@@ -16,6 +16,10 @@ Bank Statements may be generated containing a subset of the OFX information (onl
 creation of the Financial Accounting records). 
     
 Backported from Odoo 9.0
+
+When testing with the provided test file, make sure the demo data from the
+base account_bank_statement_import module has been imported, or manually
+create periods for the year 2013.
     """,
     'data' : [],
     'demo': [],
