@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Move period_id from bank_statement form to bank_statement_line form
+        -->
+        <record id="view_banking_bank_statement_tree_1" model="ir.ui.view">
+            <field name="name">account.bank.statement.tree.banking</field>
+            <field name="inherit_id" ref="account.view_bank_statement_tree" />
+            <field name="model">account.bank.statement</field>
+            <field name="arch" type="xml">
+                <!-- Remove period from bank statement -->
+                <field name="period_id" position="replace">
+                    <!-- Add invisible column for identification of import file
+                    -->
+                    <field name="banking_id" invisible="True" />
+                </field>
+            </field>
+        </record>
+        <record id="view_banking_bank_statement_form_1" model="ir.ui.view">
+            <field name="name">account.bank.statement.form.banking-1</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form" />
+            <field name="model">account.bank.statement</field>
+            <field name="sequence" eval="60"/>
+            <field name="arch" type="xml">
+                <data>
+                    <page string="Transactions" position="after">
+                        <page string="Journal Entries" name="move_live_ids">
+                            <field colspan="4" name="move_line_ids" nolabel="1"/>
+                        </page>
+                    </page>
+                    <field name="period_id" position="replace"/>
+
+                    <xpath expr="//page[@string='Transactions']/field/tree"
+                           position="attributes">
+                        <attribute name="colors">black:state == 'confirmed';darkmagenta:match_multi == True;crimson:duplicate == True;grey:state == 'draft';</attribute>
+                    </xpath>
+
+                    <xpath expr="//field[@name='line_ids']/tree/field[@name='name']"
+                           position="attributes">
+                        <attribute name="required">1</attribute>
+                    </xpath>
+
+                    <xpath expr="//field[@name='line_ids']/form//field[@name='name']"
+                           position="attributes">
+                        <attribute name="required">1</attribute>
+                    </xpath>
+
+                    <!-- Add invisible field for identification of import file
+                         on bank statements
+                    -->
+                    <field name="balance_end_real" position="after">
+                        <field name="banking_id" invisible="True"/>
+                    </field>
+
+                    <!-- Show bank accounts in account_bank_statement_line to
+                         enable manualcoupling of bank account numbers to
+                         statement lines and harvest info for future matching
+                         in the process.
+                    -->
+                    <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']"
+                           position="after">
+                        <field name="link_partner_ok" invisible="1" />
+                        <button name="link_partner"
+                                string="Link partner"
+                                icon="terp-partner"
+                                type="object"
+                                attrs="{'invisible': [('link_partner_ok', '=', False)]}"
+                                />
+                        <!-- TODO set partner_id when partner_bank_id changes -->
+                        <field name="partner_bank_id"/>
+                    </xpath>
+                    <xpath expr="//field[@name='line_ids']/form//field[@name='partner_id']"
+                           position="after">
+                        <field name="partner_bank_id"/>
+                    </xpath>
+                    <xpath expr="//field[@name='line_ids']/tree//field[@name='account_id']"
+                           position="attributes">
+                       <attribute name="attrs">{'readonly': ['|', ('state', '!=', 'draft'), ('match_type', '!=', False)]}</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='line_ids']/tree/field[@name='amount']"
+                           position="after">
+                        <field name="match_type"/>
+                        <field name="residual"/>
+                        <field name="parent_id" invisible="1" />
+                        <button name="match_wizard"
+                                string="Match"
+                                icon="terp-gtk-jump-to-ltr"
+                                attrs="{'invisible': ['|', ('parent_id', '!=', False),
+                                                           ('state', '!=', 'draft')]}"
+                                type="object"
+                                />
+                        <field name="match_multi" invisible="1"/>
+                        <field name="duplicate" invisible="1"/>
+                        <field name="state"/>
+                        <button name="confirm" states="draft"
+                                string="Confirm transaction"
+                                icon="gtk-ok"
+                                type="object"/>
+                        <button name="cancel" states="confirmed"
+                                string="Cancel transaction"
+                                icon="gtk-cancel"
+                                type="object"/>
+                        <field name="invoice_id"/>
+                        <field name="reconcile_id"/>
+                    </xpath>
+
+                    <xpath expr="//field[@name='line_ids']/form//field[@name='amount']"
+                           position="after">
+                        <field name="state"/>
+                        <field name="invoice_id"/>
+                        <field name="reconcile_id"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+     </data>
+</openerp>

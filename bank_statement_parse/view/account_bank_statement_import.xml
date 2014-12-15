@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Create new view on imported statement files -->
+        <record model="ir.ui.view" id="account_bank_statement_import_form">
+            <field name="name">account.bank.statement.import.form</field>
+            <field name="model">account.bank.statement.import</field>
+            <field name="arch" type="xml">
+                <form string="Imported Bank Statements">
+                    <notebook colspan="4">
+                        <page string="Import Details">
+                            <field name="company_id" />
+                            <field name="date" />
+                            <field name="user_id" />
+                            <field name="state" />
+                            <!-- No more filename ??? -->
+                            <field name="data_file"/>
+                            <field name="file_type" />
+                        </page>
+                        <!-- TODO after adding mods to statement
+                        <page string="Statements">
+                            <field
+                                name="statement_ids"
+                                colspan="4"
+                                nolabel="1"
+                            />
+                        </page>
+                        -->
+                        <page string="Import Log">
+                            <field name="log" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_bank_statement_import_tree">
+            <field name="name">account.bank.statement.import.tree</field>
+            <field name="model">account.bank.statement.import</field>
+            <field name="arch" type="xml">
+                <tree
+                    string="Imported Bank Statements Files"
+                    colors="red:state=='error';blue:state=='unfinished'"
+                >
+                    <field name="company_id" />
+                    <field name="date" />
+                    <field name="user_id" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+     </data>
+</openerp>

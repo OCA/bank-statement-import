@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Create new submenu in finance/configuration -->
+        <menuitem
+            id="menu_finance_banking_settings"
+            parent="account.menu_finance_configuration"
+            name="Banking"
+        />
+
+        <!-- Add menuoption for bank statement import settings -->
+        <record
+            model="ir.actions.act_window"
+            id="action_bank_statement_import_settings"
+        >
+            <field name="name">Bank Statement Import Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bank.statement.import.settings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="menu_bank_statement_import_settings"
+            parent="menu_finance_banking_settings"
+            action="action_bank_statement_import_settings"
+            name="Bank Statement Import Settings"
+            sequence="18"
+        />
+
+        <!-- Add a shortcut menu for bank accounts -->
+        <record
+            model="ir.actions.act_window"
+            id="action_res_partner_banks"
+        >
+            <field name="name">Bank Accounts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner.bank</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="menu_res_partner_banks"
+            parent="menu_finance_banking_settings"
+            action="action_res_partner_banks"
+            name="Bank Accounts"
+            sequence="10"
+         />
+
+        <!-- Menu item to show all import bank statement files -->
+        <record
+            model="ir.actions.act_window"
+            id="action_account_bank_statement_import"
+        >
+            <field name="name">Imported Bank Statements Files</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.bank.statement.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="menu_account_bank_statement_import"
+            parent="account.menu_finance_bank_and_cash"
+            action="action_account_bank_statement_import"
+            name="Imported Bank Statements Files"
+            sequence="15"
+         />
+
+        <!-- Menu item to see all bank transactions to allow for easy searching
+        -->
+        <!--  LATER 
+        <record
+            model="ir.actions.act_window"
+            id="action_bank_statement_line"
+        >
+            <field name="name">Bank Transactions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.bank.statement.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field
+                name="search_view_id"
+                ref="view_account_bank_statement_line_search"
+            />
+        </record>
+        <menuitem
+		    id="menu_bank_statement_line"
+		    parent="account.menu_finance_bank_and_cash"
+		    action="action_bank_statement_line"
+            string="Bank Transactions"
+            sequence="8"
+            />
+        -->
+
+     </data>
+</openerp>
