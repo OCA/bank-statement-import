@@ -31,7 +31,7 @@
         </record>
 
         <record id="action_account_bank_statement_import" model="ir.actions.act_window">
-            <field name="name">Import</field>
+            <field name="name">Import Bank Statement</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">account.bank.statement.import</field>
             <field name="view_type">form</field>
