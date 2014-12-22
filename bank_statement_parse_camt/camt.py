@@ -22,12 +22,12 @@ from lxml import etree
 
 from openerp.osv.orm import except_orm
 
-from openerp.addons.bank_statement_parse import lib
-from openerp.addons.bank_statement_parse.lib import BankTransaction as bt
-from openerp.addons.bank_statement_parse.lib.convert import str2date
+from openerp.addons.bank_statement_parse import parselib
+from openerp.addons.bank_statement_parse.parselib import BankTransaction as bt
+from openerp.addons.bank_statement_parse.parselib.convert import str2date
 
 
-class CamtBankTransaction(lib.BankTransaction):
+class CamtBankTransaction(parselib.BankTransaction):
 
     def __init__(self, values, *args, **kwargs):
         super(CamtBankTransaction, self).__init__(*args, **kwargs)
@@ -38,7 +38,7 @@ class CamtBankTransaction(lib.BankTransaction):
         return not self.error_message
 
 
-class CamtParser(lib.BankStatementParser):
+class CamtParser(parselib.BankStatementParser):
     code = 'CAMT'
     country_code = 'NL'
     name = 'Generic CAMT Format'
@@ -134,7 +134,7 @@ CAMT Format parser
         as it is used as the basis of the generated move lines' names
         which overflow when using the full IBAN and CAMT statement id.
         """
-        statement = lib.BankStatement()
+        statement = parselib.BankStatement()
         statement.local_account = (
             self.xpath(node, './ns:Acct/ns:Id/ns:IBAN')[0].text
             if self.xpath(node, './ns:Acct/ns:Id/ns:IBAN')

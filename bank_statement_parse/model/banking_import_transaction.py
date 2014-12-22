@@ -22,14 +22,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 import datetime
 from openerp.osv import orm, fields
 from openerp import netsvc
 from openerp.tools.translate import _
 from openerp.addons.decimal_precision import decimal_precision as dp
-from openerp.addons.account_banking.parsers import models
-from openerp.addons.account_banking.parsers import convert
+from openerp.addons.account_banking.libparser import models
+from openerp.addons.account_banking.libparser import convert
 from openerp.addons.account_banking.wizard import banktools
 
 bt = models.mem_bank_transaction
@@ -1022,7 +1021,6 @@ class banking_import_transaction(orm.Model):
             # Final check: no coercion of currencies!
             if transaction.local_currency \
                and account_info.currency_id.name != transaction.local_currency:
-                # TODO: convert currencies?
                 results['log'].append(
                     _('transaction %(statement_id)s.%(transaction_id)s for '
                       'account %(bank_account)s uses different currency than '
@@ -1350,7 +1348,6 @@ class banking_import_transaction(orm.Model):
 
     _columns = {
         # start mem_bank_transaction atributes
-        # see parsers/models.py
         'transaction': fields.char('transaction', size=16),  # id
         'statement': fields.char('statement', size=16),  # statement_id
         'type': fields.char('type', size=16),

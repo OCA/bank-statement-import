@@ -24,7 +24,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import parserlib
-from . import model
-from openerp.addons.account_bank_statement_import import\
-    account_bank_statement_import as parser_types
+from . import bank_statement
+from . import bank_transaction
