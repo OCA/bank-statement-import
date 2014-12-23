@@ -26,5 +26,3 @@
 ##############################################################################
 from . import parserlib
 from . import model
-from openerp.addons.account_bank_statement_import import\
-    account_bank_statement_import as parser_types

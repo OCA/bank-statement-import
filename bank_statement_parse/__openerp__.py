@@ -35,7 +35,6 @@
         ],
     'data': [
         # 'security/ir.model.access.csv',
-        # 'wizard/bank_import_view.xml',
         'view/account_bank_statement_import.xml',
         'view/bank_statement_import_settings.xml',
         'view/menu.xml',
