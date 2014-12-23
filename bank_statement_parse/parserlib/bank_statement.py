@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+'''Define BankStatement class to help in importing bank statements.'''
 ##############################################################################
 #
 #  Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
@@ -18,8 +19,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import re
-from openerp.tools.translate import _
 
 
 class BankStatement(object):

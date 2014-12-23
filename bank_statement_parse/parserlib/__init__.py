@@ -24,5 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import bank_statement
-from . import bank_transaction
+from bank_statement import BankStatement
+from bank_transaction import BankTransaction
+from bank_statement_parser import BankStatementParser
+from parser_decorator import advanced_parser
