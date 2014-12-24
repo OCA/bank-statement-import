@@ -77,8 +77,6 @@ class account_bank_statement_import(osv.TransientModel):
 
     def import_bank_statement(self, cr, uid, bank_statement_vals=False, context=None):
         """ Get a list of values to pass to the create() of account.bank.statement object, and returns a list of ID created using those values"""
-        import pdb
-        pdb.set_trace()
         statement_ids = []
         for vals in bank_statement_vals:
             statement_ids.append(self.pool.get('account.bank.statement').create(cr, uid, vals, context=context))

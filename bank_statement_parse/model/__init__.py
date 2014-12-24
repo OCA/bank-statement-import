@@ -25,4 +25,3 @@
 #
 ##############################################################################
 import account_bank_statement_import
-import bank_statement_import_settings

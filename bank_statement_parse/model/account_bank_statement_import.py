@@ -51,21 +51,12 @@ class account_banking_imported_file(orm.Model):
             'Import Date',
             readonly=True,
             select=True,
-            states={'draft': [('readonly', False)]},
         ),
         # Old field format replaced by file_type
         # 'file_name': fields.char('File name', size=256),
         'log': fields.text(
             'Import Log',
             readonly=True,
-            states={'draft': [('readonly', False)]},
-        ),
-        'user_id': fields.many2one(
-            'res.users',
-            'Responsible User',
-            readonly=True,
-            select=True,
-            states={'draft': [('readonly', False)]},
         ),
         'state': fields.selection(
             [
@@ -78,17 +69,9 @@ class account_banking_imported_file(orm.Model):
             select=True,
             readonly=True,
         ),
-        # TODO after adding banking_id to statement
-        # 'statement_ids': fields.one2many(
-        #     'account.bank.statement',
-        #    'banking_id',
-        #    'Statements',
-        #    readonly=False,
-        # ),
     }
     _defaults = {
         'date': fields.date.context_today,
-        'user_id': lambda self, cr, uid, context: uid,
     }
 
 

@@ -34,9 +34,7 @@
         'account_bank_statement_import',
         ],
     'data': [
-        # 'security/ir.model.access.csv',
-        'view/account_bank_statement_import.xml',
-        'view/bank_statement_import_settings.xml',
+        'security/ir.model.access.csv',
         'view/menu.xml',
     ],
     'js': [
@@ -48,6 +46,10 @@
     exentended, so parsers developed might hope to be compatible with future
     development of Odoo.
 
+# TODO Not al of the functionality described below has been implemented yet!
+#   These were in the 7.0 version of account_banking and will be migrated
+#   over time...
+
     This module extends the base functionality by:
     - more extensive logging
     - storing much more information on each bank transaction in the bank
@@ -56,32 +58,13 @@
       user and date of import.
 
     This module also should make it easy to migrate bank statement import
-    moduels written for earlies versions of Odoo/OpenERP.
-    
-    Changes to default Odoo:
-
-    * Puts focus on the real life messaging with banks:
-      + Bank statement lines upgraded to independent bank transactions.
-      + Banking statements have no special accountancy meaning, they're just
-        message envelopes for a number of bank transactions.
-      + Bank statements can be either encoded by hand to reflect the document
-        version of Bank Statements, or created as an optional side effect of
-        importing Bank Transactions.
-
-    * Adds dropin extensible import facility for bank communication in:
-      - Drop-in input parser development.
+    modules written for earlies versions of Odoo/OpenERP.
 
     * Additional features for the import/export mechanism:
       + Automatic matching and creation of bank accounts, banks and partners,
         during import of statements.
-      + Automatic matching with invoices and payments.
       + Sound import mechanism, allowing multiple imports of the same
         transactions repeated over multiple files.
-      + Journal configuration per bank account.
-      + Business logic and format parsing strictly separated to ease the
-        development of new parsers.
-      + No special configuration needed for the parsers, new parsers are
-        recognized and made available at server (re)start.
     ''',
     'installable': True,
     'auto_install': False,

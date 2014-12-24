@@ -23,12 +23,6 @@ import re
 from openerp.tools.translate import _
 
 
-def create_parser(code):
-    if code in parser_type.parser_by_code:
-        return parser_type.parser_by_code[code]()
-    return None
-
-
 class BankStatementParser(object):
     '''
     A parser delivers the interface for any parser object. Inherit from

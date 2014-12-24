@@ -57,19 +57,34 @@ def convert_statements(
 
     ns_statements = []
     for statement in os_statements:
+        # Set company_id from journal
+        company_id = False
+        if journal_id:
+            journal_model = model.pool['account.journal']
+            journal_obj = journal_model.browse(
+                cr, uid, [journal_id], context=context)
+            company_id = journal_obj[0].company_id.id
+        # Set statement_date
+        statement_date = convert.date2str(statement.date)
+        # Set period_id from statement_date
+        period_id = False
+        period_model = model.pool['account.period']
+        if statement_date:
+            period_ids = period_model.find(
+                cr, uid, statement_date, context=context)
+            period_id = period_ids and period_ids[0] or False
         ns_statement = dict(
-            # name=statement.id,
             name=statement.id,
             journal_id=journal_id,
-            date=convert.date2str(statement.date),
+            date=statement_date,
             balance_start=statement.start_balance,
             balance_end_real=statement.end_balance,
             balance_end=statement.end_balance,
             state='draft',
             user_id=uid,
             # banking_id=import_id,
-            # company_id=company.id,
-            # period_id=period_ids[0],
+            company_id=company_id,
+            period_id=period_id,
         )
         line_ids = []
         subno = 0
