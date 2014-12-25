@@ -24,7 +24,7 @@ from openerp.addons.account_bank_statement_import import\
     account_bank_statement_import as ibs
 from openerp.addons.bank_statement_parse.parserlib.parser_decorator import\
     advanced_parser
-from camt import CamtParser as Parser
+from .camt import CamtParser as Parser
 
 
 ibs.add_file_type(('camt', 'Generic CAMT Format'))
