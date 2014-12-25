@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Add process_camt method to account.bank.statement.import."""
 ##############################################################################
 #
 #    Copyright (C) 2013 Therp BV (<http://therp.nl>)
@@ -29,8 +30,9 @@ from camt import CamtParser as Parser
 ibs.add_file_type(('camt', 'Generic CAMT Format'))
 
 
-class account_bank_statement_import(orm.Model):
-    _inherit='account.bank.statement.import'
+class AccountBankStatementImport(orm.Model):
+    """Add process_camt method to account.bank.statement.import."""
+    _inherit = 'account.bank.statement.import'
 
     @advanced_parser
     def process_camt(self, cr, data):
@@ -39,3 +41,5 @@ class account_bank_statement_import(orm.Model):
         """
         parser = Parser()
         return parser.parse(cr, data)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

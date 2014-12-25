@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Implement BankStatementParser for camt files."""
 ##############################################################################
 #
 #    Copyright (C) 2013 Therp BV (<http://therp.nl>)
@@ -21,31 +22,26 @@
 from lxml import etree
 
 from openerp.osv.orm import except_orm
-
 from openerp.addons.bank_statement_parse import parserlib
-from openerp.addons.bank_statement_parse.parserlib.bank_transaction import\
-        BankTransaction as bt
 from openerp.addons.bank_statement_parse.parserlib.convert import str2date
 
 
 class CamtBankTransaction(parserlib.BankTransaction):
+    """Override BankTransaction for different validation."""
 
     def __init__(self, values, *args, **kwargs):
+        """Initialize object from values dictionary."""
         super(CamtBankTransaction, self).__init__(*args, **kwargs)
         for attr in values:
             setattr(self, attr, values[attr])
 
     def is_valid(self):
+        """Camt transaction is valid, unless error_message set."""
         return not self.error_message
 
 
 class CamtParser(parserlib.BankStatementParser):
-    code = 'CAMT'
-    country_code = 'NL'
-    name = 'Generic CAMT Format'
-    doc = '''\
-CAMT Format parser
-'''
+    """Parser for camt bank statement import files."""
 
     def tag(self, node):
         """
@@ -178,7 +174,7 @@ CAMT Format parser
 
         :param node: Ntry node
         """
-        return bt.ORDER
+        return parserlib.BankTransaction.ORDER
 
     def parse_Ntry(self, node):
         """
@@ -284,3 +280,5 @@ CAMT Format parser
             if len(statement.transactions):
                 statements.append(statement)
         return statements
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

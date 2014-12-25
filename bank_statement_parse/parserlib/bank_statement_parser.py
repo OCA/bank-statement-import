@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-'''Framework for parsing bank statement import files.'''
+"""Framework for parsing bank statement import files."""
 ##############################################################################
 #
 #  Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
@@ -24,7 +24,7 @@ from openerp.tools.translate import _
 
 
 class BankStatementParser(object):
-    '''
+    """
     A parser delivers the interface for any parser object. Inherit from
     it to implement your own.
     You should at least implement the following at the class level:
@@ -38,13 +38,19 @@ class BankStatementParser(object):
                     Translatable.
 
         parse -> the method for the actual parsing.
-    '''
+    """
+    # TODO After moving the two methods in this class to the import framework,
+    # this class is probably no longer needed.
     name = None
     code = None
     country_code = None
     doc = __doc__
 
     def get_unique_statement_id(self, cr, base):
+        """Generate unique identifier for bank_statement using
+        autonumbering."""
+        # TODO Move the creation of unique statement ids to the import
+        # framework
         name = base
         suffix = 1
         while True:
@@ -68,8 +74,11 @@ class BankStatementParser(object):
         is not prevented anywhere else in the system so the 'account'
         param being a company account is not enforced here either.
         """
+        # TODO Move the creation of unique account ids to the import
+        # framework
         def normalize(account_no):
-            return re.sub('\s', '', account_no)
+            """Do away with whitespace in bank account number."""
+            return re.sub(r'\s', '', account_no)
 
         account = normalize(account)
         cr.execute(
@@ -85,7 +94,7 @@ class BankStatementParser(object):
         return account
 
     def parse(self, cr, data):
-        '''
+        """
         Parse data.
 
         data is a raw in memory file object. You have to split it in
@@ -107,7 +116,9 @@ class BankStatementParser(object):
         Just mind that users can create random (file)containers with
         transactions in it. Try not to depend on order of appearance within
         these files. If in doubt: sort.
-        '''
+        """
         raise NotImplementedError(
             _('This is a stub. Please implement your own.')
         )
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

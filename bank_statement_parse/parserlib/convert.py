@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Handy utilities to use in parsing bank statement import files."""
 ##############################################################################
 #
 #    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
@@ -18,43 +19,42 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 import unicodedata
 
 __all__ = ['str2date', 'date2str', 'date2date', 'to_swift']
 
 try:
     from datetime import datetime
-    datetime.strptime
 except AttributeError:
     from mx import DateTime as datetime
 
 
-def str2date(datestr, format='%d/%m/%y'):
-    '''Convert a string to a datatime object'''
-    return datetime.strptime(datestr, format)
+def str2date(datestr, fmt='%d/%m/%y'):
+    """Convert a string to a datatime object"""
+    return datetime.strptime(datestr, fmt)
 
 
-def date2str(date, format='%Y-%m-%d'):
-    '''Convert a datetime object to a string'''
-    return date.strftime(format)
+def date2str(date, fmt='%Y-%m-%d'):
+    """Convert a datetime object to a string"""
+    return date.strftime(fmt)
 
 
 def date2date(datestr, fromfmt='%d/%m/%y', tofmt='%Y-%m-%d'):
-    '''
+    """
     Convert a date in a string to another string, in a different
-    format
-    '''
+    fmt
+    """
     return date2str(str2date(datestr, fromfmt), tofmt)
 
 _SWIFT = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
           "/-?:().,'+ ")
 
 
-def to_swift(astr, schemes=['utf-8', 'latin-1', 'ascii']):
-    '''
-    Reduce a string to SWIFT format
-    '''
+def to_swift(astr, schemes=None):
+    """
+    Reduce a string to SWIFT fmt
+    """
+    schemes = schemes or ['utf-8', 'latin-1', 'ascii']
     if not isinstance(astr, unicode):
         for scheme in schemes:
             try:
@@ -65,9 +65,10 @@ def to_swift(astr, schemes=['utf-8', 'latin-1', 'ascii']):
         if not isinstance(astr, unicode):
             return astr
 
-    s = [x in _SWIFT and x or ' '
-         for x in unicodedata.normalize('NFKD', astr).encode('ascii', 'ignore')
-         ]
-    return ''.join(s)
+    swift_string = [
+        x in _SWIFT and x or ' '
+        for x in unicodedata.normalize('NFKD', astr).encode('ascii', 'ignore')
+    ]
+    return ''.join(swift_string)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

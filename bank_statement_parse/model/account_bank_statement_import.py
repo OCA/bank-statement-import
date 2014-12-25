@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Extend account.bank.statement.import."""
 ##############################################################################
 #
 #    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
@@ -22,20 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-'''
-'''
-import re
 from openerp.osv import orm, fields
-from openerp.tools.translate import _
 
 
-class account_banking_imported_file(orm.Model):
-    '''Imported Bank Statements File
-    
-    Unlike backported standard Odoo model, this is not a transient model, 
+class AccountBankStatementImport(orm.Model):
+    """Imported Bank Statements File
+
+    Unlike backported standard Odoo model, this is not a transient model,
     because we want to save the import files for debugging and accounting
     purposes.
-    '''
+    """
     _inherit = 'account.bank.statement.import'
     _description = __doc__
     _rec_name = 'date'
@@ -74,4 +71,4 @@ class account_banking_imported_file(orm.Model):
         'date': fields.date.context_today,
     }
 
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+"""Define BankTransaction class to help in importing bank transactions."""
 ##############################################################################
 #
 #  Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
@@ -18,15 +19,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import re
 from openerp.tools.translate import _
 
 
 class BankTransaction(object):
-    '''
+    """
     A BankTransaction is a real life copy of a bank transfer. Mapping to
     OpenERP moves and linking to invoices and the like is done afterwards.
-    '''
+    """
     # Lock attributes to enable parsers to trigger non-conformity faults
     __slots__ = [
 
@@ -208,29 +208,27 @@ class BankTransaction(object):
     }
 
     def __init__(self, *args, **kwargs):
-        '''
+        """
         Initialize values
-        '''
+        """
         super(BankTransaction, self).__init__(*args, **kwargs)
         for attr in self.__slots__:
             setattr(self, attr, '')
         self.remote_owner_address = []
-
-    def copy(self):
-        '''
-        Return a copy of self
-        '''
-        retval = BankTransaction()
-        for attr in self.__slots__:
-            setattr(retval, attr, getattr(self, attr))
-        return retval
+        # (re-)initializations to satisfy pylint
+        self.transfer_type = ''
+        self.execution_date = ''
+        self.remote_account = ''
+        self.transferred_amount = ''
 
     def _get_type(self):
+        """Getter for type property."""
         if self.transfer_type in self.type_map:
             return self.type_map[self.transfer_type]
         return self.transfer_type
 
     def _set_type(self, value):
+        """Setter for type property."""
         if value in self.types:
             self.transfer_type = value
         else:
@@ -239,9 +237,11 @@ class BankTransaction(object):
     type = property(_get_type, _set_type)
 
     def is_valid(self):
-        '''
+        """
         Heuristic check: at least id, execution_date, remote_account and
         transferred_amount should be filled to create a valid transfer.
-        '''
+        """
         return (self.execution_date and self.remote_account
                 and self.transferred_amount and True) or False
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

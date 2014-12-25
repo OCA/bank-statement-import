@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
-'''Decorator provides 'glue' between pre 8.0 import wizards and 8.0 style.'''
+"""Decorator provides 'glue' between pre 8.0 import wizards and 8.0 style."""
 ##############################################################################
 #
-#    Copyright (C) 2014 Therp BV - http://therp.nl.   
+#    Copyright (C) 2014 Therp BV - http://therp.nl.
 #    All Rights Reserved
 #
 #    WARNING: This program as such is intended to be used by professional
@@ -31,20 +31,20 @@ from . import convert
 
 def convert_statements(
         model, cr, uid, os_statements, journal_id=False, context=None):
-    '''Taking lots of code from the former import wizard, convert array
+    """Taking lots of code from the former import wizard, convert array
     of BankStatement objects to values that can be used in create of
-    bank.statement model, including bank.statement.line tuple.'''
+    bank.statement model, including bank.statement.line tuple."""
     # os_ = old style
     # ns_ = new style
     def convert_transaction(
             model, cr, uid, transaction, subno, context=None):
+        """Convert transaction object to values for create."""
         bank_account_id, partner_id = model._detect_partner(
             cr, uid, transaction.remote_owner,
             identifying_field='owner_name', context=context
         )
         if not transaction.id:
             transaction.id = str(subno)
-        values = {}
         vals_line = {
             'date': transaction.value_date,
             'name': transaction.remote_owner + ': ' + transaction.message,
@@ -101,9 +101,10 @@ def convert_statements(
 
 
 def advanced_parser(old_style_parser):
-    '''Turn the old style three parameter function and change it automagically
-    in a six parameter function expected by the new style import.'''
+    """Turn the old style three parameter function and change it automagically
+    in a six parameter function expected by the new style import."""
     def wrapper(self, cr, uid, data_file, journal_id=False, context=None):
+        """Add extra parameters and functionality to old style parsers."""
         decoded_data = base64.decodestring(data_file)
         os_statements = old_style_parser(self, cr, decoded_data)
         return convert_statements(
