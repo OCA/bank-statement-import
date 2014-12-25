@@ -90,11 +90,11 @@ def convert_statements(
         subno = 0
         for transaction in statement.transactions:
             subno += 1
-            line_ids.append(
-                (0, 0, convert_transaction(
-                    model, cr, uid, transaction, subno, context=context)
-                )
-            )
+            line_ids.append((
+                0, 0,
+                convert_transaction(
+                    model, cr, uid, transaction, subno, context=context),
+            ))
         ns_statement['line_ids'] = line_ids
         ns_statements.append(ns_statement)
     return ns_statements
@@ -113,3 +113,4 @@ def advanced_parser(old_style_parser):
         )
     return wrapper
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
