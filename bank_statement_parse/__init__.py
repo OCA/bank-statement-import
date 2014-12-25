@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014 Therp BV - http://therp.nl.   
+#    Copyright (C) 2014 Therp BV - http://therp.nl.
 #    All Rights Reserved
 #
 #    WARNING: This program as such is intended to be used by professional
