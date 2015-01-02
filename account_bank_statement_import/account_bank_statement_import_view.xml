@@ -15,10 +15,10 @@
                             <field name="journal_id" domain="[('type', '=', 'bank')]" context="{'default_type':'bank'}"/>
                         </group>
                         <group>
-                            <b colspan="2"> How to import your bank statement in OpenERP.</b>
+                            <b colspan="2"> How to import your bank statement in Odoo.</b>
                             <label string= "1. Go to your bank account website." colspan="2"/>
-                            <label string= "2. Download your bank statements in the right format. (.OFX, .QIF or CODA are accepted)" colspan="2"/>
-                            <label string= "3. Upload right here the bank statements file into OpenERP. Click Import." colspan="2"/>
+                            <label string= "2. Download your bank statements in the right format. (.OFX, .QIF, CODA and CAMT.053 are accepted)" colspan="2"/>
+                            <label string= "3. Upload right here the bank statements file into Odoo. Click Import." colspan="2"/>
                         </group>
                     </group>
                     <footer>
