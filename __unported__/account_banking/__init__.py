@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
-"""Import all libraries used for parsing bank statements."""
 ##############################################################################
 #
-#    Copyright (C) 2014 Therp BV - http://therp.nl.
+#    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
 #    All Rights Reserved
 #
 #    WARNING: This program as such is intended to be used by professional
@@ -25,6 +24,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from .bank_statement import BankStatement
-from .bank_transaction import BankTransaction
-from .parser_decorator import advanced_parser
+
+import sepa
+import record
+import banking_import_transaction
+import account_banking
+import parsers
+import wizard
+import res_partner
+import res_bank
+import res_partner_bank

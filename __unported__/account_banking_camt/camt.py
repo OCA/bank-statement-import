@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Implement BankStatementParser for camt files."""
 ##############################################################################
 #
 #    Copyright (C) 2013 Therp BV (<http://therp.nl>)
@@ -19,29 +18,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from lxml import etree
-
 from openerp.osv.orm import except_orm
-from openerp.addons.bank_statement_parse import parserlib
-from openerp.addons.bank_statement_parse.parserlib.convert import str2date
+from openerp.addons.account_banking.parsers import models
+from openerp.addons.account_banking.parsers.convert import str2date
+
+bt = models.mem_bank_transaction
 
 
-class CamtBankTransaction(parserlib.BankTransaction):
-    """Override BankTransaction for different validation."""
+class transaction(models.mem_bank_transaction):
 
     def __init__(self, values, *args, **kwargs):
-        """Initialize object from values dictionary."""
-        super(CamtBankTransaction, self).__init__(*args, **kwargs)
+        super(transaction, self).__init__(*args, **kwargs)
         for attr in values:
             setattr(self, attr, values[attr])
 
     def is_valid(self):
-        """Camt transaction is valid, unless error_message set."""
         return not self.error_message
 
 
-class CamtParser(object):
-    """Parser for camt bank statement import files."""
+class parser(models.parser):
+    code = 'CAMT'
+    country_code = 'NL'
+    name = 'Generic CAMT Format'
+    doc = '''\
+CAMT Format parser
+'''
 
     def tag(self, node):
         """
@@ -131,7 +134,7 @@ class CamtParser(object):
         as it is used as the basis of the generated move lines' names
         which overflow when using the full IBAN and CAMT statement id.
         """
-        statement = parserlib.BankStatement()
+        statement = models.mem_bank_statement()
         statement.local_account = (
             self.xpath(node, './ns:Acct/ns:Id/ns:IBAN')[0].text
             if self.xpath(node, './ns:Acct/ns:Id/ns:IBAN')
@@ -159,8 +162,8 @@ class CamtParser(object):
                     transaction_detail['execution_date'], "%Y-%m-%d")
             number += 1
             transaction_detail['id'] = str(number).zfill(4)
-            transaction = CamtBankTransaction(transaction_detail)
-            statement.transactions.append(transaction)
+            statement.transactions.append(
+                transaction(transaction_detail))
         return statement
 
     def get_transfer_type(self, node):
@@ -174,7 +177,7 @@ class CamtParser(object):
 
         :param node: Ntry node
         """
-        return parserlib.BankTransaction.ORDER
+        return bt.ORDER
 
     def parse_Ntry(self, node):
         """
@@ -280,5 +283,3 @@ class CamtParser(object):
             if len(statement.transactions):
                 statements.append(statement)
         return statements
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

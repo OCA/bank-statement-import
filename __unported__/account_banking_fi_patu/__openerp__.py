@@ -1,8 +1,7 @@
-# -*- encoding: utf-8 -*-
-"""Import all libraries used for parsing bank statements."""
 ##############################################################################
 #
-#    Copyright (C) 2014 Therp BV - http://therp.nl.
+#    Copyright (C) 2010 Sami Haahtinen (<http://ressukka.net>).
+#    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
 #    All Rights Reserved
 #
 #    WARNING: This program as such is intended to be used by professional
@@ -25,6 +24,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from .bank_statement import BankStatement
-from .bank_transaction import BankTransaction
-from .parser_decorator import advanced_parser
+
+{
+    'name': 'Account Banking PATU module',
+    'version': '0.62',
+    'license': 'AGPL-3',
+    'author': 'Sami Haahtinen',
+    'website': 'http://ressukka.net',
+    'category': 'Account Banking',
+    'depends': ['account_banking'],
+    'description': '''
+    Module to import Finnish PATU format transation files.
+
+    This modules contains no logic, just an import filter for account_banking.
+    ''',
+    'active': False,
+    'installable': False,
+}
