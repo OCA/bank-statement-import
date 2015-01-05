@@ -39,13 +39,6 @@
     ],
     'js': [
     ],
-    'description': '''
-    Base module to write parsers for bank statement import files.
-
-    The module account_bank_statement_import, backported from odoo 9.0, is
-    extended, so parsers developed might hope to be compatible with future
-    development of Odoo.
-    ''',
     'installable': True,
     'auto_install': False,
 }

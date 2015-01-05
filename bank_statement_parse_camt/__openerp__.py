@@ -25,9 +25,5 @@
     'website': 'https://github.com/OCA/banking',
     'category': 'Banking addons',
     'depends': ['bank_statement_parse'],
-    'description': '''
-Module to import SEPA CAMT.053 Format bank statement files. Based
-on the Banking addons framework.
-    ''',
     'installable': True,
 }
