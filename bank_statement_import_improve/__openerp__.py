@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
-#              (C) 2011-2014 Therp BV (<http://therp.nl>).
+#              (C) 2011-2104 Therp BV (<http://therp.nl>).
 #              (C) 2011 Smile (<http://smile.fr>).
 #
 #    All other contributions are (C) by their respective contributors
@@ -31,9 +31,11 @@
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
-        'bank_statement_import_improve',
+        'account_bank_statement_import',
         ],
     'data': [
+        'security/ir.model.access.csv',
+        'view/menu.xml',
     ],
     'js': [
     ],

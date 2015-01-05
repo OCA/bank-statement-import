@@ -5,6 +5,8 @@
     'name': 'Account Bank Statement Import',
     'version': '1.0',
     'author': 'OpenERP SA',
+    'website': 'https://github.com/OCA/bank-statement-import',
+    'category': 'Banking addons',
     'depends': ['account'],
     'demo': [],
     'description' : """Generic Wizard to Import Bank Statements.

@@ -5,6 +5,8 @@
     'name': 'Import QIF Bank Statement',
     'version': '1.0',
     'author': 'OpenERP SA',
+    'website': 'https://github.com/OCA/bank-statement-import',
+    'category': 'Banking addons',
     'description': '''
 Module to import QIF bank statements.
 ======================================
