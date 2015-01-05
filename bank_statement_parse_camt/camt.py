@@ -140,13 +140,7 @@ class CamtParser(object):
         identifier = node.find(self.ns + 'Id').text
         if identifier.upper().startswith('CAMT053'):
             identifier = identifier[7:]
-        statement.id = self.get_unique_statement_id(
-            cr, "%s-%s" % (
-                self.get_unique_account_identifier(
-                    cr, statement.local_account),
-                identifier)
-            )
-
+        statement.id = identifier
         statement.local_currency = self.xpath(node, './ns:Acct/ns:Ccy')[0].text
         statement.start_balance = self.get_start_balance(node)
         statement.end_balance = self.get_end_balance(node)
