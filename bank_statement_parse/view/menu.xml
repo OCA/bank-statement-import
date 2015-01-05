@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
-        <!-- Create new submenu in finance/configuration -->
-        <menuitem
-            id="menu_finance_banking_settings"
-            parent="account.menu_finance_configuration"
-            name="Banking"
-        />
-
         <!-- Add a shortcut menu for bank accounts -->
         <record
             model="ir.actions.act_window"
@@ -22,10 +14,10 @@
         </record>
         <menuitem
             id="menu_res_partner_banks"
-            parent="menu_finance_banking_settings"
+            parent="account.menu_finance_bank_and_cash"
             action="action_res_partner_banks"
             name="Bank Accounts"
-            sequence="10"
+            sequence="90"
          />
 
         <!-- Menu item to show all import bank statement files -->
