@@ -37,6 +37,68 @@ class AccountBankStatementImport(orm.Model):
     _description = __doc__
     _rec_name = 'date'
 
+    def detect_partner_and_bank(
+            self, cr, uid, transaction_vals=None, partner_vals=None,
+            bank_vals=None, context=None):
+        """Try to find a partner and bank_account for a transaction.
+        
+        The calling function has to pass all the information it can gather
+        from the imported transaction. This function will try several
+        searches to find an existing bank account and partner. But possibly
+        only the partner is found. In that case, a bank account might be
+        automatically created if the information is there, and it is certain
+        the transaction can not be for one of the existing bank accounts of
+        the partner.
+
+        The following searches will be done (if needed information present):
+        - Search on bank account number;
+        - Search on partner name and address info;
+        - Search only on partner name (should be unique);
+        - Search only on address info (should be unique and complete enough);
+        - Search invoices and moves with reference info (should be unique).
+
+        Unlike the standard _detect_partner(), this function will NOT create
+        bank-accounts for unknown partners.
+        """
+        partner_id = False
+        bank_account_id = False
+        bank_model = self.pool.get('res.partner.bank')
+        partner_model = self.pool.get('res.partner')
+        # Search on bank account number
+        if bank_vals and 'acc_number' in bank_vals:
+            ids = bank_model.search(
+                cr, uid, [('acc_number', '=', bank_vals['acc_number']),],
+                context=context
+            )
+            if ids:
+                bank_account_id = ids[0]  #  TODO Should warn or raise if > 1
+                bank_records = bank_model.read(
+                    cr, uid, [bank_account_id], ['partner_id'],
+                    context=context
+                )
+                partner_id = bank_records[0]['partner_id']
+            return bank_account_id, partner_id
+        # Search on partner data
+        if partner_vals and 'acc_name' in partner_vals:
+            ids = partner_model.search(
+                cr, uid, [('name', '=', partner_vals['name']),],
+                context=context
+            )
+            if ids:
+                partner_id = ids[0]  #  TODO Should warn or raise if > 1
+                # Create bank if partner does not have one and we have data
+                if bank_vals and 'acc_number' in bank_vals:
+                    ids = bank_model.search(
+                        cr, uid, [('partner_id', '=', partner_id),],
+                        context=context
+                    )
+                    if not ids:
+                        bank_vals['partner_id'] = partner_id
+                        # TODO copy more data from partner
+                        bank_account_id = bank_model.create(
+                            cr, uid, bank_vals, context=context)
+        return bank_account_id, partner_id
+
     _columns = {
         'company_id': fields.many2one(
             'res.company',

@@ -154,6 +154,7 @@ class CamtParser(object):
             number += 1
             transaction_detail['id'] = str(number).zfill(4)
             transaction = CamtBankTransaction(transaction_detail)
+            transaction.data = etree.tostring(Ntry)
             statement.transactions.append(transaction)
         return statement
 
@@ -168,6 +169,9 @@ class CamtParser(object):
 
         :param node: Ntry node
         """
+        transfer_type_info = self.find(node, './ns:BkTxCd/ns:Prtry/ns:Cd')
+        if transfer_type_info is not None:
+            return transfer_type_info.text
         return parserlib.BankTransaction.ORDER
 
     def parse_Ntry(self, node):
@@ -185,6 +189,13 @@ class CamtParser(object):
             vals = self.parse_TxDtls(TxDtls[0], entry_details)
         else:
             vals = entry_details
+        # If no message, try to get it from additional entry info
+        import pdb
+        pdb.set_trace()
+        if not vals.get('message'):
+            additional_entry_info = self.find(node, './ns:AddtlNtryInf')
+            if additional_entry_info is not None:
+                vals['message'] = additional_entry_info.text
         return vals
 
     def get_party_values(self, TxDtls):

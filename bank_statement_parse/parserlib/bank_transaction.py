@@ -144,6 +144,9 @@ class BankTransaction(object):
         # a next direct debit run
         'storno_retry',
 
+        # The full extend of data from which the transaction has been parsed
+        'data',
+
     ]
 
     # transfer_type's to be used by the business logic.

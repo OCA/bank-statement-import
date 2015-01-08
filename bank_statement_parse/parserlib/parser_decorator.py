@@ -39,9 +39,16 @@ def convert_statements(
     def convert_transaction(
             model, cr, uid, transaction, subno, context=None):
         """Convert transaction object to values for create."""
-        bank_account_id, partner_id = model._detect_partner(
-            cr, uid, transaction.remote_owner,
-            identifying_field='owner_name', context=context
+        transaction_model = model.pool['account.bank.statement.line']
+        partner_vals = {
+            'name': transaction.remote_owner,
+        }
+        bank_vals = {
+            'acc_number': transaction.remote_account,
+        }
+        bank_account_id, partner_id = model.detect_partner_and_bank(
+            cr, uid, transaction_vals=None, partner_vals=partner_vals,
+            bank_vals=bank_vals, context=context
         )
         if not transaction.id:
             transaction.id = str(subno)
@@ -53,6 +60,11 @@ def convert_statements(
             'partner_id': partner_id,
             'bank_account_id': bank_account_id,
         }
+        # Transfer any additional transaction attributes for which columns
+        # have been defined:
+        for attr in transaction.__slots__:
+            if attr in transaction_model._columns:
+                vals_line[attr] = getattr(transaction, attr)
         return vals_line
 
     ns_statements = []
