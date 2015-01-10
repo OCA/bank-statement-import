@@ -169,8 +169,6 @@ class CamtParser(object):
 
         :param node: Ntry node
         """
-        import pdb
-        pdb.set_trace()
         transfer_type_info = self.find(node, './ns:BkTxCd/ns:Prtry/ns:Cd')
         if transfer_type_info is not None:
             return transfer_type_info.text
