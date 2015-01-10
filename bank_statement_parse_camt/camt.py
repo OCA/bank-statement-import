@@ -169,6 +169,8 @@ class CamtParser(object):
 
         :param node: Ntry node
         """
+        import pdb
+        pdb.set_trace()
         transfer_type_info = self.find(node, './ns:BkTxCd/ns:Prtry/ns:Cd')
         if transfer_type_info is not None:
             return transfer_type_info.text
@@ -190,8 +192,6 @@ class CamtParser(object):
         else:
             vals = entry_details
         # If no message, try to get it from additional entry info
-        import pdb
-        pdb.set_trace()
         if not vals.get('message'):
             additional_entry_info = self.find(node, './ns:AddtlNtryInf')
             if additional_entry_info is not None:

@@ -54,7 +54,14 @@ def convert_statements(
             transaction.id = str(subno)
         vals_line = {
             'date': transaction.value_date,
-            'name': transaction.remote_owner + ': ' + transaction.message,
+            'name': (
+                transaction.remote_owner +
+                (
+                    transaction.remote_owner and transaction.message and ': '
+                    or ''  # separator if both fields filled
+                ) +
+                transaction.message
+            ),
             'ref': transaction.reference,
             'amount': transaction.transferred_amount,
             'partner_id': partner_id,
@@ -63,7 +70,7 @@ def convert_statements(
         # Transfer any additional transaction attributes for which columns
         # have been defined:
         for attr in transaction.__slots__:
-            if attr in transaction_model._columns:
+            if attr in transaction_model._columns and attr not in vals_line:
                 vals_line[attr] = getattr(transaction, attr)
         return vals_line
 

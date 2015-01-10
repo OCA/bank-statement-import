@@ -14,7 +14,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.7.1\n"
+
+#. module: bank_statement_parse
+#: model:ir.actions.act_window,name:bank_statement_parse.action_res_partner_banks
+#: model:ir.ui.menu,name:bank_statement_parse.menu_res_partner_banks
+msgid "Bank Accounts"
+msgstr ""
+
+#. module: bank_statement_parse
+#: model:ir.ui.menu,name:bank_statement_parse.menu_finance_banking_settings
+msgid "Banking"
+msgstr ""
+
+#. module: bank_statement_parse
+#: field:account.bank.statement.import,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: bank_statement_parse
+#: selection:account.bank.statement.import,state:0
+msgid "Error"
+msgstr ""
+
+#. module: bank_statement_parse
+#: selection:account.bank.statement.import,state:0
+msgid "Finished"
+msgstr ""
+
+#. module: bank_statement_parse
+#: model:ir.model,name:bank_statement_parse.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr ""
+
+#. module: bank_statement_parse
+#: field:account.bank.statement.import,date:0
+msgid "Import Date"
+msgstr ""
+
+#. module: bank_statement_parse
+#: field:account.bank.statement.import,log:0
+msgid "Import Log"
+msgstr ""
+
+#. module: bank_statement_parse
+#: model:ir.actions.act_window,name:bank_statement_parse.action_account_bank_statement_import_tree
+#: model:ir.ui.menu,name:bank_statement_parse.menu_account_bank_statement_import_tree
+msgid "Imported Bank Statements Files"
+msgstr ""
 
 #. module: bank_statement_parse
 #: code:addons/bank_statement_parse/parserlib/bank_transaction.py:235
@@ -23,7 +69,23 @@ msgid "Invalid value for transfer_type"
 msgstr ""
 
 #. module: bank_statement_parse
+#: selection:account.bank.statement.import,state:0
+msgid "Review"
+msgstr ""
+
+#. module: bank_statement_parse
+#: field:account.bank.statement.import,state:0
+msgid "State"
+msgstr ""
+
+#. module: bank_statement_parse
 #: code:addons/bank_statement_parse/parserlib/bank_statement_parser.py:121
 #, python-format
 msgid "This is a stub. Please implement your own."
 msgstr ""
+
+#. module: bank_statement_parse
+#: selection:account.bank.statement.import,state:0
+msgid "Unfinished"
+msgstr ""
+
