@@ -141,7 +141,9 @@ class CamtParser(object):
         if identifier.upper().startswith('CAMT053'):
             identifier = identifier[7:]
         statement.id = identifier
-        statement.local_currency = self.xpath(node, './ns:Acct/ns:Ccy')[0].text
+        local_currency_info = self.xpath(node, './ns:Acct/ns:Ccy')
+        if not local_currency_info is None:
+            statement.local_currency = local_currency_info[0].text
         statement.start_balance = self.get_start_balance(node)
         statement.end_balance = self.get_end_balance(node)
         number = 0
