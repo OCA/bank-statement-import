@@ -22,7 +22,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+import re
+from openerp.osv import orm
 
 
 class ResPartnerBank(orm.Model):

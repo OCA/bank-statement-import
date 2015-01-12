@@ -62,8 +62,8 @@ class AccountBankStatementImport(orm.Model):
         """
         partner_id = False
         bank_account_id = False
-        bank_model = self.pool.get('res.partner.bank')
-        partner_model = self.pool.get('res.partner')
+        bank_model = self.pool['res.partner.bank']
+        partner_model = self.pool['res.partner']
         # Search on bank account number
         if bank_vals and 'acc_number' in bank_vals:
             ids = bank_model.search(
