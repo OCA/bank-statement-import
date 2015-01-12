@@ -67,7 +67,7 @@ class CamtParser(object):
 
     def find(self, node, expr):
         """
-        Like xpath(), but return first result if any or else False
+        Like xpath(), but return first result if any or else None
 
         Return None to test nodes for being truesy
         """
@@ -141,9 +141,9 @@ class CamtParser(object):
         if identifier.upper().startswith('CAMT053'):
             identifier = identifier[7:]
         statement.id = identifier
-        local_currency_info = self.xpath(node, './ns:Acct/ns:Ccy')
+        local_currency_info = self.find(node, './ns:Acct/ns:Ccy')
         if not local_currency_info is None:
-            statement.local_currency = local_currency_info[0].text
+            statement.local_currency = local_currency_info.text
         statement.start_balance = self.get_start_balance(node)
         statement.end_balance = self.get_end_balance(node)
         number = 0
@@ -246,7 +246,7 @@ class CamtParser(object):
             TxDtls, './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref')
         if structured is None or not structured.text:
             structured = self.find(TxDtls, './ns:Refs/ns:EndToEndId')
-        if structured is not None:
+        if not structured is None:
             vals['reference'] = structured.text
         else:
             if vals.get('message'):

@@ -9,17 +9,28 @@
       <field name="inherit_id" ref="account.view_bank_statement_form"/>
       <field name="arch" type="xml">
         <data>
+            <!-- TODO:
+                 Maybe we should make some fields and/or replacements
+                 dependent on wether statement is imported, or manually
+                 created.
+            -->
             <xpath
                 expr="//field[@name='line_ids']/tree/field[@name='amount']"
                 position="after"
             >
-            <field name="transfer_type" />
-          </xpath>
+                <field name="transfer_type" />
+            </xpath>
+            <xpath
+                expr="//field[@name='line_ids']/tree/field[@name='partner_id']"
+                position="replace"
+            >
+                <field name="partner_name" />
+            </xpath>
             <xpath
                 expr="//field[@name='line_ids']/tree/field[@name='bank_account_id']"
                 position="replace"
             >
-            <field name="bank_account_display" />
+                <field name="bank_account_display" />
           </xpath>
         </data>
       </field>

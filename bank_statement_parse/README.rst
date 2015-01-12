@@ -26,3 +26,7 @@ modules written for earlies versions of Odoo/OpenERP.
 
 Of course new parsers can also be written using the @advanced_parser
 decorator provided by this module.
+
+RECOMMENDATION
+
+Install the web_sheet_full_width to have a good view on bank statement files.
