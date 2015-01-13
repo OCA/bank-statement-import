@@ -29,7 +29,6 @@ class AccountBankStatementLine(orm.Model):
     """Extend account.bank.statement.line (Transaction)."""
     _inherit = 'account.bank.statement.line'
 
-
     def _get_computed_fields(
             self, cr, uid, ids, field_names, args, context=None):
         """Compute values for functional fields."""

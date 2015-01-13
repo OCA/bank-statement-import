@@ -123,7 +123,7 @@ class CamtParser(object):
             self.get_balance_type_node(node, 'ITBD'))
         return self.parse_amount(nodes[-1])
 
-    def parse_Stmt(self, cr, node):
+    def parse_statement(self, cr, node):
         """
         Parse a single Stmt node.
 
@@ -142,13 +142,13 @@ class CamtParser(object):
             identifier = identifier[7:]
         statement.id = identifier
         local_currency_info = self.find(node, './ns:Acct/ns:Ccy')
-        if not local_currency_info is None:
+        if local_currency_info is not None:
             statement.local_currency = local_currency_info.text
         statement.start_balance = self.get_start_balance(node)
         statement.end_balance = self.get_end_balance(node)
         number = 0
-        for Ntry in self.xpath(node, './ns:Ntry'):
-            transaction_detail = self.parse_Ntry(Ntry)
+        for entry_node in self.xpath(node, './ns:Ntry'):
+            transaction_detail = self.parse_entry(entry_node)
             if number == 0:
                 # Take the statement date from the first transaction
                 statement.date = str2date(
@@ -156,7 +156,7 @@ class CamtParser(object):
             number += 1
             transaction_detail['id'] = str(number).zfill(4)
             transaction = CamtBankTransaction(transaction_detail)
-            transaction.data = etree.tostring(Ntry)
+            transaction.data = etree.tostring(entry_node)
             statement.transactions.append(transaction)
         return statement
 
@@ -169,16 +169,16 @@ class CamtParser(object):
         For now, leave as a hook for bank specific overrides to map
         properietary codes from BkTxCd/Prtry/Cd.
 
-        :param node: Ntry node
+        :param node: entry node
         """
         transfer_type_info = self.find(node, './ns:BkTxCd/ns:Prtry/ns:Cd')
         if transfer_type_info is not None:
             return transfer_type_info.text
         return parserlib.BankTransaction.ORDER
 
-    def parse_Ntry(self, node):
+    def parse_entry(self, node):
         """
-        :param node: Ntry node
+        :param node: entry node
         """
         entry_details = {
             'execution_date': self.xpath(node, './ns:BookgDt/ns:Dt')[0].text,
@@ -186,9 +186,10 @@ class CamtParser(object):
             'transfer_type': self.get_transfer_type(node),
             'transferred_amount': self.parse_amount(node)
             }
-        TxDtls = self.xpath(node, './ns:NtryDtls/ns:TxDtls')
-        if len(TxDtls) == 1:
-            vals = self.parse_TxDtls(TxDtls[0], entry_details)
+        details_node = self.xpath(node, './ns:NtryDtls/ns:TxDtls')
+        if len(details_node) == 1:
+            vals = self.parse_transaction_details(
+                details_node[0], entry_details)
         else:
             vals = entry_details
         # If no message, try to get it from additional entry info
@@ -198,19 +199,21 @@ class CamtParser(object):
                 vals['message'] = additional_entry_info.text
         return vals
 
-    def get_party_values(self, TxDtls):
+    def get_party_values(self, details_node):
         """
         Determine to get either the debtor or creditor party node
         and extract the available data from it
         """
         vals = {}
         party_type = self.find(
-            TxDtls, '../../ns:CdtDbtInd').text == 'CRDT' and 'Dbtr' or 'Cdtr'
-        party_node = self.find(TxDtls, './ns:RltdPties/ns:%s' % party_type)
+            details_node,
+            '../../ns:CdtDbtInd').text == 'CRDT' and 'Dbtr' or 'Cdtr'
+        party_node = self.find(
+            details_node, './ns:RltdPties/ns:%s' % party_type)
         account_node = self.find(
-            TxDtls, './ns:RltdPties/ns:%sAcct/ns:Id' % party_type)
+            details_node, './ns:RltdPties/ns:%sAcct/ns:Id' % party_type)
         bic_node = self.find(
-            TxDtls,
+            details_node,
             './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type)
         if party_node is not None:
             name_node = self.find(party_node, './ns:Nm')
@@ -234,24 +237,24 @@ class CamtParser(object):
                     domestic_node.text if domestic_node is not None else False)
         return vals
 
-    def parse_TxDtls(self, TxDtls, entry_values):
+    def parse_transaction_details(self, details_node, entry_values):
         """
-        Parse a single TxDtls node
+        Parse a single details_node node
         """
         vals = dict(entry_values)
-        unstructured = self.xpath(TxDtls, './ns:RmtInf/ns:Ustrd')
+        unstructured = self.xpath(details_node, './ns:RmtInf/ns:Ustrd')
         if unstructured:
             vals['message'] = ' '.join([x.text for x in unstructured])
         structured = self.find(
-            TxDtls, './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref')
+            details_node, './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref')
         if structured is None or not structured.text:
-            structured = self.find(TxDtls, './ns:Refs/ns:EndToEndId')
-        if not structured is None:
+            structured = self.find(details_node, './ns:Refs/ns:EndToEndId')
+        if structured is not None:
             vals['reference'] = structured.text
         else:
             if vals.get('message'):
                 vals['reference'] = vals['message']
-        vals.update(self.get_party_values(TxDtls))
+        vals.update(self.get_party_values(details_node))
         return vals
 
     def check_version(self):
@@ -281,7 +284,7 @@ class CamtParser(object):
         self.assert_tag(root[0][0], 'GrpHdr')
         statements = []
         for node in root[0][1:]:
-            statement = self.parse_Stmt(cr, node)
+            statement = self.parse_statement(cr, node)
             if len(statement.transactions):
                 statements.append(statement)
         return statements

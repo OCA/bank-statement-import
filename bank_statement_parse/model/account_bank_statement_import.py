@@ -67,11 +67,11 @@ class AccountBankStatementImport(orm.Model):
         # Search on bank account number
         if bank_vals and 'acc_number' in bank_vals:
             ids = bank_model.search(
-                cr, uid, [('acc_number', '=', bank_vals['acc_number']),],
+                cr, uid, [('acc_number', '=', bank_vals['acc_number'])],
                 context=context
             )
             if ids:
-                bank_account_id = ids[0]  #  TODO Should warn or raise if > 1
+                bank_account_id = ids[0]  # TODO Should warn or raise if > 1
                 bank_records = bank_model.read(
                     cr, uid, [bank_account_id], ['partner_id'],
                     context=context
@@ -81,15 +81,15 @@ class AccountBankStatementImport(orm.Model):
         # Search on partner data
         if partner_vals and 'acc_name' in partner_vals:
             ids = partner_model.search(
-                cr, uid, [('name', '=', partner_vals['name']),],
+                cr, uid, [('name', '=', partner_vals['name'])],
                 context=context
             )
             if ids:
-                partner_id = ids[0]  #  TODO Should warn or raise if > 1
+                partner_id = ids[0]  # TODO Should warn or raise if > 1
                 # Create bank if partner does not have one and we have data
                 if bank_vals and 'acc_number' in bank_vals:
                     ids = bank_model.search(
-                        cr, uid, [('partner_id', '=', partner_id),],
+                        cr, uid, [('partner_id', '=', partner_id)],
                         context=context
                     )
                     if not ids:
