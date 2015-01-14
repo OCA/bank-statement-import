@@ -54,7 +54,9 @@ def convert_statements(
             transaction.id = str(subno)
         vals_line = {
             'date': transaction.value_date,
-            'name': transaction.message,
+            'name': (
+                transaction.message or transaction.reference or
+                transaction.remote_owner or ''),  # name is required
             'ref': transaction.reference,
             'amount': transaction.transferred_amount,
             'partner_id': partner_id,
