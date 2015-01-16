@@ -4,8 +4,6 @@
 #
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
-#    All other contributions are (C) by their respective contributors
-#
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -37,6 +35,40 @@ class AccountBankStatementImport(orm.Model):
     _description = __doc__
     _rec_name = 'date'
 
+    def create_bank_account(
+            self, cr, uid, acc_number, bank_vals=None, context=None):
+        """Create bank-account, with type determined from account_number."""
+        if not acc_number:
+            return False
+        bank_vals = dict(bank_vals or {})
+        bank_model = self.pool['res.partner.bank']
+        country_model = self.pool['res.country']
+        # Create the bank account, not linked to any partner.
+        # The reconciliation will link the partner manually
+        # chosen at the bank statement final confirmation time.
+        if bank_model.is_iban_valid(
+                cr, uid, acc_number, context=context):
+            bank_code = 'iban'
+        else:
+            bank_code = 'bank'
+        bank_vals.update({
+            'acc_number': acc_number,
+            'state': bank_code,
+        })
+        # Try to find country, if passed
+        if 'country_code' in bank_vals:
+            country_code = bank_vals['country_code']
+            if country_code:  # Might be False
+                country_ids = country_model.search(
+                    cr, uid, [('code', '=', country_code.upper())],
+                    context=context
+                )
+                if country_ids:
+                    bank_vals['country_id'] = country_ids[0]
+            del bank_vals['country_code']  # Not in model
+        bank_account_id = bank_model.create(
+            cr, uid, bank_vals, context=context)
+
     def detect_partner_and_bank(
             self, cr, uid, transaction_vals=None, partner_vals=None,
             bank_vals=None, context=None):
@@ -63,7 +95,6 @@ class AccountBankStatementImport(orm.Model):
         bank_account_id = False
         bank_model = self.pool['res.partner.bank']
         partner_model = self.pool['res.partner']
-        country_model = self.pool['res.country']
         acc_number = (
             'acc_number' in bank_vals and bank_vals['acc_number'] or False)
         acc_name = (
@@ -83,31 +114,8 @@ class AccountBankStatementImport(orm.Model):
                     cr, uid, ids, ['partner_id'], context=context)
                 partner_id = bank_records[0]['partner_id']
             else:
-                # Create the bank account, not linked to any partner.
-                # The reconciliation will link the partner manually
-                # chosen at the bank statement final confirmation time.
-                if bank_model.is_iban_valid(
-                        cr, uid, acc_number, context=context):
-                    bank_code = 'iban'
-                else:
-                    bank_code = 'bank'
-                bank_vals.update({
-                    'acc_number': acc_number,
-                    'state': bank_code,
-                })
-                # Try to find country, if passed
-                if 'country_code' in bank_vals:
-                    country_code = bank_vals['country_code']
-                    if country_code:  # Might be False
-                        country_ids = country_model.search(
-                            cr, uid, [('code', '=', country_code.upper())],
-                            context=context
-                        )
-                        if country_ids:
-                            bank_vals['country_id'] = country_ids[0]
-                    del bank_vals['country_code']  # Not in model
-                bank_account_id = bank_model.create(
-                    cr, uid, bank_vals, context=context)
+                bank_account_id = self.create_bank_account(
+                    cr, uid, acc_number, bank_vals=bank_vals, context=context)
         # Search on partner data
         if (not partner_id) and acc_name:
             ids = partner_model.search(
@@ -122,6 +130,36 @@ class AccountBankStatementImport(orm.Model):
                     bank_model.write(
                         cr, uid, [bank_account_id],
                         {'partner_id': partner_id}, context=context
+                    )
+        return bank_account_id, partner_id
+
+    def _detect_partner(
+            self, cr, uid, identifying_string, identifying_field='acc_number',
+            context=None):
+        """Overrule crappy method to use improved version.
+
+        Take possibility into account that string might be different from
+        acc_number or owner_name.
+
+        Only create res.partner.bank if we have an account-number."""
+        partner_id = False
+        bank_account_id = False
+        bank_model = self.pool['res.partner.bank']
+        if identifying_string:
+            ids = bank_model.search(
+                cr, uid, [(identifying_field, '=', identifying_string)],
+                context=context
+            )
+            if ids:
+                bank_account_id = ids[0]
+                bank_records = bank_model.read(
+                    cr, uid, ids, ['partner_id'], context=context)
+                partner_id = bank_records[0]['partner_id']
+            else:
+                if identifying_field == 'acc_number':
+                    bank_account_id = self.create_bank_account(
+                        cr, uid, identifying_string, bank_vals=None,
+                        context=context
                     )
         return bank_account_id, partner_id
 

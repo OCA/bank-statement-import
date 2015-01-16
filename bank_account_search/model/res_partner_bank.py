@@ -30,6 +30,7 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+
 class ResPartnerBank(models.Model):
     """Extend res.partner.bank."""
     _inherit = 'res.partner.bank'
@@ -69,7 +70,7 @@ class ResPartnerBank(models.Model):
         whitespace and other formatting, and ensuring string is in uppercase
         will give a searchable field.
         """
-        if not 'search_account_number' in data and 'acc_number' in data:
+        if 'search_account_number' not in data and 'acc_number' in data:
             # Do not override explicitly set search_account_number:
             data['search_account_number'] = self.normalize(data['acc_number'])
         return data
