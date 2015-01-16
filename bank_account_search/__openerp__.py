@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Extend account.bank.statement."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
@@ -19,29 +18,23 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
-
-
-class AccountBankStatement(orm.Model):
-    """Extend account.bank.statement."""
-    _inherit = 'account.bank.statement'
-
-    def get_unique_statement_id(self, cr, base):
-        """Generate unique identifier for bank_statement using
-        autonumbering."""
-        name = base
-        suffix = 1
-        while True:
-            cr.execute(
-                "select id from account_bank_statement where name = %s",
-                (name,))
-            if not cr.rowcount:
-                break
-            suffix += 1
-            name = "%s-%d" % (base, suffix)
-        return name
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    'name': 'Bank Accpunt Search',
+    'version': '0.5',
+    'license': 'AGPL-3',
+    'author': 'Banking addons community',
+    'website': 'https://github.com/OCA/bank-statement-import',
+    'category': 'Banking addons',
+    'depends': [
+        'account',
+        ],
+    'data': [
+    ],
+    'js': [
+    ],
+    'installable': True,
+    'auto_install': False,
+}

@@ -29,22 +29,6 @@ class AccountBankStatementLine(orm.Model):
     """Extend account.bank.statement.line (Transaction)."""
     _inherit = 'account.bank.statement.line'
 
-    def _get_computed_fields(
-            self, cr, uid, ids, field_names, args, context=None):
-        """Compute values for functional fields."""
-        res = {}
-        for st_line in self.browse(cr, uid, ids, context=context):
-            # Compute display value for bank account:
-            bank_account_display = False
-            if st_line.bank_account_id:
-                bank_account_display = st_line.bank_account_id.name
-            elif st_line.remote_account:
-                bank_account_display = st_line.remote_account
-            res[st_line.id] = {
-                'bank_account_display': bank_account_display,
-            }
-        return res
-
     _columns = {
         'data': fields.text(
             'Original data from import',
@@ -64,13 +48,6 @@ class AccountBankStatementLine(orm.Model):
             'Remote owner', size=32,
             readonly=True,
             help="""Owner as found in the import""",
-        ),
-        'bank_account_display': fields.function(
-            _get_computed_fields,
-            method=True,
-            multi='computed_fields',
-            string='Bank account',
-            type='char', size=32,
         ),
     }
 

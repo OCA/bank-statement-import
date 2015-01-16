@@ -31,6 +31,7 @@
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
+        'bank_account_search',
         'account_bank_statement_import',
         ],
     'data': [

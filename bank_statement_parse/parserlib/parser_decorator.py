@@ -45,6 +45,12 @@ def convert_statements(
         }
         bank_vals = {
             'acc_number': transaction.remote_account,
+            'owner_name': transaction.remote_owner or False,
+            'street': transaction.remote_owner_address or False,
+            'city': transaction.remote_owner_city or False,
+            'zip': transaction.remote_owner_postalcode or False,
+            'country_code': transaction.remote_owner_country_code or False,
+            'bank_bic': transaction.remote_bank_bic or False,
         }
         bank_account_id, partner_id = model.detect_partner_and_bank(
             cr, uid, transaction_vals=None, partner_vals=partner_vals,

@@ -2,8 +2,7 @@
 """Extend account.bank.statement.import."""
 ##############################################################################
 #
-#    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
-#              (C) 2011 - 2013 Therp BV (<http://therp.nl>).
+#    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    All other contributions are (C) by their respective contributors
 #
@@ -24,6 +23,7 @@
 #
 ##############################################################################
 from openerp.osv import orm, fields
+from openerp.tools.translate import _
 
 
 class AccountBankStatementImport(orm.Model):
@@ -52,51 +52,77 @@ class AccountBankStatementImport(orm.Model):
 
         The following searches will be done (if needed information present):
         - Search on bank account number;
-        - Search on partner name and address info;
+        - Search on partner name and address info;  # NOT IMPLEMENTED
         - Search only on partner name (should be unique);
         - Search only on address info (should be unique and complete enough);
+          # NOT IMPLEMENTED
         - Search invoices and moves with reference info (should be unique).
-
-        Unlike the standard _detect_partner(), this function will NOT create
-        bank-accounts for unknown partners.
+          # NOT IMPLEMENTED
         """
         partner_id = False
         bank_account_id = False
         bank_model = self.pool['res.partner.bank']
         partner_model = self.pool['res.partner']
+        country_model = self.pool['res.country']
+        acc_number = (
+            'acc_number' in bank_vals and bank_vals['acc_number'] or False)
+        acc_name = (
+            'acc_name' in partner_vals and partner_vals['acc_name'] or False)
         # Search on bank account number
-        if bank_vals and 'acc_number' in bank_vals:
+        if acc_number:
             ids = bank_model.search(
-                cr, uid, [('acc_number', '=', bank_vals['acc_number'])],
-                context=context
-            )
+                cr, uid, [('acc_number', '=', acc_number)], context=context)
             if ids:
-                bank_account_id = ids[0]  # TODO Should warn or raise if > 1
-                bank_records = bank_model.read(
-                    cr, uid, [bank_account_id], ['partner_id'],
-                    context=context
+                # Bank accounts should be unique!
+                assert len(ids) == 1, (
+                    _('More then one bank account with number %s!') %
+                    acc_number
                 )
+                bank_account_id = ids[0]
+                bank_records = bank_model.read(
+                    cr, uid, ids, ['partner_id'], context=context)
                 partner_id = bank_records[0]['partner_id']
-            return bank_account_id, partner_id
+            else:
+                # Create the bank account, not linked to any partner.
+                # The reconciliation will link the partner manually
+                # chosen at the bank statement final confirmation time.
+                if bank_model.is_iban_valid(
+                        cr, uid, acc_number, context=context):
+                    bank_code = 'iban'
+                else:
+                    bank_code = 'bank'
+                bank_vals.update({
+                    'acc_number': acc_number,
+                    'state': bank_code,
+                })
+                # Try to find country, if passed
+                if 'country_code' in bank_vals:
+                    country_code = bank_vals['country_code']
+                    if country_code:  # Might be False
+                        country_ids = country_model.search(
+                            cr, uid, [('code', '=', country_code.upper())],
+                            context=context
+                        )
+                        if country_ids:
+                            bank_vals['country_id'] = country_ids[0]
+                    del bank_vals['country_code']  # Not in model
+                bank_account_id = bank_model.create(
+                    cr, uid, bank_vals, context=context)
         # Search on partner data
-        if partner_vals and 'acc_name' in partner_vals:
+        if (not partner_id) and acc_name:
             ids = partner_model.search(
-                cr, uid, [('name', '=', partner_vals['name'])],
-                context=context
+                cr, uid, [('name', '=', acc_name)], context=context
             )
-            if ids:
-                partner_id = ids[0]  # TODO Should warn or raise if > 1
-                # Create bank if partner does not have one and we have data
-                if bank_vals and 'acc_number' in bank_vals:
-                    ids = bank_model.search(
-                        cr, uid, [('partner_id', '=', partner_id)],
-                        context=context
+            if len(ids) == 1:
+                # TODO Should warn or raise if > 1
+                partner_id = ids[0]
+                # If we found a partner now, and we had a bank account
+                # withouth partner, then link the two now:
+                if bank_account_id:
+                    bank_model.write(
+                        cr, uid, [bank_account_id],
+                        {'partner_id': partner_id}, context=context
                     )
-                    if not ids:
-                        bank_vals['partner_id'] = partner_id
-                        # TODO copy more data from partner
-                        bank_account_id = bank_model.create(
-                            cr, uid, bank_vals, context=context)
         return bank_account_id, partner_id
 
     _columns = {

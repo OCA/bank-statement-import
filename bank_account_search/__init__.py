@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-"""Import python modules extending orm models."""
 ##############################################################################
 #
 #    Copyright (C) 2014 Therp BV - http://therp.nl.
@@ -25,5 +24,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import account_bank_statement_import
-from . import account_bank_statement_line
+from . import model
