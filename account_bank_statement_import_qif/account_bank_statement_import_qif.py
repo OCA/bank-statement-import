@@ -13,7 +13,7 @@ from openerp.addons.account_bank_statement_import import account_bank_statement_
 
 ibs.add_file_type(('qif', 'QIF'))
 
-class account_bank_statement_import(osv.TransientModel):
+class account_bank_statement_import(osv.Model): # Not transient in backport!
     _inherit = "account.bank.statement.import"
 
     def process_qif(self, cr, uid, data_file, journal_id=False, context=None):

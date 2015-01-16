@@ -112,7 +112,7 @@ class AccountBankStatementImport(orm.Model):
                 bank_account_id = ids[0]
                 bank_records = bank_model.read(
                     cr, uid, ids, ['partner_id'], context=context)
-                partner_id = bank_records[0]['partner_id']
+                partner_id = bank_records[0]['partner_id'][0]
             else:
                 bank_account_id = self.create_bank_account(
                     cr, uid, acc_number, bank_vals=bank_vals, context=context)
@@ -154,7 +154,7 @@ class AccountBankStatementImport(orm.Model):
                 bank_account_id = ids[0]
                 bank_records = bank_model.read(
                     cr, uid, ids, ['partner_id'], context=context)
-                partner_id = bank_records[0]['partner_id']
+                partner_id = bank_records[0]['partner_id'][0]
             else:
                 if identifying_field == 'acc_number':
                     bank_account_id = self.create_bank_account(

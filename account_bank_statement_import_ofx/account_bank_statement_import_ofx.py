@@ -21,7 +21,7 @@ except ImportError:
                     "It can be downloaded and installed from `https://pypi.python.org/pypi/ofxparse`.")
     ofxparser = None
 
-class account_bank_statement_import(osv.TransientModel):
+class account_bank_statement_import(osv.Model):  # Not transient!
     _inherit = 'account.bank.statement.import'
 
     def process_ofx(self, cr, uid, data_file, journal_id=False, context=None):

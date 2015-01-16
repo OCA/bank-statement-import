@@ -17,7 +17,8 @@ def add_file_type(selection_value):
     else:
         _IMPORT_FILE_TYPE.append(selection_value)
 
-class account_bank_statement_import(osv.TransientModel):
+class account_bank_statement_import(osv.Model): # Not transient in backport!
+
     _name = 'account.bank.statement.import'
     _description = 'Import Bank Statement'
 

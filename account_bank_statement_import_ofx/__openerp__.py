@@ -7,7 +7,10 @@
     'author': 'OpenERP SA',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
-    'depends': ['account_bank_statement_import'],
+    'depends': [
+        'account_bank_statement_import',
+        'bank_statement_parse',  # Added in backport.
+    ],
     'demo': [],
     'description' : """
 Module to import OFX bank statements.
