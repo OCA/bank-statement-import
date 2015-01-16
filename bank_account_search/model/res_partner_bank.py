@@ -128,7 +128,7 @@ class ResPartnerBank(models.Model):
         help="""Normalized version of account number""",
     )
 
-    _sql_constraint = [
+    _sql_constraints = [
         ('unique_number', 'unique(search_account_number)',
          'Account Number must be unique'),
     ]
