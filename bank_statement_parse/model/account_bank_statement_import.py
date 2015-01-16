@@ -66,7 +66,7 @@ class AccountBankStatementImport(orm.Model):
                 if country_ids:
                     bank_vals['country_id'] = country_ids[0]
             del bank_vals['country_code']  # Not in model
-        bank_account_id = bank_model.create(
+        return bank_model.create(
             cr, uid, bank_vals, context=context)
 
     def detect_partner_and_bank(
