@@ -25,6 +25,7 @@
 from openerp.tests.common import TransactionCase
 from openerp.modules.module import get_module_resource
 
+
 class TestStatementFile(TransactionCase):
     """Run test to import camt.053 import."""
 
@@ -60,7 +61,7 @@ class TestStatementFile(TransactionCase):
             statement_obj.balance_start
         )
         self.assertTrue(
-            abs(statement_obj.balance_end_real- 15121.12) < 0.00001,
+            abs(statement_obj.balance_end_real - 15121.12) < 0.00001,
             'Real end balance %f not equal to 15121.12' %
             statement_obj.balance_end_real
         )
