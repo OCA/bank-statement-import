@@ -3,6 +3,7 @@
 # flake8: noqa
 {
     'name': 'Import OFX Bank Statement',
+    'category' : 'Accounting & Finance',
     'version': '1.0',
     'author': 'OpenERP SA',
     'depends': ['account_bank_statement_import'],
@@ -28,5 +29,3 @@ create periods for the year 2013.
     'auto_install': False,
     'installable': True,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
