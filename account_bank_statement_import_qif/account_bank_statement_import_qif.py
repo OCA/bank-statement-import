@@ -16,7 +16,7 @@ ibs.add_file_type(('qif', 'QIF'))
 class account_bank_statement_import(osv.Model): # Not transient in backport!
     _inherit = "account.bank.statement.import"
 
-    def process_qif(self, cr, uid, data_file, journal_id=False, context=None):
+    def process_qif(self, cr, uid, data_file, context=None):
         """ Import a file in the .QIF format"""
         try:
             fileobj = TemporaryFile('wb+')
@@ -45,9 +45,6 @@ class account_bank_statement_import(osv.Model): # Not transient in backport!
                     continue
                 if line[0] == 'D':  # date of transaction
                     vals_line['date'] = dateutil.parser.parse(line[1:], fuzzy=True).date()
-                    if vals_line.get('date') and not vals_bank_statement.get('period_id'):
-                        period_ids = self.pool.get('account.period').find(cr, uid, vals_line['date'], context=context)
-                        vals_bank_statement.update({'period_id': period_ids and period_ids[0] or False})
                 elif line[0] == 'T':  # Total amount
                     total += float(line[1:].replace(',', ''))
                     vals_line['amount'] = float(line[1:].replace(',', ''))
@@ -69,9 +66,10 @@ class account_bank_statement_import(osv.Model): # Not transient in backport!
                     pass
         else:
             raise osv.except_osv(_('Error!'), _('Cannot support this Format !Type:%s.') % (header,))
-        vals_bank_statement.update({'balance_end_real': total,
-                                    'line_ids': line_ids,
-                                    'journal_id': journal_id})
+        vals_bank_statement.update({
+            'balance_end_real': total,
+            'line_ids': line_ids,
+        })
         return [vals_bank_statement]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
