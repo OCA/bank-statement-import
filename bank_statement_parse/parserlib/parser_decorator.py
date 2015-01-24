@@ -30,7 +30,7 @@ from . import convert
 
 
 def convert_statements(
-        model, cr, uid, os_statements, journal_id=False, context=None):
+    model, cr, uid, os_statements, context=None):
     """Taking lots of code from the former import wizard, convert array
     of BankStatement objects to values that can be used in create of
     bank.statement model, including bank.statement.line tuple."""
@@ -78,34 +78,17 @@ def convert_statements(
 
     ns_statements = []
     for statement in os_statements:
-        # Set company_id from journal
-        company_id = False
-        if journal_id:
-            journal_model = model.pool['account.journal']
-            journal_obj = journal_model.browse(
-                cr, uid, [journal_id], context=context)
-            company_id = journal_obj[0].company_id.id
-        # Set statement_date
+        # Set statement_data
         statement_date = convert.date2str(statement.date)
-        # Set period_id from statement_date
-        period_id = False
-        period_model = model.pool['account.period']
-        if statement_date:
-            period_ids = period_model.find(
-                cr, uid, statement_date, context=context)
-            period_id = period_ids and period_ids[0] or False
         ns_statement = dict(
+            acc_number=statement.local_account,
             name=statement.id,
-            journal_id=journal_id,
             date=statement_date,
             balance_start=statement.start_balance,
             balance_end_real=statement.end_balance,
             balance_end=statement.end_balance,
             state='draft',
             user_id=uid,
-            # banking_id=import_id,
-            company_id=company_id,
-            period_id=period_id,
         )
         line_ids = []
         subno = 0
@@ -129,9 +112,7 @@ def advanced_parser(old_style_parser):
         decoded_data = base64.decodestring(data_file)
         os_statements = old_style_parser(self, cr, decoded_data)
         return convert_statements(
-            self, cr, uid, os_statements, journal_id=journal_id,
-            context=context
-        )
+            self, cr, uid, os_statements, context=context)
     return wrapper
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

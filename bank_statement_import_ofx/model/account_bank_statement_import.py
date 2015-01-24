@@ -11,9 +11,6 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
-from openerp.addons.account_bank_statement_import import account_bank_statement_import as ibs
-ibs.add_file_type(('ofx', 'OFX'))
-
 try:
     from ofxparse import OfxParser as ofxparser
 except ImportError:
@@ -21,10 +18,10 @@ except ImportError:
                     "It can be downloaded and installed from `https://pypi.python.org/pypi/ofxparse`.")
     ofxparser = None
 
-class account_bank_statement_import(osv.Model):  # Not transient!
+class account_bank_statement_import(osv.TransientModel):
     _inherit = 'account.bank.statement.import'
 
-    def process_ofx(self, cr, uid, data_file, context=None):
+    def process_ofx(self, cr, uid, data_file, journal_id=False, context=None):
         """ Import a file in the .OFX format"""
         if ofxparser is None:
             raise osv.except_osv(_("Error"), _("OFX parser unavailable because the `ofxparse` Python library cannot be found."
@@ -54,16 +51,17 @@ class account_bank_statement_import(osv.Model):  # Not transient!
                 total_amt += float(transaction.amount)
                 line_ids.append((0, 0, vals_line))
         except Exception, e:
-            raise osv.except_osv(_('Error!'), _("Following problem has been occurred while importing your file, Please verify the file is proper or not.\n\n %s" % e.message))
+            raise osv.except_osv(
+                _('Error!'),
+                _("Following problem has been occurred while importing your file, Please verify the file is proper or not.\n\n %s" % e.message))
         st_start_date = ofx.account.statement.start_date or False
         st_end_date = ofx.account.statement.end_date or False
-        statement_date = st_end_date or st_start_date or False
+        date = st_end_date of st_start_date or False
         vals_bank_statement = {
-            'date': statement_date,
-            'acc_number': ofx.account.number,
             'name': ofx.account.routing_number,
             'balance_start': ofx.account.statement.balance,
             'balance_end_real': float(ofx.account.statement.balance) + total_amt,
+            'date': statement_date,
         }
         vals_bank_statement.update({'line_ids': line_ids})
         os.remove(path)
