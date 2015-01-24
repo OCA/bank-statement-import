@@ -68,7 +68,6 @@ class account_bank_statement_import(osv.Model): # Not transient in backport!
             vals['journal_id'] = bank_records[0]['journal_id'][0]
             vals['company_id'] = bank_records[0]['company_id'][0]
             # Set period_id from statement_date
-            period_id = False
             if vals['date']:
                 period_ids = period_model.find(
                     cr, uid, vals['date'], context=context)

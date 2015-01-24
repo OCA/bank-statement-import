@@ -27,8 +27,11 @@ class account_bank_statement_import(osv.Model):  # Not transient!
     def process_ofx(self, cr, uid, data_file, context=None):
         """ Import a file in the .OFX format"""
         if ofxparser is None:
-            raise osv.except_osv(_("Error"), _("OFX parser unavailable because the `ofxparse` Python library cannot be found."
-                    "It can be downloaded and installed from `https://pypi.python.org/pypi/ofxparse`."))
+            raise osv.except_osv(
+                _("Error"),
+                _("OFX parser unavailable because the `ofxparse` Python library cannot be found."
+                  "It can be downloaded and installed from `https://pypi.python.org/pypi/ofxparse`.")
+            )
         try:
             tempfile = open("temp.ofx", "w+")
             tempfile.write(base64.decodestring(data_file))
