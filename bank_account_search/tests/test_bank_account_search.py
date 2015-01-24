@@ -24,6 +24,7 @@
 ##############################################################################
 from openerp.tests.common import TransactionCase
 
+
 class TestBankAccountSearch(TransactionCase):
     """Tests"""
 

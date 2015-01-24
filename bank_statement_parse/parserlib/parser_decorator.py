@@ -30,7 +30,7 @@ from . import convert
 
 
 def convert_statements(
-    model, cr, uid, os_statements, context=None):
+        model, cr, uid, os_statements, context=None):
     """Taking lots of code from the former import wizard, convert array
     of BankStatement objects to values that can be used in create of
     bank.statement model, including bank.statement.line tuple."""

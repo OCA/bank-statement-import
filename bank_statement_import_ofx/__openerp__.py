@@ -30,7 +30,7 @@
     'category': 'Banking addons',
     'depends': [
         'account_bank_statement_import_ofx',
-        'account_bank_statement_parse',
+        'bank_statement_parse',
         ],
     'data': [
     ],
