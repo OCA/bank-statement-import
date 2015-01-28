@@ -2,24 +2,6 @@
 <openerp>
     <data>
 
-        <record id="your_company_bank" model="res.partner.bank">
-            <field name="company_id" ref="base.main_company"/>
-            <field name="partner_id" ref="base.partner_root"></field>
-            <field name="owner_name">Your company</field>
-            <field name="acc_number">123456</field>
-            <field name="state">bank</field>
-            <field name="bank" ref="base.res_bank_1"/>
-        </record>
-
-        <record id="your_company_bank2" model="res.partner.bank">
-            <field name="company_id" ref="base.main_company"/>
-            <field name="partner_id" ref="base.partner_root"></field>
-            <field name="owner_name">Your company</field>
-            <field name="acc_number">NL77ABNA0574908765</field>
-            <field name="state">iban</field>
-            <field name="bank" ref="base.res_bank_1"/>
-        </record>
-
         <record id="ofx_partner_bank_1" model="res.partner.bank">
             <field name="owner_name">Agrolait</field>
             <field name="acc_number">00987654321</field>

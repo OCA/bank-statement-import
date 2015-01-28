@@ -1,37 +1,28 @@
 # -*- coding: utf-8 -*-
 # noqa: This is a backport from Odoo. OCA has no control over style here.
 # flake8: noqa
+
 {
     'name': 'Import QIF Bank Statement',
+    'category' : 'Accounting & Finance',
     'version': '1.0',
     'author': 'OpenERP SA',
-    'website': 'https://github.com/OCA/bank-statement-import',
-    'category': 'Banking addons',
     'description': '''
 Module to import QIF bank statements.
 ======================================
 
-This module allows you to import the machine readable QIF Files in Odoo: they are parsed and stored in human readable format in 
+This module allows you to import the machine readable QIF Files in Odoo: they are parsed and stored in human readable format in
 Accounting \ Bank and Cash \ Bank Statements.
 
-Bank Statements may be generated containing a subset of the QIF information (only those transaction lines that are required for the 
-creation of the Financial Accounting records). 
-
-Backported from Odoo 9.0
-
-When testing with the provided test file, make sure the demo data from the
-base account_bank_statement_import module has been imported, or manually
-create periods for the year 2013.
+Important Note
+---------------------------------------------
+Because of the QIF format limitation, we cannot ensure the same transactions aren't imported several times or handle multicurrency.
+Whenever possible, you should use a more appropriate file format like OFX.
 ''',
-    'images' : [],
-    'depends': [
-        'account_bank_statement_import',
-        'bank_statement_parse',  # Added in backport.
-    ],
+    'images': [],
+    'depends': ['account_bank_statement_import'],
     'demo': [],
-    'data': [],
+    'data': ['account_bank_statement_import_qif_view.xml'],
     'auto_install': False,
     'installable': True,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

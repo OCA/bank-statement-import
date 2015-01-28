@@ -3,29 +3,49 @@
 # flake8: noqa
 
 import dateutil.parser
-import base64
-from tempfile import TemporaryFile
+import StringIO
 
 from openerp.tools.translate import _
-from openerp.osv import osv
+from openerp.osv import osv, fields
+from openerp.exceptions import Warning
 
-from openerp.addons.account_bank_statement_import import account_bank_statement_import as ibs
-
-ibs.add_file_type(('qif', 'QIF'))
-
-class account_bank_statement_import(osv.Model): # Not transient in backport!
+class account_bank_statement_import(osv.TransientModel):
     _inherit = "account.bank.statement.import"
 
-    def process_qif(self, cr, uid, data_file, context=None):
-        """ Import a file in the .QIF format"""
+    _columns = {
+        'journal_id': fields.many2one('account.journal', string='Journal', help='Accounting journal related to the bank statement you\'re importing. It has be be manually chosen for statement formats which doesn\'t allow automatic journal detection (QIF for example).'),
+        'hide_journal_field': fields.boolean('Hide the journal field in the view'),
+    }
+
+    def _get_hide_journal_field(self, cr, uid, context=None):
+        return context and 'journal_id' in context or False
+
+    _defaults = {
+        'hide_journal_field': _get_hide_journal_field,
+    }
+
+    def _get_journal(self, cr, uid, currency_id, bank_account_id, account_number, context=None):
+        """ As .QIF format does not allow us to detect the journal, we need to let the user choose it.
+            We set it in context before to call super so it's the same as calling the widget from a journal """
+        if context is None:
+            context = {}
+        if context.get('active_id'):
+            record = self.browse(cr, uid, context.get('active_id'), context=context)
+            if record.journal_id:
+                context['journal_id'] = record.journal_id.id
+        return super(account_bank_statement_import, self)._get_journal(cr, uid, currency_id, bank_account_id, account_number, context=context)
+
+    def _check_qif(self, cr, uid, data_file, context=None):
+        return data_file.strip().startswith('!Type:')
+
+    def _parse_file(self, cr, uid, data_file, context=None):
+        if not self._check_qif(cr, uid, data_file, context=context):
+            return super(account_bank_statement_import, self)._parse_file(cr, uid, data_file, context=context)
+
         try:
-            fileobj = TemporaryFile('wb+')
-            fileobj.write(base64.b64decode(data_file))
-            fileobj.seek(0)
             file_data = ""
-            for line in fileobj.readlines():
+            for line in StringIO.StringIO(data_file).readlines():
                 file_data += line
-            fileobj.close()
             if '\r' in file_data:
                 data_list = file_data.split('\r')
             else:
@@ -33,8 +53,8 @@ class account_bank_statement_import(osv.Model): # Not transient in backport!
             header = data_list[0].strip()
             header = header.split(":")[1]
         except:
-            raise osv.except_osv(_('Import Error!'), _('Please check QIF file format is proper or not.'))
-        line_ids = []
+            raise Warning(_('Could not decipher the QIF file.'))
+        transactions = []
         vals_line = {}
         total = 0
         if header == "Bank":
@@ -51,25 +71,28 @@ class account_bank_statement_import(osv.Model): # Not transient in backport!
                 elif line[0] == 'N':  # Check number
                     vals_line['ref'] = line[1:]
                 elif line[0] == 'P':  # Payee
-                    bank_account_id, partner_id = self._detect_partner(cr, uid, line[1:], identifying_field='owner_name', context=context)
-                    vals_line['partner_id'] = partner_id
-                    vals_line['bank_account_id'] = bank_account_id
                     vals_line['name'] = 'name' in vals_line and line[1:] + ': ' + vals_line['name'] or line[1:]
+                    # Since QIF doesn't provide account numbers, we'll have to find res.partner and res.partner.bank here
+                    # (normal behavious is to provide 'account_number', which the generic module uses to find partner/bank)
+                    ids = self.pool.get('res.partner.bank').search(cr, uid, [('owner_name', '=', line[1:])], context=context)
+                    if ids:
+                        vals_line['bank_account_id'] = bank_account_id = ids[0]
+                        vals_line['partner_id'] = self.pool.get('res.partner.bank').browse(cr, uid, bank_account_id, context=context).partner_id.id
                 elif line[0] == 'M':  # Memo
                     vals_line['name'] = 'name' in vals_line and vals_line['name'] + ': ' + line[1:] or line[1:]
                 elif line[0] == '^':  # end of item
-                    line_ids.append((0, 0, vals_line))
+                    transactions.append(vals_line)
                     vals_line = {}
                 elif line[0] == '\n':
-                    line_ids = []
+                    transactions = []
                 else:
                     pass
         else:
-            raise osv.except_osv(_('Error!'), _('Cannot support this Format !Type:%s.') % (header,))
+            raise Warning(_('This file is either not a bank statement or is not correctly formed.'))
+        
         vals_bank_statement.update({
             'balance_end_real': total,
-            'line_ids': line_ids,
+            'transactions': transactions
         })
-        return [vals_bank_statement]
+        return None, None, [vals_bank_statement]
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

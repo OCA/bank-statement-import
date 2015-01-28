@@ -3,15 +3,12 @@
 # flake8: noqa
 {
     'name': 'Account Bank Statement Import',
+    'category' : 'Accounting & Finance',
     'version': '1.0',
     'author': 'OpenERP SA',
-    'website': 'https://github.com/OCA/bank-statement-import',
-    'category': 'Banking addons',
     'depends': ['account'],
     'demo': [],
     'description' : """Generic Wizard to Import Bank Statements.
-    
-    Includes the import of files in .OFX format
     
     Backport from Odoo 9.0
     """,
@@ -25,5 +22,3 @@
     'auto_install': False,
     'installable': True,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
