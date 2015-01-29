@@ -20,20 +20,92 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+import base64
+from StringIO import StringIO
+from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
+from openerp.osv import orm
 from openerp.tools.translate import _
+from openerp.addons.bank_statement_parse.parserlib import convert
 
 
-class AccountBankStatementImport(orm.Model):
-    """Imported Bank Statements File
-
-    Unlike backported standard Odoo model, this is not a transient model,
-    because we want to save the import files for debugging and accounting
-    purposes.
+class AccountBankStatementImport(orm.TransientModel):
+    """Import Bank Statements File
     """
     _inherit = 'account.bank.statement.import'
     _description = __doc__
-    _rec_name = 'date'
+
+    def convert_transaction(
+            self, cr, uid, transaction, subno, context=None):
+        """Convert transaction object to values for create."""
+        transaction_model = self.pool['account.bank.statement.line']
+        partner_vals = {
+            'name': transaction.remote_owner,
+        }
+        bank_vals = {
+            'acc_number': transaction.remote_account,
+            'owner_name': transaction.remote_owner or False,
+            'street': transaction.remote_owner_address or False,
+            'city': transaction.remote_owner_city or False,
+            'zip': transaction.remote_owner_postalcode or False,
+            'country_code': transaction.remote_owner_country_code or False,
+            'bank_bic': transaction.remote_bank_bic or False,
+        }
+        bank_account_id, partner_id = self.detect_partner_and_bank(
+            cr, uid, transaction_vals=None, partner_vals=partner_vals,
+            bank_vals=bank_vals, context=context
+        )
+        if not transaction.id:
+            transaction.id = str(subno)
+        vals_line = {
+            'date': transaction.value_date,
+            'name': (
+                transaction.message or transaction.reference or
+                transaction.remote_owner or ''),  # name is required
+            'ref': transaction.reference,
+            'amount': transaction.transferred_amount,
+            'partner_name': transaction.remote_owner,
+            'account_number': transaction.remote_account,
+            'partner_id': partner_id,
+            'bank_account_id': bank_account_id,
+        }
+        # Transfer any additional transaction attributes for which columns
+        # have been defined:
+        for attr in transaction.__slots__:
+            if attr in transaction_model._columns and attr not in vals_line:
+                vals_line[attr] = getattr(transaction, attr)
+        return vals_line
+
+    def convert_statements(
+            self, cr, uid, os_statements, context=None):
+        """Taking lots of code from the former import wizard, convert array
+        of BankStatement objects to values that can be used in create of
+        bank.statement model, including bank.statement.line tuple."""
+        # os_ = old style
+        # ns_ = new style
+        ns_statements = []
+        for statement in os_statements:
+            # Set statement_data
+            statement_date = convert.date2str(statement.date)
+            ns_statement = dict(
+                acc_number=statement.local_account,
+                name=statement.id,
+                date=statement_date,
+                balance_start=statement.start_balance,
+                balance_end_real=statement.end_balance,
+                balance_end=statement.end_balance,
+                state='draft',
+                user_id=uid,
+            )
+            line_ids = []
+            subno = 0
+            for transaction in statement.transactions:
+                subno += 1
+                line_ids.append(
+                    self.convert_transaction(
+                        cr, uid, transaction, subno, context=context))
+            ns_statement['transactions'] = line_ids
+            ns_statements.append(ns_statement)
+        return ns_statements
 
     def create_bank_account(
             self, cr, uid, acc_number, bank_vals=None, context=None):
@@ -135,72 +207,207 @@ class AccountBankStatementImport(orm.Model):
                     )
         return bank_account_id, partner_id
 
-    def _detect_partner(
-            self, cr, uid, identifying_string, identifying_field='acc_number',
-            context=None):
-        """Override super method completely.
-
-        Overridden method creates many bank-accounts with "Undefined"
-        account-number - choking on the new test for duplicates, and
-        cluttering up the res_partner_bank table with useless entries.
-
-        Take possibility into account that string might be different from
-        acc_number or owner_name.
-
-        Only create res.partner.bank if we have an account-number."""
-        partner_id = False
-        bank_account_id = False
+    def _complete_statements(self, cr, uid, statements, context=None):
+        """
+        Complete statements and transactions.
+        """
+        journal_model = self.pool['account.journal']
         bank_model = self.pool['res.partner.bank']
-        if identifying_string:
-            ids = bank_model.search(
-                cr, uid, [(identifying_field, '=', identifying_string)],
-                context=context
+        currency_model = self.pool['res.currency']
+        for st_vals in statements:
+            # Make sure we have a journal_id:
+            journal_id = (
+                'journal_id' in st_vals and st_vals['journal_id'] or False)
+            journal_id = journal_id or context.get('journal_id', False)
+            # Resolve bank-information for statement, if present
+            # In theory we might just have the journal.
+            bank_obj = False
+            account_number = (
+                'account_number' in st_vals and st_vals['account_numner']
+                or False
             )
-            if ids:
-                bank_account_id = ids[0]
-                bank_records = bank_model.read(
-                    cr, uid, ids, ['partner_id'], context=context)
-                partner_id = bank_records[0]['partner_id'][0]
-            else:
-                if identifying_field == 'acc_number':
-                    bank_account_id = self.create_bank_account(
-                        cr, uid, identifying_string, bank_vals=None,
-                        context=context
+            bank_account_id = (
+                'bank_account_id' in st_vals and st_vals['bank_account_id']
+                or False
+            )
+            if not bank_account_id and account_number:
+                ids = bank_model.search(
+                    cr, uid, [('acc_number', '=', account_number)],
+                    context=context
+                )
+                if ids:
+                    # Bank accounts should be unique!
+                    if len(ids) > 1:
+                        raise Warning(
+                            _('More then one bankaccount with number %s!')
+                            % account_number
+                        )
+                    bank_account_id = ids[0]
+                else:
+                    raise Warning(
+                        _('No bankaccount with number %s!')
+                        % account_number
                     )
-        return bank_account_id, partner_id
+            if bank_account_id:
+                bank_obj = bank_model.browse(
+                    cr, uid, bank_account_id, context=context)
+                account_number = account_number or bank_obj.acc_number
+                if not bank_obj.journal_id:
+                    raise Warning(
+                        _('Bankaccount %s not linked to journal!')
+                        % bank_obj.acc_number
+                    )
+                if journal_id:
+                    if bank_obj.journal_id.id != journal_id:
+                        raise Warning(
+                            _('The account of this statement is linked to'
+                            ' another journal.')
+                        )
+                else:
+                    journal_id = bank_obj.journal_id.id
+            # By now we should know a journal_id:
+            if not journal_id:
+                raise Warning(
+                    _('Cannot find in which journal to import this statement.'
+                      'Please manually select a journal.')
+                )
+            # If a currency_code was specified, it should be equal to the
+            # journal currency, if provided, or else to the company currency:
+            if 'currency_code'  in st_vals:
+                currency_code = st_vals['currency_code']
+                currency_ids = currency_model.search(
+                    cr, uid, [('name', '=ilike', currency_code)],
+                    context=context
+                )
+                if not currency_ids:
+                    raise Warning(
+                        _('Unknown currency %s specified in import!')
+                        % currency_code
+                    )
+                compare_currency_id = False
+                journal_obj = journal_model.browse(
+                    cr, uid, journal_id, context=context)
+                if journal_obj.currency:
+                    compare_currency_id = journal_obj.currency.id
+                else:
+                    company_obj = self.pool['res.users'].browse(
+                        cr, uid, uid, context=context).company_id
+                    if company_obj.currency:
+                        compare_currency_id = company_obj.currency.id
+                # If importing into an existing journal, its currency must be
+                # the same as the bank statement
+                if (compare_currency_id
+                        and compare_currency_id != currency_ids[0]):
+                    raise Warning(
+                        _('The currency of the bank statement is not the same'
+                        ' as the currency of the journal !')
+                )
+            st_vals['journal_id'] = journal_id
+            # Now complete all transactions in a single statement:
+            for line_vals in st_vals['transactions']:
+                unique_import_id = line_vals.get('unique_import_id', False)
+                if unique_import_id:
+                    line_vals['unique_import_id'] = (
+                        (account_number and account_number + '-' or '') +
+                        unique_import_id
+                    )
+                if (not 'bank_account_id' in line_vals
+                        or not line_vals['bank_account_id']):
+                    partner_vals = {
+                        'name': line_vals.get('partner_name', False),
+                    }
+                    bank_vals = {
+                        'acc_number': line_vals.get('account_number', False),
+                        'owner_name': line_vals.get('partner_name', False),
+                    }
+                    bank_account_id, partner_id = (
+                        self.detect_partner_and_bank(
+                            cr, uid, transaction_vals=None,
+                            partner_vals=partner_vals, bank_vals=bank_vals,
+                            context=context
+                        )
+                    )
+                    line_vals['partner_id'] = partner_id
+                    line_vals['bank_account_id'] = bank_account_id
+        return statements
 
-    _columns = {
-        'company_id': fields.many2one(
-            'res.company',
-            'Company',
-            select=True,
-            readonly=True,
-        ),
-        'date': fields.datetime(
-            'Import Date',
-            readonly=True,
-            select=True,
-        ),
-        # Old field format replaced by file_type
-        # 'file_name': fields.char('File name', size=256),
-        'log': fields.text(
-            'Import Log',
-            readonly=True,
-        ),
-        'state': fields.selection(
-            [
-                ('unfinished', 'Unfinished'),
-                ('error', 'Error'),
-                ('review', 'Review'),
-                ('ready', 'Finished'),
-            ],
-            'State',
-            select=True,
-            readonly=True,
-        ),
-    }
-    _defaults = {
-        'date': fields.date.context_today,
-    }
+    def import_file(self, cr, uid, ids, context=None):
+        """
+        Improve base import.
+
+        - Process archive files (zip);
+        - Support multiple bank-accounts per import file;
+        - No automatic creation of journals of company bank-accounts;
+        - Use all information in transaction when creating partner bank
+            account
+
+        This method is based on the following assumptions or preconditions.
+        - Only statements for already created company bank accounts are
+          processed.
+        - Each company bank account must have an associated journal.
+        - The currency for the journal must be specified, and should be
+          consistent with the currency for the bank statement, if present
+          in that statement.
+        """
+        if context is None:
+            context = {}
+        #set the active_id in the context, so that any extension module could
+        #reuse the fields chosen in the wizard if needed (see .QIF for example)
+        context.update({'active_id': ids[0]})
+
+        this_obj = self.browse(cr, uid, ids[0], context=context)
+        data = base64.b64decode(this_obj.data_file)
+        files = [data]
+        try:
+            with ZipFile(StringIO(data), 'r') as archive:
+                files = [
+                    archive.read(filename) for filename in archive.namelist()
+                    if not filename.endswith('/')
+                    ]
+        except BadZipfile:
+            pass
+
+        # Parse the file(s)
+        statements = []
+        for import_file in files:
+            # The appropriate implementation module returns the required data
+            parse_result = self._parse_file(
+                cr, uid, import_file, context=context)
+            # Parse result might be a tuple, containing currency,
+            # account number and statements. Or it might just contain
+            # a list of statements. The first case will be morphed into the
+            # second case, to allow for simple further processing.
+            if (len(parse_result) == 3
+                    and isinstance(parse_result[0], basestring)
+                    and isinstance(parse_result[1], basestring)
+                    and isinstance(parse_result[2], (list, tuple))):
+                for stmt in parse_result[2]:
+                    stmt['currency_code'] = parse_result[0]
+                    stmt['account_number'] = parse_result[1]
+                    statements += stmt
+            else:
+                statements += parse_result
+        # Check raw data
+        self._check_parsed_data(
+            cr, uid, statements, context=context)
+        # Prepare statement data to be used for bank statements creation
+        statements = self._complete_statements(
+            cr, uid, statements, context=context)
+        # Create the bank statements
+        statement_ids, notifications = self._create_bank_statements(
+            cr, uid, statements, context=context)
+        # Finally dispatch to reconciliation interface
+        model, action_id = self.pool.get('ir.model.data').get_object_reference(
+            cr, uid, 'account', 'action_bank_reconcile_bank_statements')
+        action = self.pool[model].browse(cr, uid, action_id, context=context)
+        return {
+            'name': action.name,
+            'tag': action.tag,
+            'context': {
+                'statement_ids': statement_ids,
+                'notifications': notifications
+            },
+            'type': 'ir.actions.client',
+        }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

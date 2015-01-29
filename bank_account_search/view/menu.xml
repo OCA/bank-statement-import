@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Add a shortcut menu for bank accounts -->
+        <record
+            model="ir.actions.act_window"
+            id="action_res_partner_banks"
+        >
+            <field name="name">Bank Accounts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner.bank</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="menu_res_partner_banks"
+            parent="account.menu_finance_bank_and_cash"
+            action="action_res_partner_banks"
+            name="Bank Accounts"
+            sequence="90"
+         />
+     </data>
+</openerp>

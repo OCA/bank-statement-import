@@ -20,26 +20,26 @@
 #
 ##############################################################################
 from openerp.osv import orm
-from openerp.addons.account_bank_statement_import import\
-    account_bank_statement_import as ibs
-from openerp.addons.bank_statement_parse.parserlib.parser_decorator import\
-    advanced_parser
 from .camt import CamtParser as Parser
-
-
-ibs.add_file_type(('camt', 'Generic CAMT Format'))
 
 
 class AccountBankStatementImport(orm.Model):
     """Add process_camt method to account.bank.statement.import."""
     _inherit = 'account.bank.statement.import'
 
-    @advanced_parser
-    def process_camt(self, cr, data):
+    def _parse_file(self, cr, uid, data_file, context=None):
         """
         Parse a CAMT053 XML file
         """
         parser = Parser()
-        return parser.parse(cr, data)
+        try:
+            os_statements = parser.parse(cr, data_file)
+        except:
+            # Not a camt file, returning super will call next candidate:
+            return super(AccountBankStatementImport, self)._parse_file(
+                cr, uid, data_file, context=context)
+        # Succesfull parse, convert to format expected
+        return self.convert_statements(
+            cr, uid, os_statements, context=context)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

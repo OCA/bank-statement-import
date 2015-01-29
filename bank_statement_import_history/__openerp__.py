@@ -22,16 +22,17 @@
 #
 ##############################################################################
 {
-    'name': 'Bank Account Search',
+    'name': 'Bank Statement Import History',
     'version': '0.5',
     'license': 'AGPL-3',
     'author': 'Banking addons community',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
-        'account',
+        'account_bank_statement_import',
         ],
     'data': [
+        'security/ir.model.access.csv',
         'view/menu.xml',
     ],
     'js': [

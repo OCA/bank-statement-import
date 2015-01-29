@@ -27,4 +27,3 @@
 ##############################################################################
 from .bank_statement import BankStatement
 from .bank_transaction import BankTransaction
-from .parser_decorator import advanced_parser
