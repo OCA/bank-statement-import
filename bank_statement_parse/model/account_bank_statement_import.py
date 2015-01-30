@@ -64,9 +64,10 @@ class AccountBankStatementImport(orm.TransientModel):
             'ref': transaction.reference,
             'amount': transaction.transferred_amount,
             'partner_name': transaction.remote_owner,
-            'account_number': transaction.remote_account,
+            'acc_number': transaction.remote_account,
             'partner_id': partner_id,
             'bank_account_id': bank_account_id,
+            'unique_import_id': transaction.id,
         }
         # Transfer any additional transaction attributes for which columns
         # have been defined:
@@ -109,7 +110,7 @@ class AccountBankStatementImport(orm.TransientModel):
 
     def create_bank_account(
             self, cr, uid, acc_number, bank_vals=None, context=None):
-        """Create bank-account, with type determined from account_number."""
+        """Create bank-account, with type determined from acc_number."""
         if not acc_number:
             return False
         bank_vals = dict(bank_vals or {})
@@ -222,17 +223,17 @@ class AccountBankStatementImport(orm.TransientModel):
             # Resolve bank-information for statement, if present
             # In theory we might just have the journal.
             bank_obj = False
-            account_number = (
-                'account_number' in st_vals and st_vals['account_numner']
+            acc_number = (
+                'acc_number' in st_vals and st_vals['acc_number']
                 or False
             )
             bank_account_id = (
                 'bank_account_id' in st_vals and st_vals['bank_account_id']
                 or False
             )
-            if not bank_account_id and account_number:
+            if not bank_account_id and acc_number:
                 ids = bank_model.search(
-                    cr, uid, [('acc_number', '=', account_number)],
+                    cr, uid, [('acc_number', '=', acc_number)],
                     context=context
                 )
                 if ids:
@@ -240,18 +241,18 @@ class AccountBankStatementImport(orm.TransientModel):
                     if len(ids) > 1:
                         raise Warning(
                             _('More then one bankaccount with number %s!')
-                            % account_number
+                            % acc_number
                         )
                     bank_account_id = ids[0]
                 else:
                     raise Warning(
                         _('No bankaccount with number %s!')
-                        % account_number
+                        % acc_number
                     )
             if bank_account_id:
                 bank_obj = bank_model.browse(
                     cr, uid, bank_account_id, context=context)
-                account_number = account_number or bank_obj.acc_number
+                acc_number = acc_number or bank_obj.acc_number
                 if not bank_obj.journal_id:
                     raise Warning(
                         _('Bankaccount %s not linked to journal!')
@@ -308,7 +309,7 @@ class AccountBankStatementImport(orm.TransientModel):
                 unique_import_id = line_vals.get('unique_import_id', False)
                 if unique_import_id:
                     line_vals['unique_import_id'] = (
-                        (account_number and account_number + '-' or '') +
+                        (acc_number and acc_number + '-' or '') +
                         unique_import_id
                     )
                 if (not 'bank_account_id' in line_vals
@@ -317,7 +318,7 @@ class AccountBankStatementImport(orm.TransientModel):
                         'name': line_vals.get('partner_name', False),
                     }
                     bank_vals = {
-                        'acc_number': line_vals.get('account_number', False),
+                        'acc_number': line_vals.get('acc_number', False),
                         'owner_name': line_vals.get('partner_name', False),
                     }
                     bank_account_id, partner_id = (
@@ -368,6 +369,8 @@ class AccountBankStatementImport(orm.TransientModel):
             pass
 
         # Parse the file(s)
+        import pdb
+        pdb.set_trace()
         statements = []
         for import_file in files:
             # The appropriate implementation module returns the required data
@@ -383,8 +386,8 @@ class AccountBankStatementImport(orm.TransientModel):
                     and isinstance(parse_result[2], (list, tuple))):
                 for stmt in parse_result[2]:
                     stmt['currency_code'] = parse_result[0]
-                    stmt['account_number'] = parse_result[1]
-                    statements += stmt
+                    stmt['acc_number'] = parse_result[1]
+                    statements += [stmt]
             else:
                 statements += parse_result
         # Check raw data

@@ -20,8 +20,6 @@
 #
 ##############################################################################
 from lxml import etree
-
-from openerp.osv.orm import except_orm
 from openerp.addons.bank_statement_parse import parserlib
 from openerp.addons.bank_statement_parse.parserlib.convert import str2date
 
@@ -263,14 +261,12 @@ class CamtParser(object):
         """
         if not self.ns.startswith('{urn:iso:std:iso:20022:tech:xsd:camt.')\
            and not self.ns.startswith('{ISO:camt.'):
-            raise except_orm(
-                "Error",
+            raise ValueError(
                 "This does not seem to be a CAMT format bank statement.")
 
         if not self.ns.startswith('{urn:iso:std:iso:20022:tech:xsd:camt.053.')\
            and not self.ns.startswith('{ISO:camt.053'):
-            raise except_orm(
-                "Error",
+            raise ValueError(
                 "Only CAMT.053 is supported at the moment.")
         return True
 
@@ -278,7 +274,13 @@ class CamtParser(object):
         """
         Parse a CAMT053 XML file
         """
-        root = etree.fromstring(data)
+        try:
+            root = etree.fromstring(
+                data, parser=etree.XMLParser(recover=True))
+        except etree.XMLSyntaxError:                                           
+            # ABNAmro is known to mix up encodings                             
+            root = etree.fromstring(
+                data.decode('iso-8859-15').encode('utf-8'))
         self.ns = root.tag[:root.tag.index("}") + 1]
         self.check_version()
         self.assert_tag(root[0][0], 'GrpHdr')

@@ -19,8 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
 from openerp.osv import orm
 from .camt import CamtParser as Parser
+
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(orm.Model):
@@ -33,9 +37,11 @@ class AccountBankStatementImport(orm.Model):
         """
         parser = Parser()
         try:
+            _logger.debug("Try parsing with camt.")
             os_statements = parser.parse(cr, data_file)
-        except:
+        except ValueError:
             # Not a camt file, returning super will call next candidate:
+            _logger.debug("Statement file was not a camt file.")
             return super(AccountBankStatementImport, self)._parse_file(
                 cr, uid, data_file, context=context)
         # Succesfull parse, convert to format expected
