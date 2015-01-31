@@ -277,8 +277,8 @@ class CamtParser(object):
         try:
             root = etree.fromstring(
                 data, parser=etree.XMLParser(recover=True))
-        except etree.XMLSyntaxError:                                           
-            # ABNAmro is known to mix up encodings                             
+        except etree.XMLSyntaxError:
+            # ABNAmro is known to mix up encodings
             root = etree.fromstring(
                 data.decode('iso-8859-15').encode('utf-8'))
         self.ns = root.tag[:root.tag.index("}") + 1]

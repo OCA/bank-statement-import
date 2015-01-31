@@ -21,7 +21,6 @@
 #
 ##############################################################################
 from openerp import fields, models
-from openerp.tools.translate import _
 
 
 class BankStatementHistory(models.Model):

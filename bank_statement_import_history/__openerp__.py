@@ -29,7 +29,7 @@
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
-        'account_bank_statement_import',
+        'bank_statement_parse',
         ],
     'data': [
         'security/ir.model.access.csv',

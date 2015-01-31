@@ -35,7 +35,7 @@ class AccountBankStatementImport(orm.TransientModel):
     _description = __doc__
 
     def convert_transaction(
-            self, cr, uid, transaction, subno, context=None):
+            self, cr, uid, transaction, default_transaction_id, context=None):
         """Convert transaction object to values for create."""
         transaction_model = self.pool['account.bank.statement.line']
         partner_vals = {
@@ -54,8 +54,6 @@ class AccountBankStatementImport(orm.TransientModel):
             cr, uid, transaction_vals=None, partner_vals=partner_vals,
             bank_vals=bank_vals, context=context
         )
-        if not transaction.id:
-            transaction.id = str(subno)
         vals_line = {
             'date': transaction.value_date,
             'name': (
@@ -67,7 +65,7 @@ class AccountBankStatementImport(orm.TransientModel):
             'acc_number': transaction.remote_account,
             'partner_id': partner_id,
             'bank_account_id': bank_account_id,
-            'unique_import_id': transaction.id,
+            'unique_import_id': transaction.id or default_transaction_id,
         }
         # Transfer any additional transaction attributes for which columns
         # have been defined:
@@ -101,9 +99,14 @@ class AccountBankStatementImport(orm.TransientModel):
             subno = 0
             for transaction in statement.transactions:
                 subno += 1
+                default_transaction_id = (
+                    (statement.id or statement_date) + str(subno))
                 line_ids.append(
                     self.convert_transaction(
-                        cr, uid, transaction, subno, context=context))
+                        cr, uid, transaction, default_transaction_id,
+                        context=context
+                    )
+                )
             ns_statement['transactions'] = line_ids
             ns_statements.append(ns_statement)
         return ns_statements
@@ -178,10 +181,9 @@ class AccountBankStatementImport(orm.TransientModel):
                 cr, uid, [('acc_number', '=', acc_number)], context=context)
             if ids:
                 # Bank accounts should be unique!
-                assert len(ids) == 1, (
-                    _('More then one bank account with number %s!') %
-                    acc_number
-                )
+                assert len(ids) == 1, (_(
+                    'More then one bank account with number %s!'
+                ) % acc_number)
                 bank_account_id = ids[0]
                 bank_records = bank_model.read(
                     cr, uid, ids, ['partner_id'], context=context)
@@ -239,52 +241,48 @@ class AccountBankStatementImport(orm.TransientModel):
                 if ids:
                     # Bank accounts should be unique!
                     if len(ids) > 1:
-                        raise Warning(
-                            _('More then one bankaccount with number %s!')
-                            % acc_number
-                        )
+                        raise Warning(_(
+                            'More then one bankaccount with number %s!'
+                        ) % acc_number)
                     bank_account_id = ids[0]
                 else:
-                    raise Warning(
-                        _('No bankaccount with number %s!')
-                        % acc_number
-                    )
+                    raise Warning(_(
+                        'No bankaccount with number %s!'
+                    ) % acc_number)
             if bank_account_id:
                 bank_obj = bank_model.browse(
                     cr, uid, bank_account_id, context=context)
                 acc_number = acc_number or bank_obj.acc_number
                 if not bank_obj.journal_id:
-                    raise Warning(
-                        _('Bankaccount %s not linked to journal!')
-                        % bank_obj.acc_number
-                    )
+                    raise Warning(_(
+                        'Bankaccount %s not linked to journal!'
+                    ) % bank_obj.acc_number)
                 if journal_id:
                     if bank_obj.journal_id.id != journal_id:
-                        raise Warning(
-                            _('The account of this statement is linked to'
-                            ' another journal.')
-                        )
+                        raise Warning(_(
+                            'The account of this statement is linked to'
+                            ' another journal.'
+                        ))
                 else:
                     journal_id = bank_obj.journal_id.id
             # By now we should know a journal_id:
             if not journal_id:
-                raise Warning(
-                    _('Cannot find in which journal to import this statement.'
-                      'Please manually select a journal.')
-                )
+                raise Warning(_(
+                    'Cannot find in which journal to import this statement.'
+                    'Please manually select a journal.'
+                ))
             # If a currency_code was specified, it should be equal to the
             # journal currency, if provided, or else to the company currency:
-            if 'currency_code'  in st_vals:
+            if 'currency_code' in st_vals:
                 currency_code = st_vals['currency_code']
                 currency_ids = currency_model.search(
                     cr, uid, [('name', '=ilike', currency_code)],
                     context=context
                 )
                 if not currency_ids:
-                    raise Warning(
-                        _('Unknown currency %s specified in import!')
-                        % currency_code
-                    )
+                    raise Warning(_(
+                        'Unknown currency %s specified in import!'
+                    ) % currency_code)
                 compare_currency_id = False
                 journal_obj = journal_model.browse(
                     cr, uid, journal_id, context=context)
@@ -299,10 +297,10 @@ class AccountBankStatementImport(orm.TransientModel):
                 # the same as the bank statement
                 if (compare_currency_id
                         and compare_currency_id != currency_ids[0]):
-                    raise Warning(
-                        _('The currency of the bank statement is not the same'
-                        ' as the currency of the journal !')
-                )
+                    raise Warning(_(
+                        'The currency of the bank statement is not the same'
+                        ' as the currency of the journal !'
+                    ))
             st_vals['journal_id'] = journal_id
             # Now complete all transactions in a single statement:
             for line_vals in st_vals['transactions']:
@@ -312,7 +310,7 @@ class AccountBankStatementImport(orm.TransientModel):
                         (acc_number and acc_number + '-' or '') +
                         unique_import_id
                     )
-                if (not 'bank_account_id' in line_vals
+                if ('bank_account_id' not in line_vals
                         or not line_vals['bank_account_id']):
                     partner_vals = {
                         'name': line_vals.get('partner_name', False),
@@ -352,8 +350,9 @@ class AccountBankStatementImport(orm.TransientModel):
         """
         if context is None:
             context = {}
-        #set the active_id in the context, so that any extension module could
-        #reuse the fields chosen in the wizard if needed (see .QIF for example)
+        # Set the active_id in the context, so any extension module can
+        # reuse the fields chosen in the wizard if needed
+        # (see .QIF for example):
         context.update({'active_id': ids[0]})
 
         this_obj = self.browse(cr, uid, ids[0], context=context)
@@ -369,8 +368,6 @@ class AccountBankStatementImport(orm.TransientModel):
             pass
 
         # Parse the file(s)
-        import pdb
-        pdb.set_trace()
         statements = []
         for import_file in files:
             # The appropriate implementation module returns the required data
