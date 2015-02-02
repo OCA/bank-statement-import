@@ -20,14 +20,14 @@
 #
 ##############################################################################
 import logging
-from openerp.osv import orm
+from openerp import models
 from .camt import CamtParser as Parser
 
 
 _logger = logging.getLogger(__name__)
 
 
-class AccountBankStatementImport(orm.Model):
+class AccountBankStatementImport(models.TransientModel):
     """Add process_camt method to account.bank.statement.import."""
     _inherit = 'account.bank.statement.import'
 

@@ -226,7 +226,7 @@ class AccountBankStatementImport(orm.TransientModel):
             # In theory we might just have the journal.
             bank_obj = False
             acc_number = (
-                'acc_number' in st_vals and st_vals['acc_number']
+                'acc_number' in st_vals and st_vals.pop('acc_number')
                 or False
             )
             bank_account_id = (
@@ -328,6 +328,8 @@ class AccountBankStatementImport(orm.TransientModel):
                     )
                     line_vals['partner_id'] = partner_id
                     line_vals['bank_account_id'] = bank_account_id
+                if 'acc_number' in line_vals:
+                    del line_vals['acc_number']
         return statements
 
     def import_file(self, cr, uid, ids, context=None):

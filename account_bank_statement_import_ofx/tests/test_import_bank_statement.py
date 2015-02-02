@@ -28,5 +28,16 @@ class TestOfxFile(TransactionCase):
         self.statement_import_model.import_file(cr, uid, [bank_statement_id])
         statement_id = self.bank_statement_model.search(cr, uid, [('name', '=', '000000123')])[0]
         bank_st_record = self.bank_statement_model.browse(cr, uid, statement_id)
-        self.assertEquals(bank_st_record.balance_start, 2156.56)
-        self.assertEquals(bank_st_record.balance_end_real, 1796.56)
+        # Checking equality of floating point amounts is a recipe for disaster:
+        # self.assertEquals(bank_st_record.balance_start, 2516,56)
+        # self.assertEquals(bank_st_record.balance_end_real, 2156.56)
+        self.assertTrue(
+            abs(bank_st_record.balance_start - 2516.56) < 0.00001,
+            'Start balance %f not equal to 2516.56' %
+            bank_st_record.balance_start
+        )
+        self.assertTrue(
+            abs(bank_st_record.balance_end_real - 2156.56) < 0.00001,
+            'Real end balance %f not equal to 2156.56' %
+            bank_st_record.balance_end_real
+        )

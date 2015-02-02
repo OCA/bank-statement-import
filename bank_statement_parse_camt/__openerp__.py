@@ -27,5 +27,8 @@
     'depends': [
         'bank_statement_parse'
     ],
+    'demo': [
+        'demo/demo_data.xml',
+    ],
     'installable': True,
 }

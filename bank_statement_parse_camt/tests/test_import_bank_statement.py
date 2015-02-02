@@ -44,11 +44,10 @@ class TestStatementFile(TransactionCase):
         bank_statement_id = import_model.create(
             cr, uid,
             dict(
-                file_type='camt',
                 data_file=statement_file,
             )
         )
-        import_model.parse_file(cr, uid, [bank_statement_id])
+        import_model.import_file(cr, uid, [bank_statement_id])
         ids = statement_model.search(
             cr, uid, [('name', '=', '1234Test/1')])
         self.assertTrue(ids, 'Statement not found after parse.')
