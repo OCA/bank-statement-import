@@ -213,7 +213,7 @@ class account_bank_statement_import(osv.TransientModel):
                 if unique_import_id:
                     line_vals['unique_import_id'] = (account_number and account_number + '-' or '') + unique_import_id
 
-                if not 'bank_account_id' in line_vals or not line_vals['bank_account_id']:
+                if not line_vals.get('partner_id') and not line_vals.get('bank_account_id'):
                     # Find the partner and his bank account or create the bank account. The partner selected during the
                     # reconciliation process will be linked to the bank when the statement is closed.
                     partner_id = False
