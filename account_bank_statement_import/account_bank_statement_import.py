@@ -174,7 +174,7 @@ class account_bank_statement_import(osv.TransientModel):
         wmca_pool = self.pool.get('wizard.multi.charts.accounts')
         company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
 
-        vals_account = {'currency_id': currency_id, 'acc_name': account_number, 'account_type': 'bank', 'currency_id': currency_id}
+        vals_account = {'currency_id': currency_id, 'acc_name': account_number, 'account_type': 'bank'}
         vals_account = wmca_pool._prepare_bank_account(cr, uid, company, vals_account, context=context)
         account_id = self.pool.get('account.account').create(cr, uid, vals_account, context=context)
 
