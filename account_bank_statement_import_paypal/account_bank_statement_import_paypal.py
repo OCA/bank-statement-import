@@ -22,10 +22,8 @@
 
 import logging
 from datetime import datetime
-from openerp.osv import orm
+from openerp import models, fields, api, _
 from openerp.exceptions import Warning
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 import unicodecsv
 import re
 from cStringIO import StringIO
@@ -33,18 +31,45 @@ from cStringIO import StringIO
 _logger = logging.getLogger(__name__)
 
 
-class AccountBankStatementImport(orm.TransientModel):
+class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
-    def _check_paypal(self, cr, uid, data_file, context=None):
+    @api.model
+    def _prepare_paypal_encoding(self):
+        '''This method is designed to be inherited'''
+        return 'latin1'
+
+    @api.model
+    def _prepare_paypal_date_format(self):
+        '''This method is designed to be inherited'''
+        return '%d/%m/%Y'
+
+    @api.model
+    def _valid_paypal_line(self, line):
+        '''This method is designed to be inherited'''
+        if line[5].startswith('Termin'):
+            return True
+        else:
+            return False
+
+    @api.model
+    def _paypal_convert_amount(self, amount_str):
+        '''This method is designed to be inherited'''
+        valstr = re.sub(r'[^\d,.-]', '', amount_str)
+        valstrdot = valstr.replace(',', '.')
+        return float(valstrdot)
+
+    @api.model
+    def _check_paypal(self, data_file):
+        '''This method is designed to be inherited'''
         return data_file.strip().startswith('Date,')
 
-    def _parse_file(self, cr, uid, data_file, context=None):
+    @api.model
+    def _parse_file(self, data_file):
         """ Import a file in Paypal CSV format"""
-        paypal = self._check_paypal(cr, uid, data_file, context=context)
+        paypal = self._check_paypal(data_file)
         if not paypal:
-            return super(AccountBankStatementImport)._parse_file(
-                cr, uid, data_file, context=context)
+            return super(AccountBankStatementImport)._parse_file(data_file)
         f = StringIO()
         f.write(data_file)
         f.seek(0)
@@ -52,13 +77,13 @@ class AccountBankStatementImport(orm.TransientModel):
         i = 0
         start_balance = end_balance = start_date_str = end_date_str = False
         vals_line = False
-        user = self.pool['res.users'].browse(cr, uid, uid, context=context)
-        company_currency_name = user.company_id.currency_id.name
+        company_currency_name = self.env.user.company_id.currency_id.name
         commission_total = 0.0
         raw_lines = []
         paypal_email_account = False
         # To confirm : is the encoding always latin1 ?
-        for line in unicodecsv.reader(f, encoding='latin1'):
+        for line in unicodecsv.reader(
+                f, encoding=self._prepare_paypal_encoding()):
             i += 1
             _logger.debug("Line %d: %s" % (i, line))
             if i == 1:
@@ -66,13 +91,14 @@ class AccountBankStatementImport(orm.TransientModel):
                 continue
             if not line:
                 continue
-            if not line[5].startswith('Termin'):
+            if not self._valid_paypal_line(line):
                 _logger.info(
                     'Skipping line %d because it is not in Done state' % i)
                 continue
-            date_dt = datetime.strptime(line[0], '%d/%m/%Y')
+            date_dt = datetime.strptime(
+                line[0], self._prepare_paypal_date_format())
             rline = {
-                'date': date_dt.strftime(DEFAULT_SERVER_DATE_FORMAT),
+                'date': fields.Date.to_string(date_dt),
                 'currency': line[6],
                 'owner_name': line[3],
                 'amount': line[7],
@@ -85,9 +111,7 @@ class AccountBankStatementImport(orm.TransientModel):
             for field in ['commission', 'amount', 'balance']:
                 _logger.debug('Trying to convert %s to float' % rline[field])
                 try:
-                    valstr = re.sub(r'[^\d,.-]', '', rline[field])
-                    valstrdot = valstr.replace(',', '.')
-                    rline[field] = float(valstrdot)
+                    rline[field] = self._paypal_convert_amount(rline[field])
                 except:
                     raise Warning(
                         _("Value '%s' for the field '%s' on line %d, "
@@ -111,16 +135,15 @@ class AccountBankStatementImport(orm.TransientModel):
         for wline in raw_lines:
             if company_currency_name != wline['currency']:
                 if not wline['transac_ref'] and not other_currency_line:
-                    cur_ids = self.pool['res.currency'].search(
-                        cr, uid, [('name', '=', wline['currency'])],
-                        context=context)
-                    if not cur_ids:
+                    currencies = self.env['res.currency'].search(
+                        [('name', '=', wline['currency'])])
+                    if not currencies:
                         raise Warning(
                             _('Currency %s on line %d cannot be found in Odoo')
                             % (wline['currency'], wline['line_nr']))
                     other_currency_line = {
                         'amount_currency': wline['amount'],
-                        'currency_id': cur_ids[0],
+                        'currency_id': currencies[0].id,
                         'currency': wline['currency'],
                         'name': wline['name'],
                         'owner_name': wline['owner_name'],
@@ -156,15 +179,12 @@ class AccountBankStatementImport(orm.TransientModel):
                 start_balance = fline['balance'] - fline['amount']
             end_date_str = fline['date']
             end_balance = fline['balance']
-            partner_ids = False
+            partners = False
             if fline['partner_email']:
-                partner_ids = self.pool['res.partner'].search(
-                    cr, uid, [('email', '=', fline['partner_email'])],
-                    context=context)
-            if partner_ids:
-                partner = self.pool['res.partner'].browse(
-                    cr, uid, partner_ids[0], context=context)
-                partner_id = partner.commercial_partner_id.id
+                partners = self.env['res.partner'].search(
+                    [('email', '=', fline['partner_email'])])
+            if partners:
+                partner_id = partners[0].commercial_partner_id.id
             else:
                 partner_id = False
             vals_line = {
