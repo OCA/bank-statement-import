@@ -54,7 +54,7 @@ class AccountBankStatementImport(orm.TransientModel):
         vals_line = False
         user = self.pool['res.users'].browse(cr, uid, uid, context=context)
         company_currency_name = user.company_id.currency_id.name
-        comission_total = 0.0
+        commission_total = 0.0
         raw_lines = []
         paypal_email_account = False
         # To confirm : is the encoding always latin1 ?
@@ -76,13 +76,13 @@ class AccountBankStatementImport(orm.TransientModel):
                 'currency': line[6],
                 'owner_name': line[3],
                 'amount': line[7],
-                'comission': line[8],
+                'commission': line[8],
                 'balance': line[34],
                 'transac_ref': line[30],
                 'ref': line[12],
                 'line_nr': i,
             }
-            for field in ['comission', 'amount', 'balance']:
+            for field in ['commission', 'amount', 'balance']:
                 _logger.debug('Trying to convert %s to float' % rline[field])
                 try:
                     valstr = re.sub(r'[^\d,.-]', '', rline[field])
@@ -149,7 +149,7 @@ class AccountBankStatementImport(orm.TransientModel):
         j = 0
         for fline in final_lines:
             j += 1
-            comission_total += fline['comission']
+            commission_total += fline['commission']
 
             if j == 1:
                 start_date_str = fline['date']
@@ -181,15 +181,15 @@ class AccountBankStatementImport(orm.TransientModel):
             _logger.debug("vals_line = %s" % vals_line)
             transactions.append(vals_line)
 
-        if comission_total:
-            comission_line = {
+        if commission_total:
+            commission_line = {
                 'date': end_date_str,
-                'name': _('Paypal comissions'),
+                'name': _('Paypal commissions'),
                 'ref': _('PAYPAL-COSTS'),
-                'amount': comission_total,
+                'amount': commission_total,
                 'unique_import_id': False,
                 }
-            transactions.append(comission_line)
+            transactions.append(commission_line)
 
         vals_bank_statement = {
             'name': _('PayPal Import %s > %s')
