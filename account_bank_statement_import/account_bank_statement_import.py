@@ -158,10 +158,11 @@ class account_bank_statement_import(osv.TransientModel):
 
         # If there is no journal, create one (and its account)
         # I think it's too dangerous, so I disable that code by default -- Alexis de Lattre
-        if context.get('allow_auto_create_journal') and not journal_id and account_number:
-            journal_id = self._create_journal(cr, uid, currency_id, account_number, context=context)
-            if bank_account_id:
-                bank_pool.write(cr, uid, [bank_account_id], {'journal_id': journal_id}, context=context)
+        # -- Totally disabled, Ronald Portier
+        # if context.get('allow_auto_create_journal') and not journal_id and account_number:
+        #     journal_id = self._create_journal(cr, uid, currency_id, account_number, context=context)
+        #     if bank_account_id:
+        #         bank_pool.write(cr, uid, [bank_account_id], {'journal_id': journal_id}, context=context)
 
         # If we couldn't find/create a journal, everything is lost
         if not journal_id:
@@ -174,7 +175,7 @@ class account_bank_statement_import(osv.TransientModel):
         wmca_pool = self.pool.get('wizard.multi.charts.accounts')
         company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
 
-        vals_account = {'currency_id': currency_id, 'acc_name': account_number, 'account_type': 'bank', 'currency_id': currency_id}
+        vals_account = {'currency_id': currency_id, 'acc_name': account_number, 'account_type': 'bank'}
         vals_account = wmca_pool._prepare_bank_account(cr, uid, company, vals_account, context=context)
         account_id = self.pool.get('account.account').create(cr, uid, vals_account, context=context)
 
