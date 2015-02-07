@@ -158,10 +158,13 @@ class account_bank_statement_import(osv.TransientModel):
 
         # If there is no journal, create one (and its account)
         # I think it's too dangerous, so I disable that code by default -- Alexis de Lattre
+        """
+        # -- Totally disabled, Ronald Portier
         if context.get('allow_auto_create_journal') and not journal_id and account_number:
             journal_id = self._create_journal(cr, uid, currency_id, account_number, context=context)
             if bank_account_id:
                 bank_pool.write(cr, uid, [bank_account_id], {'journal_id': journal_id}, context=context)
+        """
 
         # If we couldn't find/create a journal, everything is lost
         if not journal_id:
