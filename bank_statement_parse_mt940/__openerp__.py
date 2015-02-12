@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#    Copyright (C) 2013 Therp BV (<http://therp.nl>)
+#    Copyright (C) 2013 Therp BV <http://therp.nl>
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
     'version': '1.1',
     'license': 'AGPL-3',
     'author': 'Therp BV',
-    'website': 'https://github.com/OCA/banking',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'description': '''
 This addon provides a generic parser for MT940 files. Given that MT940 is a

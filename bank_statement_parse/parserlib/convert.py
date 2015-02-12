@@ -21,7 +21,13 @@
 ##############################################################################
 import unicodedata
 
-__all__ = ['str2date', 'date2str', 'date2date', 'to_swift']
+__all__ = [
+    'str2date',
+    'str2float',
+    'date2str',
+    'date2date',
+    'to_swift'
+]
 
 try:
     from datetime import datetime
@@ -70,5 +76,8 @@ def to_swift(astr, schemes=None):
         for x in unicodedata.normalize('NFKD', astr).encode('ascii', 'ignore')
     ]
     return ''.join(swift_string)
+
+def str2float(string):
+        return float(string.replace(',', '.'))
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

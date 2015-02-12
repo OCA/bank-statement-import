@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Parse a MT940 IBAN ING file."""
 ##############################################################################
 #
 #    Copyright (C) 2013 Therp BV (<http://therp.nl>)

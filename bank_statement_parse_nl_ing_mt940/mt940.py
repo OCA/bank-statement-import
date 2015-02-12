@@ -19,24 +19,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import print_function
 import re
-from openerp.addons.bank_statement_parse import parserlib
-from openerp.addons.bank_statement_parse_mt940.mt940 import MT940, str2float
+
+from openerp.addons.bank_statement_parse_mt940 import mt940
+from openerp.addons.bank_statement_parse.parserlib.convert import str2float
 
 
-class MT940BankTransaction(parserlib.BankTransaction):
-    """Override BankTransaction for different validation."""
-
-    def __init__(self, values=None, *args, **kwargs):
-        """Initialize object from values dictionary."""
-        super(MT940BankTransaction, self).__init__(*args, **kwargs)
-        if values:
-            for attr in values:
-                setattr(self, attr, values[attr])
-
-
-class MT940Parser(MT940):
+class MT940Parser(mt940.MT940):
     """Parser for ing MT940 bank statement import files."""
 
     name = 'ING MT940 (structured)'
@@ -50,21 +39,19 @@ class MT940Parser(MT940):
         r'(?P<reference>\w{1,50})'
     )
 
-    def create_transaction(self, cr):
-        transaction = MT940BankTransaction()
-        return transaction
-
     def handle_tag_25(self, cr, data):
-        '''ING: For current accounts: IBAN+ ISO 4217 currency code'''
+        """ING: For current accounts: IBAN+ ISO 4217 currency code."""
         self.current_statement.local_account = data[:-3]
 
     def handle_tag_60F(self, cr, data):
+        """get start balance and currency"""
         super(MT940Parser, self).handle_tag_60F(cr, data)
         self.current_statement.id = '%s-%s' % (
             self.current_statement.date.strftime('%Y'),
             self.current_statement.id)
 
     def handle_tag_61(self, cr, data):
+        """get transaction values"""
         super(MT940Parser, self).handle_tag_61(cr, data)
         re_61 = self.tag_61_regex.match(data)
         if not re_61:
@@ -95,7 +82,6 @@ class MT940Parser(MT940):
             if current_codeword in subfields:
                 subfields[current_codeword].append(word)
 
-        print(subfields)
         if 'CNTP' in subfields:
             self.current_transaction.remote_account = subfields['CNTP'][0]
             self.current_transaction.remote_bank_bic = subfields['CNTP'][1]
@@ -135,3 +121,5 @@ class MT940Parser(MT940):
             self.current_transaction.message = data
 
         self.current_transaction = None
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
