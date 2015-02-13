@@ -77,8 +77,6 @@ class MT940(object):
 
     def parse(self, cr, data):
         """Parse mt940 bank statement file contents."""
-        import pdb
-        pdb.set_trace()
         self.is_mt940(cr, data)
         iterator = data.replace('\r\n', '\n').split('\n').__iter__()
         line = None
