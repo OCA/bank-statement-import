@@ -77,6 +77,7 @@ def to_swift(astr, schemes=None):
     ]
     return ''.join(swift_string)
 
+
 def str2float(string):
         return float(string.replace(',', '.'))
 
