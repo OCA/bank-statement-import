@@ -226,12 +226,11 @@ class AccountBankStatementImport(orm.TransientModel):
             # In theory we might just have the journal.
             bank_obj = False
             acc_number = (
-                'acc_number' in st_vals and st_vals.pop('acc_number')
-                or False
+                'acc_number' in st_vals and st_vals.pop('acc_number') or False
             )
             bank_account_id = (
-                'bank_account_id' in st_vals and st_vals['bank_account_id']
-                or False
+                'bank_account_id' in st_vals and st_vals['bank_account_id'] or
+                False
             )
             if not bank_account_id and acc_number:
                 ids = bank_model.search(
@@ -295,8 +294,8 @@ class AccountBankStatementImport(orm.TransientModel):
                         compare_currency_id = company_obj.currency.id
                 # If importing into an existing journal, its currency must be
                 # the same as the bank statement
-                if (compare_currency_id
-                        and compare_currency_id != currency_ids[0]):
+                if (compare_currency_id and
+                        compare_currency_id != currency_ids[0]):
                     raise Warning(_(
                         'The currency of the bank statement is not the same'
                         ' as the currency of the journal !'
@@ -310,8 +309,8 @@ class AccountBankStatementImport(orm.TransientModel):
                         (acc_number and acc_number + '-' or '') +
                         unique_import_id
                     )
-                if ('bank_account_id' not in line_vals
-                        or not line_vals['bank_account_id']):
+                if ('bank_account_id' not in line_vals or
+                        not line_vals['bank_account_id']):
                     partner_vals = {
                         'name': line_vals.get('partner_name', False),
                     }
@@ -379,10 +378,10 @@ class AccountBankStatementImport(orm.TransientModel):
             # account number and statements. Or it might just contain
             # a list of statements. The first case will be morphed into the
             # second case, to allow for simple further processing.
-            if (len(parse_result) == 3
-                    and isinstance(parse_result[0], basestring)
-                    and isinstance(parse_result[1], basestring)
-                    and isinstance(parse_result[2], (list, tuple))):
+            if (len(parse_result) == 3 and
+                    isinstance(parse_result[0], basestring) and
+                    isinstance(parse_result[1], basestring) and
+                    isinstance(parse_result[2], (list, tuple))):
                 for stmt in parse_result[2]:
                     stmt['currency_code'] = parse_result[0]
                     stmt['acc_number'] = parse_result[1]

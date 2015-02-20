@@ -244,7 +244,7 @@ class BankTransaction(object):
         Heuristic check: at least id, execution_date, remote_account and
         transferred_amount should be filled to create a valid transfer.
         """
-        return (self.execution_date and self.remote_account
-                and self.transferred_amount and True) or False
+        return (self.execution_date and self.remote_account and
+                self.transferred_amount and True) or False
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
