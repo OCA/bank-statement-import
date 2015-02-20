@@ -272,4 +272,3 @@ class account_bank_statement_import(osv.TransientModel):
             }]
 
         return statement_ids, notifications
-
