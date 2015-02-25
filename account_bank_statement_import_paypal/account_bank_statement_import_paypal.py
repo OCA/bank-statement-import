@@ -69,7 +69,8 @@ class AccountBankStatementImport(models.TransientModel):
         """ Import a file in Paypal CSV format"""
         paypal = self._check_paypal(data_file)
         if not paypal:
-            return super(AccountBankStatementImport)._parse_file(data_file)
+            return super(AccountBankStatementImport, self)._parse_file(
+                data_file)
         f = StringIO()
         f.write(data_file)
         f.seek(0)
