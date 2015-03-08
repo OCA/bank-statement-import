@@ -35,7 +35,8 @@ class AccountBankStatementImport(models.TransientModel):
     def _check_bpost(self, cr, uid, data_file, context=None):
         return data_file[3:].startswith(
             u'"Numéro de compte :";"'.encode('utf-8'))
-        # It really starts with <U+FEFF>
+        # The file starts with <U+FEFF> = UTF-8 BOM
+        # http://en.wikipedia.org/wiki/Byte_order_mark
 
     def _parse_file(self, cr, uid, data_file, context=None):
         """ Import a file in Bpost CSV"""
