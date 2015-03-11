@@ -153,7 +153,7 @@ class CamtParser(object):
                 statement.date = str2date(
                     transaction_detail['execution_date'], "%Y-%m-%d")
             number += 1
-            transaction_detail['id'] = str(number).zfill(4)
+            transaction_detail['id'] = identifier + str(number).zfill(4)
             transaction = CamtBankTransaction(transaction_detail)
             transaction.data = etree.tostring(entry_node)
             statement.transactions.append(transaction)
