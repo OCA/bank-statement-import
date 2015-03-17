@@ -43,13 +43,6 @@ class MT940Parser(mt940.MT940):
         """ING: For current accounts: IBAN+ ISO 4217 currency code."""
         self.current_statement.local_account = data[:-3]
 
-    def handle_tag_60F(self, cr, data):
-        """get start balance and currency"""
-        super(MT940Parser, self).handle_tag_60F(cr, data)
-        self.current_statement.id = '%s-%s' % (
-            self.current_statement.date.strftime('%Y'),
-            self.current_statement.id)
-
     def handle_tag_61(self, cr, data):
         """get transaction values"""
         super(MT940Parser, self).handle_tag_61(cr, data)
