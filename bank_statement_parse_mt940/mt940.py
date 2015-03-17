@@ -167,7 +167,7 @@ class MT940(object):
         self.current_statement.start_balance = \
             (1 if data[0] == 'C' else -1) * str2float(data[10:])
         self.current_statement.id = '%s/%s' % (
-            self.current_statement.date.strftime('%y%m%d'),
+            self.current_statement.date.strftime('%Y-%m-%d'),
             self.current_statement.id)
 
     def handle_tag_62F(self, cr, data):
