@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-02 10:43+0000\n"
-"PO-Revision-Date: 2015-01-02 10:43+0000\n"
+"POT-Creation-Date: 2015-02-20 00:25+0000\n"
+"PO-Revision-Date: 2015-02-20 00:25+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,47 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import
-#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
-msgid "1. Go to your bank account website."
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:269
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr ""
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:269
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
 msgstr ""
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
-msgid "2. Download your bank statements in the right format. (.OFX, .QIF, CODA and CAMT.053 are accepted)"
+msgid "1. Download your bank statements from your bank website."
 msgstr ""
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
-msgid "3. Upload right here the bank statements file into Odoo. Click Import."
+msgid "2. Make sure you have installed the right module to support the file format."
+msgstr ""
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "3. Select the file and click 'Import'."
+msgstr ""
+
+#. module: account_bank_statement_import
+#: sql_constraint:account.bank.statement.line:0
+msgid "A bank account transactions can be imported only once !"
+msgstr ""
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:271
+#, python-format
+msgid "Already imported items"
+msgstr ""
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:182
+#, python-format
+msgid "Bank"
 msgstr ""
 
 #. module: account_bank_statement_import
@@ -36,8 +65,26 @@ msgid "Bank Statement File"
 msgstr ""
 
 #. module: account_bank_statement_import
+#: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "Cancel"
+msgstr ""
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:169
+#, python-format
+msgid "Cannot find in which journal import this statement. Please manually select a journal."
+msgstr ""
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:99
+#, python-format
+msgid "Could not make sense of the given file.\n"
+"Did you install the module to support this type of file ?"
 msgstr ""
 
 #. module: account_bank_statement_import
@@ -51,24 +98,13 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/account_bank_statement_import.py:86
-#, python-format
-msgid "Error"
-msgstr ""
-
-#. module: account_bank_statement_import
-#: field:account.bank.statement.import,file_type:0
-msgid "File Type"
-msgstr ""
-
-#. module: account_bank_statement_import
 #: help:account.bank.statement.import,data_file:0
 msgid "Get you bank statements in electronic format from your bank and select them here."
 msgstr ""
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
-msgid "How to import your bank statement in Odoo."
+msgid "How to import your bank statement :"
 msgstr ""
 
 #. module: account_bank_statement_import
@@ -89,8 +125,8 @@ msgid "Import Bank Statements"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: field:account.bank.statement.import,journal_id:0
-msgid "Journal"
+#: field:account.bank.statement.line,unique_import_id:0
+msgid "Import ID"
 msgstr ""
 
 #. module: account_bank_statement_import
@@ -104,26 +140,33 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/account_bank_statement_import.py:11
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:146
 #, python-format
-msgid "No Import Format Available"
+msgid "The account of this statement is linked to another journal."
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/account_bank_statement_import.py:86
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:157
 #, python-format
-msgid "No available format for importing bank statement. You can install one of the file format available through the module installation."
+msgid "The currency of the bank statement is not the same as the currency of the journal !"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: help:account.bank.statement.import,journal_id:0
-msgid "The journal for which the bank statements will be created"
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:104
+#, python-format
+msgid "This file doesn't contain any statement."
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/account_bank_statement_import.py:69
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:112
 #, python-format
-msgid "Undefined"
+msgid "This file doesn't contain any transaction."
+msgstr ""
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:261
+#, python-format
+msgid "You have already imported that file."
 msgstr ""
 
 #. module: account_bank_statement_import
