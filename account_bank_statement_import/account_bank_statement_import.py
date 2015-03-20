@@ -123,8 +123,9 @@ class account_bank_statement_import(osv.TransientModel):
         bank_account_id = None
         if account_number and len(account_number) > 4:
             account_number = account_number.replace(' ', '').replace('-', '')
-            cr.execute("select id from res_partner_bank where replace(replace(acc_number,' ',''),'-','') like %s and journal_id is not null", ('%' + account_number + '%',))
+            cr.execute("select id from res_partner_bank where replace(replace(acc_number,' ',''),'-','') = %s", (account_number,))
             bank_account_ids = [id[0] for id in cr.fetchall()]
+            bank_account_ids = self.pool.get('res.partner.bank').search(cr, uid, [('id', 'in', bank_account_ids)], context=context)
             if bank_account_ids:
                 bank_account_id = bank_account_ids[0]
 
@@ -132,8 +133,6 @@ class account_bank_statement_import(osv.TransientModel):
 
     def _get_journal(self, cr, uid, currency_id, bank_account_id, account_number, context=None):
         """ Find or create the journal """
-        if context is None:
-            context = {}
         bank_pool = self.pool.get('res.partner.bank')
 
         # Find the journal from context or bank account
@@ -174,7 +173,7 @@ class account_bank_statement_import(osv.TransientModel):
         wmca_pool = self.pool.get('wizard.multi.charts.accounts')
         company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
 
-        vals_account = {'currency_id': currency_id, 'acc_name': account_number, 'account_type': 'bank'}
+        vals_account = {'currency_id': currency_id, 'acc_name': account_number, 'account_type': 'bank', 'currency_id': currency_id}
         vals_account = wmca_pool._prepare_bank_account(cr, uid, company, vals_account, context=context)
         account_id = self.pool.get('account.account').create(cr, uid, vals_account, context=context)
 
@@ -213,7 +212,7 @@ class account_bank_statement_import(osv.TransientModel):
                 if unique_import_id:
                     line_vals['unique_import_id'] = (account_number and account_number + '-' or '') + unique_import_id
 
-                if not line_vals.get('partner_id') and not line_vals.get('bank_account_id'):
+                if not 'bank_account_id' in line_vals or not line_vals['bank_account_id']:
                     # Find the partner and his bank account or create the bank account. The partner selected during the
                     # reconciliation process will be linked to the bank when the statement is closed.
                     partner_id = False
