@@ -23,8 +23,7 @@ class TestQifFile(TransactionCase):
             data_file=qif_file,
         ))
         context = {
-            'journal_id': self.registry('ir.model.data').get_object_reference(cr, uid, 'account', 'bank_journal')[1],
-            'allow_auto_create_journal': True,
+            'journal_id': self.registry('ir.model.data').get_object_reference(cr, uid, 'account', 'bank_journal')[1]
         }
         self.statement_import_model.import_file(cr, uid, [bank_statement_id], context=context)
         line_id = self.bank_statement_line_model.search(cr, uid, [('name', '=', 'YOUR LOCAL SUPERMARKET')])[0]
