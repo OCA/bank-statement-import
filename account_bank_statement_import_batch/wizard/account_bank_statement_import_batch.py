@@ -23,7 +23,6 @@
 #
 ##############################################################################
 
-
 import zipfile
 import logging
 from cStringIO import StringIO
@@ -40,12 +39,58 @@ class account_bank_statement_import(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     def _get_error_notification(self, file_name,  exc):
-        return [{
+        return {
             'type': 'error',
             'message': _('Import of %s failed with error %s'
                          ) % (ustr(file_name),
                               ustr(exc)),
-            }]
+            }
+
+    @api.model
+    def display_import_result(self, notifications):
+        warnings = []
+        errors = []
+        for notification in notifications:
+            msg = '* ' + notification.get('message')
+            if notification.get('type') == 'error':
+                errors.append(msg)
+            else:
+                warnings.append(msg)
+        action = self.env.ref(
+            'account_bank_statement_import_batch.'
+            'action_account_bank_statement_import_result')
+        return {
+            'name': action.name,
+            'type': action.type,
+            'res_model': action.res_model,
+            'view_type': action.view_type,
+            'view_mode': action.view_mode,
+            'target': action.target,
+            'view_id': action.view_id.id,
+            'name': action.name,
+            'context': {
+                'default_errors': '\n'.join(errors) or False,
+                'default_warnings': '\n'.join(warnings) or False
+                }
+            }
+
+    @api.multi
+    def import_file(self):
+        """ Process the file chosen in the wizard, create bank statement(s) and
+        go to reconciliation. """
+        res = super(account_bank_statement_import, self).import_file()
+
+        # notifications messages are not displayed in the reconcile wizard in
+        # V8 (only in the master branch) Therefore, if we have notification,
+        # in place of redirecting on the reconcile action, we redirects
+        # on a new action displaying these notifications
+
+        ctx = res.get('context')
+        if ctx and ctx.get('notifications'):
+            notifications = ctx['notifications']
+            if notifications:
+                return self.display_import_result(notifications)
+        return res
 
     @api.model
     def _import_file(self, data_file):

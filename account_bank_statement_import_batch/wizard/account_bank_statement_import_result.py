@@ -22,19 +22,17 @@
 #     If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Account Bank Statement Batch Import',
-    'author': "ACSONE SA/NV,Odoo Community Association (OCA)",
-    'website': "http://www.acsone.eu",
-    'category': 'Accounting & Finance',
-    'version': '1.0',
-    'license': 'AGPL-3',
-    'depends': [
-        'account_bank_statement_import'
-    ],
-    'data': [
-        'wizard/account_bank_statement_import_result.xml',
-    ],
-    'auto_install': False,
-    'installable': True,
-}
+
+import logging
+
+from openerp import models, fields
+
+_logger = logging.getLogger(__name__)
+
+
+class account_bank_statement_import_result(models.TransientModel):
+    _name = 'account.bank.statement.import.result'
+    _description = 'Import result'
+
+    warnings = fields.Text("Warnings")
+    errors = fields.Text("Errors")
