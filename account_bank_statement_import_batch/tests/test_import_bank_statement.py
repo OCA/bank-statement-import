@@ -56,7 +56,10 @@ class TestImportBatch(TransactionCase):
                         'account_bank_statement_import.'
                         'account_bank_statement_import.'
                         '_import_file') as mocked:
-            mocked.side_effect = [([1], [2]), ([3], [4])]
+            mocked.side_effect = [([1], [{'message': '1',
+                                          'type': 'warning'}]),
+                                  ([3], [{'message': '2',
+                                          'type': 'error'}])]
             bank_statement_import = self.statement_import_model.create(
                 {'data_file': self.zip_file})
             res = bank_statement_import.import_file()
@@ -65,8 +68,9 @@ class TestImportBatch(TransactionCase):
                 'import_file should be called 2 times : '
                 '1 time for each file in the archive')
             mocked.assert_has_calls([call('test1\n'), call('test2\n')])
-            self.assertDictEqual({'statement_ids': [1, 3],
-                                  'notifications': [2, 4]}, res.get('context'))
+            self.assertDictEqual({'default_errors': '* 2',
+                                  'default_warnings': '* 1'},
+                                 res.get('context'))
 
     def test_text_file_import(self):
         with mock.patch('openerp.addons.'
@@ -74,7 +78,7 @@ class TestImportBatch(TransactionCase):
                         'account_bank_statement_import.'
                         'account_bank_statement_import.'
                         '_import_file') as mocked:
-            mocked.side_effect = [([1], [2])]
+            mocked.side_effect = [([1], [])]
             bank_statement_import = self.statement_import_model.create(
                 {'data_file': self.txt_file})
             res = bank_statement_import.import_file()
@@ -83,4 +87,4 @@ class TestImportBatch(TransactionCase):
                 'import_file should be called 1 times (not an archive)')
             mocked.assert_has_calls([call('test1\n')])
             self.assertDictEqual({'statement_ids': [1],
-                                  'notifications': [2]}, res.get('context'))
+                                  'notifications': []}, res.get('context'))
