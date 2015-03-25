@@ -193,10 +193,8 @@ class MT940(object):
         transaction = self.create_transaction()
         self.current_statement.transactions.append(transaction)
         self.current_transaction = transaction
-        transaction.execution_date = (
-            datetime.strptime((data[:6], fmt='%y%m%d'))
-        transaction.value_date = (
-            datetime.strptime(data[:6], fmt='%y%m%d'))
+        transaction.execution_date = datetime.strptime(data[:6], fmt='%y%m%d')
+        transaction.value_date = datetime.strptime(data[:6], fmt='%y%m%d')
         #  ...and the rest already is highly bank dependent
 
     def handle_tag_86(self, data):
