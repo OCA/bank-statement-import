@@ -22,6 +22,7 @@
 ##############################################################################
 import re
 import logging
+from datetime import datetime
 
 from openerp.addons.bank_statement_parse import parserlib
 

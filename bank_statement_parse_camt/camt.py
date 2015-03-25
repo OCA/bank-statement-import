@@ -260,20 +260,24 @@ class CamtParser(object):
         """
         Sanity check the document's namespace
         """
-        if not self.ns.startswith('{urn:iso:std:iso:20022:tech:xsd:camt.')\
-           and not self.ns.startswith('{ISO:camt.'):
+        if (not self.ns.startswith(
+            '{urn:iso:std:iso:20022:tech:xsd:camt.')
+                and not self.ns.startswith('{ISO:camt.')):
             raise ValueError(_(
                 "This does not seem to be a CAMT format bank statement."))
-
-        if not self.ns.startswith('{urn:iso:std:iso:20022:tech:xsd:camt.053.')\
-           and not self.ns.startswith('{ISO:camt.053'):
+        if (not self.ns.startswith(
+            '{urn:iso:std:iso:20022:tech:xsd:camt.053.')
+                and not self.ns.startswith('{ISO:camt.053')):
+                and not self.ns.startswith(
+                    '{urn:iso:std:iso:20022:tech:xsd:camt.052.')
+                and not self.ns.startswith('{ISO:camt.052')):
             raise ValueError(_(
-                "Only CAMT.053 is supported at the moment."))
+                "Only camt.052 and camt.053 supported at the moment."))
         return True
 
     def parse(self, data):
         """
-        Parse a CAMT053 XML file
+        Parse a camt.052 or camt.053 file.
         """
         try:
             root = etree.fromstring(
