@@ -67,7 +67,6 @@ class account_bank_statement_import(models.TransientModel):
             'view_mode': action.view_mode,
             'target': action.target,
             'view_id': action.view_id.id,
-            'name': action.name,
             'context': {
                 'default_errors': '\n'.join(errors) or False,
                 'default_warnings': '\n'.join(warnings) or False
