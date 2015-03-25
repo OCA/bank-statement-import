@@ -25,7 +25,6 @@ from StringIO import StringIO
 from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
 from openerp.osv import orm
 from openerp.tools.translate import _
-from openerp.addons.bank_statement_parse.parserlib import convert
 
 
 class AccountBankStatementImport(orm.TransientModel):
@@ -84,7 +83,7 @@ class AccountBankStatementImport(orm.TransientModel):
         ns_statements = []
         for statement in os_statements:
             # Set statement_data
-            statement_date = convert.date2str(statement.date)
+            statement_date = statement.date.strftime('%Y-%m-%d')
             ns_statement = dict(
                 acc_number=statement.local_account,
                 name=statement.id,

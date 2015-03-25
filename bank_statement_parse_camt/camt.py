@@ -2,7 +2,7 @@
 """Implement BankStatementParser for camt files."""
 ##############################################################################
 #
-#    Copyright (C) 2013 Therp BV (<http://therp.nl>)
+#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from datetime import datetime
 from lxml import etree
 from openerp.addons.bank_statement_parse import parserlib
-from openerp.addons.bank_statement_parse.parserlib.convert import str2date
 from openerp.tools.translate import _
 
 
@@ -150,7 +150,7 @@ class CamtParser(object):
             transaction_detail = self.parse_entry(entry_node)
             if number == 0:
                 # Take the statement date from the first transaction
-                statement.date = str2date(
+                statement.date = datetime.strptime(
                     transaction_detail['execution_date'], "%Y-%m-%d")
             number += 1
             transaction_detail['id'] = identifier + str(number).zfill(4)

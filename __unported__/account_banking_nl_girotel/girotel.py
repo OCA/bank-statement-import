@@ -44,10 +44,35 @@ As a counter measure, all imported data is converted to SWIFT-format before
 usage.
 '''
 from account_banking.parsers import models
-from account_banking.parsers.convert import str2date, to_swift
+from account_banking.parsers.convert import str2date
 from tools.translate import _
 import re
 import csv
+
+_SWIFT = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+          "/-?:().,'+ ")
+
+
+def to_swift(astr, schemes=None):
+    """
+    Reduce a string to SWIFT fmt
+    """
+    schemes = schemes or ['utf-8', 'latin-1', 'ascii']
+    if not isinstance(astr, unicode):
+        for scheme in schemes:
+            try:
+                astr = unicode(astr, scheme)
+                break
+            except UnicodeDecodeError:
+                pass
+        if not isinstance(astr, unicode):
+            return astr
+
+    swift_string = [
+        x in _SWIFT and x or ' '
+        for x in unicodedata.normalize('NFKD', astr).encode('ascii', 'ignore')
+    ]
+    return ''.join(swift_string)
 
 bt = models.mem_bank_transaction
 

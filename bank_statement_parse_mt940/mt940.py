@@ -24,8 +24,12 @@ import re
 import logging
 
 from openerp.addons.bank_statement_parse import parserlib
-from openerp.addons.bank_statement_parse.parserlib.convert import str2date
-from openerp.addons.bank_statement_parse.parserlib.convert import str2float
+
+
+def str2amount(sign, str):
+    """Convert sign (C or D) and amount in string to signed amount (float)."""
+    factor = (1 if sign == 'C' else -1)
+    return factor * float(str.replace(',', '.'))
 
 
 class MT940(object):
@@ -163,17 +167,18 @@ class MT940(object):
     def handle_tag_60F(self, cr, data):
         """get start balance and currency"""
         self.current_statement.local_currency = data[7:10]
-        self.current_statement.date = str2date(data[1:7], fmt='%y%m%d')
-        self.current_statement.start_balance = \
-            (1 if data[0] == 'C' else -1) * str2float(data[10:])
+        self.current_statement.date = (
+            datetime.strptime(data[1:7], fmt='%y%m%d'))
+        self.current_statement.start_balance = (
+            str2amount(data[0], data[10:]))
         self.current_statement.id = '%s/%s' % (
             self.current_statement.date.strftime('%Y-%m-%d'),
             self.current_statement.id)
 
     def handle_tag_62F(self, cr, data):
         """get ending balance"""
-        self.current_statement.end_balance = \
-            (1 if data[0] == 'C' else -1) * str2float(data[10:])
+        self.current_statement.end_balance = (
+            str2amount(data[0], data[10:]))
 
     def handle_tag_64(self, cr, data):
         """get current balance in currency"""
@@ -188,8 +193,10 @@ class MT940(object):
         transaction = self.create_transaction(cr)
         self.current_statement.transactions.append(transaction)
         self.current_transaction = transaction
-        transaction.execution_date = str2date(data[:6], fmt='%y%m%d')
-        transaction.value_date = str2date(data[:6], fmt='%y%m%d')
+        transaction.execution_date = (
+            datetime.strptime((data[:6], fmt='%y%m%d'))
+        transaction.value_date = (
+            datetime.strptime(data[:6], fmt='%y%m%d'))
         #  ...and the rest already is highly bank dependent
 
     def handle_tag_86(self, cr, data):
