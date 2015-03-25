@@ -9,13 +9,13 @@
             <field name="arch" type="xml">
                 <form string="Import Bank Statements Results">
                     <h2><label for="errors"/> </h2>
-                    <field name="errors" readonly='1' col="4"/>
+                    <field name="errors" readonly='1'/>
                     <h2><label for="warnings"/></h2>
                     <field name="warnings" readonly='1'/>
+                    <footer>
+                        <button icon="gtk-close" special="cancel" string="_Close" class="oe_highlight"/>
+                    </footer>
                 </form>
-                <footer>
-                    <button icon="gtk-close" class='oe_highlight' special="cancel" string="_Close" colspan="4" />
-                </footer>
             </field>
         </record>
 
