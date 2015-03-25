@@ -67,37 +67,37 @@ class MT940(object):
         self.statements = []
         'parsed statements up to now'
 
-    def create_transaction(self, cr):
+    def create_transaction(self):
         """Create and return BankTransaction object."""
         transaction = parserlib.BankTransaction()
         return transaction
 
-    def is_mt940(self, cr, line):
+    def is_mt940(self, line):
         """determine if a line is the header of a statement"""
         if not bool(re.match(self.header_regex, line)):
             raise ValueError(
                 'This does not seem to be a MT940 IBAN ING format bank '
                 'statement.')
 
-    def parse(self, cr, data):
+    def parse(self, data):
         """Parse mt940 bank statement file contents."""
-        self.is_mt940(cr, data)
+        self.is_mt940(data)
         iterator = data.replace('\r\n', '\n').split('\n').__iter__()
         line = None
         record_line = ''
         try:
             while True:
                 if not self.current_statement:
-                    self.handle_header(cr, line, iterator)
+                    self.handle_header(line, iterator)
                 line = iterator.next()
-                if not self.is_tag(cr, line) and not self.is_footer(cr, line):
+                if not self.is_tag(line) and not self.is_footer(line):
                     record_line = self.append_continuation_line(
-                        cr, record_line, line)
+                        record_line, line)
                     continue
                 if record_line:
-                    self.handle_record(cr, record_line)
-                if self.is_footer(cr, line):
-                    self.handle_footer(cr, line, iterator)
+                    self.handle_record(record_line)
+                if self.is_footer(line):
+                    self.handle_footer(line, iterator)
                     record_line = ''
                     continue
                 record_line = line
@@ -105,42 +105,42 @@ class MT940(object):
             pass
         if self.current_statement:
             if record_line:
-                self.handle_record(cr, record_line)
+                self.handle_record(record_line)
                 record_line = ''
             self.statements.append(self.current_statement)
             self.current_statement = None
         return self.statements
 
-    def append_continuation_line(self, cr, line, continuation_line):
+    def append_continuation_line(self, line, continuation_line):
         """append a continuation line for a multiline record.
         Override and do data cleanups as necessary."""
         return line + continuation_line
 
-    def create_statement(self, cr):
+    def create_statement(self):
         """create a mem_bank_statement - override if you need a custom
         implementation"""
         return parserlib.BankStatement()
 
-    def is_footer(self, cr, line):
+    def is_footer(self, line):
         """determine if a line is the footer of a statement"""
         return line and bool(re.match(self.footer_regex, line))
 
-    def is_tag(self, cr, line):
+    def is_tag(self, line):
         """determine if a line has a tag"""
         return line and bool(re.match(self.tag_regex, line))
 
-    def handle_header(self, cr, line, iterator):
+    def handle_header(self, line, iterator):
         """skip header lines, create current statement"""
         for i in range(self.header_lines):
             iterator.next()
-        self.current_statement = self.create_statement(cr)
+        self.current_statement = self.create_statement()
 
-    def handle_footer(self, cr, line, iterator):
+    def handle_footer(self, line, iterator):
         """add current statement to list, reset state"""
         self.statements.append(self.current_statement)
         self.current_statement = None
 
-    def handle_record(self, cr, line):
+    def handle_record(self, line):
         """find a function to handle the record represented by line"""
         tag_match = re.match(self.tag_regex, line)
         tag = tag_match.group(0).strip(':')
@@ -149,22 +149,22 @@ class MT940(object):
             logging.error(line)
             return
         handler = getattr(self, 'handle_tag_%s' % tag)
-        handler(cr, line[tag_match.end():])
+        handler(line[tag_match.end():])
 
-    def handle_tag_20(self, cr, data):
+    def handle_tag_20(self, data):
         """ignore reference number"""
         pass
 
-    def handle_tag_25(self, cr, data):
+    def handle_tag_25(self, data):
         """get account owner information"""
         self.current_statement.local_account = data
 
-    def handle_tag_28C(self, cr, data):
+    def handle_tag_28C(self, data):
         """get sequence number _within_this_batch_ - this alone
         doesn't provide a unique id!"""
         self.current_statement.id = data
 
-    def handle_tag_60F(self, cr, data):
+    def handle_tag_60F(self, data):
         """get start balance and currency"""
         self.current_statement.local_currency = data[7:10]
         self.current_statement.date = (
@@ -175,22 +175,22 @@ class MT940(object):
             self.current_statement.date.strftime('%Y-%m-%d'),
             self.current_statement.id)
 
-    def handle_tag_62F(self, cr, data):
+    def handle_tag_62F(self, data):
         """get ending balance"""
         self.current_statement.end_balance = (
             str2amount(data[0], data[10:]))
 
-    def handle_tag_64(self, cr, data):
+    def handle_tag_64(self, data):
         """get current balance in currency"""
         pass
 
-    def handle_tag_65(self, cr, data):
+    def handle_tag_65(self, data):
         """get future balance in currency"""
         pass
 
-    def handle_tag_61(self, cr, data):
+    def handle_tag_61(self, data):
         """get transaction values"""
-        transaction = self.create_transaction(cr)
+        transaction = self.create_transaction()
         self.current_statement.transactions.append(transaction)
         self.current_transaction = transaction
         transaction.execution_date = (
@@ -199,7 +199,7 @@ class MT940(object):
             datetime.strptime(data[:6], fmt='%y%m%d'))
         #  ...and the rest already is highly bank dependent
 
-    def handle_tag_86(self, cr, data):
+    def handle_tag_86(self, data):
         """details for previous transaction, here most differences between
         banks occur"""
         pass

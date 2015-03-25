@@ -122,7 +122,7 @@ class CamtParser(object):
             self.get_balance_type_node(node, 'ITBD'))
         return self.parse_amount(nodes[-1])
 
-    def parse_statement(self, cr, node):
+    def parse_statement(self, node):
         """
         Parse a single Stmt node.
 
@@ -271,7 +271,7 @@ class CamtParser(object):
                 "Only CAMT.053 is supported at the moment."))
         return True
 
-    def parse(self, cr, data):
+    def parse(self, data):
         """
         Parse a CAMT053 XML file
         """
@@ -290,7 +290,7 @@ class CamtParser(object):
         self.assert_tag(root[0][0], 'GrpHdr')
         statements = []
         for node in root[0][1:]:
-            statement = self.parse_statement(cr, node)
+            statement = self.parse_statement(node)
             if len(statement.transactions):
                 statements.append(statement)
         return statements

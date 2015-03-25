@@ -38,13 +38,13 @@ class MT940Parser(mt940.MT940):
         r'(?P<reference>\w{1,50})'
     )
 
-    def handle_tag_25(self, cr, data):
+    def handle_tag_25(self, data):
         """ING: For current accounts: IBAN+ ISO 4217 currency code."""
         self.current_statement.local_account = data[:-3]
 
-    def handle_tag_61(self, cr, data):
+    def handle_tag_61(self, data):
         """get transaction values"""
-        super(MT940Parser, self).handle_tag_61(cr, data)
+        super(MT940Parser, self).handle_tag_61(data)
         re_61 = self.tag_61_regex.match(data)
         if not re_61:
             raise ValueError("Cannot parse %s" % data)
@@ -53,11 +53,11 @@ class MT940Parser(mt940.MT940):
             str2amount(parsed_data['sign'], parsed_data['amount']))
         self.current_transaction.reference = parsed_data['reference']
 
-    def handle_tag_86(self, cr, data):
+    def handle_tag_86(self, data):
         """Parse 86 tag containing reference data."""
         if not self.current_transaction:
             return
-        super(MT940Parser, self).handle_tag_86(cr, data)
+        super(MT940Parser, self).handle_tag_86(data)
         codewords = ['RTRN', 'BENM', 'ORDP', 'CSID', 'BUSP', 'MARF', 'EREF',
                      'PREF', 'REMI', 'ID', 'PURP', 'ULTB', 'ULTD',
                      'CREF', 'IREF', 'CNTP', 'ULTC', 'EXCH', 'CHGS']

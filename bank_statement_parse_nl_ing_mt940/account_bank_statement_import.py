@@ -37,7 +37,7 @@ class AccountBankStatementImport(models.TransientModel):
         parser = Parser()
         try:
             _logger.debug("Try parsing with MT940 IBAN ING.")
-            os_statements = parser.parse(cr, data_file)
+            os_statements = parser.parse(data_file)
         except ValueError:
             # Returning super will call next candidate:
             _logger.debug("Statement file was not a MT940 IBAN ING file.")

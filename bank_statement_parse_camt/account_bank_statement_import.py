@@ -38,7 +38,7 @@ class AccountBankStatementImport(models.TransientModel):
         parser = Parser()
         try:
             _logger.debug("Try parsing with camt.")
-            os_statements = parser.parse(cr, data_file)
+            os_statements = parser.parse(data_file)
         except ValueError:
             # Not a camt file, returning super will call next candidate:
             _logger.debug("Statement file was not a camt file.")
