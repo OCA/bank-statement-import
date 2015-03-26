@@ -29,104 +29,36 @@ class BankTransaction(object):
     """
     # Lock attributes to enable parsers to trigger non-conformity faults
     __slots__ = [
-
-        'id',
-        # Message id
-
-        'statement_id',
-        # The bank statement this message was reported on
-
-        'transfer_type',
-        # Action type that initiated this message
-
-        'reference',
-        # A reference to this message for communication
-
-        'local_account',
-        # The account this message was meant for
-
-        'local_currency',
-        # The currency the bank used to process the transferred amount
-
-        'execution_date',
-        # The posted date of the action
-
-        'value_date',
-        # The value date of the action
-
-        'remote_account',
-        # The account of the other party
-
-        'remote_currency',
-        # The currency used by the other party
-
+        'id',  # Message id
+        'statement_id',  # The bank statement this message was reported on
+        'transfer_type',  # Action type that initiated this message
+        'reference',  # A reference to this message for communication
+        'local_account',  # The account this message was meant for
+        'local_currency',  # The currency used for the transferred amount
+        'execution_date',  # The posted date of the action
+        'value_date',  # The value date of the action
+        'remote_account',  # The account of the other party
+        'remote_currency',  # The currency used by the other party
         'exchange_rate',
         # The exchange rate used for conversion of local_currency and
         # remote_currency
-
         'transferred_amount',
         # The actual amount transferred -
         #   negative means sent, positive means received
         # Most banks use the local_currency to express this amount, but there
         # may be exceptions I'm unaware of.
-
         'message',
         # A direct message from the initiating party to the receiving party
         #   A lot of banks abuse this to stuff all kinds of structured
         #   information in this message. It is the task of the parser to split
         #   this up into the appropriate attributes.
-
-        'remote_owner',
-        # The name of the other party
-
+        'remote_owner',  # The name of the other party
         'remote_owner_address',
         # The other parties address lines - the only attribute that is a list
-
-        'remote_owner_city',
-        # The other parties city name belonging to the previous
-
-        'remote_owner_postalcode',
-        # The other parties postal code belonging to the address
-
-        'remote_owner_country_code',
-        # The other parties two letter ISO country code belonging to the
-        # previous
-
-        'remote_owner_custno',
-        # The other parties customer number
-
-        # For identification of private other parties, the following attributes
-        # are available and self explaining. Most banks allow only one per
-        # message.
-        'remote_owner_ssn',
-        'remote_owner_tax_id',
-        'remote_owner_employer_id',
-        'remote_owner_passport_no',
-        'remote_owner_idcard_no',
-        'remote_owner_driverslicense_no',
-
-        # Other private party information fields. Not all banks use it, but
-        # at least SEPA messaging allowes it.
-        'remote_owner_birthdate',
-        'remote_owner_cityofbirth',
-        'remote_owner_countryofbirth',
-        'remote_owner_provinceofbirth',
-
-        # For the identification of remote banks, the following attributes are
-        # available and self explaining. Most banks allow only one per
-        # message.
-        'remote_bank_bic',
-        'remote_bank_bei',
-        'remote_bank_ibei',
-        'remote_bank_eangln',
-        'remote_bank_chips_uid',
-        'remote_bank_duns',
-        'remote_bank_tax_id',
-
-        # For other identification purposes: both of the next attributes must
-        # be filled.
-        'remote_bank_proprietary_id',
-        'remote_bank_proprietary_id_issuer',
+        'remote_owner_city',  # The other parties city name
+        'remote_owner_postalcode',  # The other parties zip code belonging
+        'remote_owner_country_code',  # The other parties ISO country code
+        'remote_bank_bic',  # The bic belonging to other party's bank
 
         # The following attributes are for allowing banks to communicate about
         # specific transactions. The transferred_amount must include these
@@ -135,18 +67,14 @@ class BankTransaction(object):
         'provision_costs',
         'provision_costs_currency',
         'provision_costs_description',
-
         # An error message for interaction with the user
         # Only used when mem_transaction.valid returns False.
         'error_message',
-
         # Storno attribute. When True, make the cancelled debit eligible for
         # a next direct debit run
         'storno_retry',
-
         # The full extend of data from which the transaction has been parsed
         'data',
-
     ]
 
     # transfer_type's to be used by the business logic.
@@ -160,8 +88,6 @@ class BankTransaction(object):
     #                       Will be excluded from matching.
     #   CHECK               A delayed payment. Can be used to trigger extra
     #                       moves from temporary accounts. (Money away).
-    #                       TODO: No special treatment yet.
-    #                       Will be selected for matching.
     #   DIRECT_DEBIT        Speaks for itself. When outgoing (credit) and
     #                       matched, can signal the matched invoice triaged.
     #                       Will be selected for matching.
@@ -205,16 +131,11 @@ class BankTransaction(object):
         BANK_COSTS, BANK_TERMINAL, CHECK, DIRECT_DEBIT, ORDER,
         PAYMENT_BATCH, PAYMENT_TERMINAL, PERIODIC_ORDER, STORNO,
     ]
-    type_map = {
-        # This can be a translation map of type versus bank type. Each key is
-        # the real transfer_type, each value is the BankTransaction.type
-    }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """
         Initialize values
         """
-        super(BankTransaction, self).__init__(*args, **kwargs)
         for attr in self.__slots__:
             setattr(self, attr, '')
         self.remote_owner_address = []
@@ -223,28 +144,5 @@ class BankTransaction(object):
         self.execution_date = ''
         self.remote_account = ''
         self.transferred_amount = ''
-
-    def _get_type(self):
-        """Getter for type property."""
-        if self.transfer_type in self.type_map:
-            return self.type_map[self.transfer_type]
-        return self.transfer_type
-
-    def _set_type(self, value):
-        """Setter for type property."""
-        if value in self.types:
-            self.transfer_type = value
-        else:
-            raise ValueError(_('Invalid value for transfer_type'))
-
-    type = property(_get_type, _set_type)
-
-    def is_valid(self):
-        """
-        Heuristic check: at least id, execution_date, remote_account and
-        transferred_amount should be filled to create a valid transfer.
-        """
-        return (self.execution_date and self.remote_account and
-                self.transferred_amount and True) or False
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

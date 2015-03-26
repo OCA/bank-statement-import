@@ -25,20 +25,6 @@ from openerp.addons.bank_statement_parse import parserlib
 from openerp.tools.translate import _
 
 
-class CamtBankTransaction(parserlib.BankTransaction):
-    """Override BankTransaction for different validation."""
-
-    def __init__(self, values, *args, **kwargs):
-        """Initialize object from values dictionary."""
-        super(CamtBankTransaction, self).__init__(*args, **kwargs)
-        for attr in values:
-            setattr(self, attr, values[attr])
-
-    def is_valid(self):
-        """Camt transaction is valid, unless error_message set."""
-        return not self.error_message
-
-
 class CamtParser(object):
     """Parser for camt bank statement import files."""
 
@@ -154,7 +140,7 @@ class CamtParser(object):
                     transaction_detail['execution_date'], "%Y-%m-%d")
             number += 1
             transaction_detail['id'] = identifier + str(number).zfill(4)
-            transaction = CamtBankTransaction(transaction_detail)
+            transaction = parserlib.BankTransaction(transaction_detail)
             transaction.data = etree.tostring(entry_node)
             statement.transactions.append(transaction)
         return statement
@@ -171,9 +157,10 @@ class CamtParser(object):
         :param node: entry node
         """
         transfer_type_info = self.find(node, './ns:BkTxCd/ns:Prtry/ns:Cd')
+        res = ''
         if transfer_type_info is not None:
-            return transfer_type_info.text
-        return parserlib.BankTransaction.ORDER
+            res = transfer_type_info.text
+        return res
 
     def parse_entry(self, node):
         """
@@ -258,16 +245,18 @@ class CamtParser(object):
 
     def check_version(self):
         """
-        Sanity check the document's namespace
+        Validate validity of camt file.
         """
+        # Check wether it is camt at all:
         if (not self.ns.startswith(
-            '{urn:iso:std:iso:20022:tech:xsd:camt.')
+                '{urn:iso:std:iso:20022:tech:xsd:camt.')
                 and not self.ns.startswith('{ISO:camt.')):
             raise ValueError(_(
                 "This does not seem to be a CAMT format bank statement."))
+        # Check wether version 052 or 053:
         if (not self.ns.startswith(
-            '{urn:iso:std:iso:20022:tech:xsd:camt.053.')
-                and not self.ns.startswith('{ISO:camt.053')):
+                '{urn:iso:std:iso:20022:tech:xsd:camt.053.')
+                and not self.ns.startswith('{ISO:camt.053')
                 and not self.ns.startswith(
                     '{urn:iso:std:iso:20022:tech:xsd:camt.052.')
                 and not self.ns.startswith('{ISO:camt.052')):

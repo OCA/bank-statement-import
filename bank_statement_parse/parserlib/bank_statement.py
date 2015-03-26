@@ -24,12 +24,7 @@
 class BankStatement(object):
     """
     A BankStatement is a real life projection of a bank statement paper
-    containing a report of one or more transactions done. As these reports can
-    contain payments that originate in several accounting periods, period is an
-    attribute of mem_bank_transaction, not of BankStatement.
-    Also note that the statement_id is copied from the bank statement, and not
-    generated from any sequence. This enables us to skip old data in new
-    statement files.
+    containing a report of one or more transactions done.
     """
     # Lock attributes to enable parsers to trigger non-conformity faults
     __slots__ = [
@@ -43,7 +38,6 @@ class BankStatement(object):
     ]
 
     def __init__(self, *args, **kwargs):
-        super(BankStatement, self).__init__(*args, **kwargs)
         self.id = ''
         self.local_account = ''
         self.local_currency = ''
@@ -51,17 +45,5 @@ class BankStatement(object):
         self.end_balance = 0.0
         self.date = ''
         self.transactions = []
-
-    def is_valid(self):
-        """
-        Final check: ok if calculated end_balance and parsed end_balance are
-        identical and perform a heuristic check on the transactions.
-        """
-        if any([x for x in self.transactions if not x.is_valid()]):
-            return False
-        check = float(self.start_balance)
-        for transaction in self.transactions:
-            check += float(transaction.transferred_amount)
-        return abs(check - float(self.end_balance)) < 0.0001
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
