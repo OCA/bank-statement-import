@@ -108,9 +108,10 @@ class account_bank_statement_import(models.TransientModel):
                     _logger.debug('Reading file %s from archive', ustr(name))
                     single_data = myzip.read(name)
                     try:
-                        st_ids, notes = self._import_file(single_data)
-                        statement_ids.extend(st_ids)
-                        notifications.extend(notes)
+                        with self.env.cr.savepoint():
+                            st_ids, notes = self._import_file(single_data)
+                            statement_ids.extend(st_ids)
+                            notifications.extend(notes)
                     except Exception as e:
                         _logger.exception('Import of %s failed', name)
                         errors.append(self._get_error_notification(name, e))
