@@ -31,36 +31,23 @@ from openerp.tools.translate import _
 class CamtParser(object):
     """Parser for camt bank statement import files."""
 
-    def find(self, node, expr):
-        """
-        Like xpath(), but return first result if any or else None
-
-        Return None to test nodes for being truesy
-        """
-        result = node.xpath(expr, namespaces={'ns': self.ns[1:-1]})
-        if result:
-            return result[0]
-        return None
-
     def parse_amount(self, ns, node):
-        """Parse element that contains both Amount and CreditDebitIndicator
-
-        :return: signed amount
-        :returntype: float
-        """
+        """Parse element that contains Amount and CreditDebitIndicator."""
+        if not node:
+            return 0.0
         sign = -1 if node.find(ns + 'CdtDbtInd').text == 'DBIT' else 1
         return sign * float(node.find(ns + 'Amt').text)
 
     def add_value_from_node(
             self, ns, node, xpath_str, obj, attr_name, join_str=None):
-        """Add value to object from first or all nodes found with xpath.""" 
+        """Add value to object from first or all nodes found with xpath."""
         found_node = node.xpath(xpath_str, namespaces={'ns': ns})
         if found_node:
-            if join == None:
+            if join_str == None:
                 attr_value = found_node[0].text
             else:
                 attr_value = join_str.join([x.text for x in found_node])
-            setattr(obj, attr_name, attr_value
+            setattr(obj, attr_name, attr_value)
 
     def get_party_values(self, ns, details_node, transaction):
         """
@@ -85,38 +72,42 @@ class CamtParser(object):
                 './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
             if address_node:
                 transaction.remote_owner_address = [address_node[0].text]
-        account_node = self.find(
-            details_node, './ns:RltdPties/ns:%sAcct/ns:Id' % party_type)
-        if account_node is not None:
-            iban_node = self.find(account_node[0], './ns:IBAN')
-            if iban_node is not None:
-                transaction.remote_account = iban_node.text
-                bic_node = self.find(
-                    details_node,
-                    './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' %
-                    party_type
+        account_node = details_node.xpath(
+            './ns:RltdPties/ns:%sAcct/ns:Id' % party_type,
+            namespaces={'ns': ns}
+        )
+        # Get remote_account from iban or from domestic account:
+        if account_node:
+            iban_node = account_node[0].xpath(
+                './ns:IBAN', namespaces={'ns': ns})
+            if iban_node:
+                transaction.remote_account = iban_node[0].text
+                bic_node = details_node.xpath(
+                    './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type,
+                    namespaces={'ns': ns}
                 )
-                if bic_node is not None:
-                    transaction.remote_bank_bic = bic_node.text
+                if bic_node:
+                    transaction.remote_bank_bic = bic_node[0].text
             else:
-                domestic_node = self.find(account_node, './ns:Othr/ns:Id')
-                transaction.remote_account = (
-                    domestic_node.text if domestic_node is not None else False)
+                self.add_value_from_node(
+                    ns, account_node, './ns:Othr/ns:Id', transaction,
+                    'remote_account'
+                )
 
     def parse_entry(self, ns, node):
         """Parse transaction (entry) node."""
         transaction = BankTransaction()
         for attr_name, xpath_str in {
-            'transfer_type': './ns:BkTxCd/ns:Prtry/ns:Cd',
-            'execution_date': './ns:BookgDt/ns:Dt',
-            'value_date': './ns:ValDt/ns:Dt',
-        }.items():
+                'transfer_type': './ns:BkTxCd/ns:Prtry/ns:Cd',
+                'execution_date': './ns:BookgDt/ns:Dt',
+                'value_date': './ns:ValDt/ns:Dt',
+            }.items():
             self.add_value_from_node(
                 ns, node, xpath_str, transaction, attr_name)
         transaction.transferred_amount = self.parse_amount(ns, node)
         details_node = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
-        if len(details_node):
+        if details_node:
             # message
             self.add_value_from_node(
                 ns, details_node, './ns:RmtInf/ns:Ustrd', transaction,
@@ -148,11 +139,9 @@ class CamtParser(object):
         different kind of node:
         OPBD = OpeningBalance
         PRCD = PreviousClosingBalance
-        ITBD = InterimBalance (first ITBD is start-, second is end-balance) 
+        ITBD = InterimBalance (first ITBD is start-, second is end-balance)
         CLBD = ClosingBalance
         """
-        start_balance = 0.0
-        end_balance = 0.0
         start_balance_node = None
         end_balance_node = None
         for node_name in ['OPBD', 'PRCD', 'CLBD', 'ITBD']:
@@ -168,14 +157,13 @@ class CamtParser(object):
                     end_balance_node = balance_node
                 else:
                     if not start_balance_node:
-                        start_balance_node = [balance_node[0]]
+                        start_balance_node = balance_node[0]
                     if not end_balance_node:
-                        end_balance_node = [balance_node[-1]]
-        if start_balance_node:
-            start_balance = self.parse_amount(ns, nodes[0])
-        if end_balance_node:
-            end_balance = self.parse_amount(ns, nodes[0])
-        return (start_balance, end_balance)
+                        end_balance_node = balance_node[-1]
+        return (
+            self.parse_amount(ns, start_balance_node),
+            self.parse_amount(ns, end_balance_node)
+        )
 
     def parse_statement(self, ns, node):
         """Parse a single Stmt node."""
@@ -234,12 +222,12 @@ class CamtParser(object):
             raise ValueError(_(
                 "Only camt.052 and camt.053 supported at the moment."))
         # Check GrpHdr element:
-        root_0_0 = root[0][0].tag(len(ns):)  # root tag stripped of namespace
+        root_0_0 = root[0][0].tag[len(ns):]  # root tag stripped of namespace
         if root_0_0 != 'GrpHdr':
             raise ValueError(_(
                 "Expected tag '%s', got '%s' instead." %
                 ('GrpHdr', root_0_0)
-            )
+            ))
 
     def parse(self, data):
         """Parse a camt.052 or camt.053 file."""
