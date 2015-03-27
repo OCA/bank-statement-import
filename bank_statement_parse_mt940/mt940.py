@@ -163,7 +163,7 @@ class MT940(object):
     def handle_tag_28C(self, data):
         """get sequence number _within_this_batch_ - this alone
         doesn't provide a unique id!"""
-        self.current_statement.id = data
+        self.current_statement.statement_id = data
 
     def handle_tag_60F(self, data):
         """get start balance and currency"""
@@ -172,9 +172,9 @@ class MT940(object):
             datetime.strptime(data[1:7], fmt='%y%m%d'))
         self.current_statement.start_balance = (
             str2amount(data[0], data[10:]))
-        self.current_statement.id = '%s/%s' % (
+        self.current_statement.statement_id = '%s/%s' % (
             self.current_statement.date.strftime('%Y-%m-%d'),
-            self.current_statement.id)
+            self.current_statement.statement_id)
 
     def handle_tag_62F(self, data):
         """get ending balance"""

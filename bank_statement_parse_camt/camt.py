@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Implement BankStatementParser for camt files."""
+"""Class to parse camt files."""
 ##############################################################################
 #
 #    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
@@ -21,34 +21,15 @@
 ##############################################################################
 from datetime import datetime
 from lxml import etree
-from openerp.addons.bank_statement_parse import parserlib
+from openerp.addons.bank_statement_parse.parserlib import (
+    BankStatement,
+    BankTransaction
+)
 from openerp.tools.translate import _
 
 
 class CamtParser(object):
     """Parser for camt bank statement import files."""
-
-    def tag(self, node):
-        """
-        Return the tag of a node, stripped from its namespace
-        """
-        return node.tag[len(self.ns):]
-
-    def assert_tag(self, node, expected):
-        """
-        Get node's stripped tag and compare with expected
-        """
-        assert self.tag(node) == expected, (
-            "Expected tag '%s', got '%s' instead" %
-            (self.tag(node), expected))
-
-    def xpath(self, node, expr):
-        """
-        Wrap namespaces argument into call to Element.xpath():
-
-        self.xpath(node, './ns:Acct/ns:Id')
-        """
-        return node.xpath(expr, namespaces={'ns': self.ns[1:-1]})
 
     def find(self, node, expr):
         """
@@ -61,213 +42,207 @@ class CamtParser(object):
             return result[0]
         return None
 
-    def get_balance_type_node(self, node, balance_type):
-        """
-        :param node: BkToCstmrStmt/Stmt/Bal node
-        :param balance type: one of 'OPBD', 'PRCD', 'ITBD', 'CLBD'
-        """
-        code_expr = ('./ns:Bal/ns:Tp/ns:CdOrPrtry/ns:Cd[text()="%s"]/../../..'
-                     % balance_type)
-        return self.xpath(node, code_expr)
-
-    def parse_amount(self, node):
-        """
-        Parse an element that contains both Amount and CreditDebitIndicator
+    def parse_amount(self, ns, node):
+        """Parse element that contains both Amount and CreditDebitIndicator
 
         :return: signed amount
         :returntype: float
         """
-        sign = -1 if node.find(self.ns + 'CdtDbtInd').text == 'DBIT' else 1
-        return sign * float(node.find(self.ns + 'Amt').text)
+        sign = -1 if node.find(ns + 'CdtDbtInd').text == 'DBIT' else 1
+        return sign * float(node.find(ns + 'Amt').text)
 
-    def get_start_balance(self, node):
-        """
-        Find the (only) balance node with code OpeningBalance, or
-        the only one with code 'PreviousClosingBalance'
-        or the first balance node with code InterimBalance in
-        the case of preceeding pagination.
+    def add_value_from_node(
+            self, ns, node, xpath_str, obj, attr_name, join_str=None):
+        """Add value to object from first or all nodes found with xpath.""" 
+        found_node = node.xpath(xpath_str, namespaces={'ns': ns})
+        if found_node:
+            if join == None:
+                attr_value = found_node[0].text
+            else:
+                attr_value = join_str.join([x.text for x in found_node])
+            setattr(obj, attr_name, attr_value
 
-        :param node: BkToCstmrStmt/Stmt/Bal node
-        """
-        nodes = (
-            self.get_balance_type_node(node, 'OPBD') or
-            self.get_balance_type_node(node, 'PRCD') or
-            self.get_balance_type_node(node, 'ITBD'))
-        return self.parse_amount(nodes[0])
-
-    def get_end_balance(self, node):
-        """
-        Find the (only) balance node with code ClosingBalance, or
-        the second (and last) balance node with code InterimBalance in
-        the case of continued pagination.
-
-        :param node: BkToCstmrStmt/Stmt/Bal node
-        """
-        nodes = (
-            self.get_balance_type_node(node, 'CLBD') or
-            self.get_balance_type_node(node, 'ITBD'))
-        return self.parse_amount(nodes[-1])
-
-    def parse_statement(self, node):
-        """
-        Parse a single Stmt node.
-
-        Be sure to craft a unique, but short enough statement identifier,
-        as it is used as the basis of the generated move lines' names
-        which overflow when using the full IBAN and CAMT statement id.
-        """
-        statement = parserlib.BankStatement()
-        statement.local_account = (
-            self.xpath(node, './ns:Acct/ns:Id/ns:IBAN')[0].text
-            if self.xpath(node, './ns:Acct/ns:Id/ns:IBAN')
-            else self.xpath(node, './ns:Acct/ns:Id/ns:Othr/ns:Id')[0].text)
-
-        identifier = node.find(self.ns + 'Id').text
-        if identifier.upper().startswith('CAMT053'):
-            identifier = identifier[7:]
-        statement.id = identifier
-        local_currency_info = self.find(node, './ns:Acct/ns:Ccy')
-        if local_currency_info is not None:
-            statement.local_currency = local_currency_info.text
-        statement.start_balance = self.get_start_balance(node)
-        statement.end_balance = self.get_end_balance(node)
-        number = 0
-        for entry_node in self.xpath(node, './ns:Ntry'):
-            transaction_detail = self.parse_entry(entry_node)
-            if number == 0:
-                # Take the statement date from the first transaction
-                statement.date = datetime.strptime(
-                    transaction_detail['execution_date'], "%Y-%m-%d")
-            number += 1
-            transaction_detail['id'] = identifier + str(number).zfill(4)
-            transaction = parserlib.BankTransaction(transaction_detail)
-            transaction.data = etree.tostring(entry_node)
-            statement.transactions.append(transaction)
-        return statement
-
-    def get_transfer_type(self, node):
-        """
-        Map entry descriptions to transfer types. To extend with
-        proper mapping from BkTxCd/Domn/Cd/Fmly/Cd to transfer types
-        if we can get our hands on real life samples.
-
-        For now, leave as a hook for bank specific overrides to map
-        properietary codes from BkTxCd/Prtry/Cd.
-
-        :param node: entry node
-        """
-        transfer_type_info = self.find(node, './ns:BkTxCd/ns:Prtry/ns:Cd')
-        res = ''
-        if transfer_type_info is not None:
-            res = transfer_type_info.text
-        return res
-
-    def parse_entry(self, node):
-        """
-        :param node: entry node
-        """
-        entry_details = {
-            'execution_date': self.xpath(node, './ns:BookgDt/ns:Dt')[0].text,
-            'value_date': self.xpath(node, './ns:ValDt/ns:Dt')[0].text,
-            'transfer_type': self.get_transfer_type(node),
-            'transferred_amount': self.parse_amount(node)
-            }
-        details_node = self.xpath(node, './ns:NtryDtls/ns:TxDtls')
-        if len(details_node) == 1:
-            vals = self.parse_transaction_details(
-                details_node[0], entry_details)
-        else:
-            vals = entry_details
-        # If no message, try to get it from additional entry info
-        if not vals.get('message'):
-            additional_entry_info = self.find(node, './ns:AddtlNtryInf')
-            if additional_entry_info is not None:
-                vals['message'] = additional_entry_info.text
-        return vals
-
-    def get_party_values(self, details_node):
+    def get_party_values(self, ns, details_node, transaction):
         """
         Determine to get either the debtor or creditor party node
         and extract the available data from it
         """
-        vals = {}
-        party_type = self.find(
-            details_node,
-            '../../ns:CdtDbtInd').text == 'CRDT' and 'Dbtr' or 'Cdtr'
-        party_node = self.find(
-            details_node, './ns:RltdPties/ns:%s' % party_type)
+        party_type = 'Dbtr'
+        party_type_node = details_node.xpath(
+            '../../ns:CdtDbtInd', namespaces={'ns': ns})
+        if party_type_node and party_type_node[0].text != 'CRDT':
+            party_type = 'Cdtr'
+        party_node = details_node.xpath(
+            './ns:RltdPties/ns:%s' % party_type, namespaces={'ns': ns})
+        if party_node:
+            self.add_value_from_node(
+                ns, party_node, './ns:Nm', transaction, 'remote_owner')
+            self.add_value_from_node(
+                ns, party_node, './ns:PstlAdr/ns:Ctry', transaction,
+                'remote_owner_country'
+            )
+            address_node = party_node.xpath(
+                './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
+            if address_node:
+                transaction.remote_owner_address = [address_node[0].text]
         account_node = self.find(
             details_node, './ns:RltdPties/ns:%sAcct/ns:Id' % party_type)
-        bic_node = self.find(
-            details_node,
-            './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type)
-        if party_node is not None:
-            name_node = self.find(party_node, './ns:Nm')
-            vals['remote_owner'] = (
-                name_node.text if name_node is not None else False)
-            country_node = self.find(party_node, './ns:PstlAdr/ns:Ctry')
-            vals['remote_owner_country'] = (
-                country_node.text if country_node is not None else False)
-            address_node = self.find(party_node, './ns:PstlAdr/ns:AdrLine')
-            if address_node is not None:
-                vals['remote_owner_address'] = [address_node.text]
         if account_node is not None:
-            iban_node = self.find(account_node, './ns:IBAN')
+            iban_node = self.find(account_node[0], './ns:IBAN')
             if iban_node is not None:
-                vals['remote_account'] = iban_node.text
+                transaction.remote_account = iban_node.text
+                bic_node = self.find(
+                    details_node,
+                    './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' %
+                    party_type
+                )
                 if bic_node is not None:
-                    vals['remote_bank_bic'] = bic_node.text
+                    transaction.remote_bank_bic = bic_node.text
             else:
                 domestic_node = self.find(account_node, './ns:Othr/ns:Id')
-                vals['remote_account'] = (
+                transaction.remote_account = (
                     domestic_node.text if domestic_node is not None else False)
-        return vals
 
-    def parse_transaction_details(self, details_node, entry_values):
-        """
-        Parse a single details_node node
-        """
-        vals = dict(entry_values)
-        unstructured = self.xpath(details_node, './ns:RmtInf/ns:Ustrd')
-        if unstructured:
-            vals['message'] = ' '.join([x.text for x in unstructured])
-        structured = self.find(
-            details_node, './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref')
-        if structured is None or not structured.text:
-            structured = self.find(details_node, './ns:Refs/ns:EndToEndId')
-        if structured is not None:
-            vals['reference'] = structured.text
-        else:
-            if vals.get('message'):
-                vals['reference'] = vals['message']
-        vals.update(self.get_party_values(details_node))
-        return vals
+    def parse_entry(self, ns, node):
+        """Parse transaction (entry) node."""
+        transaction = BankTransaction()
+        for attr_name, xpath_str in {
+            'transfer_type': './ns:BkTxCd/ns:Prtry/ns:Cd',
+            'execution_date': './ns:BookgDt/ns:Dt',
+            'value_date': './ns:ValDt/ns:Dt',
+        }.items():
+            self.add_value_from_node(
+                ns, node, xpath_str, transaction, attr_name)
+        transaction.transferred_amount = self.parse_amount(ns, node)
+        details_node = node.xpath(
+            './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
+        if len(details_node):
+            # message
+            self.add_value_from_node(
+                ns, details_node, './ns:RmtInf/ns:Ustrd', transaction,
+                'message', join_str=' '
+            )
+            # reference
+            self.add_value_from_node(
+                ns, details_node, './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                transaction, 'reference'
+            )
+            if not transaction.reference:
+                self.add_value_from_node(
+                    ns, details_node, './ns:Refs/ns:EndToEndId',
+                    transaction, 'reference'
+                )
+            # remote party values
+            self.get_party_values(ns, details_node, transaction)
+        # If no message, try to get it from additional entry info
+        if not transaction.message:
+            self.add_value_from_node(
+                ns, node, './ns:AddtlNtryInf', transaction, 'message')
+        transaction.data = etree.tostring(node)
+        return transaction
 
-    def check_version(self):
+    def get_balance_amounts(self, ns, node):
+        """Return opening and closing balance.
+
+        Depending on kind of balance and statement, the balance might be in a
+        different kind of node:
+        OPBD = OpeningBalance
+        PRCD = PreviousClosingBalance
+        ITBD = InterimBalance (first ITBD is start-, second is end-balance) 
+        CLBD = ClosingBalance
+        """
+        start_balance = 0.0
+        end_balance = 0.0
+        start_balance_node = None
+        end_balance_node = None
+        for node_name in ['OPBD', 'PRCD', 'CLBD', 'ITBD']:
+            code_expr = (
+                './ns:Bal/ns:Tp/ns:CdOrPrtry/ns:Cd[text()="%s"]/../../..' %
+                node_name
+            )
+            balance_node = node.xpath(code_expr, namespaces={'ns': ns})
+            if balance_node:
+                if node_name in ['OPBD', 'PRCD']:
+                    start_balance_node = balance_node
+                elif node_name == 'CLBD':
+                    end_balance_node = balance_node
+                else:
+                    if not start_balance_node:
+                        start_balance_node = [balance_node[0]]
+                    if not end_balance_node:
+                        end_balance_node = [balance_node[-1]]
+        if start_balance_node:
+            start_balance = self.parse_amount(ns, nodes[0])
+        if end_balance_node:
+            end_balance = self.parse_amount(ns, nodes[0])
+        return (start_balance, end_balance)
+
+    def parse_statement(self, ns, node):
+        """Parse a single Stmt node."""
+        statement = BankStatement()
+        # local_account
+        local_account_node = node.xpath(
+            './ns:Acct/ns:Id/ns:IBAN', namespaces={'ns': ns})
+        if not local_account_node:
+            local_account_node = node.xpath(
+                './ns:Acct/ns:Id/ns:Othr/ns:Id', namespaces={'ns': ns})
+        statement.local_account = (
+            local_account_node and local_account_node[0].text)
+        # statement_id
+        statement_id_node = node.xpath(
+            './ns:Stmt/ns:Id', namespaces={'ns': ns})
+        if not statement_id_node:
+            statement_id_node = node.xpath(
+                './ns:Rpt/ns:Id', namespaces={'ns': ns})
+        statement.statement_id = (
+            statement_id_node and statement_id_node[0].text)
+        # local_currency
+        local_currency_node = node.xpath(
+            './ns:Acct/ns:Ccy', namespaces={'ns': ns})
+        statement.local_currency = (
+            local_currency_node and local_currency_node[0].text)
+        # Start and end balance
+        (statement.start_balance, statement.end_balance) = (
+            self.get_balance_amounts(ns, node))
+        transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
+        for entry_node in transaction_nodes:
+            transaction = self.parse_entry(ns, entry_node)
+            statement.transactions.append(transaction)
+        if statement.transactions:
+            # Take the statement date from the first transaction
+            statement.date = datetime.strptime(
+                statement.transactions[0]['execution_date'], "%Y-%m-%d")
+        return statement
+
+    def check_version(self, ns, root):
         """
         Validate validity of camt file.
         """
         # Check wether it is camt at all:
-        if (not self.ns.startswith(
+        if (not ns.startswith(
                 '{urn:iso:std:iso:20022:tech:xsd:camt.')
-                and not self.ns.startswith('{ISO:camt.')):
+                and not ns.startswith('{ISO:camt.')):
             raise ValueError(_(
                 "This does not seem to be a CAMT format bank statement."))
         # Check wether version 052 or 053:
-        if (not self.ns.startswith(
+        if (not ns.startswith(
                 '{urn:iso:std:iso:20022:tech:xsd:camt.053.')
-                and not self.ns.startswith('{ISO:camt.053')
-                and not self.ns.startswith(
+                and not ns.startswith('{ISO:camt.053')
+                and not ns.startswith(
                     '{urn:iso:std:iso:20022:tech:xsd:camt.052.')
-                and not self.ns.startswith('{ISO:camt.052')):
+                and not ns.startswith('{ISO:camt.052')):
             raise ValueError(_(
                 "Only camt.052 and camt.053 supported at the moment."))
-        return True
+        # Check GrpHdr element:
+        root_0_0 = root[0][0].tag(len(ns):)  # root tag stripped of namespace
+        if root_0_0 != 'GrpHdr':
+            raise ValueError(_(
+                "Expected tag '%s', got '%s' instead." %
+                ('GrpHdr', root_0_0)
+            )
 
     def parse(self, data):
-        """
-        Parse a camt.052 or camt.053 file.
-        """
+        """Parse a camt.052 or camt.053 file."""
         try:
             root = etree.fromstring(
                 data, parser=etree.XMLParser(recover=True))
@@ -278,12 +253,11 @@ class CamtParser(object):
         if not root:
             raise ValueError(_(
                 "Not a valid xml file, or not an xml file at all."))
-        self.ns = root.tag[:root.tag.index("}") + 1]
-        self.check_version()
-        self.assert_tag(root[0][0], 'GrpHdr')
+        ns = root.tag[1:root.tag.index("}") + 1]
+        self.check_version(ns, root)
         statements = []
         for node in root[0][1:]:
-            statement = self.parse_statement(node)
+            statement = self.parse_statement(ns, node)
             if len(statement.transactions):
                 statements.append(statement)
         return statements

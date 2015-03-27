@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+"""Classes and models to parse bank statements and import them into Odoo."""
 ##############################################################################
 #
 #    Copyright (C) 2014 Therp BV - http://therp.nl.
@@ -26,3 +27,5 @@
 ##############################################################################
 from . import model
 from . import parserlib
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
