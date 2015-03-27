@@ -40,49 +40,64 @@ class CamtParser(object):
 
     def add_value_from_node(
             self, ns, node, xpath_str, obj, attr_name, join_str=None):
-        """Add value to object from first or all nodes found with xpath."""
-        found_node = node.xpath(xpath_str, namespaces={'ns': ns})
-        if found_node:
-            if join_str == None:
-                attr_value = found_node[0].text
-            else:
-                attr_value = join_str.join([x.text for x in found_node])
-            setattr(obj, attr_name, attr_value)
+        """Add value to object from first or all nodes found with xpath.
 
-    def get_party_values(self, ns, details_node, transaction):
-        """
-        Determine to get either the debtor or creditor party node
-        and extract the available data from it
-        """
+        If xpath_str is a list (or iterable), it will be seen as a series
+        of search path's in order of preference. The first item that results
+        in a found node will be used to set a value."""
+        if not isinstance(xpath_str, (list, tuple)):
+            xpath_str = [xpath_str]
+        for search_str in xpath_str:
+            found_node = node.xpath(search_str, namespaces={'ns': ns})
+            if found_node:
+                if join_str == None:
+                    attr_value = found_node[0].text
+                else:
+                    attr_value = join_str.join([x.text for x in found_node])
+                setattr(obj, attr_name, attr_value)
+            break
+
+    def parse_transaction_details(self, ns, node, transaction):
+        """Parse transaction details (message, party, account...)."""
+        for attr_name, xpath_str in {
+                'message': './ns:RmtInf/ns:Ustrd',
+                'reference': [
+                    './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                    './ns:Refs/ns:EndToEndId',
+                ],
+            }.items():
+            self.add_value_from_node(
+                ns, node, xpath_str, transaction, attr_name)
+        # remote party values
         party_type = 'Dbtr'
-        party_type_node = details_node.xpath(
+        party_type_node = node.xpath(
             '../../ns:CdtDbtInd', namespaces={'ns': ns})
         if party_type_node and party_type_node[0].text != 'CRDT':
             party_type = 'Cdtr'
-        party_node = details_node.xpath(
+        party_node = node.xpath(
             './ns:RltdPties/ns:%s' % party_type, namespaces={'ns': ns})
         if party_node:
             self.add_value_from_node(
-                ns, party_node, './ns:Nm', transaction, 'remote_owner')
+                ns, party_node[0], './ns:Nm', transaction, 'remote_owner')
             self.add_value_from_node(
-                ns, party_node, './ns:PstlAdr/ns:Ctry', transaction,
+                ns, party_node[0], './ns:PstlAdr/ns:Ctry', transaction,
                 'remote_owner_country'
             )
             address_node = party_node.xpath(
                 './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
             if address_node:
                 transaction.remote_owner_address = [address_node[0].text]
-        account_node = details_node.xpath(
+        # Get remote_account from iban or from domestic account:
+        account_node = node.xpath(
             './ns:RltdPties/ns:%sAcct/ns:Id' % party_type,
             namespaces={'ns': ns}
         )
-        # Get remote_account from iban or from domestic account:
         if account_node:
             iban_node = account_node[0].xpath(
                 './ns:IBAN', namespaces={'ns': ns})
             if iban_node:
                 transaction.remote_account = iban_node[0].text
-                bic_node = details_node.xpath(
+                bic_node = node.xpath(
                     './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type,
                     namespaces={'ns': ns}
                 )
@@ -90,11 +105,11 @@ class CamtParser(object):
                     transaction.remote_bank_bic = bic_node[0].text
             else:
                 self.add_value_from_node(
-                    ns, account_node, './ns:Othr/ns:Id', transaction,
+                    ns, account_node[0], './ns:Othr/ns:Id', transaction,
                     'remote_account'
                 )
 
-    def parse_entry(self, ns, node):
+    def parse_transaction(self, ns, node):
         """Parse transaction (entry) node."""
         transaction = BankTransaction()
         for attr_name, xpath_str in {
@@ -105,26 +120,11 @@ class CamtParser(object):
             self.add_value_from_node(
                 ns, node, xpath_str, transaction, attr_name)
         transaction.transferred_amount = self.parse_amount(ns, node)
+        # Parse transaction details
         details_node = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
         if details_node:
-            # message
-            self.add_value_from_node(
-                ns, details_node, './ns:RmtInf/ns:Ustrd', transaction,
-                'message', join_str=' '
-            )
-            # reference
-            self.add_value_from_node(
-                ns, details_node, './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
-                transaction, 'reference'
-            )
-            if not transaction.reference:
-                self.add_value_from_node(
-                    ns, details_node, './ns:Refs/ns:EndToEndId',
-                    transaction, 'reference'
-                )
-            # remote party values
-            self.get_party_values(ns, details_node, transaction)
+            self.parse_transaction_details(ns, details_node[0], transaction)
         # If no message, try to get it from additional entry info
         if not transaction.message:
             self.add_value_from_node(
@@ -168,33 +168,25 @@ class CamtParser(object):
     def parse_statement(self, ns, node):
         """Parse a single Stmt node."""
         statement = BankStatement()
-        # local_account
-        local_account_node = node.xpath(
-            './ns:Acct/ns:Id/ns:IBAN', namespaces={'ns': ns})
-        if not local_account_node:
-            local_account_node = node.xpath(
-                './ns:Acct/ns:Id/ns:Othr/ns:Id', namespaces={'ns': ns})
-        statement.local_account = (
-            local_account_node and local_account_node[0].text)
-        # statement_id
-        statement_id_node = node.xpath(
-            './ns:Stmt/ns:Id', namespaces={'ns': ns})
-        if not statement_id_node:
-            statement_id_node = node.xpath(
-                './ns:Rpt/ns:Id', namespaces={'ns': ns})
-        statement.statement_id = (
-            statement_id_node and statement_id_node[0].text)
-        # local_currency
-        local_currency_node = node.xpath(
-            './ns:Acct/ns:Ccy', namespaces={'ns': ns})
-        statement.local_currency = (
-            local_currency_node and local_currency_node[0].text)
+        for attr_name, xpath_str in {
+                'local_account': [
+                    './ns:Acct/ns:Id/ns:IBAN',
+                    './ns:Acct/ns:Id/ns:Othr/ns:Id',
+                ],
+                'statement_id': [
+                    './ns:Stmt/ns:Id',
+                    './ns:Rpt/ns:Id',
+                ],
+                'local_currency': './ns:Acct/ns:Ccy',
+            }.items():
+            self.add_value_from_node(
+                ns, node, xpath_str, statement, attr_name)
         # Start and end balance
         (statement.start_balance, statement.end_balance) = (
             self.get_balance_amounts(ns, node))
         transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
         for entry_node in transaction_nodes:
-            transaction = self.parse_entry(ns, entry_node)
+            transaction = self.parse_transaction(ns, entry_node)
             statement.transactions.append(transaction)
         if statement.transactions:
             # Take the statement date from the first transaction
