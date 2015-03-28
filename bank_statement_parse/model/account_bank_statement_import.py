@@ -76,11 +76,10 @@ class AccountBankStatementImport(models.TransientModel):
         ns_statements = []
         for statement in os_statements:
             # Set statement_data
-            statement_date = statement.date.strftime('%Y-%m-%d')
             ns_statement = dict(
                 acc_number=statement.local_account,
                 name=statement.statement_id,
-                date=statement.date,
+                date=statement.date.strftime('%Y-%m-%d'),
                 balance_start=statement.start_balance,
                 balance_end_real=statement.end_balance,
                 balance_end=statement.end_balance,
