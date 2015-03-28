@@ -62,11 +62,8 @@ class MT940(object):
     def __init__(self, *args, **kwargs):
         super(MT940, self).__init__(*args, **kwargs)
         self.current_statement = None
-        'type account_banking.parsers.models.mem_bank_statement'
         self.current_transaction = None
-        'type account_banking.parsers.models.mem_bank_transaction'
         self.statements = []
-        'parsed statements up to now'
 
     def create_transaction(self):
         """Create and return BankTransaction object."""
@@ -169,7 +166,7 @@ class MT940(object):
         """get start balance and currency"""
         self.current_statement.local_currency = data[7:10]
         self.current_statement.date = (
-            datetime.strptime(data[1:7], fmt='%y%m%d'))
+            datetime.strptime(data[1:7], '%y%m%d'))
         self.current_statement.start_balance = (
             str2amount(data[0], data[10:]))
         self.current_statement.statement_id = '%s/%s' % (
@@ -194,8 +191,8 @@ class MT940(object):
         transaction = self.create_transaction()
         self.current_statement.transactions.append(transaction)
         self.current_transaction = transaction
-        transaction.execution_date = datetime.strptime(data[:6], fmt='%y%m%d')
-        transaction.value_date = datetime.strptime(data[:6], fmt='%y%m%d')
+        transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
+        transaction.value_date = datetime.strptime(data[:6], '%y%m%d')
         #  ...and the rest already is highly bank dependent
 
     def handle_tag_86(self, data):
