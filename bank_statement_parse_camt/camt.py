@@ -19,13 +19,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import re
 from datetime import datetime
 from lxml import etree
 from openerp.addons.bank_statement_parse.parserlib import (
     BankStatement,
     BankTransaction
 )
-from openerp.tools.translate import _
 
 
 class CamtParser(object):
@@ -57,7 +57,7 @@ class CamtParser(object):
         for search_str in xpath_str:
             found_node = node.xpath(search_str, namespaces={'ns': ns})
             if found_node:
-                if join_str == None:
+                if join_str is None:
                     attr_value = found_node[0].text
                 else:
                     attr_value = join_str.join([x.text for x in found_node])
@@ -66,15 +66,17 @@ class CamtParser(object):
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse transaction details (message, party, account...)."""
-        for attr_name, xpath_str in {
-                'message': './ns:RmtInf/ns:Ustrd',
-                'reference': [
-                    './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
-                    './ns:Refs/ns:EndToEndId',
-                ],
-            }.items():
-            self.add_value_from_node(
-                ns, node, xpath_str, transaction, attr_name)
+        # message
+        self.add_value_from_node(
+            ns, node, './ns:RmtInf/ns:Ustrd', transaction, 'message')
+        # reference
+        self.add_value_from_node(
+            ns, node, [
+                './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                './ns:Refs/ns:EndToEndId',
+            ],
+            transaction, 'reference'
+        )
         # remote party values
         party_type = 'Dbtr'
         party_type_node = node.xpath(
@@ -119,20 +121,19 @@ class CamtParser(object):
     def parse_transaction(self, ns, node):
         """Parse transaction (entry) node."""
         transaction = BankTransaction()
-        for attr_name, xpath_str in {
-                'transfer_type': './ns:BkTxCd/ns:Prtry/ns:Cd',
-                'execution_date': './ns:BookgDt/ns:Dt',
-                'value_date': './ns:ValDt/ns:Dt',
-            }.items():
-            self.add_value_from_node(
-                ns, node, xpath_str, transaction, attr_name)
+        self.add_value_from_node(
+            ns, node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction,
+            'transfer_type'
+        )
+        self.add_value_from_node(
+            ns, node, './ns:BookgDt/ns:Dt', transaction, 'execution_date')
+        self.add_value_from_node(
+            ns, node, './ns:ValDt/ns:Dt', transaction, 'value_date')
         transaction.transferred_amount = self.parse_amount(ns, node)
-        # Parse transaction details
         details_node = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
         if details_node:
             self.parse_transaction_details(ns, details_node[0], transaction)
-        # If no message, try to get it from additional entry info
         if not transaction.message:
             self.add_value_from_node(
                 ns, node, './ns:AddtlNtryInf', transaction, 'message')
@@ -175,20 +176,20 @@ class CamtParser(object):
     def parse_statement(self, ns, node):
         """Parse a single Stmt node."""
         statement = BankStatement()
-        for attr_name, xpath_str in {
-                'local_account': [
-                    './ns:Acct/ns:Id/ns:IBAN',
-                    './ns:Acct/ns:Id/ns:Othr/ns:Id',
-                ],
-                'statement_id': [
-                    './ns:Stmt/ns:Id',
-                    './ns:Rpt/ns:Id',
-                ],
-                'local_currency': './ns:Acct/ns:Ccy',
-            }.items():
-            self.add_value_from_node(
-                ns, node, xpath_str, statement, attr_name)
-        # Start and end balance
+        self.add_value_from_node(
+            ns, node, [
+                './ns:Acct/ns:Id/ns:IBAN',
+                './ns:Acct/ns:Id/ns:Othr/ns:Id',
+            ], statement, 'local_account'
+        )
+        self.add_value_from_node(
+            ns, node, [
+                './ns:Stmt/ns:Id',
+                './ns:Rpt/ns:Id',
+            ], statement, 'statement_id'
+        )
+        self.add_value_from_node(
+            ns, node, './ns:Acct/ns:Ccy', statement, 'local_currency')
         (statement.start_balance, statement.end_balance) = (
             self.get_balance_amounts(ns, node))
         transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
@@ -196,7 +197,6 @@ class CamtParser(object):
             transaction = self.parse_transaction(ns, entry_node)
             statement.transactions.append(transaction)
         if statement.transactions:
-            # Take the statement date from the first transaction
             statement.date = datetime.strptime(
                 statement.transactions[0].execution_date, "%Y-%m-%d")
         return statement
@@ -204,27 +204,25 @@ class CamtParser(object):
     def check_version(self, ns, root):
         """Validate validity of camt file."""
         # Check wether it is camt at all:
-        if (not ns.startswith(
-                'urn:iso:std:iso:20022:tech:xsd:camt.')
-                and not ns.startswith('{ISO:camt.')):
-            raise ValueError(_(
-                "This does not seem to be a CAMT format bank statement."))
+        re_camt = re.compile(
+            r'(^urn:iso:std:iso:20022:tech:xsd:camt.'
+            r'|^ISO:camt.)'
+        )
+        if not re_camt.search(ns):
+            raise ValueError('no camt: ' + ns)
         # Check wether version 052 or 053:
-        if (not ns.startswith(
-                'urn:iso:std:iso:20022:tech:xsd:camt.053.')
-                and not ns.startswith('ISO:camt.053')
-                and not ns.startswith(
-                    'urn:iso:std:iso:20022:tech:xsd:camt.052.')
-                and not ns.startswith('ISO:camt.052')):
-            raise ValueError(_(
-                "Only camt.052 and camt.053 supported at the moment."))
+        re_camt_version = re.compile(
+            r'(^urn:iso:std:iso:20022:tech:xsd:camt.053.'
+            r'|^urn:iso:std:iso:20022:tech:xsd:camt.052.'
+            r'|^ISO:camt.053.'
+            r'|^ISO:camt.052.)'
+        )
+        if not re_camt_version.search(ns):
+            raise ValueError('no camt 052 or 053: ' + ns)
         # Check GrpHdr element:
-        root_0_0 = root[0][0].tag[len(ns) + 2:]  # root tag stripped of namespace
+        root_0_0 = root[0][0].tag[len(ns) + 2:]  # strip namespace
         if root_0_0 != 'GrpHdr':
-            raise ValueError(_(
-                "Expected tag '%s', got '%s' instead." %
-                ('GrpHdr', root_0_0)
-            ))
+            raise ValueError('expected GrpHdr, got: ' + root_0_0)
 
     def parse(self, data):
         """Parse a camt.052 or camt.053 file."""
@@ -236,8 +234,8 @@ class CamtParser(object):
             root = etree.fromstring(
                 data.decode('iso-8859-15').encode('utf-8'))
         if not root:
-            raise ValueError(_(
-                "Not a valid xml file, or not an xml file at all."))
+            raise ValueError(
+                'Not a valid xml file, or not an xml file at all.')
         ns = root.tag[1:root.tag.index("}")]
         self.check_version(ns, root)
         statements = []
