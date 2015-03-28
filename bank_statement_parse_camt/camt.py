@@ -183,11 +183,7 @@ class CamtParser(object):
             ], statement, 'local_account'
         )
         self.add_value_from_node(
-            ns, node, [
-                './ns:Stmt/ns:Id',
-                './ns:Rpt/ns:Id',
-            ], statement, 'statement_id'
-        )
+            ns, node, './ns:Id', statement, 'statement_id')
         self.add_value_from_node(
             ns, node, './ns:Acct/ns:Ccy', statement, 'local_currency')
         (statement.start_balance, statement.end_balance) = (

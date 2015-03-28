@@ -80,7 +80,7 @@ class AccountBankStatementImport(models.TransientModel):
             ns_statement = dict(
                 acc_number=statement.local_account,
                 name=statement.statement_id,
-                date=statement_date,
+                date=statement.date,
                 balance_start=statement.start_balance,
                 balance_end_real=statement.end_balance,
                 balance_end=statement.end_balance,
@@ -201,9 +201,7 @@ class AccountBankStatementImport(models.TransientModel):
         return bank_account_id, partner_id
 
     def _complete_statements(self, cr, uid, statements, context=None):
-        """
-        Complete statements and transactions.
-        """
+        """Complete statements and transactions."""
         journal_model = self.pool['account.journal']
         bank_model = self.pool['res.partner.bank']
         currency_model = self.pool['res.currency']
