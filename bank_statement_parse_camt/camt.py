@@ -35,8 +35,15 @@ class CamtParser(object):
         """Parse element that contains Amount and CreditDebitIndicator."""
         if not node:
             return 0.0
-        sign = -1 if node.find(ns + 'CdtDbtInd').text == 'DBIT' else 1
-        return sign * float(node.find(ns + 'Amt').text)
+        sign = 1
+        amount = 0.0
+        sign_node = node.xpath('ns:CdtDbtInd', namespaces={'ns': ns})
+        if sign_node and sign_node[0].text == 'DBIT':
+            sign = -1
+        amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
+        if amount_node:
+            amount = sign * float(amount_node[0].text)
+        return amount
 
     def add_value_from_node(
             self, ns, node, xpath_str, obj, attr_name, join_str=None):
@@ -55,7 +62,7 @@ class CamtParser(object):
                 else:
                     attr_value = join_str.join([x.text for x in found_node])
                 setattr(obj, attr_name, attr_value)
-            break
+                break
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse transaction details (message, party, account...)."""
@@ -83,7 +90,7 @@ class CamtParser(object):
                 ns, party_node[0], './ns:PstlAdr/ns:Ctry', transaction,
                 'remote_owner_country'
             )
-            address_node = party_node.xpath(
+            address_node = party_node[0].xpath(
                 './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
             if address_node:
                 transaction.remote_owner_address = [address_node[0].text]
@@ -152,9 +159,9 @@ class CamtParser(object):
             balance_node = node.xpath(code_expr, namespaces={'ns': ns})
             if balance_node:
                 if node_name in ['OPBD', 'PRCD']:
-                    start_balance_node = balance_node
+                    start_balance_node = balance_node[0]
                 elif node_name == 'CLBD':
-                    end_balance_node = balance_node
+                    end_balance_node = balance_node[0]
                 else:
                     if not start_balance_node:
                         start_balance_node = balance_node[0]
@@ -191,30 +198,28 @@ class CamtParser(object):
         if statement.transactions:
             # Take the statement date from the first transaction
             statement.date = datetime.strptime(
-                statement.transactions[0]['execution_date'], "%Y-%m-%d")
+                statement.transactions[0].execution_date, "%Y-%m-%d")
         return statement
 
     def check_version(self, ns, root):
-        """
-        Validate validity of camt file.
-        """
+        """Validate validity of camt file."""
         # Check wether it is camt at all:
         if (not ns.startswith(
-                '{urn:iso:std:iso:20022:tech:xsd:camt.')
+                'urn:iso:std:iso:20022:tech:xsd:camt.')
                 and not ns.startswith('{ISO:camt.')):
             raise ValueError(_(
                 "This does not seem to be a CAMT format bank statement."))
         # Check wether version 052 or 053:
         if (not ns.startswith(
-                '{urn:iso:std:iso:20022:tech:xsd:camt.053.')
-                and not ns.startswith('{ISO:camt.053')
+                'urn:iso:std:iso:20022:tech:xsd:camt.053.')
+                and not ns.startswith('ISO:camt.053')
                 and not ns.startswith(
-                    '{urn:iso:std:iso:20022:tech:xsd:camt.052.')
-                and not ns.startswith('{ISO:camt.052')):
+                    'urn:iso:std:iso:20022:tech:xsd:camt.052.')
+                and not ns.startswith('ISO:camt.052')):
             raise ValueError(_(
                 "Only camt.052 and camt.053 supported at the moment."))
         # Check GrpHdr element:
-        root_0_0 = root[0][0].tag[len(ns):]  # root tag stripped of namespace
+        root_0_0 = root[0][0].tag[len(ns) + 2:]  # root tag stripped of namespace
         if root_0_0 != 'GrpHdr':
             raise ValueError(_(
                 "Expected tag '%s', got '%s' instead." %
@@ -233,7 +238,7 @@ class CamtParser(object):
         if not root:
             raise ValueError(_(
                 "Not a valid xml file, or not an xml file at all."))
-        ns = root.tag[1:root.tag.index("}") + 1]
+        ns = root.tag[1:root.tag.index("}")]
         self.check_version(ns, root)
         statements = []
         for node in root[0][1:]:

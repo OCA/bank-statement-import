@@ -21,7 +21,7 @@
 ##############################################################################
 import re
 
-from openerp.addons.bank_statement_parse_mt940 import mt940, str2amount
+from openerp.addons.bank_statement_parse_mt940 import mt940
 
 
 class MT940Parser(mt940.MT940):
@@ -50,7 +50,7 @@ class MT940Parser(mt940.MT940):
             raise ValueError("Cannot parse %s" % data)
         parsed_data = re_61.groupdict()
         self.current_transaction.transferred_amount = (
-            str2amount(parsed_data['sign'], parsed_data['amount']))
+            mt940.str2amount(parsed_data['sign'], parsed_data['amount']))
         self.current_transaction.reference = parsed_data['reference']
 
     def handle_tag_86(self, data):

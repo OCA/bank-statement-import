@@ -27,10 +27,10 @@ from datetime import datetime
 from openerp.addons.bank_statement_parse import parserlib
 
 
-def str2amount(sign, str):
+def str2amount(sign, amount_str):
     """Convert sign (C or D) and amount in string to signed amount (float)."""
     factor = (1 if sign == 'C' else -1)
-    return factor * float(str.replace(',', '.'))
+    return factor * float(amount_str.replace(',', '.'))
 
 
 class MT940(object):

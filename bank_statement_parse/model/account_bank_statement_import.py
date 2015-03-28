@@ -35,7 +35,6 @@ class AccountBankStatementImport(models.TransientModel):
     def convert_transaction(
             self, cr, uid, transaction, context=None):
         """Convert transaction object to values for create."""
-        transaction_model = self.env['account.bank.statement.line']
         partner_vals = {
             'name': transaction.remote_owner,
         }
@@ -108,8 +107,8 @@ class AccountBankStatementImport(models.TransientModel):
         if not acc_number:
             return False
         bank_vals = dict(bank_vals or {})
-        bank_model = self.env['res.partner.bank']
-        country_model = self.env['res.country']
+        bank_model = self.pool['res.partner.bank']
+        country_model = self.pool['res.country']
         # Create the bank account, not linked to any partner.
         # The reconciliation will link the partner manually
         # chosen at the bank statement final confirmation time.
@@ -160,8 +159,8 @@ class AccountBankStatementImport(models.TransientModel):
         """
         partner_id = False
         bank_account_id = False
-        bank_model = self.env['res.partner.bank']
-        partner_model = self.env['res.partner']
+        bank_model = self.pool['res.partner.bank']
+        partner_model = self.pool['res.partner']
         acc_number = (
             'acc_number' in bank_vals and bank_vals['acc_number'] or False)
         acc_name = (
@@ -205,9 +204,9 @@ class AccountBankStatementImport(models.TransientModel):
         """
         Complete statements and transactions.
         """
-        journal_model = self.env['account.journal']
-        bank_model = self.env['res.partner.bank']
-        currency_model = self.env['res.currency']
+        journal_model = self.pool['account.journal']
+        bank_model = self.pool['res.partner.bank']
+        currency_model = self.pool['res.currency']
         for st_vals in statements:
             # Make sure we have a journal_id:
             journal_id = (
@@ -279,7 +278,7 @@ class AccountBankStatementImport(models.TransientModel):
                 if journal_obj.currency:
                     compare_currency_id = journal_obj.currency.id
                 else:
-                    company_obj = self.env['res.users'].browse(
+                    company_obj = self.pool['res.users'].browse(
                         cr, uid, uid, context=context).company_id
                     if company_obj.currency:
                         compare_currency_id = company_obj.currency.id
@@ -389,9 +388,9 @@ class AccountBankStatementImport(models.TransientModel):
         statement_ids, notifications = self._create_bank_statements(
             cr, uid, statements, context=context)
         # Finally dispatch to reconciliation interface
-        model, action_id = self.env.get('ir.model.data').get_object_reference(
+        model, action_id = self.pool.get('ir.model.data').get_object_reference(
             cr, uid, 'account', 'action_bank_reconcile_bank_statements')
-        action = self.env[model].browse(cr, uid, action_id, context=context)
+        action = self.pool[model].browse(cr, uid, action_id, context=context)
         return {
             'name': action.name,
             'tag': action.tag,
