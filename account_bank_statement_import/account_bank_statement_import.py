@@ -35,8 +35,7 @@ class account_bank_statement_import(osv.TransientModel):
 
     def import_file(self, cr, uid, ids, context=None):
         """ Process the file chosen in the wizard, create bank statement(s) and go to reconciliation. """
-        if context is None:
-            context = {}
+        context = dict(context or {})
         #set the active_id in the context, so that any extension module could
         #reuse the fields chosen in the wizard if needed (see .QIF for example)
         context.update({'active_id': ids[0]})
@@ -133,6 +132,8 @@ class account_bank_statement_import(osv.TransientModel):
 
     def _get_journal(self, cr, uid, currency_id, bank_account_id, account_number, context=None):
         """ Find or create the journal """
+        if context is None:
+            context = {}
         bank_pool = self.pool.get('res.partner.bank')
 
         # Find the journal from context or bank account
@@ -155,11 +156,12 @@ class account_bank_statement_import(osv.TransientModel):
                 raise Warning(_('The currency of the bank statement is not the same as the currency of the journal !'))
 
         # If there is no journal, create one (and its account)
-        # I think it's too dangerous, so I disable that code -- Alexis de Lattre
-        #if not journal_id and account_number:
-        #    journal_id = self._create_journal(cr, uid, currency_id, account_number, context=context)
-        #    if bank_account_id:
-        #        bank_pool.write(cr, uid, [bank_account_id], {'journal_id': journal_id}, context=context)
+        # I think it's too dangerous, so I disable that code by default -- Alexis de Lattre
+        # -- Totally disabled, Ronald Portier
+        # if context.get('allow_auto_create_journal') and not journal_id and account_number:
+        #     journal_id = self._create_journal(cr, uid, currency_id, account_number, context=context)
+        #     if bank_account_id:
+        #         bank_pool.write(cr, uid, [bank_account_id], {'journal_id': journal_id}, context=context)
 
         # If we couldn't find/create a journal, everything is lost
         if not journal_id:
@@ -211,7 +213,7 @@ class account_bank_statement_import(osv.TransientModel):
                 if unique_import_id:
                     line_vals['unique_import_id'] = (account_number and account_number + '-' or '') + unique_import_id
 
-                if not 'bank_account_id' in line_vals or not line_vals['bank_account_id']:
+                if not line_vals.get('partner_id') and not line_vals.get('bank_account_id'):
                     # Find the partner and his bank account or create the bank account. The partner selected during the
                     # reconciliation process will be linked to the bank when the statement is closed.
                     partner_id = False
@@ -272,3 +274,4 @@ class account_bank_statement_import(osv.TransientModel):
             }]
 
         return statement_ids, notifications
+

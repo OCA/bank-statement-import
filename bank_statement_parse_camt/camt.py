@@ -33,7 +33,7 @@ class CamtParser(object):
 
     def parse_amount(self, ns, node):
         """Parse element that contains Amount and CreditDebitIndicator."""
-        if not node:
+        if node is None:
             return 0.0
         sign = 1
         amount = 0.0
@@ -68,14 +68,18 @@ class CamtParser(object):
         """Parse transaction details (message, party, account...)."""
         # message
         self.add_value_from_node(
-            ns, node, './ns:RmtInf/ns:Ustrd', transaction, 'message')
-        # reference
+            ns, node, [
+                './ns:RmtInf/ns:Ustrd',
+                './ns:AddtlTxInf',
+                './ns:AddtlNtryInf',
+            ], transaction, 'message')
+        # eref
         self.add_value_from_node(
             ns, node, [
                 './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:Refs/ns:EndToEndId',
             ],
-            transaction, 'reference'
+            transaction, 'eref'
         )
         # remote party values
         party_type = 'Dbtr'
@@ -134,9 +138,6 @@ class CamtParser(object):
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
         if details_node:
             self.parse_transaction_details(ns, details_node[0], transaction)
-        if not transaction.message:
-            self.add_value_from_node(
-                ns, node, './ns:AddtlNtryInf', transaction, 'message')
         transaction.data = etree.tostring(node)
         return transaction
 
@@ -229,7 +230,7 @@ class CamtParser(object):
             # ABNAmro is known to mix up encodings
             root = etree.fromstring(
                 data.decode('iso-8859-15').encode('utf-8'))
-        if not root:
+        if root is None:
             raise ValueError(
                 'Not a valid xml file, or not an xml file at all.')
         ns = root.tag[1:root.tag.index("}")]

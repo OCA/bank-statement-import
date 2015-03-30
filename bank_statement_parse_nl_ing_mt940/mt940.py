@@ -51,7 +51,7 @@ class MT940Parser(mt940.MT940):
         parsed_data = re_61.groupdict()
         self.current_transaction.transferred_amount = (
             mt940.str2amount(parsed_data['sign'], parsed_data['amount']))
-        self.current_transaction.reference = parsed_data['reference']
+        self.current_transaction.eref = parsed_data['reference']
 
     def handle_tag_86(self, data):
         """Parse 86 tag containing reference data."""
@@ -104,9 +104,9 @@ class MT940Parser(mt940.MT940):
             self.current_transaction.message = (
                 '/'.join(x for x in subfields['REMI'] if x))
 
-        if self.current_transaction.reference in subfields:
-            self.current_transaction.reference = ''.join(
-                subfields[self.current_transaction.reference])
+        if self.current_transaction.eref in subfields:
+            self.current_transaction.eref = ''.join(
+                subfields[self.current_transaction.eref])
 
         if not subfields:
             self.current_transaction.message = data

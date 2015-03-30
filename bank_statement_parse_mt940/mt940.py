@@ -150,7 +150,7 @@ class MT940(object):
         handler(line[tag_match.end():])
 
     def handle_tag_20(self, data):
-        """ignore reference number"""
+        """Contains unique ? message ID"""
         pass
 
     def handle_tag_25(self, data):

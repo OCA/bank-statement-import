@@ -44,7 +44,7 @@ class BankTransaction(object):
         """
         self.transaction_id = False  # Message id
         self.transfer_type = False  # Action type that initiated this message
-        self.reference = False  # reference to this message for communication
+        self.eref = False  # end to end reference for transactions
         self.execution_date = False  # The posted date of the action
         self.value_date = False  # The value date of the action
         self.remote_account = False  # The account of the other party

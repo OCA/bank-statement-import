@@ -54,9 +54,9 @@ class AccountBankStatementImport(models.TransientModel):
         vals_line = {
             'date': transaction.value_date,
             'name': (
-                transaction.message or transaction.reference or
+                transaction.message or transaction.eref or
                 transaction.remote_owner or ''),  # name is required
-            'ref': transaction.reference,
+            'ref': transaction.eref,
             'amount': transaction.transferred_amount,
             'partner_name': transaction.remote_owner,
             'acc_number': transaction.remote_account,
@@ -153,7 +153,7 @@ class AccountBankStatementImport(models.TransientModel):
         - Search only on partner name (should be unique);
         - Search only on address info (should be unique and complete enough);
           # NOT IMPLEMENTED
-        - Search invoices and moves with reference info (should be unique).
+        - Search invoices and moves with eref info (should be unique).
           # NOT IMPLEMENTED
         """
         partner_id = False
