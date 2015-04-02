@@ -84,7 +84,9 @@ class AccountBankStatementImport(models.TransientModel):
                             'not correctly formed.'))
 
         vals_bank_statement.update({
+            'currency_code': None,
+            'account_number': None,
             'balance_end_real': total,
             'transactions': transactions
         })
-        return None, None, [vals_bank_statement]
+        return [vals_bank_statement]

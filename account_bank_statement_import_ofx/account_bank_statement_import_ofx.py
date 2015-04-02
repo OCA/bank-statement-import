@@ -67,12 +67,12 @@ class AccountBankStatementImport(models.TransientModel):
             raise Warning(_("The following problem occurred during import. "
                             "The file might not be valid.\n\n %s" % e.message))
 
-        vals_bank_statement = {
+        return [{
+            'currency_code': ofx.account.statement.currency,
+            'account_number': ofx.account.number,
             'name': ofx.account.routing_number,
             'transactions': transactions,
             'balance_start': ofx.account.statement.balance,
             'balance_end_real':
                 float(ofx.account.statement.balance) + total_amt,
-        }
-        return ofx.account.statement.currency, ofx.account.number, [
-            vals_bank_statement]
+        }]
