@@ -104,7 +104,7 @@ class MT940(object):
 
     def __init__(self):
         """Initialize parser - override at least header_regex.
-        
+
         This in fact uses the ING syntax, override in others."""
         self.header_lines = 3  # Number of lines to skip
         self.header_regex = '^{1:[0-9A-Z]{25,25}}'  # Start of relevant data
