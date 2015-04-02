@@ -21,6 +21,7 @@
 ##############################################################################
 import logging
 from openerp import models
+from openerp.addons.bank_statement_parse.parserlib import convert_statements
 from .camt import CamtParser as Parser
 
 
@@ -32,20 +33,15 @@ class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     def _parse_file(self, cr, uid, data_file, context=None):
-        """
-        Parse a CAMT053 XML file
-        """
+        """Parse a CAMT053 XML file."""
         parser = Parser()
         try:
             _logger.debug("Try parsing with camt.")
-            os_statements = parser.parse(data_file)
+            return convert_statements(parser.parse(data_file))
         except ValueError:
             # Not a camt file, returning super will call next candidate:
             _logger.debug("Statement file was not a camt file.")
             return super(AccountBankStatementImport, self)._parse_file(
                 cr, uid, data_file, context=context)
-        # Succesfull parse, convert to format expected
-        return self.convert_statements(
-            cr, uid, os_statements, context=context)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

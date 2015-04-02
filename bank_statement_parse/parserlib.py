@@ -21,6 +21,50 @@
 ##############################################################################
 
 
+def convert_transaction(transaction):
+    """Convert transaction object to values for create."""
+    vals_line = {
+        'date': transaction.value_date,
+        'name': (
+            transaction.message or transaction.eref or
+            transaction.remote_owner or ''),  # name is required
+        'ref': transaction.eref,
+        'amount': transaction.transferred_amount,
+        'partner_name': transaction.remote_owner,
+        'acc_number': transaction.remote_account,
+        'unique_import_id': transaction.transaction_id,
+    }
+    return vals_line
+
+
+def convert_statements(statements):
+    """Convert statement object to values for create."""
+    vals_statements = []
+    for statement in statements:
+        # Set statement_data
+        vals_statement = {
+            'currency_code': statement.local_currency,
+            'account_number': statement.local_account,
+            'name': statement.statement_id,
+            'date': statement.date.strftime('%Y-%m-%d'),
+            'balance_start': statement.start_balance,
+            'balance_end_real': statement.end_balance,
+            'balance_end': statement.end_balance,
+            'state': 'draft',
+        }
+        statement_transactions = []
+        subno = 0
+        for transaction in statement.transactions:
+            subno += 1
+            if not transaction.transaction_id:
+                transaction.transaction_id = (
+                    statement.statement_id + str(subno).zfill(4))
+            statement_transactions.append(convert_transaction(transaction))
+        vals_statement['transactions'] = statement_transactions
+        vals_statements.append(vals_statement)
+    return vals_statements
+
+
 class BankStatement(object):
     """A bank statement groups data about several bank transactions."""
 

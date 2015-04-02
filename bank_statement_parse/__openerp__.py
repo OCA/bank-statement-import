@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2011-2015 Therp BV <http://therp.nl>.
+#    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    All other contributions are (C) by their respective contributors
 #
@@ -28,13 +28,9 @@
     'author': 'Banking addons community',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
-    'depends': [
-        'account_bank_statement_import',
-        ],
-    'data': [
-    ],
-    'js': [
-    ],
+    'depends': [],
+    'data': [],
+    'js': [],
     'installable': True,
     'auto_install': False,
 }
