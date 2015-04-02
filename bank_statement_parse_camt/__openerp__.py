@@ -25,7 +25,8 @@
     'website': 'https://github.com/OCA/banking',
     'category': 'Banking addons',
     'depends': [
-        'bank_statement_parse'
+        'account_bank_statement_import',
+        'bank_statement_parse',
     ],
     'demo': [
         'demo/demo_data.xml',

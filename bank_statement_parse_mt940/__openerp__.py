@@ -33,7 +33,8 @@ certain bank.
 See bank_statement_parse_nl_ing_mt940 for an example on how to use it.
 ''',
     'depends': [
-        'bank_statement_parse'
+        'account_bank_statement_import',
+        'bank_statement_parse',
     ],
     'data': [],
     'installable': True
