@@ -18,6 +18,7 @@
             <field name="partner_id" ref="base.partner_root"></field>
             <field name="company_id" ref="base.main_company"></field>
             <field name="journal_id" ref="camt_bank_journal"></field>
+            <field name="state">bank</field>
             <field name="bank" ref="base.res_bank_1"/>
         </record>
     </data>
