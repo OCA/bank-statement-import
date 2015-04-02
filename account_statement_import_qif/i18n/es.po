@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import_qif
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-import (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-24 21:51+0000\n"
+"PO-Revision-Date: 2015-06-08 12:44+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_bank_statement_import_qif
+#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:39
+#, python-format
+msgid "Could not decipher the QIF file."
+msgstr ""
+
+#. module: account_bank_statement_import_qif
+#: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importar extracto bancario"
+
+#. module: account_bank_statement_import_qif
+#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:83
+#, python-format
+msgid "This file is either not a bank statement or is not correctly formed."
+msgstr ""
