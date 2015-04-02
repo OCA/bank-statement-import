@@ -101,7 +101,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _parse_file(self, data_file):
         """ Each module adding a file support must extends this method. It
-        rocesses the file if it can, returns super otherwise, resulting in a
+        processes the file if it can, returns super otherwise, resulting in a
         chain of responsability.
         This method parses the given file and returns the data required by
         the bank statement import process, as specified below.
