@@ -2,8 +2,8 @@
 
 {
     'name': 'Import QIF Bank Statement',
-    'category': 'Accounting & Finance',
-    'version': '1.0',
+    'category': 'Banking addons',
+    'version': '8.0.1.0.0',
     'author': 'OpenERP SA,'
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/bank-statement-import',
