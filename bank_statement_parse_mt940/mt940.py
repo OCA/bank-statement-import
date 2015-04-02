@@ -99,25 +99,17 @@ class MT940(object):
     define functions to handle the tags you need to handle and adjust static
     variables as needed.
 
-    At least, you should override handle_tag_61 and handle_tag_86. Don't forget
-    to call super.
-    handle_tag_* functions receive the remainder of the the line (that is,
-    without ':XX:') and are supposed to write into self.current_transaction"""
-
-    header_lines = 3
-    """One file can contain multiple statements, each with its own poorly
-    documented header. For now, the best thing to do seems to skip that"""
-
-    header_regex = '^{1:[0-9A-Z]{25,25}}'
-    'The file is considered a valid MT940 file when it contains this line'
-
-    footer_regex = '^-XXX$'
-    'The line that denotes end of message, we need to create a new statement'
-
-    tag_regex = '^:[0-9]{2}[A-Z]*:'
-    'The beginning of a record, should be anchored to beginning of the line'
+    At least, you should override handle_tag_61 and handle_tag_86.
+    """
 
     def __init__(self):
+        """Initialize parser - override at least header_regex.
+        
+        This in fact uses the ING syntax, override in others."""
+        self.header_lines = 3  # Number of lines to skip
+        self.header_regex = '^{1:[0-9A-Z]{25,25}}'  # Start of relevant data
+        self.footer_regex = '^-}$|^-XXX$'  # Stop processing on seeing this
+        self.tag_regex = '^:[0-9]{2}[A-Z]*:'  # Start of new tag
         self.current_statement = None
         self.current_transaction = None
         self.statements = []

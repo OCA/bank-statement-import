@@ -27,11 +27,6 @@ from openerp.addons.bank_statement_parse_mt940.mt940 import (
 class MT940Parser(MT940):
     """Parser for ing MT940 bank statement import files."""
 
-    name = 'ING MT940 (structured)'
-    country_code = 'NL'
-    code = 'INT_MT940_STRUC'
-    footer_regex = '^-}$|^-XXX$'
-
     tag_61_regex = re.compile(
         r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
         r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
