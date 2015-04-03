@@ -193,7 +193,8 @@ class account_bank_statement_import(models.TransientModel):
 
     @api.model
     @api.returns('res.partner.bank')
-    def _create_bank_account(self, account_number, journal_id=False):
+    def _create_bank_account(self, account_number, company_id=False,
+                             currency_id=False):
         try:
             bank_type = self.env.ref('base.bank_normal')
             bank_code = bank_type.code
