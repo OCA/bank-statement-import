@@ -73,7 +73,7 @@ class account_bank_statement_import(models.TransientModel):
                     z.writestr('%s.error.txt' % notification['file_name'],
                                notification['exception'])
             zip_content = base64.b64encode(zip_content.getvalue())
-  
+
         action = self.env.ref(
             'account_bank_statement_import_batch.'
             'action_account_bank_statement_import_result')
