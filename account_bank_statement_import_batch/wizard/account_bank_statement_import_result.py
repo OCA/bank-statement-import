@@ -36,3 +36,6 @@ class account_bank_statement_import_result(models.TransientModel):
 
     warnings = fields.Text("Warnings")
     errors = fields.Text("Errors")
+    zip_errored_files = fields.Binary("Errored files")
+    zip_errored_filename = fields.Char("Errored file name",
+                                       default="error_files.zip")

@@ -59,7 +59,11 @@ class TestImportBatch(TransactionCase):
             mocked.side_effect = [([1], [{'message': '1',
                                           'type': 'warning'}]),
                                   ([3], [{'message': '2',
-                                          'type': 'error'}])]
+                                          'type': 'error',
+                                          'file_name': '2.txt',
+                                          'file_content': 'file content 42',
+                                          'exception': 'error message 2', }])]
+
             bank_statement_import = self.statement_import_model.create(
                 {'data_file': self.zip_file})
             res = bank_statement_import.import_file()
@@ -68,9 +72,13 @@ class TestImportBatch(TransactionCase):
                 'import_file should be called 2 times : '
                 '1 time for each file in the archive')
             mocked.assert_has_calls([call('test1\n'), call('test2\n')])
-            self.assertDictEqual({'default_errors': '* 2',
-                                  'default_warnings': '* 1'},
-                                 res.get('context'))
+            res_context = res.get('context')
+
+            self.assertEqual(len(res_context.keys()), 3)
+            self.assertEqual(res_context['default_errors'], '* 2')
+            self.assertEqual(res_context['default_warnings'], '* 1')
+            self.assertNotEqual(res_context.get('default_zip_errored_files'),
+                                False)
 
     def test_text_file_import(self):
         with mock.patch('openerp.addons.'

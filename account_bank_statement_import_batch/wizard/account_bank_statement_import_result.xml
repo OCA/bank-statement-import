@@ -8,6 +8,10 @@
             <field name="priority">1</field>
             <field name="arch" type="xml">
                 <form string="Import Bank Statements Results">
+                    <group>
+                        <field name="zip_errored_files" filename="zip_errored_filename" readonly="1" attrs="{'invisible': [('zip_errored_files', '=', False)]}"/>
+                        <field name="zip_errored_filename" invisible="1"/>
+                    </group>
                     <h2><label for="errors"/> </h2>
                     <field name="errors" readonly='1'/>
                     <h2><label for="warnings"/></h2>

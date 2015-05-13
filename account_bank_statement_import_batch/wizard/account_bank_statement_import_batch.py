@@ -24,6 +24,7 @@
 ##############################################################################
 
 import zipfile
+import base64
 import logging
 from cStringIO import StringIO
 
@@ -38,24 +39,41 @@ _logger = logging.getLogger(__name__)
 class account_bank_statement_import(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
-    def _get_error_notification(self, file_name,  exc):
+    def _get_error_notification(self, file_name, file_content, exc):
         return {
             'type': 'error',
             'message': _('Import of %s failed with error %s'
                          ) % (ustr(file_name),
                               ustr(exc)),
+            'file_name': ustr(file_name),
+            'file_content': file_content,
+            'exception': ustr(exc),
             }
 
     @api.model
     def display_import_result(self, notifications):
         warnings = []
         errors = []
+        notification_errors = []
+        zip_content = None
         for notification in notifications:
             msg = '* ' + notification.get('message')
             if notification.get('type') == 'error':
+                notification_errors.append(notification)
                 errors.append(msg)
             else:
                 warnings.append(msg)
+
+        if notification_errors:
+            zip_content = StringIO()
+            with zipfile.ZipFile(zip_content, mode='w') as z:
+                for notification in notification_errors:
+                    z.writestr(notification['file_name'],
+                               notification['file_content'])
+                    z.writestr('%s.error.txt' % notification['file_name'],
+                               notification['exception'])
+            zip_content = base64.b64encode(zip_content.getvalue())
+  
         action = self.env.ref(
             'account_bank_statement_import_batch.'
             'action_account_bank_statement_import_result')
@@ -69,7 +87,8 @@ class account_bank_statement_import(models.TransientModel):
             'view_id': action.view_id.id,
             'context': {
                 'default_errors': '\n'.join(errors) or False,
-                'default_warnings': '\n'.join(warnings) or False
+                'default_warnings': '\n'.join(warnings) or False,
+                'default_zip_errored_files': zip_content,
                 }
             }
 
@@ -113,7 +132,8 @@ class account_bank_statement_import(models.TransientModel):
                             notifications.extend(notes)
                     except Exception as e:
                         _logger.exception('Import of %s failed', name)
-                        errors.append(self._get_error_notification(name, e))
+                        errors.append(self._get_error_notification(
+                            name, single_data, e))
             if errors:
                 notifications.extend(errors)
         except Exception:
