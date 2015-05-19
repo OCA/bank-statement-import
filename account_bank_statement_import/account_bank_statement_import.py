@@ -220,6 +220,7 @@ class account_bank_statement_import(osv.TransientModel):
                     bank_account_id = False
                     identifying_string = line_vals.get('account_number', False)
                     if identifying_string:
+                        identifying_string = identifying_string.replace(' ', '').replace('-', '')
                         ids = self.pool.get('res.partner.bank').search(cr, uid, [('acc_number', '=', identifying_string)], context=context)
                         if ids:
                             bank_account_id = ids[0]
