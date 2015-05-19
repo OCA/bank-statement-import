@@ -100,6 +100,10 @@ class MT940(object):
     variables as needed.
 
     At least, you should override handle_tag_61 and handle_tag_86.
+    Don't forget to call super.
+    
+    handle_tag_* functions receive the remainder of the the line (that is,
+    without ':XX:') and are supposed to write into self.current_transaction
     """
 
     def __init__(self):
@@ -114,16 +118,14 @@ class MT940(object):
         self.current_transaction = None
         self.statements = []
 
-    def create_transaction(self):
-        """Create and return BankTransaction object."""
-        transaction = parserlib.BankTransaction()
-        return transaction
-
     def is_mt940(self, line):
         """determine if a line is the header of a statement"""
         if not bool(re.match(self.header_regex, line)):
             raise ValueError(
-                'This does not seem to be a MT940 format bank statement.')
+                'File starting with %s does not seem to be a'
+                ' MT940 format bank statement.' %
+                data[:12]
+            )
 
     def parse(self, data):
         """Parse mt940 bank statement file contents."""
@@ -166,6 +168,10 @@ class MT940(object):
         """create a BankStatement."""
         return parserlib.BankStatement()
 
+    def create_transaction(self):
+        """Create and return BankTransaction object."""
+        return parserlib.BankTransaction()
+
     def is_footer(self, line):
         """determine if a line is the footer of a statement"""
         return line and bool(re.match(self.footer_regex, line))
@@ -206,31 +212,18 @@ class MT940(object):
         self.current_statement.local_account = data
 
     def handle_tag_28C(self, data):
-        """get sequence number _within_this_batch_ - this alone
-        doesn't provide a unique id!"""
-        self.current_statement.statement_id = data
+        """Sequence number within batch - normally only zeroes."""
+        pass
 
     def handle_tag_60F(self, data):
         """get start balance and currency"""
-        self.current_statement.local_currency = data[7:10]
-        self.current_statement.date = datetime.strptime(data[1:7], '%y%m%d')
-        self.current_statement.start_balance = str2amount(data[0], data[10:])
-        self.current_statement.statement_id = '%s/%s' % (
-            self.current_statement.date.strftime('%Y-%m-%d'),
-            self.current_statement.statement_id,
-        )
-
-    def handle_tag_62F(self, data):
-        """get ending balance"""
-        self.current_statement.end_balance = str2amount(data[0], data[10:])
-
-    def handle_tag_64(self, data):
-        """get current balance in currency"""
-        pass
-
-    def handle_tag_65(self, data):
-        """get future balance in currency"""
-        pass
+        # For the moment only first 60F record
+        # The alternative would be to split the file and start a new
+        # statement for each 20: tag encountered.
+        stmt = self.current_statement
+        if not stmt.local_currency:
+            stmt.local_currency = data[7:10]
+            stmt.start_balance = str2amount(data[0], data[10:])
 
     def handle_tag_61(self, data):
         """get transaction values"""
@@ -240,6 +233,36 @@ class MT940(object):
         transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
         transaction.value_date = datetime.strptime(data[:6], '%y%m%d')
         #  ...and the rest already is highly bank dependent
+
+    def handle_tag_62F(self, data):
+        """Get ending balance, statement date and id.
+
+        We use the date on the last 62F tag as statement date, as the date
+        on the 60F record (previous end balance) might contain a date in
+        a previous period.
+
+        We generate the statement.id from the local_account and the end-date,
+        this should normally be unique, provided there is a maximum of
+        one statement per day.
+
+        Depending on the bank, there might be multiple 62F tags in the import
+        file. The last one counts.
+        """
+        stmt = self.current_statement
+        stmt.end_balance = str2amount(data[0], data[10:])
+        stmt.date = datetime.strptime(data[1:7], '%y%m%d')
+        stmt.id = '%s-%s' % (
+            stmt.local_account,
+            stmt.date.strftime('%Y-%m-%d'),
+        )
+
+    def handle_tag_64(self, data):
+        """get current balance in currency"""
+        pass
+
+    def handle_tag_65(self, data):
+        """get future balance in currency"""
+        pass
 
     def handle_tag_86(self, data):
         """details for previous transaction, here most differences between

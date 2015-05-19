@@ -31,7 +31,9 @@ class MT940Parser(MT940):
 
     tag_61_regex = re.compile(
         r'^(?P<date>\d{6})(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
-        r'(?P<reference>\w{1,16})')
+        r'(?P<reference>MARF|EREF|PREF|NONREF)\s*'
+        r'\n?(?P<remote_account>\w{1,16})?'
+    )
 
     def __init__(self):
         """Initialize parser - override at least header_regex."""
@@ -51,27 +53,16 @@ class MT940Parser(MT940):
         data = ''.join([x for x in data if x in printable])
         return super(MT940Parser, self).parse(data)
 
-    def handle_tag_60F(self, data):
-        """get start balance and currency"""
-        # For the moment only first 60F record
-        # The alternative would be to split the file and start a new
-        # statement for each 20: tag encountered.
-        stmt = self.current_statement
-        if not stmt.local_currency:
-            stmt.local_currency = data[7:10]
-            stmt.date = datetime.strptime(data[1:7], '%y%m%d')
-            stmt.start_balance = str2amount(data[0], data[10:])
-            stmt.statement_id = '%s-%s' % (
-                self.current_statement.date.strftime('%Y-%m-%d'),
-                self.current_statement.statement_id)
-
     def handle_tag_61(self, data):
         """Handle tag 61: transaction data."""
         super(MT940Parser, self).handle_tag_61(data)
         parsed_data = self.tag_61_regex.match(data).groupdict()
         self.current_transaction.transferred_amount = (
             str2amount(parsed_data['sign'], parsed_data['amount']))
-        self.current_transaction.eref = parsed_data['reference']
+        self.current_transaction.reference = parsed_data['reference']
+        if parsed_data['remote_account']:
+            self.current_transaction.remote_account = (
+                parsed_data['remote_account'])
 
     def handle_tag_86(self, data):
         """Handle tag 86: transaction details"""
