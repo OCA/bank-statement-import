@@ -4,7 +4,7 @@
 
 {
     'name': 'Import QIF Bank Statement',
-    'category' : 'Accounting & Finance',
+    'category': 'Accounting & Finance',
     'version': '1.0',
     'author': 'OpenERP SA',
     'description': '''
