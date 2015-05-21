@@ -67,9 +67,8 @@ class TestAccountBankStatemetImport(TransactionCase):
         expected_id = journal.company_id.partner_id.id
 
         st_import = self.statement_import_model.sudo(self.other_user_id_a.id)
-        bank_id = st_import._create_bank_account(
+        bank = st_import._create_bank_account(
             '001251882303', journal_id=self.journal_id)
-        bank = self.env['res.partner.bank'].browse(bank_id)
 
         self.assertEqual(bank.partner_id.id,
                          expected_id)
