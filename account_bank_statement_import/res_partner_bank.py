@@ -64,3 +64,8 @@ class ResPartnerBank(models.Model):
         return super(ResPartnerBank, self).search(
             cr, user, args, offset=0, limit=None, order=None, context=None,
             count=False)
+
+    _sql_constraints = [
+        ('unique_number', 'unique(sanitized_acc_number)',
+         'Account Number must be unique'),
+    ]
