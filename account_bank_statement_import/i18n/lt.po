@@ -142,7 +142,7 @@ msgstr "Banko išrašo importas"
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "Import Bank Statements"
-msgstr "Importuoti banko sąskaitos išrašus"
+msgstr "Banko išrašo importas"
 
 
 #. module: account_bank_statement_import
