@@ -1,0 +1,212 @@
+﻿# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_bank_statement_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-20 00:25+0000\n"
+"PO-Revision-Date: 2015-02-20 00:25+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:269
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d Pervedimai buvo ignoruoti, nes jie jau importuoti."
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:269
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1 pervedimas buvo ignoruotas, nes jis jau importuotas."
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "1. Download your bank statements from your bank website."
+msgstr "1. Atsisiųskite banko sąskaitų išrašus iš banko internetinės svetainės."
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "2. Make sure you have installed the right module to support the file format."
+msgstr "2. Įsitikinkit, jog esate įrašę tinkamą modulį kuris palaikytų banko išrašo formatą."
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "3. Select the file and click 'Import'."
+msgstr "3. Nurodykite failą ir spauskite 'Importuoti'."
+
+
+#. module: account_bank_statement_import
+#: sql_constraint:account.bank.statement.line:0
+msgid "A bank account transactions can be imported only once !"
+msgstr "Banko sąskaitos operacijos gali būti importuojamos tik vieną kartą !"
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:271
+#, python-format
+msgid "Already imported items"
+msgstr "Įrašai jau importuoti"
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:182
+#, python-format
+msgid "Bank"
+msgstr "Bankas"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,data_file:0
+msgid "Bank Statement File"
+msgstr "Banko išrašo failas"
+
+
+#. module: account_bank_statement_import
+#: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Banko išrašo eilutė"
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "Cancel"
+msgstr "Atšaukti"
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:169
+#, python-format
+msgid "Cannot find in which journal import this statement. Please manually select a journal.
+msgstr "Žurnalas, į kurį norite importuoti šį išrašą, nerastas. Pasirinkite žurnalą rankiniu būdu."
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:99
+#, python-format
+msgid "Could not make sense of the given file.\n"
+"Did you install the module to support this type of file ?"
+msgstr "Failas, kurį nurodėte, netinka.\n"
+"Ar Jūs įrašėte tinkamą modulį, kad palaikytų šį failų formatą?"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,create_uid:0
+msgid "Created by"
+msgstr "Sukūrė"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,create_date:0
+msgid "Created on"
+msgstr "Sukurta"
+
+
+#. module: account_bank_statement_import
+#: help:account.bank.statement.import,data_file:0
+msgid "Get you bank statements in electronic format from your bank and select them here."
+msgstr "Atsisiuntę banko sąskaitos išrašą elektroniniu formatu, pasirinkite jį čia."
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "How to import your bank statement :"
+msgstr "Kaip importuoti banko sąskaitos išrašą :"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,id:0
+msgid "ID"
+msgstr "ID"
+
+
+#. module: account_bank_statement_import
+#: model:ir.actions.act_window,name:account_bank_statement_import.action_account_bank_statement_import
+#: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_import
+#: model:ir.ui.menu,name:account_bank_statement_import.menu_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Banko išrašo importas"
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "Import Bank Statements"
+msgstr "Banko išrašo importas"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.line,unique_import_id:0
+msgid "Import ID"
+msgstr "Importuoti ID"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,write_uid:0
+msgid "Last Updated by"
+msgstr "Paskutinį kartą atnaujino"
+
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,write_date:0
+msgid "Last Updated on"
+msgstr "Paskutinį kartą atnaujinta"
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:146
+#, python-format
+msgid "The account of this statement is linked to another journal."
+msgstr "Šio išrašo banko sąskaita yra susieta su kitu žurnalu."
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:157
+#, python-format
+msgid "The currency of the bank statement is not the same as the currency of the journal !"
+msgstr "Banko sąskaitos išrašo valiuta skiriasi nuo pasirinkto žurnalo valiutos !"
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:104
+#, python-format
+msgid "This file doesn't contain any statement."
+msgstr "Šiame faile nėra jokių banko sąskaitos išrašų."
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:112
+#, python-format
+msgid "This file doesn't contain any transaction."
+msgstr "Šiame faile nėra jokių operacijų."
+
+
+#. module: account_bank_statement_import
+#: code:addons/account_bank_statement_import/account_bank_statement_import.py:261
+#, python-format
+msgid "You have already imported that file."
+msgstr "Jūs jau importavote šį failą."
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "_Import"
+msgstr "_Importuoti"
+
+
+#. module: account_bank_statement_import
+#: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
+msgid "or"
+msgstr "arba"
+
+
