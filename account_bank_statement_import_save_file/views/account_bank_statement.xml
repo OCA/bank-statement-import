@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Transactions']" position="after">
+                    <page string="Imported file" attrs="{'invisible': [('import_file', '=', False)]}">
+                        <group>
+                            <group>
+                                <field name="import_file" />
+                            </group>
+                            <group>
+                                <field name="import_date" />
+                                <field name="import_user" />
+                            </group>
+                        </group>
+                        <field name="import_log" />
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
