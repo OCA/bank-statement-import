@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    account_bank_statement_import_paypal module for Odoo
-#    Copyright (C) 2014 Akretion-2015 (http://www.akretion.com)
+#    Copyright (C) 2014-2015 Akretion (http://www.akretion.com)
 #    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
