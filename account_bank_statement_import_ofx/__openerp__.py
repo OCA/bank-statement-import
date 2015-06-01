@@ -25,9 +25,8 @@ base account_bank_statement_import module has been imported, or manually
 create periods for the year 2013.
     """,
     'data' : [],
-    'demo': [
-        'demo/demo_data.xml',
-    ],
-    'auto_install': False,
+    'depends': ['account_bank_statement_import'],
+    'demo': [],
+    'auto_install': True,
     'installable': True,
 }
