@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Menu item to show all import bank statement files -->
+        <record
+            model="ir.actions.act_window"
+            id="action_account_bank_statement_import_tree"
+        >
+            <field name="name">Imported Bank Statements Files</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bank.statement.import.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="menu_account_bank_statement_import_tree"
+            parent="account.menu_finance_bank_and_cash"
+            action="action_account_bank_statement_import_tree"
+            name="Imported Bank Statements Files"
+            sequence="15"
+         />
+
+     </data>
+</openerp>
