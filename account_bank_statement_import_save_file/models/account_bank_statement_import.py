@@ -23,7 +23,7 @@ import inspect
 from openerp import models, fields, api
 
 
-class AccountBankStatementImport(models.Model):
+class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     @api.model
