@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# noqa: This is a backport from Odoo. OCA has no control over style here.
-# flake8: noqa
 from openerp.tests.common import TransactionCase
 from openerp.modules.module import get_module_resource
 
@@ -16,12 +14,6 @@ class TestOfxFile(TransactionCase):
         self.bank_statement_model = self.env['account.bank.statement']
 
     def test_ofx_file_import(self):
-        try:
-            from ofxparse import OfxParser as ofxparser
-        except ImportError:
-            # the Python library isn't installed on the server, the OFX import
-            # is unavailable and the test cannot be run
-            return True
         ofx_file_path = get_module_resource(
             'account_bank_statement_import_ofx',
             'test_ofx_file', 'test_ofx.ofx')
@@ -41,4 +33,3 @@ class TestOfxFile(TransactionCase):
         self.assertEquals(
             line.bank_account_id.id,
             self.ref('account_bank_statement_import.ofx_partner_bank_1'))
-

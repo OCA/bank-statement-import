@@ -16,7 +16,7 @@ except ImportError:
     ofxparser = None
 
 
-class account_bank_statement_import(models.TransientModel):
+class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     @api.model
@@ -33,7 +33,7 @@ class account_bank_statement_import(models.TransientModel):
     def _parse_file(self, data_file):
         ofx = self._check_ofx(data_file)
         if not ofx:
-            return super(account_bank_statement_import, self)._parse_file(
+            return super(AccountBankStatementImport, self)._parse_file(
                 data_file)
 
         transactions = []
