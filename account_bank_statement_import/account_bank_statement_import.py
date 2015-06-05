@@ -9,7 +9,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class account_bank_statement_line(models.Model):
+class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
 
     # Ensure transactions can be imported only once (if the import format
@@ -23,7 +23,7 @@ class account_bank_statement_line(models.Model):
     ]
 
 
-class account_bank_statement_import(models.TransientModel):
+class AccountBankStatementImport(models.TransientModel):
     _name = 'account.bank.statement.import'
     _description = 'Import Bank Statement'
 

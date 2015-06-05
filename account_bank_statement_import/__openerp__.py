@@ -3,13 +3,10 @@
     'name': 'Account Bank Statement Import',
     'category': 'Accounting & Finance',
     'version': '1.0',
-    'author': 'OpenERP SA',
+    'author': 'OpenERP SA,'
+              'Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'depends': ['account'],
-    'demo': [],
-    'description': """Generic Wizard to Import Bank Statements.
-
-    Backport from Odoo 9.0
-    """,
     'data': [
         'account_bank_statement_import_view.xml',
     ],

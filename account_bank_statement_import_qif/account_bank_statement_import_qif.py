@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# noqa: This is a backport from Odoo. OCA has no control over style here.
-# flake8: noqa
 
 import dateutil.parser
 import StringIO
@@ -10,7 +8,7 @@ from openerp import api, models, fields
 from openerp.exceptions import Warning
 
 
-class account_bank_statement_import(models.TransientModel):
+class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
 
     @api.model
@@ -37,7 +35,7 @@ class account_bank_statement_import(models.TransientModel):
             record = self.browse(active_id)
             if record.journal_id:
                 record = record.with_context(journal_id=record.journal_id.id)
-        return super(account_bank_statement_import, record)._get_journal(
+        return super(AccountBankStatementImport, record)._get_journal(
             currency_id, bank_account_id, account_number)
 
     @api.model
@@ -47,7 +45,7 @@ class account_bank_statement_import(models.TransientModel):
     @api.model
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):
-            return super(account_bank_statement_import, self)._parse_file(
+            return super(AccountBankStatementImport, self)._parse_file(
                 data_file)
 
         try:
@@ -80,9 +78,13 @@ class account_bank_statement_import(models.TransientModel):
                 elif line[0] == 'N':  # Check number
                     vals_line['ref'] = line[1:]
                 elif line[0] == 'P':  # Payee
-                    vals_line['name'] = 'name' in vals_line and line[1:] + ': ' + vals_line['name'] or line[1:]
-                    # Since QIF doesn't provide account numbers, we'll have to find res.partner and res.partner.bank here
-                    # (normal behavious is to provide 'account_number', which the generic module uses to find partner/bank)
+                    vals_line['name'] = ('name' in vals_line and
+                                         line[1:] + ': ' + vals_line['name'] or
+                                         line[1:])
+                    # Since QIF doesn't provide account numbers, we'll have to
+                    #  find res.partner and res.partner.bank here
+                    # (normal behavious is to provide 'account_number', which
+                    # the generic module uses to find partner/bank)
                     banks = self.env['res.partner.bank'].search(
                         [('owner_name', '=', line[1:])], limit=1)
                     if banks:
@@ -90,7 +92,9 @@ class account_bank_statement_import(models.TransientModel):
                         vals_line['bank_account_id'] = bank_account.id
                         vals_line['partner_id'] = bank_account.partner_id.id
                 elif line[0] == 'M':  # Memo
-                    vals_line['name'] = 'name' in vals_line and vals_line['name'] + ': ' + line[1:] or line[1:]
+                    vals_line['name'] = ('name' in vals_line and
+                                         vals_line['name'] + ': ' + line[1:] or
+                                         line[1:])
                 elif line[0] == '^':  # end of item
                     transactions.append(vals_line)
                     vals_line = {}
