@@ -20,7 +20,7 @@
 ##############################################################################
 import base64
 import inspect
-from openerp import models, fields, api
+from openerp import models, api
 
 
 class AccountBankStatementImport(models.TransientModel):

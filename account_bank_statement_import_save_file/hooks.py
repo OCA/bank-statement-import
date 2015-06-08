@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import SUPERUSER_ID, api
+from openerp import SUPERUSER_ID
 
 
 def _post_init_hook(cr, pool):
