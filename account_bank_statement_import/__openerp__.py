@@ -1,18 +1,13 @@
 # -*- encoding: utf-8 -*-
-# noqa: This is a backport from Odoo. OCA has no control over style here.
-# flake8: noqa
 {
     'name': 'Account Bank Statement Import',
-    'category' : 'Accounting & Finance',
+    'category': 'Accounting & Finance',
     'version': '1.0',
-    'author': 'OpenERP SA',
+    'author': 'OpenERP SA,'
+              'Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'depends': ['account'],
-    'demo': [],
-    'description' : """Generic Wizard to Import Bank Statements.
-    
-    Backport from Odoo 9.0
-    """,
-    'data' : [
+    'data': [
         'account_bank_statement_import_view.xml',
     ],
     'demo': [
