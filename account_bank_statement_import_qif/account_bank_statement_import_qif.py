@@ -4,7 +4,7 @@ import dateutil.parser
 import StringIO
 
 from openerp.tools.translate import _
-from openerp import api, models, fields
+from openerp import api, models
 from openerp.exceptions import Warning
 
 
@@ -14,14 +14,6 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _get_hide_journal_field(self):
         return self.env.context.get('journal_id') and True
-
-    journal_id = fields.Many2one(
-        'account.journal', string='Journal',
-        help='Accounting journal related to the bank statement you\'re '
-        'importing. It has be be manually chosen for statement formats which '
-        'doesn\'t allow automatic journal detection (QIF for example).')
-    hide_journal_field = fields.Boolean(
-        'Hide the journal field in the view', default=_get_hide_journal_field)
 
     @api.model
     def _get_journal(self, currency_id, bank_account_id, account_number):

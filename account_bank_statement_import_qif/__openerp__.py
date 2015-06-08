@@ -11,9 +11,6 @@
     'depends': [
         'account_bank_statement_import'
     ],
-    'data': [
-        'account_bank_statement_import_qif_view.xml'
-    ],
     'auto_install': False,
     'installable': True,
 }

@@ -9,6 +9,12 @@
             <field name="arch" type="xml">
                 <form string="Import Bank Statements">
                     <field name="data_file"/>
+                    <field name="hide_journal_field" invisible="1"/>
+                    <label for="journal_id"/>
+                    <field name="journal_id"
+                        domain="[('type', '=', 'bank')]"
+                        attrs="{'invisible': [('hide_journal_field', '=', True)]}"
+                        context="{'default_type':'bank'}"/>
                     <br/><br/><b> How to import your bank statement :</b>
                     <br/><label string= "1. Download your bank statements from your bank website."/>
                     <br/><label string= "2. Make sure you have installed the right module to support the file format."/>
