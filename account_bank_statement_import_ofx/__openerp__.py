@@ -12,6 +12,6 @@
     'external_dependencies': {
         'python': ['ofxparse'],
     },
-    'auto_install': True,
+    'auto_install': False,
     'installable': True,
 }
