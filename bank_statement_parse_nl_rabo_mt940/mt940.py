@@ -38,8 +38,8 @@ class MT940Parser(MT940):
     def __init__(self):
         """Initialize parser - override at least header_regex."""
         super(MT940Parser, self).__init__()
+        self.mt940_type = 'RABO'
         self.header_lines = 1  # Number of lines to skip
-
         # Do not user $ for end of string below: line contains much
         # more data than just the first line.
         self.header_regex = '^:940:'  # Start of relevant data

@@ -101,7 +101,7 @@ class MT940(object):
 
     At least, you should override handle_tag_61 and handle_tag_86.
     Don't forget to call super.
-    
+
     handle_tag_* functions receive the remainder of the the line (that is,
     without ':XX:') and are supposed to write into self.current_transaction
     """
@@ -110,6 +110,7 @@ class MT940(object):
         """Initialize parser - override at least header_regex.
 
         This in fact uses the ING syntax, override in others."""
+        self.mt940_type = 'General'
         self.header_lines = 3  # Number of lines to skip
         self.header_regex = '^{1:[0-9A-Z]{25,25}}'  # Start of relevant data
         self.footer_regex = '^-}$|^-XXX$'  # Stop processing on seeing this
@@ -123,8 +124,8 @@ class MT940(object):
         if not bool(re.match(self.header_regex, line)):
             raise ValueError(
                 'File starting with %s does not seem to be a'
-                ' MT940 format bank statement.' %
-                data[:12]
+                ' valid %s MT940 format bank statement.' %
+                (data[:12], self.mt940_type)
             )
 
     def parse(self, data):

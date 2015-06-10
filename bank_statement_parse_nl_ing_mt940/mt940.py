@@ -33,6 +33,11 @@ class MT940Parser(MT940):
         r'(?P<reference>\w{1,50})'
     )
 
+    def __init__(self):
+        """Initialize parser - override at least header_regex."""
+        super(MT940Parser, self).__init__()
+        self.mt940_type = 'ING'
+
     def handle_tag_61(self, data):
         """get transaction values"""
         super(MT940Parser, self).handle_tag_61(data)
