@@ -125,7 +125,7 @@ class MT940(object):
             raise ValueError(
                 'File starting with %s does not seem to be a'
                 ' valid %s MT940 format bank statement.' %
-                (data[:12], self.mt940_type)
+                (line[:12], self.mt940_type)
             )
 
     def parse(self, data):

@@ -21,7 +21,6 @@
 ##############################################################################
 import re
 from string import printable
-from datetime import datetime
 from openerp.addons.bank_statement_parse_mt940.mt940 import (
     MT940, str2amount, get_subfields, handle_common_subfields)
 
