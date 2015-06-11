@@ -322,7 +322,7 @@ class AccountBankStatementImport(models.TransientModel):
         bs_model = self.env['account.bank.statement']
         bsl_model = self.env['account.bank.statement.line']
         # Filter out already imported transactions and create statement
-        ignored_statement_lines_import_ids = []
+        ignored_line_ids = []
         filtered_st_lines = []
         for line_vals in statement['transactions']:
             unique_id = (
@@ -333,7 +333,7 @@ class AccountBankStatementImport(models.TransientModel):
                     [('unique_import_id', '=', unique_id)], limit=1)):
                 filtered_st_lines.append(line_vals)
             else:
-                ignored_statement_lines_import_ids.append(unique_id)
+                ignored_line_ids.append(unique_id)
         statement_id = False
         if len(filtered_st_lines) > 0:
             # Remove values that won't be used to create records
@@ -346,7 +346,7 @@ class AccountBankStatementImport(models.TransientModel):
             statement_id = bs_model.create(statement).id
         # Prepare import feedback
         notifications = []
-        num_ignored = len(ignored_statement_lines_import_ids)
+        num_ignored = len(ignored_line_ids)
         if num_ignored > 0:
             notifications += [{
                 'type': 'warning',
@@ -360,8 +360,6 @@ class AccountBankStatementImport(models.TransientModel):
                     'name': _('Already imported items'),
                     'model': 'account.bank.statement.line',
                     'ids': bsl_model.search(
-                        [('unique_import_id', 'in',
-                          ignored_statement_lines_import_ids)]).ids
-                }
+                        [('unique_import_id', 'in', ignored_line_ids)]).ids}
             }]
         return statement_id, notifications
