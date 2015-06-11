@@ -31,7 +31,7 @@ def convert_transaction(transaction):
         'ref': transaction.eref,
         'amount': transaction.transferred_amount,
         'partner_name': transaction.remote_owner,
-        'acc_number': transaction.remote_account,
+        'account_number': transaction.remote_account,
         'unique_import_id': transaction.transaction_id,
     }
     return vals_line

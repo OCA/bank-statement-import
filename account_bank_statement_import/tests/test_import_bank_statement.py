@@ -25,13 +25,13 @@
 from openerp.tests.common import TransactionCase
 
 
-class TestAccountBankStatemetImport(TransactionCase):
+class TestAccountBankStatementImport(TransactionCase):
     """Tests for import bank statement file import
     (account.bank.statement.import)
     """
 
     def setUp(self):
-        super(TestAccountBankStatemetImport, self).setUp()
+        super(TestAccountBankStatementImport, self).setUp()
         self.statement_import_model = self.env[
             'account.bank.statement.import']
         self.account_journal_model = self.env['account.journal']

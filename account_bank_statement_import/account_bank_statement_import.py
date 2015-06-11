@@ -212,21 +212,36 @@ class AccountBankStatementImport(models.TransientModel):
             else:
                 if bank_account.journal_id.id:
                     journal_id = bank_account.journal_id.id
-
         # If importing into an existing journal, its currency must be the same
-        # as the bank statement
-        if journal_id:
-            journal_currency_id = self.env['account.journal'].browse(
-                journal_id).currency.id
-            if currency_id and currency_id != journal_currency_id:
-                raise Warning(_('The currency of the bank statement is not '
-                                'the same as the currency of the journal !'))
-
-        # If we couldn't find/create a journal, everything is lost
-        if not journal_id:
-            raise Warning(_('Cannot find in which journal import this '
-                            'statement. Please manually select a journal.'))
-
+        # as the bank statement. When journal has no currency, currency must
+        # be equal to company currency.
+        if journal_id and currency_id:
+            journal_obj = self.env['account.journal'].browse(journal_id)
+            if journal_obj.currency:
+                if currency_id != journal_obj.currency.id:
+                    # ALso log message with id's for technical analysis:
+                    _logger.warn(_(
+                        'Statement currency id is %d,'
+                        ' but journal currency id = %d.') %
+                        (currency_id, journal_currency_id,)
+                    )
+                    raise Warning(_(
+                        'The currency of the bank statement is not '
+                        'the same as the currency of the journal !'
+                    ))
+            else:
+                company_currency_id = self.env.user.company_id.currency_id.id
+                if currency_id != company_currency_id:
+                    # ALso log message with id's for technical analysis:
+                    _logger.warn(_(
+                        'Statement currency id is %d,'
+                        ' but company currency id = %d.') %
+                        (currency_id, company_currency_id,)
+                    )
+                    raise Warning(_(
+                        'The currency of the bank statement is not '
+                        'the same as the company currency !'
+                    ))
         return journal_id
 
     @api.model

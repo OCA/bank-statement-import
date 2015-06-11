@@ -1,12 +1,17 @@
+# -*- encoding: utf-8 -*-
+"""Test import of bank statement for MT940 ING."""
 ##############################################################################
 #
-#    Copyright (C) 2013 Therp BV (<http://therp.nl>)
+#    Copyright (C) 2015 Therp BV <http://therp.nl>.
+#
+#    All other contributions are (C) by their respective contributors
+#
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,19 +22,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'MT940 IBAN ING Format Bank Statements Import',
-    'version': '0.3',
-    'license': 'AGPL-3',
-    'author': 'Therp BV',
-    'website': 'https://github.com/OCA/banking',
-    'category': 'Banking addons',
-    'depends': [
-        'bank_statement_parse_mt940'
-    ],
-    'data': [],
-    'demo': [
-        'demo/demo_data.xml',
-    ],
-    'installable': True
-}
+from . import test_import_bank_statement

@@ -252,7 +252,7 @@ class MT940(object):
         stmt = self.current_statement
         stmt.end_balance = str2amount(data[0], data[10:])
         stmt.date = datetime.strptime(data[1:7], '%y%m%d')
-        stmt.id = '%s-%s' % (
+        stmt.statement_id = '%s-%s' % (
             stmt.local_account,
             stmt.date.strftime('%Y-%m-%d'),
         )
