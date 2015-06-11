@@ -212,24 +212,21 @@ class AccountBankStatementImport(models.TransientModel):
             else:
                 if bank_account.journal_id.id:
                     journal_id = bank_account.journal_id.id
+
         # If importing into an existing journal, its currency must be the same
-        # as the bank statement. When journal has no currency, currency must
-        # be equal to company currency.
-        if journal_id and currency_id:
+        # as the bank statement
+        if journal_id:
             journal_currency_id = self.env['account.journal'].browse(
                 journal_id).currency.id
-            if journal_currency_id:
-                if currency_id and currency_id != journal_currency_id:
-                    raise Warning(_(
-                        'The currency of the bank statement is not '
-                        'the same as the currency of the journal !'
-                    ))
-                else:
-                    if currency_id != self.env.user.company_id.currency_id.id:
-                        raise Warning(_(
-                            'The currency of the bank statement is not '
-                            'the same as the company currency !'
-                        ))
+            if currency_id and currency_id != journal_currency_id:
+                raise Warning(_('The currency of the bank statement is not '
+                                'the same as the currency of the journal !'))
+
+        # If we couldn't find/create a journal, everything is lost
+        if not journal_id:
+            raise Warning(_('Cannot find in which journal import this '
+                            'statement. Please manually select a journal.'))
+
         return journal_id
 
     @api.model
