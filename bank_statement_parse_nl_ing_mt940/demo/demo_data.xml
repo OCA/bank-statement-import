@@ -14,7 +14,7 @@
 
         <record id="mt940_ing_company_bank" model="res.partner.bank">
             <field name="owner_name">Your Company</field>
-            <field name="acc_number">NL77ABNA0574908765</field>
+            <field name="acc_number">NL77INGB0574908765</field>
             <field name="partner_id" ref="base.partner_root"></field>
             <field name="company_id" ref="base.main_company"></field>
             <field name="journal_id" ref="mt940_ing_bank_journal"></field>

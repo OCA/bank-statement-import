@@ -31,7 +31,7 @@ class TestStatementFile(TransactionCase):
 
     def test_statement_import(self):
         """Test correct creation of single statement.
-        
+
         For this test there is NOT an existing bank-account. Therefore a
         bank account should automatically be created in the main company.
         """

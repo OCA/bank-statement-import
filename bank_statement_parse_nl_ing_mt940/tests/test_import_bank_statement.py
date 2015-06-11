@@ -50,7 +50,7 @@ class TestStatementFile(TransactionCase):
         import_model.import_file(cr, uid, [bank_statement_id])
         # statement name is account number + '-' + date of last 62F line:
         ids = statement_model.search(
-            cr, uid, [('name', '=', 'NL77ABNA0574908765-2014-02-20')])
+            cr, uid, [('name', '=', 'NL77INGB0574908765-2014-02-20')])
         self.assertTrue(ids, 'Statement not found after parse.')
         statement_id = ids[0]
         statement_obj = statement_model.browse(

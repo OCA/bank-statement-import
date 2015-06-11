@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementLine(models.Model):
+    """Extend model account.bank.statement.line."""
     _inherit = "account.bank.statement.line"
 
     # Ensure transactions can be imported only once (if the import format
@@ -25,6 +26,7 @@ class AccountBankStatementLine(models.Model):
 
 
 class AccountBankStatementImport(models.TransientModel):
+    """Extend model account.bank.statement."""
     _name = 'account.bank.statement.import'
     _description = 'Import Bank Statement'
 
@@ -153,8 +155,8 @@ class AccountBankStatementImport(models.TransientModel):
                 -o 'ref': string
         """
         raise Warning(_(
-            'Could not make sense of the given file.\nDid you '
-            'install the module to support this type of file ?'
+            'Could not make sense of the given file.\n'
+            'Did you install the module to support this type of file?'
         ))
 
     @api.model
@@ -218,12 +220,14 @@ class AccountBankStatementImport(models.TransientModel):
         if journal_id and currency_id:
             journal_obj = self.env['account.journal'].browse(journal_id)
             if journal_obj.currency:
-                if currency_id != journal_obj.currency.id:
+                journal_currency_id = journal_obj.currency.id
+                if currency_id != journal_currency_id:
                     # ALso log message with id's for technical analysis:
-                    _logger.warn(_(
-                        'Statement currency id is %d,'
-                        ' but journal currency id = %d.') %
-                        (currency_id, journal_currency_id,)
+                    _logger.warn(
+                        _('Statement currency id is %d,'
+                          ' but journal currency id = %d.'),
+                        currency_id,
+                        journal_currency_id
                     )
                     raise Warning(_(
                         'The currency of the bank statement is not '
@@ -233,10 +237,11 @@ class AccountBankStatementImport(models.TransientModel):
                 company_currency_id = self.env.user.company_id.currency_id.id
                 if currency_id != company_currency_id:
                     # ALso log message with id's for technical analysis:
-                    _logger.warn(_(
-                        'Statement currency id is %d,'
-                        ' but company currency id = %d.') %
-                        (currency_id, company_currency_id,)
+                    _logger.warn(
+                        _('Statement currency id is %d,'
+                          ' but company currency id = %d.'),
+                        currency_id,
+                        company_currency_id
                     )
                     raise Warning(_(
                         'The currency of the bank statement is not '
@@ -246,8 +251,9 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     @api.returns('res.partner.bank')
-    def _create_bank_account(self, account_number, company_id=False,
-                             currency_id=False):
+    def _create_bank_account(
+            self, account_number, company_id=False, currency_id=False):
+        """Automagically create bank account, when not yet existing."""
         try:
             bank_type = self.env.ref('base.bank_normal')
             bank_code = bank_type.code
@@ -276,6 +282,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _complete_statement(self, statement, journal_id, account_number):
+        """Complete statement from information passed."""
         statement['journal_id'] = journal_id
         for line_vals in statement['transactions']:
             unique_import_id = line_vals.get('unique_import_id', False)
@@ -343,11 +350,12 @@ class AccountBankStatementImport(models.TransientModel):
         if num_ignored > 0:
             notifications += [{
                 'type': 'warning',
-                'message': _("%d transactions had already been imported and "
-                             "were ignored.") % num_ignored
-                        if num_ignored > 1
-                        else _("1 transaction had already been imported and "
-                               "was ignored."),
+                'message':
+                    _("%d transactions had already been imported and "
+                      "were ignored.") % num_ignored
+                    if num_ignored > 1
+                    else _("1 transaction had already been imported and "
+                           "was ignored."),
                 'details': {
                     'name': _('Already imported items'),
                     'model': 'account.bank.statement.line',
