@@ -9,6 +9,9 @@
     'depends': [
         'account_bank_statement_import'
     ],
+    'demo': [
+        'demo/demo_data.xml',
+    ],
     'external_dependencies': {
         'python': ['ofxparse'],
     },
