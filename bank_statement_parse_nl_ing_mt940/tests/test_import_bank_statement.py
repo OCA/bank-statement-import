@@ -29,7 +29,8 @@ from openerp.modules.module import get_module_resource
 class TestStatementFile(TransactionCase):
     """Run test to import MT940 ING import."""
 
-    def test_statement_import(self):
+    def _test_statement_import(
+            self, file_name, statement_name, start_balance, end_balance):
         """Test correct creation of single statement."""
         import_model = self.registry('account.bank.statement.import')
         statement_model = self.registry('account.bank.statement')
@@ -37,7 +38,7 @@ class TestStatementFile(TransactionCase):
         statement_path = get_module_resource(
             'bank_statement_parse_nl_ing_mt940',
             'test_files',
-            'test-ing.940'
+            file_name
         )
         statement_file = open(
             statement_path, 'rb').read().encode('base64')
@@ -50,20 +51,37 @@ class TestStatementFile(TransactionCase):
         import_model.import_file(cr, uid, [bank_statement_id])
         # statement name is account number + '-' + date of last 62F line:
         ids = statement_model.search(
-            cr, uid, [('name', '=', 'NL77INGB0574908765-2014-02-20')])
-        self.assertTrue(ids, 'Statement not found after parse.')
+            cr, uid, [('name', '=', statement_name)])
+        self.assertTrue(
+            ids,
+            'Statement %s not found after parse.' % statement_name
+        )
         statement_id = ids[0]
         statement_obj = statement_model.browse(
             cr, uid, statement_id)
         self.assertTrue(
-            abs(statement_obj.balance_start - 662.23) < 0.00001,
-            'Start balance %f not equal to 662.23' %
-            statement_obj.balance_start
+            abs(statement_obj.balance_start - start_balance) < 0.00001,
+            'Start balance %f not equal to expected %f' %
+            (statement_obj.balance_start, start_balance)
         )
         self.assertTrue(
-            abs(statement_obj.balance_end_real - 564.35) < 0.00001,
-            'Real end balance %f not equal to 564.35' %
-            statement_obj.balance_end_real
+            abs(statement_obj.balance_end - end_balance) < 0.00001,
+            'Start balance %f not equal to expected %f' %
+            (statement_obj.balance_end_real, end_balance)
+        )
+
+    def test_old_statement_import(self):
+        """Test correct creation of single statement from old format."""
+        self._test_statement_import(
+            'test-ing-old.940', 'NL77INGB0574908765-2014-01-20',
+            662.23, 564.35
+        )
+
+    def test_statement_import(self):
+        """Test correct creation of single statement."""
+        self._test_statement_import(
+            'test-ing.940', 'NL77INGB0574908765-2014-02-20',
+            662.23, 564.35
         )
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

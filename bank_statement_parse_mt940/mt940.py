@@ -112,7 +112,7 @@ class MT940(object):
         This in fact uses the ING syntax, override in others."""
         self.mt940_type = 'General'
         self.header_lines = 3  # Number of lines to skip
-        self.header_regex = '^{1:[0-9A-Z]{25,25}}'  # Start of relevant data
+        self.header_regex = '^0000 01INGBNL2AXXXX|^{1'  # Start of relevant data
         self.footer_regex = '^-}$|^-XXX$'  # Stop processing on seeing this
         self.tag_regex = '^:[0-9]{2}[A-Z]*:'  # Start of new tag
         self.current_statement = None
