@@ -2,6 +2,8 @@
 """Framework for importing bank statement files."""
 import logging
 import base64
+from StringIO import StringIO
+from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
 
 from openerp import api, models, fields
 from openerp.tools.translate import _
@@ -52,7 +54,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.multi
     def import_file(self):
-        """ Process the file chosen in the wizard, create bank statement(s) and
+        """Process the file chosen in the wizard, create bank statement(s) and
         go to reconciliation."""
         self.ensure_one()
         data_file = base64.b64decode(self.data_file)
@@ -72,12 +74,37 @@ class AccountBankStatementImport(models.TransientModel):
         }
 
     @api.model
+    def _parse_all_files(self, data_file):
+        """Parse one file or multiple files from zip-file.
+
+        Return array of statements for further processing.
+        """
+        statements = []
+        files = [data_file]
+        try:
+            with ZipFile(StringIO(data_file), 'r') as archive:
+                files = [
+                    archive.read(filename) for filename in archive.namelist()
+                    if not filename.endswith('/')
+                    ]
+        except BadZipfile:
+            pass
+        # Parse the file(s)
+        for import_file in files:
+            # The appropriate implementation module(s) returns the statements.
+            # Actually we don't care wether all the files have the same
+            # format. Although unlikely you might mix mt940 and camt files
+            # in one zipfile.
+            statements += self._parse_file(import_file)
+        return statements
+
+    @api.model
     def _import_file(self, data_file):
         """ Create bank statement(s) from file."""
         # The appropriate implementation module returns the required data
         statement_ids = []
         notifications = []
-        parse_result = self._parse_file(data_file)
+        parse_result = self._parse_all_files(data_file)
         # Check for old version result, with separate currency and account
         if isinstance(parse_result, tuple) and len(parse_result) == 3:
             (currency_code, account_number, statements) = parse_result
@@ -125,7 +152,7 @@ class AccountBankStatementImport(models.TransientModel):
         return self._create_bank_statement(stmt_vals)
 
     @api.model
-    def _parse_file(self, data_file):
+    def _parse_file(self, dummy_data_file):
         """ Each module adding a file support must extends this method. It
         processes the file if it can, returns super otherwise, resulting in a
         chain of responsability.
