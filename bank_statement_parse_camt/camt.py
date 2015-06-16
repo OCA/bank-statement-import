@@ -3,7 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
-#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -241,5 +240,3 @@ class CamtParser(object):
             if len(statement.transactions):
                 statements.append(statement)
         return statements
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

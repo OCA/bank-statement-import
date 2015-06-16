@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013 Therp BV (<http://therp.nl>)
-#    All Rights Reserved
+#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -21,8 +21,8 @@
     'name': 'CAMT Format Bank Statements Import',
     'version': '0.3',
     'license': 'AGPL-3',
-    'author': 'Therp BV',
-    'website': 'https://github.com/OCA/banking',
+    'author': 'Odoo Community Association (OCA), Therp BV',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
         'account_bank_statement_import',

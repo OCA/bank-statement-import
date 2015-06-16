@@ -6,8 +6,6 @@
 #
 #    All other contributions are (C) by their respective contributors
 #
-#    All Rights Reserved
-#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -64,5 +62,3 @@ class TestStatementFile(TransactionCase):
             'Real end balance %f not equal to 15121.12' %
             statement_obj.balance_end_real
         )
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

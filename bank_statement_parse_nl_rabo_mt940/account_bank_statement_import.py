@@ -2,8 +2,7 @@
 """Parse a MT940 RABO file."""
 ##############################################################################
 #
-#    Copyright (C) 2013 Therp BV <http://therp.nl>
-#    All Rights Reserved
+#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -43,5 +42,3 @@ class AccountBankStatementImport(models.TransientModel):
             _logger.debug("Statement file was not a MT940 RABO file.")
             return super(AccountBankStatementImport, self)._parse_file(
                 cr, uid, data_file, context=context)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

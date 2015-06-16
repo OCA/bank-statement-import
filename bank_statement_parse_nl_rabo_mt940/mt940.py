@@ -85,5 +85,3 @@ class MT940Parser(MT940):
                 transaction.remote_owner_address = subfields['ADDR']
         # Prevent handling tag 86 later for non transaction details:
         self.current_transaction = None
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

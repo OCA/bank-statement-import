@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013 Therp BV <http://therp.nl>
-#    All Rights Reserved
+#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -21,17 +21,9 @@
     'name': 'MT940 Bank Statements Import',
     'version': '1.1',
     'license': 'AGPL-3',
-    'author': 'Therp BV',
+    'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
-    'description': '''
-This addon provides a generic parser for MT940 files. Given that MT940 is a
-non-open non-standard of pure evil in the way that every bank cooks up its own
-interpretation of it, this addon alone won't help you much. It is rather
-intended to be used by other addons to implement the dialect specific to a
-certain bank.
-See bank_statement_parse_nl_ing_mt940 for an example on how to use it.
-''',
     'depends': [
         'account_bank_statement_import',
         'bank_statement_parse',

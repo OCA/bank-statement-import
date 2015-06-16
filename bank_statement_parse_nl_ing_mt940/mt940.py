@@ -3,7 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2014-2015 Therp BV <http://therp.nl>.
-#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -65,5 +64,3 @@ class MT940Parser(MT940):
             handle_common_subfields(transaction, subfields)
         # Prevent handling tag 86 later for non transaction details:
         self.current_transaction = None
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """Generic parser for MT940 files, base for customized versions per bank."""
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2014 Therp BV (<http://therp.nl>).
+#    This module copyright (C) 2014-2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -269,5 +268,3 @@ class MT940(object):
         """details for previous transaction, here most differences between
         banks occur"""
         pass
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

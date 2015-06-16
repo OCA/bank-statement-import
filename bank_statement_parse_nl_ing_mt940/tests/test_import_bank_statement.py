@@ -6,8 +6,6 @@
 #
 #    All other contributions are (C) by their respective contributors
 #
-#    All Rights Reserved
-#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -83,5 +81,3 @@ class TestStatementFile(TransactionCase):
             'test-ing.940', 'NL77INGB0574908765-2014-02-20',
             662.23, 564.35
         )
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

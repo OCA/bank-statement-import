@@ -5,8 +5,6 @@
 #
 #    All other contributions are (C) by their respective contributors
 #
-#    All Rights Reserved
-#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -25,7 +23,7 @@
     'name': 'Bank Statement Import Parse',
     'version': '0.5',
     'license': 'AGPL-3',
-    'author': 'Banking addons community',
+    'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [],

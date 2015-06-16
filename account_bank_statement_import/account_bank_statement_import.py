@@ -81,9 +81,9 @@ class AccountBankStatementImport(models.TransientModel):
         # Check raw data:
         self._check_parsed_data(statements)
         # Import all statements:
-        for statement in statements:
+        for stmt_vals in statements:
             (statement_id, new_notifications) = (
-                self._import_statement(statement))
+                self._import_statement(stmt_vals))
             if statement_id:
                 statement_ids.append(statement_id)
             notifications.append(new_notifications)
@@ -92,13 +92,13 @@ class AccountBankStatementImport(models.TransientModel):
         return statement_ids, notifications
 
     @api.model
-    def _import_statement(self, statement):
+    def _import_statement(self, stmt_vals):
         """Import a single bank-statement.
 
         Return ids of created statements and notifications.
         """
-        currency_code = statement.pop('currency_code')
-        account_number = statement.pop('account_number')
+        currency_code = stmt_vals.pop('currency_code')
+        account_number = stmt_vals.pop('account_number')
         # Try to find the bank account and currency in odoo
         currency_id = self._find_currency_id(currency_code)
         bank_account_id = self._find_bank_account_id(account_number)
@@ -118,10 +118,10 @@ class AccountBankStatementImport(models.TransientModel):
         if not journal_id:
             raise Warning(_('Can not determine journal for import.'))
         # Prepare statement data to be used for bank statements creation
-        statement = self._complete_statement(
-            statement, journal_id, account_number)
-        # Create the bank statement
-        return self._create_bank_statement(statement)
+        stmt_vals = self._complete_statement(
+            stmt_vals, journal_id, account_number)
+        # Create the bank stmt_vals
+        return self._create_bank_statement(stmt_vals)
 
     @api.model
     def _parse_file(self, data_file):
@@ -164,8 +164,8 @@ class AccountBankStatementImport(models.TransientModel):
         """ Basic and structural verifications """
         if len(statements) == 0:
             raise Warning(_('This file doesn\'t contain any statement.'))
-        for statement in statements:
-            if 'transactions' in statement and statement['transactions']:
+        for stmt_vals in statements:
+            if 'transactions' in stmt_vals and stmt_vals['transactions']:
                 return
         # If we get here, no transaction was found:
         raise Warning(_('This file doesn\'t contain any transaction.'))
@@ -281,10 +281,10 @@ class AccountBankStatementImport(models.TransientModel):
             default_currency=currency_id).create(vals_acc)
 
     @api.model
-    def _complete_statement(self, statement, journal_id, account_number):
+    def _complete_statement(self, stmt_vals, journal_id, account_number):
         """Complete statement from information passed."""
-        statement['journal_id'] = journal_id
-        for line_vals in statement['transactions']:
+        stmt_vals['journal_id'] = journal_id
+        for line_vals in stmt_vals['transactions']:
             unique_import_id = line_vals.get('unique_import_id', False)
             if unique_import_id:
                 line_vals['unique_import_id'] = (
@@ -311,10 +311,10 @@ class AccountBankStatementImport(models.TransientModel):
                             identifying_string).id
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
-        return statement
+        return stmt_vals
 
     @api.model
-    def _create_bank_statement(self, statement):
+    def _create_bank_statement(self, stmt_vals):
         """ Create bank statement from imported values, filtering out
         already imported transactions, and return data used by the
         reconciliation widget
@@ -324,7 +324,7 @@ class AccountBankStatementImport(models.TransientModel):
         # Filter out already imported transactions and create statement
         ignored_line_ids = []
         filtered_st_lines = []
-        for line_vals in statement['transactions']:
+        for line_vals in stmt_vals['transactions']:
             unique_id = (
                 'unique_import_id' in line_vals and
                 line_vals['unique_import_id']
@@ -337,13 +337,13 @@ class AccountBankStatementImport(models.TransientModel):
         statement_id = False
         if len(filtered_st_lines) > 0:
             # Remove values that won't be used to create records
-            statement.pop('transactions', None)
+            stmt_vals.pop('transactions', None)
             for line_vals in filtered_st_lines:
                 line_vals.pop('account_number', None)
             # Create the statement
-            statement['line_ids'] = [
+            stmt_vals['line_ids'] = [
                 [0, False, line] for line in filtered_st_lines]
-            statement_id = bs_model.create(statement).id
+            statement_id = bs_model.create(stmt_vals).id
         # Prepare import feedback
         notifications = []
         num_ignored = len(ignored_line_ids)

@@ -1,14 +1,16 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Import MT940 IBAN ING Bank Statements
-=====================================
+Bank Statement MT940
+====================
 
-This module allows you to import the MT940 IBAN files from the Dutch ING bank
-in Odoo as bank statements.
-The specifications are published at:
-    https://www.ing.nl/media/ING_ming_mt940s_24_juli_tcm162-46356.pdf
-and were last updated august 2014.
+This module provides a generic parser for MT940 files. Given that MT940 is a
+non-open non-standard of pure evil in the way that every bank cooks up its own
+interpretation of it, this addon alone won't help you much. It is rather
+intended to be used by other addons to implement the dialect specific to a
+certain bank.
+
+See bank_statement_parse_nl_ing_mt940 for an example on how to use it.
 
 Known issues / Roadmap
 ======================

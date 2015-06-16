@@ -2,8 +2,7 @@
 """Classes and definitions used in parsing bank statements."""
 ##############################################################################
 #
-#  Copyright (C) 2015 Therp BV - http://therp.nl.
-#  All Rights Reserved
+#  Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as published by
@@ -111,5 +110,3 @@ class BankTransaction(object):
         self.storno_retry = False
         # If True, make cancelled debit eligible for a next direct debit run
         self.data = ''  # Raw data from which the transaction has been parsed
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
