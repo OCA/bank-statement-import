@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2014-2015 Therp BV <http://therp.nl>.
+#    Copyright (C) 2014-2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,19 +18,15 @@
 #
 ##############################################################################
 {
-    "name": "MT940 import for dutch Rabobank",
-    "version": "1.1",
+    'name': 'MT940 import for dutch Rabobank',
+    'version': '1.1',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
-    "category": "Account Banking",
-    "depends": [
+    'category': 'Banking addons',
+    'depends': [
         'bank_statement_parse_mt940'
     ],
-    "data": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "auto_install": False,
-    "installable": True,
-    "application": False,
+    'auto_install': False,
+    'installable': True,
+    'application': False,
 }

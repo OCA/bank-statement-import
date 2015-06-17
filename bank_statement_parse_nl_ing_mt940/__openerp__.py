@@ -27,7 +27,6 @@
     'depends': [
         'bank_statement_parse_mt940'
     ],
-    'data': [],
     'demo': [
         'demo/demo_data.xml',
     ],

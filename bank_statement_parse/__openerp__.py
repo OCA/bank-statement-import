@@ -3,8 +3,6 @@
 #
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
-#    All other contributions are (C) by their respective contributors
-#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -26,9 +24,6 @@
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
-    'depends': [],
-    'data': [],
-    'js': [],
     'installable': True,
     'auto_install': False,
 }

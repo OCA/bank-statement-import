@@ -2,7 +2,6 @@
 """Implement parser for MT940 files - Rabobank dialect."""
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify

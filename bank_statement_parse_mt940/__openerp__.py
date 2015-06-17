@@ -28,6 +28,5 @@
         'account_bank_statement_import',
         'bank_statement_parse',
     ],
-    'data': [],
     'installable': True
 }
