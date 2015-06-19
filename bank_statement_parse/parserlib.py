@@ -20,74 +20,91 @@
 ##############################################################################
 
 
-def convert_transaction(transaction):
-    """Convert transaction object to values for create."""
-    vals_line = {
-        'date': transaction.value_date,
-        'name': (
-            transaction.message or transaction.eref or
-            transaction.remote_owner or ''),  # name is required
-        'ref': transaction.eref,
-        'amount': transaction.transferred_amount,
-        'partner_name': transaction.remote_owner,
-        'account_number': transaction.remote_account,
-        'unique_import_id': transaction.transaction_id,
-    }
-    return vals_line
-
-
-def convert_statements(statements):
-    """Convert statement object to values for create."""
-    vals_statements = []
-    for statement in statements:
-        # Set statement_data
-        vals_statement = {
-            'currency_code': statement.local_currency,
-            'account_number': statement.local_account,
-            'name': statement.statement_id,
-            'date': statement.date.strftime('%Y-%m-%d'),
-            'balance_start': statement.start_balance,
-            'balance_end_real': statement.end_balance,
-            'balance_end': statement.end_balance,
-            'state': 'draft',
-        }
-        statement_transactions = []
-        subno = 0
-        for transaction in statement.transactions:
-            subno += 1
-            if not transaction.transaction_id:
-                transaction.transaction_id = (
-                    statement.statement_id + str(subno).zfill(4))
-            statement_transactions.append(convert_transaction(transaction))
-        vals_statement['transactions'] = statement_transactions
-        vals_statements.append(vals_statement)
-    return vals_statements
-
-
-class BankStatement(object):
-    """A bank statement groups data about several bank transactions."""
-
-    def __init__(self):
-        self.statement_id = ''
-        self.local_account = ''
-        self.local_currency = ''
-        self.start_balance = 0.0
-        self.end_balance = 0.0
-        self.date = ''
-        self.transactions = []
-
-
-class BankTransaction(object):
+class BankTransaction(dict):
     """Single transaction that is part of a bank statement."""
+
+    @property
+    def value_date(self):
+        """property getter"""
+        return self['date']
+
+    @value_date.setter
+    def value_date(self, value_date):
+        """property setter"""
+        self['date'] = value_date
+
+    @property
+    def name(self):
+        """property getter"""
+        return self['name']
+
+    @name.setter
+    def name(self, name):
+        """property setter"""
+        self['name'] = name
+
+    @property
+    def amount(self):
+        """property getter"""
+        return self['amount']
+
+    @amount.setter
+    def amount(self, amount):
+        """property setter"""
+        self['amount'] = amount
+
+    @property
+    def eref(self):
+        """property getter"""
+        return self['ref']
+
+    @eref.setter
+    def eref(self, eref):
+        """property setter"""
+        self['ref'] = eref
+        if not self.message:
+            self.name = eref
+
+    @property
+    def message(self):
+        """property getter"""
+        return self._message
+
+    @message.setter
+    def message(self, message):
+        """property setter"""
+        self._message = message
+        self.name = message
+
+    @property
+    def remote_owner(self):
+        """property getter"""
+        return self['partner_name']
+
+    @remote_owner.setter
+    def remote_owner(self, remote_owner):
+        """property setter"""
+        self['partner_name'] = remote_owner
+        if not (self.message or self.eref):
+            self.name = remote_owner
+
+    @property
+    def remote_account(self):
+        """property getter"""
+        return self['account_number']
+
+    @remote_account.setter
+    def remote_account(self, remote_account):
+        """property setter"""
+        self['account_number'] = remote_account
 
     def __init__(self):
         """Define and initialize attributes.
 
-        Does not include attributes that belong to statement.
+        Not all attributes are already used in the actual import.
         """
-        self.transaction_id = False  # Message id
+        super(BankTransaction, self).__init__()
         self.transfer_type = False  # Action type that initiated this message
-        self.eref = False  # end to end reference for transactions
         self.execution_date = False  # The posted date of the action
         self.value_date = False  # The value date of the action
         self.remote_account = False  # The account of the other party
@@ -96,7 +113,9 @@ class BankTransaction(object):
         # The exchange rate used for conversion of local_currency and
         # remote_currency
         self.transferred_amount = 0.0  # actual amount transferred
-        self.message = False  # message from the remote party
+        self.name = ''
+        self._message = False  # message from the remote party
+        self.eref = False  # end to end reference for transactions
         self.remote_owner = False  # name of the other party
         self.remote_owner_address = []  # other parties address lines
         self.remote_owner_city = False  # other parties city name
@@ -110,3 +129,100 @@ class BankTransaction(object):
         self.storno_retry = False
         # If True, make cancelled debit eligible for a next direct debit run
         self.data = ''  # Raw data from which the transaction has been parsed
+
+
+class BankStatement(dict):
+    """A bank statement groups data about several bank transactions."""
+
+    @property
+    def statement_id(self):
+        """property getter"""
+        return self['name']
+
+    def _set_transaction_ids(self):
+        """Set transaction ids to statement_id with sequence-number."""
+        subno = 0
+        for transaction in self['transactions']:
+            subno += 1
+            transaction['unique_import_id'] = (
+                self.statement_id + str(subno).zfill(4))
+
+    @statement_id.setter
+    def statement_id(self, statement_id):
+        """property setter"""
+        self['name'] = statement_id
+        self._set_transaction_ids()
+
+    @property
+    def local_account(self):
+        """property getter"""
+        return self['account_number']
+
+    @local_account.setter
+    def local_account(self, local_account):
+        """property setter"""
+        self['account_number'] = local_account
+
+    @property
+    def local_currency(self):
+        """property getter"""
+        return self['currency_code']
+
+    @local_currency.setter
+    def local_currency(self, local_currency):
+        """property setter"""
+        self['currency_code'] = local_currency
+
+    @property
+    def start_balance(self):
+        """property getter"""
+        return self['balance_start']
+
+    @start_balance.setter
+    def start_balance(self, start_balance):
+        """property setter"""
+        self['balance_start'] = start_balance
+
+    @property
+    def end_balance(self):
+        """property getter"""
+        return self['balance_end']
+
+    @end_balance.setter
+    def end_balance(self, end_balance):
+        """property setter"""
+        self['balance_end'] = end_balance
+        self['balance_end_real'] = end_balance
+
+    @property
+    def date(self):
+        """property getter"""
+        return self['date']
+
+    @date.setter
+    def date(self, date):
+        """property setter"""
+        self['date'] = date
+
+    def create_transaction(self):
+        """Create and append transaction.
+
+        This should only be called after statement_id has been set, because
+        statement_id will become part of the unique transaction_id.
+        """
+        transaction = BankTransaction()
+        self['transactions'].append(transaction)
+        # Fill default id, but might be overruled
+        transaction['unique_import_id'] = (
+            self.statement_id + str(len(self['transactions'])).zfill(4))
+        return transaction
+
+    def __init__(self):
+        super(BankStatement, self).__init__()
+        self['transactions'] = []
+        self.statement_id = ''
+        self.local_account = ''
+        self.local_currency = ''
+        self.date = ''
+        self.start_balance = 0.0
+        self.end_balance = 0.0

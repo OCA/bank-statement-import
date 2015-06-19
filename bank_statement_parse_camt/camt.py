@@ -21,10 +21,7 @@
 import re
 from datetime import datetime
 from lxml import etree
-from openerp.addons.bank_statement_parse.parserlib import (
-    BankStatement,
-    BankTransaction
-)
+from openerp.addons.bank_statement_parse.parserlib import BankStatement
 
 
 class CamtParser(object):
@@ -121,9 +118,8 @@ class CamtParser(object):
                     'remote_account'
                 )
 
-    def parse_transaction(self, ns, node):
+    def parse_transaction(self, ns, node, transaction):
         """Parse transaction (entry) node."""
-        transaction = BankTransaction()
         self.add_value_from_node(
             ns, node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction,
             'transfer_type'
@@ -190,11 +186,11 @@ class CamtParser(object):
             self.get_balance_amounts(ns, node))
         transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
         for entry_node in transaction_nodes:
-            transaction = self.parse_transaction(ns, entry_node)
-            statement.transactions.append(transaction)
-        if statement.transactions:
+            transaction = statement.create_transaction()
+            self.parse_transaction(ns, entry_node, transaction)
+        if statement['transactions']:
             statement.date = datetime.strptime(
-                statement.transactions[0].execution_date, "%Y-%m-%d")
+                statement['transactions'][0].execution_date, "%Y-%m-%d")
         return statement
 
     def check_version(self, ns, root):
@@ -237,6 +233,6 @@ class CamtParser(object):
         statements = []
         for node in root[0][1:]:
             statement = self.parse_statement(ns, node)
-            if len(statement.transactions):
+            if len(statement['transactions']):
                 statements.append(statement)
         return statements

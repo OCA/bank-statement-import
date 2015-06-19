@@ -63,7 +63,7 @@ class TestStatementFile(TransactionCase):
             (statement_obj.balance_start, start_balance)
         )
         self.assertTrue(
-            abs(statement_obj.balance_end - end_balance) < 0.00001,
+            abs(statement_obj.balance_end_real - end_balance) < 0.00001,
             'Start balance %f not equal to expected %f' %
             (statement_obj.balance_end_real, end_balance)
         )

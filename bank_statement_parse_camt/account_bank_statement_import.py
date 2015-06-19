@@ -20,11 +20,10 @@
 ##############################################################################
 import logging
 from openerp import models
-from openerp.addons.bank_statement_parse.parserlib import convert_statements
 from .camt import CamtParser as Parser
 
 
-_logger = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -35,10 +34,10 @@ class AccountBankStatementImport(models.TransientModel):
         """Parse a CAMT053 XML file."""
         parser = Parser()
         try:
-            _logger.debug("Try parsing with camt.")
-            return convert_statements(parser.parse(data_file))
+            _LOGGER.debug("Try parsing with camt.")
+            return parser.parse(data_file)
         except ValueError:
             # Not a camt file, returning super will call next candidate:
-            _logger.debug("Statement file was not a camt file.")
+            _LOGGER.debug("Statement file was not a camt file.")
             return super(AccountBankStatementImport, self)._parse_file(
                 cr, uid, data_file, context=context)

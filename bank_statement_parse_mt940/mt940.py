@@ -22,7 +22,7 @@ import re
 import logging
 from datetime import datetime
 
-from openerp.addons.bank_statement_parse import parserlib
+from openerp.addons.bank_statement_parse.parserlib import BankStatement
 
 
 def str2amount(sign, amount_str):
@@ -138,8 +138,7 @@ class MT940(object):
                     self.handle_header(line, iterator)
                 line = iterator.next()
                 if not self.is_tag(line) and not self.is_footer(line):
-                    record_line = self.append_continuation_line(
-                        record_line, line)
+                    record_line += line
                     continue
                 if record_line:
                     self.handle_record(record_line)
@@ -158,19 +157,6 @@ class MT940(object):
             self.current_statement = None
         return self.statements
 
-    def append_continuation_line(self, line, continuation_line):
-        """append a continuation line for a multiline record.
-        Override and do data cleanups as necessary."""
-        return line + continuation_line
-
-    def create_statement(self):
-        """create a BankStatement."""
-        return parserlib.BankStatement()
-
-    def create_transaction(self):
-        """Create and return BankTransaction object."""
-        return parserlib.BankTransaction()
-
     def is_footer(self, line):
         """determine if a line is the footer of a statement"""
         return line and bool(re.match(self.footer_regex, line))
@@ -183,7 +169,7 @@ class MT940(object):
         """skip header lines, create current statement"""
         for dummy_i in range(self.header_lines):
             iterator.next()
-        self.current_statement = self.create_statement()
+        self.current_statement = BankStatement()
 
     def handle_footer(self, line, iterator):
         """add current statement to list, reset state"""
@@ -226,8 +212,7 @@ class MT940(object):
 
     def handle_tag_61(self, data):
         """get transaction values"""
-        transaction = self.create_transaction()
-        self.current_statement.transactions.append(transaction)
+        transaction = self.current_statement.create_transaction()
         self.current_transaction = transaction
         transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
         transaction.value_date = datetime.strptime(data[:6], '%y%m%d')
