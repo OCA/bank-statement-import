@@ -44,14 +44,14 @@ class BankTransaction(dict):
         self['name'] = name
 
     @property
-    def amount(self):
+    def transferred_amount(self):
         """property getter"""
         return self['amount']
 
-    @amount.setter
-    def amount(self, amount):
+    @transferred_amount.setter
+    def transferred_amount(self, transferred_amount):
         """property setter"""
-        self['amount'] = amount
+        self['amount'] = transferred_amount
 
     @property
     def eref(self):

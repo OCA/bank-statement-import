@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """Framework for importing bank statement files."""
+import logging
 import base64
 
 from openerp import api, models, fields
 from openerp.tools.translate import _
 from openerp.exceptions import Warning
 
-import logging
-_logger = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class AccountBankStatementLine(models.Model):
@@ -223,7 +223,7 @@ class AccountBankStatementImport(models.TransientModel):
                 journal_currency_id = journal_obj.currency.id
                 if currency_id != journal_currency_id:
                     # ALso log message with id's for technical analysis:
-                    _logger.warn(
+                    _LOGGER.warn(
                         _('Statement currency id is %d,'
                           ' but journal currency id = %d.'),
                         currency_id,
@@ -237,7 +237,7 @@ class AccountBankStatementImport(models.TransientModel):
                 company_currency_id = self.env.user.company_id.currency_id.id
                 if currency_id != company_currency_id:
                     # ALso log message with id's for technical analysis:
-                    _logger.warn(
+                    _LOGGER.warn(
                         _('Statement currency id is %d,'
                           ' but company currency id = %d.'),
                         currency_id,
@@ -288,9 +288,9 @@ class AccountBankStatementImport(models.TransientModel):
             unique_import_id = line_vals.get('unique_import_id', False)
             if unique_import_id:
                 line_vals['unique_import_id'] = (
-                    account_number and account_number + '-' or '') + \
+                    (account_number and account_number + '-' or '') +
                     unique_import_id
-
+                )
             if not line_vals.get('bank_account_id'):
                 # Find the partner and his bank account or create the bank
                 # account. The partner selected during the reconciliation
@@ -298,17 +298,17 @@ class AccountBankStatementImport(models.TransientModel):
                 # closed.
                 partner_id = False
                 bank_account_id = False
-                identifying_string = line_vals.get('account_number')
-                if identifying_string:
+                account_number = line_vals.get('account_number')
+                if account_number:
                     bank_model = self.env['res.partner.bank']
                     banks = bank_model.search(
-                        [('acc_number', '=', identifying_string)], limit=1)
+                        [('acc_number', '=', account_number)], limit=1)
                     if banks:
                         bank_account_id = banks[0].id
                         partner_id = banks[0].partner_id.id
                     else:
-                        bank_account_id = self._create_bank_account(
-                            identifying_string).id
+                        bank_obj = self._create_bank_account(account_number)
+                        bank_account_id = bank_obj and bank_obj.id or False
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
         return stmt_vals

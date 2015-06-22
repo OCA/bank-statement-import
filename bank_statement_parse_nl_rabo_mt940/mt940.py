@@ -30,7 +30,7 @@ class MT940Parser(MT940):
     tag_61_regex = re.compile(
         r'^(?P<date>\d{6})(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
         r'(?P<reference>MARF|EREF|PREF|NONREF)\s*'
-        r'\n?(?P<remote_account>\w{1,16})?'
+        r'\n?(?P<remote_account>\w{1,34})?'
     )
 
     def __init__(self):
@@ -57,7 +57,7 @@ class MT940Parser(MT940):
         parsed_data = self.tag_61_regex.match(data).groupdict()
         self.current_transaction.transferred_amount = (
             str2amount(parsed_data['sign'], parsed_data['amount']))
-        self.current_transaction.reference = parsed_data['reference']
+        self.current_transaction.eref = parsed_data['reference']
         if parsed_data['remote_account']:
             self.current_transaction.remote_account = (
                 parsed_data['remote_account'])

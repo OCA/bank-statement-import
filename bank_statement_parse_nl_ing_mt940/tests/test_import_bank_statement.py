@@ -20,64 +20,34 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tests.common import TransactionCase
-from openerp.modules.module import get_module_resource
+from openerp.addons.account_bank_statement_import.tests import (
+    TestStatementFile)
 
 
-class TestStatementFile(TransactionCase):
+class TestImport(TestStatementFile):
     """Run test to import MT940 ING import."""
-
-    def _test_statement_import(
-            self, file_name, statement_name, start_balance, end_balance):
-        """Test correct creation of single statement."""
-        import_model = self.registry('account.bank.statement.import')
-        statement_model = self.registry('account.bank.statement')
-        cr, uid = self.cr, self.uid
-        statement_path = get_module_resource(
-            'bank_statement_parse_nl_ing_mt940',
-            'test_files',
-            file_name
-        )
-        statement_file = open(
-            statement_path, 'rb').read().encode('base64')
-        bank_statement_id = import_model.create(
-            cr, uid,
-            dict(
-                data_file=statement_file,
-            )
-        )
-        import_model.import_file(cr, uid, [bank_statement_id])
-        # statement name is account number + '-' + date of last 62F line:
-        ids = statement_model.search(
-            cr, uid, [('name', '=', statement_name)])
-        self.assertTrue(
-            ids,
-            'Statement %s not found after parse.' % statement_name
-        )
-        statement_id = ids[0]
-        statement_obj = statement_model.browse(
-            cr, uid, statement_id)
-        self.assertTrue(
-            abs(statement_obj.balance_start - start_balance) < 0.00001,
-            'Start balance %f not equal to expected %f' %
-            (statement_obj.balance_start, start_balance)
-        )
-        self.assertTrue(
-            abs(statement_obj.balance_end_real - end_balance) < 0.00001,
-            'Start balance %f not equal to expected %f' %
-            (statement_obj.balance_end_real, end_balance)
-        )
 
     def test_old_statement_import(self):
         """Test correct creation of single statement from old format."""
         self._test_statement_import(
-            'test-ing-old.940', 'NL77INGB0574908765-2014-01-20',
-            662.23, 564.35
+            'bank_statement_parse_nl_ing_mt940', 'test-ing-old.940',
+            'NL77INGB0574908765-2014-01-20',
+            start_balance=662.23, end_balance=564.35
         )
 
     def test_statement_import(self):
         """Test correct creation of single statement."""
+        transactions = [
+            {
+                'remote_account': 'NL32INGB0000012345',
+                'transferred_amount': 1.56,
+                'value_date': '2014-02-20',
+                'ref': 'EV12341REP1231456T1234',
+            },
+        ]
         self._test_statement_import(
-            'test-ing.940', 'NL77INGB0574908765-2014-02-20',
-            662.23, 564.35
+            'bank_statement_parse_nl_ing_mt940', 'test-ing.940',
+            'NL77INGB0574908765-2014-02-20',
+            start_balance=662.23, end_balance=564.35,
+            transactions=transactions
         )

@@ -36,7 +36,8 @@ class AccountBankStatementImport(models.TransientModel):
         parser = Parser()
         try:
             _LOGGER.debug("Try parsing with MT940 RABO.")
-            return parser.parse(data_file)
+            statements = parser.parse(data_file)
+            return statements
         except ValueError:
             # Returning super will call next candidate:
             _LOGGER.debug("Statement file was not a MT940 RABO file.")
