@@ -113,7 +113,6 @@ class TestStatementFile(TransactionCase):
             'Statement %s not found after parse.' % statement_name
         )
         statement_obj = ids[0]
-        #statement_obj = statement_model.browse(statement_id)
         if start_balance:
             self.assertTrue(
                 abs(statement_obj.balance_start - start_balance) < 0.00001,
