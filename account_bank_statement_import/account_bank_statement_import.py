@@ -40,7 +40,8 @@ class AccountBankStatementImport(models.TransientModel):
         'importing. It has be be manually chosen for statement formats which '
         'doesn\'t allow automatic journal detection (QIF for example).')
     hide_journal_field = fields.Boolean(
-        'Hide the journal field in the view', compute='_get_hide_journal_field')
+        string='Hide the journal field in the view',
+        compute='_get_hide_journal_field')
     data_file = fields.Binary(
         'Bank Statement File', required=True,
         help='Get you bank statements in electronic format from your bank '
