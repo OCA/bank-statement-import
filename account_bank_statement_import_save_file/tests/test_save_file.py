@@ -31,18 +31,20 @@ class HelloWorldParser(models.TransientModel):
 
     @api.model
     def _parse_file(self, data_file):
-        return [{
-            'currency_code': 'EUR',
-            'account_number': acc_number,
-            'name': '000000123',
-            'date': '2013-06-26',
-            'transactions': [{
-                'name': 'KBC-INVESTERINGSKREDIET 787-5562831-01',
+        return (
+            'EUR',
+            acc_number,
+            [{
+                'name': '000000123',
                 'date': '2013-06-26',
-                'amount': 42,
-                'unique_import_id': 'hello',
+                'transactions': [{
+                    'name': 'KBC-INVESTERINGSKREDIET 787-5562831-01',
+                    'date': '2013-06-26',
+                    'amount': 42,
+                    'unique_import_id': 'hello',
+                }],
             }],
-        }]
+        )
 
 
 class TestSaveFile(TransactionCase):
@@ -60,7 +62,11 @@ class TestSaveFile(TransactionCase):
         if not journal_id:
             account = import_wizard._create_bank_account(acc_number)
             journal_id = self.env['account.journal']\
-                .search([('currency.name', '=', 'EUR')]).ids[0]
+                .search([
+                    '|',
+                    ('currency.name', '=', 'EUR'),
+                    ('currency', '=', False)
+                ]).ids[0]
             account.journal_id = journal_id
         action = import_wizard.with_context(journal_id=journal_id)\
             .create({'data_file': base64.b64encode('hello world')})\
