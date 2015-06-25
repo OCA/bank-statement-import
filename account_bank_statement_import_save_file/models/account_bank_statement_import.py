@@ -19,7 +19,6 @@
 #
 ##############################################################################
 import base64
-import inspect
 from openerp import models, api
 
 
