@@ -27,25 +27,16 @@ class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     @api.model
-    def _import_statement(self, statement):
-        (statement_id, notifications) = \
-            super(AccountBankStatementImport, self)._import_statement(
-                statement)
-        if statement_id:
-            # get raw file data from the stack
-            def get_data_file(frame):
-                if 'data_file' in frame.f_locals:
-                    return frame.f_locals['data_file']
-                if frame.f_back:
-                    return get_data_file(frame.f_back)
-                return None
-            data_file = get_data_file(inspect.currentframe())
-            self.env['account.bank.statement'].browse([statement_id]).write({
+    def _import_file(self, data_file):
+        (statement_ids, notifications) = \
+            super(AccountBankStatementImport, self)._import_file(data_file)
+        if statement_ids:
+            self.env['account.bank.statement'].browse(statement_ids).write({
                 'import_file': self.env['ir.attachment'].create(
                     self._create_import_file_attachment_data(
-                        data_file, statement_id, notifications)).id,
+                        data_file, statement_ids[0], notifications)).id,
             })
-        return (statement_id, notifications)
+        return (statement_ids, notifications)
 
     @api.model
     def _create_import_file_attachment_data(self, data_file, statement_id,
