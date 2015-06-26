@@ -77,7 +77,15 @@ class AccountBankStatementImport(models.TransientModel):
         # The appropriate implementation module returns the required data
         statement_ids = []
         notifications = []
-        statements = self._parse_file(data_file)
+        parse_result = self._parse_file(data_file)
+        # Check for old version result, with separate currency and account
+        if isinstance(parse_result, tuple) and len(parse_result) == 3:
+            (currency_code, account_number, statements) = parse_result
+            for stmt_vals in statements:
+                stmt_vals['currency_code'] = currency_code
+                stmt_vals['account_number'] = account_number
+        else:
+            statements = parse_result
         # Check raw data:
         self._check_parsed_data(statements)
         # Import all statements:
