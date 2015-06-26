@@ -196,7 +196,7 @@ class AccountBankStatementImport(models.TransientModel):
         return bank_account_id
 
     @api.model
-    def _get_journal(self, currency_id, bank_account_id, account_number):
+    def _get_journal(self, currency_id, bank_account_id):
         """ Find the journal """
         bank_model = self.env['res.partner.bank']
         # Find the journal from context, wizard or bank account
