@@ -32,7 +32,7 @@ class ResPartnerBank(models.Model):
 
     sanitized_acc_number = fields.Char(
         'Sanitized Account Number', size=64, readonly=True,
-        compute='_get_sanitized_account_number', store=True)
+        compute='_get_sanitized_account_number', store=True, index=True)
 
     def _sanitize_account_number(self, acc_number):
         if acc_number:
