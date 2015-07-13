@@ -62,8 +62,8 @@ class ResPartnerBank(models.Model):
                 args[pos] = ('sanitized_acc_number', op, value)
             pos += 1
         return super(ResPartnerBank, self).search(
-            cr, user, args, offset=0, limit=None, order=None, context=None,
-            count=False)
+            cr, user, args, offset=offset, limit=limit, order=order,
+            context=context, count=count)
 
     _sql_constraints = [
         ('unique_number', 'unique(sanitized_acc_number)',
