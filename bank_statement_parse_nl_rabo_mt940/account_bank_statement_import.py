@@ -24,7 +24,7 @@ from openerp import models
 from .mt940 import MT940Parser as Parser
 
 
-_LOGGER = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -35,11 +35,12 @@ class AccountBankStatementImport(models.TransientModel):
         """Parse a MT940 RABO file."""
         parser = Parser()
         try:
-            _LOGGER.debug("Try parsing with MT940 RABO.")
+            _logger.debug("Try parsing with MT940 RABO.")
             statements = parser.parse(data_file)
             return statements
         except ValueError:
             # Returning super will call next candidate:
-            _LOGGER.debug("Statement file was not a MT940 RABO file.")
+            _logger.debug("Statement file was not a MT940 RABO file.",
+                          exc_info=True)
             return super(AccountBankStatementImport, self)._parse_file(
                 cr, uid, data_file, context=context)

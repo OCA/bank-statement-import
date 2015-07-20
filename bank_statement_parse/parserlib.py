@@ -98,6 +98,14 @@ class BankTransaction(dict):
         """property setter"""
         self['account_number'] = remote_account
 
+    @property
+    def note(self):
+        return self['note']
+
+    @note.setter
+    def note(self, note):
+        self['note'] = note
+
     def __init__(self):
         """Define and initialize attributes.
 

@@ -26,7 +26,7 @@ from openerp.tests.common import TransactionCase
 from openerp.modules.module import get_module_resource
 
 
-_LOGGER = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class TestStatementFile(TransactionCase):
@@ -69,7 +69,7 @@ class TestStatementFile(TransactionCase):
                 "select name, date, amount, ref, bank_account_id"
                 " from account_bank_statement_line"
                 " where statement_id=%d" % statement_obj.id)
-            _LOGGER.error(
+            _logger.error(
                 "Transaction not found in %s" %
                 str(self.cr.fetchall())
             )

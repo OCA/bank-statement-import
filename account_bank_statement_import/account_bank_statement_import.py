@@ -7,7 +7,7 @@ from openerp import api, models, fields
 from openerp.tools.translate import _
 from openerp.exceptions import Warning
 
-_LOGGER = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementLine(models.Model):
@@ -231,7 +231,7 @@ class AccountBankStatementImport(models.TransientModel):
                 journal_currency_id = journal_obj.currency.id
                 if currency_id != journal_currency_id:
                     # ALso log message with id's for technical analysis:
-                    _LOGGER.warn(
+                    _logger.warn(
                         _('Statement currency id is %d,'
                           ' but journal currency id = %d.'),
                         currency_id,
@@ -245,7 +245,7 @@ class AccountBankStatementImport(models.TransientModel):
                 company_currency_id = self.env.user.company_id.currency_id.id
                 if currency_id != company_currency_id:
                     # ALso log message with id's for technical analysis:
-                    _LOGGER.warn(
+                    _logger.warn(
                         _('Statement currency id is %d,'
                           ' but company currency id = %d.'),
                         currency_id,
