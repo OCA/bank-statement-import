@@ -23,7 +23,7 @@ from openerp import models
 from .mt940 import MT940Parser as Parser
 
 
-_LOGGER = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -34,10 +34,11 @@ class AccountBankStatementImport(models.TransientModel):
         """Parse a MT940 IBAN ING file."""
         parser = Parser()
         try:
-            _LOGGER.debug("Try parsing with MT940 IBAN ING.")
+            _logger.debug("Try parsing with MT940 IBAN ING.")
             return parser.parse(data_file)
         except ValueError:
             # Returning super will call next candidate:
-            _LOGGER.debug("Statement file was not a MT940 IBAN ING file.")
+            _logger.debug("Statement file was not a MT940 IBAN ING file.",
+                          exc_info=True)
             return super(AccountBankStatementImport, self)._parse_file(
                 cr, uid, data_file, context=context)
