@@ -165,13 +165,13 @@ class MT940(object):
         """determine if a line has a tag"""
         return line and bool(re.match(self.tag_regex, line))
 
-    def handle_header(self, line, iterator):
+    def handle_header(self, dummy_line, iterator):
         """skip header lines, create current statement"""
         for dummy_i in range(self.header_lines):
             iterator.next()
         self.current_statement = BankStatement()
 
-    def handle_footer(self, line, iterator):
+    def handle_footer(self, dummy_line, dummy_iterator):
         """add current statement to list, reset state"""
         self.statements.append(self.current_statement)
         self.current_statement = None
@@ -235,10 +235,17 @@ class MT940(object):
         stmt = self.current_statement
         stmt.end_balance = str2amount(data[0], data[10:])
         stmt.date = datetime.strptime(data[1:7], '%y%m%d')
-        stmt.statement_id = '%s-%s' % (
-            stmt.local_account,
-            stmt.date.strftime('%Y-%m-%d'),
-        )
+        # Only replace logically empty (only whitespace or zeroes) id's:
+        # But do replace statement_id's added before (therefore starting
+        # with local_account), because we need the date on the last 62F
+        # record.
+        test_empty_id = re.sub(r'[\s0]', '', stmt.statement_id)
+        if ((not test_empty_id) or
+                (stmt.statement_id.startswith(stmt.local_account))):
+            stmt.statement_id = '%s-%s' % (
+                stmt.local_account,
+                stmt.date.strftime('%Y-%m-%d'),
+            )
 
     def handle_tag_64(self, data):
         """get current balance in currency"""
