@@ -18,15 +18,17 @@
 #
 ##############################################################################
 {
-    'name': 'MT940 Bank Statements Import',
-    'version': '1.1',
+    'name': 'MT940 IBAN ING Format Bank Statements Import',
+    'version': '0.3',
     'license': 'AGPL-3',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
-        'account_bank_statement_import',
-        'bank_statement_parse',
+        'account_bank_statement_import_mt940_base'
+    ],
+    'demo': [
+        'demo/demo_data.xml',
     ],
     'installable': True
 }

@@ -22,7 +22,7 @@ import re
 import logging
 from datetime import datetime
 
-from openerp.addons.bank_statement_parse.parserlib import BankStatement
+from openerp.addons.account_bank_statement_import.parserlib import BankStatement
 
 
 def str2amount(sign, amount_str):

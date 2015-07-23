@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Run test to import camt.053 import."""
+"""Run test to import MT940 IBAN ING import."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
+#
+#    All other contributions are (C) by their respective contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,23 +25,29 @@ from openerp.addons.account_bank_statement_import.tests import (
 
 
 class TestImport(TestStatementFile):
-    """Run test to import camt import."""
+    """Run test to import MT940 ING import."""
+
+    def test_old_statement_import(self):
+        """Test correct creation of single statement from old format."""
+        self._test_statement_import(
+            'account_bank_statement_import_mt940_nl_ing', 'test-ing-old.940',
+            'NL77INGB0574908765-2014-01-20',
+            start_balance=662.23, end_balance=564.35
+        )
 
     def test_statement_import(self):
         """Test correct creation of single statement."""
         transactions = [
             {
-                'remote_account': 'NL46ABNA0499998748',
-                'transferred_amount': -754.25,
-                'value_date': '2013-01-05',
-                'ref': '435005714488-ABNO33052620',
+                'remote_account': 'NL32INGB0000012345',
+                'transferred_amount': 1.56,
+                'value_date': '2014-02-20',
+                'ref': 'EV12341REP1231456T1234',
             },
         ]
-        # statement name is account number + '-' + date of last 62F line:
         self._test_statement_import(
-            'bank_statement_parse_camt', 'test-camt053.xml',
-            '1234Test/1',
-            local_account='NL77ABNA0574908765',
-            start_balance=15568.27, end_balance=15121.12,
+            'account_bank_statement_import_mt940_nl_ing', 'test-ing.940',
+            'NL77INGB0574908765-2014-02-20',
+            start_balance=662.23, end_balance=564.35,
             transactions=transactions
         )

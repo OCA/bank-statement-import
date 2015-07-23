@@ -26,7 +26,6 @@
     'category': 'Banking addons',
     'depends': [
         'account_bank_statement_import',
-        'bank_statement_parse',
     ],
     'demo': [
         'demo/demo_data.xml',
