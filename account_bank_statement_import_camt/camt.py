@@ -21,7 +21,8 @@
 import re
 from datetime import datetime
 from lxml import etree
-from openerp.addons.bank_statement_parse.parserlib import BankStatement
+from openerp.addons.account_bank_statement_import.parserlib import (
+    BankStatement)
 
 
 class CamtParser(object):

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
+#    Copyright (C) 2014-2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,17 +18,15 @@
 #
 ##############################################################################
 {
-    'name': 'MT940 IBAN ING Format Bank Statements Import',
-    'version': '0.3',
-    'license': 'AGPL-3',
+    'name': 'MT940 import for dutch Rabobank',
+    'version': '1.1',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',
     'depends': [
-        'bank_statement_parse_mt940'
+        'account_bank_statement_import_mt940_base'
     ],
-    'demo': [
-        'demo/demo_data.xml',
-    ],
-    'installable': True
+    'auto_install': False,
+    'installable': True,
+    'application': False,
 }

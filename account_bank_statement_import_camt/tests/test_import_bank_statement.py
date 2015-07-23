@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Run test to import MT940 IBAN RABO import."""
+"""Run test to import camt.053 import."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
-#    All other contributions are (C) by their respective contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,23 +23,23 @@ from openerp.addons.account_bank_statement_import.tests import (
 
 
 class TestImport(TestStatementFile):
-    """Run test to import MT940 RABO import."""
+    """Run test to import camt import."""
 
     def test_statement_import(self):
         """Test correct creation of single statement."""
         transactions = [
             {
-                'remote_account': 'NL66RABO0160878799',
-                'transferred_amount': 400.00,
-                'value_date': '2014-01-02',
-                'ref': 'NONREF',
+                'remote_account': 'NL46ABNA0499998748',
+                'transferred_amount': -754.25,
+                'value_date': '2013-01-05',
+                'ref': '435005714488-ABNO33052620',
             },
         ]
         # statement name is account number + '-' + date of last 62F line:
         self._test_statement_import(
-            'bank_statement_parse_nl_rabo_mt940', 'test-rabo.swi',
-            'NL34RABO0142623393-2014-01-07',
-            local_account='NL34RABO0142623393',
-            start_balance=4433.52, end_balance=4798.91,
+            'account_bank_statement_import_camt', 'test-camt053.xml',
+            '1234Test/1',
+            local_account='NL77ABNA0574908765',
+            start_balance=15568.27, end_balance=15121.12,
             transactions=transactions
         )

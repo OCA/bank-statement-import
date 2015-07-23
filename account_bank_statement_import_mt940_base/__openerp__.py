@@ -1,14 +1,7 @@
-# -*- encoding: utf-8 -*-
-"""Classes and models to parse bank statements and import them into Odoo."""
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014-2015 Therp BV <http://therp.nl>.
-#
-#    WARNING: This program as such is intended to be used by professional
-#    programmers who take the whole responsability of assessing all potential
-#    consequences resulting from its eventual inadequacies and bugs
-#    End users who are looking for a ready-to-use solution with commercial
-#    garantees and support are strongly adviced to contract EduSense BV
+#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -24,4 +17,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import parserlib
+{
+    'name': 'MT940 Bank Statements Import',
+    'version': '1.1',
+    'license': 'AGPL-3',
+    'author': 'Odoo Community Association (OCA), Therp BV',
+    'website': 'https://github.com/OCA/bank-statement-import',
+    'category': 'Banking addons',
+    'depends': [
+        'account_bank_statement_import',
+    ],
+    'installable': True
+}
