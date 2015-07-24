@@ -1,210 +1,229 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import
+# 	* account_bank_statement_import
+# Therp BV <therp.nl>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-11 12:15+0000\n"
-"PO-Revision-Date: 2015-06-11 12:15+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2015-06-11 14:37+0200\n"
+"Last-Translator: Therp BV <therp.nl>\n"
+"Language: nl\n"
+"Language-Team: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:347
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
-msgstr ""
+msgstr "%d Transacties zijn overgeslagen omdat ze al reeds waren geïmporteerd."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:350
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
-msgstr ""
+msgstr "1. Transactie was al geïmporteerd en is overgeslagen."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "1. Download your bank statements from your bank website."
-msgstr ""
+msgstr "1. Download het bankafschrift bestand van de website van uw bank."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
-msgid "2. Make sure you have installed the right module to support the file format."
+msgid ""
+"2. Make sure you have installed the right module to support the file format."
 msgstr ""
+"2. Zorg ervoor dat de modules die het formaat van uw bestand ondersteunen "
+"zijn geïnstalleerd."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "3. Select the file and click 'Import'."
-msgstr ""
+msgstr "3. Selecteer het bestand en klik op \"Importeren\"."
 
 #. module: account_bank_statement_import
 #: sql_constraint:account.bank.statement.line:0
 msgid "A bank account transactions can be imported only once !"
-msgstr ""
+msgstr "De transacties kunnen slechts eenmalig worden geïmporteerd."
 
 #. module: account_bank_statement_import
 #: sql_constraint:res.partner.bank:0
 msgid "Account Number must be unique"
-msgstr ""
+msgstr "Rekeningnummer moet uniek zijn"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:353
 #, python-format
 msgid "Already imported items"
-msgstr ""
+msgstr "Al eerder geïmporteerde regels"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_res_partner_bank
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Bankrekeningen"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,data_file:0
 msgid "Bank Statement File"
-msgstr ""
+msgstr "Bankafschriften bestand"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Bankafschrift regel"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:116
 #, python-format
 msgid "Can not determine journal for import."
-msgstr ""
+msgstr "Kan niet bepalen welk dagboek gebruikt moet worden."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:154
 #, python-format
-msgid "Could not make sense of the given file.\n"
+msgid ""
+"Could not make sense of the given file.\n"
 "Did you install the module to support this type of file ?"
 msgstr ""
+"Kon het bestand niet interpreteren.\n"
+"Heeft u de juiste modules voor dit type bestand geïnstalleerd?"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,data_file:0
-msgid "Get you bank statements in electronic format from your bank and select them here."
+msgid ""
+"Get you bank statements in electronic format from your bank and select them "
+"here."
 msgstr ""
+"Verkrijg de bankafschriften van uw bank in elektronische vorm en selecteer "
+"ze hier."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "How to import your bank statement :"
-msgstr ""
+msgstr "Hoe uw bankafschrift te importeren:"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_bank_statement_import
 #: model:ir.actions.act_window,name:account_bank_statement_import.action_account_bank_statement_import
 #: model:ir.ui.menu,name:account_bank_statement_import.menu_account_bank_statement_import
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr ""
+msgstr "Geïmporteerd bankafschrift"
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "Import Bank Statements"
-msgstr ""
+msgstr "Importeer bankafschriften"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.line,unique_import_id:0
 msgid "Import ID"
-msgstr ""
+msgstr "Import ID"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: account_bank_statement_import
 #: field:res.partner.bank,sanitized_acc_number:0
 msgid "Sanitized Account Number"
-msgstr ""
+msgstr "Gestandaardiseerd rekeningnummer"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:237
 #, python-format
 msgid "Statement currency id is %d, but company currency id = %d."
-msgstr ""
+msgstr "Valuta id van afschrift = %d, maar valuta id van bedrijf = %d."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:224
 #, python-format
 msgid "Statement currency id is %d, but journal currency id = %d."
-msgstr ""
+msgstr "Valuta id van afschrift = %d, maar valuta id van dagboek = %d."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:179
 #, python-format
 msgid "Statement has invalid currency code %s"
-msgstr ""
+msgstr "Bankafschrift heeft ongeldige valutacode %s"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:207
 #, python-format
 msgid "The account of this statement is linked to another journal."
 msgstr ""
+"Het rekeningnummer van dit afschrift is gekoppeld aan een ander dagboek."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:242
 #, python-format
-msgid "The currency of the bank statement is not the same as the company currency !"
+msgid ""
+"The currency of the bank statement is not the same as the company currency !"
 msgstr ""
+"De valuta van het afschrift is niet gelijk aan de valuta van het bedrijf!"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:229
 #, python-format
-msgid "The currency of the bank statement is not the same as the currency of the journal !"
+msgid ""
+"The currency of the bank statement is not the same as the currency of the "
+"journal !"
 msgstr ""
+"De valuta van het afschrift is niet hetzelfde als de valuta van het dagboek!"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:163
 #, python-format
 msgid "This file doesn't contain any statement."
-msgstr ""
+msgstr "Dit bestand bevat geen enkel afschrift."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:168
 #, python-format
 msgid "This file doesn't contain any transaction."
-msgstr ""
+msgstr "Dit bestand bevat geen enkele transactie."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/account_bank_statement_import.py:88
 #, python-format
 msgid "You have already imported that file."
-msgstr ""
+msgstr "U heeft dit bestand al geïmporteerd."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -215,4 +234,3 @@ msgstr ""
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "or"
 msgstr ""
-

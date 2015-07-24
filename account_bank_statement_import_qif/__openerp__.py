@@ -2,7 +2,7 @@
 
 {
     'name': 'Import QIF Bank Statement',
-    'category': 'Accounting & Finance',
+    'category': 'Banking addons',
     'version': '1.0',
     'author': 'OpenERP SA,'
               'Odoo Community Association (OCA)',

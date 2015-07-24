@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
     'name': 'Account Bank Statement Import',
-    'category': 'Accounting & Finance',
+    'category': 'Banking addons',
     'version': '1.0',
     'author': 'OpenERP SA,'
               'Odoo Community Association (OCA)',

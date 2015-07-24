@@ -25,13 +25,13 @@
 from openerp.tests.common import TransactionCase
 
 
-class TestAccountBankStatemetImport(TransactionCase):
+class TestAccountBankStatementImport(TransactionCase):
     """Tests for import bank statement file import
     (account.bank.statement.import)
     """
 
     def setUp(self):
-        super(TestAccountBankStatemetImport, self).setUp()
+        super(TestAccountBankStatementImport, self).setUp()
         self.statement_import_model = self.env[
             'account.bank.statement.import']
         self.account_journal_model = self.env['account.journal']
@@ -65,10 +65,7 @@ class TestAccountBankStatemetImport(TransactionCase):
         """
         journal = self.account_journal_model.browse(self.journal_id)
         expected_id = journal.company_id.partner_id.id
-
         st_import = self.statement_import_model.sudo(self.other_user_id_a.id)
         bank = st_import._create_bank_account(
             '001251882303', company_id=self.company_id)
-
-        self.assertEqual(bank.partner_id.id,
-                         expected_id)
+        self.assertEqual(bank.partner_id.id, expected_id)

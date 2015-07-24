@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
+"""Framework for importing bank statement files."""
+import logging
 import base64
 
 from openerp import api, models, fields
 from openerp.tools.translate import _
 from openerp.exceptions import Warning
 
-import logging
 _logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementLine(models.Model):
+    """Extend model account.bank.statement.line."""
     _inherit = "account.bank.statement.line"
 
     # Ensure transactions can be imported only once (if the import format
@@ -24,6 +26,7 @@ class AccountBankStatementLine(models.Model):
 
 
 class AccountBankStatementImport(models.TransientModel):
+    """Extend model account.bank.statement."""
     _name = 'account.bank.statement.import'
     _description = 'Import Bank Statement'
 
@@ -50,7 +53,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.multi
     def import_file(self):
         """ Process the file chosen in the wizard, create bank statement(s) and
-        go to reconciliation. """
+        go to reconciliation."""
         self.ensure_one()
         data_file = base64.b64decode(self.data_file)
         statement_ids, notifications = self.with_context(
@@ -70,15 +73,43 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _import_file(self, data_file):
-        """ Create bank statement(s) from file
-        """
+        """ Create bank statement(s) from file."""
         # The appropriate implementation module returns the required data
-        currency_code, account_number, stmts_vals = self._parse_file(data_file)
-        # Check raw data
-        self._check_parsed_data(stmts_vals)
+        statement_ids = []
+        notifications = []
+        parse_result = self._parse_file(data_file)
+        # Check for old version result, with separate currency and account
+        if isinstance(parse_result, tuple) and len(parse_result) == 3:
+            (currency_code, account_number, statements) = parse_result
+            for stmt_vals in statements:
+                stmt_vals['currency_code'] = currency_code
+                stmt_vals['account_number'] = account_number
+        else:
+            statements = parse_result
+        # Check raw data:
+        self._check_parsed_data(statements)
+        # Import all statements:
+        for stmt_vals in statements:
+            (statement_id, new_notifications) = (
+                self._import_statement(stmt_vals))
+            if statement_id:
+                statement_ids.append(statement_id)
+            notifications.append(new_notifications)
+        if len(statement_ids) == 0:
+            raise Warning(_('You have already imported that file.'))
+        return statement_ids, notifications
+
+    @api.model
+    def _import_statement(self, stmt_vals):
+        """Import a single bank-statement.
+
+        Return ids of created statements and notifications.
+        """
+        currency_code = stmt_vals.pop('currency_code')
+        account_number = stmt_vals.pop('account_number')
         # Try to find the bank account and currency in odoo
-        currency_id, bank_account_id = self._find_additional_data(
-            currency_code, account_number)
+        currency_id = self._find_currency_id(currency_code)
+        bank_account_id = self._find_bank_account_id(account_number)
         # Create the bank account if not already existing
         if not bank_account_id and account_number:
             journal_id = self.env.context.get('journal_id')
@@ -90,87 +121,90 @@ class AccountBankStatementImport(models.TransientModel):
                 account_number, company_id=company_id,
                 currency_id=currency_id).id
         # Find or create the bank journal
-        journal_id = self._get_journal(
-            currency_id, bank_account_id, account_number)
+        journal_id = self._get_journal(currency_id, bank_account_id)
+        # By now journal and account_number must be known
+        if not journal_id:
+            raise Warning(_('Can not determine journal for import.'))
         # Prepare statement data to be used for bank statements creation
-        stmts_vals = self._complete_stmts_vals(
-            stmts_vals, journal_id, account_number)
-        # Create the bank statements
-        return self._create_bank_statements(stmts_vals)
+        stmt_vals = self._complete_statement(
+            stmt_vals, journal_id, account_number)
+        # Create the bank stmt_vals
+        return self._create_bank_statement(stmt_vals)
 
     @api.model
     def _parse_file(self, data_file):
         """ Each module adding a file support must extends this method. It
-        rocesses the file if it can, returns super otherwise, resulting in a
+        processes the file if it can, returns super otherwise, resulting in a
         chain of responsability.
         This method parses the given file and returns the data required by
         the bank statement import process, as specified below.
-            rtype: triplet (if a value can't be retrieved, use None)
-                - currency code: string (e.g: 'EUR')
-                    The ISO 4217 currency code, case insensitive
-                - account number: string (e.g: 'BE1234567890')
-                    The number of the bank account which the statement belongs
-                    to
-                - bank statements data: list of dict containing (optional
-                                        items marked by o) :
-                    - 'name': string (e.g: '000000123')
-                    - 'date': date (e.g: 2013-06-26)
-                    -o 'balance_start': float (e.g: 8368.56)
-                    -o 'balance_end_real': float (e.g: 8888.88)
-                    - 'transactions': list of dict containing :
-                        - 'name': string
-                            (e.g: 'KBC-INVESTERINGSKREDIET 787-5562831-01')
-                        - 'date': date
-                        - 'amount': float
-                        - 'unique_import_id': string
-                        -o 'account_number': string
-                            Will be used to find/create the res.partner.bank
-                            in odoo
-                        -o 'note': string
-                        -o 'partner_name': string
-                        -o 'ref': string
+        - bank statements data: list of dict containing (optional
+                                items marked by o) :
+            -o currency code: string (e.g: 'EUR')
+                The ISO 4217 currency code, case insensitive
+            -o account number: string (e.g: 'BE1234567890')
+                The number of the bank account which the statement
+                belongs to
+            - 'name': string (e.g: '000000123')
+            - 'date': date (e.g: 2013-06-26)
+            -o 'balance_start': float (e.g: 8368.56)
+            -o 'balance_end_real': float (e.g: 8888.88)
+            - 'transactions': list of dict containing :
+                - 'name': string
+                    (e.g: 'KBC-INVESTERINGSKREDIET 787-5562831-01')
+                - 'date': date
+                - 'amount': float
+                - 'unique_import_id': string
+                -o 'account_number': string
+                    Will be used to find/create the res.partner.bank
+                    in odoo
+                -o 'note': string
+                -o 'partner_name': string
+                -o 'ref': string
         """
-        raise Warning(_('Could not make sense of the given file.\nDid you '
-                        'install the module to support this type of file ?'))
+        raise Warning(_(
+            'Could not make sense of the given file.\n'
+            'Did you install the module to support this type of file?'
+        ))
 
     @api.model
-    def _check_parsed_data(self, stmts_vals):
+    def _check_parsed_data(self, statements):
         """ Basic and structural verifications """
-        if len(stmts_vals) == 0:
+        if len(statements) == 0:
             raise Warning(_('This file doesn\'t contain any statement.'))
-
-        no_st_line = True
-        for vals in stmts_vals:
-            if vals['transactions'] and len(vals['transactions']) > 0:
-                no_st_line = False
-                break
-        if no_st_line:
-            raise Warning(_('This file doesn\'t contain any transaction.'))
+        for stmt_vals in statements:
+            if 'transactions' in stmt_vals and stmt_vals['transactions']:
+                return
+        # If we get here, no transaction was found:
+        raise Warning(_('This file doesn\'t contain any transaction.'))
 
     @api.model
-    def _find_additional_data(self, currency_code, account_number):
-        """ Get the res.currency ID and the res.partner.bank ID """
-        # if no currency_code is provided, we'll use the company currency
-        currency_id = False
+    def _find_currency_id(self, currency_code):
+        """ Get res.currency ID."""
         if currency_code:
             currency_ids = self.env['res.currency'].search(
                 [('name', '=ilike', currency_code)])
-            company_currency_id = self.env.user.company_id.currency_id
             if currency_ids:
-                if currency_ids[0] != company_currency_id:
-                    currency_id = currency_ids[0].id
+                return currency_ids[0].id
+            else:
+                raise Warning(_(
+                    'Statement has invalid currency code %s') % currency_code)
+        # if no currency_code is provided, we'll use the company currency
+        return self.env.user.company_id.currency_id.id
 
+    @api.model
+    def _find_bank_account_id(self, account_number):
+        """ Get res.partner.bank ID """
         bank_account_id = None
         if account_number and len(account_number) > 4:
             bank_account_ids = self.env['res.partner.bank'].search(
                 [('acc_number', '=', account_number)], limit=1)
             if bank_account_ids:
                 bank_account_id = bank_account_ids[0].id
-
-        return currency_id, bank_account_id
+        return bank_account_id
 
     @api.model
-    def _get_journal(self, currency_id, bank_account_id, account_number):
+    def _get_journal(self, currency_id, bank_account_id):
         """ Find the journal """
         bank_model = self.env['res.partner.bank']
         # Find the journal from context, wizard or bank account
@@ -189,23 +223,45 @@ class AccountBankStatementImport(models.TransientModel):
                 if bank_account.journal_id.id:
                     journal_id = bank_account.journal_id.id
         # If importing into an existing journal, its currency must be the same
-        # as the bank statement
-        if journal_id:
-            journal_currency_id = self.env['account.journal'].browse(
-                journal_id).currency.id
-            if currency_id and currency_id != journal_currency_id:
-                raise Warning(_('The currency of the bank statement is not '
-                                'the same as the currency of the journal !'))
-        # If we couldn't find/create a journal, everything is lost
-        if not journal_id:
-            raise Warning(_('Cannot find in which journal import this '
-                            'statement. Please manually select a journal.'))
+        # as the bank statement. When journal has no currency, currency must
+        # be equal to company currency.
+        if journal_id and currency_id:
+            journal_obj = self.env['account.journal'].browse(journal_id)
+            if journal_obj.currency:
+                journal_currency_id = journal_obj.currency.id
+                if currency_id != journal_currency_id:
+                    # ALso log message with id's for technical analysis:
+                    _logger.warn(
+                        _('Statement currency id is %d,'
+                          ' but journal currency id = %d.'),
+                        currency_id,
+                        journal_currency_id
+                    )
+                    raise Warning(_(
+                        'The currency of the bank statement is not '
+                        'the same as the currency of the journal !'
+                    ))
+            else:
+                company_currency_id = self.env.user.company_id.currency_id.id
+                if currency_id != company_currency_id:
+                    # ALso log message with id's for technical analysis:
+                    _logger.warn(
+                        _('Statement currency id is %d,'
+                          ' but company currency id = %d.'),
+                        currency_id,
+                        company_currency_id
+                    )
+                    raise Warning(_(
+                        'The currency of the bank statement is not '
+                        'the same as the company currency !'
+                    ))
         return journal_id
 
     @api.model
     @api.returns('res.partner.bank')
-    def _create_bank_account(self, account_number, company_id=False,
-                             currency_id=False):
+    def _create_bank_account(
+            self, account_number, company_id=False, currency_id=False):
+        """Automagically create bank account, when not yet existing."""
         try:
             bank_type = self.env.ref('base.bank_normal')
             bank_code = bank_type.code
@@ -233,95 +289,85 @@ class AccountBankStatementImport(models.TransientModel):
             default_currency=currency_id).create(vals_acc)
 
     @api.model
-    def _complete_stmts_vals(self, stmts_vals, journal_id, account_number):
-        for st_vals in stmts_vals:
-            st_vals['journal_id'] = journal_id
-
-            for line_vals in st_vals['transactions']:
-                unique_import_id = line_vals.get('unique_import_id', False)
-                if unique_import_id:
-                    line_vals['unique_import_id'] = (
-                        account_number and account_number + '-' or '') + \
-                        unique_import_id
-
-                if not line_vals.get('bank_account_id'):
-                    # Find the partner and his bank account or create the bank
-                    # account. The partner selected during the reconciliation
-                    # process will be linked to the bank when the statement is
-                    # closed.
-                    partner_id = False
-                    bank_account_id = False
-                    identifying_string = line_vals.get('account_number')
-                    if identifying_string:
-                        bank_model = self.env['res.partner.bank']
-                        banks = bank_model.search(
-                            [('acc_number', '=', identifying_string)], limit=1)
-                        if banks:
-                            bank_account_id = banks[0].id
-                            partner_id = banks[0].partner_id.id
-                        else:
-                            bank_account_id = self._create_bank_account(
-                                identifying_string).id
-                    line_vals['partner_id'] = partner_id
-                    line_vals['bank_account_id'] = bank_account_id
-
-        return stmts_vals
+    def _complete_statement(self, stmt_vals, journal_id, account_number):
+        """Complete statement from information passed."""
+        stmt_vals['journal_id'] = journal_id
+        for line_vals in stmt_vals['transactions']:
+            unique_import_id = line_vals.get('unique_import_id', False)
+            if unique_import_id:
+                line_vals['unique_import_id'] = (
+                    (account_number and account_number + '-' or '') +
+                    unique_import_id
+                )
+            if not line_vals.get('bank_account_id'):
+                # Find the partner and his bank account or create the bank
+                # account. The partner selected during the reconciliation
+                # process will be linked to the bank when the statement is
+                # closed.
+                partner_id = False
+                bank_account_id = False
+                account_number = line_vals.get('account_number')
+                if account_number:
+                    bank_model = self.env['res.partner.bank']
+                    banks = bank_model.search(
+                        [('acc_number', '=', account_number)], limit=1)
+                    if banks:
+                        bank_account_id = banks[0].id
+                        partner_id = banks[0].partner_id.id
+                    else:
+                        bank_obj = self._create_bank_account(account_number)
+                        bank_account_id = bank_obj and bank_obj.id or False
+                line_vals['partner_id'] = partner_id
+                line_vals['bank_account_id'] = bank_account_id
+        return stmt_vals
 
     @api.model
-    def _create_bank_statements(self, stmts_vals):
-        """ Create new bank statements from imported values, filtering out
-        already imported transactions, and returns data used by the
+    def _create_bank_statement(self, stmt_vals):
+        """ Create bank statement from imported values, filtering out
+        already imported transactions, and return data used by the
         reconciliation widget
         """
         bs_model = self.env['account.bank.statement']
         bsl_model = self.env['account.bank.statement.line']
-
-        # Filter out already imported transactions and create statements
-        statement_ids = []
-        ignored_statement_lines_import_ids = []
-        for st_vals in stmts_vals:
-            filtered_st_lines = []
-            for line_vals in st_vals['transactions']:
-                if 'unique_import_id' not in line_vals \
-                   or not line_vals['unique_import_id'] \
-                   or not bool(bsl_model.sudo().search(
-                        [('unique_import_id', '=',
-                          line_vals['unique_import_id'])],
-                        limit=1)):
-                    filtered_st_lines.append(line_vals)
-                else:
-                    ignored_statement_lines_import_ids.append(
-                        line_vals['unique_import_id'])
-            if len(filtered_st_lines) > 0:
-                # Remove values that won't be used to create records
-                st_vals.pop('transactions', None)
-                for line_vals in filtered_st_lines:
-                    line_vals.pop('account_number', None)
-                # Create the satement
-                st_vals['line_ids'] = [[0, False, line] for line in
-                                       filtered_st_lines]
-                statement_ids.append(bs_model.create(st_vals).id)
-        if len(statement_ids) == 0:
-            raise Warning(_('You have already imported that file.'))
-
+        # Filter out already imported transactions and create statement
+        ignored_line_ids = []
+        filtered_st_lines = []
+        for line_vals in stmt_vals['transactions']:
+            unique_id = (
+                'unique_import_id' in line_vals and
+                line_vals['unique_import_id']
+            )
+            if not unique_id or not bool(bsl_model.sudo().search(
+                    [('unique_import_id', '=', unique_id)], limit=1)):
+                filtered_st_lines.append(line_vals)
+            else:
+                ignored_line_ids.append(unique_id)
+        statement_id = False
+        if len(filtered_st_lines) > 0:
+            # Remove values that won't be used to create records
+            stmt_vals.pop('transactions', None)
+            for line_vals in filtered_st_lines:
+                line_vals.pop('account_number', None)
+            # Create the statement
+            stmt_vals['line_ids'] = [
+                [0, False, line] for line in filtered_st_lines]
+            statement_id = bs_model.create(stmt_vals).id
         # Prepare import feedback
         notifications = []
-        num_ignored = len(ignored_statement_lines_import_ids)
+        num_ignored = len(ignored_line_ids)
         if num_ignored > 0:
             notifications += [{
                 'type': 'warning',
-                'message': _("%d transactions had already been imported and "
-                             "were ignored.") % num_ignored
-                        if num_ignored > 1
-                        else _("1 transaction had already been imported and "
-                               "was ignored."),
+                'message':
+                    _("%d transactions had already been imported and "
+                      "were ignored.") % num_ignored
+                    if num_ignored > 1
+                    else _("1 transaction had already been imported and "
+                           "was ignored."),
                 'details': {
                     'name': _('Already imported items'),
                     'model': 'account.bank.statement.line',
                     'ids': bsl_model.search(
-                        [('unique_import_id', 'in',
-                          ignored_statement_lines_import_ids)]).ids
-                }
+                        [('unique_import_id', 'in', ignored_line_ids)]).ids}
             }]
-
-        return statement_ids, notifications
+        return statement_id, notifications
