@@ -31,7 +31,7 @@ def post_init_hook(cr, pool):
             """
             with
             res_partner_bank_sanitized as
-            (select id, acc_number, regexp_replace(acc_number, '\W+', '', 'g')
+            (select id, acc_number, regexp_replace(acc_number, '\\W+', '', 'g')
              acc_number_sanitized from res_partner_bank),
             res_partner_bank_sanitized_grouped as
             (select array_agg(id) ids, acc_number_sanitized, count(*) amount
