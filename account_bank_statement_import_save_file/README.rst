@@ -16,6 +16,11 @@ Contributors
 
 * Holger Brunn <hbrunn@therp.nl>
 
+Icon
+----
+
+* https://commons.wikimedia.org/wiki/File:Paper_clip_font_awesome.svg
+
 Maintainer
 ----------
 
