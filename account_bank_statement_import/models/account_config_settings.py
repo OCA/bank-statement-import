@@ -20,7 +20,7 @@
 from openerp import models, fields
 
 
-class AccountConfigSettings(models.Model):
+class AccountConfigSettings(models.TransientModel):
     _inherit = 'account.config.settings'
 
     module_base_bank_account_number_unique = fields.Boolean(
