@@ -8,7 +8,8 @@
     'website': 'https://github.com/OCA/bank-statement-import',
     'depends': ['account'],
     'data': [
-        'account_bank_statement_import_view.xml',
+        "views/account_config_settings.xml",
+        'views/account_bank_statement_import_view.xml',
     ],
     'demo': [
         'demo/fiscalyear_period.xml',
