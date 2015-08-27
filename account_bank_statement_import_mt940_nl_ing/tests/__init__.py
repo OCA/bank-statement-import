@@ -1,12 +1,10 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Test import of bank statement for MT940 ING."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    All other contributions are (C) by their respective contributors
-#
-#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as

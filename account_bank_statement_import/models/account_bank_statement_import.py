@@ -7,13 +7,14 @@ from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
 
 from openerp import api, models, fields
 from openerp.tools.translate import _
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
-_logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 
 class AccountBankStatementLine(models.Model):
     """Extend model account.bank.statement.line."""
+    # pylint: disable=too-many-public-methods
     _inherit = "account.bank.statement.line"
 
     # Ensure transactions can be imported only once (if the import format
@@ -29,6 +30,7 @@ class AccountBankStatementLine(models.Model):
 
 class AccountBankStatementImport(models.TransientModel):
     """Extend model account.bank.statement."""
+    # pylint: disable=too-many-public-methods
     _name = 'account.bank.statement.import'
     _description = 'Import Bank Statement'
 
@@ -37,6 +39,7 @@ class AccountBankStatementImport(models.TransientModel):
         """ Return False if the journal_id can't be provided by the parsed
         file and must be provided by the wizard.
         See account_bank_statement_import_qif """
+        # pylint: disable=no-self-use
         return True
 
     journal_id = fields.Many2one(
@@ -58,8 +61,10 @@ class AccountBankStatementImport(models.TransientModel):
         go to reconciliation."""
         self.ensure_one()
         data_file = base64.b64decode(self.data_file)
+        # pylint: disable=protected-access
         statement_ids, notifications = self.with_context(
-            active_id=self.id)._import_file(data_file)
+            active_id=self.id  # pylint: disable=no-member
+        )._import_file(data_file)
         # dispatch to reconciliation interface
         action = self.env.ref(
             'account.action_bank_reconcile_bank_statements')
@@ -95,7 +100,16 @@ class AccountBankStatementImport(models.TransientModel):
             # Actually we don't care wether all the files have the same
             # format. Although unlikely you might mix mt940 and camt files
             # in one zipfile.
-            statements += self._parse_file(import_file)
+            parse_result = self._parse_file(import_file)
+            # Check for old version result, with separate currency and account
+            if isinstance(parse_result, tuple) and len(parse_result) == 3:
+                (currency_code, account_number, new_statements) = parse_result
+                for stmt_vals in new_statements:
+                    stmt_vals['currency_code'] = currency_code
+                    stmt_vals['account_number'] = account_number
+            else:
+                new_statements = parse_result
+            statements += new_statements
         return statements
 
     @api.model
@@ -104,15 +118,7 @@ class AccountBankStatementImport(models.TransientModel):
         # The appropriate implementation module returns the required data
         statement_ids = []
         notifications = []
-        parse_result = self._parse_all_files(data_file)
-        # Check for old version result, with separate currency and account
-        if isinstance(parse_result, tuple) and len(parse_result) == 3:
-            (currency_code, account_number, statements) = parse_result
-            for stmt_vals in statements:
-                stmt_vals['currency_code'] = currency_code
-                stmt_vals['account_number'] = account_number
-        else:
-            statements = parse_result
+        statements = self._parse_all_files(data_file)
         # Check raw data:
         self._check_parsed_data(statements)
         # Import all statements:
@@ -123,7 +129,7 @@ class AccountBankStatementImport(models.TransientModel):
                 statement_ids.append(statement_id)
             notifications.append(new_notifications)
         if len(statement_ids) == 0:
-            raise Warning(_('You have already imported that file.'))
+            raise UserError(_('You have already imported that file.'))
         return statement_ids, notifications
 
     @api.model
@@ -144,7 +150,7 @@ class AccountBankStatementImport(models.TransientModel):
         journal_id = self._get_journal(currency_id, bank_account_id)
         # By now journal and account_number must be known
         if not journal_id:
-            raise Warning(_('Can not determine journal for import.'))
+            raise UserError(_('Can not determine journal for import.'))
         # Prepare statement data to be used for bank statements creation
         stmt_vals = self._complete_statement(
             stmt_vals, journal_id, account_number)
@@ -152,7 +158,9 @@ class AccountBankStatementImport(models.TransientModel):
         return self._create_bank_statement(stmt_vals)
 
     @api.model
-    def _parse_file(self, dummy_data_file):
+    def _parse_file(self, data_file):
+        # pylint: disable=no-self-use
+        # pylint: disable=unused-argument
         """ Each module adding a file support must extends this method. It
         processes the file if it can, returns super otherwise, resulting in a
         chain of responsability.
@@ -182,21 +190,22 @@ class AccountBankStatementImport(models.TransientModel):
                 -o 'partner_name': string
                 -o 'ref': string
         """
-        raise Warning(_(
+        raise UserError(_(
             'Could not make sense of the given file.\n'
             'Did you install the module to support this type of file?'
         ))
 
     @api.model
     def _check_parsed_data(self, statements):
+        # pylint: disable=no-self-use
         """ Basic and structural verifications """
         if len(statements) == 0:
-            raise Warning(_('This file doesn\'t contain any statement.'))
+            raise UserError(_('This file doesn\'t contain any statement.'))
         for stmt_vals in statements:
             if 'transactions' in stmt_vals and stmt_vals['transactions']:
                 return
         # If we get here, no transaction was found:
-        raise Warning(_('This file doesn\'t contain any transaction.'))
+        raise UserError(_('This file doesn\'t contain any transaction.'))
 
     @api.model
     def _find_currency_id(self, currency_code):
@@ -207,7 +216,7 @@ class AccountBankStatementImport(models.TransientModel):
             if currency_ids:
                 return currency_ids[0].id
             else:
-                raise Warning(_(
+                raise UserError(_(
                     'Statement has invalid currency code %s') % currency_code)
         # if no currency_code is provided, we'll use the company currency
         return self.env.user.company_id.currency_id.id
@@ -234,7 +243,7 @@ class AccountBankStatementImport(models.TransientModel):
             if journal_id:
                 if (bank_account.journal_id.id and
                         bank_account.journal_id.id != journal_id):
-                    raise Warning(
+                    raise UserError(
                         _('The account of this statement is linked to '
                           'another journal.'))
                 if not bank_account.journal_id.id:
@@ -257,7 +266,7 @@ class AccountBankStatementImport(models.TransientModel):
                         currency_id,
                         journal_currency_id
                     )
-                    raise Warning(_(
+                    raise UserError(_(
                         'The currency of the bank statement is not '
                         'the same as the currency of the journal !'
                     ))
@@ -271,7 +280,7 @@ class AccountBankStatementImport(models.TransientModel):
                         currency_id,
                         company_currency_id
                     )
-                    raise Warning(_(
+                    raise UserError(_(
                         'The currency of the bank statement is not '
                         'the same as the company currency !'
                     ))

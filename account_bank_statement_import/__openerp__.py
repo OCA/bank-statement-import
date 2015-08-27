@@ -1,8 +1,9 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 {
     'name': 'Account Bank Statement Import',
     'category': 'Banking addons',
     'version': '8.0.1.0.1',
+    'license': 'AGPL-3',
     'author': 'OpenERP SA,'
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/bank-statement-import',

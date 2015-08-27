@@ -27,5 +27,5 @@
     'depends': [
         'account_bank_statement_import',
     ],
-    'installable': True
+    'installable': True,
 }
