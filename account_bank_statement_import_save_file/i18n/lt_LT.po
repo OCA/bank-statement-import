@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import_save_file
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-import (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-01 16:24+0000\n"
+"PO-Revision-Date: 2015-09-01 16:25+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Lithuanian (Lithuania) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/lt_LT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: lt_LT\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement
+msgid "Bank Statement"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importuoti banko išrašą"
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_file:0
+msgid "Import file"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: view:account.bank.statement:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported file"
+msgstr ""
