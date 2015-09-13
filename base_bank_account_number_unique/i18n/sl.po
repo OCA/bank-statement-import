@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * base_bank_account_number_unique
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-import (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-01 16:24+0000\n"
+"PO-Revision-Date: 2015-09-07 14:24+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: base_bank_account_number_unique
+#: sql_constraint:res.partner.bank:0
+msgid "Account Number must be unique"
+msgstr "Številka računa mora biti unikatna"
+
+#. module: base_bank_account_number_unique
+#: model:ir.model,name:base_bank_account_number_unique.model_res_partner_bank
+msgid "Bank Accounts"
+msgstr "Bančni računi"
+
+#. module: base_bank_account_number_unique
+#: code:addons/base_bank_account_number_unique/hooks.py:44
+#, python-format
+msgid ""
+"Module installation can't proceed as you have duplicate account numbers in your system already. Please clean that up and try again.\n"
+"The following shows the first %d duplicate account numbers\n"
+"%s\n"
+"(if you see less than %d, those are the only duplicates)"
+msgstr "Namestitev modula se ne more nadaljevati, ker imate v sistemu že duplikate številk računov. Prosimo, počistite jih in poskusite ponovno.\nPrvih %d podvojenih številk računov\n%s\n(če jih vidite manj kot %d, so to edini duplikati)"
