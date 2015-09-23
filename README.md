@@ -8,6 +8,23 @@ This repository hosts:
 * a 8.0 backport of the account_bank_statement_import modules from the master branch
 * additionnal parsers and import features inspired by v7.0 branch from https://github.com/OCA/bank-payment and https://github.com/OCA/bank-statement-reconcile
 
+[//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[account_bank_statement_import](account_bank_statement_import/) | 1.0 | Account Bank Statement Import
+[account_bank_statement_import_camt](account_bank_statement_import_camt/) | 0.3 | CAMT Format Bank Statements Import
+[account_bank_statement_import_mt940_base](account_bank_statement_import_mt940_base/) | 1.1 | MT940 Bank Statements Import
+[account_bank_statement_import_mt940_nl_ing](account_bank_statement_import_mt940_nl_ing/) | 0.3 | MT940 IBAN ING Format Bank Statements Import
+[account_bank_statement_import_mt940_nl_rabo](account_bank_statement_import_mt940_nl_rabo/) | 1.1 | MT940 import for dutch Rabobank
+[account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 1.0 | Import OFX Bank Statement
+[account_bank_statement_import_qif](account_bank_statement_import_qif/) | 1.0 | Import QIF Bank Statement
+[account_bank_statement_import_save_file](account_bank_statement_import_save_file/) | 1.0 | Keep imported bank statements as raw data
+[base_bank_account_number_unique](base_bank_account_number_unique/) | 1.0 | Enforce uniqueness on bank accounts
+
+[//]: # (end addons)
+
 Translation Status
 ------------------
 [![Transifex Status](https://www.transifex.com/projects/p/OCA-bank-statement-import-8-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-bank-statement-import-8-0)
