@@ -110,17 +110,10 @@ class AccountBankStatementImport(models.TransientModel):
         # Try to find the bank account and currency in odoo
         currency_id = self._find_currency_id(currency_code)
         bank_account_id = self._find_bank_account_id(account_number)
-        # Create the bank account if not already existing
         if not bank_account_id and account_number:
-            journal_id = self.env.context.get('journal_id')
-            company_id = self.env.user.company_id.id
-            if journal_id:
-                journal = self.env['account.journal'].browse(journal_id)
-                company_id = journal.company_id.id
-            bank_account_id = self._create_bank_account(
-                account_number, company_id=company_id,
-                currency_id=currency_id).id
-        # Find or create the bank journal
+            raise Warning(_('Can not find the account number %s.') %
+                          account_number)
+        # Find the bank journal
         journal_id = self._get_journal(currency_id, bank_account_id)
         # By now journal and account_number must be known
         if not journal_id:
