@@ -23,6 +23,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
+from openerp.exceptions import Warning
 
 
 class TestAccountBankStatementImport(TransactionCase):
@@ -58,6 +59,24 @@ class TestAccountBankStatementImport(TransactionCase):
              "name": "my user",
              "groups_id": [(4, self.ref('account.group_account_manager'))]
              })
+
+    def test_import_preconditions(self):
+        """Checks that the import raises an exception if:
+         * no bank account found for the account_number
+         * no account_journal found on the bank_account
+        """
+        stmt_vals = {
+            'currency_code': 'EUR',
+            'account_number': '123456789'}
+        with self.assertRaises(Warning) as e:
+            self.statement_import_model._import_statement(stmt_vals.copy())
+        self.assertEqual(e.exception.message,
+                         'Can not find the account number 123456789.')
+        self.statement_import_model._create_bank_account('123456789')
+        with self.assertRaises(Warning) as e:
+            self.statement_import_model._import_statement(stmt_vals.copy())
+        self.assertEqual(e.exception.message,
+                         'Can not determine journal for import.')
 
     def test_create_bank_account(self):
         """Checks that the bank_account created by the import belongs to the
