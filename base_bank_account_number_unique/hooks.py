@@ -17,11 +17,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import _, SUPERUSER_ID, exceptions
+from openerp import _, SUPERUSER_ID
+from openerp.exceptions import Warning as UserError
 
 
 def post_init_hook(cr, pool):
-    '''check if your constraint was actually inserted, raise otherwise'''
+    """check if your constraint was actually inserted, raise otherwise"""
     if not pool['ir.model.constraint'].search(cr, SUPERUSER_ID, [
         ('name', '=', 'res_partner_bank_unique_number'),
         ('model.model', '=', 'res.partner.bank'),
@@ -51,4 +52,4 @@ def post_init_hook(cr, pool):
                 max_account_numbers, '\n'.join(duplicates),
                 max_account_numbers,
         )
-        raise exceptions.Warning(message)
+        raise UserError(message)

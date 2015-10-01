@@ -23,7 +23,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 
 class TestAccountBankStatementImport(TransactionCase):
@@ -68,12 +68,12 @@ class TestAccountBankStatementImport(TransactionCase):
         stmt_vals = {
             'currency_code': 'EUR',
             'account_number': '123456789'}
-        with self.assertRaises(Warning) as e:
+        with self.assertRaises(UserError) as e:
             self.statement_import_model._import_statement(stmt_vals.copy())
         self.assertEqual(e.exception.message,
                          'Can not find the account number 123456789.')
         self.statement_import_model._create_bank_account('123456789')
-        with self.assertRaises(Warning) as e:
+        with self.assertRaises(UserError) as e:
             self.statement_import_model._import_statement(stmt_vals.copy())
         self.assertEqual(e.exception.message,
                          'Can not determine journal for import.')

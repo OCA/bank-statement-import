@@ -144,8 +144,9 @@ class AccountBankStatementImport(models.TransientModel):
         currency_id = self._find_currency_id(currency_code)
         bank_account_id = self._find_bank_account_id(account_number)
         if not bank_account_id and account_number:
-            raise Warning(_('Can not find the account number %s.') %
-                          account_number)
+            raise UserError(
+                _('Can not find the account number %s.') % account_number
+            )
         # Find the bank journal
         journal_id = self._get_journal(currency_id, bank_account_id)
         # By now journal and account_number must be known

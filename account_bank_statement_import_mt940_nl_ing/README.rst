@@ -7,7 +7,7 @@ Import MT940 IBAN ING Bank Statements
 This module allows you to import the MT940 IBAN files from the Dutch ING bank
 in Odoo as bank statements.
 The specifications are published at:
-    https://www.ing.nl/media/ING_ming_mt940s_24_juli_tcm162-46356.pdf
+https://www.ing.nl/media/ING_ming_mt940s_24_juli_tcm162-46356.pdf
 and were last updated august 2014.
 
 Known issues / Roadmap
