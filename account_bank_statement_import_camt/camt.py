@@ -134,6 +134,9 @@ class CamtParser(object):
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
         if details_node:
             self.parse_transaction_details(ns, details_node[0], transaction)
+        if not transaction.message:
+            self.add_value_from_node(
+                ns, node, './ns:AddtlNtryInf', transaction, 'message')
         transaction.data = etree.tostring(node)
         return transaction
 
