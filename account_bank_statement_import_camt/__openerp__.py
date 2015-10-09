@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'CAMT Format Bank Statements Import',
-    'version': '0.3',
+    'version': '8.0.0.3.0',
     'license': 'AGPL-3',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
