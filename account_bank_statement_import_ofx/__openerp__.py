@@ -2,7 +2,7 @@
 {
     'name': 'Import OFX Bank Statement',
     'category': 'Banking addons',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': 'OpenERP SA,'
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/bank-statement-import',
