@@ -27,6 +27,6 @@
         'account_bank_statement_import_mt940_base'
     ],
     'auto_install': False,
-    'installable': True,
+    'installable': False,
     'application': False,
 }

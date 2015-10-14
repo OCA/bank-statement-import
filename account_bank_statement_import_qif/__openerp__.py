@@ -12,5 +12,5 @@
         'account_bank_statement_import'
     ],
     'auto_install': False,
-    'installable': True,
+    'installable': False,
 }
