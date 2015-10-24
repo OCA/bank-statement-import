@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import_qif
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-04 11:46+0200\n"
+"PO-Revision-Date: 2015-10-04 11:50+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.3\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language: de\n"
+
+#. module: account_bank_statement_import_qif
+#: help:account.bank.statement.import,journal_id:0
+msgid ""
+"Accounting journal related to the bank statement you're importing. It has be "
+"be manually chosen for statement formats which doesn't allow automatic "
+"journal detection (QIF for example)."
+msgstr ""
+"Buchhaltungsjournal mit Bezug auf diesen zu importierenden Kontoauszug. Es "
+"muss bei Kontoauszugs-Dateiformaten manuell ausgewählt werden, die keine "
+"automatische Journalerkennung ermöglichen (z. B. QIF)."
+
+#. module: account_bank_statement_import_qif
+#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:54
+#, python-format
+msgid "Could not decipher the QIF file."
+msgstr "Konnte die QIF-Datei nicht entschlüsseln."
+
+#. module: account_bank_statement_import_qif
+#: field:account.bank.statement.import,hide_journal_field:0
+msgid "Hide the journal field in the view"
+msgstr "Verstecke das Journal-Feld in der Sicht"
+
+#. module: account_bank_statement_import_qif
+#: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Kontoauszug importieren"
+
+#. module: account_bank_statement_import_qif
+#: field:account.bank.statement.import,journal_id:0
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_bank_statement_import_qif
+#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:98
+#, python-format
+msgid "This file is either not a bank statement or is not correctly formed."
+msgstr ""
+"Diese Datei ist entweder keine Kontoauszugsdatei oder aber falsch formatiert."
