@@ -30,7 +30,6 @@ class AccountBankStatementLine(models.Model):
 
 class AccountBankStatementImport(models.TransientModel):
     """Extend model account.bank.statement."""
-    # pylint: disable=too-many-public-methods
     _name = 'account.bank.statement.import'
     _description = 'Import Bank Statement'
 
