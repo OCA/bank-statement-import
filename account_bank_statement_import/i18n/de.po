@@ -3,13 +3,14 @@
 # * account_bank_statement_import
 # 
 # Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-24 18:37+0000\n"
-"PO-Revision-Date: 2015-10-24 18:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2015-10-25 22:36+0000\n"
+"PO-Revision-Date: 2015-10-26 07:28+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgid ""
 "Accounting journal related to the bank statement you're importing. It has be"
 " be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
-msgstr ""
+msgstr "Das Journal der Finanzbuchhaltung mit Bezug auf den Kontoauszug, den Sie importieren. Es wurde manuell ausgewählt für Auszugformate, die keine automatische Journalerkennung erlauben (zum Beispiel QIF)."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:361
@@ -82,7 +83,7 @@ msgstr "Kontoauszugsposition"
 #. module: account_bank_statement_import
 #: view:account.config.settings:account_bank_statement_import.view_account_config_settings
 msgid "Bank statement import"
-msgstr ""
+msgstr "Kontoauszugimport"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:120
@@ -94,7 +95,7 @@ msgstr "Kann das Journal zum Import nicht ermitteln."
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:114
 #, python-format
 msgid "Can not find the account number %s."
-msgstr ""
+msgstr "Kann Kontonummer %s nicht finden."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -107,7 +108,7 @@ msgstr "Abbrechen"
 msgid ""
 "Could not make sense of the given file.\n"
 "Did you install the module to support this type of file?"
-msgstr ""
+msgstr "Konnte die angegebene Datei nicht interpretieren.\nHaben Sie das Modul für diesen Dateityp installiert?"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,create_uid:0
@@ -122,7 +123,7 @@ msgstr "Erstellt am"
 #. module: account_bank_statement_import
 #: field:account.config.settings,module_base_bank_account_number_unique:0
 msgid "Enforce unique account numbers on bank accounts"
-msgstr ""
+msgstr "Eindeutige Kontonummern für Bankkonten erzwingen"
 
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,data_file:0
@@ -165,7 +166,7 @@ msgstr "Import-ID"
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,write_uid:0

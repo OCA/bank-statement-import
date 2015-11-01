@@ -3,13 +3,14 @@
 # * account_bank_statement_import_ofx
 # 
 # Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-24 18:37+0000\n"
-"PO-Revision-Date: 2015-05-29 00:41+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-10-25 22:36+0000\n"
+"PO-Revision-Date: 2015-10-26 07:22+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,4 +30,4 @@ msgid ""
 "The following problem occurred during import. The file might not be valid.\n"
 "\n"
 " %s"
-msgstr ""
+msgstr "Das Folgende Problem trat während dem Import auf. Die Datei ist wahrscheinlich ungültig.\n\n%s"
