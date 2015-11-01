@@ -3,13 +3,14 @@
 # * account_bank_statement_import_save_file
 # 
 # Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-24 18:37+0000\n"
-"PO-Revision-Date: 2015-10-24 18:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2015-10-25 22:36+0000\n"
+"PO-Revision-Date: 2015-10-26 10:21+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 #. module: account_bank_statement_import_save_file
 #: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Kontoauszug"
 
 #. module: account_bank_statement_import_save_file
 #: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
@@ -30,9 +31,9 @@ msgstr "Kontoauszug importieren"
 #. module: account_bank_statement_import_save_file
 #: field:account.bank.statement,import_file:0
 msgid "Import file"
-msgstr ""
+msgstr "Datei importieren"
 
 #. module: account_bank_statement_import_save_file
 #: view:account.bank.statement:account_bank_statement_import_save_file.view_bank_statement_form
 msgid "Imported file"
-msgstr ""
+msgstr "Importierte Datei"
