@@ -299,16 +299,16 @@ class AccountBankStatementImport(models.TransientModel):
                 # closed.
                 partner_id = False
                 bank_account_id = False
-                account_number = line_vals.get('account_number')
-                if account_number:
+                partner_account_number = line_vals.get('account_number')
+                if partner_account_number:
                     bank_model = self.env['res.partner.bank']
                     banks = bank_model.search(
-                        [('acc_number', '=', account_number)], limit=1)
+                        [('acc_number', '=', partner_account_number)], limit=1)
                     if banks:
                         bank_account_id = banks[0].id
                         partner_id = banks[0].partner_id.id
                     else:
-                        bank_obj = self._create_bank_account(account_number)
+                        bank_obj = self._create_bank_account(partner_account_number)
                         bank_account_id = bank_obj and bank_obj.id or False
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
