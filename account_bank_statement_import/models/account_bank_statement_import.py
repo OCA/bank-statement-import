@@ -308,7 +308,8 @@ class AccountBankStatementImport(models.TransientModel):
                         bank_account_id = banks[0].id
                         partner_id = banks[0].partner_id.id
                     else:
-                        bank_obj = self._create_bank_account(partner_account_number)
+                        bank_obj = self._create_bank_account(
+                            partner_account_number)
                         bank_account_id = bank_obj and bank_obj.id or False
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
