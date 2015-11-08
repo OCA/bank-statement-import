@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-03 22:47+0000\n"
+"POT-Creation-Date: 2015-11-04 11:12+0000\n"
 "PO-Revision-Date: 2015-10-02 06:45+0000\n"
 "Last-Translator: Erwin van der Ploeg <erwin@bas-solutions.nl>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/nl/)\n"
@@ -20,13 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:355
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:356
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d Transacties zijn overgeslagen omdat ze al reeds waren geïmporteerd."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:358
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:359
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1. Transactie was al geïmporteerd en is overgeslagen."
@@ -61,7 +61,7 @@ msgid ""
 msgstr "Het dagboek wat hoort bij het bankafschrift welke u importeert. Het dient handmatig te worden gekozen voor bankafschrift formaten welke geen automatische dagboek detectie ondersteunen (bijvoorbeeld QIF)"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:361
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:362
 #, python-format
 msgid "Already imported items"
 msgstr "Al eerder geïmporteerde regels"
