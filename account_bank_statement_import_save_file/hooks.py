@@ -56,6 +56,9 @@ def _post_init_hook_migrate_account_banking_imported_file(cr, pool):
 
     attachment_ids = [attachment_id for attachment_id, in cr.fetchall()]
 
+    if not attachment_ids:
+        return
+
     # assign respective attachment to all statements pointing to an imported
     # banking file
     cr.execute(
