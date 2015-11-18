@@ -46,7 +46,7 @@ class AccountBankStatementImport(models.TransientModel):
                 # generic module uses to find partner/bank)
                 bank_account_id = partner_id = False
                 banks = self.env['res.partner.bank'].search(
-                    [('owner_name', '=', transaction.payee)], limit=1)
+                    [('bank_name', '=', transaction.payee)], limit=1)
                 if banks:
                     bank_account = banks[0]
                     bank_account_id = bank_account.id
