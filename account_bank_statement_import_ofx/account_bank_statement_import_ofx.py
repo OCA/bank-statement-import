@@ -9,11 +9,11 @@ from openerp.exceptions import Warning
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from ofxparse import OfxParser as ofxparser
-except ImportError:
-    _logger.warn("ofxparse not found, OFX parsing disabled.")
-    ofxparser = None
+# try:
+#     from ofxparse import OfxParser as ofxparser
+# except ImportError:
+#     _logger.warn("ofxparse not found, OFX parsing disabled.")
+#     ofxparser = None
 
 
 class AccountBankStatementImport(models.TransientModel):
