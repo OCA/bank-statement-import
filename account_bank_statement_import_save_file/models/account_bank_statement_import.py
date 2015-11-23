@@ -46,5 +46,7 @@ class AccountBankStatementImport(models.TransientModel):
             'res_id': statement_id,
             'type': 'binary',
             'datas': base64.b64encode(data_file),
-            'description': notifications,
+            'description': '\n'.join(
+                '%(type)s: %(message)' % notification
+                for notification in notifications) or False,
         }
