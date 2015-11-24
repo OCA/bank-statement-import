@@ -9,16 +9,24 @@ Import 1с client bank exchange files
 Installation
 ============
 
-The module requires odoo account_bank_statement_import be installed.
+The module requires odoo account_bank_statement_import be installed
 
 Known issues / Roadmap
 ======================
 
-* None
 
-Bug Tracker
+ToDo
 ===========
+Add exeptions
+Add analys of transaction code
+Change parsing \r on \r | \n
+Checkout fields
 
+
+Importing files requirements
+===========
+WINDOWS-1251 encoding
+On end of each line \r\n
 
 Credits
 =======
