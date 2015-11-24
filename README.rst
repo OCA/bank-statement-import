@@ -22,6 +22,7 @@ Add analys of transaction code
 Change parsing \r on \r | \n
 Checkout fields
 
+
 Importing files requirements
 ===========
 WINDOWS-1251 encoding
