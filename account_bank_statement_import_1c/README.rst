@@ -19,14 +19,14 @@ ToDo
 ===========
 Add exeptions
 Add analys of transaction code
-Change parsing \r on \r | \n
+Change parsing /\r on /\r | /\n
 Checkout fields
 
 
 Importing files requirements
 ===========
 WINDOWS-1251 encoding
-On end of each line \r\n
+On end of each line /\r/\n
 
 Credits
 =======
@@ -34,12 +34,22 @@ Credits
 Contributors
 ------------    
 
-* IT Projects
+* IT-Projects LLC
 * Rakhimkulov Ilyas
 
 Maintainer
 ----------
 
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
 
-This module is maintained by the IT Projects.
+This module is maintained by the OCA.
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
+To contribute to this module, please visit http://odoo-community.org.
+
 
