@@ -5,7 +5,7 @@ import StringIO
 
 from openerp.tools.translate import _
 from openerp import api, models
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -36,7 +36,7 @@ class AccountBankStatementImport(models.TransientModel):
             header = data_list[0].strip()
             header = header.split(":")[1]
         except:
-            raise Warning(_('Could not decipher the QIF file.'))
+            raise UserError(_('Could not decipher the QIF file.'))
         transactions = []
         vals_line = {}
         total = 0
@@ -80,8 +80,10 @@ class AccountBankStatementImport(models.TransientModel):
                 else:
                     pass
         else:
-            raise Warning(_('This file is either not a bank statement or is '
-                            'not correctly formed.'))
+            raise UserError(_(
+                "This file is either not a bank statement or is "
+                "not correctly formed."
+            ))
 
         vals_bank_statement.update({
             'balance_end_real': total,

@@ -19,7 +19,8 @@
 ##############################################################################
 {
     'name': 'MT940 import for dutch Rabobank',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.1',
+    'license': 'AGPL-3',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
     'category': 'Banking addons',

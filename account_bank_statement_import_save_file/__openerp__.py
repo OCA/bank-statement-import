@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2015 Therp BV <http://therp.nl>.
+#    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,27 +18,20 @@
 #
 ##############################################################################
 {
-    "name": "Save imported bank statements",
-    "version": "8.0.1.0.0",
-    "author": "Therp BV",
-    "license": "AGPL-3",
-    "category": "Accounting & Finance",
-    "summary": "Keep imported bank statements as raw data",
-    "depends": [
+    'name': 'Save imported bank statements',
+    'version': '8.0.1.0.1',
+    'author': 'Odoo Community Association (OCA), Therp BV',
+    'license': 'AGPL-3',
+    'category': 'Banking addons',
+    'summary': 'Keep imported bank statements as raw data',
+    'depends': [
         'account_bank_statement_import',
     ],
-    "data": [
-        "views/account_bank_statement.xml",
+    'data': [
+        'views/account_bank_statement.xml',
     ],
-    "qweb": [
-    ],
-    "test": [
-    ],
-    "post_init_hook": '_post_init_hook',
-    "auto_install": False,
-    "installable": True,
-    "application": False,
-    "external_dependencies": {
-        'python': [],
-    },
+    'post_init_hook': '_post_init_hook',
+    'auto_install': False,
+    'installable': True,
+    'application': False,
 }

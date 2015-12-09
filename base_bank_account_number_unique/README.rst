@@ -1,20 +1,35 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
+
 Unique bank account numbers
 ===========================
 
-It can be desirable to be able to rely on a bank account number identifying exactly one partner. This module allows you to enforce this, so that an account number is unique in the system.
+It can be desirable to be able to rely on a bank account number identifying
+exactly one partner. This module allows you to enforce this, so that an
+account number is unique in the system.
 
 Installation
 ============
 
-During installation, the module checks if your bank account numbers are unique already. If this is not the case, you won't be able to install the module until duplicates are fixed.
+During installation, the module checks if your bank account numbers are
+unique already. If this is not the case, you won't be able to install the
+module until duplicates are fixed.
 
-The error message only shows the first few duplicates, in order to find all of them, use the following statement::
+The error message only shows the first few duplicates, in order to find all
+of them, use the following statement::
 
-    with res_partner_bank_sanitized as (select id, acc_number, regexp_replace(acc_number, '\W+', '', 'g') acc_number_sanitized from res_partner_bank),
-         res_partner_bank_sanitized_grouped as (select array_agg(id) ids, acc_number_sanitized, count(*) amount from res_partner_bank_sanitized group by acc_number_sanitized)
-         select * from res_partner_bank_sanitized_grouped where amount > 1;
+    with res_partner_bank_sanitized as (
+        select
+            id, acc_number,
+            regexp_replace(acc_number, '\W+', '', 'g') acc_number_sanitized
+        from res_partner_bank
+    ),
+    res_partner_bank_sanitized_grouped as (
+        select
+            array_agg(id) ids, acc_number_sanitized, count(*) amount
+        from res_partner_bank_sanitized group by acc_number_sanitized
+    )
+    select * from res_partner_bank_sanitized_grouped where amount > 1;
 
 Bug Tracker
 ===========

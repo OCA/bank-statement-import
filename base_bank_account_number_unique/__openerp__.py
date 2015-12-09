@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    This module copyright (C) 2015 Therp BV <http://therp.nl>.
+#    Copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,16 +18,16 @@
 #
 ##############################################################################
 {
-    "name": "Unique bank account numbers",
-    "version": "8.0.1.0.0",
-    "author": "Therp BV,Odoo Community Association (OCA)",
-    "license": "AGPL-3",
-    "category": "Accounting & Finance",
-    "summary": "Enforce uniqueness on bank accounts",
-    "depends": [
+    'name': 'Unique bank account numbers',
+    'version': '8.0.1.0.1',
+    'author': 'Therp BV, Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
+    'category': 'Banking addons',
+    'summary': 'Enforce uniqueness on bank accounts',
+    'depends': [
         'account_bank_statement_import',
     ],
-    "post_init_hook": "post_init_hook",
-    "auto_install": False,
-    "installable": True,
+    'post_init_hook': 'post_init_hook',
+    'auto_install': False,
+    'installable': True,
 }

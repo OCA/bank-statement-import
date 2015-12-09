@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'MT940 Bank Statements Import',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.1.1',
     'license': 'AGPL-3',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'website': 'https://github.com/OCA/bank-statement-import',
@@ -27,5 +27,5 @@
     'depends': [
         'account_bank_statement_import',
     ],
-    'installable': True
+    'installable': True,
 }

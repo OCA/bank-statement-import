@@ -18,7 +18,7 @@
 #
 ##############################################################################
 from openerp.tests.common import TransactionCase
-from openerp import exceptions
+from openerp.exceptions import Warning as UserError
 from ..hooks import post_init_hook
 
 
@@ -38,5 +38,5 @@ class TestBaseBankAccountNumberUnique(TransactionCase):
             'acc_number': 'BE 1234 567 890',
             'state': 'bank',
         })
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(UserError):
             post_init_hook(self.cr, self.registry)
