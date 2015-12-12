@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-04 11:12+0000\n"
+"POT-Creation-Date: 2015-12-10 01:40+0000\n"
 "PO-Revision-Date: 2015-10-01 11:07+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Lithuanian (Lithuania) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/lt_LT/)\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:356
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:392
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d transakcijos ignoruotos, nes jau buvo importuotos."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:359
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:395
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1 transakcija ignoruota, nes jau buvo importuota."
@@ -60,7 +60,7 @@ msgid ""
 msgstr "Sąskaitos žurnalas susijęs su banko išrašu, kurį jūs importuojate. Jis turi būti rankiniu būdu pasirinktas išrašų formatams, kurių sistema pati neaptinka (pvz. QIF)"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:362
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:398
 #, python-format
 msgid "Already imported items"
 msgstr "Importuoti įrašai"
@@ -86,13 +86,13 @@ msgid "Bank statement import"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:120
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:153
 #, python-format
 msgid "Can not determine journal for import."
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:114
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:147
 #, python-format
 msgid "Can not find the account number %s."
 msgstr ""
@@ -103,7 +103,7 @@ msgid "Cancel"
 msgstr "Atšaukti"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:158
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:193
 #, python-format
 msgid ""
 "Could not make sense of the given file.\n"
@@ -184,38 +184,38 @@ msgid "Sanitized Account Number"
 msgstr "Išbraukytas sąskaitos numeris"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:242
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:278
 #, python-format
 msgid "Statement currency id is %d, but company currency id = %d."
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:228
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:264
 #, python-format
 msgid "Statement currency id is %d, but journal currency id = %d."
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:183
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:219
 #, python-format
 msgid "Statement has invalid currency code %s"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:211
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:247
 #, python-format
 msgid "The account of this statement is linked to another journal."
 msgstr "Šio išrašo sąskaita yra susieta su kitu žurnalu."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:247
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:283
 #, python-format
 msgid ""
 "The currency of the bank statement is not the same as the company currency !"
 msgstr ""
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:233
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:269
 #, python-format
 msgid ""
 "The currency of the bank statement is not the same as the currency of the "
@@ -223,19 +223,19 @@ msgid ""
 msgstr "Banko išrašo valiuta skiriasi nuo žurnalo valiutos !"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:167
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:203
 #, python-format
 msgid "This file doesn't contain any statement."
 msgstr "Faile nerasta jokių išrašų."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:172
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:208
 #, python-format
 msgid "This file doesn't contain any transaction."
 msgstr "Faile nėra jokių pavedimų."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:99
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:131
 #, python-format
 msgid "You have already imported that file."
 msgstr "Jūs jau importavote šį failą."

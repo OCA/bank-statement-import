@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-04 11:12+0000\n"
+"POT-Creation-Date: 2015-12-10 01:40+0000\n"
 "PO-Revision-Date: 2015-10-02 06:45+0000\n"
 "Last-Translator: Erwin van der Ploeg <erwin@bas-solutions.nl>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/nl/)\n"
@@ -20,13 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:356
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:392
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d Transacties zijn overgeslagen omdat ze al reeds waren geïmporteerd."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:359
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:395
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1. Transactie was al geïmporteerd en is overgeslagen."
@@ -61,7 +61,7 @@ msgid ""
 msgstr "Het dagboek wat hoort bij het bankafschrift welke u importeert. Het dient handmatig te worden gekozen voor bankafschrift formaten welke geen automatische dagboek detectie ondersteunen (bijvoorbeeld QIF)"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:362
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:398
 #, python-format
 msgid "Already imported items"
 msgstr "Al eerder geïmporteerde regels"
@@ -87,13 +87,13 @@ msgid "Bank statement import"
 msgstr "Importeer bankafschrift"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:120
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:153
 #, python-format
 msgid "Can not determine journal for import."
 msgstr "Kan niet bepalen welk dagboek gebruikt moet worden."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:114
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:147
 #, python-format
 msgid "Can not find the account number %s."
 msgstr "Kan rekeningnummer niet vinden %s."
@@ -104,7 +104,7 @@ msgid "Cancel"
 msgstr "Annuleren"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:158
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:193
 #, python-format
 msgid ""
 "Could not make sense of the given file.\n"
@@ -185,38 +185,38 @@ msgid "Sanitized Account Number"
 msgstr "Gestandaardiseerd rekeningnummer"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:242
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:278
 #, python-format
 msgid "Statement currency id is %d, but company currency id = %d."
 msgstr "Valuta id van afschrift = %d, maar valuta id van bedrijf = %d."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:228
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:264
 #, python-format
 msgid "Statement currency id is %d, but journal currency id = %d."
 msgstr "Valuta id van afschrift = %d, maar valuta id van dagboek = %d."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:183
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:219
 #, python-format
 msgid "Statement has invalid currency code %s"
 msgstr "Bankafschrift heeft ongeldige valutacode %s"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:211
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:247
 #, python-format
 msgid "The account of this statement is linked to another journal."
 msgstr "Het rekeningnummer van dit afschrift is gekoppeld aan een ander dagboek."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:247
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:283
 #, python-format
 msgid ""
 "The currency of the bank statement is not the same as the company currency !"
 msgstr "De valuta van het afschrift is niet gelijk aan de valuta van het bedrijf!"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:233
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:269
 #, python-format
 msgid ""
 "The currency of the bank statement is not the same as the currency of the "
@@ -224,19 +224,19 @@ msgid ""
 msgstr "De valuta van het afschrift is niet hetzelfde als de valuta van het dagboek!"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:167
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:203
 #, python-format
 msgid "This file doesn't contain any statement."
 msgstr "Dit bestand bevat geen enkel afschrift."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:172
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:208
 #, python-format
 msgid "This file doesn't contain any transaction."
 msgstr "Dit bestand bevat geen enkele transactie."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:99
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:131
 #, python-format
 msgid "You have already imported that file."
 msgstr "U heeft dit bestand al geïmporteerd."

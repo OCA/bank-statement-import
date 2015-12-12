@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-01 16:24+0000\n"
+"POT-Creation-Date: 2015-12-10 01:40+0000\n"
 "PO-Revision-Date: 2015-09-07 14:24+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/sl/)\n"
@@ -29,7 +29,7 @@ msgid "Bank Accounts"
 msgstr "Bančni računi"
 
 #. module: base_bank_account_number_unique
-#: code:addons/base_bank_account_number_unique/hooks.py:44
+#: code:addons/base_bank_account_number_unique/hooks.py:45
 #, python-format
 msgid ""
 "Module installation can't proceed as you have duplicate account numbers in your system already. Please clean that up and try again.\n"

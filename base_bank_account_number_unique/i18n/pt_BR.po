@@ -4,11 +4,12 @@
 # 
 # Translators:
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
+# danimaribeiro <danimaribeiro@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 09:23+0000\n"
+"POT-Creation-Date: 2015-12-10 01:40+0000\n"
 "PO-Revision-Date: 2015-10-09 00:28+0000\n"
 "Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
@@ -29,7 +30,7 @@ msgid "Bank Accounts"
 msgstr "Contas bancárias"
 
 #. module: base_bank_account_number_unique
-#: code:addons/base_bank_account_number_unique/hooks.py:44
+#: code:addons/base_bank_account_number_unique/hooks.py:45
 #, python-format
 msgid ""
 "Module installation can't proceed as you have duplicate account numbers in your system already. Please clean that up and try again.\n"
