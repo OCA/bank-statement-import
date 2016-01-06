@@ -219,4 +219,4 @@ class AccountBankStatementImport(models.TransientModel):
             'balance_end_real': end_balance,
             'transactions': transactions,
         }
-        return None, paypal_email_account, [vals_bank_statement]
+        return None, None, [vals_bank_statement]
