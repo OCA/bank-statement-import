@@ -56,7 +56,8 @@ class AccountBankStatementImport(models.TransientModel):
     def _paypal_convert_amount(self, amount_str):
         '''This method is designed to be inherited'''
         valstr = re.sub(r'[^\d,.-]', '', amount_str)
-        valstrdot = valstr.replace(',', '.')
+        valstrdot = valstr.replace('.', '')
+        valstrdot = valstrdot.replace(',', '.')
         return float(valstrdot)
 
     @api.model
