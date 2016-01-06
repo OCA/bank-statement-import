@@ -190,8 +190,8 @@ class AccountBankStatementImport(models.TransientModel):
                 partner_id = False
             vals_line = {
                 'date': fline['date'],
-                'name': fline['name'],
-                'ref': fline['ref'],
+                'name': fline['ref'],
+                'ref': fline['name'],
                 'unique_import_id': fline['ref'],
                 'amount': fline['amount'],
                 'partner_id': partner_id,
