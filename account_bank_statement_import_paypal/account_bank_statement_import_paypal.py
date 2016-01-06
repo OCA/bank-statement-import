@@ -47,7 +47,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _valid_paypal_line(self, line):
         '''This method is designed to be inherited'''
-        if line[5].startswith('Termin'):
+        if line[5].startswith('Termin') or line[5].startswith('Rembours'):
             return True
         else:
             return False
