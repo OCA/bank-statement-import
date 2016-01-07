@@ -4,6 +4,10 @@
 Account Bank Statement Import
 =============================
 
+CAUTION: this module was renamed in the 9.0 branch to avoid conflicts with the
+upstream account_bank_statement_import module added in odoo 9. Exercise caution
+when porting. 
+
 This module add a generic wizard to import Bank Statements. It also extend
 the bank account module to sanitize the account number and extend the search
 method to use this field when searching on account_number.
