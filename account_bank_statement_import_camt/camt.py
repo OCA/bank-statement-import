@@ -143,7 +143,7 @@ class CamtParser(object):
                     './ns:NtryDtls/ns:Btch/ns:PmtInfId',
                 ],
                 transaction, 'eref'
-        )
+            )
         transaction.data = etree.tostring(node)
         return transaction
 
