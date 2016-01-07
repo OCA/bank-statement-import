@@ -16,5 +16,8 @@
         'demo/partner_bank.xml',
     ],
     'auto_install': False,
+# CAUTION: this module was renamed in the 9.0 branch to avoid conflicts with the
+# upstream account_bank_statement_import module added in odoo 9. Exercise caution
+# when porting.
     'installable': False,
 }
