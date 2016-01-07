@@ -61,6 +61,15 @@ class AccountBankStatementImport(models.TransientModel):
                     'bank_account_id': bank_account_id,
                     'partner_id': partner_id,
                 }
+                # Memo (<NAME>) and payee (<PAYEE>) are not required
+                # field in OFX statement, cf section 11.4.3 Statement
+                # Transaction <STMTTRN> of the OFX specs: the required
+                # elements are in bold, cf 1.5 Conventions and these 2
+                # fields are not in bold.
+                # But the 'name' field of account.bank.statement.line is
+                # required=True, so we must always have a value !
+                if not vals_line['name']:
+                    vals_line['name'] = '-'
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
         except Exception, e:
