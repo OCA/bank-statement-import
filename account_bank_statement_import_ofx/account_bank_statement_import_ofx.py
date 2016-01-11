@@ -68,8 +68,11 @@ class AccountBankStatementImport(models.TransientModel):
                 # fields are not in bold.
                 # But the 'name' field of account.bank.statement.line is
                 # required=True, so we must always have a value !
+                # The field TRNTYPE is a required field in OFX
                 if not vals_line['name']:
-                    vals_line['name'] = '-'
+                    vals_line['name'] = transaction.type.capitalize()
+                    if transaction.checknum:
+                        vals_line['name'] += ' %s' % transaction.checknum
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
         except Exception, e:
