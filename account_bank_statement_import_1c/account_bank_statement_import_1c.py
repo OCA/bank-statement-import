@@ -1,10 +1,7 @@
 # -*- coding:utf-8 -*-
 
-import logging
-import StringIO
 from openerp import api, models
 from openerp.tools.translate import _
-from openerp.exceptions import Warning
 import re
 from datetime import datetime
 import os
@@ -30,17 +27,18 @@ class AccountBankStatementImport(models.TransientModel):
                     self.result['general'][key] = strg.group(1)
             # normalize
             try:
-                crDate = self.result['general']['ДатаСоздания']
-                self.result['general']['ДатаСоздания'] = datetime.date(datetime.strptime(crDate, '%d.%m.%Y'))
+                crdate = self.result['general']['ДатаСоздания']
+                self.result['general']['ДатаСоздания'] = datetime.date(datetime.strptime(crdate, '%d.%m.%Y'))
             except:
                 pass
             try:
-                crTime = self.result['general']['ВремяСоздания']
-                self.result['general']['ДатаСоздания'] = datetime.time(datetime.strptime(crTime, '%H:%M:%S'))
+                crtime = self.result['general']['ВремяСоздания']
+                self.result['general']['ДатаСоздания'] = datetime.time(datetime.strptime(crtime, '%H:%M:%S'))
             except:
                 pass
             # parse remainings
-            regexp_acc = 'СекцияРасчСчет([\s\S]*?)\sКонецРасчСчет'
+            # r prefix makes this string as raw string whithout \like escapes.
+            regexp_acc = r'СекцияРасчСчет([\s\S]*?)\sКонецРасчСчет'
             for match in re.findall(regexp_acc, data_file):
                 for matchchild in re.findall('(.*)=(.*)\r', match):
                     self.result['remainings'][matchchild[0]] = matchchild[1]
@@ -77,7 +75,7 @@ class AccountBankStatementImport(models.TransientModel):
                 pass
 
             # parse documents
-            regexp_document = 'СекцияДокумент=(.*)\s([\s\S]*?)\sКонецДокумента'
+            regexp_document = r'СекцияДокумент=(.*)\s([\s\S]*?)\sКонецДокумента'
             regexp_base = '(.*)=(.*)\r'
             for matchdoc in re.findall(regexp_document, data_file):
                 # document type

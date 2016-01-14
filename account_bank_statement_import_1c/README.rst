@@ -24,7 +24,7 @@ Checkout fields
 
 
 Importing files requirements
-===========
+============================
 WINDOWS-1251 encoding
 On end of each line /\r/\n
 
