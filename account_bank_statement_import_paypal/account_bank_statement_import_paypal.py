@@ -47,7 +47,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _valid_paypal_line(self, line):
         '''This method is designed to be inherited'''
-        if line[5].startswith('Termin'):
+        if line[5].startswith('Termin') or line[5].startswith('Rembours'):
             return True
         else:
             return False
@@ -56,7 +56,8 @@ class AccountBankStatementImport(models.TransientModel):
     def _paypal_convert_amount(self, amount_str):
         '''This method is designed to be inherited'''
         valstr = re.sub(r'[^\d,.-]', '', amount_str)
-        valstrdot = valstr.replace(',', '.')
+        valstrdot = valstr.replace('.', '')
+        valstrdot = valstrdot.replace(',', '.')
         return float(valstrdot)
 
     @api.model
@@ -190,8 +191,8 @@ class AccountBankStatementImport(models.TransientModel):
                 partner_id = False
             vals_line = {
                 'date': fline['date'],
-                'name': fline['name'],
-                'ref': fline['ref'],
+                'name': fline['ref'],
+                'ref': fline['name'],
                 'unique_import_id': fline['ref'],
                 'amount': fline['amount'],
                 'partner_id': partner_id,
@@ -219,4 +220,4 @@ class AccountBankStatementImport(models.TransientModel):
             'balance_end_real': end_balance,
             'transactions': transactions,
         }
-        return None, paypal_email_account, [vals_bank_statement]
+        return None, None, [vals_bank_statement]
