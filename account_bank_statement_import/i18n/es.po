@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Antonio Trueba, 2016
+# Antonio Trueba, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 04:09+0000\n"
-"PO-Revision-Date: 2016-01-07 14:39+0000\n"
+"POT-Creation-Date: 2016-01-09 05:03+0000\n"
+"PO-Revision-Date: 2016-01-25 18:14+0000\n"
 "Last-Translator: Antonio Trueba\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -181,7 +182,7 @@ msgstr "Última actualización en"
 #. module: account_bank_statement_import
 #: field:res.partner.bank,sanitized_acc_number:0
 msgid "Sanitized Account Number"
-msgstr ""
+msgstr "Número de cuenta validado"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:278
