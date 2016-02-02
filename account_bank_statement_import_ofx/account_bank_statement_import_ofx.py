@@ -45,8 +45,11 @@ class AccountBankStatementImport(models.TransientModel):
                 # (normal behavious is to provide 'account_number', which the
                 # generic module uses to find partner/bank)
                 bank_account_id = partner_id = False
-                banks = self.env['res.partner.bank'].search(
-                    [('owner_name', '=', transaction.payee)], limit=1)
+                
+                # 2016-01-28 : Stephane LERENDU 
+                # in the res.partner.bank object, I search partner_id field to have the name
+                banks = self.env['res.partner.bank'].search([('partner_id.name', '=', transaction.payee)], limit=1)
+                
                 if banks:
                     bank_account = banks[0]
                     bank_account_id = bank_account.id
@@ -63,6 +66,7 @@ class AccountBankStatementImport(models.TransientModel):
                 }
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
+                
         except Exception, e:
             raise Warning(_("The following problem occurred during import. "
                             "The file might not be valid.\n\n %s" % e.message))

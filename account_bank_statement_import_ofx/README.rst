@@ -46,6 +46,7 @@ Contributors
 * Alexis de Lattre <alexis@via.ecp.fr>
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Ronald Portier <rportier@therp.nl>
+* Stephane Lerendu <stephane.lerendu@mind-and-go.com>
 
 Maintainer
 ----------
