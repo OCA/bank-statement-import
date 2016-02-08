@@ -238,6 +238,7 @@ class AccountBankStatementImport(models.TransientModel):
         bank_model = self.env['res.partner.bank']
         # Find the journal from context, wizard or bank account
         journal_id = self.env.context.get('journal_id') or self.journal_id.id
+        currency = self.env['res.currency'].browse(currency_id)
         if bank_account_id:
             bank_account = bank_model.browse(bank_account_id)
             if journal_id:
@@ -267,23 +268,26 @@ class AccountBankStatementImport(models.TransientModel):
                         journal_currency_id
                     )
                     raise UserError(_(
-                        'The currency of the bank statement is not '
-                        'the same as the currency of the journal !'
-                    ))
+                        'The currency of the bank statement (%s) is not '
+                        'the same as the currency of the journal %s (%s) !'
+                    ) % (
+                        currency.name,
+                        journal_obj.name,
+                        journal_obj.currency.name))
             else:
-                company_currency_id = self.env.user.company_id.currency_id.id
-                if currency_id != company_currency_id:
+                company_currency = self.env.user.company_id.currency_id
+                if currency_id != company_currency.id:
                     # ALso log message with id's for technical analysis:
                     _logger.warn(
                         _('Statement currency id is %d,'
                           ' but company currency id = %d.'),
                         currency_id,
-                        company_currency_id
+                        company_currency.id
                     )
                     raise UserError(_(
-                        'The currency of the bank statement is not '
-                        'the same as the company currency !'
-                    ))
+                        'The currency of the bank statement (%s) is not '
+                        'the same as the company currency (%s) !'
+                    ) % (currency.name, company_currency.name))
         return journal_id
 
     @api.model
