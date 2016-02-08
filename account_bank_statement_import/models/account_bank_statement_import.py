@@ -354,7 +354,9 @@ class AccountBankStatementImport(models.TransientModel):
             # do this now
             try:
                 stmt_vals['period_id'] =\
-                    self.env['account.period'].find(dt=stmt_vals['date']).id
+                    self.env['account.period']\
+                        .with_context(account_period_prefer_normal=True)\
+                        .find(dt=stmt_vals['date']).id
             except RedirectWarning:
                 # if there's no period for the date, ignore resulting exception
                 pass
