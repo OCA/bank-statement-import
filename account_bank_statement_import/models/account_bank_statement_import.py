@@ -7,7 +7,7 @@ from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
 
 from openerp import api, models, fields
 from openerp.tools.translate import _
-from openerp.exceptions import Warning as UserError
+from openerp.exceptions import Warning as UserError, RedirectWarning
 
 _logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -349,6 +349,15 @@ class AccountBankStatementImport(models.TransientModel):
                         bank_account_id = bank_obj and bank_obj.id or False
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
+        if 'date' in stmt_vals and 'period_id' not in stmt_vals:
+            # if the parser found a date but didn't set a period for this date,
+            # do this now
+            try:
+                stmt_vals['period_id'] =\
+                    self.env['account.period'].find(dt=stmt_vals['date']).id
+            except RedirectWarning:
+                # if there's no period for the date, ignore resulting exception
+                pass
         return stmt_vals
 
     @api.model
