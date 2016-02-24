@@ -100,8 +100,8 @@ class AccountBankStatementImport(models.TransientModel):
                 vls_line = {
                     'date': transaction['Дата'],
                     'name': transaction['Плательщик1'] + (
-                        transaction['НазначениеПлатежа'] and ': '
-                        + transaction['НазначениеПлатежа'] or ''),
+                        transaction['НазначениеПлатежа'] and ': ' +
+                        transaction['НазначениеПлатежа'] or ''),
                     'ref': transaction['ВидОплаты'],
                     # 1cCBE does not have stuff like (transaction.id).
                     # Need to decide what to push here.
