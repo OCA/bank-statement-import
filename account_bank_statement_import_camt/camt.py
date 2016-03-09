@@ -137,6 +137,13 @@ class CamtParser(object):
         if not transaction.message:
             self.add_value_from_node(
                 ns, node, './ns:AddtlNtryInf', transaction, 'message')
+        if not transaction.eref:
+            self.add_value_from_node(
+                ns, node, [
+                    './ns:NtryDtls/ns:Btch/ns:PmtInfId',
+                ],
+                transaction, 'eref'
+            )
         transaction.data = etree.tostring(node)
         return transaction
 
