@@ -58,7 +58,8 @@ class AccountBankStatementImport(models.TransientModel):
                         transaction.memo and ': ' + transaction.memo or ''),
                     'ref': transaction.id,
                     'amount': transaction.amount,
-                    'unique_import_id': transaction.id,
+                    'unique_import_id': '%s-%s-%s' % (
+                        transaction.id, transaction.payee, transaction.memo),
                     'bank_account_id': bank_account_id,
                     'partner_id': partner_id,
                 }
@@ -83,7 +84,7 @@ class AccountBankStatementImport(models.TransientModel):
             ))
 
         vals_bank_statement = {
-            'name': ofx.account.routing_number,
+            'name': ofx.account.number,
             'transactions': transactions,
             'balance_start': ofx.account.statement.balance,
             'balance_end_real':
