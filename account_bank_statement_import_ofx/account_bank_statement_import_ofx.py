@@ -84,7 +84,7 @@ class AccountBankStatementImport(models.TransientModel):
             ))
 
         vals_bank_statement = {
-            'name': ofx.account.number,
+            'name': '%s-%s' % (ofx.account.routing_number, ofx.account.number),
             'transactions': transactions,
             'balance_start': ofx.account.statement.balance,
             'balance_end_real':
