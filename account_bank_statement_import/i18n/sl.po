@@ -3,13 +3,13 @@
 # * account_bank_statement_import
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 01:40+0000\n"
-"PO-Revision-Date: 2015-10-01 13:01+0000\n"
+"POT-Creation-Date: 2016-03-09 23:48+0000\n"
+"PO-Revision-Date: 2016-03-10 05:46+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:392
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:407
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d transakcij je bilo že uvoženih in se prezrejo."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:395
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:410
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1 transakcija je bila že uvožena in se prezre."
@@ -60,7 +60,7 @@ msgid ""
 msgstr "Knjigovodski dnevnik v zvezi z bančnim izpiskom, ki ga uvažate. Formate izpiskov, ki ne omogočajo samodejne detekcije dnevnika (npr. QIF) izberite ročno."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:398
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:413
 #, python-format
 msgid "Already imported items"
 msgstr "Že uvoženi predmeti"
@@ -184,13 +184,13 @@ msgid "Sanitized Account Number"
 msgstr "Številka očiščenega konta"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:278
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:282
 #, python-format
 msgid "Statement currency id is %d, but company currency id = %d."
 msgstr "ID valute izpiska je %d, a ID valute družbe = %d."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:264
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:265
 #, python-format
 msgid "Statement currency id is %d, but journal currency id = %d."
 msgstr "ID valute izpiska je %d, a ID valute dnevnika = %d."
@@ -202,25 +202,26 @@ msgid "Statement has invalid currency code %s"
 msgstr "Izpisek ima neveljavno kodo valute %s"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:247
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:248
 #, python-format
 msgid "The account of this statement is linked to another journal."
 msgstr "Konto tega izpiska je povezan z drugim dnevnikom."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:283
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:287
 #, python-format
 msgid ""
-"The currency of the bank statement is not the same as the company currency !"
-msgstr "Valuta bančnega izpiska ni enaka valuti družbe!"
+"The currency of the bank statement (%s) is not the same as the company "
+"currency (%s) !"
+msgstr "Valuta bančnega izpiska (%s) ni enaka valuti družbe (%s)!"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:269
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:270
 #, python-format
 msgid ""
-"The currency of the bank statement is not the same as the currency of the "
-"journal !"
-msgstr "Valuta na bančnem izpisku ne ustreza valuti dnevnika!"
+"The currency of the bank statement (%s) is not the same as the currency of "
+"the journal %s (%s) !"
+msgstr "Valuta na bančnem izpisku (%s) ne ustreza valuti dnevnika %s (%s) !"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:203
