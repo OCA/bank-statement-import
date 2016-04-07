@@ -351,8 +351,10 @@ class AccountBankStatementImport(models.TransientModel):
                         bank_obj = self._create_bank_account(
                             partner_account_number)
                         bank_account_id = bank_obj and bank_obj.id or False
-                line_vals['partner_id'] = partner_id
-                line_vals['bank_account_id'] = bank_account_id
+                if partner_id:
+                    line_vals['partner_id'] = partner_id
+                if bank_account_id:
+                    line_vals['bank_account_id'] = bank_account_id
         if 'date' in stmt_vals and 'period_id' not in stmt_vals:
             # if the parser found a date but didn't set a period for this date,
             # do this now
