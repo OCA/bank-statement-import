@@ -5,15 +5,11 @@ import StringIO
 
 from openerp import api, models
 from openerp.tools.translate import _
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
+
+from .ofx import OfxParser, OfxParser_ok
 
 _logger = logging.getLogger(__name__)
-
-try:
-    from ofxparse import OfxParser as ofxparser
-except ImportError:
-    _logger.warn("ofxparse not found, OFX parsing disabled.")
-    ofxparser = None
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -21,11 +17,12 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _check_ofx(self, data_file):
-        if ofxparser is None:
+        if not OfxParser_ok:
             return False
         try:
-            ofx = ofxparser.parse(StringIO.StringIO(data_file))
-        except:
+            ofx = OfxParser.parse(StringIO.StringIO(data_file))
+        except Exception as e:
+            _logger.debug(e)
             return False
         return ofx
 
@@ -64,7 +61,7 @@ class AccountBankStatementImport(models.TransientModel):
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
         except Exception, e:
-            raise Warning(_("The following problem occurred during import. "
+            raise UserError(_("The following problem occurred during import. "
                             "The file might not be valid.\n\n %s" % e.message))
 
         vals_bank_statement = {
@@ -72,7 +69,7 @@ class AccountBankStatementImport(models.TransientModel):
             'transactions': transactions,
             'balance_start': ofx.account.statement.balance,
             'balance_end_real':
-                float(ofx.account.statement.balance) + total_amt,
+            float(ofx.account.statement.balance) + total_amt,
         }
         return ofx.account.statement.currency, ofx.account.number, [
             vals_bank_statement]
