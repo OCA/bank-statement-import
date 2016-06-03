@@ -16,7 +16,7 @@ class TestOfxFile(TransactionCase):
     def test_ofx_file_import(self):
         ofx_file_path = get_module_resource(
             'account_bank_statement_import_ofx',
-            'test_ofx_file', 'test_ofx.ofx')
+            'tests/test_ofx_file/', 'test_ofx.ofx')
         ofx_file = open(ofx_file_path, 'rb').read().encode('base64')
         bank_statement = self.statement_import_model.create(
             dict(data_file=ofx_file))
