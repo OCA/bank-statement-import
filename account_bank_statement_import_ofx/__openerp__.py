@@ -1,13 +1,17 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 {
     'name': 'Import OFX Bank Statement',
     'category': 'Banking addons',
-    'version': '8.0.1.0.0',
+    'version': '9.0.0.0.0',
     'author': 'OpenERP SA,'
+              'La Louve,'
               'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/bank-statement-import',
+    'website': 'https://odoo-community.org/',
     'depends': [
-        'account_bank_statement_import'
+        'account_bank_statement_import',
+    ],
+    'data': [
+        'views/view_account_bank_statement_import.xml',
     ],
     'demo': [
         'demo/demo_data.xml',
