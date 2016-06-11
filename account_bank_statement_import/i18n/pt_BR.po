@@ -3,15 +3,16 @@
 # * account_bank_statement_import
 # 
 # Translators:
+# Ananias Filho <ananias@kmee.com.br>, 2016
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-09 23:48+0000\n"
-"PO-Revision-Date: 2016-03-09 23:48+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2016-04-14 03:09+0000\n"
+"PO-Revision-Date: 2016-06-06 16:27+0000\n"
+"Last-Translator: Ananias Filho <ananias@kmee.com.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -214,7 +215,7 @@ msgstr "A conta deste extrato está ligada a outro diário."
 msgid ""
 "The currency of the bank statement (%s) is not the same as the company "
 "currency (%s) !"
-msgstr ""
+msgstr "A moeda do extrato bancário (%s) não é a mesma que a moeda da empresa (%s)!"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:270
@@ -222,7 +223,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal %s (%s) !"
-msgstr ""
+msgstr "A moeda do extrato bancário (%s) não é a mesma que a moeda do Diário %s (%s)!"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:203
