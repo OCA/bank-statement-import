@@ -3,9 +3,9 @@
 # See README.rst file on addons root folder for license details
 
 import re
-from datetime import datetime
 from openerp.addons.account_bank_statement_import_mt940_base.mt940 import (
     MT940, str2amount)
+
 
 def get_counterpart(transaction, subfield):
     """Get counterpart from transaction.
@@ -21,6 +21,7 @@ def get_counterpart(transaction, subfield):
     if len(subfield) >= 3 and subfield[2]:
         transaction.remote_owner_tin = subfield[2]
 
+
 def get_subfields(data, codewords):
     """Return dictionary with value array for each codeword in data.
 
@@ -32,7 +33,7 @@ def get_subfields(data, codewords):
         +25TRANSACTIONMESSAGE3+26TRANSACTIONMESSAGE4
         +27TRANSACTIONMESSAGE5
         +61PARTNERADDRESS1+62PARTNERADDRESS2
-    codewords = ['20', '23', '24', '25', '26', '27', 
+    codewords = ['20', '23', '24', '25', '26', '27',
                  '30', '31', '32', '33', '61', '62']
     !!! NOT ALL CODEWORDS ARE PRESENT !!!
     Then return subfields = {
@@ -63,6 +64,7 @@ def get_subfields(data, codewords):
             subfields[current_codeword].append(word[2:])
     return subfields
 
+
 def handle_common_subfields(transaction, subfields):
     """Deal with common functionality for tag 86 subfields."""
     # Get counterpart from 31, 32 or 33 subfields:
@@ -85,6 +87,7 @@ def handle_common_subfields(transaction, subfields):
     if transaction.eref in subfields:
         transaction.eref = ''.join(
             subfields[transaction.eref])
+
 
 class MT940Parser(MT940):
     """Parser for ing MT940 bank statement import files."""
@@ -140,4 +143,3 @@ class MT940Parser(MT940):
             handle_common_subfields(transaction, subfields)
         # Prevent handling tag 86 later for non transaction details:
         self.current_transaction = None
-

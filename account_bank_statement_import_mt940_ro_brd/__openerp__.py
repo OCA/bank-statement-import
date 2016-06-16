@@ -8,7 +8,6 @@
     'author': 'Forest and Biomass Services Romania, '
               'Odoo Community Association (OCA)',
     'website': 'https://www.forbiom.eu',
-    'website': 'www.forbiom.eu',
     'category': 'Banking addons',
     'depends': [
         'account_bank_statement_import_mt940_base'

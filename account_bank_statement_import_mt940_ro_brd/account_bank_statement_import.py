@@ -3,7 +3,7 @@
 # See README.rst file on addons root folder for license details
 
 import logging
-from openerp import models, api
+from openerp import models
 from .mt940 import MT940Parser as Parser
 
 _logger = logging.getLogger(__name__)
@@ -13,7 +13,6 @@ class AccountBankStatementImport(models.TransientModel):
     """Add parsing of mt940 files to bank statement import."""
     _inherit = 'account.bank.statement.import'
 
-        
     def _parse_file(self, cr, uid, data_file, context=None):
         """Parse a MT940 IBAN BRD file."""
         parser = Parser()
