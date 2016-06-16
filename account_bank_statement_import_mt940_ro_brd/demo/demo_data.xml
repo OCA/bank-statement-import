@@ -4,7 +4,7 @@
 
         <record id="mt940_brd_bank_journal" model="account.journal">
             <field name="name">Bank Journal - (test mt940 BRD)</field>
-            <field name="code">TBNKMT940BRD</field>
+            <field name="code">BRD940</field>
             <field name="type">bank</field>
             <field name="sequence_id" ref="account.sequence_bank_journal"/>
             <field name="default_debit_account_id" ref="account.bnk"/>
