@@ -6,13 +6,14 @@
 # Ananias Filho <ananias@kmee.com.br>, 2016
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
+# Paulo Ricardo <ti@shoppingescritorio.com.br>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-14 03:09+0000\n"
-"PO-Revision-Date: 2016-06-06 16:27+0000\n"
-"Last-Translator: Ananias Filho <ananias@kmee.com.br>\n"
+"POT-Creation-Date: 2016-06-11 07:26+0000\n"
+"PO-Revision-Date: 2016-06-14 12:12+0000\n"
+"Last-Translator: Paulo Ricardo <ti@shoppingescritorio.com.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,6 +124,11 @@ msgid "Created on"
 msgstr "Criado em"
 
 #. module: account_bank_statement_import
+#: field:account.bank.statement.import,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: account_bank_statement_import
 #: field:account.config.settings,module_base_bank_account_number_unique:0
 msgid "Enforce unique account numbers on bank accounts"
 msgstr "Forçar números únicos nas contas bancárias."
@@ -133,6 +139,11 @@ msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
 msgstr "Pegue os extratos eletrônicos do seu banco e selecione-os aqui."
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,hide_journal_field:0
+msgid "Hide the journal field in the view"
+msgstr "Ocultar o campo Diário nesta visão"
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -169,6 +180,11 @@ msgstr "Id da importação"
 #: field:account.bank.statement.import,journal_id:0
 msgid "Journal"
 msgstr "Diário"
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,__last_update:0
+msgid "Last Modified on"
+msgstr "Última Modificação em"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,write_uid:0

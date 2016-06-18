@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-09 23:48+0000\n"
-"PO-Revision-Date: 2016-03-09 23:48+0000\n"
+"POT-Creation-Date: 2016-06-11 07:26+0000\n"
+"PO-Revision-Date: 2016-06-11 07:26+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: English (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/en/)\n"
 "MIME-Version: 1.0\n"
@@ -120,6 +120,11 @@ msgid "Created on"
 msgstr "Created on"
 
 #. module: account_bank_statement_import
+#: field:account.bank.statement.import,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: account_bank_statement_import
 #: field:account.config.settings,module_base_bank_account_number_unique:0
 msgid "Enforce unique account numbers on bank accounts"
 msgstr "Enforce unique account numbers on bank accounts"
@@ -130,6 +135,11 @@ msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
 msgstr "Get you bank statements in electronic format from your bank and select them here."
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,hide_journal_field:0
+msgid "Hide the journal field in the view"
+msgstr "Hide the journal field in the view"
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -166,6 +176,11 @@ msgstr "Import ID"
 #: field:account.bank.statement.import,journal_id:0
 msgid "Journal"
 msgstr "Journal"
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,write_uid:0
