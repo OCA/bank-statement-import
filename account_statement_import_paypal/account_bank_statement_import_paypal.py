@@ -37,7 +37,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _prepare_paypal_encoding(self):
         '''This method is designed to be inherited'''
-        return 'latin1'
+        return 'utf-8'
 
     @api.model
     def _prepare_paypal_date_format(self):
@@ -47,7 +47,8 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _valid_paypal_line(self, line):
         '''This method is designed to be inherited'''
-        if line[5].startswith('Termin') or line[5].startswith('Rembours'):
+        col_name = line[5].replace('"','')
+        if col_name.startswith('Termin') or col_name.startswith('Rembours'):
             return True
         else:
             return False
@@ -63,11 +64,16 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _check_paypal(self, data_file):
         '''This method is designed to be inherited'''
-        return data_file.strip().startswith('Date,')
+        paypal = data_file.strip().startswith('Date,')
+        if not paypal:
+            paypal = data_file.strip().startswith('"Date",')
+
+        return paypal
 
     @api.model
     def _parse_file(self, data_file):
         """ Import a file in Paypal CSV format"""
+        data_file = data_file.replace("\xef\xbb\xbf", "")
         paypal = self._check_paypal(data_file)
         if not paypal:
             return super(AccountBankStatementImport, self)._parse_file(
@@ -105,8 +111,8 @@ class AccountBankStatementImport(models.TransientModel):
                 'owner_name': line[3],
                 'amount': line[7],
                 'commission': line[8],
-                'balance': line[34],
-                'transac_ref': line[30],
+                'balance': line[27],
+                'transac_ref': line[23],
                 'ref': line[12],
                 'line_nr': i,
             }
@@ -136,7 +142,7 @@ class AccountBankStatementImport(models.TransientModel):
         other_currency_line = {}
         for wline in raw_lines:
             if company_currency_name != wline['currency']:
-                if not wline['transac_ref'] and not other_currency_line:
+                if wline['transac_ref'] and not other_currency_line:
                     currencies = self.env['res.currency'].search(
                         [('name', '=', wline['currency'])])
                     if not currencies:
@@ -149,8 +155,10 @@ class AccountBankStatementImport(models.TransientModel):
                         'currency': wline['currency'],
                         'name': wline['name'],
                         'owner_name': wline['owner_name'],
-                        }
-                if wline['transac_ref'] and other_currency_line:
+                        'transac_ref': wline['transac_ref'],
+                    }
+
+                if other_currency_line and not wline['transac_ref']:
                     assert (
                         wline['currency'] == other_currency_line['currency']),\
                         'WRONG currency'
@@ -158,11 +166,16 @@ class AccountBankStatementImport(models.TransientModel):
                         wline['amount'] ==
                         other_currency_line['amount_currency'] * -1),\
                         'WRONG amount'
-                    other_currency_line['transac_ref'] = wline['transac_ref']
+                if (
+                        other_currency_line and
+                        wline['ref'] ==
+                        other_currency_line['transac_ref']):
+                    # reset other_currency_line
+                    other_currency_line = {}
             else:
                 if (
-                        other_currency_line
-                        and wline['transac_ref'] ==
+                        other_currency_line and
+                        wline['transac_ref'] ==
                         other_currency_line['transac_ref']):
                     wline.update(other_currency_line)
                     # reset other_currency_line
