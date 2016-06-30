@@ -22,7 +22,7 @@ class TestOfxFile(TransactionCase):
             dict(data_file=ofx_file))
         bank_statement.import_file()
         bank_st_record = self.bank_statement_model.search(
-            [('name', '=', '000000123')])[0]
+            [('name', '=', '123456')])[0]
         self.assertEquals(bank_st_record.balance_start, 2156.56)
         self.assertEquals(bank_st_record.balance_end_real, 1796.56)
 
