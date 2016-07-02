@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-09 23:48+0000\n"
+"POT-Creation-Date: 2016-06-30 14:49+0000\n"
 "PO-Revision-Date: 2015-10-09 00:24+0000\n"
 "Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
@@ -25,7 +25,7 @@ msgid "Import Bank Statement"
 msgstr "Importar extrato bancário"
 
 #. module: account_bank_statement_import_ofx
-#: code:addons/account_bank_statement_import_ofx/account_bank_statement_import_ofx.py:80
+#: code:addons/account_bank_statement_import_ofx/account_bank_statement_import_ofx.py:81
 #, python-format
 msgid ""
 "The following problem occurred during import. The file might not be valid.\n"
