@@ -69,7 +69,7 @@ class CamtParser(object):
                 './ns:RmtInf/ns:Ustrd',
                 './ns:AddtlTxInf',
                 './ns:AddtlNtryInf',
-            ], transaction, 'message')
+            ], transaction, 'message', join_str='\n')
         # eref
         self.add_value_from_node(
             ns, node, [
