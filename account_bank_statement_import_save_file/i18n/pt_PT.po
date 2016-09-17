@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import_save_file
+# 
+# Translators:
+# Pedro Castro Silva <pedrocs@sossia.pt>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-import (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-18 10:27+0000\n"
+"PO-Revision-Date: 2016-09-07 09:16+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@sossia.pt>\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Extrato Bancário"
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_date:0
+msgid "Date Created"
+msgstr "Data de Criação"
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_log:0
+msgid "Description"
+msgstr "Descrição"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importar Extrato Bancário"
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_file:0
+msgid "Import file"
+msgstr "Importar ficheiro"
+
+#. module: account_bank_statement_import_save_file
+#: view:account.bank.statement:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported file"
+msgstr "Ficheiro importado"
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_user:0
+msgid "Owner"
+msgstr "Dono"

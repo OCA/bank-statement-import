@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * base_bank_account_number_unique
+# 
+# Translators:
+# Pedro Castro Silva <pedrocs@sossia.pt>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-import (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-18 10:27+0000\n"
+"PO-Revision-Date: 2016-09-07 09:15+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@sossia.pt>\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_PT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: base_bank_account_number_unique
+#: sql_constraint:res.partner.bank:0
+msgid "Account Number must be unique"
+msgstr "O Número de Conta tem que ser único"
+
+#. module: base_bank_account_number_unique
+#: model:ir.model,name:base_bank_account_number_unique.model_res_partner_bank
+msgid "Bank Accounts"
+msgstr "Contas Bancárias"
+
+#. module: base_bank_account_number_unique
+#: code:addons/base_bank_account_number_unique/hooks.py:45
+#, python-format
+msgid ""
+"Module installation can't proceed as you have duplicate account numbers in your system already. Please clean that up and try again.\n"
+"The following shows the first %d duplicate account numbers\n"
+"%s\n"
+"(if you see less than %d, those are the only duplicates)"
+msgstr "A instalação do módulo não pode prosseguir uma vez que já existem números de conta duplicados no sistema. Por favor, corrija a situação e tente novamente.\nVeja a seguir os %d primeiros números de conta duplicados\n%s\n(se vê menos de %d, este são os únicos duplicados)"
