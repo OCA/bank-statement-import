@@ -105,8 +105,8 @@ class AccountBankStatementImport(models.TransientModel):
                 'owner_name': line[3],
                 'amount': line[7],
                 'commission': line[8],
-                'balance': line[32],
-                'transac_ref': line[28],
+                'balance': line[27],
+                'transac_ref': line[23],
                 'ref': line[12],
                 'line_nr': i,
             }
@@ -136,7 +136,7 @@ class AccountBankStatementImport(models.TransientModel):
         other_currency_line = {}
         for wline in raw_lines:
             if company_currency_name != wline['currency']:
-                if not wline['transac_ref'] and not other_currency_line:
+                if wline['transac_ref'] and not other_currency_line:
                     currencies = self.env['res.currency'].search(
                         [('name', '=', wline['currency'])])
                     if not currencies:
@@ -149,8 +149,10 @@ class AccountBankStatementImport(models.TransientModel):
                         'currency': wline['currency'],
                         'name': wline['name'],
                         'owner_name': wline['owner_name'],
-                        }
-                if wline['transac_ref'] and other_currency_line:
+                        'transac_ref': wline['transac_ref'],
+                    }
+
+                if other_currency_line and not wline['transac_ref']:
                     assert (
                         wline['currency'] == other_currency_line['currency']),\
                         'WRONG currency'
@@ -158,11 +160,16 @@ class AccountBankStatementImport(models.TransientModel):
                         wline['amount'] ==
                         other_currency_line['amount_currency'] * -1),\
                         'WRONG amount'
-                    other_currency_line['transac_ref'] = wline['transac_ref']
+                if (
+                        other_currency_line and
+                        wline['ref'] ==
+                        other_currency_line['transac_ref']):
+                    # reset other_currency_line
+                    other_currency_line = {}
             else:
                 if (
-                        other_currency_line
-                        and wline['transac_ref'] ==
+                        other_currency_line and
+                        wline['transac_ref'] ==
                         other_currency_line['transac_ref']):
                     wline.update(other_currency_line)
                     # reset other_currency_line
