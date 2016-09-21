@@ -21,6 +21,8 @@
 
 
 def migrate(cr, version):
+    if not version:
+        return
     # if we end up here, we migrate from 7.0's account_banking
     # set transaction ids, taking care to enforce uniqueness
     cr.execute(
