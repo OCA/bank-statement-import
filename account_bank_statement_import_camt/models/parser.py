@@ -167,7 +167,7 @@ class CamtParser(models.AbstractModel):
         detail_nodes = self.xpath(node, './ns:NtryDtls/ns:TxDtls')
         if len(detail_nodes) == 0:
             self.default_transaction_data(node, transaction)
-            transaction.data = etree.tostring(node)
+            transaction['data'] = etree.tostring(node)
             yield transaction
             return
         transaction_base = transaction

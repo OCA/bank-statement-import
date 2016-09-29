@@ -4,10 +4,12 @@ import logging
 import base64
 from StringIO import StringIO
 from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
+import hashlib
 
 from openerp import api, models, fields
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError, RedirectWarning
+
 
 _logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -234,6 +236,16 @@ class AccountBankStatementImport(models.TransientModel):
         return self.env.user.company_id.currency_id.id
 
     @api.model
+    def _get_bank(self, account_number):
+        """Get res.partner.bank."""
+        bank_model = self.env['res.partner.bank']
+        if account_number and len(account_number) > 4:
+            return bank_model.search(
+                [('acc_number', '=', account_number)], limit=1
+            )
+        return bank_model.browse([])  # Empty recordset
+
+    @api.model
     def _find_bank_account_id(self, account_number):
         """ Get res.partner.bank ID """
         bank_account_id = None
@@ -337,12 +349,19 @@ class AccountBankStatementImport(models.TransientModel):
     def _complete_statement(self, stmt_vals, journal_id, account_number):
         """Complete statement from information passed."""
         stmt_vals['journal_id'] = journal_id
+        statement_bank = self._get_bank(account_number)
         for line_vals in stmt_vals['transactions']:
-            unique_import_id = line_vals.get('unique_import_id', False)
+            unique_import_id = (
+                statement_bank.enforce_unique_import_lines and
+                'data' in line_vals and line_vals['data'] and
+                hashlib.md5(line_vals['data']).hexdigest() or
+                'unique_import_id' in line_vals and
+                line_vals['unique_import_id'] or
+                False
+            )
             if unique_import_id:
                 line_vals['unique_import_id'] = (
-                    (account_number and account_number + '-' or '') +
-                    unique_import_id
+                    statement_bank.acc_number + '-' + unique_import_id
                 )
             if not line_vals.get('bank_account_id'):
                 # Find the partner and his bank account or create the bank
@@ -353,16 +372,15 @@ class AccountBankStatementImport(models.TransientModel):
                 bank_account_id = False
                 partner_account_number = line_vals.get('account_number')
                 if partner_account_number:
-                    bank_model = self.env['res.partner.bank']
-                    banks = bank_model.search(
-                        [('acc_number', '=', partner_account_number)], limit=1)
-                    if banks:
-                        bank_account_id = banks[0].id
-                        partner_id = banks[0].partner_id.id
+                    partner_bank = self._get_bank(partner_account_number)
+                    if partner_bank:
+                        partner_id = partner_bank.partner_id.id
                     else:
-                        bank_obj = self._create_bank_account(
-                            partner_account_number)
-                        bank_account_id = bank_obj and bank_obj.id or False
+                        partner_bank = self._create_bank_account(
+                            partner_account_number
+                        )
+                    if partner_bank:
+                        bank_account_id = partner_bank.id
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
         if 'date' in stmt_vals and 'period_id' not in stmt_vals:
@@ -389,22 +407,44 @@ class AccountBankStatementImport(models.TransientModel):
         # Filter out already imported transactions and create statement
         ignored_line_ids = []
         filtered_st_lines = []
+        unique_ids = {}
+        duplicates = 0
         for line_vals in stmt_vals['transactions']:
-            unique_id = (
-                'unique_import_id' in line_vals and
-                line_vals['unique_import_id']
-            )
-            if not unique_id or not bool(bsl_model.sudo().search(
-                    [('unique_import_id', '=', unique_id)], limit=1)):
+            unique_id = line_vals.get('unique_import_id', False)
+            if not unique_id:
                 filtered_st_lines.append(line_vals)
-            else:
+                continue
+            if unique_id in unique_ids:
+                # Not unique within statement!
+                # In these cases the duplicates should both be imported.
+                # Most like case is if the same person made two equal payments
+                # on the same day. But duplicate will be marked.
+                duplicates += 1
+                _logger.warn(
+                    _("line with unique_id %s is not in fact unique: %s"),
+                    unique_id, line_vals)
+                unique_id += " %d" % duplicates
+                line_vals['name'] = (_(
+                    "Duplicate: %s") % line_vals['name'] or '')
+                line_vals['unique_import_id'] = unique_id
+                filtered_st_lines.append(line_vals)
+                continue
+            existing_line = bsl_model.sudo().search([
+                ('unique_import_id', '=', unique_id),
+                ('company_id', '=', self.env.user.company_id.id)], limit=1)
+            if existing_line:
                 ignored_line_ids.append(unique_id)
+                continue
+            unique_ids[unique_id] = line_vals
+            filtered_st_lines.append(line_vals)
         statement_id = False
         if len(filtered_st_lines) > 0:
             # Remove values that won't be used to create records
             stmt_vals.pop('transactions', None)
             for line_vals in filtered_st_lines:
                 line_vals.pop('account_number', None)
+                line_vals.pop('transaction_id', None)
+                line_vals.pop('data', None)
             # Create the statement
             stmt_vals['line_ids'] = [
                 [0, False, line] for line in filtered_st_lines]

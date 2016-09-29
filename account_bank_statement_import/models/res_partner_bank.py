@@ -33,6 +33,18 @@ class ResPartnerBank(models.Model):
     sanitized_acc_number = fields.Char(
         'Sanitized Account Number', size=64, readonly=True,
         compute='_get_sanitized_account_number', store=True, index=True)
+    enforce_unique_import_lines = fields.Boolean(
+        string='Force unique lines on import',
+        help="Some banks do not provide an unique id for transactions in"
+             " bank statements. In some cases it is possible that multiple"
+             " downloads contain overlapping transactions. In that case"
+             " activate this option to generate a unique id based on all the"
+             " information in the transaction. This prevents duplicate"
+             " imports, at the cost of - in exceptional cases - missing"
+             " transactions when all the information in two or more"
+             " transactions is the same.\n"
+             "This setting is only relevant for banks linked to a company."
+    )
 
     def _sanitize_account_number(self, acc_number):
         if acc_number:
