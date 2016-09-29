@@ -30,7 +30,7 @@ class MT940Parser(MT940):
         r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
         r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
         r'(?P<reference>\w{0,16})'
-        r'(//(?P<ingid>\w{14})\r\n/TRCD/(?P<ingtranscode>\w{0,34})){0,1}'
+        r'(//(?P<ingid>\w{14})/TRCD/(?P<ingtranscode>\w{0,34})){0,1}'
     )
 
     def __init__(self):
