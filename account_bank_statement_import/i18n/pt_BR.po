@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-11 07:26+0000\n"
-"PO-Revision-Date: 2016-06-14 12:12+0000\n"
+"POT-Creation-Date: 2016-09-21 16:09+0000\n"
+"PO-Revision-Date: 2016-10-04 09:43+0000\n"
 "Last-Translator: Paulo Ricardo <ti@shoppingescritorio.com.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -126,7 +126,7 @@ msgstr "Criado em"
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome para Mostrar"
 
 #. module: account_bank_statement_import
 #: field:account.config.settings,module_base_bank_account_number_unique:0
