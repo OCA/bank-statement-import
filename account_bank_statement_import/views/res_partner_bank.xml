@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_partner_bank_form" model="ir.ui.view">
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form" />
+            <field name="arch" type="xml">
+                <group name="bank" position="after">
+                    <group
+                        name="import_settings"
+                        string="Bank Statement Import Settings"
+                        invisible="context.get('company_hide', True)"
+                        >
+                        <field
+                            name="enforce_unique_import_lines"
+                        />
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</openerp>

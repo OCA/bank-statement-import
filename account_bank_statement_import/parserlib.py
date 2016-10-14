@@ -100,6 +100,14 @@ class BankTransaction(dict):
     def note(self, note):
         self['note'] = note
 
+    @property
+    def data(self):
+        return self['data']
+
+    @data.setter
+    def data(self, data):
+        self['data'] = data
+
     def __init__(self):
         """Define and initialize attributes.
 
