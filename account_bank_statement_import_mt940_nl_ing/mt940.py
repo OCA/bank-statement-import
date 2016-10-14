@@ -29,7 +29,8 @@ class MT940Parser(MT940):
     tag_61_regex = re.compile(
         r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
         r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
-        r'(?P<reference>\w{1,50})'
+        r'(?P<reference>\w{0,16})'
+        r'(//(?P<ingid>\w{14})/TRCD/(?P<ingtranscode>\w{0,34})){0,1}'
     )
 
     def __init__(self):
@@ -47,6 +48,7 @@ class MT940Parser(MT940):
         self.current_transaction.transferred_amount = (
             str2amount(parsed_data['sign'], parsed_data['amount']))
         self.current_transaction.eref = parsed_data['reference']
+        self.current_transaction.id = parsed_data['ingid']
 
     def handle_tag_86(self, data):
         """Parse 86 tag containing reference data."""
