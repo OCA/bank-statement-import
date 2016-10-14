@@ -151,13 +151,13 @@ class AccountBankStatementImport(models.TransientModel):
         account_number = stmt_vals.pop('account_number')
         # Try to find the bank account and currency in odoo
         currency_id = self._find_currency_id(currency_code)
-        bank_account_id = self._find_bank_account_id(account_number)
-        if not bank_account_id and account_number:
+        statement_bank = self._get_bank(account_number)
+        if not statement_bank and account_number:
             raise UserError(
                 _('Can not find the account number %s.') % account_number
             )
         # Find the bank journal
-        journal_id = self._get_journal(currency_id, bank_account_id)
+        journal_id = self._get_journal(currency_id, statement_bank.id)
         # By now journal and account_number must be known
         if not journal_id:
             raise UserError(
@@ -167,7 +167,8 @@ class AccountBankStatementImport(models.TransientModel):
             )
         # Prepare statement data to be used for bank statements creation
         stmt_vals = self._complete_statement(
-            stmt_vals, journal_id, account_number)
+            statement_bank, stmt_vals, journal_id
+        )
         # Create the bank stmt_vals
         return self._create_bank_statement(stmt_vals)
 
@@ -244,17 +245,6 @@ class AccountBankStatementImport(models.TransientModel):
                 [('acc_number', '=', account_number)], limit=1
             )
         return bank_model.browse([])  # Empty recordset
-
-    @api.model
-    def _find_bank_account_id(self, account_number):
-        """ Get res.partner.bank ID """
-        bank_account_id = None
-        if account_number and len(account_number) > 4:
-            bank_account_ids = self.env['res.partner.bank'].search(
-                [('acc_number', '=', account_number)], limit=1)
-            if bank_account_ids:
-                bank_account_id = bank_account_ids[0].id
-        return bank_account_id
 
     @api.model
     def _get_journal(self, currency_id, bank_account_id):
@@ -346,7 +336,7 @@ class AccountBankStatementImport(models.TransientModel):
             default_currency=currency_id).create(vals_acc)
 
     @api.model
-    def _complete_statement(self, stmt_vals, journal_id, account_number):
+    def _complete_statement(self, statement_bank, stmt_vals, journal_id):
         """Complete statement from information passed."""
         stmt_vals['journal_id'] = journal_id
         statement_bank = self._get_bank(account_number)
@@ -424,6 +414,7 @@ class AccountBankStatementImport(models.TransientModel):
             for line_vals in filtered_st_lines:
                 line_vals.pop('account_number', None)
                 line_vals.pop('transaction_id', None)
+                line_vals.pop('statement_id', None)
                 line_vals.pop('data', None)
             # Create the statement
             stmt_vals['line_ids'] = [
