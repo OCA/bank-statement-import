@@ -83,14 +83,28 @@ def handle_common_subfields(transaction, subfields):
     for counterpart_field in ['CNTP', 'BENM', 'ORDP']:
         if counterpart_field in subfields:
             get_counterpart(transaction, subfields[counterpart_field])
+    if not transaction.message:
+        transaction.message = ''
     # REMI: Remitter information (text entered by other party on trans.):
     if 'REMI' in subfields:
-        transaction.message = (
-            '/'.join(x for x in subfields['REMI'] if x))
+        transaction.message += (
+            subfields['REMI'][2]
+            # this might look like
+            # /REMI/USTD//<remittance info>/
+            # or
+            # /REMI/STRD/CUR/<betalingskenmerk>/
+            if len(subfields['REMI']) >= 3 and subfields['REMI'][0] in [
+                'STRD', 'USTD'
+            ]
+            else
+            '/'.join(x for x in subfields['REMI'] if x)
+        )
+    # EREF: End-to-end reference
+    if 'EREF' in subfields:
+        transaction.message += '/'.join(filter(bool, subfields['EREF']))
     # Get transaction reference subfield (might vary):
     if transaction.eref in subfields:
-        transaction.eref = ''.join(
-            subfields[transaction.eref])
+        transaction.eref = ''.join(subfields[transaction.eref])
 
 
 class MT940(object):
