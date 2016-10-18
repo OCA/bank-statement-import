@@ -37,7 +37,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _prepare_paypal_encoding(self):
         '''This method is designed to be inherited'''
-        return 'latin1'
+        return 'utf-8'
 
     @api.model
     def _prepare_paypal_date_format(self):
