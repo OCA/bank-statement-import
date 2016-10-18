@@ -47,7 +47,8 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _valid_paypal_line(self, line):
         '''This method is designed to be inherited'''
-        if line[5].startswith('Termin') or line[5].startswith('Rembours'):
+        col_name = line[5].replace('"','')
+        if col_name.startswith('Termin') or col_name.startswith('Rembours'):
             return True
         else:
             return False
@@ -63,7 +64,11 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _check_paypal(self, data_file):
         '''This method is designed to be inherited'''
-        return data_file.strip().startswith('Date,')
+        paypal = data_file.strip().startswith('Date,')
+        if not paypal:
+            paypal = data_file.strip().startswith('"Date",')
+
+        return paypal
 
     @api.model
     def _parse_file(self, data_file):
