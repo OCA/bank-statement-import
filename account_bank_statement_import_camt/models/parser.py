@@ -12,8 +12,9 @@ from lxml import etree
 
 from openerp import _, models
 
-from openerp.addons.account_bank_statement_import.parserlib import (
-    BankStatement)
+from openerp.addons.account_bank_statement_import.parserlib import BankStatement
+
+_logger = logging.getLogger(__name__)
 
 _logger = logging.getLogger(__name__)
 
