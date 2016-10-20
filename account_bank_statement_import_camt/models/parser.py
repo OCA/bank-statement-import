@@ -3,6 +3,7 @@
 # Copyright 2015 1200wd.com.
 # Copyright 2017 Open Net Sàrl.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+"""Class to parse camt files."""
 import logging
 import re
 from copy import copy
@@ -264,7 +265,8 @@ class CamtParser(models.AbstractModel):
                   " Total amount %s."),
                 statement.start_balance,
                 statement.end_balance,
-                total_amount)
+                total_amount
+            )
         return statement
 
     def check_version(self, root):
