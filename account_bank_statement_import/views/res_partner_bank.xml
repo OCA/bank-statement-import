@@ -9,7 +9,7 @@
                     <group
                         name="import_settings"
                         string="Bank Statement Import Settings"
-                        invisible="context.get('company_hide', True)"
+                        invisible="context.get('company_hide', False)"
                         >
                         <field
                             name="enforce_unique_import_lines"
