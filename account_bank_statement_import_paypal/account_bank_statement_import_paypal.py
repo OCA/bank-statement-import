@@ -73,6 +73,7 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _parse_file(self, data_file):
         """ Import a file in Paypal CSV format"""
+        data_file = data_file.replace("\xef\xbb\xbf", "")
         paypal = self._check_paypal(data_file)
         if not paypal:
             return super(AccountBankStatementImport, self)._parse_file(
