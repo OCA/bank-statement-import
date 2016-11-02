@@ -31,7 +31,7 @@ this module is based on ofxparse python lib and overload some of its functions.
 * For the time being the default ofxparse lib available with
   'pip install ofxparse' do not manage correctly european amount that are
   written with ',' and not with '.'. (For exemple, The Credit Cooperatif
-French Bank provides OFX 1.0 with amounts written with coma)
+  French Bank provides OFX 1.0 with amounts written with coma)
 
 April, 27 2016: this problem has been fixed here:
 https://github.com/jseutter/ofxparse/commit/283f89c3246ed3fedccc3ef5c96078b7d5b94579

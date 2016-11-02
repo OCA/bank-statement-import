@@ -5,11 +5,11 @@ import StringIO
 
 from openerp import api, models
 from openerp.tools.translate import _
-from openerp.exceptions import Warning
-
-_logger = logging.getLogger(__name__)
+from openerp.exceptions import Warning as UserError
 
 from .ofx import OfxParser, OfxParser_ok
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -61,7 +61,7 @@ class AccountBankStatementImport(models.TransientModel):
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
         except Exception, e:
-            raise Warning(_("The following problem occurred during import. "
+            raise UserError(_("The following problem occurred during import. "
                             "The file might not be valid.\n\n %s" % e.message))
 
         vals_bank_statement = {
