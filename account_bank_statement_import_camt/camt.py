@@ -1,28 +1,9 @@
 # -*- coding: utf-8 -*-
 """Class to parse camt files."""
-##############################################################################
-#
-#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2013-2016 Therp BV <http://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import re
-from datetime import datetime
 from lxml import etree
-from openerp.addons.account_bank_statement_import.parserlib import (
-    BankStatement)
 
 
 class CamtParser(object):
@@ -58,7 +39,7 @@ class CamtParser(object):
                     attr_value = found_node[0].text
                 else:
                     attr_value = join_str.join([x.text for x in found_node])
-                setattr(obj, attr_name, attr_value)
+                obj[attr_name] = attr_value
                 break
 
     def parse_transaction_details(self, ns, node, transaction):
@@ -67,16 +48,21 @@ class CamtParser(object):
         self.add_value_from_node(
             ns, node, [
                 './ns:RmtInf/ns:Ustrd',
-                './ns:AddtlTxInf',
                 './ns:AddtlNtryInf',
-            ], transaction, 'message', join_str='\n')
+                './ns:Refs/ns:InstrId',
+            ], transaction, 'note', join_str='\n')
+        # name
+        self.add_value_from_node(
+            ns, node, [
+                './ns:AddtlTxInf',
+            ], transaction, 'name', join_str='\n')
         # eref
         self.add_value_from_node(
             ns, node, [
                 './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:Refs/ns:EndToEndId',
             ],
-            transaction, 'eref'
+            transaction, 'ref'
         )
         # remote party values
         party_type = 'Dbtr'
@@ -88,15 +74,15 @@ class CamtParser(object):
             './ns:RltdPties/ns:%s' % party_type, namespaces={'ns': ns})
         if party_node:
             self.add_value_from_node(
-                ns, party_node[0], './ns:Nm', transaction, 'remote_owner')
+                ns, party_node[0], './ns:Nm', transaction, 'partner_name')
             self.add_value_from_node(
                 ns, party_node[0], './ns:PstlAdr/ns:Ctry', transaction,
-                'remote_owner_country'
+                'partner_country'
             )
             address_node = party_node[0].xpath(
                 './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
             if address_node:
-                transaction.remote_owner_address = [address_node[0].text]
+                transaction['partner_address'] = [address_node[0].text]
         # Get remote_account from iban or from domestic account:
         account_node = node.xpath(
             './ns:RltdPties/ns:%sAcct/ns:Id' % party_type,
@@ -106,45 +92,52 @@ class CamtParser(object):
             iban_node = account_node[0].xpath(
                 './ns:IBAN', namespaces={'ns': ns})
             if iban_node:
-                transaction.remote_account = iban_node[0].text
+                transaction['account_number'] = iban_node[0].text
                 bic_node = node.xpath(
                     './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type,
                     namespaces={'ns': ns}
                 )
                 if bic_node:
-                    transaction.remote_bank_bic = bic_node[0].text
+                    transaction['account_bic'] = bic_node[0].text
             else:
                 self.add_value_from_node(
                     ns, account_node[0], './ns:Othr/ns:Id', transaction,
-                    'remote_account'
+                    'account_number'
                 )
 
-    def parse_transaction(self, ns, node, transaction):
+    def parse_transaction(self, ns, node):
         """Parse transaction (entry) node."""
+        transaction = {}
         self.add_value_from_node(
             ns, node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction,
             'transfer_type'
         )
         self.add_value_from_node(
+            ns, node, './ns:BookgDt/ns:Dt', transaction, 'date')
+        self.add_value_from_node(
             ns, node, './ns:BookgDt/ns:Dt', transaction, 'execution_date')
         self.add_value_from_node(
             ns, node, './ns:ValDt/ns:Dt', transaction, 'value_date')
-        transaction.transferred_amount = self.parse_amount(ns, node)
+
+        transaction['amount'] = self.parse_amount(ns, node)
+
         details_node = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
         if details_node:
             self.parse_transaction_details(ns, details_node[0], transaction)
-        if not transaction.message:
+        if not transaction.get('name'):
             self.add_value_from_node(
-                ns, node, './ns:AddtlNtryInf', transaction, 'message')
-        if not transaction.eref:
+                ns, node, './ns:AddtlNtryInf', transaction, 'name')
+        if not transaction.get('name'):
+            transaction['name'] = '/'
+        if not transaction.get('ref'):
             self.add_value_from_node(
                 ns, node, [
                     './ns:NtryDtls/ns:Btch/ns:PmtInfId',
                 ],
-                transaction, 'eref'
+                transaction, 'ref'
             )
-        transaction.data = etree.tostring(node)
+        transaction['data'] = etree.tostring(node)
         return transaction
 
     def get_balance_amounts(self, ns, node):
@@ -182,27 +175,28 @@ class CamtParser(object):
 
     def parse_statement(self, ns, node):
         """Parse a single Stmt node."""
-        statement = BankStatement()
+        result = {}
         self.add_value_from_node(
             ns, node, [
                 './ns:Acct/ns:Id/ns:IBAN',
                 './ns:Acct/ns:Id/ns:Othr/ns:Id',
-            ], statement, 'local_account'
+            ], result, 'account_number'
         )
         self.add_value_from_node(
-            ns, node, './ns:Id', statement, 'statement_id')
+            ns, node, './ns:Id', result, 'name')
         self.add_value_from_node(
-            ns, node, './ns:Acct/ns:Ccy', statement, 'local_currency')
-        (statement.start_balance, statement.end_balance) = (
+            ns, node, './ns:Dt', result, 'date')
+        self.add_value_from_node(
+            ns, node, './ns:Acct/ns:Ccy', result, 'currency')
+        result['balance_start'], result['balance_end_real'] = (
             self.get_balance_amounts(ns, node))
         transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
+        result['transactions'] = []
         for entry_node in transaction_nodes:
-            transaction = statement.create_transaction()
-            self.parse_transaction(ns, entry_node, transaction)
-        if statement['transactions']:
-            statement.date = datetime.strptime(
-                statement['transactions'][0].execution_date, "%Y-%m-%d")
-        return statement
+            transaction = self.parse_transaction(ns, entry_node)
+            if transaction:
+                result['transactions'].append(transaction)
+        return result
 
     def check_version(self, ns, root):
         """Validate validity of camt file."""
@@ -242,8 +236,14 @@ class CamtParser(object):
         ns = root.tag[1:root.tag.index("}")]
         self.check_version(ns, root)
         statements = []
+        currency = None
+        account_number = None
         for node in root[0][1:]:
             statement = self.parse_statement(ns, node)
             if len(statement['transactions']):
+                if 'currency' in statement:
+                    currency = statement.pop('currency')
+                if 'account_number' in statement:
+                    account_number = statement.pop('account_number')
                 statements.append(statement)
-        return statements
+        return currency, account_number, statements

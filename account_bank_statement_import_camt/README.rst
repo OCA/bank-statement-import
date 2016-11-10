@@ -28,6 +28,7 @@ Credits
 Contributors
 ------------
 
+* Holger Brunn <hbrunn@therp.nl>
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
 
