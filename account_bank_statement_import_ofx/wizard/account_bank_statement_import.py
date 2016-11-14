@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+
+import logging
+import StringIO
+
+from odoo import api, models, fields, _
+from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from ofxparse import OfxParser
+except ImportError:
+    _logger.debug("ofxparse not found.")
+    OfxParser = None
+
+
+class AccountBankStatementImport(models.TransientModel):
+    _inherit = 'account.bank.statement.import'
+
+    @api.model
+    def _check_ofx(self, data_file):
+        if not OfxParser:
+            return False
+        try:
+            ofx = OfxParser.parse(StringIO.StringIO(data_file))
+        except Exception as e:
+            _logger.debug(e)
+            return False
+        return ofx
+
+    @api.model
+    def _prepare_ofx_transaction_line(self, transaction):
+        # since odoo 9, the account module defines a constraint
+        # on account.bank.statement.line: 'amount' must be != 0
+        # But some banks have some transactions with amount=0
+        # for bank charges that are offered, which blocks the import
+        precision = self.env['decimal.precision'].precision_get('Account')
+        if float_is_zero(
+                float(transaction.amount), precision_digits=precision):
+            return False
+        # Since ofxparse doesn't provide account numbers,
+        # we cannot provide the key 'bank_account_id',
+        # nor the key 'account_number'
+        # If you read odoo10/addons/account_bank_statement_import/
+        # account_bank_statement_import.py, it's the only 2 keys
+        # we can provide to match a partner.
+        vals = {
+            'date': transaction.date,
+            'name': transaction.payee + (
+                transaction.memo and ': ' + transaction.memo or ''),
+            'ref': transaction.id,
+            'amount': float(transaction.amount),
+            'unique_import_id': transaction.id,
+        }
+        return vals
+
+    @api.model
+    def _parse_file(self, data_file):
+        ofx = self._check_ofx(data_file)
+        if not ofx:
+            return super(AccountBankStatementImport, self)._parse_file(
+                data_file)
+
+        transactions = []
+        total_amt = 0.00
+        start_date = end_date = False
+        try:
+            for transaction in ofx.account.statement.transactions:
+                vals = self._prepare_ofx_transaction_line(transaction)
+                if vals:
+                    transactions.append(vals)
+                    total_amt += vals['amount']
+                    tdate = fields.Date.to_string(vals['date'])
+                    if not start_date or tdate < start_date:
+                        start_date = tdate
+                    if not end_date or tdate > end_date:
+                        end_date = tdate
+        except Exception, e:
+            raise UserError(_(
+                "The following problem occurred during import. "
+                "The file might not be valid.\n\n %s") % e.message)
+
+        vals_bank_statement = {
+            'name': _('Account %s %s > %s') % (
+                ofx.account.number, start_date, end_date),
+            'transactions': transactions,
+            'balance_start': ofx.account.statement.balance,
+            'balance_end_real':
+            float(ofx.account.statement.balance) + total_amt,
+        }
+        return ofx.account.statement.currency, ofx.account.number, [
+            vals_bank_statement]
