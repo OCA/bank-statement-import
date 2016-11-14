@@ -3,9 +3,9 @@
 import logging
 import StringIO
 
-from openerp import api, models
-from openerp.tools.translate import _
-from openerp.exceptions import Warning as UserError
+from openerp import api, models, _
+from openerp.exceptions import UserError
+from openerp.tools import float_is_zero
 
 from .ofx import OfxParser, OfxParser_ok
 
@@ -35,8 +35,16 @@ class AccountBankStatementImport(models.TransientModel):
 
         transactions = []
         total_amt = 0.00
+        precision = self.env['decimal.precision'].precision_get('Account')
         try:
             for transaction in ofx.account.statement.transactions:
+                # since odoo 9, the account module defines a constraint
+                # on account.bank.statement.line: 'amount' must be != 0
+                # But some banks have some transactions with amount=0
+                # for bank charges that are offered, which blocks the import
+                if float_is_zero(
+                        float(transaction.amount), precision_digits=precision):
+                    continue
                 # Since ofxparse doesn't provide account numbers, we'll have
                 # to find res.partner and res.partner.bank here
                 # (normal behavious is to provide 'account_number', which the
@@ -65,7 +73,7 @@ class AccountBankStatementImport(models.TransientModel):
                             "The file might not be valid.\n\n %s" % e.message))
 
         vals_bank_statement = {
-            'name': ofx.account.routing_number,
+            'name': ofx.account.number,
             'transactions': transactions,
             'balance_start': ofx.account.statement.balance,
             'balance_end_real':
