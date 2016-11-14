@@ -5,16 +5,10 @@
 Import OFX Bank Statement
 =========================
 
-This module allows you to import the machine readable OFX Files in Odoo: they are parsed and stored in human readable format in 
-Accounting \ Bank and Cash \ Bank Statements.
+This module adds support for the import of bank statements in `OFX format <https://en.wikipedia.org/wiki/Open_Financial_Exchange>`_.
 
-Bank Statements may be generated containing a subset of the OFX information (only those transaction lines that are required for the 
-creation of the Financial Accounting records). 
-
-The module has been initiated by a backport of the new framework developed
-by Odoo for V9 at its early stage. It's no more kept in sync with the V9 since
-it has reach a stage where maintaining a pure backport of 9.0 in 8.0 is not
-feasible anymore 
+Bank Statements may be generated containing a subset of the OFX information (only those transaction lines that are required for the
+creation of the Financial Accounting records).
 
 Installation
 ============
@@ -23,20 +17,12 @@ The module requires one additional python lib:
 
 * `ofxparse <http://pypi.python.org/pypi/ofxparse>`_
 
-Technical Note
-==============
+Usage
+=====
 
-this module is based on ofxparse python lib and overload some of its functions.
-
-* For the time being the default ofxparse lib available with
-  'pip install ofxparse' do not manage correctly european amount that are
-  written with ',' and not with '.'. (For exemple, The Credit Cooperatif
-  French Bank provides OFX 1.0 with amounts written with coma)
-
-April, 27 2016: this problem has been fixed here:
-https://github.com/jseutter/ofxparse/commit/283f89c3246ed3fedccc3ef5c96078b7d5b94579
-but it is not available in the pip lib for the time being.
-
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/174/10.0
 
 Known issues / Roadmap
 ======================
@@ -46,11 +32,10 @@ Known issues / Roadmap
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
-In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_bank_statement_import_ofx%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
-
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/bank-statement-import/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smashing it by providing a detailed and welcomed feedback.
 
 Credits
 =======
@@ -77,4 +62,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
