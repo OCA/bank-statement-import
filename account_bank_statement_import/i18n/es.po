@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-18 10:27+0000\n"
-"PO-Revision-Date: 2016-09-09 11:33+0000\n"
+"POT-Creation-Date: 2016-10-14 13:36+0000\n"
+"PO-Revision-Date: 2016-10-26 09:53+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -141,7 +141,7 @@ msgstr "Obtenga los extractos bancarios en formato electrónico de su banco y se
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,hide_journal_field:0
 msgid "Hide the journal field in the view"
-msgstr ""
+msgstr "Oculta el campo diario en la vista"
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
