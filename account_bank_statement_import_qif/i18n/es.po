@@ -21,7 +21,7 @@ msgstr ""
 #: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:39
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr ""
+msgstr "No se puede descifrar el archivo QIF."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
@@ -32,4 +32,4 @@ msgstr "Importar extracto bancario"
 #: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:83
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
-msgstr ""
+msgstr "Este archivo no es un extracto bancario o no está correctamente formado."
