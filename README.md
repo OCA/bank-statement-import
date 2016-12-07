@@ -13,7 +13,6 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[account_bank_statement_import_base](account_bank_statement_import_base/) | 8.0.1.0.1 (unported) | Account Bank Statement Import
 [account_bank_statement_import_camt](account_bank_statement_import_camt/) | 8.0.0.3.0 (unported) | CAMT Format Bank Statements Import
 [account_bank_statement_import_mt940_base](account_bank_statement_import_mt940_base/) | 8.0.1.1.0 (unported) | MT940 Bank Statements Import
 [account_bank_statement_import_mt940_nl_ing](account_bank_statement_import_mt940_nl_ing/) | 8.0.0.3.0 (unported) | MT940 IBAN ING Format Bank Statements Import
