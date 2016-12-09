@@ -18,6 +18,21 @@ class TestImport(TransactionCase):
         },
     ]
 
+    def setUp(self):
+        super(TestImport, self).setUp()
+        bank = self.env['res.partner.bank'].create({
+            'acc_number': 'NL77ABNA0574908765',
+            'partner_id': self.env.ref('base.main_partner').id,
+            'company_id': self.env.ref('base.main_company').id,
+            'bank_id': self.env.ref('base.res_bank_1').id,
+        })
+        self.env['account.journal'].create({
+            'name': 'Bank Journal - (test camt)',
+            'code': 'TBNKCAMT',
+            'type': 'bank',
+            'bank_account_id': bank.id,
+        })
+
     def test_statement_import(self):
         """Test correct creation of single statement."""
         action = {}

@@ -11,9 +11,6 @@
     'depends': [
         'account_bank_statement_import',
     ],
-    'demo': [
-        'demo/demo_data.xml',
-    ],
     'data': [
         'views/account_bank_statement_import.xml',
     ],
