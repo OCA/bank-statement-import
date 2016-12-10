@@ -3,15 +3,15 @@
 # * account_bank_statement_import_qif
 # 
 # Translators:
-# danimaribeiro <danimaribeiro@gmail.com>, 2015
+# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: bank-statement-import (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 09:23+0000\n"
-"PO-Revision-Date: 2015-10-09 00:26+0000\n"
-"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
+"POT-Creation-Date: 2016-12-09 17:00+0000\n"
+"PO-Revision-Date: 2016-12-09 17:00+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:39
+#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:39
 #, python-format
 msgid "Could not decipher the QIF file."
 msgstr "Não foi  possível decifrar o arquivo QIF."
@@ -30,7 +30,12 @@ msgid "Import Bank Statement"
 msgstr "Importar Extrato Bancário"
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:83
+#: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view
+msgid "Quicken Interchange Format (.qif)"
+msgstr ""
+
+#. module: account_bank_statement_import_qif
+#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:74
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr "O arquivo não é um extrato bancário ou o formato é incorreto."
