@@ -3,8 +3,8 @@
 # © 2013-2016 Therp BV <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import base64
-from openerp.tests.common import TransactionCase
-from openerp.tools.misc import file_open
+from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_open
 
 
 class TestImport(TransactionCase):
