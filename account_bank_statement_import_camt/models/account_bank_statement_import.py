@@ -5,7 +5,7 @@
 import logging
 import StringIO
 import zipfile
-from openerp import api, models
+from odoo import api, models
 from ..camt import CamtParser as Parser
 
 _logger = logging.getLogger(__name__)
