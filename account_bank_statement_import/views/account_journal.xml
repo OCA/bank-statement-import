@@ -8,7 +8,7 @@
       <field name="inherit_id" ref="account.view_account_journal_form"/>
       <field name="arch" type="xml">
         <field name="sequence_id" position="after">
-          <field name="enforce_sequence"/>
+          <field name="enforce_sequence" attrs="{'invisible': [('type', '!=', 'bank')]}"/>
         </field>
       </field>
     </record>
