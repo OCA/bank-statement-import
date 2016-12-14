@@ -30,7 +30,7 @@ virtualenv:
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
-  - pip install ofxparse
+  - pip install git+https://github.com/jseutter/ofxparse.git
   - travis_install_nightly
 # example: dependency
 # - git clone https://github.com/OCA/webkit-tools -b ${VERSION} $HOME/webkit-tools
