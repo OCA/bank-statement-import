@@ -22,11 +22,12 @@ class AccountBankStatementImport(models.TransientModel):
             parser = Parser()
             _logger.debug("Try parsing with camt.")
             line_fields = self.env['account.bank.statement.line']._fields
+            extra_fields = ['account_number']
             currency, account_number, statements = parser.parse(data_file)
             for statement in statements:
                 for transaction in statement.get('transactions', []):
                     for key in transaction.keys():
-                        if key not in line_fields:
+                        if key not in line_fields and key not in extra_fields:
                             transaction.pop(key)
             return currency, account_number, statements
         except ValueError:
