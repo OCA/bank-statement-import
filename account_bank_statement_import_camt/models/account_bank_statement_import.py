@@ -21,7 +21,14 @@ class AccountBankStatementImport(models.TransientModel):
         try:
             parser = Parser()
             _logger.debug("Try parsing with camt.")
-            return parser.parse(data_file)
+            line_fields = self.env['account.bank.statement.line']._fields
+            currency, account_number, statements = parser.parse(data_file)
+            for statement in statements:
+                for transaction in statement.get('transactions', []):
+                    for key in transaction:
+                        if key not in line_fields:
+                            transaction.pop(key)
+            return currency, account_number, statements
         except ValueError:
             try:
                 with zipfile.ZipFile(StringIO.StringIO(data_file)) as data:
