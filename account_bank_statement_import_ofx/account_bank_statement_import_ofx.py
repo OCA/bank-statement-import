@@ -83,12 +83,12 @@ class AccountBankStatementImport(models.TransientModel):
                 "The file might not be valid.\n\n %s" % e.message
             ))
 
+        balance = float(ofx.account.statement.balance)
         vals_bank_statement = {
             'name': ofx.account.number,
             'transactions': transactions,
-            'balance_start': ofx.account.statement.balance,
-            'balance_end_real':
-                float(ofx.account.statement.balance) + total_amt,
+            'balance_start': balance - total_amt,
+            'balance_end_real': balance,
         }
         return ofx.account.statement.currency, ofx.account.number, [
             vals_bank_statement]
