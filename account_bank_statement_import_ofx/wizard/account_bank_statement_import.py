@@ -3,7 +3,7 @@
 import logging
 import StringIO
 
-from odoo import api, models, fields, _
+from odoo import api, models, _
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 
