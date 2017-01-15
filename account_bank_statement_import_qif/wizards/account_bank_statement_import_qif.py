@@ -5,12 +5,12 @@
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import dateutil.parser
 import StringIO
+import dateutil.parser
 
-from openerp.tools.translate import _
-from openerp import api, models
-from openerp.exceptions import UserError
+from odoo.tools.translate import _
+from odoo import api, models
+from odoo.exceptions import UserError
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -20,7 +20,6 @@ class AccountBankStatementImport(models.TransientModel):
     def _check_qif(self, data_file):
         return data_file.strip().startswith('!Type:')
 
-    @api.model
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):
             return super(AccountBankStatementImport, self)._parse_file(
