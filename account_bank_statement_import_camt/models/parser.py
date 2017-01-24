@@ -164,11 +164,22 @@ class CamtParser(models.AbstractModel):
         self.add_value_from_node(
             node, './ns:ValDt/ns:Dt', transaction, 'value_date')
         transaction.transferred_amount = self.parse_amount(node)
-        self.add_value_from_node(
-            node, './ns:AddtlNtryInf', transaction, 'name')
-        detail_nodes = self.xpath(node, './ns:NtryDtls/ns:TxDtls')
-        if len(detail_nodes) == 0:
-            self.default_transaction_data(node, transaction)
+        batch_node = self.xpath(node, './ns:NtryDtls/ns:Btch')
+        if batch_node:
+            self.add_value_from_node(
+                batch_node[0], './ns:PmtInfId', transaction, 'eref')
+        else:
+            self.add_value_from_node(
+                node, './ns:AddtlNtryInf', transaction, 'name')
+            self.add_value_from_node(
+                node,
+                ['./ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                './ns:NtryDtls/ns:Btch/ns:PmtInfId'],
+                transaction,
+                'eref')
+        details_nodes = node.xpath(
+            './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
+        if len(details_nodes) == 0:
             transaction.data = etree.tostring(node)
             yield transaction
             return
