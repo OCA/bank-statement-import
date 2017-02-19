@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+# Copyright 2015 Odoo S. A.
+# Copyright 2015 Laurent Mignon <laurent.mignon@acsone.eu>
+# Copyright 2015 Ronald Portier <rportier@therp.nl>
+# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.modules.module import get_module_resource
+from odoo.tests.common import TransactionCase
+from odoo.modules.module import get_module_resource
 
 
 class TestQifFile(TransactionCase):
@@ -13,17 +18,32 @@ class TestQifFile(TransactionCase):
         super(TestQifFile, self).setUp()
         self.statement_import_model = self.env['account.bank.statement.import']
         self.statement_line_model = self.env['account.bank.statement.line']
+        self.journal = self.env['account.journal'].create({
+            'name': 'Test bank journal',
+            'code': 'TEST',
+            'type': 'bank',
+        })
+        self.partner = self.env['res.partner'].create({
+            # Different case for trying insensitive case search
+            'name': 'EPIC Technologies',
+        })
 
     def test_qif_file_import(self):
-        from openerp.tools import float_compare
         qif_file_path = get_module_resource(
-            'account_bank_statement_import_qif',
-            'test_qif_file', 'test_qif.qif')
+            'account_bank_statement_import_qif', 'tests', 'test_qif.qif',
+        )
         qif_file = open(qif_file_path, 'rb').read().encode('base64')
-        bank_statement_improt = self.statement_import_model.with_context(
-            journal_id=self.ref('account.bank_journal')).create(
-            dict(data_file=qif_file))
-        bank_statement_improt.import_file()
-        bank_statement = self.statement_line_model.search(
-            [('name', '=', 'YOUR LOCAL SUPERMARKET')], limit=1)[0].statement_id
-        assert float_compare(bank_statement.balance_end_real, -1896.09, 2) == 0
+        wizard = self.statement_import_model.with_context(
+            journal_id=self.journal.id
+        ).create(
+            dict(data_file=qif_file)
+        )
+        wizard.import_file()
+        statement = self.statement_line_model.search(
+            [('name', '=', 'YOUR LOCAL SUPERMARKET')], limit=1,
+        )[0].statement_id
+        self.assertAlmostEqual(statement.balance_end_real, -1896.09, 2)
+        line = self.statement_line_model.search(
+            [('name', '=', 'Epic Technologies')], limit=1,
+        )
+        self.assertEqual(line.partner_id, self.partner)
