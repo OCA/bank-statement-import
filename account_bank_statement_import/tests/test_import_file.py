@@ -95,6 +95,7 @@ class TestStatementFile(TransactionCase):
         bank_statement_id = import_model.create(
             dict(
                 data_file=statement_file,
+                filename=file_name,
             )
         )
         bank_statement_id.import_file()
