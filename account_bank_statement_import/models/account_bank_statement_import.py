@@ -150,7 +150,11 @@ class AccountBankStatementImport(models.TransientModel):
         journal_id = self._get_journal(currency_id, bank_account_id)
         # By now journal and account_number must be known
         if not journal_id:
-            raise UserError(_('Can not determine journal for import.'))
+            raise UserError(
+                _('Can not determine journal for import'
+                  ' for account number %s and currency %s.') %
+                (account_number, currency_code)
+            )
         # Prepare statement data to be used for bank statements creation
         stmt_vals = self._complete_statement(
             stmt_vals, journal_id, account_number)
