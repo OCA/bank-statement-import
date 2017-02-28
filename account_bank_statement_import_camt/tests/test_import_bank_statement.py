@@ -37,7 +37,7 @@ class TestImport(TestStatementFile):
         ]
         self._test_statement_import(
             'account_bank_statement_import_camt', 'test-camt053.xml',
-            '1234Test/1',
+            '2014-01-05-1234Test/1',
             local_account='NL77ABNA0574908765',
             start_balance=15568.27, end_balance=15121.12,
             transactions=transactions
@@ -47,6 +47,6 @@ class TestImport(TestStatementFile):
         """Test import of multiple statements from zip file."""
         self._test_statement_import(
             'account_bank_statement_import_camt', 'test-camt053.zip',
-            '1234Test/2',  # Only name of first statement
+            '2014-02-05-1234Test/2',  # Only name of first statement
             local_account='NL77ABNA0574908765',
         )
