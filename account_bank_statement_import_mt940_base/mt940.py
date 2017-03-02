@@ -22,10 +22,7 @@ import re
 import logging
 from datetime import datetime
 
-from openerp.addons.account_bank_statement_import.parserlib import (
-    BankStatement)
-
-
+ 
 def str2amount(sign, amount_str):
     """Convert sign (C or D) and amount in string to signed amount (float)."""
     factor = (1 if sign == 'C' else -1)
@@ -117,6 +114,8 @@ class MT940(object):
         self.current_statement = None
         self.current_transaction = None
         self.statements = []
+        self.currency_code = None
+        self.account_number = None
 
     def is_mt940(self, line):
         """determine if a line is the header of a statement"""
@@ -156,7 +155,7 @@ class MT940(object):
                 record_line = ''
             self.statements.append(self.current_statement)
             self.current_statement = None
-        return self.statements
+        return self.currency_code, self.account_number, self.statements
 
     def is_footer(self, line):
         """determine if a line is the footer of a statement"""
@@ -170,7 +169,8 @@ class MT940(object):
         """skip header lines, create current statement"""
         for dummy_i in range(self.header_lines):
             iterator.next()
-        self.current_statement = BankStatement()
+        self.current_statement = {'name': None, 'date': None, 'balance_start': 0.0,
+                                  'balance_end_real': 0.0, 'transactions': []}
 
     def handle_footer(self, dummy_line, dummy_iterator):
         """add current statement to list, reset state"""
@@ -195,7 +195,7 @@ class MT940(object):
     def handle_tag_25(self, data):
         """Handle tag 25: local bank account information."""
         data = data.replace('EUR', '').replace('.', '').strip()
-        self.current_statement.local_account = data
+        self.account_number = data
 
     def handle_tag_28C(self, data):
         """Sequence number within batch - normally only zeroes."""
@@ -206,17 +206,24 @@ class MT940(object):
         # For the moment only first 60F record
         # The alternative would be to split the file and start a new
         # statement for each 20: tag encountered.
-        stmt = self.current_statement
-        if not stmt.local_currency:
-            stmt.local_currency = data[7:10]
-            stmt.start_balance = str2amount(data[0], data[10:])
+        if not self.currency_code:
+            self.currency_code = data[7:10]
+            self.current_statement['balance_start'] = str2amount(data[0], data[10:])
+        # stmt = self.current_statement
+        # if not stmt.local_currency:
+        #     stmt.local_currency = data[7:10]
+        #     stmt.start_balance = str2amount(data[0], data[10:])
 
     def handle_tag_61(self, data):
         """get transaction values"""
-        transaction = self.current_statement.create_transaction()
-        self.current_transaction = transaction
-        transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
-        transaction.value_date = datetime.strptime(data[:6], '%y%m%d')
+        self.current_statement['transactions'].append({})
+        self.current_transaction = self.current_statement['transactions'][-1]
+        self.current_transaction['date'] = datetime.strptime(data[:6], '%y%m%d')       
+        
+        # transaction = self.current_statement.create_transaction()
+        # self.current_transaction = transaction
+        # transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
+        # transaction.value_date = datetime.strptime(data[:6], '%y%m%d')
         #  ...and the rest already is highly bank dependent
 
     def handle_tag_62F(self, data):
@@ -233,20 +240,31 @@ class MT940(object):
         Depending on the bank, there might be multiple 62F tags in the import
         file. The last one counts.
         """
-        stmt = self.current_statement
-        stmt.end_balance = str2amount(data[0], data[10:])
-        stmt.date = datetime.strptime(data[1:7], '%y%m%d')
+        
+        self.current_statement['balance_end_real'] = str2amount(data[0], data[10:])
+        self.current_statement['date'] = datetime.strptime(data[1:7], '%y%m%d')
+        # stmt = self.current_statement
+        # stmt.end_balance = str2amount(data[0], data[10:])
+        # stmt.date = datetime.strptime(data[1:7], '%y%m%d')
+        
         # Only replace logically empty (only whitespace or zeroes) id's:
         # But do replace statement_id's added before (therefore starting
         # with local_account), because we need the date on the last 62F
         # record.
-        test_empty_id = re.sub(r'[\s0]', '', stmt.statement_id)
+        test_empty_id = re.sub(r'[\s0]', '', self.current_statement['name'] or '')
         if ((not test_empty_id) or
-                (stmt.statement_id.startswith(stmt.local_account))):
-            stmt.statement_id = '%s-%s' % (
-                stmt.local_account,
-                stmt.date.strftime('%Y-%m-%d'),
+                (self.current_statement['name'].startswith(self.account_number))):
+            self.current_statement['name'] = '%s-%s' % (
+                self.account_number,
+                self.current_statement['date'].strftime('%Y-%m-%d'),
             )
+        # test_empty_id = re.sub(r'[\s0]', '', stmt.statement_id)
+        # if ((not test_empty_id) or
+        #         (stmt.statement_id.startswith(stmt.local_account))):
+        #     stmt.statement_id = '%s-%s' % (
+        #         stmt.local_account,
+        #         stmt.date.strftime('%Y-%m-%d'),
+        #    )
 
     def handle_tag_64(self, data):
         """get current balance in currency"""
