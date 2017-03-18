@@ -38,8 +38,8 @@ class TestOfxFile(TransactionCase):
         bank_statement.import_file()
         bank_st_record = self.abs_model.search(
             [('name', 'like', '123456')])[0]
-        self.assertEquals(bank_st_record.balance_start, 2156.56)
-        self.assertEquals(bank_st_record.balance_end_real, 1796.56)
+        self.assertEquals(bank_st_record.balance_start, 2516.56)
+        self.assertEquals(bank_st_record.balance_end_real, 2156.56)
 
         line = self.absl_model.search([
             ('name', '=', 'Agrolait'),
