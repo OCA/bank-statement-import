@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="rule_amount_exact" model="account.bank.statement.import.auto.reconcile.rule">
+            <field name="journal_id" ref="account.bank_journal" />
+            <field name="rule_type">account.bank.statement.import.auto.reconcile.exact.amount</field>
+        </record>
+    </data>
+</openerp>
