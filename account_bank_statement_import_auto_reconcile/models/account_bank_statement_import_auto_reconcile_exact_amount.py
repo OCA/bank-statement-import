@@ -27,5 +27,19 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
                     precision_digits=digits
                 ) == 0
         ):
-            statement_line.process_reconciliation(matches)
+            move = self.env['account.move'].create(
+                self.env['account.bank.statement']._prepare_move(
+                    statement_line,
+                    (
+                        statement_line.statement_id.name or statement_line.name
+                    ) + "/" + str(statement_line.sequence or '')
+                )
+            )
+            move_line_dict = self.env['account.bank.statement']\
+                ._prepare_bank_move_line(
+                    statement_line, move.id, -statement_line.amount,
+                    statement_line.statement_id.company_id.currency_id.id,
+                )
+            move_line_dict['counterpart_move_line_id'] = matches[0]['id']
+            statement_line.process_reconciliation([move_line_dict])
             return True
