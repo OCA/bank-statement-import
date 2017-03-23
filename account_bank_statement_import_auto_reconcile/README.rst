@@ -39,7 +39,6 @@ Known issues / Roadmap
     * AmountTransposedDigits (reconcile if only two digits are swapped. Dangerous and a special case of AmountDiffuse)
     * whatever else we can think of
 * add some helpers/examples for using the options field
-* allow to turn off automatic reconciliations during a specific import
 * allow to fiddle with the parameters of configured rules during a specific import
 
 Bug Tracker
