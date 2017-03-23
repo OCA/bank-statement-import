@@ -14,6 +14,7 @@
         'web_widget_one2many_tags',
     ],
     "data": [
+        "views/account_bank_statement_import.xml",
         "views/account_journal.xml",
         "views/account_bank_statement_import_auto_reconcile_rule.xml",
         'security/ir.model.access.csv',
