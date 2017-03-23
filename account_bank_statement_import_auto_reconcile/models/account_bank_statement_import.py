@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # © 2017 Therp BV <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openerp import _, api, models
+from openerp import _, api, fields, models
 
 
 class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
+
+    auto_reconcile = fields.Boolean('Auto reconcile', default=True)
 
     @api.model
     def _create_bank_statement(self, stmt_vals):
@@ -15,6 +17,12 @@ class AccountBankStatementImport(models.TransientModel):
         if not statement_id:
             return statement_id, notifications
         statement = self.env['account.bank.statement'].browse(statement_id)
+        if (
+                not statement.journal_id
+                .statement_import_auto_reconcile_rule_ids or
+                not self.auto_reconcile
+        ):
+            return statement_id, notifications
         reconcile_rules = statement.journal_id\
             .statement_import_auto_reconcile_rule_ids.mapped(
                 lambda x: self.env[x.rule_type].new({
