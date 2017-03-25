@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-15 03:36+0000\n"
-"PO-Revision-Date: 2016-12-15 03:36+0000\n"
+"POT-Creation-Date: 2017-03-19 03:39+0000\n"
+"PO-Revision-Date: 2017-03-19 03:39+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -17,12 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#. module: account_bank_statement_import_ofx
-#: code:addons/account_bank_statement_import_ofx/wizard/account_bank_statement_import.py:86
-#, python-format
-msgid "Account %s %s > %s"
-msgstr ""
 
 #. module: account_bank_statement_import_ofx
 #: model:ir.model,name:account_bank_statement_import_ofx.model_account_bank_statement_import
@@ -35,7 +29,7 @@ msgid "Open Financial Exchange (.OFX Money)"
 msgstr ""
 
 #. module: account_bank_statement_import_ofx
-#: code:addons/account_bank_statement_import_ofx/wizard/account_bank_statement_import.py:81
+#: code:addons/account_bank_statement_import_ofx/wizard/account_bank_statement_import.py:75
 #, python-format
 msgid ""
 "The following problem occurred during import. The file might not be valid.\n"
