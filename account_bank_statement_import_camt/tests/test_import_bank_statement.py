@@ -1,10 +1,41 @@
 # -*- coding: utf-8 -*-
 """Run test to import camt.053 import."""
 # © 2013-2016 Therp BV <http://therp.nl>
+# Copyright 2017 Open Net Sàrl
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import base64
+import difflib
+import pprint
+import tempfile
+
 from odoo.tests.common import TransactionCase
 from odoo.tools.misc import file_open
+
+
+class TestParser(TransactionCase):
+    """Tests for the camt parser itself."""
+    def setUp(self):
+        super(TestParser, self).setUp()
+        self.parser = self.env['account.bank.statement.import.camt.parser']
+
+    def test_parse(self):
+        with file_open(
+            'account_bank_statement_import_camt/test_files/test-camt053'
+        ) as testfile:
+            data = testfile.read()
+        res = self.parser.parse(data)
+        with tempfile.NamedTemporaryFile(suffix='.pydata') as temp:
+            pprint.pprint(res, temp)
+            with file_open('account_bank_statement_import_camt/test_files/'
+                           'golden-camt053.pydata') as golden:
+                temp.seek(0)
+                diff = list(
+                    difflib.unified_diff(golden.readlines(), temp.readlines(),
+                                         golden.name,        temp.name))
+                if len(diff) > 2:
+                    self.fail(
+                        "actual output doesn't match exptected output:\n%s" %
+                        "".join(diff))
 
 
 class TestImport(TransactionCase):
