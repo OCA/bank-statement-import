@@ -11,22 +11,22 @@ from openerp.tests.common import TransactionCase
 from openerp.tools.misc import file_open
 
 
+DATA_DIR = 'account_bank_statement_import_camt/test_files/'
+
+
 class TestParser(TransactionCase):
     """Tests for the camt parser itself."""
     def setUp(self):
         super(TestParser, self).setUp()
         self.parser = self.env['account.bank.statement.import.camt.parser']
 
-    def test_parse(self):
-        with file_open(
-            'account_bank_statement_import_camt/test_files/test-camt053'
-        ) as testfile:
+    def _do_parse_test(self, inputfile, goldenfile):
+        with file_open(inputfile) as testfile:
             data = testfile.read()
         res = self.parser.parse(data)
         with tempfile.NamedTemporaryFile(suffix='.pydata') as temp:
             pprint.pprint(res, temp)
-            with file_open('account_bank_statement_import_camt/test_files/'
-                           'golden-camt053.pydata') as golden:
+            with file_open(goldenfile) as golden:
                 temp.seek(0)
                 diff = list(
                     difflib.unified_diff(golden.readlines(), temp.readlines(),
@@ -35,6 +35,16 @@ class TestParser(TransactionCase):
                     self.fail(
                         "actual output doesn't match exptected output:\n%s" %
                         "".join(diff))
+
+    def test_parse(self):
+        self._do_parse_test(
+            DATA_DIR + 'test-camt053',
+            DATA_DIR + 'golden-camt053.pydata')
+
+    def test_parse_txdtls(self):
+        self._do_parse_test(
+            DATA_DIR + 'test-camt053-txdtls',
+            DATA_DIR + 'golden-camt053-txdtls.pydata')
 
 
 class TestImport(TransactionCase):
@@ -66,9 +76,7 @@ class TestImport(TransactionCase):
     def test_statement_import(self):
         """Test correct creation of single statement."""
         action = {}
-        with file_open(
-            'account_bank_statement_import_camt/test_files/test-camt053'
-        ) as testfile:
+        with file_open(DATA_DIR + 'test-camt053') as testfile:
             action = self.env['account.bank.statement.import'].create({
                 'data_file': base64.b64encode(testfile.read()),
             }).import_file()
