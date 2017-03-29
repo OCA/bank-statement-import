@@ -21,6 +21,14 @@ Usage
 
 After a journal is configured for automatic reconciliations, it simply happens during an import on this journal. If there were automatic reconciliations, you'll see a notification about that and the lines in question will also show up as reconciled.
 
+Reconciliation rules
+--------------------
+
+    Odoo standard
+        Do exactly what Odoo does when proposing reconciliations. This searches for an exact match on amount and reference first, but falls back to less exact matches if none are found before. If there's only one match, do the reconciliation
+    Exact amount and reference
+        Strictly only match if we have the same partner, amount and reference
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
     :target: https://runbot.odoo-community.org/runbot/174/8.0

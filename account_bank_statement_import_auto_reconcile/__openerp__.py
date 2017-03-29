@@ -12,6 +12,7 @@
     "depends": [
         'account_bank_statement_import',
         'web_widget_one2many_tags',
+        'base_domain_operator',
     ],
     "demo": [
         "demo/account_bank_statement_import_auto_reconcile_rule.xml",
