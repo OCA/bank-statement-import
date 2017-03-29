@@ -5,7 +5,6 @@ import StringIO
 
 from odoo import api, models, _
 from odoo.exceptions import UserError
-from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -32,14 +31,6 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _prepare_ofx_transaction_line(self, transaction):
-        # since odoo 9, the account module defines a constraint
-        # on account.bank.statement.line: 'amount' must be != 0
-        # But some banks have some transactions with amount=0
-        # for bank charges that are offered, which blocks the import
-        precision = self.env['decimal.precision'].precision_get('Account')
-        if float_is_zero(
-                float(transaction.amount), precision_digits=precision):
-            return False
         # Since ofxparse doesn't provide account numbers,
         # we cannot provide the key 'bank_account_id',
         # nor the key 'account_number'
