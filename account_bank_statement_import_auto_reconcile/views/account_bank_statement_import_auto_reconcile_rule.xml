@@ -8,6 +8,7 @@
                     <group>
                         <field name="rule_type" />
                     </group>
+                    <div name="rule_options" attrs="{'invisible': [('rule_type', '=', False)]}" />
                 </form>
             </field>
         </record>
