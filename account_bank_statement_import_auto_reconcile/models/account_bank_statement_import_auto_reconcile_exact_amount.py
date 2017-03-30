@@ -4,6 +4,7 @@
 from openerp import api, fields, models
 
 
+# pylint: disable=R7980
 class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
     _inherit = 'account.bank.statement.import.auto.reconcile'
     _name = 'account.bank.statement.import.auto.reconcile.exact.amount'
