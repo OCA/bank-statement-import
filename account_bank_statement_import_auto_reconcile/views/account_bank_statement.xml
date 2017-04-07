@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <act_window
+            id="action_reapply_rules"
+            src_model="account.bank.statement"
+            res_model="account.bank.statement.import.reapply.rules"
+            name="Reapply matching rules"
+            target="new"
+            view_id="account_bank_statement_import_reapply_rules_form"
+        />
+    </data>
+</openerp>
