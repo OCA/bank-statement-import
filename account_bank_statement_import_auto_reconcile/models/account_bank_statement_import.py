@@ -4,6 +4,7 @@
 from openerp import _, api, fields, models
 
 
+# pylint: disable=R7980
 class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
