@@ -9,7 +9,7 @@ from odoo import models, api
 class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
-    @api.model
+    @api.multi
     def import_file(self):
         action = \
             super(AccountBankStatementImport, self).import_file()
