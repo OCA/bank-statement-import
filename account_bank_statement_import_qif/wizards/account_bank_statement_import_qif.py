@@ -20,7 +20,6 @@ class AccountBankStatementImport(models.TransientModel):
     def _check_qif(self, data_file):
         return data_file.strip().startswith('!Type:')
 
-    @api.model
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):
             return super(AccountBankStatementImport, self)._parse_file(
