@@ -47,7 +47,6 @@ class AccountBankStatementImport(models.TransientModel):
         }
         return vals
 
-    @api.model
     def _parse_file(self, data_file):
         ofx = self._check_ofx(data_file)
         if not ofx:
