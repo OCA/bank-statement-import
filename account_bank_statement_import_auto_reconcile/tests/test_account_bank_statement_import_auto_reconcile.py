@@ -27,20 +27,21 @@ class TestAccountBankStatementImportAutoReconcile(TransactionCase):
         return [
             {
                 'currency_code': self.invoice.company_id.currency_id.name,
-                'account_number':
-                self.invoice.partner_id.bank_ids[:1].acc_number,
+                'account_number': False,
                 'name': 'Auto reconcile test',
                 'date': fields.Date.to_string(
                     fields.Date.from_string(date) + timedelta(days=5)
                 ),
                 'transactions': [
                     {
-                        'name': 'testtransaction',
+                        'name': self.invoice.number,
                         'date': fields.Date.to_string(
                             fields.Date.from_string(date) + timedelta(days=5)
                         ),
                         'amount': self.invoice.residual,
                         'unique_import_id': '42',
+                        'account_number':
+                        self.invoice.partner_id.bank_ids[:1].acc_number,
                     },
                 ],
             },
