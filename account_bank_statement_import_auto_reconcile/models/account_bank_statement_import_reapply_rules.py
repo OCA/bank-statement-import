@@ -25,10 +25,7 @@ class AccountBankStatementImportReapplyRules(models.TransientModel):
 
         self.write({'journal_id': journal.id})
         reconcile_rules = journal.statement_import_auto_reconcile_rule_ids\
-            .mapped(lambda x: self.env[x.rule_type].new({
-                'wizard_id': self.id,
-                'options': x.options
-            }))
+            .get_rules()
 
         for line in self.env['account.bank.statement.line'].search([
                 ('statement_id', 'in', statements.ids),
