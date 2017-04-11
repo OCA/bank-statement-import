@@ -9,11 +9,12 @@ This repository hosts:
 * additionnal parsers and import features inspired by v7.0 branch from https://github.com/OCA/bank-payment and https://github.com/OCA/bank-statement-reconcile
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[account_bank_statement_import](account_bank_statement_import/) | 8.0.1.0.2 | Account Bank Statement Import
+[account_bank_statement_import](account_bank_statement_import/) | 8.0.1.1.0 | Account Bank Statement Import
 [account_bank_statement_import_camt](account_bank_statement_import_camt/) | 8.0.0.4.0 | CAMT Format Bank Statements Import
 [account_bank_statement_import_mt940_base](account_bank_statement_import_mt940_base/) | 8.0.1.1.1 | MT940 Bank Statements Import
 [account_bank_statement_import_mt940_nl_ing](account_bank_statement_import_mt940_nl_ing/) | 8.0.0.4.0 | MT940 IBAN ING Format Bank Statements Import

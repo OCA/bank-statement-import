@@ -38,6 +38,7 @@ Contributors
 * Alexis de Lattre <alexis@via.ecp.fr>
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Ronald Portier <rportier@therp.nl>
+* Luc De Meyer <luc.demeyer@noviat.com>
 
 Maintainer
 ----------

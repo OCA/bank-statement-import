@@ -45,9 +45,8 @@ class ResPartnerBank(models.Model):
         self.sanitized_acc_number = self._sanitize_account_number(
             self.acc_number)
 
-    @api.returns('self')
-    def search(self, cr, user, args, offset=0, limit=None, order=None,
-               context=None, count=False):
+    @api.model
+    def search(self, args, offset=0, limit=None, order=None, count=False):
         pos = 0
         while pos < len(args):
             if args[pos][0] == 'acc_number':
@@ -62,5 +61,4 @@ class ResPartnerBank(models.Model):
                 args[pos] = ('sanitized_acc_number', op, value)
             pos += 1
         return super(ResPartnerBank, self).search(
-            cr, user, args, offset=offset, limit=limit, order=order,
-            context=context, count=count)
+            args, offset=offset, limit=limit, order=order, count=count)

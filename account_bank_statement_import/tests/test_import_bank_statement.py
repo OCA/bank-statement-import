@@ -75,8 +75,9 @@ class TestAccountBankStatementImport(TransactionCase):
         self.statement_import_model._create_bank_account('123456789')
         with self.assertRaises(UserError) as e:
             self.statement_import_model._import_statement(stmt_vals.copy())
-        self.assertEqual(e.exception.message,
-                         'Can not determine journal for import.')
+        self.assertEqual(
+            e.exception.message[:25], 'Can not determine journal'
+        )
 
     def test_create_bank_account(self):
         """Checks that the bank_account created by the import belongs to the

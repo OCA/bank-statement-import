@@ -200,8 +200,12 @@ class CamtParser(object):
             transaction = statement.create_transaction()
             self.parse_transaction(ns, entry_node, transaction)
         if statement['transactions']:
-            statement.date = datetime.strptime(
-                statement['transactions'][0].execution_date, "%Y-%m-%d")
+            execution_date = statement['transactions'][0].execution_date
+            statement.date = datetime.strptime(execution_date, "%Y-%m-%d")
+            # Prepend date of first transaction to improve id uniquenes
+            if execution_date not in statement.statement_id:
+                statement.statement_id = "%s-%s" % (
+                    execution_date, statement.statement_id)
         return statement
 
     def check_version(self, ns, root):
