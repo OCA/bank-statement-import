@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates id="template" xml:space="preserve">
+  <t t-extend="bank_statement_reconciliation_statement_line_details">
+    
+    <t t-jquery="table.details > tr:nth-child(2)" t-operation="after">
+        <tr t-if="line.partner_address"><td>Address</td><td><t t-esc="line.partner_address"/></td></tr>
+    </t>
+      <t t-jquery="table.details > tr:nth-child(6)" t-operation="after">
+        <tr t-if="line.partner_account"><td>Partner account</td><td><t t-esc="line.partner_account"/></td></tr>
+    </t>
+  </t>
+</templates>
