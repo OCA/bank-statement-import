@@ -4,7 +4,7 @@
 Bank Statement Parse Camt
 =========================
 
-Module to import SEPA CAMT.053 Format bank statement files.
+Module to import SEPA CAMT.053 and CAMT.054 Format bank statement files.
 
 Based on the Banking addons framework.
 
