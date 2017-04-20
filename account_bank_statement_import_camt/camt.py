@@ -170,6 +170,7 @@ class CamtParser(object):
             ns, node, './ns:Id', result, 'name')
         self.add_value_from_node(
             ns, node, './ns:CreDtTm', result, 'date')
+        result['date'] = result['date'].split('T')[0]
         self.add_value_from_node(
             ns, node, './ns:Acct/ns:Ccy', result, 'currency')
         result['balance_start'], result['balance_end_real'] = (
