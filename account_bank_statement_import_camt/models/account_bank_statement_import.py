@@ -20,8 +20,6 @@
 ##############################################################################
 import logging
 from openerp import models
-from .camt import CamtParser as Parser
-
 
 _logger = logging.getLogger(__name__)
 
@@ -32,7 +30,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _parse_file(self, cr, uid, data_file, context=None):
         """Parse a CAMT053 XML file."""
-        parser = Parser()
+        parser = self.pool['account.bank.statement.import.camt.parser']
         try:
             _logger.debug("Try parsing with camt.")
             return parser.parse(data_file)
