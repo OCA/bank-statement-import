@@ -37,10 +37,10 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
 
         domain = [
             '|', '|', '|',
-            ('ref', operator, statement_line.ref),
-            ('name', operator, statement_line.name),
-            ('ref', operator, statement_line.name),
-            ('name', operator, statement_line.ref),
+            ('ref', operator, statement_line.ref or ''),
+            ('name', operator, statement_line.name or ''),
+            ('ref', operator, statement_line.name or ''),
+            ('name', operator, statement_line.ref or ''),
             ('reconcile_id', '=', False),
             ('state', '=', 'valid'),
             ('account_id.reconcile', '=', True),
