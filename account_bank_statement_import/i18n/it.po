@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 03:20+0000\n"
-"PO-Revision-Date: 2017-03-01 03:20+0000\n"
+"POT-Creation-Date: 2017-03-30 16:11+0000\n"
+"PO-Revision-Date: 2017-05-10 09:47+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -174,7 +174,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account_bank_statement_import.action_account_bank_statement_import
 #: model:ir.ui.menu,name:account_bank_statement_import.menu_account_bank_statement_import
 msgid "Import"
-msgstr ""
+msgstr "Importa"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_import
