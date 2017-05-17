@@ -153,7 +153,7 @@ class MT940(object):
                     self.handle_header(line, iterator)
                 line = iterator.next()
                 if not self.is_tag(line) and not self.is_footer(line):
-                    record_line += line
+                    record_line = self.add_record_line(line, record_line)
                     continue
                 if record_line:
                     self.handle_record(record_line)
@@ -171,6 +171,10 @@ class MT940(object):
             self.statements.append(self.current_statement)
             self.current_statement = None
         return self.statements
+
+    def add_record_line(self, line, record_line):
+        record_line += line
+        return record_line
 
     def is_footer(self, line):
         """determine if a line is the footer of a statement"""
