@@ -29,11 +29,10 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
         amount_field = 'debit'
         sign = 1
         if statement_line.currency_id or statement_line.journal_id.currency:
-            if statement_line.amount < 0:
-                amount_field = 'credit'
-                sign = -1
-            else:
-                amount_field = 'amount_currency'
+            amount_field = 'amount_currency'
+        elif statement_line.amount < 0:
+            amount_field = 'credit'
+            sign = -1
 
         domain = [
             '|', '|', '|',
@@ -47,7 +46,7 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
             ('partner_id', '=', statement_line.partner_id.id),
             (amount_field, '=', self._round(sign * statement_line.amount)),
         ]
-        move_lines = self.env['account.move.line'].search(domain, limit=1)
-        if move_lines:
+        move_lines = self.env['account.move.line'].search(domain, limit=2)
+        if move_lines and len(move_lines)==1:
             self._reconcile_move_line(statement_line, move_lines.id)
             return True
