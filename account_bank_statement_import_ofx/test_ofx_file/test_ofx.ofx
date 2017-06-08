@@ -19,7 +19,7 @@
         <SEVERITY>INFO</SEVERITY>
       </STATUS>
       <STMTRS>
-        <CURDEF>USD</CURDEF>
+        <CURDEF>EUR</CURDEF>
         <BANKACCTFROM>
           <BANKID>000000123</BANKID>
           <ACCTID>123456</ACCTID>
@@ -31,7 +31,8 @@
           <STMTTRN>
             <TRNTYPE>POS</TRNTYPE>
             <DTPOSTED>20130824080000</DTPOSTED>
-            <TRNAMT>-80</TRNAMT>
+            <TRNAMT>80</TRNAMT>
+            <!--<TRNAMT>-80</TRNAMT>-->
             <FITID>219378</FITID>
             <NAME>Agrolait</NAME>
           </STMTTRN>
@@ -84,7 +85,7 @@
         <SEVERITY>INFO</SEVERITY>
       </STATUS>
       <CCSTMTRS>
-        <CURDEF>USD</CURDEF>
+        <CURDEF>EUR</CURDEF>
         <CCACCTFROM>
           <ACCTID>123412341234</ACCTID>
         </CCACCTFROM>
