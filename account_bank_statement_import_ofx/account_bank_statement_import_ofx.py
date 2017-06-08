@@ -9,11 +9,11 @@ from openerp.exceptions import Warning
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from ofxparse import OfxParser as ofxparser
-except ImportError:
-    _logger.warn("ofxparse not found, OFX parsing disabled.")
-    ofxparser = None
+# try:
+#     from ofxparse import OfxParser as ofxparser
+# except ImportError:
+#     _logger.warn("ofxparse not found, OFX parsing disabled.")
+#     ofxparser = None
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -46,7 +46,7 @@ class AccountBankStatementImport(models.TransientModel):
                 # generic module uses to find partner/bank)
                 bank_account_id = partner_id = False
                 banks = self.env['res.partner.bank'].search(
-                    [('owner_name', '=', transaction.payee)], limit=1)
+                    [('bank_name', '=', transaction.payee)], limit=1)
                 if banks:
                     bank_account = banks[0]
                     bank_account_id = bank_account.id
