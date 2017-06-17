@@ -64,6 +64,13 @@ class CamtParser(object):
             ],
             transaction, 'ref'
         )
+        # unique_import_id
+        self.add_value_from_node(
+            ns, node, [
+                './ns:Refs/ns:AcctSvcrRef',
+            ],
+            transaction, 'unique_import_id'
+        )
         # remote party values
         party_type = 'Dbtr'
         party_type_node = node.xpath(
@@ -75,14 +82,6 @@ class CamtParser(object):
         if party_node:
             self.add_value_from_node(
                 ns, party_node[0], './ns:Nm', transaction, 'partner_name')
-            self.add_value_from_node(
-                ns, party_node[0], './ns:PstlAdr/ns:Ctry', transaction,
-                'partner_country'
-            )
-            address_node = party_node[0].xpath(
-                './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
-            if address_node:
-                transaction['partner_address'] = [address_node[0].text]
         # Get remote_account from iban or from domestic account:
         account_node = node.xpath(
             './ns:RltdPties/ns:%sAcct/ns:Id' % party_type,
@@ -93,12 +92,6 @@ class CamtParser(object):
                 './ns:IBAN', namespaces={'ns': ns})
             if iban_node:
                 transaction['account_number'] = iban_node[0].text
-                bic_node = node.xpath(
-                    './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type,
-                    namespaces={'ns': ns}
-                )
-                if bic_node:
-                    transaction['account_bic'] = bic_node[0].text
             else:
                 self.add_value_from_node(
                     ns, account_node[0], './ns:Othr/ns:Id', transaction,
@@ -109,15 +102,7 @@ class CamtParser(object):
         """Parse transaction (entry) node."""
         transaction = {}
         self.add_value_from_node(
-            ns, node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction,
-            'transfer_type'
-        )
-        self.add_value_from_node(
             ns, node, './ns:BookgDt/ns:Dt', transaction, 'date')
-        self.add_value_from_node(
-            ns, node, './ns:BookgDt/ns:Dt', transaction, 'execution_date')
-        self.add_value_from_node(
-            ns, node, './ns:ValDt/ns:Dt', transaction, 'value_date')
 
         transaction['amount'] = self.parse_amount(ns, node)
 
@@ -137,7 +122,6 @@ class CamtParser(object):
                 ],
                 transaction, 'ref'
             )
-        transaction['data'] = etree.tostring(node)
         return transaction
 
     def get_balance_amounts(self, ns, node):
@@ -185,7 +169,8 @@ class CamtParser(object):
         self.add_value_from_node(
             ns, node, './ns:Id', result, 'name')
         self.add_value_from_node(
-            ns, node, './ns:Dt', result, 'date')
+            ns, node, './ns:CreDtTm', result, 'date')
+        result['date'] = result['date'].split('T')[0]
         self.add_value_from_node(
             ns, node, './ns:Acct/ns:Ccy', result, 'currency')
         result['balance_start'], result['balance_end_real'] = (
