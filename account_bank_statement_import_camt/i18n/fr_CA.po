@@ -3,20 +3,20 @@
 # * account_bank_statement_import_camt
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 15:52+0000\n"
 "PO-Revision-Date: 2017-06-20 15:52+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Norwegian Bokmål (Norway) (https://www.transifex.com/oca/teams/23907/nb_NO/)\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: French (Canada) (https://www.transifex.com/oca/teams/23907/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nb_NO\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import_camt
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt.account_bank_statement_import_view
@@ -26,22 +26,22 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_bank_statement_import_camt_parser_display_name
 msgid "Display Name"
-msgstr "Vis navn"
+msgstr "Afficher le nom"
 
 #. module: account_bank_statement_import_camt
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_bank_statement_import_camt_parser_id
 msgid "ID"
-msgstr "ID"
+msgstr "Identifiant"
 
 #. module: account_bank_statement_import_camt
 #: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr "Importer bankutsagn"
+msgstr ""
 
 #. module: account_bank_statement_import_camt
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_bank_statement_import_camt_parser___last_update
 msgid "Last Modified on"
-msgstr "Sist endret den"
+msgstr ""
 
 #. module: account_bank_statement_import_camt
 #: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import_camt_parser

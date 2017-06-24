@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 17:00+0000\n"
-"PO-Revision-Date: 2016-12-09 17:00+0000\n"
+"POT-Creation-Date: 2017-06-20 15:52+0000\n"
+"PO-Revision-Date: 2017-06-20 15:52+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: French (Switzerland) (https://www.transifex.com/oca/teams/23907/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,29 @@ msgid "CAMT"
 msgstr ""
 
 #. module: account_bank_statement_import_camt
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_bank_statement_import_camt_parser_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: account_bank_statement_import_camt
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_bank_statement_import_camt_parser_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_bank_statement_import_camt
 #: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Importer Relevé"
+
+#. module: account_bank_statement_import_camt
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_bank_statement_import_camt_parser___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_bank_statement_import_camt
+#: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import_camt_parser
+msgid "account.bank.statement.import.camt.parser"
+msgstr ""
 
 #. module: account_bank_statement_import_camt
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt.account_bank_statement_import_view
