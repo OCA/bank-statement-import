@@ -13,6 +13,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [account_bank_statement_import_camt](account_bank_statement_import_camt/) | 9.0.1.0.0 | CAMT Format Bank Statements Import
+[account_bank_statement_import_camt_details](account_bank_statement_import_camt_details/) | 9.0.1.0.0 | CAMT Debitor Details Bank Statements Import
 [account_bank_statement_import_qif](account_bank_statement_import_qif/) | 9.0.1.0.0 | Import QIF Bank Statements
 
 
