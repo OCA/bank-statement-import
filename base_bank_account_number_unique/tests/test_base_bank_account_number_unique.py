@@ -1,42 +1,22 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    This module copyright (C) 2015 Therp BV <http://therp.nl>.
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015-2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import Warning as UserError
-from ..hooks import post_init_hook
+from openerp.exceptions import ValidationError
 
 
 class TestBaseBankAccountNumberUnique(TransactionCase):
+
     def test_base_bank_account_number_unique(self):
-        # drop our constraint, insert nonunique account numbers and see if
-        # the init hook catches this
-        self.env['ir.model.constraint'].search([
-            ('name', '=', 'res_partner_bank_unique_number'),
-            ('model.model', '=', 'res.partner.bank'),
-        ])._module_data_uninstall()
-        self.env['res.partner.bank'].create({
+        """Add a bank account, then try to add another one with the
+        same number."""
+        bank_account_model = self.env['res.partner.bank']
+        bank_account_model.create({
             'acc_number': 'BE1234567890',
             'state': 'bank',
         })
-        self.env['res.partner.bank'].create({
-            'acc_number': 'BE 1234 567 890',
-            'state': 'bank',
-        })
-        with self.assertRaises(UserError):
-            post_init_hook(self.cr, self.registry)
+        with self.assertRaises(ValidationError):
+            bank_account_model.create({
+                'acc_number': 'BE 1234 567 890',
+                'state': 'bank',
+            })

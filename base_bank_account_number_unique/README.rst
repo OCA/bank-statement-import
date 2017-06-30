@@ -8,36 +8,45 @@ It can be desirable to be able to rely on a bank account number identifying
 exactly one partner. This module allows you to enforce this, so that an
 account number is unique in the system.
 
-Installation
-============
+There are some valid corner cases were it is valid to have multiple records
+for the same account number. For instance in a multicompany setup where the
+bank-account linked to one company, is a partner bank account for another
+company.
 
-During installation, the module checks if your bank account numbers are
-unique already. If this is not the case, you won't be able to install the
-module until duplicates are fixed.
+Because of these corner cases, the constraint is no longer implemented as
+a SQL unique index. This has the added advantage, that the module can be
+installed on databases where the bank-account numbers are not unique already.
 
-The error message only shows the first few duplicates, in order to find all
-of them, use the following statement::
+To find records that are not unique, you could use the following SQL
+statement.
 
     with res_partner_bank_sanitized as (
         select
-            id, acc_number,
-            regexp_replace(acc_number, '\W+', '', 'g') acc_number_sanitized
+            id, acc_number, coalesce(company_id, 0) as company_id,
+            sanitized_acc_number
         from res_partner_bank
     ),
     res_partner_bank_sanitized_grouped as (
         select
-            array_agg(id) ids, acc_number_sanitized, count(*) amount
-        from res_partner_bank_sanitized group by acc_number_sanitized
+            array_agg(id) ids, sanitized_acc_number, count(*) kount,
+            company_id
+        from res_partner_bank_sanitized
+        group by sanitized_acc_number, company_id
     )
-    select * from res_partner_bank_sanitized_grouped where amount > 1;
+    select * from res_partner_bank_sanitized_grouped where kount > 1;
+
+Installation
+============
+
+The constraint is active for new and changed numbers, from the moment of
+installation.
+
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
-In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20base_bank_account_number_unique%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+Bugs are tracked on
+`GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 
 Credits
 =======
@@ -46,6 +55,7 @@ Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
+* Ronald Portier <ronald@therp.nl>
 
 Maintainer
 ----------
