@@ -4,7 +4,7 @@
 from openerp import models, fields
 
 
-class account_journal(models.Model):
+class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     enforce_sequence = fields.Boolean(

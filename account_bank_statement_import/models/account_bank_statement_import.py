@@ -36,7 +36,7 @@ class AccountBankStatementImport(models.TransientModel):
     _description = 'Import Bank Statement'
 
     @api.model
-    def _get_hide_journal_field(self):
+    def _compute_hide_journal_field(self):
         """ Return False if the journal_id can't be provided by the parsed
         file and must be provided by the wizard.
         See account_bank_statement_import_qif """
@@ -50,7 +50,7 @@ class AccountBankStatementImport(models.TransientModel):
         'doesn\'t allow automatic journal detection (QIF for example).')
     hide_journal_field = fields.Boolean(
         string='Hide the journal field in the view',
-        compute='_get_hide_journal_field')
+        compute='_compute_hide_journal_field')
     data_file = fields.Binary(
         'Bank Statement File', required=True,
         help='Get you bank statements in electronic format from your bank '

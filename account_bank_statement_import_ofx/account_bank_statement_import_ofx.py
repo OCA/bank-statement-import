@@ -25,7 +25,7 @@ class AccountBankStatementImport(models.TransientModel):
             return False
         try:
             ofx = ofxparser.parse(StringIO.StringIO(data_file))
-        except:
+        except Exception:
             return False
         return ofx
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2015-2017 Therp BV <https://therp.nl>
+# Copyright 2015-2018 Therp BV <https://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp import api, models, _
 from openerp.exceptions import ValidationError
@@ -8,13 +8,13 @@ from openerp.exceptions import ValidationError
 class ResPartnerBank(models.Model):
     _inherit = 'res.partner.bank'
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    @api.multi
+    def copy_data(self, default=None):
         default = default or {}
-        context = context or {}
-        if 'acc_number' not in default and 'default_acc_number' not in context:
+        if 'acc_number' not in default and \
+                'default_acc_number' not in self.env.context:
             default['acc_number'] = ''
-        return super(ResPartnerBank, self).copy_data(
-            cr, uid, id, default=default, context=context)
+        return super(ResPartnerBank, self).copy_data(default=default)
 
     @api.constrains('company_id', 'sanitized_acc_number')
     def _check_unique_account(self):

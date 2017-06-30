@@ -35,7 +35,7 @@ class AccountBankStatementImport(models.TransientModel):
                 data_list = file_data.split('\n')
             header = data_list[0].strip()
             header = header.split(":")[1]
-        except:
+        except Exception:
             raise UserError(_('Could not decipher the QIF file.'))
         transactions = []
         vals_line = {}

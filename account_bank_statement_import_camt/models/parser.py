@@ -6,7 +6,6 @@
 """Class to parse camt files."""
 import logging
 import re
-from copy import copy
 from datetime import datetime
 from lxml import etree
 
@@ -103,7 +102,8 @@ class CamtParser(models.AbstractModel):
                 './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:Refs/ns:EndToEndId',
             ],
-            transaction, 'eref')
+            transaction, 'eref'
+        )
         amount = self.parse_amount(node)
         if amount != 0.0:
             transaction['amount'] = amount
@@ -174,7 +174,7 @@ class CamtParser(models.AbstractModel):
             self.add_value_from_node(
                 node,
                 ['./ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
-                './ns:NtryDtls/ns:Btch/ns:PmtInfId'],
+                 './ns:NtryDtls/ns:Btch/ns:PmtInfId'],
                 transaction,
                 'eref')
         details_nodes = node.xpath(
