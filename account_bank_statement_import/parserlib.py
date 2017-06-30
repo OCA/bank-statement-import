@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
 """Classes and definitions used in parsing bank statements."""
-##############################################################################
-#
-#  Copyright (C) 2015 Therp BV <http://therp.nl>.
-#
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU Affero General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Affero General Public License for more details.
-#
-#  You should have received a copy of the GNU Affero General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015-2016 Therp BV <http://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
 class BankTransaction(dict):
     """Single transaction that is part of a bank statement."""
+
+    @property
+    def transaction_id(self):
+        """property getter"""
+        return self['transaction_id']
+
+    @transaction_id.setter
+    def transaction_id(self, transaction_id):
+        """property setter"""
+        self['transaction_id'] = transaction_id
 
     @property
     def value_date(self):
@@ -112,6 +106,7 @@ class BankTransaction(dict):
         Not all attributes are already used in the actual import.
         """
         super(BankTransaction, self).__init__()
+        self.transaction_id = ''  # Fill this only if unique for import
         self.transfer_type = False  # Action type that initiated this message
         self.execution_date = False  # The posted date of the action
         self.value_date = False  # The value date of the action
@@ -152,8 +147,15 @@ class BankStatement(dict):
         subno = 0
         for transaction in self['transactions']:
             subno += 1
-            transaction['unique_import_id'] = (
-                self.statement_id + str(subno).zfill(4))
+            if transaction.transaction_id:
+                transaction['unique_import_id'] = transaction.transaction_id
+            else:
+                # Cut local_account from prefix if applicable:
+                if self.statement_id.startswith(self.local_account):
+                    prefix = self.statement_id[len(self.local_account):]
+                else:
+                    prefix = self.statement_id
+                transaction['unique_import_id'] = prefix + str(subno).zfill(4)
 
     @statement_id.setter
     def statement_id(self, statement_id):
