@@ -20,3 +20,14 @@ class TestBaseBankAccountNumberUnique(TransactionCase):
                 'acc_number': 'BE 1234 567 890',
                 'state': 'bank',
             })
+
+    def test_bank_account_copy(self):
+        """Copied bank account data should not contain account."""
+        bank_account_model = self.env['res.partner.bank']
+        original_account = bank_account_model.create({
+            'acc_number': 'BE1234567890',
+            'state': 'bank',
+        })
+        copied_data = original_account.copy_data(default=None)
+        # Calling copy_data from new api returns array!
+        self.assertEqual(copied_data[0]['acc_number'], '')
