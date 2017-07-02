@@ -60,7 +60,9 @@ class TestSaveFile(TransactionCase):
             ('acc_number', '=', acc_number),
         ]).journal_id.id
         if not journal_id:
-            account = import_wizard._create_bank_account(acc_number)
+            account = import_wizard._create_bank_account(
+                acc_number, company_id=self.env.user.company_id.id
+            )
             journal_id = self.env['account.journal']\
                 .search([
                     '|',
