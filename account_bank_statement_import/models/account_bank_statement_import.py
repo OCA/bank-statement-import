@@ -142,6 +142,39 @@ class AccountBankStatementImport(models.TransientModel):
         return statement_ids, notifications
 
     @api.model
+    def _find_company_bank_account_id(self, account_number):
+        """Find bank account for which statement import is done.
+
+        We need a separate function, because bank accounts might not
+        be unique. But in that case the account linked to the current
+        company is valid. Also we might find the right bank account, just
+        by using the journal and the current company, even if there is no
+        account number in the import file.
+        """
+        bank_model = self.env['res.partner.bank']
+        # A journal to use might already have been specified:
+        selected_journal_id = \
+            self.env.context.get('journal_id') or \
+            self.journal_id.id or \
+            False
+        # Determine domain to find the right account. The domain must
+        # contain the company, as only accounts linked to a company are
+        # valid here:
+        bank_domain = [
+            ('company_id', '=', self.env.user.company_id.id),
+        ]
+        if selected_journal_id:
+            bank_domain.append(
+                ('journal_id', '=', selected_journal_id)
+            )
+        if account_number and len(account_number) > 4:
+            bank_domain.append(
+                ('acc_number', '=', account_number)
+            )
+        bank_account_ids = bank_model.search(bank_domain, limit=1)
+        return bank_account_ids and bank_account_ids[0].id or False
+
+    @api.model
     def _import_statement(self, stmt_vals):
         """Import a single bank-statement.
 
@@ -151,7 +184,7 @@ class AccountBankStatementImport(models.TransientModel):
         account_number = stmt_vals.pop('account_number')
         # Try to find the bank account and currency in odoo
         currency_id = self._find_currency_id(currency_code)
-        bank_account_id = self._find_bank_account_id(account_number)
+        bank_account_id = self._find_company_bank_account_id(account_number)
         if not bank_account_id and account_number:
             raise UserError(
                 _('Can not find the account number %s.') % account_number
