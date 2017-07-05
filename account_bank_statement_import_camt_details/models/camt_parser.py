@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # © 2017 Compassion CH <http://www.compassion.ch>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openerp import models
-from openerp.tools import OrderedDict
+from odoo import models
+from odoo.tools import OrderedDict
 
 
 class CamtDetailsParser(models.AbstractModel):
@@ -44,9 +44,15 @@ class CamtDetailsParser(models.AbstractModel):
             transaction['partner_address'] = self._format_partner_address(
                 address_values)
 
+        # BIC node
+        bic_node = node.xpath(
+            './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type,
+            namespaces={'ns': ns})
+        if bic_node:
+            transaction['partner_bic'] = bic_node[0].text
+
         # Transfer account info in fields
         transaction['partner_account'] = transaction.get('account_number')
-        transaction['partner_bic'] = transaction.get('account_bic')
 
     def _format_partner_address(self, address_values):
         """
