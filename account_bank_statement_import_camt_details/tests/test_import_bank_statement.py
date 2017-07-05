@@ -28,10 +28,10 @@ class TestImport(TransactionCase):
         """Test that transaction details are correctly imported."""
         line_details = [
             {
-                'partner_account': 'NL46ABNA0499998748',
+                'partner_account': 'NL69ABNA0522123643',
                 'partner_bic': 'ABNANL2A',
-                'partner_name': 'INSURANCE COMPANY TESTX',
-                'partner_address': 'TEST STREET 20, 1234 AB TESTCITY'
+                'partner_name': '3rd party Media',
+                'partner_address': 'SOMESTREET 570-A, 1276 ML HOUSCITY'
             },
             {
                 'partner_account': 'NL46ABNA0499998748',
@@ -39,10 +39,10 @@ class TestImport(TransactionCase):
                 'partner_name': 'Test Customer',
             },
             {
-                'partner_account': 'NL69ABNA0522123643',
+                'partner_account': 'NL46ABNA0499998748',
                 'partner_bic': 'ABNANL2A',
-                'partner_name': '3rd party Media',
-                'partner_address': 'SOMESTREET 570-A, 1276 ML HOUSCITY'
+                'partner_name': 'INSURANCE COMPANY TESTX',
+                'partner_address': 'TEST STREET 20, 1234 AB TESTCITY'
             },
         ]
         with file_open(
@@ -51,8 +51,10 @@ class TestImport(TransactionCase):
             action = self.env['account.bank.statement.import'].create({
                 'data_file': base64.b64encode(testfile.read()),
             }).import_file()
+        statement_ids = action.get('context', {}).get('statement_ids')
+        self.assertIsNotNone(statement_ids)
         statement_lines = self.env['account.bank.statement'].browse(
-            action['context']['statement_ids']).mapped('line_ids')
+            statement_ids).mapped('line_ids')
         for i in range(0, len(line_details)):
             line = statement_lines[i]
             rec_data = line.get_statement_line_for_reconciliation_widget()
