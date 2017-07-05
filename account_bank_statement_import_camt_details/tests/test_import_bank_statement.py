@@ -2,8 +2,8 @@
 # © 2017 CompassionCH <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import base64
-from openerp.tests.common import TransactionCase
-from openerp.tools.misc import file_open
+from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_open
 
 
 class TestImport(TransactionCase):
@@ -28,10 +28,10 @@ class TestImport(TransactionCase):
         """Test that transaction details are correctly imported."""
         line_details = [
             {
-                'partner_account': 'NL46ABNA0499998748',
+                'partner_account': 'NL69ABNA0522123643',
                 'partner_bic': 'ABNANL2A',
-                'partner_name': 'INSURANCE COMPANY TESTX',
-                'partner_address': 'TEST STREET 20, 1234 AB TESTCITY'
+                'partner_name': '3rd party Media',
+                'partner_address': 'SOMESTREET 570-A, 1276 ML HOUSCITY'
             },
             {
                 'partner_account': 'NL46ABNA0499998748',
@@ -39,10 +39,10 @@ class TestImport(TransactionCase):
                 'partner_name': 'Test Customer',
             },
             {
-                'partner_account': 'NL69ABNA0522123643',
+                'partner_account': 'NL46ABNA0499998748',
                 'partner_bic': 'ABNANL2A',
-                'partner_name': '3rd party Media',
-                'partner_address': 'SOMESTREET 570-A, 1276 ML HOUSCITY'
+                'partner_name': 'INSURANCE COMPANY TESTX',
+                'partner_address': 'TEST STREET 20, 1234 AB TESTCITY'
             },
         ]
         with file_open(
