@@ -29,11 +29,9 @@ class AccountBankStatementImport(models.TransientModel):
             ('ДатаСоздания', lambda y: dt.date(dt.strptime(y, '%d.%m.%Y'))),
             ('ВремяСоздания', lambda y: dt.date(dt.strptime(y, '%d.%m.%Y'))),
         ]
-        for x in data_and_action:
-            try:
-                result['general'][x[0]] = x[1](result['general'][x[0]])
-            except AttributeError:
-                pass
+        for data, action in data_and_action:
+            if result['general'].get(data, False):
+                result['general'][data] = action(result['general'][data])
         # parse remain
         # r prefix makes this string as raw string without \like escapes.
         regexp_acc = r'СекцияРасчСчет([\s\S]*?)\sКонецРасчСчет'
@@ -82,9 +80,6 @@ class AccountBankStatementImport(models.TransientModel):
                 # earlier was partner name (bank_name) but i
                 # think its not good i decide use acc_number
                 if banks:
-                    # bank_account = banks[0]
-                    # bank_account_id = bank_account.id
-                    # partner_id = bank_account.partner_id.id
                     pass
                 vls_line = {
                     'date': transaction['Дата'],
@@ -97,11 +92,7 @@ class AccountBankStatementImport(models.TransientModel):
                     # Temporary its ВидОплаты
                     'amount': transaction['Сумма'],
                     'unique_import_id': str(os.urandom(10)),
-                    # transaction.id transaction['Номер']
-                    # if transaction['Номер'] != None else
-                    # 'bank_account_id': transaction['ВидОплаты'],
                     'bank_account_id': False,
-                    # 'partner_id': partner_id,
                     'partner_id': False,
                 }
                 total_amt += float(transaction['Сумма'])
