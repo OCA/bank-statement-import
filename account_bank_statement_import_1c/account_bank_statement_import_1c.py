@@ -51,7 +51,7 @@ class AccountBankStatementImport(models.TransientModel):
         ]
         for data, action in data_and_action:
             if result['remain'].get(data, False):
-                result['remain'].[data] = action(result['remain'][data])
+                result['remain'][data] = action(result['remain'][data])
         # parse documents
         regexp_document = r'СекцияДокумент=(.*)\s([\s\S]*?)' \
                           r'\sКонецДокумента'
