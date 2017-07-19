@@ -65,7 +65,7 @@ class AccountBankStatementImport(models.TransientModel):
                 # normalize
             if document.get('Номер', False):
                 document['Номер'] = int(document['Номер'])
-            if document.get('Дата', Дата):
+            if document.get('Дата', False):
                 document['Дата'] = dt.date(dt.strptime(
                     document['Дата'], '%d.%m.%Y'))
             if document.get('Сумма', False):
