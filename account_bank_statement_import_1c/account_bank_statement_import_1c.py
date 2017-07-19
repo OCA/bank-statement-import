@@ -9,14 +9,12 @@ import os
 
 class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
-    normalHead = False
 
     @api.model
     def _parse_file(self, data_file):
         result = {'errors': [], 'general': {}, 'remain': {}, 'filters': {},
                   'documents': []}
-        self.normalHead = data_file.startswith('1CClientBankExchange')
-        if not self.normalHead:
+        if not data_file.startswith('1CClientBankExchange'):
             return super(AccountBankStatementImport, self)._parse_file(
                 data_file)
         # parse general info (key=value)
@@ -51,11 +49,9 @@ class AccountBankStatementImport(models.TransientModel):
             ('ВсегоСписано', lambda y: float(y)),
             ('КонечныйОстаток', lambda y: float(y))
         ]
-        for x in data_and_action:
-            try:
-                result['remain'][x[0]] = x[1](result['remain'][x[0]])
-            except AttributeError:
-                pass
+        for data, action in data_and_action:
+            if result['remain'].get(data, False):
+                result['remain'].[data] = action(result['remain'][data])
         # parse documents
         regexp_document = r'СекцияДокумент=(.*)\s([\s\S]*?)' \
                           r'\sКонецДокумента'
@@ -67,26 +63,19 @@ class AccountBankStatementImport(models.TransientModel):
             for match_child in re.findall(regexp_base, match_doc[1]):
                 document[match_child[0]] = match_child[1]
                 # normalize
-            try:
+            if document.get('Номер', False):
                 document['Номер'] = int(document['Номер'])
-            except AttributeError:
-                pass
-            try:
+            if document.get('Дата', Дата):
                 document['Дата'] = dt.date(dt.strptime(
                     document['Дата'], '%d.%m.%Y'))
-            except AttributeError:
-                pass
-            try:
+            if document.get('Сумма', False):
                 document['Сумма'] = float(document['Сумма'])
-            except AttributeError:
-                pass
             result['documents'].append(document)
         # make suitable for odoo format
         transactions = []
         total_amt = 0.00
         try:
             for transaction in result['documents']:
-                # bank_account_id = partner_id = False
                 banks = self.env['res.partner.bank'].search(
                     [('acc_number', '=', transaction['ПлательщикСчет'])],
                     limit=1)
