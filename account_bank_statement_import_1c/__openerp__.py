@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 {
     'name': 'Import 1c Bank Statement',
     'category': 'Banking addons',
