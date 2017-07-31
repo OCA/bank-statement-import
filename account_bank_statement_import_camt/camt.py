@@ -223,7 +223,7 @@ class CamtParser(object):
             transactions.extend(self.parse_entry(ns, entry_node, transaction))
         statement['transactions'] = transactions
         if statement['transactions']:
-            execution_date = statement['transactions'][0].execution_date
+            execution_date = statement['transactions'][0].execution_date[:10]
             statement.date = datetime.strptime(execution_date, "%Y-%m-%d")
             # Prepend date of first transaction to improve id uniquenes
             if execution_date not in statement.statement_id:
