@@ -65,6 +65,7 @@ class CamtParser(models.AbstractModel):
             ns, node, [
                 './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:Refs/ns:EndToEndId',
+                './ns:Ntry/ns:AcctSvcrRef'
             ],
             transaction, 'ref'
         )
@@ -135,6 +136,7 @@ class CamtParser(models.AbstractModel):
             ns, node, [
                 './ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:NtryDtls/ns:Btch/ns:PmtInfId',
+                './ns:NtryDtls/ns:TxDtls/ns:Refs/ns:AcctSvcrRef'
             ],
             transaction, 'ref'
         )
@@ -205,6 +207,10 @@ class CamtParser(models.AbstractModel):
         for entry_node in entry_nodes:
             transactions.extend(self.parse_entry(ns, entry_node))
         result['transactions'] = transactions
+        result['date'] = sorted(transactions,
+                                key=lambda x: x['date'],
+                                reverse=True
+                                )[0]['date']
         return result
 
     def check_version(self, ns, root):
