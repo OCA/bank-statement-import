@@ -35,7 +35,9 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
             sign = -1
 
         domain = [
-            '|', '|', '|',
+            '|', '|', '|', '|', '|',
+            ('move_id.ref', operator, statement_line.ref or ''),
+            ('move_id.name', operator, statement_line.name or ''),
             ('ref', operator, statement_line.ref or ''),
             ('name', operator, statement_line.name or ''),
             ('ref', operator, statement_line.name or ''),
