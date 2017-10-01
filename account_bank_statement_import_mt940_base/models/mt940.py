@@ -22,7 +22,7 @@ import re
 import logging
 from datetime import datetime
 
- 
+
 def str2amount(sign, amount_str):
     """Convert sign (C or D) and amount in string to signed amount (float)."""
     factor = (1 if sign == 'C' else -1)
@@ -43,6 +43,7 @@ def get_subfields(data, codewords):
         'ISDT': ['20'],
     }
     """
+
     subfields = {}
     current_codeword = None
     for word in data.split('/'):
@@ -169,7 +170,8 @@ class MT940(object):
         """skip header lines, create current statement"""
         for dummy_i in range(self.header_lines):
             iterator.next()
-        self.current_statement = {'name': None, 'date': None, 'balance_start': 0.0,
+        self.current_statement = {'name': None,
+                                  'date': None, 'balance_start': 0.0,
                                   'balance_end_real': 0.0, 'transactions': []}
 
     def handle_footer(self, dummy_line, dummy_iterator):
@@ -208,7 +210,8 @@ class MT940(object):
         # statement for each 20: tag encountered.
         if not self.currency_code:
             self.currency_code = data[7:10]
-            self.current_statement['balance_start'] = str2amount(data[0], data[10:])
+            self.current_statement['balance_start'] = \
+                str2amount(data[0], data[10:])
         # stmt = self.current_statement
         # if not stmt.local_currency:
         #     stmt.local_currency = data[7:10]
@@ -218,8 +221,9 @@ class MT940(object):
         """get transaction values"""
         self.current_statement['transactions'].append({})
         self.current_transaction = self.current_statement['transactions'][-1]
-        self.current_transaction['date'] = datetime.strptime(data[:6], '%y%m%d')       
-        
+        self.current_transaction['date'] = datetime.strptime(data[:6],
+                                                             '%y%m%d')
+
         # transaction = self.current_statement.create_transaction()
         # self.current_transaction = transaction
         # transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
@@ -240,20 +244,24 @@ class MT940(object):
         Depending on the bank, there might be multiple 62F tags in the import
         file. The last one counts.
         """
-        
-        self.current_statement['balance_end_real'] = str2amount(data[0], data[10:])
-        self.current_statement['date'] = datetime.strptime(data[1:7], '%y%m%d')
+
+        self.current_statement['balance_end_real'] = \
+            str2amount(data[0], data[10:])
+        self.current_statement['date'] = \
+            datetime.strptime(data[1:7], '%y%m%d')
         # stmt = self.current_statement
         # stmt.end_balance = str2amount(data[0], data[10:])
         # stmt.date = datetime.strptime(data[1:7], '%y%m%d')
-        
+
         # Only replace logically empty (only whitespace or zeroes) id's:
         # But do replace statement_id's added before (therefore starting
         # with local_account), because we need the date on the last 62F
         # record.
-        test_empty_id = re.sub(r'[\s0]', '', self.current_statement['name'] or '')
+        test_empty_id = re.sub(r'[\s0]', '',
+                               self.current_statement['name'] or '')
         if ((not test_empty_id) or
-                (self.current_statement['name'].startswith(self.account_number))):
+                (self.current_statement['name'].startswith(
+                    self.account_number))):
             self.current_statement['name'] = '%s-%s' % (
                 self.account_number,
                 self.current_statement['date'].strftime('%Y-%m-%d'),
