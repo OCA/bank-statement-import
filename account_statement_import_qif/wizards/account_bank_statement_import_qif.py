@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Odoo S. A.
 # Copyright 2015 Laurent Mignon <laurent.mignon@acsone.eu>
 # Copyright 2015 Ronald Portier <rportier@therp.nl>
-# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016-2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import StringIO
 import dateutil.parser
 
 from odoo.tools.translate import _
@@ -18,16 +16,14 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _check_qif(self, data_file):
-        return data_file.strip().startswith('!Type:')
+        return data_file.strip().startswith(b'!Type:')
 
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):
             return super(AccountBankStatementImport, self)._parse_file(
                 data_file)
         try:
-            file_data = ""
-            for line in StringIO.StringIO(data_file).readlines():
-                file_data += line
+            file_data = data_file.decode()
             if '\r' in file_data:
                 data_list = file_data.split('\r')
             else:
