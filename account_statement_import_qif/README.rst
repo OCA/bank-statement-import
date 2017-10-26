@@ -26,14 +26,14 @@ Usage
 
 To use this module, you need to:
 
-#. Go to *Accounting* dashboard.
+#. Go to *Invoicing / Accounting* dashboard.
 #. Click on *Import statement* from any of the bank journals.
 #. Select a QIF file.
 #. Press *Import*.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/174/9.0
+   :target: https://runbot.odoo-community.org/runbot/174/11.0
 
 Bug Tracker
 ===========
@@ -50,11 +50,15 @@ Credits
 Contributors
 ------------    
 
-* Odoo SA 
-* Alexis de Lattre <alexis@via.ecp.fr>
-* Laurent Mignon <laurent.mignon@acsone.eu>
-* Ronald Portier <rportier@therp.nl>
-* Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* Odoo SA
+* Akretion
+  * Alexis de Lattre <alexis@via.ecp.fr>
+* ACSONE A/V
+  * Laurent Mignon <laurent.mignon@acsone.eu>
+* Therp
+  * Ronald Portier <rportier@therp.nl>
+* Tecnativa (https://www.tecnativa.com)
+  * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 
 Maintainer
 ----------
