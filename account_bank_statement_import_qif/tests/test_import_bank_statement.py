@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Odoo S. A.
 # Copyright 2015 Laurent Mignon <laurent.mignon@acsone.eu>
 # Copyright 2015 Ronald Portier <rportier@therp.nl>
-# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2016-2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
+import base64
 
 
 class TestQifFile(TransactionCase):
@@ -32,7 +32,7 @@ class TestQifFile(TransactionCase):
         qif_file_path = get_module_resource(
             'account_bank_statement_import_qif', 'tests', 'test_qif.qif',
         )
-        qif_file = open(qif_file_path, 'rb').read().encode('base64')
+        qif_file = base64.b64encode(open(qif_file_path, 'rb').read())
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
         ).create(
