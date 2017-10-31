@@ -6,7 +6,6 @@ import logging
 import StringIO
 import zipfile
 from odoo import api, models
-from ..camt import CamtParser as Parser
 
 _logger = logging.getLogger(__name__)
 
@@ -19,7 +18,7 @@ class AccountBankStatementImport(models.TransientModel):
     def _parse_file(self, data_file):
         """Parse a CAMT053 XML file."""
         try:
-            parser = Parser()
+            parser = self.env['account.bank.statement.import.camt.parser']
             _logger.debug("Try parsing with camt.")
             return parser.parse(data_file)
         except ValueError:
