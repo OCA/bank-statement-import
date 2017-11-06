@@ -202,7 +202,7 @@ class MT940(object):
         """find a function to handle the record represented by line"""
         tag_match = re.match(self.tag_regex, line)
         tag = tag_match.group(0).strip(':')
-        if not hasattr(self, 'handle_tag_%s' % tag):
+        if not hasattr(self, 'handle_tag_%s' % tag):  # pragma: no cover
             logging.error('Unknown tag %s', tag)
             logging.error(line)
             return

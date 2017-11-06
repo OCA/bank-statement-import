@@ -35,6 +35,7 @@ Contributors
 
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
+* Andrea Stirpe <a.stirpe@onestein.nl>
 
 Maintainer
 ----------
