@@ -11,8 +11,6 @@ import tempfile
 from odoo.tests.common import TransactionCase
 from odoo.tools.misc import file_open
 
-from ..camt import CamtParser
-
 
 DATA_DIR = 'account_bank_statement_import_camt/test_files/'
 
@@ -21,7 +19,7 @@ class TestParser(TransactionCase):
     """Tests for the camt parser itself."""
     def setUp(self):
         super(TestParser, self).setUp()
-        self.parser = CamtParser()
+        self.parser = self.env['account.bank.statement.import.camt.parser']
 
     def _do_parse_test(self, inputfile, goldenfile):
         with file_open(inputfile) as testfile:
