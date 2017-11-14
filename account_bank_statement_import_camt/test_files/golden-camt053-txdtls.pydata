@@ -2,6 +2,7 @@
  'CH1111000000123456789',
  [{'balance_end_real': 79443.15,
    'balance_start': 75960.15,
+   'date': '2017-03-22',
    'name': '20170323123456789012345',
    'transactions': [{'account_number': 'CH2222000000123456789',
                      'amount': 2187.0,
