@@ -5,8 +5,11 @@
 import re
 from lxml import etree
 
+from odoo import models
 
-class CamtParser(object):
+
+class CamtParser(models.AbstractModel):
+    _name = 'account.bank.statement.import.camt.parser'
     """Parser for camt bank statement import files."""
 
     def parse_amount(self, ns, node):
