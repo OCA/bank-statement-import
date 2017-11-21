@@ -12,6 +12,15 @@ from odoo.tools.translate import _
 from odoo import api, models
 from odoo.exceptions import UserError
 
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    import chardet
+except (ImportError, IOError) as err:
+    chardet = False
+    _logger.debug(err)
+
 
 class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
@@ -20,10 +29,21 @@ class AccountBankStatementImport(models.TransientModel):
     def _check_qif(self, data_file):
         return data_file.strip().startswith('!Type:')
 
+    def _get_qif_encoding(self, data_file):
+        if chardet:
+            return chardet.detect(data_file)['encoding']
+        else:
+            return u'utf-8'
+
+    def _parse_qif_date(self, date_str):
+        return dateutil.parser.parse(date_str, fuzzy=True).date()
+
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):
             return super(AccountBankStatementImport, self)._parse_file(
                 data_file)
+        encoding = self._get_qif_encoding(data_file)
+        data_file = data_file.decode(encoding)
         try:
             file_data = ""
             for line in StringIO.StringIO(data_file).readlines():
@@ -39,15 +59,14 @@ class AccountBankStatementImport(models.TransientModel):
         transactions = []
         vals_line = {}
         total = 0
-        if header == "Bank":
+        if header in ("Bank", "CCard"):
             vals_bank_statement = {}
             for line in data_list:
                 line = line.strip()
                 if not line:
                     continue
                 if line[0] == 'D':  # date of transaction
-                    vals_line['date'] = dateutil.parser.parse(
-                        line[1:], fuzzy=True).date()
+                    vals_line['date'] = self._parse_qif_date(line[1:])
                 elif line[0] == 'T':  # Total amount
                     total += float(line[1:].replace(',', ''))
                     vals_line['amount'] = float(line[1:].replace(',', ''))
