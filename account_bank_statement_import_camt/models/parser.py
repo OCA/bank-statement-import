@@ -216,10 +216,12 @@ class CamtParser(models.AbstractModel):
         )
         if not re_camt.search(ns):
             raise ValueError('no camt: ' + ns)
-        # Check wether version 052 or 053:
+        # Check wether version 052 ,053 or 054:
         re_camt_version = re.compile(
-            r'(^urn:iso:std:iso:20022:tech:xsd:camt.053.'
+            r'(^urn:iso:std:iso:20022:tech:xsd:camt.054.'
+            r'|^urn:iso:std:iso:20022:tech:xsd:camt.053.'
             r'|^urn:iso:std:iso:20022:tech:xsd:camt.052.'
+            r'|^ISO:camt.054.'
             r'|^ISO:camt.053.'
             r'|^ISO:camt.052.)'
         )
