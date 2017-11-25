@@ -3,14 +3,14 @@
 # * account_bank_statement_import_ofx
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-11 21:55+0000\n"
-"PO-Revision-Date: 2017-04-11 21:55+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2017-11-21 01:42+0000\n"
+"PO-Revision-Date: 2017-11-21 01:42+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. module: account_bank_statement_import_ofx
 #: model:ir.model,name:account_bank_statement_import_ofx.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr "Importar extrato bancário"
+msgstr "Importar Extrato Bancário"
 
 #. module: account_bank_statement_import_ofx
 #: model:ir.ui.view,arch_db:account_bank_statement_import_ofx.view_account_bank_statement_import_form
