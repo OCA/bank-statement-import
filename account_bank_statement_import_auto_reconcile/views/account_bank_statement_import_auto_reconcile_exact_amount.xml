@@ -5,7 +5,17 @@
             <field name="model">account.bank.statement.import.auto.reconcile.exact.amount</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
+                    <group name="statement_fields" string="On the statement, match...">
+                        <field name="match_st_ref" />
+                        <field name="match_st_name" />
+                    </group>
+                    <group name="move_line_fields" string="... with the following fields">
+                        <field name="match_move_ref" />
+                        <field name="match_move_name" />
+                        <field name="match_line_ref" />
+                        <field name="match_line_name" />
+                    </group>
+                    <group name="options" string="Options">
                         <field name="substring_match" />
                         <field name="case_sensitive" />
                     </group>

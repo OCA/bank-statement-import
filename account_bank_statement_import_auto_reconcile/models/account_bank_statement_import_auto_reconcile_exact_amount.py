@@ -12,6 +12,12 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
 
     substring_match = fields.Boolean('Match for substrings', default=False)
     case_sensitive = fields.Boolean('Case sensitive matching', default=False)
+    match_st_ref = fields.Boolean('Reference from st. line', default=True)
+    match_st_name = fields.Boolean('Name from st. line', default=True)
+    match_move_ref = fields.Boolean('Move reference', default=True)
+    match_move_name = fields.Boolean('Move name', default=True)
+    match_line_ref = fields.Boolean('Move line reference', default=True)
+    match_line_name = fields.Boolean('Move line name', default=True)
 
     @api.multi
     def reconcile(self, statement_line):
@@ -34,20 +40,35 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
             amount_field = 'credit'
             sign = -1
 
+        statement_fields = filter(None, [
+            self.match_st_name and 'name' or None,
+            self.match_st_ref and 'ref' or None,
+        ])
+
+        move_line_fields = filter(None, [
+            self.match_move_ref and 'move_id.ref' or None,
+            self.match_move_name and 'move_id.name' or None,
+            self.match_line_ref and 'ref' or None,
+            self.match_line_name and 'name' or None,
+        ])
+
         domain = [
-            '|', '|', '|', '|', '|',
-            ('move_id.ref', operator, statement_line.ref or ''),
-            ('move_id.name', operator, statement_line.name or ''),
-            ('ref', operator, statement_line.ref or ''),
-            ('name', operator, statement_line.name or ''),
-            ('ref', operator, statement_line.name or ''),
-            ('name', operator, statement_line.ref or ''),
             ('reconcile_id', '=', False),
             ('state', '=', 'valid'),
             ('account_id.reconcile', '=', True),
             ('partner_id', '=', statement_line.partner_id.id),
             (amount_field, '=', self._round(sign * statement_line.amount)),
         ]
+
+        domain += (
+            len(statement_fields) * len(move_line_fields) - 1
+        ) * ['|']
+
+        for move_line_field in move_line_fields:
+            for statement_field in statement_fields:
+                value = statement_line[statement_field]
+                domain.append((move_line_field, operator, value))
+
         move_lines = self.env['account.move.line'].search(domain, limit=2)
         if move_lines and len(move_lines) == 1:
             self._reconcile_move_line(statement_line, move_lines.id)
