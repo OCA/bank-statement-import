@@ -17,6 +17,9 @@ class TestAccountBankStatementImportAutoReconcile(TransactionCase):
         self.original_parse_file = AccountBankStatementImport._parse_file
         AccountBankStatementImport._parse_file = self._parse_file
         self.invoice = self.env.ref('account.invoice_4')
+        self.rule = self.env.ref(
+            'account_bank_statement_import_auto_reconcile.rule_amount_exact'
+        )
 
     def tearDown(self):
         super(TestAccountBankStatementImportAutoReconcile, self).tearDown()
@@ -59,8 +62,23 @@ class TestAccountBankStatementImportAutoReconcile(TransactionCase):
         self.env['account.bank.statement'].browse(
             action['context']['statement_ids']
         ).unlink()
+        # now we do matching, but manipulate the matching to work on the
+        # ref field only which is empty in our example
+        self.rule.write({'match_st_name': False})
+        action = self.env['account.bank.statement.import'].create({
+            'data_file': base64.b64encode('hello world'),
+            'journal_id': self.env.ref('account.bank_journal').id,
+            'auto_reconcile': True,
+        }).import_file()
+        # nothing should have happened
+        self.assertEqual(self.invoice.state, 'open')
+        self.env['account.bank.statement'].browse(
+            action['context']['statement_ids']
+        ).unlink()
         # for exact amount matching, our first transaction should be matched
-        # to the invoice's move line, marking the invoice as paid
+        # to the invoice's move line, marking the invoice as paid,
+        # provided we allow matching by name
+        self.rule.write({'match_st_name': True})
         action = self.env['account.bank.statement.import'].create({
             'data_file': base64.b64encode('hello world'),
             'journal_id': self.env.ref('account.bank_journal').id,
