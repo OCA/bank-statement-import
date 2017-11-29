@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Class to parse camt files."""
 # © 2013-2016 Therp BV <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -9,8 +8,8 @@ from odoo import models
 
 
 class CamtParser(models.AbstractModel):
-    _name = 'account.bank.statement.import.camt.parser'
     """Parser for camt bank statement import files."""
+    _name = 'account.bank.statement.import.camt.parser'
 
     def parse_amount(self, ns, node):
         """Parse element that contains Amount and CreditDebitIndicator."""
@@ -78,10 +77,6 @@ class CamtParser(models.AbstractModel):
         if party_node:
             self.add_value_from_node(
                 ns, party_node[0], './ns:Nm', transaction, 'partner_name')
-            self.add_value_from_node(
-                ns, party_node[0], './ns:PstlAdr/ns:Ctry', transaction,
-                'partner_country'
-            )
             address_node = party_node[0].xpath(
                 './ns:PstlAdr/ns:AdrLine', namespaces={'ns': ns})
             if address_node:
@@ -96,12 +91,6 @@ class CamtParser(models.AbstractModel):
                 './ns:IBAN', namespaces={'ns': ns})
             if iban_node:
                 transaction['account_number'] = iban_node[0].text
-                bic_node = node.xpath(
-                    './ns:RltdAgts/ns:%sAgt/ns:FinInstnId/ns:BIC' % party_type,
-                    namespaces={'ns': ns}
-                )
-                if bic_node:
-                    transaction['account_bic'] = bic_node[0].text
             else:
                 self.add_value_from_node(
                     ns, account_node[0], './ns:Othr/ns:Id', transaction,
@@ -111,16 +100,12 @@ class CamtParser(models.AbstractModel):
     def parse_transaction(self, ns, node):
         """Parse transaction (entry) node."""
         transaction = {}
-        self.add_value_from_node(
-            ns, node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction,
-            'transfer_type'
-        )
+
         self.add_value_from_node(
             ns, node, './ns:BookgDt/ns:Dt', transaction, 'date')
-        self.add_value_from_node(
-            ns, node, './ns:BookgDt/ns:Dt', transaction, 'execution_date')
-        self.add_value_from_node(
-            ns, node, './ns:ValDt/ns:Dt', transaction, 'value_date')
+        if not transaction.get('date'):
+            self.add_value_from_node(
+                ns, node, './ns:ValDt/ns:Dt', transaction, 'date')
 
         transaction['amount'] = self.parse_amount(ns, node)
 
@@ -140,7 +125,7 @@ class CamtParser(models.AbstractModel):
                 ],
                 transaction, 'ref'
             )
-        transaction['data'] = etree.tostring(node)
+
         return transaction
 
     def get_balance_amounts(self, ns, node):
@@ -176,6 +161,19 @@ class CamtParser(models.AbstractModel):
             self.parse_amount(ns, end_balance_node)
         )
 
+    def get_statement_date(self, ns, node):
+        """Return statement date.
+
+        The date might be in the balance node:
+        CLBD = ClosingBalance
+        """
+        code_expr = \
+            './ns:Bal/ns:Tp/ns:CdOrPrtry/ns:Cd[text()="CLBD"]' \
+            '/../../../ns:Dt/ns:Dt/text()'
+        date_node = node.xpath(code_expr, namespaces={'ns': ns})
+        date = date_node and date_node[0] or None
+        return date
+
     def parse_statement(self, ns, node):
         """Parse a single Stmt node."""
         result = {}
@@ -193,6 +191,7 @@ class CamtParser(models.AbstractModel):
             ns, node, './ns:Acct/ns:Ccy', result, 'currency')
         result['balance_start'], result['balance_end_real'] = (
             self.get_balance_amounts(ns, node))
+        result['date'] = self.get_statement_date(ns, node)
         transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
         result['transactions'] = []
         for entry_node in transaction_nodes:
@@ -210,10 +209,12 @@ class CamtParser(models.AbstractModel):
         )
         if not re_camt.search(ns):
             raise ValueError('no camt: ' + ns)
-        # Check wether version 052 or 053:
+        # Check wether version 052 ,053 or 054:
         re_camt_version = re.compile(
-            r'(^urn:iso:std:iso:20022:tech:xsd:camt.053.'
+            r'(^urn:iso:std:iso:20022:tech:xsd:camt.054.'
+            r'|^urn:iso:std:iso:20022:tech:xsd:camt.053.'
             r'|^urn:iso:std:iso:20022:tech:xsd:camt.052.'
+            r'|^ISO:camt.054.'
             r'|^ISO:camt.053.'
             r'|^ISO:camt.052.)'
         )

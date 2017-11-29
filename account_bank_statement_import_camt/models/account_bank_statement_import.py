@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 """Add process_camt method to account.bank.statement.import."""
 # © 2013-2016 Therp BV <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
-import StringIO
+from io import BytesIO
 import zipfile
 from odoo import api, models
 
@@ -23,7 +22,7 @@ class AccountBankStatementImport(models.TransientModel):
             return parser.parse(data_file)
         except ValueError:
             try:
-                with zipfile.ZipFile(StringIO.StringIO(data_file)) as data:
+                with zipfile.ZipFile(BytesIO(data_file)) as data:
                     currency = None
                     account_number = None
                     transactions = []
