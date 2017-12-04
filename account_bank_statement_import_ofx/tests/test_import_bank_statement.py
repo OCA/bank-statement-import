@@ -12,6 +12,7 @@ class TestOfxFile(TransactionCase):
         super(TestOfxFile, self).setUp()
         self.absi_model = self.env['account.bank.statement.import']
         self.abs_model = self.env['account.bank.statement']
+        self.j_model = self.env['account.journal']
         self.absl_model = self.env['account.bank.statement.line']
         cur = self.env.ref('base.USD')
         self.env.ref('base.main_company').currency_id = cur.id
@@ -20,13 +21,36 @@ class TestOfxFile(TransactionCase):
             'partner_id': self.env.ref('base.main_partner').id,
             'company_id': self.env.ref('base.main_company').id,
             'bank_id': self.env.ref('base.res_bank_1').id,
-            })
+        })
         self.env['account.journal'].create({
             'name': 'Bank Journal TEST OFX',
             'code': 'BNK12',
             'type': 'bank',
             'bank_account_id': bank.id,
-            })
+        })
+
+        bank_iban_ofx = self.env['res.partner.bank'].create({
+            'acc_number': 'FR7630001007941234567890185',
+            'partner_id': self.env.ref('base.main_partner').id,
+            'company_id': self.env.ref('base.main_company').id,
+            'bank_id': self.env.ref('base.res_bank_1').id,
+        })
+
+        self.env['account.journal'].create({
+            'name': 'FR7630001007941234567890185',
+            'code': 'BNK13',
+            'type': 'bank',
+            'bank_account_id': bank_iban_ofx.id,
+        })
+
+    def test_wrong_ofx_file_import(self):
+        ofx_file_path = get_module_resource(
+            'account_bank_statement_import_ofx',
+            'tests/test_ofx_file/', 'test_ofx_wrong.ofx')
+        ofx_file_wrong = open(ofx_file_path, 'rb').read().encode('base64')
+        bank_statement = self.absi_model.create(
+            dict(data_file=ofx_file_wrong))
+        self.assertFalse(bank_statement._check_ofx(data_file=ofx_file_wrong))
 
     def test_ofx_file_import(self):
         ofx_file_path = get_module_resource(
@@ -46,3 +70,17 @@ class TestOfxFile(TransactionCase):
             ('statement_id', '=', bank_st_record.id)])[0]
         self.assertEquals(line.ref, '219378')
         self.assertEquals(line.date, '2013-08-24')
+
+    def test_check_journal_bank_account(self):
+        ofx_file_path = get_module_resource(
+            'account_bank_statement_import_ofx',
+            'tests/test_ofx_file/', 'test_ofx_iban.ofx')
+        ofx_file = open(ofx_file_path, 'rb').read().encode('base64')
+        bank_st = self.absi_model.create(
+            dict(data_file=ofx_file))
+        journal_iban_ofx = self.j_model.search([
+            ('name', '=', 'FR7630001007941234567890185')])
+        res = bank_st._check_journal_bank_account(journal_iban_ofx,
+                                                  '12345678901')
+        self.assertTrue(res)
+        bank_st.with_context(journal_id=journal_iban_ofx.id).import_file()

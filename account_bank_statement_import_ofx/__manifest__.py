@@ -8,6 +8,7 @@
               'Akretion,'
               'La Louve,'
               'GRAP,'
+              'Nicolas JEUDY,'
               'Odoo Community Association (OCA)',
     'website': 'https://odoo-community.org/',
     'depends': [
