@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
 ====================
@@ -36,6 +36,7 @@ Contributors
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
 * Andrea Stirpe <a.stirpe@onestein.nl>
+* Fekete Mihai <mihai.fekete@forbiom.eu>
 
 Maintainer
 ----------
