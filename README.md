@@ -6,7 +6,9 @@ OCA bank statement import modules for Odoo
 
 This repository hosts additionnal parsers and import features inspired by v7.0 branch from https://github.com/OCA/bank-payment and https://github.com/OCA/bank-statement-reconcile
 
-
+Contributing
+------------
+Do you want to contribute? Please read our [contributing guidelines](https://github.com/OCA/maintainer-tools/blob/master/CONTRIBUTING.md).
 
 Translation Status
 ------------------
