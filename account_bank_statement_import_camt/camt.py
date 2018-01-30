@@ -3,6 +3,7 @@
 ##############################################################################
 #
 #    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
+#    Copyright 2017 Open Net Sàrl
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,11 +19,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 import re
 from datetime import datetime
 from lxml import etree
 from openerp.addons.account_bank_statement_import.parserlib import (
     BankStatement)
+from copy import copy
 
 
 class CamtParser(object):
@@ -62,7 +65,7 @@ class CamtParser(object):
                 break
 
     def parse_transaction_details(self, ns, node, transaction):
-        """Parse transaction details (message, party, account...)."""
+        """Parse TxDtls node."""
         # message
         self.add_value_from_node(
             ns, node, [
@@ -78,6 +81,9 @@ class CamtParser(object):
             ],
             transaction, 'eref'
         )
+        amount = self.parse_amount(ns, node)
+        if amount != 0.0:
+            transaction['amount'] = amount
         # remote party values
         party_type = 'Dbtr'
         party_type_node = node.xpath(
@@ -119,33 +125,48 @@ class CamtParser(object):
                     'remote_account'
                 )
 
-    def parse_transaction(self, ns, node, transaction):
-        """Parse transaction (entry) node."""
+    def parse_entry(self, ns, node, transaction):
+        """Parse an Ntry node and yield transactions."""
         self.add_value_from_node(
             ns, node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction,
             'transfer_type'
         )
         self.add_value_from_node(
+            ns, node, './ns:BookgDt/ns:Dt', transaction, 'date')
+        self.add_value_from_node(
             ns, node, './ns:BookgDt/ns:Dt', transaction, 'execution_date')
         self.add_value_from_node(
             ns, node, './ns:ValDt/ns:Dt', transaction, 'value_date')
-        transaction.transferred_amount = self.parse_amount(ns, node)
-        details_node = node.xpath(
+        amount = self.parse_amount(ns, node)
+        if amount != 0.0:
+            transaction['amount'] = amount
+        self.add_value_from_node(
+            ns, node, './ns:AddtlNtryInf', transaction, 'name')
+        self.add_value_from_node(
+            ns, node, [
+                './ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                './ns:NtryDtls/ns:Btch/ns:PmtInfId',
+            ],
+            transaction, 'ref'
+        )
+        details_nodes = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
-        if details_node:
-            self.parse_transaction_details(ns, details_node[0], transaction)
-        if not transaction.message:
-            self.add_value_from_node(
-                ns, node, './ns:AddtlNtryInf', transaction, 'message')
-        if not transaction.eref:
-            self.add_value_from_node(
-                ns, node, [
-                    './ns:NtryDtls/ns:Btch/ns:PmtInfId',
-                ],
-                transaction, 'eref'
-            )
-        transaction.data = etree.tostring(node)
-        return transaction
+        if len(details_nodes) == 0:
+            yield transaction
+            return
+        transaction_base = transaction
+        for i, dnode in enumerate(details_nodes):
+            transaction = copy(transaction_base)
+            self.parse_transaction_details(ns, dnode, transaction)
+            # transactions['data'] should be a synthetic xml snippet which
+            # contains only the TxDtls that's relevant.
+            data = copy(node)
+            for j, dnode in enumerate(data.xpath(
+                    './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})):
+                if j != i:
+                    dnode.getparent().remove(dnode)
+            transaction['data'] = etree.tostring(data)
+            yield transaction
 
     def get_balance_amounts(self, ns, node):
         """Return opening and closing balance.
@@ -195,12 +216,14 @@ class CamtParser(object):
             ns, node, './ns:Acct/ns:Ccy', statement, 'local_currency')
         (statement.start_balance, statement.end_balance) = (
             self.get_balance_amounts(ns, node))
-        transaction_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
-        for entry_node in transaction_nodes:
+        entry_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
+        transactions = []
+        for entry_node in entry_nodes:
             transaction = statement.create_transaction()
-            self.parse_transaction(ns, entry_node, transaction)
+            transactions.extend(self.parse_entry(ns, entry_node, transaction))
+        statement['transactions'] = transactions
         if statement['transactions']:
-            execution_date = statement['transactions'][0].execution_date
+            execution_date = statement['transactions'][0].execution_date[:10]
             statement.date = datetime.strptime(execution_date, "%Y-%m-%d")
             # Prepend date of first transaction to improve id uniquenes
             if execution_date not in statement.statement_id:
