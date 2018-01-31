@@ -75,14 +75,19 @@ class CamtParser(object):
         """Parse TxDtls node."""
         # message
         self.add_value_from_node(
-            ns, node, [
+            ns,
+            node,
+            [
                 './ns:RmtInf/ns:Ustrd',
                 './ns:AddtlTxInf',
                 './ns:AddtlNtryInf',
                 './ns:RltdPties/ns:CdtrAcct/ns:Tp/ns:Prtry',
                 './ns:RltdPties/ns:DbtrAcct/ns:Tp/ns:Prtry',
-            ], transaction, 'message', join_str='\n',
-               default=_('No description')
+            ],
+            transaction,
+            'message',
+            join_str='\n',
+            default=_('No description')
         )
         # eref
         self.add_value_from_node(
