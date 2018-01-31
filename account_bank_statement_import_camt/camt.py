@@ -21,11 +21,14 @@
 ##############################################################################
 
 import re
+from copy import copy
 from datetime import datetime
 from lxml import etree
+
+from openerp import _
+
 from openerp.addons.account_bank_statement_import.parserlib import (
     BankStatement)
-from copy import copy
 
 
 class CamtParser(object):
@@ -46,7 +49,8 @@ class CamtParser(object):
         return amount
 
     def add_value_from_node(
-            self, ns, node, xpath_str, obj, attr_name, join_str=None):
+            self, ns, node, xpath_str, obj, attr_name, join_str=None,
+            default=None):
         """Add value to object from first or all nodes found with xpath.
 
         If xpath_str is a list (or iterable), it will be seen as a series
@@ -63,16 +67,28 @@ class CamtParser(object):
                     attr_value = join_str.join([x.text for x in found_node])
                 setattr(obj, attr_name, attr_value)
                 break
+        else:
+            if default:
+                setattr(obj, attr_name, default)
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse TxDtls node."""
         # message
         self.add_value_from_node(
-            ns, node, [
+            ns,
+            node,
+            [
                 './ns:RmtInf/ns:Ustrd',
                 './ns:AddtlTxInf',
                 './ns:AddtlNtryInf',
-            ], transaction, 'message', join_str='\n')
+                './ns:RltdPties/ns:CdtrAcct/ns:Tp/ns:Prtry',
+                './ns:RltdPties/ns:DbtrAcct/ns:Tp/ns:Prtry',
+            ],
+            transaction,
+            'message',
+            join_str='\n',
+            default=_('No description')
+        )
         # eref
         self.add_value_from_node(
             ns, node, [
