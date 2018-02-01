@@ -75,6 +75,8 @@ class CamtParser(models.AbstractModel):
             ],
             transaction, 'ref'
         )
+        if 'ref' not in transaction and 'name' in transaction:
+            transaction['ref'] = transaction['name']
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction['amount'] = amount
