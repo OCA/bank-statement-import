@@ -21,8 +21,17 @@ except (ImportError, IOError) as err:
 # value are translated. You can add you header here
 
 HEADERS = [
-    '"Date","Heure","Fuseau horaire","Description","Devise"',  # French
-    '"Date","Time","Time Zone","Description","Currency"',  # English
+    # French
+    '"Date","Heure","Fuseau horaire","Description","Devise","Avant commission"'
+    ',"Commission","Net","Solde","Numéro de transaction","Adresse email de '
+    'l\'expéditeur","Nom","Nom de la banque","Compte bancaire","Montant des '
+    'frais de livraison et de traitement","TVA","Identifiant de facture",'
+    '"Numéro de la transaction de référence"',
+    # English
+    '"Date","Time","Time Zone","Description","Currency","Gross ","Fee ","Net",'
+    '"Balance","Transaction ID","From Email Address","Name","Bank Name",'
+    '"Bank Account","Shipping and Handling Amount","Sales Tax","Invoice ID",'
+    '"Reference Txn ID"'
     ]
 
 
@@ -114,14 +123,15 @@ class AccountBankStatementImport(models.TransientModel):
             }
 
     def _post_process_statement_line(self, raw_lines):
-        # In the new paypal bank statement the first lines always
-        # have the currency of the paypal account
-        paypal_account_currency = raw_lines[0]['currency']
-
+        journal_id = self.env.context.get('journal_id')
+        if not journal_id:
+            raise UserError(_('You must run this wizard from the journal'))
+        journal = self.env['account.journal'].browse(journal_id)
+        currency = journal.currency_id or journal.company_id.currency_id
         currency_change_lines = {}
         real_transactions = []
         for line in raw_lines:
-            if line['currency'] != paypal_account_currency:
+            if line['currency'] != currency.name:
                 currency_change_lines[line['transaction_id']] = line
             else:
                 real_transactions.append(line)
