@@ -179,12 +179,14 @@ class CamtParser(models.AbstractModel):
             self.parse_transaction_details(ns, dnode, transaction)
             # transactions['data'] should be a synthetic xml snippet which
             # contains only the TxDtls that's relevant.
-            data = copy(node)
-            for j, dnode in enumerate(data.xpath(
-                    './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})):
-                if j != i:
-                    dnode.getparent().remove(dnode)
-            transaction['data'] = etree.tostring(data)
+            # only set this field if statement lines have it
+            if 'data' in self.env['account.bank.statement.line']._fields:
+                data = copy(node)
+                for j, dnode in enumerate(data.xpath(
+                        './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})):
+                    if j != i:
+                        dnode.getparent().remove(dnode)
+                transaction['data'] = etree.tostring(data)
             yield transaction
 
     def get_balance_amounts(self, ns, node):
