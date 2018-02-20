@@ -30,8 +30,11 @@ from openerp import _
 from openerp.addons.account_bank_statement_import.parserlib import (
     BankStatement)
 
+from openerp import models
 
-class CamtParser(object):
+
+class CamtParser(models.AbstractModel):
+    _name = 'account.bank.statement.import.camt.parser'
     """Parser for camt bank statement import files."""
 
     def parse_amount(self, ns, node):
