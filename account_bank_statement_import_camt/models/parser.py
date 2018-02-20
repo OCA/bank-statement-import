@@ -180,7 +180,7 @@ class CamtParser(models.AbstractModel):
             # transactions['data'] should be a synthetic xml snippet which
             # contains only the TxDtls that's relevant.
             # only set this field if statement lines have it
-            if 'data' in self.env['account.bank.statement.line']._fields:
+            if 'data' in self.pool['account.bank.statement.line']._fields:
                 data = copy(node)
                 for j, dnode in enumerate(data.xpath(
                         './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})):
