@@ -232,14 +232,14 @@ class CamtParser(models.AbstractModel):
             r'|^ISO:camt.052.)'
         )
         if not re_camt_version.search(ns):
-            raise ValueError('no camt 052 or 053: ' + ns)
+            raise ValueError('no camt 052 or 053 or 054: ' + ns)
         # Check GrpHdr element:
         root_0_0 = root[0][0].tag[len(ns) + 2:]  # strip namespace
         if root_0_0 != 'GrpHdr':
             raise ValueError('expected GrpHdr, got: ' + root_0_0)
 
     def parse(self, data):
-        """Parse a camt.052 or camt.053 file."""
+        """Parse a camt.052 or camt.053 or camt.054 file."""
         try:
             root = etree.fromstring(
                 data, parser=etree.XMLParser(recover=True))
