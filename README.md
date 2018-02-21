@@ -12,7 +12,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[account_bank_statement_import_camt](account_bank_statement_import_camt/) | 10.0.1.1.0 | CAMT Format Bank Statements Import
+[account_bank_statement_import_camt](account_bank_statement_import_camt/) | 10.0.1.1.1 | CAMT Format Bank Statements Import
 [account_bank_statement_import_move_line](account_bank_statement_import_move_line/) | 10.0.1.0.0 | Bank statement import move lines
 [account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 10.0.1.0.0 | Import OFX Bank Statement
 [account_bank_statement_import_qif](account_bank_statement_import_qif/) | 10.0.1.0.1 | Import QIF Bank Statements
