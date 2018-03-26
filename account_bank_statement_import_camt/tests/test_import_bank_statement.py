@@ -47,6 +47,12 @@ class TestParser(TransactionCase):
             DATA_DIR + 'test-camt053-txdtls',
             DATA_DIR + 'golden-camt053-txdtls.pydata')
 
+    def test_parse_no_ntry(self):
+        self._do_parse_test(
+            DATA_DIR + 'test-camt053-no-ntry',
+            DATA_DIR + 'golden-camt053-no-ntry.pydata',
+        )
+
 
 class TestImport(TransactionCase):
     """Run test to import camt import."""

@@ -183,10 +183,12 @@ class CamtParser(models.AbstractModel):
         for entry_node in entry_nodes:
             transactions.extend(self.parse_entry(ns, entry_node))
         result['transactions'] = transactions
-        result['date'] = sorted(transactions,
-                                key=lambda x: x['date'],
-                                reverse=True
-                                )[0]['date']
+        result['date'] = None
+        if transactions:
+            result['date'] = sorted(transactions,
+                                    key=lambda x: x['date'],
+                                    reverse=True
+                                    )[0]['date']
         return result
 
     def check_version(self, ns, root):
