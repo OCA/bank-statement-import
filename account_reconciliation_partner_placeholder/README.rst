@@ -2,9 +2,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-========================================
-Account Reconciliation Widget Extensions
-========================================
+==========================================
+Account Reconciliation Partner Placeholder
+==========================================
 
 This module restores a feature from Odoo version 8. When a user imports a
 bank statement and the partner of the statement line is not present in

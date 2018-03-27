@@ -1,7 +1,7 @@
 # © 2018 bloopark systems (<http://bloopark.de>)
 
 {
-    'name': 'Account Reconciliation Widget Extensions',
+    'name': 'Account Reconciliation Partner Placeholder',
     'version': '11.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Odoo Community Association (OCA), bloopark systems GmbH',
