@@ -1,6 +1,8 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
+   :alt: License: AGPL-3
 
+====================
 Bank Statement MT940
 ====================
 
@@ -10,7 +12,7 @@ interpretation of it, this addon alone won't help you much. It is rather
 intended to be used by other addons to implement the dialect specific to a
 certain bank.
 
-See bank_statement_parse_nl_ing_mt940 for an example on how to use it.
+See account_bank_statement_import_mt940_nl_ing for an example on how to use it.
 
 Known issues / Roadmap
 ======================
@@ -20,11 +22,10 @@ Known issues / Roadmap
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
-In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_bank_statement_import%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
-
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/bank-statement-import/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smash it by providing detailed and welcomed feedback.
 
 Credits
 =======
@@ -34,9 +35,12 @@ Contributors
 
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
+* Andrea Stirpe <a.stirpe@onestein.nl>
+* Fekete Mihai <mihai.fekete@forbiom.eu>
 
 Maintainer
 ----------
+
 
 .. image:: https://odoo-community.org/logo.png
    :alt: Odoo Community Association
@@ -48,6 +52,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
-This module should make it easy to migrate bank statement import
-modules written for earlies versions of Odoo/OpenERP.
+To contribute to this module, please visit https://odoo-community.org.

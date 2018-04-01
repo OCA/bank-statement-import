@@ -1,29 +1,10 @@
-# -*- coding: utf-8 -*-
+# Copyright (C) 2014-2015 Therp BV <http://therp.nl>.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 """Generic parser for MT940 files, base for customized versions per bank."""
-##############################################################################
-#
-#    Copyright (C) 2014-2015 Therp BV <http://therp.nl>.
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+
 import re
 import logging
 from datetime import datetime
-
-from openerp.addons.account_bank_statement_import.parserlib import (
-    BankStatement)
 
 
 def str2amount(sign, amount_str):
@@ -68,13 +49,11 @@ def get_counterpart(transaction, subfield):
     if not subfield:
         return  # subfield is empty
     if len(subfield) >= 1 and subfield[0]:
-        transaction.remote_account = subfield[0]
+        transaction.update({'account_number': subfield[0]})
     if len(subfield) >= 2 and subfield[1]:
-        transaction.remote_bank_bic = subfield[1]
+        transaction.update({'account_bic': subfield[1]})
     if len(subfield) >= 3 and subfield[2]:
-        transaction.remote_owner = subfield[2]
-    if len(subfield) >= 4 and subfield[3]:
-        transaction.remote_owner_city = subfield[3]
+        transaction.update({'partner_name': subfield[2]})
 
 
 def handle_common_subfields(transaction, subfields):
@@ -83,14 +62,28 @@ def handle_common_subfields(transaction, subfields):
     for counterpart_field in ['CNTP', 'BENM', 'ORDP']:
         if counterpart_field in subfields:
             get_counterpart(transaction, subfields[counterpart_field])
+    if not transaction.get('name'):
+        transaction['name'] = ''
     # REMI: Remitter information (text entered by other party on trans.):
     if 'REMI' in subfields:
-        transaction.message = (
-            '/'.join(x for x in subfields['REMI'] if x))
+        transaction['name'] += (
+            subfields['REMI'][2]
+            # this might look like
+            # /REMI/USTD//<remittance info>/
+            # or
+            # /REMI/STRD/CUR/<betalingskenmerk>/
+            if len(subfields['REMI']) >= 3 and subfields['REMI'][0] in [
+                'STRD', 'USTD'
+            ]
+            else
+            '/'.join(x for x in subfields['REMI'] if x)
+        )
+    # EREF: End-to-end reference
+    if 'EREF' in subfields:
+        transaction['name'] += '/'.join(filter(bool, subfields['EREF']))
     # Get transaction reference subfield (might vary):
-    if transaction.eref in subfields:
-        transaction.eref = ''.join(
-            subfields[transaction.eref])
+    if transaction.get('ref') in subfields:
+        transaction['ref'] = ''.join(subfields[transaction['ref']])
 
 
 class MT940(object):
@@ -111,12 +104,14 @@ class MT940(object):
         This in fact uses the ING syntax, override in others."""
         self.mt940_type = 'General'
         self.header_lines = 3  # Number of lines to skip
-        self.header_regex = '^0000 01INGBNL2AXXXX|^{1'
+        self.header_regex = '^0000 01INGBNL2AXXXX|^{1'  # Start of header
         self.footer_regex = '^-}$|^-XXX$'  # Stop processing on seeing this
         self.tag_regex = '^:[0-9]{2}[A-Z]*:'  # Start of new tag
         self.current_statement = None
         self.current_transaction = None
         self.statements = []
+        self.currency_code = None
+        self.account_number = None
 
     def is_mt940(self, line):
         """determine if a line is the header of a statement"""
@@ -127,36 +122,70 @@ class MT940(object):
                 (line[:12], self.mt940_type)
             )
 
-    def parse(self, data):
+    def is_mt940_statement(self, line):
+        """determine if line is the start of a statement"""
+        if not bool(line.startswith('{4:')):
+            raise ValueError(
+                'The pre processed match %s does not seem to be a'
+                ' valid %s MT940 format bank statement. Every statement'
+                ' should start be a dict starting with {4:..' % line
+            )
+
+    def pre_process_data(self, data):
+        matches = []
+        self.is_mt940(line=data)
+        data = data.replace(
+            '-}', '}').replace('}{', '}\r\n{').replace('\r\n', '\n')
+        if data.startswith(':940:'):
+            for statement in data.replace(':940:', '').split(':20:'):
+                match = '{4:\n:20:' + statement + '}'
+                matches.append(match)
+        else:
+            tag_re = re.compile(
+                r'(\{4:[^{}]+\})',
+                re.MULTILINE)
+            matches = tag_re.findall(data)
+        return matches
+
+    def parse(self, data, header_lines=None):
         """Parse mt940 bank statement file contents."""
-        self.is_mt940(data)
-        iterator = data.replace('\r\n', '\n').split('\n').__iter__()
-        line = None
-        record_line = ''
-        try:
-            while True:
-                if not self.current_statement:
-                    self.handle_header(line, iterator)
-                line = iterator.next()
-                if not self.is_tag(line) and not self.is_footer(line):
-                    record_line += line
-                    continue
+        data = data.decode()
+        matches = self.pre_process_data(data)
+        for match in matches:
+            self.is_mt940_statement(line=match)
+            iterator = '\n'.join(
+                match.split('\n')[1:-1]).split('\n').__iter__()
+            line = None
+            record_line = ''
+            try:
+                while True:
+                    if not self.current_statement:
+                        self.handle_header(line, iterator,
+                                           header_lines=header_lines)
+                    line = iterator.next()
+                    if not self.is_tag(line) and not self.is_footer(line):
+                        record_line = self.add_record_line(line, record_line)
+                        continue
+                    if record_line:
+                        self.handle_record(record_line)
+                    if self.is_footer(line):
+                        self.handle_footer(line, iterator)
+                        record_line = ''
+                        continue
+                    record_line = line
+            except StopIteration:
+                pass
+            if self.current_statement:
                 if record_line:
                     self.handle_record(record_line)
-                if self.is_footer(line):
-                    self.handle_footer(line, iterator)
                     record_line = ''
-                    continue
-                record_line = line
-        except StopIteration:
-            pass
-        if self.current_statement:
-            if record_line:
-                self.handle_record(record_line)
-                record_line = ''
-            self.statements.append(self.current_statement)
-            self.current_statement = None
-        return self.statements
+                self.statements.append(self.current_statement)
+                self.current_statement = None
+        return self.currency_code, self.account_number, self.statements
+
+    def add_record_line(self, line, record_line):
+        record_line += line
+        return record_line
 
     def is_footer(self, line):
         """determine if a line is the footer of a statement"""
@@ -166,11 +195,19 @@ class MT940(object):
         """determine if a line has a tag"""
         return line and bool(re.match(self.tag_regex, line))
 
-    def handle_header(self, dummy_line, iterator):
+    def handle_header(self, dummy_line, iterator, header_lines=None):
         """skip header lines, create current statement"""
-        for dummy_i in range(self.header_lines):
+        if not header_lines:
+            header_lines = self.header_lines
+        for dummy_i in range(header_lines):
             iterator.next()
-        self.current_statement = BankStatement()
+        self.current_statement = {
+            'name': None,
+            'date': None,
+            'balance_start': 0.0,
+            'balance_end_real': 0.0,
+            'transactions': []
+        }
 
     def handle_footer(self, dummy_line, dummy_iterator):
         """add current statement to list, reset state"""
@@ -181,7 +218,7 @@ class MT940(object):
         """find a function to handle the record represented by line"""
         tag_match = re.match(self.tag_regex, line)
         tag = tag_match.group(0).strip(':')
-        if not hasattr(self, 'handle_tag_%s' % tag):
+        if not hasattr(self, 'handle_tag_%s' % tag):  # pragma: no cover
             logging.error('Unknown tag %s', tag)
             logging.error(line)
             return
@@ -195,7 +232,7 @@ class MT940(object):
     def handle_tag_25(self, data):
         """Handle tag 25: local bank account information."""
         data = data.replace('EUR', '').replace('.', '').strip()
-        self.current_statement.local_account = data
+        self.account_number = data
 
     def handle_tag_28C(self, data):
         """Sequence number within batch - normally only zeroes."""
@@ -206,18 +243,24 @@ class MT940(object):
         # For the moment only first 60F record
         # The alternative would be to split the file and start a new
         # statement for each 20: tag encountered.
-        stmt = self.current_statement
-        if not stmt.local_currency:
-            stmt.local_currency = data[7:10]
-            stmt.start_balance = str2amount(data[0], data[10:])
+        if not self.currency_code:
+            self.currency_code = data[7:10]
+        self.current_statement['balance_start'] = str2amount(
+            data[0],
+            data[10:]
+        )
+        if not self.current_statement['date']:
+            self.current_statement['date'] = datetime.strptime(data[1:7],
+                                                               '%y%m%d')
 
     def handle_tag_61(self, data):
         """get transaction values"""
-        transaction = self.current_statement.create_transaction()
-        self.current_transaction = transaction
-        transaction.execution_date = datetime.strptime(data[:6], '%y%m%d')
-        transaction.value_date = datetime.strptime(data[:6], '%y%m%d')
-        #  ...and the rest already is highly bank dependent
+        self.current_statement['transactions'].append({})
+        self.current_transaction = self.current_statement['transactions'][-1]
+        self.current_transaction['date'] = datetime.strptime(
+            data[:6],
+            '%y%m%d'
+        )
 
     def handle_tag_62F(self, data):
         """Get ending balance, statement date and id.
@@ -233,19 +276,24 @@ class MT940(object):
         Depending on the bank, there might be multiple 62F tags in the import
         file. The last one counts.
         """
-        stmt = self.current_statement
-        stmt.end_balance = str2amount(data[0], data[10:])
-        stmt.date = datetime.strptime(data[1:7], '%y%m%d')
+
+        self.current_statement['balance_end_real'] = str2amount(
+            data[0],
+            data[10:]
+        )
+        self.current_statement['date'] = datetime.strptime(data[1:7], '%y%m%d')
+
         # Only replace logically empty (only whitespace or zeroes) id's:
         # But do replace statement_id's added before (therefore starting
         # with local_account), because we need the date on the last 62F
         # record.
-        test_empty_id = re.sub(r'[\s0]', '', stmt.statement_id)
-        if ((not test_empty_id) or
-                (stmt.statement_id.startswith(stmt.local_account))):
-            stmt.statement_id = '%s-%s' % (
-                stmt.local_account,
-                stmt.date.strftime('%Y-%m-%d'),
+        statement_name = self.current_statement['name'] or ''
+        test_empty_id = re.sub(r'[\s0]', '', statement_name)
+        is_account_number = statement_name.startswith(self.account_number)
+        if not test_empty_id or is_account_number:
+            self.current_statement['name'] = '%s-%s' % (
+                self.account_number,
+                self.current_statement['date'].strftime('%Y-%m-%d'),
             )
 
     def handle_tag_64(self, data):
