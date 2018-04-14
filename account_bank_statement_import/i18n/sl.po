@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 03:20+0000\n"
-"PO-Revision-Date: 2017-03-03 13:25+0000\n"
+"POT-Creation-Date: 2018-04-11 22:49+0000\n"
+"PO-Revision-Date: 2018-04-11 22:49+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:411
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:419
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d transakcij je bilo že uvoženih in se prezrejo."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:414
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:422
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1 transakcija je bila že uvožena in se prezre."
@@ -60,7 +60,7 @@ msgid ""
 msgstr "Knjigovodski dnevnik v zvezi z bančnim izpiskom, ki ga uvažate. Formate izpiskov, ki ne omogočajo samodejne detekcije dnevnika (npr. QIF) izberite ročno."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:417
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:425
 #, python-format
 msgid "Already imported items"
 msgstr "Že uvoženi predmeti"
@@ -91,14 +91,14 @@ msgid "Bank statement import"
 msgstr "Uvoz bančnega izpiska"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:154
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:162
 #, python-format
 msgid ""
 "Can not determine journal for import for account number %s and currency %s."
 msgstr "Ni mogoče določiti dnevnika za uvoz številke konta %s in valute %s."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:147
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:155
 #, python-format
 msgid "Can not find the account number %s."
 msgstr "Ne najde se konto številka %s."
@@ -109,7 +109,7 @@ msgid "Cancel"
 msgstr "Preklic"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:197
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:205
 #, python-format
 msgid ""
 "Could not make sense of the given file.\n"
@@ -140,6 +140,11 @@ msgstr "Vsili zaporedje"
 #: field:account.config.settings,module_base_bank_account_number_unique:0
 msgid "Enforce unique account numbers on bank accounts"
 msgstr "Vsili unikatne številke računov za bančne račune"
+
+#. module: account_bank_statement_import
+#: field:account.bank.statement.import,filename:0
+msgid "Filename"
+msgstr "Naziv datoteke"
 
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,data_file:0
@@ -219,31 +224,31 @@ msgid "Sanitized Account Number"
 msgstr "Številka očiščenega konta"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:286
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:294
 #, python-format
 msgid "Statement currency id is %d, but company currency id = %d."
 msgstr "ID valute izpiska je %d, a ID valute družbe = %d."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:269
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:277
 #, python-format
 msgid "Statement currency id is %d, but journal currency id = %d."
 msgstr "ID valute izpiska je %d, a ID valute dnevnika = %d."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:223
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:231
 #, python-format
 msgid "Statement has invalid currency code %s"
 msgstr "Izpisek ima neveljavno kodo valute %s"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:252
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:260
 #, python-format
 msgid "The account of this statement is linked to another journal."
 msgstr "Konto tega izpiska je povezan z drugim dnevnikom."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:291
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:299
 #, python-format
 msgid ""
 "The currency of the bank statement (%s) is not the same as the company "
@@ -251,7 +256,7 @@ msgid ""
 msgstr "Valuta bančnega izpiska (%s) ni enaka valuti družbe (%s)!"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:274
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:282
 #, python-format
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
@@ -259,19 +264,19 @@ msgid ""
 msgstr "Valuta na bančnem izpisku (%s) ne ustreza valuti dnevnika %s (%s) !"
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:207
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:215
 #, python-format
 msgid "This file doesn't contain any statement."
 msgstr "Ta datoteka ne vsebuje izpiskov."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:212
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:220
 #, python-format
 msgid "This file doesn't contain any transaction."
 msgstr "Ta datoteka ne vsebuje transakcij."
 
 #. module: account_bank_statement_import
-#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:131
+#: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:139
 #, python-format
 msgid "You have already imported that file."
 msgstr "To datoteko ste že uvozili."
