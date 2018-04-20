@@ -99,9 +99,10 @@ class CamtParser(models.AbstractModel):
                     'account_number'
                 )
 
-    def parse_entry(self, ns, node):
+    def parse_entry(self, ns, node, transaction=None):
         """Parse an Ntry node and yield transactions"""
-        transaction = {'name': '/', 'amount': 0}  # fallback defaults
+        if transaction is None:
+            transaction = {'name': '/', 'amount': 0}  # fallback defaults
         self.add_value_from_node(
             ns, node, './ns:BookgDt/ns:Dt', transaction, 'date')
         amount = self.parse_amount(ns, node)
