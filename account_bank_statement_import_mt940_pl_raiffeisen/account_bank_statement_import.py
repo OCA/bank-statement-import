@@ -29,6 +29,10 @@ class AccountBankStatementImport(models.TransientModel):
         """
         parser = Parser()
         try:
-            return parser.parse(data_file.decode('windows-1252').encode('utf-8'))
+            return parser.parse(
+                data_file.decode('windows-1252').encode('utf-8')
+            )
         except ValueError:
-            return super(AccountBankStatementImport, self)._parse_file(data_file)
+            return super(AccountBankStatementImport, self)._parse_file(
+                data_file,
+            )
