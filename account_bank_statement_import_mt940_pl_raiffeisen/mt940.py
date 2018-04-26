@@ -47,9 +47,9 @@ class MT940Parser(MT940):
 
         self.mt940_type = 'Raiffeisen'
         self.header_lines = 0
-        self.header_regex = '^:20'
-        self.footer_regex = '^\-$'
-        self.tag_regex = '^:[0-9]{2}[A-Z]*:'
+        self.header_regex = r'^:20'
+        self.footer_regex = r'^\-$'
+        self.tag_regex = r'^:[0-9]{2}[A-Z]*:'
 
     def str2amount(self, sign, amount_str):
         return (1 if sign == 'C' else -1) * float(amount_str.replace(',', '.'))
