@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_bank_statement_import_camt
+# * account_bank_statement_import_camt_oca
 #
 # Translators:
 msgid ""
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.8.3\n"
 
-#. module: account_bank_statement_import_camt
-#: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Kontoauszug importieren"

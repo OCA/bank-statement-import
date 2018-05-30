@@ -27,7 +27,7 @@ class TestImport(TransactionCase):
     def test_statement_import(self):
         """Test correct creation of single statement."""
         testfile = get_module_resource(
-            'account_bank_statement_import_camt',
+            'account_bank_statement_import_camt_oca',
             'test_files',
             'test-camt053',
         )
@@ -60,7 +60,7 @@ class TestImport(TransactionCase):
     def test_zip_import(self):
         """Test import of multiple statements from zip file."""
         testfile = get_module_resource(
-            'account_bank_statement_import_camt',
+            'account_bank_statement_import_camt_oca',
             'test_files',
             'test-camt053.zip',
         )

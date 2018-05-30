@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_bank_statement_import_camt
+# * account_bank_statement_import_camt_oca
 # 
 # Translators:
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Language: lt_LT\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#. module: account_bank_statement_import_camt
-#: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Importuoti banko išrašą"
