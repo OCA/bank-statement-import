@@ -32,7 +32,7 @@ class AccountBankStatementImport(models.TransientModel):
                         )
                         transactions.extend(new)
                 return currency, account_number, transactions
-            except (zipfile.BadZipfile, ValueError):
+            except (zipfile.BadZipFile, ValueError):
                 pass
             # Not a camt file, returning super will call next candidate:
             _logger.debug("Statement file was not a camt file.",

@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_bank_statement_import_camt
-# 
+# * account_bank_statement_import_camt_oca
+#
 # Translators:
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2017
 msgid ""
@@ -18,17 +18,17 @@ msgstr ""
 "Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: account_bank_statement_import_camt
-#: model:ir.ui.view,arch_db:account_bank_statement_import_camt.account_bank_statement_import_view
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "CAMT"
 msgstr ""
 
-#. module: account_bank_statement_import_camt
-#: model:ir.model,name:account_bank_statement_import_camt.model_account_bank_statement_import
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Tuo pankkiaineisto"
 
-#. module: account_bank_statement_import_camt
-#: model:ir.ui.view,arch_db:account_bank_statement_import_camt.account_bank_statement_import_view
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "zipped CAMT"
 msgstr ""
