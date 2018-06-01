@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Class to parse camt files."""
 # © 2013-2016 Therp BV <http://therp.nl>
 # Copyright 2017 Open Net Sàrl
@@ -10,8 +9,8 @@ from odoo import models
 
 
 class CamtParser(models.AbstractModel):
-    _name = 'account.bank.statement.import.camt.parser'
     """Parser for camt bank statement import files."""
+    _name = 'account.bank.statement.import.camt.parser'
 
     def parse_amount(self, ns, node):
         """Parse element that contains Amount and CreditDebitIndicator."""
@@ -190,14 +189,14 @@ class CamtParser(models.AbstractModel):
 
     def check_version(self, ns, root):
         """Validate validity of camt file."""
-        # Check wether it is camt at all:
+        # Check whether it is camt at all:
         re_camt = re.compile(
             r'(^urn:iso:std:iso:20022:tech:xsd:camt.'
             r'|^ISO:camt.)'
         )
         if not re_camt.search(ns):
             raise ValueError('no camt: ' + ns)
-        # Check wether version 052 ,053 or 054:
+        # Check whether version 052 ,053 or 054:
         re_camt_version = re.compile(
             r'(^urn:iso:std:iso:20022:tech:xsd:camt.054.'
             r'|^urn:iso:std:iso:20022:tech:xsd:camt.053.'
