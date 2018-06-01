@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import_camt_oca
+#
+# Translators:
+# Quentin THEURET <odoo@kerpeo.com>, 2017
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-21 01:42+0000\n"
+"PO-Revision-Date: 2017-11-21 01:42+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
+msgid "CAMT"
+msgstr "CAMT"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importer Relevé Bancaire"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_oca_parser
+msgid "account.bank.statement.import.camt.parser"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
+msgid "zipped CAMT"
+msgstr "CAMT zippé"
