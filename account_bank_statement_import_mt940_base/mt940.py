@@ -78,7 +78,12 @@ def get_counterpart(transaction, subfield):
 
 
 def handle_common_subfields(transaction, subfields):
-    """Deal with common functionality for tag 86 subfields."""
+    """Deal with common functionality for tag 86 subfields.
+
+    transaction.eref is filled from 61 record with information on subfield
+    that contains the actual reference in 86 record. So transaction.eref
+    is used for a dual purpose!
+    """
     # Get counterpart from CNTP, BENM or ORDP subfields:
     for counterpart_field in ['CNTP', 'BENM', 'ORDP']:
         if counterpart_field in subfields:
@@ -100,9 +105,8 @@ def handle_common_subfields(transaction, subfields):
             '/'.join(x for x in subfields['REMI'] if x)
         )
     # EREF: End-to-end reference
-    if 'EREF' in subfields:
-        transaction.message += '/'.join(filter(bool, subfields['EREF']))
     # Get transaction reference subfield (might vary):
+    transaction.eref = transaction.eref or 'EREF'
     if transaction.eref in subfields:
         transaction.eref = ''.join(subfields[transaction.eref])
 
