@@ -1,17 +1,16 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_bank_statement_import_camt_oca
-#
+# 
 # Translators:
-# Quentin THEURET <odoo@kerpeo.com>, 2017
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# OCA Transbot <transbot@odoo-community.org>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-21 01:42+0000\n"
-"PO-Revision-Date: 2017-11-21 01:42+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2018-06-08 08:27+0000\n"
+"PO-Revision-Date: 2018-06-08 08:27+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,12 +24,12 @@ msgid "CAMT"
 msgstr "CAMT"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser_display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser_id
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_id
 msgid "ID"
 msgstr "ID"
 
@@ -40,12 +39,12 @@ msgid "Import Bank Statement"
 msgstr "Importer Relevé Bancaire"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser___last_update
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser___last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_oca_parser
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
 msgid "account.bank.statement.import.camt.parser"
 msgstr ""
 

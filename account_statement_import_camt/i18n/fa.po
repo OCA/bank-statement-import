@@ -3,20 +3,20 @@
 # * account_bank_statement_import_camt_oca
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2018
+# Mehdi Zarrinkolah <mehdi1811@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-08 08:27+0000\n"
 "PO-Revision-Date: 2018-06-08 08:27+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
-"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Last-Translator: Mehdi Zarrinkolah <mehdi1811@gmail.com>, 2018\n"
+"Language-Team: Persian (https://www.transifex.com/oca/teams/23907/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: hr\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
@@ -26,29 +26,29 @@ msgstr "CAMT"
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_display_name
 msgid "Display Name"
-msgstr "Naziv"
+msgstr "نام صفحه نمایش"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_id
 msgid "ID"
-msgstr "ID"
+msgstr "شناسه"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr "Uvoz bankovnog izvoda"
+msgstr "ورود بیانیه بانکی "
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser___last_update
 msgid "Last Modified on"
-msgstr "Zadnje modificirano"
+msgstr "آخرین تغییر در"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
 msgid "account.bank.statement.import.camt.parser"
-msgstr "account.bank.statement.import.camt.parser"
+msgstr "گزارش .حساب بانکی .وارد کننده .تقسیم کننده .تجزیه کننده"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "zipped CAMT"
-msgstr "kompresirani CAMT"
+msgstr "CAMT زیپ شده "
