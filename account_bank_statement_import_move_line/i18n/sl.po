@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_bank_statement_import_move_line
-# 
+#
 # Translators:
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2017
 # OCA Transbot <transbot@odoo-community.org>, 2017
@@ -13,11 +13,12 @@ msgstr ""
 "PO-Revision-Date: 2017-08-08 02:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -57,9 +58,9 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
 msgid ""
-"Click on Add All Move Lines to auto-select the move lines matching the above"
-" criteria or click on Add an item to manually select the move lines filtered"
-" by the above criteria."
+"Click on Add All Move Lines to auto-select the move lines matching the above "
+"criteria or click on Add an item to manually select the move lines filtered "
+"by the above criteria."
 msgstr ""
 
 #. module: account_bank_statement_import_move_line
