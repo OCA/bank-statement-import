@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import_move_line
+# 	* account_bank_statement_import_move_line
 #
 msgid ""
 msgstr ""
@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2017-08-09 15:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -52,8 +53,15 @@ msgstr "Elegir opciones de filtro de apuntes"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
-msgid "Click on Add All Move Lines to auto-select the move lines matching the above criteria or click on Add an item to manually select the move lines filtered by the above criteria."
-msgstr "Clic en Añadir todas las líneas para seleccionar automáticamente las líneas de movimiento que coinciden con los criterios anteriores o clic en Agregar un elemento para seleccionar manualmente las líneas de movimiento filtradas por los criterios anteriores."
+msgid ""
+"Click on Add All Move Lines to auto-select the move lines matching the above "
+"criteria or click on Add an item to manually select the move lines filtered "
+"by the above criteria."
+msgstr ""
+"Clic en Añadir todas las líneas para seleccionar automáticamente las líneas "
+"de movimiento que coinciden con los criterios anteriores o clic en Agregar "
+"un elemento para seleccionar manualmente las líneas de movimiento filtradas "
+"por los criterios anteriores."
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.actions.act_window,name:account_bank_statement_import_move_line.account_statement_line_create_action
@@ -177,4 +185,3 @@ msgstr "Tipo de filtro por fecha"
 #: model:ir.model,name:account_bank_statement_import_move_line.model_account_statement_line_create
 msgid "Wizard to create statement lines"
 msgstr "Asistente para crear líneas de extracto"
-

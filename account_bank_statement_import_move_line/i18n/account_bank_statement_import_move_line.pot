@@ -1,22 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_bank_statement_import_move_line
+#	* account_bank_statement_import_move_line
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 02:41+0000\n"
-"PO-Revision-Date: 2017-08-11 02:41+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
-"Language: de\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -41,7 +36,7 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create_statement_id
 msgid "Bank Statement"
-msgstr "Kontoauszug"
+msgstr ""
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -55,10 +50,7 @@ msgstr ""
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
-msgid ""
-"Click on Add All Move Lines to auto-select the move lines matching the above "
-"criteria or click on Add an item to manually select the move lines filtered "
-"by the above criteria."
+msgid "Click on Add All Move Lines to auto-select the move lines matching the above criteria or click on Add an item to manually select the move lines filtered by the above criteria."
 msgstr ""
 
 #. module: account_bank_statement_import_move_line
@@ -183,3 +175,4 @@ msgstr ""
 #: model:ir.model,name:account_bank_statement_import_move_line.model_account_statement_line_create
 msgid "Wizard to create statement lines"
 msgstr ""
+
