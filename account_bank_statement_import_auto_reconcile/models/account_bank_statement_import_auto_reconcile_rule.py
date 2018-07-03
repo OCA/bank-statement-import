@@ -142,10 +142,13 @@ class AccountBankStatementImportAutoReconcileRule(models.Model):
     def get_rules(self):
         """Return a NewId object for the configured rule"""
         rules = self.mapped(
-            lambda x: self.env[x.rule_type].new({
-                'wizard_id': self.id,
-                'options': x.options
-            })
+            lambda x: self.env[x.rule_type].new(dict(
+                self.env[x.rule_type].default_get(
+                    self.env[x.rule_type]._fields.keys()
+                ),
+                wizard_id=self.id,
+                options=x.options,
+            ))
             if x else None
         )
         for rule in rules:

@@ -85,3 +85,19 @@ class TestAccountBankStatementImportAutoReconcile(TransactionCase):
             'auto_reconcile': True,
         }).import_file()
         self.assertEqual(self.invoice.state, 'paid')
+
+    def test_rule_options(self):
+        self.rule.unlink()
+        rule = self.env[
+            'account.bank.statement.import.auto.reconcile.rule'
+        ].create({
+            'journal_id': self.env.ref('account.bank_journal').id,
+            'rule_type':
+            'account.bank.statement.import.auto.reconcile.exact.amount',
+            'match_st_name': False,
+        })
+        rules = rule.get_rules()
+        # explicitly written
+        self.assertFalse(rules.match_st_name)
+        # defaults must be used here too
+        self.assertTrue(rules.match_st_ref)
