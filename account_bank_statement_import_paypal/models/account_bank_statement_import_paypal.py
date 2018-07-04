@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2017 Akretion (http://www.akretion.com).
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
@@ -6,14 +5,14 @@
 
 import logging
 from datetime import datetime
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 import re
-from cStringIO import StringIO
+from io import StringIO
 _logger = logging.getLogger(__name__)
 
 try:
-    import unicodecsv
+    import csv
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -31,7 +30,7 @@ HEADERS = [
     '"Date","Time","Time Zone","Description","Currency","Gross ","Fee ","Net",'
     '"Balance","Transaction ID","From Email Address","Name","Bank Name",'
     '"Bank Account","Shipping and Handling Amount","Sales Tax","Invoice ID",'
-    '"Reference Txn ID"'
+    '"Reference Txn ID"',
     ]
 
 
@@ -40,16 +39,22 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _get_paypal_encoding(self):
-        return 'utf-8'
+        return 'utf-8-sig'
+
+    @api.model
+    def _get_paypal_str_data(self, data_file):
+        if not isinstance(data_file, str):
+            data_file = data_file.decode(self._get_paypal_encoding())
+        return data_file.strip()
 
     @api.model
     def _get_paypal_date_format(self):
-        '''This method is designed to be inherited'''
+        """ This method is designed to be inherited """
         return '%d/%m/%Y'
 
     @api.model
     def _paypal_convert_amount(self, amount_str):
-        '''This method is designed to be inherited'''
+        """ This method is designed to be inherited """
         valstr = re.sub(r'[^\d,.-]', '', amount_str)
         valstrdot = valstr.replace('.', '')
         valstrdot = valstrdot.replace(',', '.')
@@ -57,6 +62,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _check_paypal(self, data_file):
+        data_file = self._get_paypal_str_data(data_file)
         for header in HEADERS:
             if data_file.strip().startswith(header):
                 return True
@@ -75,7 +81,7 @@ class AccountBankStatementImport(models.TransientModel):
             'transaction_id': line[9],
             'email': line[10],
             'partner_name': line[11],
-            # This two field are usefull for bank transfert
+            # This two field are useful for bank transfer
             'bank_name': line[12],
             'bank_account': line[13],
             'invoice_number': line[16],
@@ -86,7 +92,7 @@ class AccountBankStatementImport(models.TransientModel):
             _logger.debug('Trying to convert %s to float' % rline[field])
             try:
                 rline[field] = self._paypal_convert_amount(rline[field])
-            except:
+            except Exception:
                 raise UserError(
                     _("Value '%s' for the field '%s' on line %d, "
                         "cannot be converted to float")
@@ -94,12 +100,12 @@ class AccountBankStatementImport(models.TransientModel):
         return rline
 
     def _parse_paypal_file(self, data_file):
-        f = StringIO()
-        f.write(data_file)
+        data_file = self._get_paypal_str_data(data_file)
+        f = StringIO(data_file)
         f.seek(0)
         raw_lines = []
-        reader = unicodecsv.reader(f, encoding=self._get_paypal_encoding())
-        reader.next()  # Drop header
+        reader = csv.reader(f)
+        next(reader)  # Drop header
         for idx, line in enumerate(reader):
             _logger.debug("Line %d: %s" % (idx, line))
             raw_lines.append(self._convert_paypal_line_to_dict(idx, line))
@@ -188,7 +194,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _parse_file(self, data_file):
-        """ Import a file in Paypal CSV format"""
+        """ Import a file in Paypal CSV format """
         paypal = self._check_paypal(data_file)
         if not paypal:
             return super(AccountBankStatementImport, self)._parse_file(
@@ -265,7 +271,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _complete_statement(self, stmts_vals, journal_id, account_number):
-        '''Match the partner from paypal information'''
+        """ Match the partner from paypal information """
         stmts_vals = super(AccountBankStatementImport, self).\
             _complete_statement(stmts_vals, journal_id, account_number)
         for line in stmts_vals['transactions']:
