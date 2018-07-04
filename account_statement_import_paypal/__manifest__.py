@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2017 Akretion (http://www.akretion.com).
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
@@ -6,24 +5,14 @@
 {
     "name": "Import Paypal Bank Statements",
     'summary': 'Import Paypal CSV files as Bank Statements in Odoo',
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "category": "Accounting",
     "website": "https://github.com/OCA/bank-statement-import",
     "author": " Akretion, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {
-        'python': ['unicodecsv'],
-        "bin": [],
-    },
     "depends": [
         "account_bank_statement_import",
     ],
-    "data": [
-    ],
-    "demo": [
-    ],
-    "qweb": [
-    ]
 }
