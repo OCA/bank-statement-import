@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo10-addon-account_bank_statement_import_camt',
+        'odoo10-addon-account_bank_statement_import_camt_details',
         'odoo10-addon-account_bank_statement_import_move_line',
         'odoo10-addon-account_bank_statement_import_mt940_base',
         'odoo10-addon-account_bank_statement_import_ofx',
