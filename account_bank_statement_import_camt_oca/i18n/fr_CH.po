@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-09 17:00+0000\n"
 "PO-Revision-Date: 2016-12-09 17:00+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: French (Switzerland) (https://www.transifex.com/oca/teams/23907/fr_CH/)\n"
+"Language-Team: French (Switzerland) (https://www.transifex.com/oca/"
+"teams/23907/fr_CH/)\n"
+"Language: fr_CH\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr_CH\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import_camt_oca
@@ -24,9 +25,29 @@ msgid "CAMT"
 msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_id
+msgid "ID"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Importer Relevé"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
+msgid "account.bank.statement.import.camt.parser"
+msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
