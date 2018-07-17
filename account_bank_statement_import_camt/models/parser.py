@@ -166,7 +166,7 @@ class CamtParser(models.AbstractModel):
                 './ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:NtryDtls/ns:Btch/ns:PmtInfId',
             ],
-            transaction, 'ref'
+            transaction, 'eref'
         )
         details_nodes = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
