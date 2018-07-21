@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-08 08:27+0000\n"
-"PO-Revision-Date: 2018-06-08 08:27+0000\n"
-"Last-Translator: Mehdi Zarrinkolah <mehdi1811@gmail.com>, 2018\n"
+"PO-Revision-Date: 2018-07-22 10:30+0000\n"
+"Last-Translator: derKonig <fshahy@gmail.com>\n"
 "Language-Team: Persian (https://www.transifex.com/oca/teams/23907/fa/)\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
@@ -36,7 +37,7 @@ msgstr "شناسه"
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr "ورود بیانیه بانکی "
+msgstr "ورود بیانیه بانکی"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser___last_update
@@ -51,4 +52,4 @@ msgstr "گزارش .حساب بانکی .وارد کننده .تقسیم کنن�
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "zipped CAMT"
-msgstr "CAMT زیپ شده "
+msgstr "CAMT زیپ شده"
