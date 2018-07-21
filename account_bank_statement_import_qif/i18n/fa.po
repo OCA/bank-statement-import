@@ -9,30 +9,31 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-08 08:27+0000\n"
-"PO-Revision-Date: 2018-06-08 08:27+0000\n"
-"Last-Translator: Mehdi Zarrinkolah <mehdi1811@gmail.com>, 2018\n"
+"PO-Revision-Date: 2018-07-22 11:31+0000\n"
+"Last-Translator: derKonig <fshahy@gmail.com>\n"
 "Language-Team: Persian (https://www.transifex.com/oca/teams/23907/fa/)\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:34
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr "فایل QIF رمزگشایی نشد"
+msgstr "فایل QIF رمزگشایی نشد."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr "ورود بیانیه بانکی "
+msgstr "ورود بیانیه بانکی"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view
 msgid "Quicken Interchange Format (.qif)"
-msgstr "قالب مبادله سریع qif"
+msgstr "قالب مبادله سریع (.qif)"
 
 #. module: account_bank_statement_import_qif
 #: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:69
