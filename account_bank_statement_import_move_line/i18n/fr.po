@@ -159,7 +159,7 @@ msgid "Partner Related"
 msgstr "Partenaire lié"
 
 #. module: account_bank_statement_import_move_line
-#: code:addons/account_bank_statement_import_move_line/wizards/account_statement_line_create.py:96
+#: code:addons/account_bank_statement_import_move_line/wizards/account_statement_line_create.py:95
 #, python-format
 msgid "Select Move Lines to Create Statement"
 msgstr "Sélectionner les lignes de mouvement pour créer le relevé"
