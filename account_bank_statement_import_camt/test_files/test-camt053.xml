@@ -111,7 +111,7 @@
                 </NtryDtls>
             </Ntry>
             <Ntry>
-                <Amt Ccy="EUR">594.05</Amt>
+                <Amt Ccy="EUR">564.05</Amt>
                 <CdtDbtInd>DBIT</CdtDbtInd>
                 <RvslInd>true</RvslInd>
                 <Sts>BOOK</Sts>
