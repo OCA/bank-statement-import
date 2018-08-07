@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'CAMT Format Bank Statements Import',
-    'version': '8.0.0.4.0',
+    'version': '8.0.0.4.1',
     'summary': 'Module to import SEPA CAMT.053 Format bank statement files',
     'license': 'AGPL-3',
     'author': 'Odoo Community Association (OCA), Therp BV',
