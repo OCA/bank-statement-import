@@ -48,6 +48,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Ronald Portier <rportier@therp.nl>
 * Sylvain LE GAL <https://twitter.com/legalsylvain>
+* Nicolas JEUDY <https://github.com/njeudy>
 
 Maintainer
 ----------
