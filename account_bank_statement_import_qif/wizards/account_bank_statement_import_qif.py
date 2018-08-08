@@ -90,4 +90,8 @@ class AccountBankStatementImport(models.TransientModel):
                         [('name', 'ilike', line_vals['name'])], limit=1,
                     )
                     line_vals['partner_id'] = partner.id
+                    if partner:
+                        line_vals['partner_name'] = partner.name
+                    else:
+                        line_vals['partner_name'] = line_vals['name']
         return res

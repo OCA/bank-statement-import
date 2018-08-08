@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_backend" name="account reconciliation partner placeholder assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/account_reconciliation_partner_placeholder/static/src/js/reconciliation/reconciliation_renderer.js"></script>
+        </xpath>
+    </template>
+
+</odoo>
