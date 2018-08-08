@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_bank_account_number_unique
-# 
+#
 # Translators:
 # Antonio Trueba, 2016
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2015-12-12 04:09+0000\n"
 "PO-Revision-Date: 2016-01-07 14:42+0000\n"
 "Last-Translator: Antonio Trueba\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-"
+"import-8-0/language/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_bank_account_number_unique
@@ -32,8 +33,15 @@ msgstr "Cuentas bancarias"
 #: code:addons/base_bank_account_number_unique/hooks.py:45
 #, python-format
 msgid ""
-"Module installation can't proceed as you have duplicate account numbers in your system already. Please clean that up and try again.\n"
+"Module installation can't proceed as you have duplicate account numbers in "
+"your system already. Please clean that up and try again.\n"
 "The following shows the first %d duplicate account numbers\n"
 "%s\n"
 "(if you see less than %d, those are the only duplicates)"
-msgstr "No se puede continuar con la instalación del módulo, ya que en este momento existen números de cuenta duplicados en su sistema. Revíselos e inténtelo de nuevo.\nA continuación se muestran los %d primeros números duplicados\n%s\n(si se muestran menos de %d, entonces no hay más duplicados)"
+msgstr ""
+"No se puede continuar con la instalación del módulo, ya que en este momento "
+"existen números de cuenta duplicados en su sistema. Revíselos e inténtelo de "
+"nuevo.\n"
+"A continuación se muestran los %d primeros números duplicados\n"
+"%s\n"
+"(si se muestran menos de %d, entonces no hay más duplicados)"
