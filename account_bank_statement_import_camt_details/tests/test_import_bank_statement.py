@@ -41,6 +41,11 @@ class TestImport(TransactionCase):
             {
                 'partner_account': 'NL46ABNA0499998748',
                 'partner_bic': 'ABNANL2A',
+                'partner_name': 'Test Customer',
+            },
+            {
+                'partner_account': 'NL46ABNA0499998748',
+                'partner_bic': 'ABNANL2A',
                 'partner_name': 'INSURANCE COMPANY TESTX',
                 'partner_address': 'TEST STREET 20, 1234 AB TESTCITY'
             },
