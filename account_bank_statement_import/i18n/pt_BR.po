@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_bank_statement_import
-# 
+#
 # Translators:
 # Ananias Filho <ananias@kmee.com.br>, 2016
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
@@ -15,11 +15,12 @@ msgstr ""
 "POT-Creation-Date: 2018-04-11 22:49+0000\n"
 "PO-Revision-Date: 2018-04-11 22:49+0000\n"
 "Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-"
+"statement-import-8-0/language/pt_BR/)\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import
@@ -58,10 +59,13 @@ msgstr "Uma transação bancária pode ser importada apenas uma vez!"
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,journal_id:0
 msgid ""
-"Accounting journal related to the bank statement you're importing. It has be"
-" be manually chosen for statement formats which doesn't allow automatic "
+"Accounting journal related to the bank statement you're importing. It has be "
+"be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
-msgstr "O diário relacionado ao seu extrato bancário que está importando. Deve ser escolhido manualmente para formatos que não permitem a detecção do diário automática. (QIF por exemplo)."
+msgstr ""
+"O diário relacionado ao seu extrato bancário que está importando. Deve ser "
+"escolhido manualmente para formatos que não permitem a detecção do diário "
+"automática. (QIF por exemplo)."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:425
@@ -99,7 +103,9 @@ msgstr "Importar extrato bancário"
 #, python-format
 msgid ""
 "Can not determine journal for import for account number %s and currency %s."
-msgstr "Não é possível determinar o diário para importação para o número da conta %s e a moeda %s."
+msgstr ""
+"Não é possível determinar o diário para importação para o número da conta %s "
+"e a moeda %s."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:155
@@ -118,7 +124,9 @@ msgstr "Cancelar"
 msgid ""
 "Could not make sense of the given file.\n"
 "Did you install the module to support this type of file?"
-msgstr "O arquivo não faz sentido.\nVocê instalou o módulo correto para suporte este tipo de arquivo?"
+msgstr ""
+"O arquivo não faz sentido.\n"
+"Você instalou o módulo correto para suporte este tipo de arquivo?"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,create_uid:0
@@ -176,9 +184,11 @@ msgstr "ID"
 #: help:account.journal,enforce_sequence:0
 msgid ""
 "If checked, the Journal Sequence will determine the statement naming policy "
-"even if the name is already set manually or by the statement import "
-"software."
-msgstr "Se marcada, a Sequência do Diário determinará a política de nomenclatura de instruções mesmo que o nome já esteja definido manualmente ou pelo software de importação de instruções."
+"even if the name is already set manually or by the statement import software."
+msgstr ""
+"Se marcada, a Sequência do Diário determinará a política de nomenclatura de "
+"instruções mesmo que o nome já esteja definido manualmente ou pelo software "
+"de importação de instruções."
 
 #. module: account_bank_statement_import
 #: model:ir.actions.act_window,name:account_bank_statement_import.action_account_bank_statement_import
@@ -257,7 +267,8 @@ msgstr "A conta deste extrato está ligada a outro diário."
 msgid ""
 "The currency of the bank statement (%s) is not the same as the company "
 "currency (%s) !"
-msgstr "A moeda do extrato bancário (%s) não é a mesma que a moeda da empresa (%s)!"
+msgstr ""
+"A moeda do extrato bancário (%s) não é a mesma que a moeda da empresa (%s)!"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:282
@@ -265,7 +276,8 @@ msgstr "A moeda do extrato bancário (%s) não é a mesma que a moeda da empresa
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal %s (%s) !"
-msgstr "A moeda do extrato bancário (%s) não é a mesma que a moeda do Diário %s (%s)!"
+msgstr ""
+"A moeda do extrato bancário (%s) não é a mesma que a moeda do Diário %s (%s)!"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:215

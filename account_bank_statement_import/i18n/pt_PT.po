@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_bank_statement_import
-# 
+#
 # Translators:
 # Pedro Castro Silva <inactive+pcs.sossia@transifex.com>, 2016
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2018-04-11 22:49+0000\n"
 "PO-Revision-Date: 2018-04-11 22:49+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/pt_PT/)\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-bank-"
+"statement-import-8-0/language/pt_PT/)\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_bank_statement_import
@@ -33,13 +34,16 @@ msgstr "1 transação já tinha sido importada e foi ignorada"
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "1. Download your bank statements from your bank website."
-msgstr "1. Descarregue os seus extratos bancários a partir do website do seu banco."
+msgstr ""
+"1. Descarregue os seus extratos bancários a partir do website do seu banco."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid ""
 "2. Make sure you have installed the right module to support the file format."
-msgstr "2. Certifique-se de que tem instalado um módulo que suporte o formato do ficheiro."
+msgstr ""
+"2. Certifique-se de que tem instalado um módulo que suporte o formato do "
+"ficheiro."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -54,10 +58,13 @@ msgstr "Uma transação bancária só pode ser importada uma vez !"
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,journal_id:0
 msgid ""
-"Accounting journal related to the bank statement you're importing. It has be"
-" be manually chosen for statement formats which doesn't allow automatic "
+"Accounting journal related to the bank statement you're importing. It has be "
+"be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
-msgstr "Diário Contabilístico relacionado com o extrato que está a importar. Tem que ser escolhido manualmente para formatos de extratos que não suportem deteção automática de diário (como o QIF, por exemplo)."
+msgstr ""
+"Diário Contabilístico relacionado com o extrato que está a importar. Tem que "
+"ser escolhido manualmente para formatos de extratos que não suportem deteção "
+"automática de diário (como o QIF, por exemplo)."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:425
@@ -114,7 +121,9 @@ msgstr "Cancelar"
 msgid ""
 "Could not make sense of the given file.\n"
 "Did you install the module to support this type of file?"
-msgstr "Não foi possível decifrar o ficheiro.\nInstalou o módule de suporte a este tipo de ficheiro?"
+msgstr ""
+"Não foi possível decifrar o ficheiro.\n"
+"Instalou o módule de suporte a este tipo de ficheiro?"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,create_uid:0
@@ -151,7 +160,9 @@ msgstr ""
 msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
-msgstr "Obtenha os extratos bancários em formato eletrónico no seu banco e selecione-os aqui."
+msgstr ""
+"Obtenha os extratos bancários em formato eletrónico no seu banco e selecione-"
+"os aqui."
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,hide_journal_field:0
@@ -172,8 +183,7 @@ msgstr "ID"
 #: help:account.journal,enforce_sequence:0
 msgid ""
 "If checked, the Journal Sequence will determine the statement naming policy "
-"even if the name is already set manually or by the statement import "
-"software."
+"even if the name is already set manually or by the statement import software."
 msgstr ""
 
 #. module: account_bank_statement_import

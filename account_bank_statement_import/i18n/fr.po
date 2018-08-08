@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_bank_statement_import
-# 
+#
 # Translators:
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2016
 # Florian Hatat, 2015
@@ -16,11 +16,12 @@ msgstr ""
 "POT-Creation-Date: 2018-04-11 22:49+0000\n"
 "PO-Revision-Date: 2018-04-11 22:49+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-"
+"import-8-0/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import
@@ -38,13 +39,17 @@ msgstr "1 mouvement déjà importé a été ignoré."
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid "1. Download your bank statements from your bank website."
-msgstr "1. Téléchargez vos relevés de comptes depuis le site internet de votre banque."
+msgstr ""
+"1. Téléchargez vos relevés de comptes depuis le site internet de votre "
+"banque."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid ""
 "2. Make sure you have installed the right module to support the file format."
-msgstr "2. Vérifiez que vous avez bien installé le module compatible avec le format de fichier à importer."
+msgstr ""
+"2. Vérifiez que vous avez bien installé le module compatible avec le format "
+"de fichier à importer."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -59,10 +64,13 @@ msgstr "Les transactions peuvent être importées en une seule fois !"
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,journal_id:0
 msgid ""
-"Accounting journal related to the bank statement you're importing. It has be"
-" be manually chosen for statement formats which doesn't allow automatic "
+"Accounting journal related to the bank statement you're importing. It has be "
+"be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
-msgstr "Le compte du journal lié au relevé de banque que vous importez. Il est à sélectionner manuellement pour les formats de relevés qui n'autorisent pas la détection automatique du journal (QIF par exemple)."
+msgstr ""
+"Le compte du journal lié au relevé de banque que vous importez. Il est à "
+"sélectionner manuellement pour les formats de relevés qui n'autorisent pas "
+"la détection automatique du journal (QIF par exemple)."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:425
@@ -119,7 +127,9 @@ msgstr "Annuler"
 msgid ""
 "Could not make sense of the given file.\n"
 "Did you install the module to support this type of file?"
-msgstr "Impossible de traiter le fichier donné.\nAvez vous installez le module qui supporte ce type de fichier?"
+msgstr ""
+"Impossible de traiter le fichier donné.\n"
+"Avez vous installez le module qui supporte ce type de fichier?"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,create_uid:0
@@ -156,7 +166,9 @@ msgstr "Nom du fichier"
 msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
-msgstr "Récupérer les relevé de banque au format électronique de votre banque et les sélectionner ici."
+msgstr ""
+"Récupérer les relevé de banque au format électronique de votre banque et les "
+"sélectionner ici."
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,hide_journal_field:0
@@ -177,8 +189,7 @@ msgstr "ID"
 #: help:account.journal,enforce_sequence:0
 msgid ""
 "If checked, the Journal Sequence will determine the statement naming policy "
-"even if the name is already set manually or by the statement import "
-"software."
+"even if the name is already set manually or by the statement import software."
 msgstr ""
 
 #. module: account_bank_statement_import
@@ -232,13 +243,16 @@ msgstr "Nettoyage du numéro de compte"
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:294
 #, python-format
 msgid "Statement currency id is %d, but company currency id = %d."
-msgstr "L'Id de la devise du relevé de banque est %d, celui de la société est id = %d."
+msgstr ""
+"L'Id de la devise du relevé de banque est %d, celui de la société est id = "
+"%d."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:277
 #, python-format
 msgid "Statement currency id is %d, but journal currency id = %d."
-msgstr "L'Id de la devise du relevé de banque est %d, celui du journal est id = %d."
+msgstr ""
+"L'Id de la devise du relevé de banque est %d, celui du journal est id = %d."
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:231
@@ -258,7 +272,9 @@ msgstr "Le numéro de compte de ce relevé correspond à un autre journal."
 msgid ""
 "The currency of the bank statement (%s) is not the same as the company "
 "currency (%s) !"
-msgstr "La devise du relevé de banque (%s) n'est pas la même que la devise société (%s) !"
+msgstr ""
+"La devise du relevé de banque (%s) n'est pas la même que la devise société "
+"(%s) !"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:282
@@ -266,7 +282,9 @@ msgstr "La devise du relevé de banque (%s) n'est pas la même que la devise soc
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal %s (%s) !"
-msgstr "La devise du relevé de banque (%s) n'est pas la même que la devise sur le journal %s (%s) !"
+msgstr ""
+"La devise du relevé de banque (%s) n'est pas la même que la devise sur le "
+"journal %s (%s) !"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:215

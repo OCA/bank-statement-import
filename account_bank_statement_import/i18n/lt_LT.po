@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_bank_statement_import
-# 
+#
 # Translators:
 # Arminas Grigonis <arminas@versada.lt>, 2015
 msgid ""
@@ -11,12 +11,14 @@ msgstr ""
 "POT-Creation-Date: 2018-04-11 22:49+0000\n"
 "PO-Revision-Date: 2018-04-11 22:49+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Lithuanian (Lithuania) (http://www.transifex.com/oca/OCA-bank-statement-import-8-0/language/lt_LT/)\n"
+"Language-Team: Lithuanian (Lithuania) (http://www.transifex.com/oca/OCA-bank-"
+"statement-import-8-0/language/lt_LT/)\n"
+"Language: lt_LT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: lt_LT\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:419
@@ -39,7 +41,8 @@ msgstr "1. Atsisiųskite savo banko sąskaitos išrašus iš savo banko svetain�
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
 msgid ""
 "2. Make sure you have installed the right module to support the file format."
-msgstr "2. Įsitikinkte, kad įrašėte tinkamą modulį, kuris palaikytų šį failų formatą."
+msgstr ""
+"2. Įsitikinkte, kad įrašėte tinkamą modulį, kuris palaikytų šį failų formatą."
 
 #. module: account_bank_statement_import
 #: view:account.bank.statement.import:account_bank_statement_import.account_bank_statement_import_view
@@ -54,10 +57,13 @@ msgstr "Banko sąskaitos išrašai gali būti importuoti tik vieną kartą!"
 #. module: account_bank_statement_import
 #: help:account.bank.statement.import,journal_id:0
 msgid ""
-"Accounting journal related to the bank statement you're importing. It has be"
-" be manually chosen for statement formats which doesn't allow automatic "
+"Accounting journal related to the bank statement you're importing. It has be "
+"be manually chosen for statement formats which doesn't allow automatic "
 "journal detection (QIF for example)."
-msgstr "Sąskaitos žurnalas susijęs su banko išrašu, kurį jūs importuojate. Jis turi būti rankiniu būdu pasirinktas išrašų formatams, kurių sistema pati neaptinka (pvz. QIF)"
+msgstr ""
+"Sąskaitos žurnalas susijęs su banko išrašu, kurį jūs importuojate. Jis turi "
+"būti rankiniu būdu pasirinktas išrašų formatams, kurių sistema pati "
+"neaptinka (pvz. QIF)"
 
 #. module: account_bank_statement_import
 #: code:addons/account_bank_statement_import/models/account_bank_statement_import.py:425
@@ -172,8 +178,7 @@ msgstr "ID"
 #: help:account.journal,enforce_sequence:0
 msgid ""
 "If checked, the Journal Sequence will determine the statement naming policy "
-"even if the name is already set manually or by the statement import "
-"software."
+"even if the name is already set manually or by the statement import software."
 msgstr ""
 
 #. module: account_bank_statement_import
