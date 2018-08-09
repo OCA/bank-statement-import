@@ -6,14 +6,13 @@
 """Class to parse camt files."""
 import logging
 import re
+from copy import copy
 from datetime import datetime
 from lxml import etree
 
 from openerp import _, models
 
 from openerp.addons.account_bank_statement_import.parserlib import BankStatement
-
-_logger = logging.getLogger(__name__)
 
 _logger = logging.getLogger(__name__)
 
@@ -102,8 +101,7 @@ class CamtParser(models.AbstractModel):
                 './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:Refs/ns:EndToEndId',
             ],
-            transaction, 'eref'
-        )
+            transaction, 'eref')
         amount = self.parse_amount(node)
         if amount != 0.0:
             transaction['amount'] = amount
@@ -143,12 +141,17 @@ class CamtParser(models.AbstractModel):
 
     def default_transaction_data(self, node, transaction):
         if not transaction.eref:
-            self.add_value_from_node(
-                node, [
-                    './ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
-                    './ns:NtryDtls/ns:Btch/ns:PmtInfId',
-                ],
-                transaction, 'eref')
+            batch_node = self.xpath(node, './ns:NtryDtls/ns:Btch')
+            if batch_node:
+                self.add_value_from_node(
+                    batch_node[0], './ns:PmtInfId', transaction, 'eref')
+            else:
+                self.add_value_from_node(
+                    node,
+                    ['./ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                     './ns:NtryDtls/ns:Btch/ns:PmtInfId'],
+                    transaction,
+                    'eref')
         if not transaction.message:
             self.add_value_from_node(
                 node, './ns:AddtlNtryInf', transaction, 'message')
@@ -164,22 +167,11 @@ class CamtParser(models.AbstractModel):
         self.add_value_from_node(
             node, './ns:ValDt/ns:Dt', transaction, 'value_date')
         transaction.transferred_amount = self.parse_amount(node)
-        batch_node = self.xpath(node, './ns:NtryDtls/ns:Btch')
-        if batch_node:
-            self.add_value_from_node(
-                batch_node[0], './ns:PmtInfId', transaction, 'eref')
-        else:
-            self.add_value_from_node(
-                node, './ns:AddtlNtryInf', transaction, 'name')
-            self.add_value_from_node(
-                node,
-                ['./ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
-                 './ns:NtryDtls/ns:Btch/ns:PmtInfId'],
-                transaction,
-                'eref')
-        details_nodes = node.xpath(
-            './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
-        if len(details_nodes) == 0:
+        self.add_value_from_node(
+            node, './ns:AddtlNtryInf', transaction, 'name')
+        detail_nodes = self.xpath(node, './ns:NtryDtls/ns:TxDtls')
+        if len(detail_nodes) == 0:
+            self.default_transaction_data(node, transaction)
             transaction.data = etree.tostring(node)
             yield transaction
             return
@@ -277,8 +269,7 @@ class CamtParser(models.AbstractModel):
                   " Total amount %s."),
                 statement.start_balance,
                 statement.end_balance,
-                total_amount
-            )
+                total_amount)
         return statement
 
     def check_version(self, root):
