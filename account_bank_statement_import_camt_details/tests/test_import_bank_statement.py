@@ -19,7 +19,7 @@ class TestImport(TransactionCase):
         })
         self.env['account.journal'].create({
             'name': 'Bank Journal - (test camt)',
-            'code': 'TBNKCAMT',
+            'code': 'TBNKC',
             'type': 'bank',
             'bank_account_id': bank.id,
         })
