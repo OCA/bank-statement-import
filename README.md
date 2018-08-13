@@ -22,7 +22,7 @@ addon | version | summary
 [account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 8.0.1.0.1 | Import OFX Bank Statement
 [account_bank_statement_import_qif](account_bank_statement_import_qif/) | 8.0.1.0.1 | Import QIF Bank Statement
 [account_bank_statement_import_save_file](account_bank_statement_import_save_file/) | 8.0.1.0.1 | Keep imported bank statements as raw data
-[base_bank_account_number_unique](base_bank_account_number_unique/) | 8.0.1.0.1 | Enforce uniqueness on bank accounts
+[base_bank_account_number_unique](base_bank_account_number_unique/) | 8.0.1.1.0 | Enforce uniqueness on bank accounts
 
 [//]: # (end addons)
 
