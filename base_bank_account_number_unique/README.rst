@@ -18,7 +18,7 @@ a SQL unique index. This has the added advantage, that the module can be
 installed on databases where the bank-account numbers are not unique already.
 
 To find records that are not unique, you could use the following SQL
-statement.
+statement::
 
     with res_partner_bank_sanitized as (
         select
