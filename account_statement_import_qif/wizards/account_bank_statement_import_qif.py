@@ -35,7 +35,7 @@ class AccountBankStatementImport(models.TransientModel):
         transactions = []
         vals_line = {}
         total = 0
-        if header == "Bank":
+        if header in ("Bank", "CCard"):
             vals_bank_statement = {}
             for line in data_list:
                 line = line.strip()
@@ -58,7 +58,7 @@ class AccountBankStatementImport(models.TransientModel):
                     vals_line['name'] = ('name' in vals_line and
                                          vals_line['name'] + ': ' + line[1:] or
                                          line[1:])
-                elif line[0] == '^':  # end of item
+                elif line[0] == '^' and vals_line:  # end of item
                     transactions.append(vals_line)
                     vals_line = {}
                 elif line[0] == '\n':
