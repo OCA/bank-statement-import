@@ -10,6 +10,20 @@ Module to import SEPA CAMT.053 and CAMT.054 Format bank statement files.
 
 Based on the Banking addons framework.
 
+Configuration
+=============
+
+The user can configure the way CAMT bank statements are imported:
+
+* Go to *Settings* -> *General Settings* -> *Invoicing*
+* Set the *CAMT (OCA) Import Batch* checkbox
+
+If the *CAMT (OCA) Import Batch* checkbox is false, the import will load every single line of the TxDtls details;
+instead if it's true, it will load only the total amount of each batch of lines.
+
+To be able to access the configuration settings, the user must belong to *Show Full Accounting Features* group.
+
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
     :target: https://runbot.odoo-community.org/runbot/174/11.0

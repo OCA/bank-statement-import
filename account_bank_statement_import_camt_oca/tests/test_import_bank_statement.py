@@ -148,3 +148,64 @@ class TestImport(TransactionCase):
                 action['context']['statement_ids']
             ):
                 self.assertTrue(statement.line_ids)
+
+    def test_statement_import_batch(self):
+        """Test correct creation of single statement."""
+        transactions = [
+            {
+                'account_number': 'NL46ABNA0499998748',
+                'amount': -754.25,
+                'date': '2014-01-05',
+                'ref': '435005714488-ABNO33052620',
+            },
+            {
+                'account_number': 'NL46ABNA0499998748',
+                'amount': -664.05,
+                'date': '2014-01-05',
+                'ref': 'TESTBANK/NL/20141229/01206408',
+            },
+            {
+                'account_number': 'NL69ABNA0522123643',
+                'amount': 1405.31,
+                'date': '2014-01-05',
+                'ref': '115',
+            },
+        ]
+
+        self.env.user.company_id.camt_import_batch = True
+        testfile = get_module_resource(
+            'account_bank_statement_import_camt_oca',
+            'test_files',
+            'test-camt053',
+        )
+        with open(testfile, 'rb') as datafile:
+            action = self.env['account.bank.statement.import'].create({
+                'data_file': base64.b64encode(datafile.read())
+            }).import_file()
+
+            for statement in self.env['account.bank.statement'].browse(
+                action['context']['statement_ids']
+            ):
+                self.assertTrue(any(
+                    all(
+                        line[key] == transactions[0][key]
+                        for key in ['amount', 'date', 'ref']
+                    ) and
+                    line.bank_account_id.acc_number ==
+                    self.transactions[0]['account_number']
+                    for line in statement.line_ids
+                ))
+
+    def test_config(self):
+        """Test configuration of batch statements."""
+        self.assertFalse(self.env.user.company_id.camt_import_batch)
+        conf = self.env['res.config.settings'].create({
+            'camt_import_batch': True
+        })
+        conf.set_values()
+        self.assertTrue(self.env.user.company_id.camt_import_batch)
+        conf.write({
+            'camt_import_batch': False
+        })
+        conf.set_values()
+        self.assertFalse(self.env.user.company_id.camt_import_batch)

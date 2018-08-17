@@ -19,13 +19,13 @@ class CamtParser(models.AbstractModel):
         sign = 1
         amount = 0.0
         sign_node = node.xpath('ns:CdtDbtInd', namespaces={'ns': ns})
-        if not sign_node:
+        if not sign_node and not self.env.user.company_id.camt_import_batch:
             sign_node = node.xpath(
                 '../../ns:CdtDbtInd', namespaces={'ns': ns})
         if sign_node and sign_node[0].text == 'DBIT':
             sign = -1
         amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
-        if not amount_node:
+        if not amount_node and not self.env.user.company_id.camt_import_batch:
             amount_node = node.xpath(
                 './ns:AmtDtls/ns:TxAmt/ns:Amt', namespaces={'ns': ns})
         if amount_node:
@@ -133,6 +133,8 @@ class CamtParser(models.AbstractModel):
             transaction = transaction_base.copy()
             self.parse_transaction_details(ns, node, transaction)
             yield transaction
+            if self.env.user.company_id.camt_import_batch:
+                break
 
     def get_balance_amounts(self, ns, node):
         """Return opening and closing balance.
