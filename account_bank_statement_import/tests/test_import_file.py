@@ -1,25 +1,8 @@
 # -*- coding: utf-8 -*-
+# Copyright 2015 Therp BV <http://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 """Provide common base for bank statement import tests."""
-##############################################################################
-#
-#    Copyright (C) 2015 Therp BV <http://therp.nl>.
-#
-#    All other contributions are (C) by their respective contributors
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+
 import logging
 
 from openerp.tests.common import TransactionCase
@@ -95,11 +78,11 @@ class TestStatementFile(TransactionCase):
         bank_statement_id = import_model.create(
             dict(
                 data_file=statement_file,
-                filename=file_name,
+                filename=file_name
             )
         )
         bank_statement_id.import_file()
-        # Check wether bank account has been created:
+        # Check whether bank account has been created:
         if local_account:
             bids = partner_bank_model.search(
                 [('acc_number', '=', local_account)])

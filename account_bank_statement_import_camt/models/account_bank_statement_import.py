@@ -1,25 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright 2013-2015 Therp BV <http://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 """Add process_camt method to account.bank.statement.import."""
-##############################################################################
-#
-#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+
 import logging
-from openerp import models
+from openerp import api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -28,15 +13,49 @@ class AccountBankStatementImport(models.TransientModel):
     """Add process_camt method to account.bank.statement.import."""
     _inherit = 'account.bank.statement.import'
 
-    def _parse_file(self, cr, uid, data_file, context=None):
+    @api.model
+    def _parse_file(self, data_file):
         """Parse a CAMT053 XML file."""
-        parser = self.pool['account.bank.statement.import.camt.parser']
+        parser = self.env['account.bank.statement.import.camt.parser']
         try:
             _logger.debug("Try parsing with camt.")
             return parser.parse(data_file)
         except ValueError:
             # Not a camt file, returning super will call next candidate:
-            _logger.debug("Statement file was not a camt file.",
-                          exc_info=True)
+            _logger.debug("Statement file was not a camt file.", exc_info=True)
             return super(AccountBankStatementImport, self)._parse_file(
-                cr, uid, data_file, context=context)
+                data_file)
+
+    @api.model
+    def _complete_statement(self, stmt_vals, journal_id, account_number):
+        journal = journal_id and self.env['account.journal'].browse(journal_id)
+        camt_import_batch = journal and journal.camt_import_batch
+
+        # aggregate batch transactions
+        agg_transactions = []
+        batch_transactions = {}
+        for transaction in stmt_vals.get('transactions', []):
+            batch = transaction.pop('batch', None)
+            if camt_import_batch:
+                if not batch:
+                    agg_transactions.append(transaction)
+                    continue
+                else:
+                    if batch not in batch_transactions:
+                        transaction.pop('partner_name', None)
+                        transaction.pop('account_number', None)
+                        transaction['ref'] = batch
+                        transaction['name'] = batch
+                        agg_transactions.append(transaction)
+                        batch_transactions[batch] = transaction
+                    else:
+                        batch_transactions[batch]['amount'] += \
+                            transaction['amount']
+        if camt_import_batch and batch_transactions:
+            stmt_vals['transactions'] = agg_transactions
+            _logger.debug(
+                "%d CAMT batch transactions aggregated.",
+                (len(batch_transactions),)
+            )
+        return super(AccountBankStatementImport, self)._complete_statement(
+            stmt_vals, journal_id, account_number)

@@ -106,6 +106,14 @@ class BankTransaction(dict):
     def note(self, note):
         self['note'] = note
 
+    @property
+    def batch(self):
+        return self.get('batch', False)
+
+    @batch.setter
+    def batch(self, batch):
+        self['batch'] = batch
+
     def __init__(self):
         """Define and initialize attributes.
 

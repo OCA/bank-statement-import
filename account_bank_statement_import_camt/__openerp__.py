@@ -31,5 +31,8 @@
     'demo': [
         'demo/demo_data.xml',
     ],
+    'data': [
+        'views/account_journal.xml',
+    ],
     'installable': True,
 }

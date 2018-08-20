@@ -8,6 +8,20 @@ Module to import SEPA CAMT.053 Format bank statement files.
 
 Based on the Banking addons framework.
 
+Configuration
+=============
+
+The user can configure the way CAMT bank statements are imported:
+
+* Go to *Accounting* -> *Configuration* -> *Journals* -> *Journals*
+* Find the Journal that is related to the bank account you are importing for
+* Set the *Aggregate batch transactions (CAMT)* checkbox
+
+If the checkbox is false, the import will load every single line of the TxDtls details;
+instead if it's true, it will load only the total amount of each batch of lines.
+
+To be able to access the configuration settings, the user must enable Technical features.
+
 Known issues / Roadmap
 ======================
 
@@ -30,6 +44,9 @@ Contributors
 
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
+* Andrea Stirpe <a.stirpe@onestein.nl>
+* Tom Blauwendraat <tom@sunflowerweb.nl>
+* Dan Kiplangat <dan@sunflowerweb.nl>
 
 Maintainer
 ----------
