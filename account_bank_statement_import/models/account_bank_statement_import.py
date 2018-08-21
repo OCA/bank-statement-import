@@ -345,22 +345,25 @@ class AccountBankStatementImport(models.TransientModel):
                 bank_account_id = False
                 partner_account_number = line_vals.get('account_number')
                 if partner_account_number:
-                    partner_model = self.env['res.partner']
-                    partner_with_bank = partner_model.search([
+                    partner_with_bank = self.env['res.partner'].search([
                         ('bank_ids.acc_number', '=', partner_account_number)
                     ], limit=1)
-                    if partner_with_bank:
-                        bank_model = self.env['res.partner.bank']
-                        banks = bank_model.search([
-                            ('acc_number', '=', partner_account_number)
-                        ], limit=1)
-                        if banks:
-                            bank_account_id = banks[0].id
-                            partner_id = banks[0].partner_id.id
-                        else:
-                            bank_obj = self._create_bank_account(
-                                partner_account_number)
-                            bank_account_id = bank_obj and bank_obj.id or False
+                    banks = partner_with_bank.bank_ids.filtered(
+                        lambda b: b.acc_number == partner_account_number
+                    )
+                    if not banks:
+                        # otherwise accounts that are created on the fly will
+                        # not be matched, and the test will fail.
+                        banks = self.env['res.partner.bank'].search([
+                            ('acc_number', '=', partner_account_number),
+                            ('partner_id', '=', False)
+                        ])
+                    if banks:
+                        bank_account_id = banks[0].id
+                        partner_id = banks[0].partner_id.id
+                    else:
+                        bank_account_id = self._create_bank_account(
+                            partner_account_number).id
                 line_vals['partner_id'] = partner_id
                 line_vals['bank_account_id'] = bank_account_id
         if 'date' in stmt_vals and 'period_id' not in stmt_vals:
