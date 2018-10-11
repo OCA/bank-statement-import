@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo11-addon-account_bank_statement_import_camt_oca',
         'odoo11-addon-account_bank_statement_import_move_line',
         'odoo11-addon-account_bank_statement_import_mt940_base',
+        'odoo11-addon-account_bank_statement_import_ofx',
         'odoo11-addon-account_bank_statement_import_qif',
     ],
     classifiers=[
