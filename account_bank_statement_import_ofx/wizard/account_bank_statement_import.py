@@ -39,7 +39,7 @@ class AccountBankStatementImport(models.TransientModel):
         if not OfxParser:
             return False
         try:
-            ofx = OfxParser.parse(io.StringIO(data_file.decode('utf-8')))
+            ofx = OfxParser.parse(io.BytesIO(data_file))
         except Exception as e:
             _logger.debug(e)
             return False
