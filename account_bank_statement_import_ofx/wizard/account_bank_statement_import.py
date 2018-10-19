@@ -65,7 +65,6 @@ class AccountBankStatementImport(models.TransientModel):
         return vals
 
     def _parse_file(self, data_file):
-        _logger.info('INSIDE OFX PARSER')
         ofx = self._check_ofx(data_file)
         if not ofx:
             return super(AccountBankStatementImport, self)._parse_file(
