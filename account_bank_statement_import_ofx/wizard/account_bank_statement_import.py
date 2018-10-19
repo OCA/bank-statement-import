@@ -38,7 +38,12 @@ class AccountBankStatementImport(models.TransientModel):
     def _check_ofx(self, data_file):
         if not OfxParser:
             return False
-        ofx = OfxParser.parse(io.BytesIO(data_file))
+
+        try:
+            ofx = OfxParser.parse(io.BytesIO(data_file))
+        except ValueError:
+            return False
+
         return ofx
 
     @api.model
