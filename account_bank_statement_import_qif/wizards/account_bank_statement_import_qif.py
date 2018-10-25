@@ -26,8 +26,10 @@ class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
 
     is_qif_file = fields.Boolean('Is qif file', default=False)
-    qif_date_format = fields.Selection(
-        [('dmy', 'DD/MM/YYYY'), ('mdy', 'MM/DD/YYYY'), ('ymd', 'YYYY/MM/DD')], string='Date format')
+    qif_date_format = fields.Selection([
+        ('dmy', 'DD/MM/YYYY'),
+        ('mdy', 'MM/DD/YYYY'),
+        ('ymd', 'YYYY/MM/DD')], string='Date format')
 
     @api.onchange('filename')
     def check_filename(self):
