@@ -8,6 +8,12 @@
             <xpath expr="//ul[@id='statement_format']" position="inside">
                 <li>Quicken Interchange Format (.qif)</li>
             </xpath>
+            <xpath expr="//field[@name='filename']" position="after">
+                <group>
+                    <field name="is_qif_file" invisible="1"/>
+                    <field name="qif_date_format" attrs="{'invisible': [('is_qif_file', '=', False)], 'required': [('is_qif_file', '=', True)]}"/>
+                </group>
+            </xpath>
         </field>
     </record>
 

@@ -9,7 +9,7 @@ import StringIO
 import dateutil.parser
 
 from odoo.tools.translate import _
-from odoo import api, models
+from odoo import api, models, fields
 from odoo.exceptions import UserError
 
 import logging
@@ -25,6 +25,17 @@ except (ImportError, IOError) as err:
 class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
 
+    is_qif_file = fields.Boolean('Is qif file', default=False)
+    qif_date_format = fields.Selection(
+        [('dmy', 'DD/MM/YYYY'), ('mdy', 'MM/DD/YYYY'), ('ymd', 'YYYY/MM/DD')], string='Date format')
+
+    @api.onchange('filename')
+    def check_filename(self):
+        if self.filename and self.filename[-4:] == '.qif':
+            self.is_qif_file = True
+        else:
+            self.is_qif_file = False
+
     @api.model
     def _check_qif(self, data_file):
         return data_file.strip().startswith('!Type:')
@@ -36,7 +47,16 @@ class AccountBankStatementImport(models.TransientModel):
             return u'utf-8'
 
     def _parse_qif_date(self, date_str):
-        return dateutil.parser.parse(date_str, fuzzy=True).date()
+        date_args = {
+            'fuzzy': True
+        }
+        if self.qif_date_format == 'dmy':
+            date_args.update({'dayfirst': True})
+        elif self.qif_date_format == 'mdy':
+            date_args.update({'dayfirst': False})
+        elif self.qif_date_format == 'ymd':
+            date_args.update({'yearfirst': True})
+        return dateutil.parser.parse(date_str, **date_args).date()
 
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):

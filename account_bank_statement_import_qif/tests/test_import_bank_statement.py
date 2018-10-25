@@ -30,13 +30,13 @@ class TestQifFile(TransactionCase):
 
     def test_qif_file_import(self):
         qif_file_path = get_module_resource(
-            'account_bank_statement_import_qif', 'tests', 'test_qif.qif',
+            'account_bank_statement_import_qif', 'test_files', 'test_qif.qif',
         )
         qif_file = open(qif_file_path, 'rb').read().encode('base64')
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
         ).create(
-            dict(data_file=qif_file)
+            dict(data_file=qif_file, qif_date_format='mdy')
         )
         wizard.import_file()
         statement = self.statement_line_model.search(
@@ -47,3 +47,51 @@ class TestQifFile(TransactionCase):
             [('name', '=', 'Epic Technologies')], limit=1,
         )
         self.assertEqual(line.partner_id, self.partner)
+
+    def test_date_format_mdy(self):
+        qif_file_path = get_module_resource(
+            'account_bank_statement_import_qif', 'test_files', 'test_qif.qif',
+        )
+        qif_file = open(qif_file_path, 'rb').read().encode('base64')
+        wizard = self.statement_import_model.with_context(
+            journal_id=self.journal.id
+        ).create(
+            dict(data_file=qif_file)
+        )
+        wizard.import_file()
+        line = self.statement_line_model.search(
+            [('name', '=', 'Delta PC')], limit=1,
+        )
+        self.assertEqual(line.date, '2013-08-12')
+
+    def test_date_format_dmy(self):
+        qif_file_path = get_module_resource(
+            'account_bank_statement_import_qif', 'test_files', 'test_qif_dmy.qif',
+        )
+        qif_file = open(qif_file_path, 'rb').read().encode('base64')
+        wizard = self.statement_import_model.with_context(
+            journal_id=self.journal.id
+        ).create(
+            dict(data_file=qif_file, qif_date_format='dmy')
+        )
+        wizard.import_file()
+        line = self.statement_line_model.search(
+            [('name', '=', 'Delta PC')], limit=1,
+        )
+        self.assertEqual(line.date, '2013-08-12')
+
+    def test_date_format_ymd(self):
+        qif_file_path = get_module_resource(
+            'account_bank_statement_import_qif', 'test_files', 'test_qif_ymd.qif',
+        )
+        qif_file = open(qif_file_path, 'rb').read().encode('base64')
+        wizard = self.statement_import_model.with_context(
+            journal_id=self.journal.id
+        ).create(
+            dict(data_file=qif_file, qif_date_format='ymd')
+        )
+        wizard.import_file()
+        line = self.statement_line_model.search(
+            [('name', '=', 'Delta PC')], limit=1,
+        )
+        self.assertEqual(line.date, '2013-08-12')
