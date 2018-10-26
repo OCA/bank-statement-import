@@ -26,10 +26,11 @@ Usage
 
 To use this module, you need to:
 
+#. Go to the *Account Journal* configuration.
+#. Select the right date format for qif file import.
 #. Go to *Accounting* dashboard.
 #. Click on *Import statement* from any of the bank journals.
 #. Select a QIF file.
-#. Select the right date format.
 #. Press *Import*.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

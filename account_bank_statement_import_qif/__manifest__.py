@@ -17,6 +17,7 @@
         'account_bank_statement_import',
     ],
     'data': [
+        'views/account_journal_view.xml',
         'wizards/account_bank_statement_import_qif_view.xml',
     ],
     'installable': True,

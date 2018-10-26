@@ -25,19 +25,6 @@ except (ImportError, IOError) as err:
 class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
 
-    is_qif_file = fields.Boolean('Is qif file', default=False)
-    qif_date_format = fields.Selection([
-        ('dmy', 'DD/MM/YYYY'),
-        ('mdy', 'MM/DD/YYYY'),
-        ('ymd', 'YYYY/MM/DD')], string='Date format')
-
-    @api.onchange('filename')
-    def check_filename(self):
-        if self.filename and self.filename[-4:] == '.qif':
-            self.is_qif_file = True
-        else:
-            self.is_qif_file = False
-
     @api.model
     def _check_qif(self, data_file):
         return data_file.strip().startswith('!Type:')
@@ -48,15 +35,15 @@ class AccountBankStatementImport(models.TransientModel):
         else:
             return u'utf-8'
 
-    def _parse_qif_date(self, date_str):
+    def _parse_qif_date(self, date_str, qif_date_format):
         date_args = {
             'fuzzy': True
         }
-        if self.qif_date_format == 'dmy':
+        if qif_date_format == 'dmy':
             date_args.update({'dayfirst': True})
-        elif self.qif_date_format == 'mdy':
+        elif qif_date_format == 'mdy':
             date_args.update({'dayfirst': False})
-        elif self.qif_date_format == 'ymd':
+        elif qif_date_format == 'ymd':
             date_args.update({'yearfirst': True})
         return dateutil.parser.parse(date_str, **date_args).date()
 
@@ -64,6 +51,11 @@ class AccountBankStatementImport(models.TransientModel):
         if not self._check_qif(data_file):
             return super(AccountBankStatementImport, self)._parse_file(
                 data_file)
+        qif_date_format = False
+        journal_id = self.env.context.get('journal_id')
+        if journal_id:
+            journal = self.env['account.journal'].browse(journal_id)
+            qif_date_format = journal.qif_date_format
         encoding = self._get_qif_encoding(data_file)
         data_file = data_file.decode(encoding)
         try:
@@ -88,7 +80,8 @@ class AccountBankStatementImport(models.TransientModel):
                 if not line:
                     continue
                 if line[0] == 'D':  # date of transaction
-                    vals_line['date'] = self._parse_qif_date(line[1:])
+                    vals_line['date'] = self._parse_qif_date(line[1:],
+                                                             qif_date_format)
                 elif line[0] == 'T':  # Total amount
                     total += float(line[1:].replace(',', ''))
                     vals_line['amount'] = float(line[1:].replace(',', ''))

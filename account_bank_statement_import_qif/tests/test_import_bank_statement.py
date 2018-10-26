@@ -22,6 +22,19 @@ class TestQifFile(TransactionCase):
             'name': 'Test bank journal',
             'code': 'TEST',
             'type': 'bank',
+            'qif_date_format': 'mdy'
+        })
+        self.journal_dmy = self.env['account.journal'].create({
+            'name': 'Test bank journal DMY',
+            'code': 'TEST_DMY',
+            'type': 'bank',
+            'qif_date_format': 'dmy'
+        })
+        self.journal_ymd = self.env['account.journal'].create({
+            'name': 'Test bank journal YMD',
+            'code': 'TEST_YMD',
+            'type': 'bank',
+            'qif_date_format': 'ymd'
         })
         self.partner = self.env['res.partner'].create({
             # Different case for trying insensitive case search
@@ -38,7 +51,7 @@ class TestQifFile(TransactionCase):
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
         ).create(
-            dict(data_file=qif_file, qif_date_format='mdy')
+            dict(data_file=qif_file)
         )
         wizard.import_file()
         statement = self.statement_line_model.search(
@@ -76,9 +89,9 @@ class TestQifFile(TransactionCase):
         )
         qif_file = open(qif_file_path, 'rb').read().encode('base64')
         wizard = self.statement_import_model.with_context(
-            journal_id=self.journal.id
+            journal_id=self.journal_dmy.id
         ).create(
-            dict(data_file=qif_file, qif_date_format='dmy')
+            dict(data_file=qif_file)
         )
         wizard.import_file()
         line = self.statement_line_model.search(
@@ -94,9 +107,9 @@ class TestQifFile(TransactionCase):
         )
         qif_file = open(qif_file_path, 'rb').read().encode('base64')
         wizard = self.statement_import_model.with_context(
-            journal_id=self.journal.id
+            journal_id=self.journal_ymd.id
         ).create(
-            dict(data_file=qif_file, qif_date_format='ymd')
+            dict(data_file=qif_file)
         )
         wizard.import_file()
         line = self.statement_line_model.search(
