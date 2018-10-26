@@ -9,7 +9,7 @@ import StringIO
 import dateutil.parser
 
 from odoo.tools.translate import _
-from odoo import api, models, fields
+from odoo import api, models
 from odoo.exceptions import UserError
 
 import logging
