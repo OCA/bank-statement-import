@@ -19,27 +19,12 @@ msgid "CAMT"
 msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser_display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser_id
-msgid "ID"
-msgstr ""
-
-#. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_oca_parser___last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: account_bank_statement_import_camt_oca
-#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_oca_parser
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
 msgid "account.bank.statement.import.camt.parser"
 msgstr ""
 
