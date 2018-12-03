@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_statements_source']" position="after">
+                <field name="qif_date_format" attrs="{'invisible': [('bank_statements_source', '=', 'manual')], 'required': [('bank_statements_source', '=', 'file_import')]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
