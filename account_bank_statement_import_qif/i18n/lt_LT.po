@@ -21,10 +21,15 @@ msgstr ""
 "%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:58
+#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:72
 #, python-format
 msgid "Could not decipher the QIF file."
 msgstr "Neįmanoma iššifruoti QIF failo."
+
+#. module: account_bank_statement_import_qif
+#: selection:account.journal,qif_date_format:0
+msgid "DD/MM/YYYY"
+msgstr ""
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
@@ -32,12 +37,32 @@ msgid "Import Bank Statement"
 msgstr "Importuoti banko išrašą"
 
 #. module: account_bank_statement_import_qif
+#: model:ir.model,name:account_bank_statement_import_qif.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_bank_statement_import_qif
+#: selection:account.journal,qif_date_format:0
+msgid "MM/DD/YYYY"
+msgstr ""
+
+#. module: account_bank_statement_import_qif
+#: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_journal_qif_date_format
+msgid "QIF Date format"
+msgstr ""
+
+#. module: account_bank_statement_import_qif
 #: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view
 msgid "Quicken Interchange Format (.qif)"
 msgstr ""
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:92
+#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:107
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr "Failas arba ne banko išrašas arba suformuotas neteisingai."
+
+#. module: account_bank_statement_import_qif
+#: selection:account.journal,qif_date_format:0
+msgid "YYYY/MM/DD"
+msgstr ""
