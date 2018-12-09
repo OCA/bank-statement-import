@@ -21,27 +21,34 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: base_bank_account_number_unique
-#: sql_constraint:res.partner.bank:0
-msgid "Account Number must be unique"
-msgstr "Številka računa mora biti unikatna"
-
-#. module: base_bank_account_number_unique
 #: model:ir.model,name:base_bank_account_number_unique.model_res_partner_bank
 msgid "Bank Accounts"
 msgstr "Bančni računi"
 
 #. module: base_bank_account_number_unique
-#: code:addons/base_bank_account_number_unique/hooks.py:45
+#: code:addons/base_bank_account_number_unique/models/res_partner_bank.py:36
 #, python-format
-msgid ""
-"Module installation can't proceed as you have duplicate account numbers in "
-"your system already. Please clean that up and try again.\n"
-"The following shows the first %d duplicate account numbers\n"
-"%s\n"
-"(if you see less than %d, those are the only duplicates)"
+msgid "Bank account %s already registered for %s."
 msgstr ""
-"Namestitev modula se ne more nadaljevati, ker imate v sistemu že duplikate "
-"številk računov. Prosimo, počistite jih in poskusite ponovno.\n"
-"Prvih %d podvojenih številk računov\n"
-"%s\n"
-"(če jih vidite manj kot %d, so to edini duplikati)"
+
+#. module: base_bank_account_number_unique
+#: code:addons/base_bank_account_number_unique/models/res_partner_bank.py:39
+#, python-format
+msgid "unknown partner"
+msgstr ""
+
+#~ msgid "Account Number must be unique"
+#~ msgstr "Številka računa mora biti unikatna"
+
+#~ msgid ""
+#~ "Module installation can't proceed as you have duplicate account numbers "
+#~ "in your system already. Please clean that up and try again.\n"
+#~ "The following shows the first %d duplicate account numbers\n"
+#~ "%s\n"
+#~ "(if you see less than %d, those are the only duplicates)"
+#~ msgstr ""
+#~ "Namestitev modula se ne more nadaljevati, ker imate v sistemu že "
+#~ "duplikate številk računov. Prosimo, počistite jih in poskusite ponovno.\n"
+#~ "Prvih %d podvojenih številk računov\n"
+#~ "%s\n"
+#~ "(če jih vidite manj kot %d, so to edini duplikati)"

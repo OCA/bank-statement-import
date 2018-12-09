@@ -20,28 +20,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_bank_account_number_unique
-#: sql_constraint:res.partner.bank:0
-msgid "Account Number must be unique"
-msgstr "O Número de Conta tem que ser único"
-
-#. module: base_bank_account_number_unique
 #: model:ir.model,name:base_bank_account_number_unique.model_res_partner_bank
 msgid "Bank Accounts"
 msgstr "Contas Bancárias"
 
 #. module: base_bank_account_number_unique
-#: code:addons/base_bank_account_number_unique/hooks.py:45
+#: code:addons/base_bank_account_number_unique/models/res_partner_bank.py:36
 #, python-format
-msgid ""
-"Module installation can't proceed as you have duplicate account numbers in "
-"your system already. Please clean that up and try again.\n"
-"The following shows the first %d duplicate account numbers\n"
-"%s\n"
-"(if you see less than %d, those are the only duplicates)"
+msgid "Bank account %s already registered for %s."
 msgstr ""
-"A instalação do módulo não pode prosseguir uma vez que já existem números de "
-"conta duplicados no sistema. Por favor, corrija a situação e tente "
-"novamente.\n"
-"Veja a seguir os %d primeiros números de conta duplicados\n"
-"%s\n"
-"(se vê menos de %d, este são os únicos duplicados)"
+
+#. module: base_bank_account_number_unique
+#: code:addons/base_bank_account_number_unique/models/res_partner_bank.py:39
+#, python-format
+msgid "unknown partner"
+msgstr ""
+
+#~ msgid "Account Number must be unique"
+#~ msgstr "O Número de Conta tem que ser único"
+
+#~ msgid ""
+#~ "Module installation can't proceed as you have duplicate account numbers "
+#~ "in your system already. Please clean that up and try again.\n"
+#~ "The following shows the first %d duplicate account numbers\n"
+#~ "%s\n"
+#~ "(if you see less than %d, those are the only duplicates)"
+#~ msgstr ""
+#~ "A instalação do módulo não pode prosseguir uma vez que já existem números "
+#~ "de conta duplicados no sistema. Por favor, corrija a situação e tente "
+#~ "novamente.\n"
+#~ "Veja a seguir os %d primeiros números de conta duplicados\n"
+#~ "%s\n"
+#~ "(se vê menos de %d, este são os únicos duplicados)"

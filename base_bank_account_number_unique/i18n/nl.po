@@ -19,28 +19,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_bank_account_number_unique
-#: sql_constraint:res.partner.bank:0
-msgid "Account Number must be unique"
-msgstr "Rekeningnummer dient uniek te zijn"
-
-#. module: base_bank_account_number_unique
 #: model:ir.model,name:base_bank_account_number_unique.model_res_partner_bank
 msgid "Bank Accounts"
 msgstr "Rekeningnummers"
 
 #. module: base_bank_account_number_unique
-#: code:addons/base_bank_account_number_unique/hooks.py:45
+#: code:addons/base_bank_account_number_unique/models/res_partner_bank.py:36
 #, python-format
-msgid ""
-"Module installation can't proceed as you have duplicate account numbers in "
-"your system already. Please clean that up and try again.\n"
-"The following shows the first %d duplicate account numbers\n"
-"%s\n"
-"(if you see less than %d, those are the only duplicates)"
+msgid "Bank account %s already registered for %s."
 msgstr ""
-"De installatie kan niet door gaan omdat er al dubbele rekeningnummer in het "
-"systeem staan. Schoon dat op en probeer het opnieuw.\n"
-"Er volgen de eerste %d dubbele rekeningnummers\n"
-"%s\n"
-"(indien er minder dan %d getoond worden, zijn er niet meer dubbele "
-"rekeningnummers)"
+
+#. module: base_bank_account_number_unique
+#: code:addons/base_bank_account_number_unique/models/res_partner_bank.py:39
+#, python-format
+msgid "unknown partner"
+msgstr ""
+
+#~ msgid "Account Number must be unique"
+#~ msgstr "Rekeningnummer dient uniek te zijn"
+
+#~ msgid ""
+#~ "Module installation can't proceed as you have duplicate account numbers "
+#~ "in your system already. Please clean that up and try again.\n"
+#~ "The following shows the first %d duplicate account numbers\n"
+#~ "%s\n"
+#~ "(if you see less than %d, those are the only duplicates)"
+#~ msgstr ""
+#~ "De installatie kan niet door gaan omdat er al dubbele rekeningnummer in "
+#~ "het systeem staan. Schoon dat op en probeer het opnieuw.\n"
+#~ "Er volgen de eerste %d dubbele rekeningnummers\n"
+#~ "%s\n"
+#~ "(indien er minder dan %d getoond worden, zijn er niet meer dubbele "
+#~ "rekeningnummers)"
