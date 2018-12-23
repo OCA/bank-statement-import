@@ -57,8 +57,9 @@ class CamtParser(models.AbstractModel):
         # name
         self.add_value_from_node(
             ns, node, [
-                './ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf|./ns:AddtlTxInf',
+                './ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf',
                 './ns:AddtlNtryInf',
+                './ns:AddtlTxInf',
                 './ns:Refs/ns:InstrId',
             ], transaction, 'name', join_str='\n')
         # note
