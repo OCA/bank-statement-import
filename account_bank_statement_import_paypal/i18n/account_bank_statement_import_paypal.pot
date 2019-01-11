@@ -6,6 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-11 10:43+0000\n"
+"PO-Revision-Date: 2019-01-11 10:43+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -253,7 +255,7 @@ msgid "Paypal commissions"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_id_4207
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_id_4185
 msgid "Paypal map"
 msgstr ""
 
