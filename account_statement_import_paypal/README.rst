@@ -25,7 +25,8 @@ Import Paypal Bank Statements
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module allows you to import the Paypal CSV files in Odoo as bank statements.
+This module allows you to import the Paypal CSV files in Odoo as bank
+statements.
 
 **Table of contents**
 
@@ -35,18 +36,18 @@ This module allows you to import the Paypal CSV files in Odoo as bank statements
 Configuration
 =============
 
-In the menu Accounting > Configuration > Accounting > Bank Accounts,
-make sure that you have your Paypal bank account with the following parameters:
-* Bank Account Type: Normal Bank Account
-* Account Number: the email address associated with your Paypal account
-* Account Journal: the journal associated to your Paypal account
+* Create or go to a bank journal where you want to import Paypal statement.
+* Edit that journal and set a Paypal map in **Paypal Map** section in **Advanced
+  Settings** tab.
 
-TIPS
-~~~~
-For now only French and English report are supported.
-For adding new support you just need to add your header in
-model/account_bank_statement_import_paypal.py in the variables HEADERS.
-Please help us and do a PR for adding new header ! Thanks
+* Now you can import Paypal statements in that journal.
+
+Note: if existent Paypal Map does not fit to your file to import, you can
+create another map in **Invoicing > Configuration > Accounting > Paypal
+Mapping**.
+
+You can import headers from any Paypal file in **Action > Create Paypal Map
+Lines** and set every line with which field of statement have to match.
 
 Usage
 =====

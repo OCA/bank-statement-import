@@ -37,6 +37,12 @@ HEADERS = [
 class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
+    paypal_map_id = fields.Many2one(
+        comodel_name='account.bank.statement.import.paypal.map',
+        string='Paypal map',
+        readonly=True,
+    )
+
     @api.model
     def _get_paypal_encoding(self):
         return 'utf-8-sig'
@@ -46,11 +52,6 @@ class AccountBankStatementImport(models.TransientModel):
         if not isinstance(data_file, str):
             data_file = data_file.decode(self._get_paypal_encoding())
         return data_file.strip()
-
-    @api.model
-    def _get_paypal_date_format(self):
-        """ This method is designed to be inherited """
-        return '%d/%m/%Y'
 
     @api.model
     def _paypal_convert_amount(self, amount_str):
@@ -63,31 +64,33 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _check_paypal(self, data_file):
         data_file = self._get_paypal_str_data(data_file)
-        for header in HEADERS:
-            if data_file.strip().startswith(header):
-                return True
-        return False
+        if not self.paypal_map_id:
+            return False
+        headers = self.mapped('paypal_map_id.map_line_ids.name')
+        file_headers = data_file.split('\n', 1)[0]
+        if any(item not in file_headers for item in headers):
+            raise UserError(
+                _("Headers of file to import and Paypal map lines does not "
+                  "match."))
+        return True
 
     def _convert_paypal_line_to_dict(self, idx, line):
-        date_dt = datetime.strptime(line[0], self._get_paypal_date_format())
-        rline = {
-            'date': fields.Date.to_string(date_dt),
-            'time': line[1],
-            'description': line[3],
-            'currency': line[4],
-            'amount': line[5],
-            'commission': line[6],
-            'balance': line[8],
-            'transaction_id': line[9],
-            'email': line[10],
-            'partner_name': line[11],
-            # This two field are useful for bank transfer
-            'bank_name': line[12],
-            'bank_account': line[13],
-            'invoice_number': line[16],
-            'origin_transaction_id': line[17],
-            'idx': idx,
-        }
+        rline = dict()
+        for item in range(len(line)):
+            map = self.mapped('paypal_map_id.map_line_ids')[item]
+            value = line[item]
+            if not map.field_to_assign:
+                continue
+            if map.date_format:
+                try:
+                    value = fields.Date.to_string(
+                        datetime.strptime(value, map.date_format))
+                except Exception:
+                    raise UserError(
+                        _("Date format of map file and Paypal date does "
+                          "not match."))
+            rline[map.field_to_assign] = value
+
         for field in ['commission', 'amount', 'balance']:
             _logger.debug('Trying to convert %s to float' % rline[field])
             try:
@@ -128,11 +131,14 @@ class AccountBankStatementImport(models.TransientModel):
             'transaction_id': cline['transaction_id'],
             }
 
-    def _post_process_statement_line(self, raw_lines):
+    def _get_journal(self):
         journal_id = self.env.context.get('journal_id')
         if not journal_id:
             raise UserError(_('You must run this wizard from the journal'))
-        journal = self.env['account.journal'].browse(journal_id)
+        return self.env['account.journal'].browse(journal_id)
+
+    def _post_process_statement_line(self, raw_lines):
+        journal = self._get_journal()
         currency = journal.currency_id or journal.company_id.currency_id
         currency_change_lines = {}
         real_transactions = []
@@ -265,17 +271,24 @@ class AccountBankStatementImport(models.TransientModel):
             if partner:
                 return {
                     'partner_id': partner.id,
-                    'account_id': partner.property_account_receivable.id,
+                    'account_id': partner.property_account_receivable_id.id,
                     }
         return None
 
     @api.model
-    def _complete_statement(self, stmts_vals, journal_id, account_number):
+    def _complete_stmts_vals(self, stmts_vals, journal_id, account_number):
         """ Match the partner from paypal information """
-        stmts_vals = super(AccountBankStatementImport, self).\
-            _complete_statement(stmts_vals, journal_id, account_number)
-        for line in stmts_vals['transactions']:
+        stmts_vals = super(AccountBankStatementImport, self). \
+            _complete_stmts_vals(stmts_vals, journal_id, account_number)
+        for line in stmts_vals[0]['transactions']:
             vals = self._complete_paypal_statement_line(line)
             if vals:
                 line.update(vals)
         return stmts_vals
+
+    @api.model
+    def default_get(self, fields):
+        res = super(AccountBankStatementImport, self).default_get(fields)
+        journal = self._get_journal()
+        res['paypal_map_id'] = journal.paypal_map_id.id
+        return res
