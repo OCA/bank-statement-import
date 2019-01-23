@@ -180,9 +180,13 @@ class CamtParser(models.AbstractModel):
             yield transaction
             return
         transaction_base = transaction
+        transaction_base_id = transaction_base['unique_import_id']
         for i, dnode in enumerate(details_nodes):
             transaction = copy(transaction_base)
             self.parse_transaction_details(ns, dnode, transaction)
+            if transaction_base_id == transaction['unique_import_id']:
+                # if parse_transaction_details didn't uniquify ids, do it here
+                transaction['unique_import_id'] += i and '-%s' % i or ''
             # transactions['data'] should be a synthetic xml snippet which
             # contains only the TxDtls that's relevant.
             # only set this field if statement lines have it
