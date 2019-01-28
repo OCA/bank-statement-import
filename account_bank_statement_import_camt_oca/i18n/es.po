@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 08:27+0000\n"
+"POT-Creation-Date: 2019-04-16 08:08+0000\n"
 "PO-Revision-Date: 2018-06-08 08:27+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
@@ -19,17 +19,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
+#, fuzzy
+msgid "Account Bank Statement Import CAMT parser"
+msgstr "account.bank.statement.import.camt.parser"
+
+#. module: account_bank_statement_import_camt_oca
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "CAMT"
 msgstr "CAMT"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser__display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser_id
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser__id
 msgid "ID"
 msgstr "ID"
 
@@ -39,16 +45,28 @@ msgid "Import Bank Statement"
 msgstr "Importar extracto bancario"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser___last_update
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
-msgid "account.bank.statement.import.camt.parser"
-msgstr "account.bank.statement.import.camt.parser"
+#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:13
+#, python-format
+msgid "camt.053.001.02"
+msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
-#: model:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
+#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:13
+#, python-format
+msgid "camt.054.001.02"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "zipped CAMT"
 msgstr "CAMT en .zip"

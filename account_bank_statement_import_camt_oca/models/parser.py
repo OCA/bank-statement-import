@@ -1,7 +1,7 @@
 """Class to parse camt files."""
-# © 2013-2016 Therp BV <http://therp.nl>
+# Copyright 2013-2016 Therp BV <https://therp.nl>
 # Copyright 2017 Open Net Sàrl
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import re
 from lxml import etree
 
@@ -9,8 +9,8 @@ from odoo import models
 
 
 class CamtParser(models.AbstractModel):
-    """Parser for camt bank statement import files."""
     _name = 'account.bank.statement.import.camt.parser'
+    _description = 'Account Bank Statement Import CAMT parser'
 
     def parse_amount(self, ns, node):
         """Parse element that contains Amount and CreditDebitIndicator."""
