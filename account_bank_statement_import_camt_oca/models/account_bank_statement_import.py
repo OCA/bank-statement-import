@@ -1,6 +1,5 @@
-"""Add process_camt method to account.bank.statement.import."""
-# © 2013-2016 Therp BV <http://therp.nl>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2013-2016 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import logging
 from io import BytesIO
 import zipfile
@@ -10,7 +9,6 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
-    """Add process_camt method to account.bank.statement.import."""
     _inherit = 'account.bank.statement.import'
 
     @api.model
