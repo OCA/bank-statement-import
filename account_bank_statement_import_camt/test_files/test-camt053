@@ -262,8 +262,8 @@
                             <Dbtr>
                                 <Nm>3rd party Media</Nm>
                                 <PstlAdr>
-                                    <StrtNm>SOMESTREET 570-A</StrtNm>
-                                    <TwnNm>1276 ML HOUSCITY</TwnNm>
+                                    <AdrLine>SOMESTREET 570-A</AdrLine>
+                                    <AdrLine>1276 ML HOUSCITY</AdrLine>
                                     <Ctry>NL</Ctry>
                                 </PstlAdr>
                             </Dbtr>
