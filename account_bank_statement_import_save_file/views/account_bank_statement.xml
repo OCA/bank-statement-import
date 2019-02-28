@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odoo>   
+<odoo>
     <record id="view_bank_statement_form" model="ir.ui.view">
         <field name="model">account.bank.statement</field>
         <field name="inherit_id" ref="account.view_bank_statement_form" />
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='statement_line_ids']" position="after">
-                <page string="Imported file" attrs="{'invisible': [('import_file', '=', False)]}">
+            <notebook position="inside">
+                <page string="Imported File" name="imported_file" attrs="{'invisible': [('import_file', '=', False)]}">
                     <group>
-                        <group>
-                            <field name="import_file" />
-                        </group>
-                        <group>
-                            <field name="import_date" />
-                            <field name="import_user" />
-                        </group>
+                        <field name="import_file"/>
+                        <field name="import_date"/>
+                        <field name="import_user"/>
+                        <field name="import_log"/>
                     </group>
-                    <field name="import_log" />
                 </page>
-            </xpath>
+            </notebook>
         </field>
     </record>
 </odoo>

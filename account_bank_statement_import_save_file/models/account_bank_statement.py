@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2015 Therp BV (<http://therp.nl>).
+# Copyright 2015-2019 Therp BV (<http://therp.nl>).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class AccountBankStatement(models.Model):
@@ -10,9 +9,7 @@ class AccountBankStatement(models.Model):
 
     import_file = fields.Many2one(
         'ir.attachment', 'Import file', readonly=True)
-    import_date = fields.Datetime(
-        related=['import_file', 'create_date'], readonly=True)
-    import_user = fields.Many2one(
-        related=['import_file', 'create_uid'], readonly=True)
+    import_date = fields.Datetime(related='import_file.create_date')
+    import_user = fields.Many2one(related='import_file.create_uid')
     import_log = fields.Text(
-        related=['import_file', 'description'], readonly=True)
+        related='import_file.description', string='Import Warnings')
