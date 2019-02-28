@@ -9,7 +9,9 @@ class AccountBankStatement(models.Model):
 
     import_file = fields.Many2one(
         'ir.attachment', 'Import file', readonly=True)
-    import_date = fields.Datetime(related='import_file.create_date')
-    import_user = fields.Many2one(related='import_file.create_uid')
+    import_date = fields.Datetime(
+        related='import_file.create_date', string='Imported on')
+    import_user = fields.Many2one(
+        related='import_file.create_uid', string='Imported by')
     import_log = fields.Text(
         related='import_file.description', string='Import Warnings')

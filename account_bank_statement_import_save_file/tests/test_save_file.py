@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-# © 2015 Therp BV (<http://therp.nl>).
-# © 2017 Today Mourad EL HADJ MIMOUNE <mourad.elhadj.mimoune@akretion.com>
+# Copyright 2015-2019 Therp BV (<http://therp.nl>).
+# Copyright 2017-Today Mourad EL HADJ MIMOUNE
+#                      <mourad.elhadj.mimoune@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import base64
@@ -19,7 +19,7 @@ class HelloWorldParser(models.TransientModel):
 
     @api.model
     def _parse_file(self, data_file):
-        if module_name in data_file:
+        if data_file == module_name.encode('utf-8'):
             return self._mock_parse(data_file)
         else:
             return super(HelloWorldParser, self)._parse_file(data_file)
@@ -58,14 +58,12 @@ class TestSaveFile(TransactionCase):
         HelloWorldParser._build_model(self.registry, self.cr)
         import_wizard = self.env['account.bank.statement.import']
         journal_id = self.bank_journal_euro.id
+        data_file = base64.b64encode(module_name.encode('utf-8'))
         import_wizard_id = import_wizard.with_context(journal_id=journal_id)\
-            .create({
-                'data_file': base64.b64encode(bytes(
-                    'account_bank_statement_import_save_file: Hello world'))
-            })
+            .create({'data_file': data_file, 'filename': 'test.ofx'})
         action = import_wizard_id.import_file()
         for statement in self.env['account.bank.statement'].browse(
                 action['context']['statement_ids']):
             self.assertEqual(
                 base64.b64decode(statement.import_file.datas),
-                'account_bank_statement_import_save_file: Hello world')
+                module_name.encode('utf-8'))
