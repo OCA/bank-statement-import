@@ -1,22 +1,35 @@
 # -*- coding: utf-8 -*-
-# © 2017 Therp BV <http://therp.nl>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import base64
 from datetime import timedelta
-from openerp import fields
-from openerp.tests.common import TransactionCase
-from openerp.addons.account_bank_statement_import.models\
+from odoo import fields
+from odoo.tests.common import TransactionCase
+from odoo.addons.account_bank_statement_import\
     .account_bank_statement_import import AccountBankStatementImport
 
 
 class TestAccountBankStatementImportAutoReconcile(TransactionCase):
+
+    post_install = True
+    at_install = False
+
     def setUp(self):
         super(TestAccountBankStatementImportAutoReconcile, self).setUp()
         # we don't really have something to import, so we patch the
         # import routine to return what we want for our tests
         self.original_parse_file = AccountBankStatementImport._parse_file
         AccountBankStatementImport._parse_file = self._parse_file
-        self.invoice = self.env.ref('account.invoice_4')
+        invoice_account = self.env['account.account'].search([
+            ('user_type_id', '=', self.env.ref(
+                'account.data_account_type_receivable').id)],
+            limit=1,
+        )
+        self.invoice = self.env['account.invoice'].create({
+            'partner_id': self.env.ref('base.res_partner_2').id,
+            'account_id': invoice_account.id,
+            'type': 'in_invoice',
+        })
         self.rule = self.env.ref(
             'account_bank_statement_import_auto_reconcile.rule_amount_exact'
         )

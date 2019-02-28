@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# © 2017 Therp BV <http://therp.nl>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openerp.tools import float_compare, float_round
-from openerp import api, fields, models
+# Copyright 2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo.tools import float_compare, float_round
+from odoo import api, fields, models
 
 
 class AccountBankStatementImportAutoReconcile(models.AbstractModel):
@@ -46,24 +46,25 @@ class AccountBankStatementImportAutoReconcile(models.AbstractModel):
 
     @api.model
     def _reconcile_move_line(self, statement_line, move_line_id):
-        """Helper to reconcile some move line with a bank statement.
-        This will create a move to reconcile with and assigns journal_entry_id
+        """ Given a bank statement line and an account move line (Journal Item)
+        which we know that can be reconciled, reconcile them.
+
+        :param statement_line: The account.bank.statement.line to reconcile.
+        :param move_line_id: The id of the account.move.line to reconcile.
         """
-        move = self.env['account.move'].create(
-            self.env['account.bank.statement']._prepare_move(
-                statement_line,
-                (
-                    statement_line.statement_id.name or statement_line.name
-                ) + "/" + str(statement_line.sequence or '')
-            )
+        acc_move_line = self.env['account.move.line']
+        acc_move = self.env['account.move']
+        move = acc_move.create(statement_line._prepare_reconciliation_move(
+            statement_line.ref))
+        move_line_dict = statement_line._prepare_reconciliation_move_line(
+            move,
+            -acc_move_line.browse(move_line_id).balance,
         )
-        move_line_dict = self.env['account.bank.statement']\
-            ._prepare_bank_move_line(
-                statement_line, move.id, -statement_line.amount,
-                statement_line.statement_id.company_id.currency_id.id,
-            )
-        move_line_dict['counterpart_move_line_id'] = move_line_id
-        statement_line.process_reconciliation([move_line_dict])
+        move_line = acc_move_line.with_context(
+            check_move_validity=False).create(move_line_dict)
+        move_line_dict.update({'move_line': move_line})
+        statement_line.process_reconciliation(
+            counterpart_aml_dicts=[move_line_dict])
 
     @api.multi
     def reconcile(self, statement_line):

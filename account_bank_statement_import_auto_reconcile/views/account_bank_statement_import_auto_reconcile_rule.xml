@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        <record id="account_bank_statement_import_auto_reconcile_rule_form" model="ir.ui.view">
-            <field name="model">account.bank.statement.import.auto.reconcile.rule</field>
-            <field name="arch" type="xml">
-                <form>
-                    <group>
-                        <field name="rule_type" />
-                    </group>
-                    <div name="rule_options" attrs="{'invisible': [('rule_type', '=', False)]}" />
-                </form>
-            </field>
-        </record>
-        <record id="account_bank_statement_import_auto_reconcile_rule_tree" model="ir.ui.view">
-            <field name="model">account.bank.statement.import.auto.reconcile.rule</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="display_name" />
-                </tree>
-            </field>
-        </record>
-    </data>
-</openerp>
+<odoo>
+    <record id="account_bank_statement_import_auto_reconcile_rule_form" model="ir.ui.view">
+        <field name="model">account.bank.statement.import.auto.reconcile.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="rule_type" />
+                </group>
+                <div name="rule_options" attrs="{'invisible': [('rule_type', '=', False)]}" />
+            </form>
+        </field>
+    </record>
+    <record id="account_bank_statement_import_auto_reconcile_rule_tree" model="ir.ui.view">
+        <field name="model">account.bank.statement.import.auto.reconcile.rule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="display_name" />
+            </tree>
+        </field>
+    </record>
+</odoo>
