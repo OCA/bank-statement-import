@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# © 2017 Therp BV <http://therp.nl>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 {
     "name": "Automatic reconciliation after import",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "author": "Therp BV,Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": 'Banking addons',
@@ -11,7 +11,6 @@
     "reconciliation rules to be run after a bank statement is imported",
     "depends": [
         'account_bank_statement_import',
-        'web_widget_one2many_tags',
         'base_domain_operator',
     ],
     "demo": [

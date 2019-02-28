@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# © 2017 Therp BV <http://therp.nl>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from lxml import etree
-from openerp import _, api, exceptions, fields, models, tools
+from odoo import _, api, exceptions, fields, models, tools
 from .account_bank_statement_import_auto_reconcile import\
     AccountBankStatementImportAutoReconcile as auto_reconcile_base
 
@@ -87,6 +87,8 @@ class AccountBankStatementImportAutoReconcileRule(models.Model):
         result = super(AccountBankStatementImportAutoReconcileRule, self)\
             .fields_view_get(view_id=view_id, view_type=view_type,
                              toolbar=toolbar, submenu=submenu)
+        if view_type != 'form':
+            return result
         standard_fields = set(self.env[auto_reconcile_base._name]._fields)
         arch = etree.fromstring(result['arch'])
         container = arch.xpath('//div[@name="rule_options"]')[0]

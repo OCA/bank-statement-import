@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2017 Therp BV <http://therp.nl>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openerp import api, fields, models
+# Copyright 2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo import api, fields, models
 
 
 # pylint: disable=R7980
@@ -34,7 +34,7 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
 
         amount_field = 'debit'
         sign = 1
-        if statement_line.currency_id or statement_line.journal_id.currency:
+        if statement_line.currency_id or statement_line.journal_id.currency_id:
             amount_field = 'amount_currency'
         elif statement_line.amount < 0:
             amount_field = 'credit'
@@ -53,8 +53,7 @@ class AccountBankStatementImportAutoReconcileExactAmount(models.AbstractModel):
         ])
 
         domain = [
-            ('reconcile_id', '=', False),
-            ('state', '=', 'valid'),
+            ('reconciled', '=', False),
             ('account_id.reconcile', '=', True),
             ('partner_id', '=', statement_line.partner_id.id),
             (amount_field, '=', self._round(sign * statement_line.amount)),

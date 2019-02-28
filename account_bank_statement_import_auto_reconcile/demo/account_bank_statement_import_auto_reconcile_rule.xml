@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        <record id="rule_amount_exact" model="account.bank.statement.import.auto.reconcile.rule">
-            <field name="journal_id" ref="account.bank_journal" />
-            <field name="rule_type">account.bank.statement.import.auto.reconcile.exact.amount</field>
-            <field name="match_st_name" eval="True" />
-            <field name="match_st_ref" eval="True" />
-            <field name="match_move_name" eval="True" />
-            <field name="match_move_ref" eval="True" />
-            <field name="match_line_name" eval="True" />
-            <field name="match_line_ref" eval="True" />
-        </record>
-    </data>
-</openerp>
+<odoo>
+    <record id="rule_amount_exact" model="account.bank.statement.import.auto.reconcile.rule">
+        <field name="journal_id" ref="account.bank_journal" />
+        <field name="rule_type">account.bank.statement.import.auto.reconcile.exact.amount</field>
+        <field name="match_st_name" eval="True" />
+        <field name="match_st_ref" eval="True" />
+        <field name="match_move_name" eval="True" />
+        <field name="match_move_ref" eval="True" />
+        <field name="match_line_name" eval="True" />
+        <field name="match_line_ref" eval="True" />
+    </record>
+</odoo>
