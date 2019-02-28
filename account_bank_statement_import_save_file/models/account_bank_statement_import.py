@@ -24,11 +24,12 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _prepare_import_file_attachment(self, data_file, statement_id,
                                         notifications, filename):
+        if not filename:
+            filename = '<unknown>'
         return {
             'name': filename,
             'res_model': 'account.bank.statement',
             'res_id': statement_id,
-            'type': 'binary',
             'datas': data_file,
             'datas_fname': filename,
             'description': '\n'.join(
