@@ -76,6 +76,14 @@ class CamtParser(models.AbstractModel):
             transaction, 'ref'
         )
         amount = self.parse_amount(ns, node)
+
+        # Tx conversion devise
+        xchgrate = node.xpath(
+            '../../ns:AmtDtls/ns:TxAmt/ns:CcyXchg/ns:XchgRate', namespaces={'ns': ns})
+        # If there is a tx, then we do the conversion
+        if xchgrate:
+            amount = amount * float(xchgrate[0].text)
+
         if amount != 0.0:
             transaction['amount'] = amount
         # remote party values
