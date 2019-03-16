@@ -62,9 +62,6 @@ class AccountBankStatementImportAutoReconcile(models.AbstractModel):
         )
         move_line = acc_move_line.with_context(
             check_move_validity=False).create(move_line_dict)
-        move_line_dict.update({'move_line': move_line})
-        statement_line.process_reconciliation(
-            counterpart_aml_dicts=[move_line_dict])
 
     @api.multi
     def reconcile(self, statement_line):
