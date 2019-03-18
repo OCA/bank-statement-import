@@ -1,0 +1,2 @@
+# TODO: revert to standard server-tools before merging
+server-tools https://github.com/daramousk/server-tools 10.0-mig-base_domain_operator
