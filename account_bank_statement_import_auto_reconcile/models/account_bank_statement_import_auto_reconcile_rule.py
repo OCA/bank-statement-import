@@ -11,6 +11,7 @@ class AccountBankStatementImportAutoReconcileRule(models.Model):
     _name = 'account.bank.statement.import.auto.reconcile.rule'
     _description = 'Automatic reconciliation rule'
 
+    display_name = fields.Char(string='Rule')
     rule_type = fields.Selection('_sel_rule_type', required=True)
     journal_id = fields.Many2one('account.journal', 'Journal', required=True)
     options = fields.Serialized('Options')

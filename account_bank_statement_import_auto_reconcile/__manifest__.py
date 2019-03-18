@@ -13,9 +13,6 @@
         'account_bank_statement_import',
         'base_domain_operator',
     ],
-    "demo": [
-        "demo/account_bank_statement_import_auto_reconcile_rule.xml",
-    ],
     "data": [
         "views/account_bank_statement_import_reapply_rules.xml",
         "views/account_bank_statement.xml",

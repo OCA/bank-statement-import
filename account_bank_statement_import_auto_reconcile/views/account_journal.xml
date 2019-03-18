@@ -4,9 +4,26 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
-            <field name="default_credit_account_id" position="after">
-                <field name="statement_import_auto_reconcile_rule_ids"/>
-            </field>
+            <notebook position="inside">
+                <page
+                    name="account_bank_statement_auto_reconcile"
+                    string="Automatic reconciliation rules"
+                    attrs="{'invisible': [('type', '!=', 'bank')]}"
+                >
+                    <field name="statement_import_auto_reconcile_rule_ids" />
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="view_account_bank_journal_form" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_bank_journal_form" />
+        <field name="arch" type="xml">
+            <xpath expr="./sheet/group" position="after">
+                <group name="account_bank_statement_auto_reconcile">
+                    <field name="statement_import_auto_reconcile_rule_ids" />
+                </group>
+            </xpath>
         </field>
     </record>
 </odoo>

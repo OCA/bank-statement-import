@@ -20,7 +20,7 @@ class AccountBankStatementImportAutoReconcile(models.AbstractModel):
     def _digits(self):
         try:
             return self.__digits
-        except:
+        except AttributeError:
             self.__digits = self.env['decimal.precision'].precision_get(
                 'Account'
             )
@@ -52,16 +52,13 @@ class AccountBankStatementImportAutoReconcile(models.AbstractModel):
         :param statement_line: The account.bank.statement.line to reconcile.
         :param move_line_id: The id of the account.move.line to reconcile.
         """
-        acc_move_line = self.env['account.move.line']
-        acc_move = self.env['account.move']
-        move = acc_move.create(statement_line._prepare_reconciliation_move(
-            statement_line.ref))
-        move_line_dict = statement_line._prepare_reconciliation_move_line(
-            move,
-            -acc_move_line.browse(move_line_id).balance,
-        )
-        move_line = acc_move_line.with_context(
-            check_move_validity=False).create(move_line_dict)
+        move_line = self.env['account.move.line'].browse(move_line_id)
+        return statement_line.process_reconciliation(counterpart_aml_dicts=[{
+            'name': statement_line.name,
+            'debit': move_line.credit,
+            'credit': move_line.debit,
+            'move_line': move_line,
+        }])
 
     @api.multi
     def reconcile(self, statement_line):

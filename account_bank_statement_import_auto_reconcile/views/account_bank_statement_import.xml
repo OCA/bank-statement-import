@@ -5,8 +5,10 @@
         <field name="inherit_id" ref="account_bank_statement_import.account_bank_statement_import_view" />
         <field name="arch" type="xml">
             <field name="data_file" position="after">
-                <field name="auto_reconcile" class="oe_inline" />
-                <label for="auto_reconcile" />
+                <div>
+                    <field name="auto_reconcile" class="oe_inline" />
+                    <label for="auto_reconcile" />
+                </div>
             </field>
         </field>
     </record>
