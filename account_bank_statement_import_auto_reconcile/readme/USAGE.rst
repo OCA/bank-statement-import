@@ -1,0 +1,1 @@
+After a journal is configured for automatic reconciliations, it simply happens during an import on this journal if you don't disable the `auto reconcile` checkbox on the import wizard. If there were automatic reconciliations, you'll see a notification about that and the lines in question will also show up as reconciled.
