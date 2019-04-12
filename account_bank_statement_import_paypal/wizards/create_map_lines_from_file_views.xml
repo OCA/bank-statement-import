@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="create_paypal_map_lines_view" model="ir.ui.view">
+        <field name="name">Create Paypal Map Lines</field>
+        <field name="model">wizard.paypal.map.create</field>
+        <field name="arch" type="xml">
+            <form string="Import Paypal Map Lines">
+                <h2>Select a Paypal bank statement file to create all the map lines from headers file.</h2>
+                <p>Download a bank statement from your bank and import it here.</p>
+                <p>All the Paypal map lines will be created automatically.</p>
+                <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
+                <field name="filename" invisible="1"/>
+                <footer>
+                    <button name="create_map_lines" string="Create Lines" type="object" class="btn-primary" />
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <act_window name="Create Paypal Map Lines"
+            res_model="wizard.paypal.map.create"
+            src_model="account.bank.statement.import.paypal.map"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_create_paypal_map_lines"/>
+
+</odoo>
