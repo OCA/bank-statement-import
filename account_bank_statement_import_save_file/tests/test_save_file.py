@@ -47,12 +47,14 @@ class TestSaveFile(TransactionCase):
     def setUp(self):
         super(TestSaveFile, self).setUp()
         self.currency_eur_id = self.env.ref("base.EUR").id
-        self.bank_journal_euro = self.env['account.journal'].create(
-            {'name': 'Bank',
-             'type': 'bank',
-             'code': 'BNK_test_imp',
-             'currency_id': self.currency_eur_id
-             })
+        self.bank_journal_euro = self.env['account.journal'].create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BNK_test_imp',
+            'currency_id': self.currency_eur_id
+            if self.env.user.company_id.currency_id != self.currency_eur_id
+            else False,
+        })
 
     def test_SaveFile(self):
         HelloWorldParser._build_model(self.registry, self.cr)
