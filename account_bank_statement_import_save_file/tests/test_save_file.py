@@ -52,7 +52,7 @@ class TestSaveFile(TransactionCase):
             'type': 'bank',
             'code': 'BNK_test_imp',
             'currency_id': self.currency_eur_id
-            if self.env.user.company_id.currency_id != self.currency_eur_id
+            if self.env.user.company_id.currency_id.id != self.currency_eur_id
             else False,
         })
 
