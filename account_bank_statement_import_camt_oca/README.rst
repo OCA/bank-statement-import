@@ -57,7 +57,9 @@ Contributors
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
 * Andrea Stirpe <a.stirpe@onestein.nl>
-* Maxence Groine <mgroine@fiefmanage.ch>
+* Maxence Groine <mgroine@fiefmanage.ch
+* Mihai Fekete <feketemihai@gmail.com>
+
 
 Maintainers
 ~~~~~~~~~~~
