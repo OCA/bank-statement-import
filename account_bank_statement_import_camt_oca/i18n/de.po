@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import_camt_oca
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-import (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-16 08:08+0000\n"
+"PO-Revision-Date: 2015-10-04 11:43+0200\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-"
+"import-8-0/language/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.3\n"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
+msgid "Account Bank Statement Import CAMT parser"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
+msgid "CAMT"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser__id
+msgid "ID"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Kontoauszug importieren"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:13
+#, python-format
+msgid "camt.053.001.02"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:13
+#, python-format
+msgid "camt.054.001.02"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
+msgid "zipped CAMT"
+msgstr ""
