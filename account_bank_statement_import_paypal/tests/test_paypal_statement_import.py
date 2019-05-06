@@ -18,6 +18,7 @@ class TestPaypalFile(common.SavepointCase):
             'name': 'Paypal Bank',
             'type': 'bank',
             'code': 'PYPAL',
+            'currency_id': cls.env.ref('base.USD').id,
         })
 
     def _do_import(self, file_name):
