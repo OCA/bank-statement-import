@@ -2,7 +2,9 @@
 <odoo noupdate="1">
 
     <record id="paypal_map" model="account.bank.statement.import.paypal.map">
-        <field name="name">Paypal Monthly Statement</field>
+      <field name="name">Paypal Monthly Statement</field>
+      <field name="float_thousands_sep">comma</field>
+      <field name="float_decimal_sep">dot</field>
     </record>
 
     <record id="paypal_map_line_date" model="account.bank.statement.import.paypal.map.line">

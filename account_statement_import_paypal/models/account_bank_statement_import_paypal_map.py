@@ -1,7 +1,7 @@
 # Copyright 2019 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class AccountBankStatementImportPaypalMap(models.Model):
@@ -17,6 +17,50 @@ class AccountBankStatementImportPaypalMap(models.Model):
         required=True,
         copy=True,
     )
+    float_thousands_sep = fields.Selection(
+        [('dot', 'dot (.)'),
+         ('comma', 'comma (,)'),
+         ('none', 'none'),
+         ],
+        string='Thousands separator',
+        # forward compatibility: this was the value assumed
+        # before the field was added.
+        default='dot',
+        required=True
+    )
+    float_decimal_sep = fields.Selection(
+        [('dot', 'dot (.)'),
+         ('comma', 'comma (,)'),
+         ('none', 'none'),
+         ],
+        string='Decimals separator',
+        # forward compatibility: this was the value assumed
+        # before the field was added.
+        default='comma',
+        required=True
+    )
+
+    @api.onchange('float_thousands_sep')
+    def onchange_thousands_separator(self):
+        if 'dot' == self.float_thousands_sep == self.float_decimal_sep:
+            self.float_decimal_sep = 'comma'
+        elif 'comma' == self.float_thousands_sep == self.float_decimal_sep:
+            self.float_decimal_sep = 'dot'
+
+    @api.onchange('float_decimal_sep')
+    def onchange_decimal_separator(self):
+        if 'dot' == self.float_thousands_sep == self.float_decimal_sep:
+            self.float_thousands_sep = 'comma'
+        elif 'comma' == self.float_thousands_sep == self.float_decimal_sep:
+            self.float_thousands_sep = 'dot'
+
+    def _get_separators(self):
+        separators = {'dot': '.',
+                      'comma': ',',
+                      'none': '',
+                      }
+        return (separators[self.float_thousands_sep],
+                separators[self.float_decimal_sep])
 
 
 class AccountBankStatementImportPaypalMapLIne(models.Model):
