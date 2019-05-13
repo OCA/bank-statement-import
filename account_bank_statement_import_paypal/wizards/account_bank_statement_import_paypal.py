@@ -80,19 +80,19 @@ class AccountBankStatementImport(models.TransientModel):
     def _convert_paypal_line_to_dict(self, idx, line):
         rline = dict()
         for item in range(len(line)):
-            map = self.mapped('paypal_map_id.map_line_ids')[item]
+            paypal_map = self.mapped('paypal_map_id.map_line_ids')[item]
             value = line[item]
-            if not map.field_to_assign:
+            if not paypal_map.field_to_assign:
                 continue
-            if map.date_format:
+            if paypal_map.date_format:
                 try:
                     value = fields.Date.to_string(
-                        datetime.strptime(value, map.date_format))
+                        datetime.strptime(value, paypal_map.date_format))
                 except Exception:
                     raise UserError(
                         _("Date format of map file and Paypal date does "
                           "not match."))
-            rline[map.field_to_assign] = value
+            rline[paypal_map.field_to_assign] = value
 
         for field in ['commission', 'amount', 'balance']:
             _logger.debug('Trying to convert %s to float' % rline[field])
