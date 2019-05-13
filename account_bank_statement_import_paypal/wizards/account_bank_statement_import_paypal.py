@@ -55,10 +55,13 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _paypal_convert_amount(self, amount_str):
-        """ This method is designed to be inherited """
-        valstr = re.sub(r'[^\d,.-]', '', amount_str)
-        valstrdot = valstr.replace('.', '')
-        valstrdot = valstrdot.replace(',', '.')
+        if self.paypal_map_id:
+            thousands, decimal = self.paypal_map_id._get_separators()
+        else:
+            thousands, decimal = ',', '.'
+        valstr = re.sub(r'[^\d%s%s.-]' % (thousands, decimal), '', amount_str)
+        valstrdot = valstr.replace(thousands, '')
+        valstrdot = valstrdot.replace(decimal, '.')
         return float(valstrdot)
 
     @api.model
