@@ -16,6 +16,8 @@
             <form string="Paypal Map">
                 <group>
                     <field name="name"/>
+                    <field name="float_thousands_sep"/>
+                    <field name="float_decimal_sep"/>
                 </group>
                 <separator string="Mapping Lines"/>
                 <field name="map_line_ids"/>
