@@ -55,10 +55,13 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _paypal_convert_amount(self, amount_str):
-        """ This method is designed to be inherited """
-        valstr = re.sub(r'[^\d,.-]', '', amount_str)
-        valstrdot = valstr.replace('.', '')
-        valstrdot = valstrdot.replace(',', '.')
+        if self.paypal_map_id:
+            thousands, decimal = self.paypal_map_id._get_separators()
+        else:
+            thousands, decimal = ',', '.'
+        valstr = re.sub(r'[^\d%s%s.-]' % (thousands, decimal), '', amount_str)
+        valstrdot = valstr.replace(thousands, '')
+        valstrdot = valstrdot.replace(decimal, '.')
         return float(valstrdot)
 
     @api.model
@@ -77,19 +80,19 @@ class AccountBankStatementImport(models.TransientModel):
     def _convert_paypal_line_to_dict(self, idx, line):
         rline = dict()
         for item in range(len(line)):
-            map = self.mapped('paypal_map_id.map_line_ids')[item]
+            paypal_map = self.mapped('paypal_map_id.map_line_ids')[item]
             value = line[item]
-            if not map.field_to_assign:
+            if not paypal_map.field_to_assign:
                 continue
-            if map.date_format:
+            if paypal_map.date_format:
                 try:
                     value = fields.Date.to_string(
-                        datetime.strptime(value, map.date_format))
+                        datetime.strptime(value, paypal_map.date_format))
                 except Exception:
                     raise UserError(
                         _("Date format of map file and Paypal date does "
                           "not match."))
-            rline[map.field_to_assign] = value
+            rline[paypal_map.field_to_assign] = value
 
         for field in ['commission', 'amount', 'balance']:
             _logger.debug('Trying to convert %s to float' % rline[field])
