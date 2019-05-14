@@ -42,8 +42,10 @@ class TestPaypalFile(common.SavepointCase):
         # Current statements before to run the wizard
         old_statements = self.env['account.bank.statement'].search([])
         # This journal is for Paypal statements
-        map = self.env.ref('account_bank_statement_import_paypal.paypal_map')
-        self.journal.paypal_map_id = map.id
+        paypal_map = self.env.ref(
+            'account_bank_statement_import_paypal.paypal_map'
+        )
+        self.journal.paypal_map_id = paypal_map.id
         file = self._do_import('paypal_en.csv')
         file = base64.b64encode(file.encode("utf-8"))
         wizard = self.env['account.bank.statement.import'].with_context({
@@ -55,4 +57,6 @@ class TestPaypalFile(common.SavepointCase):
         self.assertEqual(len(statement.line_ids), 3)
         self.assertEqual(len(statement.mapped('line_ids').filtered(
             lambda x: x.partner_id and x.account_id)), 1)
-        self.assertAlmostEqual(sum(statement.mapped('line_ids.amount')), 489.2)
+        self.assertAlmostEqual(
+            sum(statement.mapped('line_ids.amount')), 1489.2
+        )
