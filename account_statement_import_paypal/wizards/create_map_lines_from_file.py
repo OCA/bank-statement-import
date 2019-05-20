@@ -9,6 +9,7 @@ from io import StringIO
 
 class WizardPaypalMapCreate(models.TransientModel):
     _name = 'wizard.paypal.map.create'
+    _description = 'Wizard Paypal Map Create'
 
     data_file = fields.Binary(
         string='Bank Statement File',
