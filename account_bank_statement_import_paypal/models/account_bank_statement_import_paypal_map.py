@@ -6,6 +6,7 @@ from odoo import fields, models, api
 
 class AccountBankStatementImportPaypalMap(models.Model):
     _name = 'account.bank.statement.import.paypal.map'
+    _description = 'Account Bank Statement Import Paypal Map'
 
     name = fields.Char(
         required=True,
@@ -63,8 +64,9 @@ class AccountBankStatementImportPaypalMap(models.Model):
                 separators[self.float_decimal_sep])
 
 
-class AccountBankStatementImportPaypalMapLIne(models.Model):
+class AccountBankStatementImportPaypalMapLine(models.Model):
     _name = 'account.bank.statement.import.paypal.map.line'
+    _description = 'Account Bank Statement Import Paypal Map Line'
     _order = "sequence asc, id asc"
 
     sequence = fields.Integer(
