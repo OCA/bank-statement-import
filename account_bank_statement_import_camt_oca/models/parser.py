@@ -6,6 +6,7 @@ import re
 from lxml import etree
 
 from odoo import models
+from odoo.addons.base.models.res_bank import sanitize_account_number
 
 
 class CamtParser(models.AbstractModel):
@@ -222,6 +223,15 @@ class CamtParser(models.AbstractModel):
 
     def parse(self, data):
         """Parse a camt.052 or camt.053 or camt.054 file."""
+        journal_account_number = None
+        journal_currency_name = None
+        if self.env.context.get('journal_id', None):
+            journal_id = self.env.context.get('journal_id', None)
+            journal = self.env['account.journal'].browse(journal_id)
+            journal_account_number = sanitize_account_number(
+                journal.bank_account_id.acc_number
+            )
+            journal_currency_name = journal.currency_id.name
         try:
             root = etree.fromstring(
                 data, parser=etree.XMLParser(recover=True))
@@ -241,8 +251,37 @@ class CamtParser(models.AbstractModel):
             statement = self.parse_statement(ns, node)
             if len(statement['transactions']):
                 if 'currency' in statement:
+                    old_currency = currency
                     currency = statement.pop('currency')
+                    if (
+                        journal_currency_name
+                        and journal_currency_name != currency
+                    ):
+                        continue
+                    if (
+                        not journal_currency_name
+                        and old_currency
+                        and old_currency != currency
+                    ):
+                        raise ValueError(
+                            'File containing statements for multiple '
+                            'currencies'
+                        )
                 if 'account_number' in statement:
+                    old_account_number = account_number
                     account_number = statement.pop('account_number')
+                    if (
+                        journal_account_number
+                        and journal_account_number != account_number
+                    ):
+                        continue
+                    if (
+                        not journal_account_number
+                        and old_account_number
+                        and old_account_number != account_number
+                    ):
+                        raise ValueError(
+                            'File containing statements for multiple accounts'
+                        )
                 statements.append(statement)
-        return currency, account_number, statements
+        return currency, journal_account_number or account_number, statements

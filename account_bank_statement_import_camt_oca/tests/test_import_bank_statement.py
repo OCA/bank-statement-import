@@ -113,6 +113,35 @@ class TestImport(TransactionCase):
             'bank_account_id': bank.id,
         })
 
+    def test_statement_import_more_than_one_xml_tag(self):
+        """Test correct statements creation for more than one xml document
+        in import file."""
+        testfile = get_module_resource(
+            'account_bank_statement_import_camt_oca',
+            'test_files',
+            'test-camt053-more-than-one-xml',
+        )
+        with open(testfile, 'rb') as datafile:
+            action = self.env['account.bank.statement.import'].create({
+                'data_file': base64.b64encode(datafile.read())
+            }).import_file()
+
+            statement_lines = self.env['account.bank.statement'].browse(
+                action['context']['statement_ids']
+            ).mapped('line_ids')
+
+            self.assertEqual(len(statement_lines), 8)
+
+            self.assertTrue(any(
+                all(
+                    line[key] == self.transactions[0][key]
+                    for key in ['amount', 'date', 'ref']
+                ) and
+                line.bank_account_id.acc_number ==
+                self.transactions[0]['account_number']
+                for line in statement_lines
+            ))
+
     def test_statement_import(self):
         """Test correct creation of single statement."""
         testfile = get_module_resource(
@@ -128,6 +157,7 @@ class TestImport(TransactionCase):
             statement_lines = self.env['account.bank.statement'].browse(
                 action['context']['statement_ids']
             ).line_ids
+            self.assertEqual(len(statement_lines), 4)
             self.assertTrue(any(
                 all(
                     line[key] == self.transactions[0][key]
