@@ -91,12 +91,17 @@ msgid "Date Format"
 msgstr "Formato de fecha"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:90
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:93
 #, python-format
 msgid "Date format of map file and Paypal date does not match."
 msgstr ""
 "El format de fecha del archivo de plantilla y la fecha de Paypal no "
 "coinciden."
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_float_decimal_sep
+msgid "Decimals separator"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
@@ -146,7 +151,7 @@ msgid "Header Name"
 msgstr "Nombre de la cabecera"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:73
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:76
 #, python-format
 msgid "Headers of file to import and Paypal map lines does not match."
 msgstr ""
@@ -228,13 +233,13 @@ msgid "Origin Transaction ID"
 msgstr "Id. de transacción"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:226
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:229
 #, python-format
 msgid "PAYPAL-COSTS"
 msgstr "COSTES-PAYPAL"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:191
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:194
 #, python-format
 msgid "PayPal Import %s > %s"
 msgstr "Importación de Paypal %s > %s"
@@ -254,13 +259,13 @@ msgid "Paypal Mapping"
 msgstr "Plantilla de Paypal"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:225
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:228
 #, python-format
 msgid "Paypal commissions"
 msgstr "Tarifa de Paypal"
 
 #. module: account_bank_statement_import_paypal
-#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_id_4185
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_id_4209
 msgid "Paypal map"
 msgstr "Plantilla de Paypal"
 
@@ -294,6 +299,11 @@ msgid "Statement Field to Assign"
 msgstr "Campo del extracto a asignar"
 
 #. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_float_thousands_sep
+msgid "Thousands separator"
+msgstr ""
+
+#. module: account_bank_statement_import_paypal
 #: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
 msgid "Time"
 msgstr "Hora"
@@ -304,14 +314,14 @@ msgid "Transaction ID"
 msgstr "Id. de transacción"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:100
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:103
 #, python-format
 msgid "Value '%s' for the field '%s' on line %d, cannot be converted to float"
 msgstr ""
 "El valor '%s' del campo '%s' en la línea %d, no se puede convertir a float"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:137
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:140
 #, python-format
 msgid "You must run this wizard from the journal"
 msgstr "Debe ejecutar este asistente des del diario"
@@ -327,10 +337,22 @@ msgid "account.bank.statement.import.paypal.map.line"
 msgstr "account.bank.statement.import.paypal.map.line"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:122
+#: selection:account.bank.statement.import.paypal.map,float_decimal_sep:0
+#: selection:account.bank.statement.import.paypal.map,float_thousands_sep:0
+msgid "comma (,)"
+msgstr ""
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:125
 #, python-format
 msgid "currency %s on line %d cannot be found in odoo"
 msgstr "la monea %s de la línea %d no se puede encontrar en odoo"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map,float_decimal_sep:0
+#: selection:account.bank.statement.import.paypal.map,float_thousands_sep:0
+msgid "dot (.)"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: selection:account.bank.statement.import.paypal.map.line,date_format:0
@@ -341,6 +363,12 @@ msgstr "p.e. 12/15/2019"
 #: selection:account.bank.statement.import.paypal.map.line,date_format:0
 msgid "i.e. 15/12/2019"
 msgstr "p.e. 15/12/2019"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map,float_decimal_sep:0
+#: selection:account.bank.statement.import.paypal.map,float_thousands_sep:0
+msgid "none"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_wizard_paypal_map_create
