@@ -1,0 +1,348 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import_paypal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-11 10:43+0000\n"
+"PO-Revision-Date: 2019-01-11 11:44+0100\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid "All the Paypal map lines will be created automatically."
+msgstr "Todas las lineas de la plantilla se crearán automáticamente."
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Bank Account"
+msgstr "Cuenta bancaria"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Bank Name"
+msgstr "Nombre del banco"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_data_file
+msgid "Bank Statement File"
+msgstr "Archivo de extracto bancario"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid "Choose a file to import..."
+msgstr "Escoja un archivo a importar..."
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid "Create Lines"
+msgstr "Crear líneas"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.actions.act_window,name:account_bank_statement_import_paypal.action_create_paypal_map_lines
+msgid "Create Paypal Map Lines"
+msgstr "Crear las líneas de la plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_create_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_create_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_create_uid
+msgid "Created by"
+msgstr "Creado el"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_create_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_create_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_create_date
+msgid "Created on"
+msgstr "Creado por"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_date_format
+msgid "Date Format"
+msgstr "Formato de fecha"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:90
+#, python-format
+msgid "Date format of map file and Paypal date does not match."
+msgstr ""
+"El format de fecha del archivo de plantilla y la fecha de Paypal no "
+"coinciden."
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid "Download a bank statement from your bank and import it here."
+msgstr "Descargue un extracto bancario desde su banco e impórtelo aquí."
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Fee"
+msgstr "Tarifa"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_sequence
+msgid "Field number"
+msgstr "Nº de campo"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_filename
+msgid "Filename"
+msgstr "Nombre de archivo"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "From Email Address"
+msgstr "Correo electrónico del remitente"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Gross"
+msgstr "Bruto"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_name
+msgid "Header Name"
+msgstr "Nombre de la cabecera"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:73
+#, python-format
+msgid "Headers of file to import and Paypal map lines does not match."
+msgstr ""
+"La cabecera del archivo a importar y las lineas de la plantilla de Paypal no "
+"coinciden."
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_id
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_id
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importar Extracto Bancario"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid "Import Paypal Map Lines"
+msgstr "Importar las lineas de la plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Invoice ID"
+msgstr "Número de factura"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model,name:account_bank_statement_import_paypal.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map___last_update
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line___last_update
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_write_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_write_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_write_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_write_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_wizard_paypal_map_create_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_map_parent_id
+msgid "Map Parent"
+msgstr "Plantilla padre"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_map_line_ids
+msgid "Map lines"
+msgstr "Líneas de la plantilla"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.statement_import_map_tax_form
+msgid "Mapping Lines"
+msgstr "Líneas de la plantilla"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Origin Transaction ID"
+msgstr "Id. de transacción"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:226
+#, python-format
+msgid "PAYPAL-COSTS"
+msgstr "COSTES-PAYPAL"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:191
+#, python-format
+msgid "PayPal Import %s > %s"
+msgstr "Importación de Paypal %s > %s"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_journal_paypal_map_id
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.statement_import_map_tax_form
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.statement_import_map_tax_tree
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.view_account_journal_form_n43
+msgid "Paypal Map"
+msgstr "Plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.actions.act_window,name:account_bank_statement_import_paypal.action_statement_import_paypal_mappging
+#: model:ir.ui.menu,name:account_bank_statement_import_paypal.menu_statement_import_paypal_mapping
+msgid "Paypal Mapping"
+msgstr "Plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:225
+#, python-format
+msgid "Paypal commissions"
+msgstr "Tarifa de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_id_4185
+msgid "Paypal map"
+msgstr "Plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.statement_import_map_tax_line_form
+msgid "Paypal mapping line"
+msgstr "Línea de plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.statement_import_map_tax_line_tree
+msgid "Paypal mapping lines"
+msgstr "Líneas de plantilla de Paypal"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_view
+msgid "Paypal with Template:"
+msgstr "Paypal con la plantilla:"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.create_paypal_map_lines_view
+msgid ""
+"Select a Paypal bank statement file to create all the map lines from headers "
+"file."
+msgstr ""
+"Seleccione un archivo de extracto bancario de Paypal para crear todas las "
+"lineas de la plantilla a partir de la cabecera del archivo."
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_map_line_field_to_assign
+msgid "Statement Field to Assign"
+msgstr "Campo del extracto a asignar"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Time"
+msgstr "Hora"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,field_to_assign:0
+msgid "Transaction ID"
+msgstr "Id. de transacción"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:100
+#, python-format
+msgid "Value '%s' for the field '%s' on line %d, cannot be converted to float"
+msgstr ""
+"El valor '%s' del campo '%s' en la línea %d, no se puede convertir a float"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:137
+#, python-format
+msgid "You must run this wizard from the journal"
+msgstr "Debe ejecutar este asistente des del diario"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import_paypal_map
+msgid "account.bank.statement.import.paypal.map"
+msgstr "account.bank.statement.import.paypal.map"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import_paypal_map_line
+msgid "account.bank.statement.import.paypal.map.line"
+msgstr "account.bank.statement.import.paypal.map.line"
+
+#. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:122
+#, python-format
+msgid "currency %s on line %d cannot be found in odoo"
+msgstr "la monea %s de la línea %d no se puede encontrar en odoo"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,date_format:0
+msgid "i.e. 12/15/2019"
+msgstr "p.e. 12/15/2019"
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,date_format:0
+msgid "i.e. 15/12/2019"
+msgstr "p.e. 15/12/2019"
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model,name:account_bank_statement_import_paypal.model_wizard_paypal_map_create
+msgid "wizard.paypal.map.create"
+msgstr "wizard.paypal.map.create"

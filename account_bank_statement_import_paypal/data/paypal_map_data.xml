@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="paypal_map" model="account.bank.statement.import.paypal.map">
+      <field name="name">Paypal Monthly Statement</field>
+      <field name="float_thousands_sep">comma</field>
+      <field name="float_decimal_sep">dot</field>
+    </record>
+
+    <record id="paypal_map_line_date" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Date</field>
+        <field name="sequence">0</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">date</field>
+        <field name="date_format">%m/%d/%Y</field>
+    </record>
+    <record id="paypal_map_line_time" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Time</field>
+        <field name="sequence">1</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">time</field>
+    </record>
+    <record id="paypal_map_line_time_zone" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Time Zone</field>
+        <field name="sequence">2</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+    </record>
+    <record id="paypal_map_line_description" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Description</field>
+        <field name="sequence">3</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">description</field>
+    </record>
+    <record id="paypal_map_line_currency" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Currency</field>
+        <field name="sequence">4</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">currency</field>
+    </record>
+    <record id="paypal_map_line_gross" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Gross</field>
+        <field name="sequence">5</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">amount</field>
+    </record>
+    <record id="paypal_map_line_fee" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Fee</field>
+        <field name="sequence">6</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">commission</field>
+    </record>
+    <record id="paypal_map_line_net" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Net</field>
+        <field name="sequence">7</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+    </record>
+    <record id="paypal_map_line_balance" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Balance</field>
+        <field name="sequence">8</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">balance</field>
+    </record>
+    <record id="paypal_map_line_transaction" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Transaction ID</field>
+        <field name="sequence">9</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">transaction_id</field>
+    </record>
+    <record id="paypal_map_line_email" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">From Email Address</field>
+        <field name="sequence">10</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">email</field>
+    </record>
+    <record id="paypal_map_line_name" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Name</field>
+        <field name="sequence">11</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">partner_name</field>
+    </record>
+    <record id="paypal_map_line_bank_name" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Bank Name</field>
+        <field name="sequence">12</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">bank_name</field>
+    </record>
+    <record id="paypal_map_line_bank_account" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Bank Account</field>
+        <field name="sequence">13</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">bank_account</field>
+    </record>
+    <record id="paypal_map_line_shipping" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Shipping and Handling Amount</field>
+        <field name="sequence">14</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+    </record>
+    <record id="paypal_map_line_sales" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Sales Tax</field>
+        <field name="sequence">15</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+    </record>
+    <record id="paypal_map_line_invoice" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Invoice ID</field>
+        <field name="sequence">16</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">invoice_number</field>
+    </record>
+    <record id="paypal_map_line_reference" model="account.bank.statement.import.paypal.map.line">
+        <field name="name">Reference Txn ID</field>
+        <field name="sequence">17</field>
+        <field name="map_parent_id" ref="paypal_map"/>
+        <field name="field_to_assign">origin_transaction_id</field>
+    </record>
+
+</odoo>
