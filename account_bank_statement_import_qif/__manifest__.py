@@ -7,7 +7,7 @@
 {
     'name': 'Import QIF Bank Statements',
     'category': 'Accounting',
-    'version': '11.0.1.0.1',
+    'version': '12.0.1.0.0',
     'author': 'OpenERP SA,'
               'Tecnativa,'
               'Odoo Community Association (OCA)',
