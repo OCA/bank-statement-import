@@ -49,6 +49,7 @@ Contributors
 * Ronald Portier <rportier@therp.nl>
 * Sylvain LE GAL <https://twitter.com/legalsylvain>
 * Nicolas JEUDY <https://github.com/njeudy>
+* Le Filament <https://github.com/lefilament>
 
 Maintainer
 ----------
