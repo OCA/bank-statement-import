@@ -1,6 +1,7 @@
 from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
 import base64
+import datetime
 
 
 class TestOfxFile(TransactionCase):
@@ -68,8 +69,8 @@ class TestOfxFile(TransactionCase):
         line = self.absl_model.search([
             ('name', '=', 'Agrolait'),
             ('statement_id', '=', bank_st_record.id)])[0]
-        self.assertEquals(line.ref, '219378')
-        self.assertEquals(line.date, '2013-08-24')
+        self.assertEqual(line.ref, '219378')
+        self.assertEqual(line.date, datetime.date(2013, 8, 24))
 
     def test_check_journal_bank_account(self):
         ofx_file_path = get_module_resource(
