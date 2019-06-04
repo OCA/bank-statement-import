@@ -1,13 +1,14 @@
 {
     'name': 'Import OFX Bank Statement',
     'category': 'Banking addons',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Odoo SA,'
               'Akretion,'
               'La Louve,'
               'GRAP,'
               'Nicolas JEUDY,'
+              'Le Filament,'
               'Odoo Community Association (OCA)',
     'website': 'https://odoo-community.org/',
     'depends': [
