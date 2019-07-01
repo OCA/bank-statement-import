@@ -11,3 +11,8 @@ class AccountJournal(models.Model):
         comodel_name='account.bank.statement.import.paypal.map',
         string='Paypal Map',
     )
+
+    def _get_bank_statements_available_import_formats(self):
+        res = super()._get_bank_statements_available_import_formats()
+        res.append('Paypal')
+        return res
