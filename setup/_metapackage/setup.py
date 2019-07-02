@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-account_bank_statement_import_camt_oca',
+        'odoo12-addon-account_bank_statement_import_ofx',
         'odoo12-addon-account_bank_statement_import_paypal',
     ],
     classifiers=[
