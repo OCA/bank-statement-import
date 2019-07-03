@@ -66,7 +66,11 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _check_paypal(self, data_file):
-        data_file = self._get_paypal_str_data(data_file)
+        try:
+            data_file = self._get_paypal_str_data(data_file)
+        except Exception as e:
+            _logger.debug(e)
+            return False
         if not self.paypal_map_id:
             return False
         headers = self.mapped('paypal_map_id.map_line_ids.name')
