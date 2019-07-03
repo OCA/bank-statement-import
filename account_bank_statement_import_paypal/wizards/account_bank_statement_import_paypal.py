@@ -68,7 +68,7 @@ class AccountBankStatementImport(models.TransientModel):
     def _check_paypal(self, data_file):
         try:
             data_file = self._get_paypal_str_data(data_file)
-        except Exception as e:
+        except UnicodeDecodeError as e:
             _logger.debug(e)
             return False
         if not self.paypal_map_id:
