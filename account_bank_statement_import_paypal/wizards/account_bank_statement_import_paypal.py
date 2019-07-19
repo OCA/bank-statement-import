@@ -274,8 +274,7 @@ class AccountBankStatementImport(models.TransientModel):
             if partner:
                 return {
                     'partner_id': partner.id,
-                    'account_id': partner.property_account_receivable_id.id,
-                    }
+                }
         return None
 
     @api.model
