@@ -56,7 +56,7 @@ class TestPaypalFile(common.SavepointCase):
         statement = staments_now - old_statements
         self.assertEqual(len(statement.line_ids), 3)
         self.assertEqual(len(statement.mapped('line_ids').filtered(
-            lambda x: x.partner_id and x.account_id)), 1)
+            lambda x: x.partner_id)), 1)
         self.assertAlmostEqual(
             sum(statement.mapped('line_ids.amount')), 1489.2
         )
