@@ -33,6 +33,13 @@ class CamtDetailsParser(models.AbstractModel):
                 './ns:BldgNb', namespaces={'ns': ns})
             if building_node:
                 address_values['building'] = building_node[0].text
+            generic_nodes = address_node[0].xpath(
+                './ns:AdrLine', namespaces={'ns': ns})
+            if generic_nodes:
+                address_values.update({
+                    'address_line_' + str(i): node.text
+                    for i, node in enumerate(generic_nodes)
+                })
             zip_node = address_node[0].xpath(
                 './ns:PstCd', namespaces={'ns': ns})
             if zip_node:
@@ -58,7 +65,8 @@ class CamtDetailsParser(models.AbstractModel):
         """
         Hook for formatting the partner address read in CAMT bank statement.
         :param address_values: dict: all address values found in statement
-            Possible keys are ['street', 'building', 'zip', 'city']
+            Possible keys are ['street', 'building', 'address_line_xxx',
+                               'zip', 'city']
             Not all keys may be present.
         :return: str: formatted address
         """
