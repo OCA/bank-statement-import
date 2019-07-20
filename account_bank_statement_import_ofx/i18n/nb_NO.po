@@ -25,7 +25,12 @@ msgid "Import Bank Statement"
 msgstr "Importer bankutsagn"
 
 #. module: account_bank_statement_import_ofx
-#: model:ir.ui.view,arch_db:account_bank_statement_import_ofx.view_account_bank_statement_import_form
+#: model:ir.model,name:account_bank_statement_import_ofx.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_bank_statement_import_ofx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_ofx.view_account_bank_statement_import_form
 msgid "Open Financial Exchange (.OFX Money)"
 msgstr ""
 
