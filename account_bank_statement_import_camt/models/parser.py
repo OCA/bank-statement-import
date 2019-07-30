@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 """Class to parse camt files."""
-# © 2013-2016 Therp BV <http://therp.nl>
+# Copyright 2013-2019 Therp BV <https://therp.nl>.
 # Copyright 2017 Open Net Sàrl
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import re
 from lxml import etree
 
 from odoo import models
+
+
+DETAIL_SEPARATOR = " - "
 
 
 class CamtParser(models.AbstractModel):
@@ -60,12 +63,12 @@ class CamtParser(models.AbstractModel):
                 './ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf',
                 './ns:AddtlNtryInf',
                 './ns:Refs/ns:InstrId',
-            ], transaction, 'name', join_str='\n')
+            ], transaction, 'name', join_str=DETAIL_SEPARATOR)
         # name
         self.add_value_from_node(
             ns, node, [
                 './ns:AddtlTxInf',
-            ], transaction, 'note', join_str='\n')
+            ], transaction, 'note', join_str=DETAIL_SEPARATOR)
         # eref
         self.add_value_from_node(
             ns, node, [
