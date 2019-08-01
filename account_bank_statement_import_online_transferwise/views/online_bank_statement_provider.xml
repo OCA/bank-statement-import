@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019 Dataplug (https://dataplug.io)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field name="inherit_id" ref="account_bank_statement_import_online.online_bank_statement_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='configuration']" position="inside">
+                <group attrs="{'invisible': [('service', '!=', 'transferwise')]}">
+                    <group>
+                        <field
+                            name="api_base"
+                            string="API base"
+                            groups="base.group_no_one"
+                        />
+                        <field
+                            name="password"
+                            string="API key"
+                            password="True"
+                            attrs="{'required': [('service', '=', 'transferwise')]}"
+                        />
+                    </group>
+                    <group>
+                        <field
+                            name="origin"
+                            string="Profile"
+                            attrs="{'required': [('service', '=', 'transferwise')]}"
+                            widget="dynamic_dropdown"
+                            values="values_transferwise_profile"
+                            context="{'api_key': password, 'api_base': api_base}"
+                        />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
