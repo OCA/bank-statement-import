@@ -11,7 +11,8 @@
                 <button name="%(account_statement_line_create_action)d"
                         string="Import Journal Items" type="action"
                         class="oe_highlight"
-                        attrs="{'invisible':[('state', '!=', 'open')]}"/>
+                        attrs="{'invisible':[('state', '!=', 'open')]}"
+                        groups="account.group_account_user"/>
             </field>
         </field>
     </record>
