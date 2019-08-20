@@ -3,11 +3,12 @@
 
 {
     'name': 'Bank statement import move lines',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Accounting',
     'summary': 'Import journal items into bank statement',
     'author': 'Tecnativa, '
               'Odoo Community Association (OCA)',
+    'maintainers': ['pedrobaeza'],
     'website': 'https://www.tecnativa.com',
     'depends': [
         'account',
@@ -17,6 +18,7 @@
         'views/account_bank_statement_view.xml',
     ],
     'license': 'AGPL-3',
+    'development_status': 'Production/Stable',
     'installable': True,
     'auto_install': False,
 }
