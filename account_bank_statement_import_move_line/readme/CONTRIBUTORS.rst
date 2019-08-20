@@ -1,1 +1,4 @@
-* Luis M. Ontalba luis.martinez@tecnativa.com>
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Luis M. Ontalba
+  * Victor M.M. Torres
