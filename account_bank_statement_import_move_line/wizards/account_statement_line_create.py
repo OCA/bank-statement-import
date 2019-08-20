@@ -36,19 +36,18 @@ class AccountStatementLineCreate(models.TransientModel):
 
     @api.model
     def default_get(self, field_list):
-        res = super(AccountStatementLineCreate, self).default_get(field_list)
-        context = self.env.context
-        assert context.get('active_model') == 'account.bank.statement',\
-            'active_model should be account.bank.statement'
-        assert context.get('active_id'), 'Missing active_id in context !'
-        statement = self.env[
-            'account.bank.statement'].browse(context['active_id'])
-        res.update({
-            'target_move': 'posted',
-            'date_type': 'due',
-            'invoice': True,
-            'statement_id': statement.id,
-            })
+        res = super().default_get(field_list)
+        active_model = self.env.context.get('active_model')
+        if active_model == 'account.bank.statement':
+            statement = self.env[active_model].browse(
+                self.env.context.get('active_id')).exists()
+            if statement:
+                res.update({
+                    'target_move': 'posted',
+                    'date_type': 'due',
+                    'invoice': True,
+                    'statement_id': statement.id,
+                })
         return res
 
     @api.multi
@@ -112,7 +111,8 @@ class AccountStatementLineCreate(models.TransientModel):
 
     @api.multi
     def create_statement_lines(self):
-        if self.move_line_ids:
-            self.move_line_ids.create_statement_line_from_move_line(
-                self.statement_id)
+        for rec in self:
+            if rec.move_line_ids and rec.statement_id:
+                rec.move_line_ids.create_statement_line_from_move_line(
+                    rec.statement_id)
         return True
