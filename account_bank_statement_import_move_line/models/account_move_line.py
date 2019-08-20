@@ -10,7 +10,6 @@ class AccountMoveLine(models.Model):
     @api.multi
     def _prepare_statement_line_vals(self, statement):
         self.ensure_one()
-        assert statement, 'Missing statement'
         amount = 0.0
         if self.debit > 0:
             amount = self.debit
@@ -25,7 +24,7 @@ class AccountMoveLine(models.Model):
             'date': self.date_maturity,
             'amount_currency': self.amount_currency,
             'currency_id': self.currency_id.id,
-            }
+        }
         return vals
 
     @api.multi
