@@ -103,6 +103,7 @@ class AccountBankStatementImportPaypalMapLIne(models.Model):
         selection=[
             ('%d/%m/%Y', 'i.e. 15/12/2019'),
             ('%m/%d/%Y', 'i.e. 12/15/2019'),
+            ('%d.%m.%Y', 'i.e. 15.12.2019')
         ],
         string="Date Format",
     )
