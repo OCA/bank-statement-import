@@ -86,8 +86,16 @@ class CamtParser(models.AbstractModel):
         party_node = node.xpath(
             './ns:RltdPties/ns:%s' % party_type, namespaces={'ns': ns})
         if party_node:
-            self.add_value_from_node(
-                ns, party_node[0], './ns:Nm', transaction, 'partner_name')
+            name_node = node.xpath(
+                './ns:RltdPties/ns:%s/ns:Nm' % party_type,
+                namespaces={'ns': ns})
+            if name_node:
+                self.add_value_from_node(
+                    ns, party_node[0], './ns:Nm', transaction, 'partner_name')
+            else:
+                self.add_value_from_node(
+                    ns, party_node[0], './ns:PstlAdr/ns:AdrLine',
+                    transaction, 'partner_name')
         # Get remote_account from iban or from domestic account:
         account_node = node.xpath(
             './ns:RltdPties/ns:%sAcct/ns:Id' % party_type,
