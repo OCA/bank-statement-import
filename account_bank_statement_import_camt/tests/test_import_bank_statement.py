@@ -31,7 +31,7 @@ class TestParser(TransactionCase):
                 temp.seek(0)
                 diff = list(
                     difflib.unified_diff(golden.readlines(), temp.readlines(),
-                                         golden.name,        temp.name))
+                                         golden.name, temp.name))
                 if len(diff) > 2:
                     self.fail(
                         "actual output doesn't match exptected output:\n%s" %
