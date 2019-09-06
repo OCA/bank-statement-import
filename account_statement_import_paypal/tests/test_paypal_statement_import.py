@@ -14,10 +14,14 @@ class TestPaypalFile(common.SavepointCase):
         cls.map = cls.env['account.bank.statement.import.paypal.map'].create({
             'name': 'Paypal Map Test',
         })
+        usd = cls.env.ref('base.USD')
         cls.journal = cls.env['account.journal'].create({
             'name': 'Paypal Bank',
             'type': 'bank',
             'code': 'PYPAL',
+            'currency_id': (
+                usd.id if cls.env.user.company_id.currency_id != usd else False
+            ),
         })
 
     def _do_import(self, file_name):
