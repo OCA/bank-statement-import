@@ -98,7 +98,7 @@ msgid "Date Format"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:93
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:97
 #, python-format
 msgid "Date format of map file and Paypal date does not match."
 msgstr ""
@@ -156,7 +156,7 @@ msgid "Header Name"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:76
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:80
 #, python-format
 msgid "Headers of file to import and Paypal map lines does not match."
 msgstr ""
@@ -236,13 +236,13 @@ msgid "Origin Transaction ID"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:229
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:233
 #, python-format
 msgid "PAYPAL-COSTS"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:194
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:198
 #, python-format
 msgid "PayPal Import %s > %s"
 msgstr ""
@@ -262,7 +262,7 @@ msgid "Paypal Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:228
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:232
 #, python-format
 msgid "Paypal commissions"
 msgstr ""
@@ -313,7 +313,7 @@ msgid "Transaction ID"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:103
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:107
 #, python-format
 msgid "Value '%s' for the field '%s' on line %d, cannot be converted to float"
 msgstr ""
@@ -324,7 +324,7 @@ msgid "Wizard Paypal Map Create"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:140
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:144
 #, python-format
 msgid "You must run this wizard from the journal"
 msgstr ""
@@ -336,7 +336,7 @@ msgid "comma (,)"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:125
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal.py:129
 #, python-format
 msgid "currency %s on line %d cannot be found in odoo"
 msgstr ""
