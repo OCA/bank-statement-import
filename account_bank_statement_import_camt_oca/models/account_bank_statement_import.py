@@ -11,7 +11,6 @@ _logger = logging.getLogger(__name__)
 class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
-    @api.model
     def _parse_file(self, data_file):
         """Parse a CAMT053 XML file."""
         try:
