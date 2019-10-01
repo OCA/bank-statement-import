@@ -36,7 +36,7 @@ Contributors
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Ronald Portier <rportier@therp.nl>
 * Andrea Stirpe <a.stirpe@onestein.nl>
-* Fekete Mihai <mihai.fekete@forbiom.eu>
+* Fekete Mihai <mihai.fekete@gmail.com>
 
 Maintainer
 ----------
