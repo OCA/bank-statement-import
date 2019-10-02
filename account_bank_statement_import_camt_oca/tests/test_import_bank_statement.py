@@ -7,7 +7,7 @@ import difflib
 import pprint
 import tempfile
 
-
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
 
@@ -153,3 +153,19 @@ class TestImport(TransactionCase):
             for statement in self.env['account.bank.statement'].browse(
                     action['context']['statement_ids']):
                 self.assertTrue(statement.line_ids)
+
+    def test_bad_zip_with_multiple_accounts(self):
+        """
+            Test import of a zip file with statements
+            related to different accounts
+        """
+        testfile = get_module_resource(
+            'account_bank_statement_import_camt_oca',
+            'test_files',
+            'test-camt053-multiple-accounts.zip',
+        )
+        with open(testfile, 'rb') as datafile:
+            with self.assertRaises(UserError):
+                self.env['account.bank.statement.import'].create({
+                    'data_file': base64.b64encode(datafile.read()),
+                }).import_file()

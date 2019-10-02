@@ -3,7 +3,8 @@
 import logging
 from io import BytesIO
 import zipfile
-from odoo import api, models
+from odoo import api, models, _
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -14,6 +15,26 @@ class AccountBankStatementImport(models.TransientModel):
     @api.model
     def _parse_file(self, data_file):
         """Parse a CAMT053 XML file."""
+
+        def _check_unique_ccy_acc_nb_sets(ccy_set, acc_nb_set):
+            err_msg_dtls = []
+
+            if len(ccy_set) > 1:
+                err_msg_dtls.append(
+                    _(" different currencies ({})".format(
+                        ','.join(list(ccy_set))))
+                )
+            if len(acc_number_set) > 1:
+                err_msg_dtls.append(
+                    _(" different accounts:\n\t* {}".format(
+                        '\n\t* '.join(list(acc_number_set))))
+                )
+
+            if len(err_msg_dtls) != 0:
+                errmsg = _("This zip file contains statements for ") \
+                    + " and ".join(err_msg_dtls)
+                raise UserError(errmsg)
+
         try:
             parser = self.env['account.bank.statement.import.camt.parser']
             _logger.debug("Try parsing with camt.")
@@ -21,6 +42,8 @@ class AccountBankStatementImport(models.TransientModel):
         except ValueError:
             try:
                 with zipfile.ZipFile(BytesIO(data_file)) as data:
+                    ccy_set = set()
+                    acc_number_set = set()
                     currency = None
                     account_number = None
                     transactions = []
@@ -28,7 +51,17 @@ class AccountBankStatementImport(models.TransientModel):
                         currency, account_number, new = self._parse_file(
                             data.open(member).read()
                         )
+                        if currency:
+                            ccy_set.add(currency)
+                        if account_number:
+                            acc_number_set.add(account_number)
                         transactions.extend(new)
+
+                    # Raise error if different ccy/acc_number in zipped stmts
+                    _check_unique_ccy_acc_nb_sets(ccy_set, acc_number_set)
+                    currency = list(ccy_set)[0] if len(ccy_set) == 1 else None
+                    account_number = list(acc_number_set)[0] if \
+                        len(acc_number_set) == 1 else None
                 return currency, account_number, transactions
             except (zipfile.BadZipFile, ValueError):
                 pass
