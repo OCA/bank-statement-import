@@ -15,4 +15,8 @@
                      'date': '2017-03-22',
                      'name': u'CR\xc9DIT GROUP\xc9 BVR TRAITEMENT DU 22.03.2017 NUM\xc9RO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
                      'partner_name': 'Banque Cantonale Vaudoise',
-                     'ref': '302388292000022222222222222'}]}])
+                     'ref': '302388292000022222222222222'},
+                    {'amount': -4220.21,
+                     'date': '2017-03-22',
+                     'name': '/',
+                     'ref': '20170323001234567891234567891234'}]}])

@@ -105,7 +105,7 @@ class CamtParser(models.AbstractModel):
                     'account_number'
                 )
 
-    def parse_entry(self, ns, node, transaction=None):
+    def parse_entry(self, ns, node, transaction=None, currency=None):
         """Parse an Ntry node and yield transactions"""
         if transaction is None:
             transaction = {'name': '/', 'amount': 0}  # fallback defaults
@@ -130,6 +130,19 @@ class CamtParser(models.AbstractModel):
         if len(details_nodes) == 0:
             yield transaction
             return
+        if currency:
+            is_single_currency = all(
+                amt_node[0].attrib['Ccy'] == currency for amt_node in (
+                    dn.xpath('.//ns:Amt', namespaces={'ns': ns})
+                    for dn in details_nodes
+                )
+            )
+            # Do not parse transaction details if currency is different
+            # from account currency as conversion infos may not be available
+            # (thanks to the 'pain' norm)
+            if not is_single_currency:
+                yield transaction
+                return
         transaction_base = transaction
         for node in details_nodes:
             transaction = transaction_base.copy()
@@ -187,7 +200,7 @@ class CamtParser(models.AbstractModel):
         entry_nodes = node.xpath('./ns:Ntry', namespaces={'ns': ns})
         transactions = []
         for entry_node in entry_nodes:
-            transactions.extend(self.parse_entry(ns, entry_node))
+            transactions.extend(self.parse_entry(ns, entry_node, currency=result.get('currency')))
         result['transactions'] = transactions
         result['date'] = None
         if transactions:
