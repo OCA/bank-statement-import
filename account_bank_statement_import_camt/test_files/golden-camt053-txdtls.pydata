@@ -1,4 +1,4 @@
-(None,
+('CHF',
  'CH1111000000123456789',
  [{'balance_end_real': 79443.15,
    'balance_start': 75960.15,
