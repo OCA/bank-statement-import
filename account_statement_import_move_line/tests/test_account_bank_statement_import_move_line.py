@@ -60,12 +60,8 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
             'invoice': False,
         })
         wizard.populate()
-        self.assertTrue(len(wizard.move_line_ids), 2)
-        wizard.invoice = True
-        wizard.move_line_filters_change()
-        wizard.populate()
-        self.assertTrue(len(wizard.move_line_ids), 1)
-        line = wizard.move_line_ids[0]
+        self.assertEqual(len(wizard.move_line_ids), 1)
+        line = wizard.move_line_ids
         self.assertEqual(line.debit, self.invoice.amount_total)
         wizard.create_statement_lines()
         line = self.statement.line_ids[0]
