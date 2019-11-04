@@ -9,7 +9,7 @@
     'author': 'Tecnativa, '
               'Odoo Community Association (OCA)',
     'maintainers': ['pedrobaeza'],
-    'website': 'https://www.tecnativa.com',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'depends': [
         'account',
     ],
