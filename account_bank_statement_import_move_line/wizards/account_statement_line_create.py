@@ -89,6 +89,7 @@ class AccountStatementLineCreate(models.TransientModel):
     def populate(self):
         domain = self._prepare_move_line_domain()
         lines = self.env['account.move.line'].search(domain)
+        self.move_line_ids = False
         self.move_line_ids = lines
         action = {
             'name': _('Select Move Lines to Create Statement'),
