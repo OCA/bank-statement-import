@@ -1,1 +1,3 @@
-from . import test_paypal_statement_import
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from . import test_account_bank_statement_import_paypal
