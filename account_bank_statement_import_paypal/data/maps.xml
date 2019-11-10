@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 Tecnativa - Vicent Cubells
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+
+    <record id="paypal_statement_map_en" model="account.bank.statement.import.paypal.mapping">
+        <field name="name">PayPal Statement (EN)</field>
+        <field name="float_thousands_sep">comma</field>
+        <field name="float_decimal_sep">dot</field>
+        <field name="date_format">%m/%d/%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Date</field>
+        <field name="time_column">Time</field>
+        <field name="tz_column">Time Zone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Currency</field>
+        <field name="gross_column">Gross</field>
+        <field name="fee_column">Fee</field>
+        <field name="balance_column">Balance</field>
+        <field name="transaction_id_column">Transaction ID</field>
+        <field name="description_column">Description</field>
+        <field name="from_email_address_column">From Email Address</field>
+        <field name="invoice_id_column">Invoice ID</field>
+        <field name="bank_name_column">Bank Name</field>
+        <field name="bank_account_column">Bank Account</field>
+    </record>
+
+    <record id="paypal_activity_map_en" model="account.bank.statement.import.paypal.mapping">
+        <field name="name">PayPal Activity (EN)</field>
+        <field name="float_thousands_sep">comma</field>
+        <field name="float_decimal_sep">dot</field>
+        <field name="date_format">%d/%m/%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Date</field>
+        <field name="time_column">Time</field>
+        <field name="tz_column">TimeZone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Currency</field>
+        <field name="gross_column">Gross</field>
+        <field name="fee_column">Fee</field>
+        <field name="balance_column">Balance</field>
+        <field name="transaction_id_column">Transaction ID</field>
+        <field name="type_column">Type</field>
+        <field name="from_email_address_column">From Email Address</field>
+        <field name="to_email_address_column">To Email Address</field>
+        <field name="invoice_id_column">Invoice ID</field>
+        <field name="subject_column">Subject</field>
+        <field name="note_column">Note</field>
+    </record>
+
+</odoo>
