@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 Tecnativa - Vicent Cubells
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="account_bank_statement_import_paypal_mapping_wizard_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.import.paypal.mapping.wizard.form</field>
+        <field name="model">account.bank.statement.import.paypal.mapping.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <h2>Select a PayPal report file to import mapping.</h2>
+                <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
+                <field name="filename" invisible="1"/>
+                <footer>
+                    <button name="import_mapping" string="Import" type="object" class="btn-primary" />
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_bank_statement_import_paypal_mapping_wizard" model="ir.actions.act_window">
+        <field name="name">Import Mapping</field>
+        <field name="res_model">account.bank.statement.import.paypal.mapping.wizard</field>
+        <field name="src_model">account.bank.statement.import.paypal.mapping</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
