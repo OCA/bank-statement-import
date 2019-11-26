@@ -53,10 +53,14 @@ class AccountBankStatementImport(models.TransientModel):
         # If you read odoo10/addons/account_bank_statement_import/
         # account_bank_statement_import.py, it's the only 2 keys
         # we can provide to match a partner.
+        name = transaction.payee
+        if transaction.checknum:
+            name += " " + transaction.checknum
+        if transaction.memo:
+            name += " : " + transaction.memo
         vals = {
             'date': transaction.date,
-            'name': transaction.payee + (
-                transaction.memo and ': ' + transaction.memo or ''),
+            'name': name,
             'ref': transaction.id,
             'amount': float(transaction.amount),
             'unique_import_id': transaction.id,
