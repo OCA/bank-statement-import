@@ -29,7 +29,7 @@ msgid "Open Financial Exchange (.OFX Money)"
 msgstr ""
 
 #. module: account_bank_statement_import_ofx
-#: code:addons/account_bank_statement_import_ofx/wizard/account_bank_statement_import.py:81
+#: code:addons/account_bank_statement_import_ofx/wizard/account_bank_statement_import.py:85
 #, python-format
 msgid "The following problem occurred during import. The file might not be valid.\n"
 "\n"
