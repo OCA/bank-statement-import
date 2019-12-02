@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 {
     'name': 'CAMT Format Bank Statements Import',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'license': 'AGPL-3',
     'author': 'Therp BV, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/bank-statement-import',
