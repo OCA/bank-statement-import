@@ -51,7 +51,6 @@ class AccountStatementLineCreate(models.TransientModel):
                 )
         return res
 
-    @api.multi
     def _prepare_move_line_domain(self):
         self.ensure_one()
         domain = [
@@ -91,7 +90,6 @@ class AccountStatementLineCreate(models.TransientModel):
             domain += [("id", "not in", move_in_payment_ids)]
         return domain
 
-    @api.multi
     def populate(self):
         domain = self._prepare_move_line_domain()
         lines = self.env["account.move.line"].search(domain)
@@ -123,7 +121,6 @@ class AccountStatementLineCreate(models.TransientModel):
         res = {"domain": {"move_line_ids": domain}}
         return res
 
-    @api.multi
     def create_statement_lines(self):
         for rec in self:
             if rec.move_line_ids and rec.statement_id:
