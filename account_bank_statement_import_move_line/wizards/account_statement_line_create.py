@@ -16,13 +16,13 @@ class AccountStatementLineCreate(models.TransientModel):
     )
     journal_ids = fields.Many2many("account.journal", string="Journals Filter")
     target_move = fields.Selection(
-        [("posted", "All Posted Entries"), ("all", "All Entries"),],
+        [("posted", "All Posted Entries"), ("all", "All Entries")],
         string="Target Moves",
     )
     allow_blocked = fields.Boolean(string="Allow Litigation Move Lines")
     invoice = fields.Boolean(string="Linked to an Invoice or Refund")
     date_type = fields.Selection(
-        [("due", "Due Date"), ("move", "Move Date"),],
+        [("due", "Due Date"), ("move", "Move Date")],
         string="Type of Date Filter",
         required=True,
     )
@@ -51,7 +51,6 @@ class AccountStatementLineCreate(models.TransientModel):
                 )
         return res
 
-    @api.multi
     def _prepare_move_line_domain(self):
         self.ensure_one()
         domain = [
@@ -79,7 +78,7 @@ class AccountStatementLineCreate(models.TransientModel):
         elif self.date_type == "move":
             domain.append(("date", "<=", self.move_date))
         if self.invoice:
-            domain.append(("invoice_id", "!=", False))
+            domain.append(("move_id", "!=", False))
         paylines = self.env["account.payment"].search(
             [
                 ("state", "in", ("draft", "posted", "sent")),
@@ -91,7 +90,6 @@ class AccountStatementLineCreate(models.TransientModel):
             domain += [("id", "not in", move_in_payment_ids)]
         return domain
 
-    @api.multi
     def populate(self):
         domain = self._prepare_move_line_domain()
         lines = self.env["account.move.line"].search(domain)
@@ -123,7 +121,6 @@ class AccountStatementLineCreate(models.TransientModel):
         res = {"domain": {"move_line_ids": domain}}
         return res
 
-    @api.multi
     def create_statement_lines(self):
         for rec in self:
             if rec.move_line_ids and rec.statement_id:
