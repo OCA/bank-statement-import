@@ -9,9 +9,11 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestAccountBankStatementImportMoveLine, cls).setUpClass()
+
         cls.account_type = cls.env["account.account.type"].create(
-            {"name": "Test Account Type"}
+            {"name": "Test Account Type", "type": "other", "internal_group": "asset"}
         )
+
         cls.a_receivable = cls.env["account.account"].create(
             {
                 "code": "TAA",
@@ -24,9 +26,9 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
             {"name": "Test Partner 2", "parent_id": False}
         )
         cls.journal = cls.env["account.journal"].create(
-            {"name": "Test Journal", "type": "bank"}
+            {"name": "Test Journal", "type": "sale", "code": "TJS0"}
         )
-        cls.invoice = cls.env["account.invoice"].create(
+        cls.invoice = cls.env["account.move"].create(
             {
                 "name": "Test Invoice 3",
                 "partner_id": cls.partner.id,
@@ -51,9 +53,8 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
         )
 
     def test_global(self):
-        self.invoice.action_invoice_open()
-        self.assertTrue(self.invoice.move_id)
-        self.invoice.move_id.post()
+        self.invoice.post()
+        self.assertTrue(self.invoice.id)
         wizard_o = self.env["account.statement.line.create"]
         context = wizard_o._context.copy()
         context.update(

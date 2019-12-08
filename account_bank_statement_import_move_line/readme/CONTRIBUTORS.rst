@@ -2,4 +2,5 @@
 
   * Luis M. Ontalba
   * Victor M.M. Torres
-* robertrottermann <robert@redcor.ch>
+  * Robert Rottermann <robert@redcor.ch>
+  * Pedro Gonzalez <pegonzalezs@gmail.com>
