@@ -77,15 +77,15 @@ class TestImport(TransactionCase):
             self.assertEqual(bank_st_record.balance_end_real, 4833.52)
             statement_line = bank_st_record.line_ids[0]
             self.assertEqual(statement_line.amount,
-                            self.transactions[0]['amount'])
+                             self.transactions[0]['amount'])
             self.assertEqual(statement_line.date,
-                            self.transactions[0]['date'])
+                             self.transactions[0]['date'])
             self.assertEqual(statement_line.ref,
-                            self.transactions[0]['ref'])
+                             self.transactions[0]['ref'])
             self.assertEqual(statement_line.name,
-                            self.transactions[0]['name'])
+                             self.transactions[0]['name'])
             self.assertEqual(statement_line.note,
-                            self.transactions[0]['note'])
+                             self.transactions[0]['note'])
             bank_st_record = statements[1]
             self.assertEqual(bank_st_record.balance_start, 4833.52)
             self.assertEqual(bank_st_record.balance_end_real, 4798.91)
