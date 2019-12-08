@@ -3,13 +3,13 @@
 
 {
     "name": "Bank statement import move lines",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "category": "Accounting",
     "summary": "Import journal items into bank statement",
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "maintainers": ["pedrobaeza"],
     "website": "https://github.com/OCA/bank-statement-import",
-    "depends": ["account",],
+    "depends": ["account"],
     "data": [
         "wizards/account_statement_line_create_view.xml",
         "views/account_bank_statement_view.xml",
