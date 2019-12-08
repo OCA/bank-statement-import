@@ -8,7 +8,6 @@ from odoo.tests.common import TransactionCase, tagged
 from odoo.modules.module import get_module_resource
 
 
-@tagged('-standard', 'mt940')
 class TestImport(TransactionCase):
     """Run test to import mt940 import."""
     def setUp(self):
