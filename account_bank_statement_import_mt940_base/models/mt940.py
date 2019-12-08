@@ -197,6 +197,8 @@ class MT940Parser(models.AbstractModel):
             'account_number': None,
             'statement': None,
         }
+        if not header_lines:
+            header_lines = self.get_header_lines()
         for match in matches:
             self.is_mt940_statement(line=match)
             iterator = '\n'.join(
