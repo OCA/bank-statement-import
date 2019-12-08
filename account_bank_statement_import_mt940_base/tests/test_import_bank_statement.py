@@ -4,7 +4,7 @@ import base64
 import datetime
 import re
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
 
 
