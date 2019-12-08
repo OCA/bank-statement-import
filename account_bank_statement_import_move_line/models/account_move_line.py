@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = "account.move.line"
 
     @api.multi
     def _prepare_statement_line_vals(self, statement):
@@ -16,20 +16,20 @@ class AccountMoveLine(models.Model):
         elif self.credit > 0:
             amount = -self.credit
         vals = {
-            'name': self.name or '?',
-            'amount': amount,
-            'partner_id': self.partner_id.id,
-            'statement_id': statement.id,
-            'ref': self.ref,
-            'date': self.date_maturity,
-            'amount_currency': self.amount_currency,
-            'currency_id': self.currency_id.id,
+            "name": self.name or "?",
+            "amount": amount,
+            "partner_id": self.partner_id.id,
+            "statement_id": statement.id,
+            "ref": self.ref,
+            "date": self.date_maturity,
+            "amount_currency": self.amount_currency,
+            "currency_id": self.currency_id.id,
         }
         return vals
 
     @api.multi
     def create_statement_line_from_move_line(self, statement):
-        abslo = self.env['account.bank.statement.line']
+        abslo = self.env["account.bank.statement.line"]
         for mline in self:
             abslo.create(mline._prepare_statement_line_vals(statement))
         return
