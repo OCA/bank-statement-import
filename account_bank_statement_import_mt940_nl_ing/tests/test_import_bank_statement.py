@@ -5,11 +5,10 @@
 import base64
 import datetime
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
 
 
-@tagged('-standard', 'mt940')
 class TestImport(TransactionCase):
     """Run test to import MT940 ING import."""
 
@@ -30,18 +29,50 @@ class TestImport(TransactionCase):
             'currency_id': self.env.ref('base.EUR').id,
         })
         self.transactions = [
-            {
-                'remote_account': 'NL32INGB0000012345',
-                'transferred_amount': 1.56,
-                'value_date': '2014-02-20',
-                'ref': 'EV12341REP1231456T1234',
-            },
-            {
-                'remote_account': 'NL32INGB0000012345',
-                'transferred_amount': 1.56,
-                'value_date': '2014-02-20',
-                'ref': 'EV12341REP1231456T1234',
-            }
+            {'date': datetime.date(2014, 2, 20),
+             'amount': 1.56,
+             'note': 'EREF',
+             'account_number': 'NL32INGB0000012345',
+             'partner_name': 'ING BANK NV INZAKE WEB',
+             'name': '/EV10001REP1000000T1000EV12341REP1231456T1234'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': -1.57,
+             'note': 'PREF',
+             'name': '/TOTAAL 1 VZ'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': 1.57,
+             'note': 'EREF',
+             'account_number': 'NL32INGB0000012345',
+             'partner_name': 'J.Janssen',
+             'name': '/Factuurnr 123456 Klantnr 0012320120123456789'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': -1.14,
+             'note': 'EREF',
+             'account_number': 'NL32INGB0000012345',
+             'partner_name': 'ING Bank N.V. inzake WeB',
+             'name': '/EV123REP123412T1234EV123REP123412T1234'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': 1.45,
+             'note': 'PREF',
+             'name': '/TOTAAL 1 POSTEN'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': -12.75,
+             'note': 'EREF',
+             'account_number': 'NL32INGB0000012345',
+             'partner_name': 'J.Janssen',
+             'name': '/CONTRIBUTIE FEB 201420120501P0123478'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': 32.0,
+             'note': '9001123412341234',
+             'account_number': 'NL32INGB0000012345',
+             'partner_name': 'J.Janssen',
+             'name': '/900112341234123415814016000676480'},
+            {'date': datetime.date(2014, 2, 20),
+             'amount': -119.0,
+             'note': '1070123412341234',
+             'account_number': 'NL32INGB0000012345',
+             'partner_name': 'INGBANK NV',
+             'name': '/107012341234123415614016000384600'}
         ]
         self.data = \
             "/BENM//NAME/Cost/REMI/Period 01-10-2013 t/m 31-12-2013/ISDT/20"
@@ -74,27 +105,14 @@ class TestImport(TransactionCase):
                 action['context']['statement_ids']
             )
             bank_st_record = statements[0]
-            self.assertEqual(bank_st_record.balance_start, 662.23)
-            self.assertEqual(bank_st_record.balance_end_real, 564.35)
-            statement_line = bank_st_record.line_ids[0]
-            self.assertEqual(statement_line.amount,
-                             self.transactions[0]['amount'])
-            self.assertEqual(statement_line.date,
-                             self.transactions[0]['date'])
-            self.assertEqual(statement_line.ref,
-                             self.transactions[0]['ref'])
-            self.assertEqual(statement_line.name,
-                             self.transactions[0]['name'])
-            self.assertEqual(statement_line.note,
-                             self.transactions[0]['note'])
-            statement_line = bank_st_record.line_ids[1]
-            self.assertEqual(statement_line.amount,
-                             self.transactions[1]['amount'])
-            self.assertEqual(statement_line.date,
-                             self.transactions[1]['date'])
-            self.assertEqual(statement_line.ref,
-                             self.transactions[1]['ref'])
-            self.assertEqual(statement_line.name,
-                             self.transactions[1]['name'])
-            self.assertEqual(statement_line.note,
-                             self.transactions[1]['note'])
+            keys = ['date', 'amount', 'note', 'account_number',
+                    'partner_name', 'name']
+            self.assertEqual(len(self.transactions),
+                             len(bank_st_record.line_ids))
+            for i in range(len(self.transactions)):
+                transaction = self.transactions[i]
+                line = bank_st_record.line_ids.sorted(reverse=True)[i]
+                for key in keys:
+                    if transaction.get(key):
+                        self.assertEqual(transaction[key],
+                                         line.read([key])[0][key])

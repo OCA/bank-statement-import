@@ -2,12 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import base64
 import datetime
+import re
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
 
 
-@tagged('-standard', 'mt940')
 class TestImport(TransactionCase):
     """Run test to import mt940 import."""
     def setUp(self):
@@ -46,10 +46,33 @@ class TestImport(TransactionCase):
             "/BENM//NAME/Cost/REMI/Period 01-10-2013 t/m 31-12-2013/ISDT/20"
         self.codewords = ['BENM', 'ADDR', 'NAME', 'CNTP', 'ISDT', 'REMI']
 
-    def test_get_subfields(self):
-        """Unit Test function get_subfields()."""
-
-        res = self.parser.get_subfields(self.data, self.codewords)
+    def test_get_methods(self):
+        parser = parser = self.parser.with_context(type='mt940_general')
+        # Test get_mt940_type
+        self.assertEqual(parser.get_mt940_type(), 'mt940_general')
+        # Test get_header_lines
+        self.assertEqual(parser.get_header_lines(), 0)
+        # Test get_header_regex
+        self.assertEqual(parser.get_header_regex(), ':940:')
+        # Test get_footer_regex
+        self.assertEqual(parser.get_footer_regex(), '}')
+        # Test get_tag_regex
+        self.assertEqual(parser.get_tag_regex(), '^:[0-9]{2}[A-Z]*:')
+        # Test get_codewords
+        self.assertEqual(parser.get_codewords(),
+                         ['BENM', 'ADDR', 'NAME', 'CNTP', 'ISDT', 'REMI'])
+        # Test get_tag_61_regex
+        tag_61_regex = re.compile(
+            r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
+            r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
+            r'(?P<reference>\w{1,50})'
+        )
+        self.assertEqual(parser.get_tag_61_regex(), tag_61_regex)
+        # Test parse_amount
+        self.assertEqual(parser.parse_amount('D', '123,41'), -123.41)
+        self.assertEqual(parser.parse_amount('C', '123,41'), 123.41)
+        # Test get_subfields
+        res = parser.get_subfields(self.data, self.codewords)
         espected_res = {
             'BENM': [''],
             'NAME': ['Cost'],
@@ -112,3 +135,47 @@ class TestImport(TransactionCase):
         datafile = open(testfile, 'rb').read()
         with self.assertRaises(ValueError):
             parser.parse(datafile)
+
+    def test_parse_file(self):
+        testfile = get_module_resource(
+            'account_bank_statement_import_mt940_base',
+            'test_files',
+            'test-rabo.swi',
+        )
+        with open(testfile, 'rb') as datafile:
+            parser = self.parser.with_context(type='mt940_general')
+            datafile = open(testfile, 'rb').read()
+            self.assertEqual(
+                parser.parse(datafile),
+                ('EUR',
+                 'NL34RABO0142623393',
+                 [{'name': None, 'date': None, 'balance_start': 0.0,
+                   'balance_end_real': 0.0, 'transactions': []},
+                  {'name': 'NL34RABO0142623393',
+                   'date': datetime.datetime(2014, 1, 2, 0, 0),
+                   'balance_start': 4433.52,
+                   'balance_end_real': 4833.52,
+                   'transactions': [
+                       {'date': datetime.datetime(2014, 1, 2, 0, 0),
+                        'amount': 400.0,
+                        'note': 'NONREFNL66RABO0160878799',
+                        'name': '/Test money paid by other partner:'}]},
+                  {'name': 'NL34RABO0142623393',
+                   'date': datetime.datetime(2014, 1, 3, 0, 0),
+                   'balance_start': 4833.52,
+                   'balance_end_real': 4833.52,
+                   'transactions': []},
+                  {'name': 'NL34RABO0142623393',
+                   'date': datetime.datetime(2014, 1, 6, 0, 0),
+                   'balance_start': 4833.52,
+                   'balance_end_real': 4798.91,
+                   'transactions': [
+                       {'date': datetime.datetime(2014, 1, 1, 0, 0),
+                        'amount': -34.61,
+                        'note': 'NONREF',
+                        'name': '/Periode 01-10-2013 t/m 31-12-2013'}]},
+                  {'name': 'NL34RABO0142623393',
+                   'date': datetime.datetime(2014, 1, 7, 0, 0),
+                   'balance_start': 4798.91,
+                   'balance_end_real': 4798.91,
+                   'transactions': []}]))

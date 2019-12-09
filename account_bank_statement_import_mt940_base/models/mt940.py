@@ -32,46 +32,28 @@ class MT940Parser(models.AbstractModel):
 
     def get_header_lines(self):
         # Works implicit for general and rabo
-        hlines = 0
-        if self.get_mt940_type() == 'mt940_general':
-            hlines = 0
-        return hlines
+        return 0
 
     def get_header_regex(self):
         # Works implicit for general (rabo)
-        hregex = ''
-        if self.get_mt940_type() == 'mt940_general':
-            hregex = ':940:'
-        return hregex
+        return ':940:'
 
     def get_footer_regex(self):
         # Works implicit for general (rabo)
-        fregex = ''
-        if self.get_mt940_type() == 'mt940_general':
-            fregex = '}'
-        return fregex
+        return '}'
 
     def get_tag_regex(self):
-        tregex = False
-        if self.get_mt940_type() == 'mt940_general':
-            tregex = '^:[0-9]{2}[A-Z]*:'
-        return tregex
+        return '^:[0-9]{2}[A-Z]*:'
 
     def get_codewords(self):
-        codewords = []
-        if self.get_mt940_type() == 'mt940_general':
-            codewords = ['BENM', 'ADDR', 'NAME', 'CNTP', 'ISDT', 'REMI']
-        return codewords
+        return ['BENM', 'ADDR', 'NAME', 'CNTP', 'ISDT', 'REMI']
 
     def get_tag_61_regex(self):
-        tag_61_regex = ''
-        if self.get_mt940_type() == 'mt940_general':
-            tag_61_regex = re.compile(
-                r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
-                r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
-                r'(?P<reference>\w{1,50})'
-            )
-        return tag_61_regex
+        return re.compile(
+            r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
+            r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
+            r'(?P<reference>\w{1,50})'
+        )
 
     def is_mt940(self, line):
         """determine if a line is the header of a statement"""
@@ -131,10 +113,9 @@ class MT940Parser(models.AbstractModel):
         can be BENM, ORDP, CNTP"""
         if not subfield:
             return  # subfield is empty
+        subfield = list(filter(lambda a: a != '', subfield))
         if len(subfield) >= 1 and subfield[0]:
             transaction.update({'account_number': subfield[0]})
-        if len(subfield) >= 2 and subfield[1]:
-            transaction.update({'account_bic': subfield[1]})
         if len(subfield) >= 3 and subfield[2]:
             transaction.update({'partner_name': subfield[2]})
         return transaction
@@ -197,6 +178,8 @@ class MT940Parser(models.AbstractModel):
             'account_number': None,
             'statement': None,
         }
+        if not header_lines:
+            header_lines = self.get_header_lines()
         for match in matches:
             self.is_mt940_statement(line=match)
             iterator = '\n'.join(
