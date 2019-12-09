@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import base64
 import datetime
+import re
 
 from odoo.tests.common import TransactionCase
 from odoo.modules.module import get_module_resource
@@ -75,18 +76,55 @@ class TestImport(TransactionCase):
              'name': '/107012341234123415614016000384600'}
         ]
         self.data = \
-            "/BENM//NAME/Cost/REMI/Period 01-10-2013 t/m 31-12-2013/ISDT/20"
-        self.codewords = ['BENM', 'ADDR', 'NAME', 'CNTP', 'ISDT', 'REMI']
+            "/RTRN/MS03//EREF/20120501P0123478//MARF/MND" \
+            "-" \
+            "120123//CSID/NL32" \
+            "ZZZ999999991234//CNTP/NL32INGB0000012345/INGBNL2A/J.Janssen" \
+            "///REMI/USTD//CO" \
+            "NTRIBUTIE FEB 2014/"
+        self.codewords = ['RTRN', 'BENM', 'ORDP', 'CSID', 'BUSP', 'MARF',
+                          'EREF', 'PREF', 'REMI', 'ID', 'PURP', 'ULTB',
+                          'ULTD', 'CREF', 'IREF', 'CNTP', 'ULTC', 'EXCH',
+                          'CHGS']
 
-    def test_get_subfields(self):
-        """Unit Test function get_subfields()."""
-
-        res = self.parser.get_subfields(self.data, self.codewords)
+    def test_get_methods(self):
+        parser = parser = self.parser.with_context(type='mt940_nl_ing')
+        # Test get_mt940_type
+        self.assertEqual(parser.get_mt940_type(), 'mt940_nl_ing')
+        # Test get_header_lines
+        self.assertEqual(parser.get_header_lines(), 0)
+        # Test get_header_regex
+        self.assertEqual(parser.get_header_regex(),
+                         '^0000 01INGBNL2AXXXX|^{1')
+        # Test get_footer_regex
+        self.assertEqual(parser.get_footer_regex(), '^-}$|^-XXX$')
+        # Test get_tag_regex
+        self.assertEqual(parser.get_tag_regex(), '^:[0-9]{2}[A-Z]*:')
+        # Test get_codewords
+        self.assertEqual(parser.get_codewords(),
+                         ['RTRN', 'BENM', 'ORDP', 'CSID', 'BUSP', 'MARF',
+                          'EREF', 'PREF', 'REMI', 'ID', 'PURP', 'ULTB',
+                          'ULTD', 'CREF', 'IREF', 'CNTP', 'ULTC', 'EXCH',
+                          'CHGS'])
+        # Test get_tag_61_regex
+        tag_61_regex = re.compile(
+            r'^(?P<date>\d{6})(?P<line_date>\d{0,4})'
+            r'(?P<sign>[CD])(?P<amount>\d+,\d{2})N(?P<type>.{3})'
+            r'(?P<reference>\w{1,50})'
+        )
+        self.assertEqual(parser.get_tag_61_regex(), tag_61_regex)
+        # Test parse_amount
+        self.assertEqual(parser.parse_amount('D', '123,41'), -123.41)
+        self.assertEqual(parser.parse_amount('C', '123,41'), 123.41)
+        # Test get_subfields
+        res = parser.get_subfields(self.data, self.codewords)
         espected_res = {
-            'BENM': [''],
-            'NAME': ['Cost'],
-            'REMI': ['Period 01-10-2013 t', 'm 31-12-2013'],
-            'ISDT': ['20'],
+            'CNTP': ['NL32INGB0000012345', 'INGBNL2A', 'J.Janssen', '', ''],
+            'CSID': ['NL32ZZZ999999991234', ''],
+            'EREF': ['20120501P0123478', ''],
+            'MARF': ['MND-120123', ''],
+            'REMI': ['USTD', '', 'CONTRIBUTIE FEB 2014', ''],
+            'RTRN': ['MS03', '']
         }
         self.assertEqual(res, espected_res)
 
