@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<odoo>
+
+  <record id="account_bank_statement_import_view" model="ir.ui.view">
+      <field name="name">account.bank.statement.import.view</field>
+      <field name="model">account.bank.statement.import</field>
+      <field name="inherit_id" ref="account_bank_statement_import.account_bank_statement_import_view"/>
+      <field name="arch" type="xml">
+
+        <field name="filename" position="after">
+          <field name="check_journal" invisible="1"/>
+          <group attrs="{'invisible': [('check_journal', '=', True)]}">
+            <field name="check_message"
+              nolabel="1"
+              colspan="2"
+              style="color: red;"/>
+            <field name="force_journal"/>
+          </group>
+        </field>
+
+      </field>
+  </record>
+
+</odoo>
