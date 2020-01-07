@@ -121,13 +121,19 @@ class TestImport(TransactionCase):
             'test-camt053',
         )
         with open(testfile, 'rb') as datafile:
-            action = self.env['account.bank.statement.import'].create({
-                'data_file': base64.b64encode(datafile.read())
-            }).import_file()
+            camt_file = base64.b64encode(datafile.read())
 
-            statement_lines = self.env['account.bank.statement'].browse(
-                action['context']['statement_ids']
-            ).line_ids
+            self.env['account.bank.statement.import'].create(
+                {
+                    'attachment_ids': [(0, 0, {
+                        'name': 'test file',
+                        'datas': camt_file,
+                        })]
+            }).import_file()
+            
+            bank_st_record = self.env['account.bank.statement'].search([
+                ('name', '=', '1234Test/1')], limit=1)
+            statement_lines = bank_st_record.line_ids
             self.assertTrue(any(
                 all(
                     line[key] == self.transactions[0][key]
@@ -146,10 +152,15 @@ class TestImport(TransactionCase):
             'test-camt053.zip',
         )
         with open(testfile, 'rb') as datafile:
-            action = self.env['account.bank.statement.import'].create({
-                'data_file': base64.b64encode(datafile.read()),
+            camt_file = base64.b64encode(datafile.read())
+            self.env['account.bank.statement.import'].create(
+                {
+                    'attachment_ids': [(0, 0, {
+                        'name': 'test file',
+                        'datas': camt_file,
+                        })]
             }).import_file()
+            bank_st_record = self.env['account.bank.statement'].search([
+                ('name', 'in', ['1234Test/2', '1234Test/3'])])
 
-            for statement in self.env['account.bank.statement'].browse(
-                    action['context']['statement_ids']):
-                self.assertTrue(statement.line_ids)
+            self.assertTrue(all([st.line_ids for st in bank_st_record]))
