@@ -156,7 +156,7 @@ class AccountBankStatementImport(models.TransientModel):
             # transaction of currency change if yes merge the transaction
             # as for odoo it's only one line
             cline = currency_change_lines.get(line['origin_transaction_id'])
-            if cline and (cline['amount'] * line['amount'] > 0):
+            if cline:
                 # we update the current line with currency information
                 vals = self._prepare_paypal_currency_vals(cline)
                 line.update(vals)
