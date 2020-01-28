@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: account_bank_statement_import_camt_details
 #. openerp-web
-#: code:addons/account_bank_statement_import_camt_details/static/src/xml/camt_details_reconciliation_layout.xml:6
+#: code:addons/account_bank_statement_import_camt_details/static/src/xml/camt_details_reconciliation_layout.xml:7
 #, python-format
 msgid "Address"
 msgstr ""
@@ -27,7 +27,14 @@ msgstr ""
 
 #. module: account_bank_statement_import_camt_details
 #. openerp-web
-#: code:addons/account_bank_statement_import_camt_details/static/src/xml/camt_details_reconciliation_layout.xml:9
+#: code:addons/account_bank_statement_import_camt_details/static/src/xml/camt_details_reconciliation_layout.xml:6
+#, python-format
+msgid "Camt Name"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_details
+#. openerp-web
+#: code:addons/account_bank_statement_import_camt_details/static/src/xml/camt_details_reconciliation_layout.xml:10
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_details.field_account_bank_statement_line_partner_account
 #, python-format
 msgid "Partner account"
