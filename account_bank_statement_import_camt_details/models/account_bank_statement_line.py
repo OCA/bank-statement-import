@@ -19,6 +19,9 @@ class AccountBankStatementLine(models.Model):
         """
         data = super(AccountBankStatementLine,
                      self).get_statement_line_for_reconciliation_widget()
+        if self.partner_name:
+            data['partner_name_camt'] = self.partner_name
+
         if self.partner_address:
             data['partner_address'] = self.partner_address
         if self.partner_account:
