@@ -24,6 +24,18 @@ msgid "Account Bank Statement Import CAMT parser"
 msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement
+#, fuzzy
+msgid "Bank Statement"
+msgstr "Importar Extrato Bancário"
+
+#. module: account_bank_statement_import_camt_oca
+#: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_line
+#, fuzzy
+msgid "Bank Statement Line"
+msgstr "Importar Extrato Bancário"
+
+#. module: account_bank_statement_import_camt_oca
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_camt_oca.account_bank_statement_import_view
 msgid "CAMT"
 msgstr ""
@@ -54,13 +66,13 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
-#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:13
+#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:0
 #, python-format
 msgid "camt.053.001.02"
 msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
-#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:13
+#: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:0
 #, python-format
 msgid "camt.054.001.02"
 msgstr ""
