@@ -12,16 +12,14 @@ class AccountBankStatementImport(models.TransientModel):
         """ Create additional line in statement to set bank statement statement
         to 0 balance"""
 
-        statement_line_ids, notifications = super()._create_bank_statements(stmts_vals)
-        statements = self.env["account.bank.statement"].search(
-            [("line_ids", "in", statement_line_ids)]
-        )
+        statement_ids, notifications = super()._create_bank_statements(stmts_vals)
+        statements = self.env['account.bank.statement'].browse(statement_ids)
         for statement in statements:
             amount = sum(statement.line_ids.mapped("amount"))
             if statement.journal_id.transfer_line:
                 if amount != 0:
                     amount = -amount
-                line = statement.line_ids.create(
+                statement.line_ids.create(
                     {
                         "name": statement.name,
                         "amount": amount,
@@ -29,8 +27,7 @@ class AccountBankStatementImport(models.TransientModel):
                         "date": statement.date,
                     }
                 )
-                statement_line_ids.append(line.id)
                 statement.balance_end_real = statement.balance_start
             else:
                 statement.balance_end_real = statement.balance_start + amount
-        return statement_line_ids, notifications
+        return statement_ids, notifications

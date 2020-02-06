@@ -9,6 +9,6 @@ class AccountBankStatementImport(models.Model):
     _inherit = "account.journal"
 
     transfer_line = fields.Boolean(
-        string="Generate line",
-        help="Generate transfer line on total of bank statemen import",
+        string="Add balance line",
+        help="Generate balance line on total of bank statemen import",
     )

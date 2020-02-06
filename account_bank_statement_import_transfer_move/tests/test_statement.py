@@ -37,20 +37,20 @@ class TestGenerateBankStatement(SavepointCase):
 
     def _load_statement(self):
 
+        # self = self.with_context(journal_id=self.journal.id)
+
         testfile = get_module_resource(
             "account_bank_statement_import_camt_oca", "test_files", "test-camt053"
         )
-        with open(testfile, "rb") as datafile:
-            camt_file = base64.b64encode(datafile.read())
+        with open(testfile, 'rb') as datafile:
+            action = self.env['account.bank.statement.import'].with_context(
+                journal_id=self.journal.id).create({
+                    'data_file': base64.b64encode(datafile.read())
+                }).import_file()
 
-            self.env["account.bank.statement.import"].create(
-                {"attachment_ids": [(0, 0, {"name": "test file", "datas": camt_file})]}
-            ).import_file()
-
-            bank_st_record = self.env["account.bank.statement"].search(
-                [("name", "=", "1234Test/1")], limit=1
-            )
-            statement_lines = bank_st_record.line_ids
+            statement_lines = self.env['account.bank.statement'].browse(
+                action['context']['statement_ids']
+            ).line_ids
 
             return statement_lines
 
