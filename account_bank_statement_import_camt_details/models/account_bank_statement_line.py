@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Add process_camt method to account.bank.statement.import."""
 # © 2017 Compassion CH <http://www.compassion.ch>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -17,8 +16,7 @@ class AccountBankStatementLine(models.Model):
         """ Returns the data required by the bank statement
         reconciliation widget to display a statement line
         """
-        data = super(AccountBankStatementLine,
-                     self).get_statement_line_for_reconciliation_widget()
+        data = super().get_statement_line_for_reconciliation_widget()
         if self.partner_name:
             data['partner_name_camt'] = self.partner_name
 

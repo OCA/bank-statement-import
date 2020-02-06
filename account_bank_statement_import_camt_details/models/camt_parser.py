@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2017 Compassion CH <http://www.compassion.ch>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import models
@@ -11,8 +10,7 @@ class CamtDetailsParser(models.AbstractModel):
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse transaction details (message, party, account...)."""
-        super(CamtDetailsParser, self).parse_transaction_details(
-            ns, node, transaction)
+        super().parse_transaction_details(ns, node, transaction)
 
         # remote party values
         party_type = 'Dbtr'
@@ -70,4 +68,4 @@ class CamtDetailsParser(models.AbstractModel):
             Not all keys may be present.
         :return: str: formatted address
         """
-        return ', '.join(address_values.values())
+        return ', '.join(list(address_values.values()))
