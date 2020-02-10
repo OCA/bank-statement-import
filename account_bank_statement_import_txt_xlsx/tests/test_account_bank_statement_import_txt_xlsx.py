@@ -47,24 +47,21 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
+        data = self._data_file("fixtures/sample_statement_en.csv", "utf-8")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/sample_statement_en.csv",
-                "data_file": self._data_file(
-                    "fixtures/sample_statement_en.csv", "utf-8"
-                ),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/sample_statement_en.csv", "datas": data})
+                ],
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_bank_statement_import_txt_xlsx_test": True,
-            }
+            account_bank_statement_import_txt_xlsx_test=True
         ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
@@ -77,25 +74,22 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
+        data = self._data_file("fixtures/empty_statement_en.csv", "utf-8")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/empty_statement_en.csv",
-                "data_file": self._data_file(
-                    "fixtures/empty_statement_en.csv", "utf-8"
-                ),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/empty_statement_en.csv", "datas": data})
+                ],
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                {
-                    "journal_id": journal.id,
-                    "account_bank_statement_import_txt_xlsx_test": True,
-                }
+                account_bank_statement_import_txt_xlsx_test=True
             ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
 
     def test_import_xlsx_file(self):
@@ -107,22 +101,21 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
+        data = self._data_file("fixtures/sample_statement_en.xlsx")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/sample_statement_en.xlsx",
-                "data_file": self._data_file("fixtures/sample_statement_en.xlsx"),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/sample_statement_en.xlsx", "datas": data})
+                ],
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_bank_statement_import_txt_xlsx_test": True,
-            }
+            account_bank_statement_import_txt_xlsx_test=True
         ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
@@ -135,29 +128,33 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
+        data = self._data_file("fixtures/empty_statement_en.xlsx")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/empty_statement_en.xlsx",
-                "data_file": self._data_file("fixtures/empty_statement_en.xlsx"),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/empty_statement_en.xlsx", "datas": data})
+                ],
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                {
-                    "journal_id": journal.id,
-                    "account_bank_statement_import_txt_xlsx_test": True,
-                }
+                account_bank_statement_import_txt_xlsx_test=True
             ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
 
     def test_mapping_import_wizard_xlsx(self):
         with common.Form(self.AccountBankStatementImportSheetMappingWizard) as form:
-            form.filename = "fixtures/empty_statement_en.xlsx"
-            form.data_file = self._data_file("fixtures/empty_statement_en.xlsx")
+            attachment = self.env["ir.attachment"].create(
+                {
+                    "name": "fixtures/empty_statement_en.xlsx",
+                    "datas": self._data_file("fixtures/empty_statement_en.xlsx"),
+                }
+            )
+            form.attachment_ids.add(attachment)
             self.assertEqual(len(form.header), 90)
             self.assertEqual(
                 len(
@@ -174,8 +171,13 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
 
     def test_mapping_import_wizard_csv(self):
         with common.Form(self.AccountBankStatementImportSheetMappingWizard) as form:
-            form.filename = "fixtures/empty_statement_en.csv"
-            form.data_file = self._data_file("fixtures/empty_statement_en.csv")
+            attachment = self.env["ir.attachment"].create(
+                {
+                    "name": "fixtures/empty_statement_en.csv",
+                    "datas": self._data_file("fixtures/empty_statement_en.csv"),
+                }
+            )
+            form.attachment_ids.add(attachment)
             self.assertEqual(len(form.header), 90)
             self.assertEqual(
                 len(
@@ -199,22 +201,21 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
+        data = self._data_file("fixtures/original_currency.csv", "utf-8")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/original_currency.csv",
-                "data_file": self._data_file("fixtures/original_currency.csv", "utf-8"),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/original_currency.csv", "datas": data})
+                ],
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_bank_statement_import_txt_xlsx_test": True,
-            }
+            account_bank_statement_import_txt_xlsx_test=True
         ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
 
@@ -238,22 +239,21 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "original_amount_column": None,
             }
         )
+        data = self._data_file("fixtures/multi_currency.csv", "utf-8")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/multi_currency.csv",
-                "data_file": self._data_file("fixtures/multi_currency.csv", "utf-8"),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/multi_currency.csv", "datas": data})
+                ],
                 "sheet_mapping_id": statement_map.id,
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_bank_statement_import_txt_xlsx_test": True,
-            }
+            account_bank_statement_import_txt_xlsx_test=True
         ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
 
@@ -277,22 +277,21 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "original_amount_column": None,
             }
         )
+        data = self._data_file("fixtures/balance.csv", "utf-8")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/balance.csv",
-                "data_file": self._data_file("fixtures/balance.csv", "utf-8"),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/balance.csv", "datas": data})
+                ],
                 "sheet_mapping_id": statement_map.id,
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_bank_statement_import_txt_xlsx_test": True,
-            }
+            account_bank_statement_import_txt_xlsx_test=True
         ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
         self.assertEqual(statement.balance_start, 10.0)
@@ -318,22 +317,21 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "credit_value": "C",
             }
         )
+        data = self._data_file("fixtures/debit_credit.csv", "utf-8")
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            journal_id=journal.id
         ).create(
             {
-                "filename": "fixtures/debit_credit.csv",
-                "data_file": self._data_file("fixtures/debit_credit.csv", "utf-8"),
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/debit_credit.csv", "datas": data})
+                ],
                 "sheet_mapping_id": statement_map.id,
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_bank_statement_import_txt_xlsx_test": True,
-            }
+            account_bank_statement_import_txt_xlsx_test=True
         ).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
         self.assertEqual(statement.balance_start, 10.0)

@@ -14,8 +14,12 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
     _description = "Account Bank Statement Import Sheet Mapping Wizard"
     _inherit = ["multi.step.wizard.mixin"]
 
-    data_file = fields.Binary(string="Bank Statement File", required=True,)
-    filename = fields.Char()
+    attachment_ids = fields.Many2many(
+        comodel_name="ir.attachment",
+        string="Files",
+        required=True,
+        relation="account_bank_statement_import_sheet_mapping_wiz_attachment_rel",
+    )
     header = fields.Char()
     file_encoding = fields.Selection(
         string="Encoding", selection=lambda self: self._selection_file_encoding(),
@@ -97,11 +101,11 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             .selection
         )
 
-    @api.onchange("data_file")
-    def _onchange_data_file(self):
+    @api.onchange("attachment_ids")
+    def _onchange_attachment_ids(self):
         Parser = self.env["account.bank.statement.import.sheet.parser"]
         Mapping = self.env["account.bank.statement.import.sheet.mapping"]
-        if not self.data_file:
+        if not self.attachment_ids:
             return
         csv_options = {}
         if self.delimiter:
@@ -110,9 +114,12 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             )
         if self.quotechar:
             csv_options["quotechar"] = self.quotechar
-        header = Parser.parse_header(
-            b64decode(self.data_file), self.file_encoding, csv_options
-        )
+        header = []
+        for data_file in self.attachment_ids:
+            header += Parser.parse_header(
+                b64decode(data_file.datas), self.file_encoding, csv_options
+            )
+        header = list(set(header))
         self.header = json.dumps(header)
 
     @api.model
@@ -122,12 +129,12 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             return []
         return [(x, x) for x in json.loads(header)]
 
-    @api.multi
     def _get_mapping_values(self):
         """Hook for extension"""
         self.ensure_one()
+        filename = "& ".join(self.attachment_ids.mapped("name"))
         return {
-            "name": _("Mapping from %s") % path.basename(self.filename),
+            "name": _("Mapping from %s") % path.basename(filename),
             "float_thousands_sep": "comma",
             "float_decimal_sep": "dot",
             "file_encoding": self.file_encoding,
@@ -152,7 +159,6 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             "bank_account_column": self.bank_account_column,
         }
 
-    @api.multi
     def import_mapping(self):
         self.ensure_one()
         mapping = self.env["account.bank.statement.import.sheet.mapping"].create(

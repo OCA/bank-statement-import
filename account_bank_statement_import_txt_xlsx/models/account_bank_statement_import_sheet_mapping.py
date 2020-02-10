@@ -12,12 +12,12 @@ class AccountBankStatementImportSheetMapping(models.Model):
     name = fields.Char(required=True,)
     float_thousands_sep = fields.Selection(
         string="Thousands Separator",
-        selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none"),],
+        selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none")],
         default="dot",
     )
     float_decimal_sep = fields.Selection(
         string="Decimals Separator",
-        selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none"),],
+        selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none")],
         default="comma",
     )
     file_encoding = fields.Selection(
@@ -52,9 +52,9 @@ class AccountBankStatementImportSheetMapping(models.Model):
         ],
         default="comma",
     )
-    quotechar = fields.Char(string="Text qualifier", size=1, default='"',)
-    timestamp_format = fields.Char(string="Timestamp Format", required=True,)
-    timestamp_column = fields.Char(string="Timestamp column", required=True,)
+    quotechar = fields.Char(string="Text qualifier", size=1, default='"')
+    timestamp_format = fields.Char(string="Timestamp Format", required=True)
+    timestamp_column = fields.Char(string="Timestamp column", required=True)
     currency_column = fields.Char(
         string="Currency column",
         help=(
@@ -127,7 +127,6 @@ class AccountBankStatementImportSheetMapping(models.Model):
         elif "comma" == self.float_thousands_sep == self.float_decimal_sep:
             self.float_thousands_sep = "dot"
 
-    @api.multi
     def _get_float_separators(self):
         self.ensure_one()
         separators = {
@@ -143,9 +142,8 @@ class AccountBankStatementImportSheetMapping(models.Model):
     @api.model
     def _decode_column_delimiter_character(self, delimiter):
         return (
-            {"dot": ".", "comma": ",", "semicolon": ";", "tab": "\t", "space": " ",}
+            {"dot": ".", "comma": ",", "semicolon": ";", "tab": "\t", "space": " "}
         ).get(delimiter)
 
-    @api.multi
     def _get_column_delimiter_character(self):
         return self._decode_column_delimiter_character(self.delimiter)
