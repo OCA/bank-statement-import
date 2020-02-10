@@ -7,7 +7,6 @@ import logging
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
-from os import path
 
 from odoo import _, api, models
 
@@ -43,21 +42,19 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         return list(next(csv_data))
 
     @api.model
-    def parse(self, mapping, data_file, filename):
+    def parse(self, data_file, mapping):
         journal = self.env["account.journal"].browse(self.env.context.get("journal_id"))
         currency_code = (journal.currency_id or journal.company_id.currency_id).name
         account_number = journal.bank_account_id.acc_number
 
-        name = _("%s: %s") % (journal.code, path.basename(filename),)
         lines = self._parse_lines(mapping, data_file, currency_code)
         if not lines:
-            return currency_code, account_number, [{"name": name, "transactions": [],}]
+            return currency_code, account_number, [{"transactions": []}]
 
         lines = list(sorted(lines, key=lambda line: line["timestamp"]))
         first_line = lines[0]
         last_line = lines[-1]
         data = {
-            "name": name,
             "date": first_line["timestamp"].date(),
         }
 
@@ -77,13 +74,12 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 map(lambda line: self._convert_line_to_transactions(line), lines)
             )
         )
-        data.update(
-            {"transactions": transactions,}
-        )
+        data.update({"transactions": transactions})
 
         return currency_code, account_number, [data]
 
     def _parse_lines(self, mapping, data_file, currency_code):
+        columns = dict()
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
@@ -111,59 +107,61 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
         else:
             header = [value.strip() for value in next(csv_or_xlsx)]
-        timestamp_column = header.index(mapping.timestamp_column)
-        currency_column = (
+        columns["timestamp_column"] = header.index(mapping.timestamp_column)
+        columns["currency_column"] = (
             header.index(mapping.currency_column) if mapping.currency_column else None
         )
-        amount_column = header.index(mapping.amount_column)
-        balance_column = (
+        columns["amount_column"] = header.index(mapping.amount_column)
+        columns["balance_column"] = (
             header.index(mapping.balance_column) if mapping.balance_column else None
         )
-        original_currency_column = (
+        columns["original_currency_column"] = (
             header.index(mapping.original_currency_column)
             if mapping.original_currency_column
             else None
         )
-        original_amount_column = (
+        columns["original_amount_column"] = (
             header.index(mapping.original_amount_column)
             if mapping.original_amount_column
             else None
         )
-        debit_credit_column = (
+        columns["debit_credit_column"] = (
             header.index(mapping.debit_credit_column)
             if mapping.debit_credit_column
             else None
         )
-        transaction_id_column = (
+        columns["transaction_id_column"] = (
             header.index(mapping.transaction_id_column)
             if mapping.transaction_id_column
             else None
         )
-        description_column = (
+        columns["description_column"] = (
             header.index(mapping.description_column)
             if mapping.description_column
             else None
         )
-        notes_column = (
+        columns["notes_column"] = (
             header.index(mapping.notes_column) if mapping.notes_column else None
         )
-        reference_column = (
+        columns["reference_column"] = (
             header.index(mapping.reference_column) if mapping.reference_column else None
         )
-        partner_name_column = (
+        columns["partner_name_column"] = (
             header.index(mapping.partner_name_column)
             if mapping.partner_name_column
             else None
         )
-        bank_name_column = (
+        columns["bank_name_column"] = (
             header.index(mapping.bank_name_column) if mapping.bank_name_column else None
         )
-        bank_account_column = (
+        columns["bank_account_column"] = (
             header.index(mapping.bank_account_column)
             if mapping.bank_account_column
             else None
         )
+        return self._parse_rows(mapping, currency_code, csv_or_xlsx, columns)
 
+    def _parse_rows(self, mapping, currency_code, csv_or_xlsx, columns):  # noqa: C901
         if isinstance(csv_or_xlsx, tuple):
             rows = range(1, csv_or_xlsx[1].nrows)
         else:
@@ -184,47 +182,67 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             else:
                 values = list(row)
 
-            timestamp = values[timestamp_column]
+            timestamp = values[columns["timestamp_column"]]
             currency = (
-                values[currency_column]
-                if currency_column is not None
+                values[columns["currency_column"]]
+                if columns["currency_column"] is not None
                 else currency_code
             )
-            amount = values[amount_column]
-            balance = values[balance_column] if balance_column is not None else None
+            amount = values[columns["amount_column"]]
+            balance = (
+                values[columns["balance_column"]]
+                if columns["balance_column"] is not None
+                else None
+            )
             original_currency = (
-                values[original_currency_column]
-                if original_currency_column is not None
+                values[columns["original_currency_column"]]
+                if columns["original_currency_column"] is not None
                 else None
             )
             original_amount = (
-                values[original_amount_column]
-                if original_amount_column is not None
+                values[columns["original_amount_column"]]
+                if columns["original_amount_column"] is not None
                 else None
             )
             debit_credit = (
-                values[debit_credit_column] if debit_credit_column is not None else None
+                values[columns["debit_credit_column"]]
+                if columns["debit_credit_column"] is not None
+                else None
             )
             transaction_id = (
-                values[transaction_id_column]
-                if transaction_id_column is not None
+                values[columns["transaction_id_column"]]
+                if columns["transaction_id_column"] is not None
                 else None
             )
             description = (
-                values[description_column] if description_column is not None else None
+                values[columns["description_column"]]
+                if columns["description_column"] is not None
+                else None
             )
-            notes = values[notes_column] if notes_column is not None else None
+            notes = (
+                values[columns["notes_column"]]
+                if columns["notes_column"] is not None
+                else None
+            )
             reference = (
-                values[reference_column] if reference_column is not None else None
+                values[columns["reference_column"]]
+                if columns["reference_column"] is not None
+                else None
             )
             partner_name = (
-                values[partner_name_column] if partner_name_column is not None else None
+                values[columns["partner_name_column"]]
+                if columns["partner_name_column"] is not None
+                else None
             )
             bank_name = (
-                values[bank_name_column] if bank_name_column is not None else None
+                values[columns["bank_name_column"]]
+                if columns["bank_name_column"] is not None
+                else None
             )
             bank_account = (
-                values[bank_account_column] if bank_account_column is not None else None
+                values[columns["bank_account_column"]]
+                if columns["bank_account_column"] is not None
+                else None
             )
 
             if currency != currency_code:
@@ -310,8 +328,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
 
         if transaction_id:
             transaction["unique_import_id"] = "{}-{}".format(
-                transaction_id,
-                int(timestamp.timestamp()),
+                transaction_id, int(timestamp.timestamp()),
             )
 
         transaction["name"] = description or _("N/A")
