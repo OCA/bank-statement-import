@@ -6,13 +6,13 @@ from odoo import fields, models
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = "account.journal"
 
     default_sheet_mapping_id = fields.Many2one(
-        comodel_name='account.bank.statement.import.sheet.mapping',
+        comodel_name="account.bank.statement.import.sheet.mapping",
     )
 
     def _get_bank_statements_available_import_formats(self):
         res = super()._get_bank_statements_available_import_formats()
-        res.append('TXT/CSV/XSLX')
+        res.append("TXT/CSV/XSLX")
         return res
