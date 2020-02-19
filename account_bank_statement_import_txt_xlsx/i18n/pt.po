@@ -6,152 +6,154 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-02-19 15:13+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: none\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_txt.py:236
 #, python-format
 msgid "%s Import %s > %s"
-msgstr ""
+msgstr "%s Importar %s > %s"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_map
 msgid "Account Bank Statement Import Txt Map"
-msgstr ""
+msgstr "Mapa Txt para Importação de Extratos Bancários"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_map_line
 msgid "Account Bank Statement Import Txt Map Line"
-msgstr ""
+msgstr "Linha de Mapa Txt para Importação de Extratos Bancários"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "All the txt map lines will be created automatically."
-msgstr ""
+msgstr "Todas as linhas do mapa txt serão criadas automaticamente."
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Amount in foreign currency"
-msgstr ""
+msgstr "Montante em moeda estrangeira"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Amount in the journal currency"
-msgstr ""
+msgstr "Montante na moeda do diário"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_txt.py:160
 #, python-format
 msgid "An error was found translating a date field from the file: %s"
-msgstr ""
+msgstr "Foi encontrado um erro na tradução de uma campo de data do ficheiro: %s"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Bank Account Number"
-msgstr ""
+msgstr "Nº de Conta Bancária"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__data_file
 msgid "Bank Statement File"
-msgstr ""
+msgstr "Ficheiro de Extrato Bancário"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "Choose a file to import..."
-msgstr ""
+msgstr "Escolha um ficheiro a importar..."
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "Create Lines"
-msgstr ""
+msgstr "Criar Linhas"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.actions.act_window,name:account_bank_statement_import_txt_xlsx.action_create_txt_map_lines
 msgid "Create Statement Map Lines"
-msgstr ""
+msgstr "Criar Linhas de Mapa de Extrato"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__create_uid
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__create_uid
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__create_date
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__create_date
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Currency"
-msgstr ""
+msgstr "Moeda"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__date_format
 msgid "Date Format"
-msgstr ""
+msgstr "Formato de Data"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_txt.py:111
 #, python-format
 msgid "Date format of map file and Txt date does not match."
-msgstr ""
+msgstr "O formato das datas do ficheiro mapa e do Txt não coincidem."
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__float_decimal_sep
 msgid "Decimals separator"
-msgstr ""
+msgstr "Separador decimal"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome a Exibir"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "Download a bank statement from your bank and import it here."
-msgstr ""
+msgstr "Descarregue um extrato bancário do seu banco e importe-o aqui."
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__file_encoding
 msgid "Encoding"
-msgstr ""
+msgstr "Codificação"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__sequence
 msgid "Field number"
-msgstr ""
+msgstr "Número do campo"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__filename
 msgid "Filename"
-msgstr ""
+msgstr "Ficheiro"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__name
 msgid "Header Name"
-msgstr ""
+msgstr "Nome do Cabeçalho"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_txt.py:74
@@ -159,6 +161,7 @@ msgstr ""
 #, python-format
 msgid "Headers of file to import and Txt map lines does not match."
 msgstr ""
+"Os cabeçalhos do ficheiro a importar e das linhas de mapa Txt não coincidem."
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__id
@@ -170,151 +173,153 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import
 msgid "Import Bank Statement"
-msgstr ""
+msgstr "Importar Extrato Bancário"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "Import Txt Map Lines"
-msgstr ""
+msgstr "Importar Linhas de Mapa Txt"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diário"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map____last_update
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line____last_update
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Modif. pela última em"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__write_uid
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__write_uid
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Atualização por"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__write_date
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__write_date
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_wizard_txt_map_create__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Atualização em"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__map_parent_id
 msgid "Map Parent"
-msgstr ""
+msgstr "Ascendente do Mapa"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__map_line_ids
 msgid "Map lines"
-msgstr ""
+msgstr "Linhas de Mapa"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.statement_import_map_tax_form
 msgid "Mapping Lines"
-msgstr ""
+msgstr "Linhas de Mapeamento"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map.line,field_to_assign:0
 msgid "Reference"
-msgstr ""
+msgstr "Referência"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.create_txt_map_lines_view
 msgid "Select a TXT/CSV or XLSX bank statement file to create all the map lines from headers file."
 msgstr ""
+"Selecione um ficheiro de extrato bancário TXT/CSV ou XLSX para criar todas "
+"as linhas de mapa a partir dos cabeçalhos."
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__delimiter
 msgid "Separated by"
-msgstr ""
+msgstr "Separado por"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,delimiter:0
 msgid "Space"
-msgstr ""
+msgstr "Espaço"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map_line__field_to_assign
 msgid "Statement Field to Assign"
-msgstr ""
+msgstr "Campo do Extrato a Atribuir"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.ui.menu,name:account_bank_statement_import_txt_xlsx.menu_statement_import_txt_mapping
 msgid "Statement Import Map"
-msgstr ""
+msgstr "Importar Mapa do Extrato"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.actions.act_window,name:account_bank_statement_import_txt_xlsx.action_statement_import_txt_mappging
 msgid "Statement Import Mapping"
-msgstr ""
+msgstr "Importar Mapeamento do Extrato"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_journal__statement_import_txt_map_id
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.view_account_journal_form_n43
 msgid "Statement Import Txt Map"
-msgstr ""
+msgstr "Importar Mapa Txt do Extrato"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__quotechar
 msgid "String delimiter"
-msgstr ""
+msgstr "Delimitador de texto"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,delimiter:0
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_map__float_thousands_sep
 msgid "Thousands separator"
-msgstr ""
+msgstr "Separador de milhares"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.statement_import_map_tax_form
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.statement_import_map_tax_tree
 msgid "Txt Map"
-msgstr ""
+msgstr "Mapa Txt"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import__txt_map_id
 msgid "Txt map"
-msgstr ""
+msgstr "Mapa Txt"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.statement_import_map_tax_line_form
 msgid "Txt mapping line"
-msgstr ""
+msgstr "Linha de mapeamento Txt"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.statement_import_map_tax_line_tree
 msgid "Txt mapping lines"
-msgstr ""
+msgstr "Linhas de mapeamento Txt"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_view
 msgid "Txt/XLSX file with Template:"
-msgstr ""
+msgstr "Ficheiro Txt/XLSX com Modelo:"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,file_encoding:0
@@ -331,6 +336,7 @@ msgstr ""
 #, python-format
 msgid "Value '%s' for the field '%s' on line %d, cannot be converted to float"
 msgstr ""
+"O valor '%s' para o campo '%s' na linha %d não pode ser convertido para float"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,file_encoding:0
@@ -340,13 +346,13 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_wizard_txt_map_create
 msgid "Wizard Txt Map Create"
-msgstr ""
+msgstr "Assistente de Criação de Mapa Txt"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_txt.py:190
 #, python-format
 msgid "You must run this wizard from the journal"
-msgstr ""
+msgstr "Tem que executar este assistente a partir do diário"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,file_encoding:0
@@ -358,14 +364,14 @@ msgstr ""
 #: selection:account.bank.statement.import.map,float_decimal_sep:0
 #: selection:account.bank.statement.import.map,float_thousands_sep:0
 msgid "comma (,)"
-msgstr ""
+msgstr "vírgula (,)"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,delimiter:0
 #: selection:account.bank.statement.import.map,float_decimal_sep:0
 #: selection:account.bank.statement.import.map,float_thousands_sep:0
 msgid "dot (.)"
-msgstr ""
+msgstr "ponto (.)"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,file_encoding:0
@@ -402,12 +408,12 @@ msgstr ""
 #: selection:account.bank.statement.import.map,float_decimal_sep:0
 #: selection:account.bank.statement.import.map,float_thousands_sep:0
 msgid "none"
-msgstr ""
+msgstr "nenhum"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,delimiter:0
 msgid "semicolon (;)"
-msgstr ""
+msgstr "ponto e vírgula (;)"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.map,file_encoding:0
