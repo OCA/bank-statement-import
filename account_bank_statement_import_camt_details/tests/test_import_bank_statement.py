@@ -1,0 +1,64 @@
+# © 2017 CompassionCH <http://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_open
+
+
+class TestImport(TransactionCase):
+    """Run test to import camt import."""
+
+    def setUp(self):
+        super().setUp()
+        bank = self.env['res.partner.bank'].create({
+            'acc_number': 'NL77ABNA0574908765',
+            'partner_id': self.env.ref('base.main_partner').id,
+            'company_id': self.env.ref('base.main_company').id,
+            'bank_id': self.env.ref('base.res_bank_1').id,
+        })
+        self.env['account.journal'].create({
+            'name': 'Bank Journal - (test camt)',
+            'code': 'TBNKCAMT',
+            'type': 'bank',
+            'bank_account_id': bank.id,
+        })
+
+    def test_statement_import(self):
+        """Test that transaction details are correctly imported."""
+        line_details = [
+            {
+                'partner_account': 'NL46ABNA0499998748',
+                'partner_bic': 'ABNANL2A',
+                'partner_name': 'INSURANCE COMPANY TESTX',
+                'partner_address': 'TEST STREET 20, 1234 AB TESTCITY'
+            },
+            {
+                'partner_account': 'NL46ABNA0499998748',
+                'partner_bic': 'ABNANL2A',
+                'partner_name': 'Test Customer',
+            },
+            {
+                'partner_account': 'NL46ABNA0499998748',
+                'partner_bic': 'ABNANL2A',
+                'partner_name': 'Test Customer',
+            },
+            {
+                'partner_account': 'NL69ABNA0522123643',
+                'partner_bic': 'ABNANL2A',
+                'partner_name': '3rd party Media',
+                'partner_address': 'SOMESTREET 570-A, 1276 ML HOUSCITY'
+            },
+        ]
+        with file_open(
+            'account_bank_statement_import_camt_oca/test_files/test-camt053', mode="rb"
+        ) as testfile:
+            res = self.env['account.bank.statement.import.camt.parser'].parse(
+                testfile.read())
+            statement_lines = res[2][0].get('transactions')
+            for i in range(0, len(line_details)):
+                line = statement_lines[i]
+                for key, val in list(line_details[i].items()):
+                    # test data is in reconcile data view
+                    if key in ('partner_account', 'partner_address'):
+                        self.assertEqual(val, line.get(key))
+                    # test field is set in model
+                    self.assertEqual(line.get(key), val)
