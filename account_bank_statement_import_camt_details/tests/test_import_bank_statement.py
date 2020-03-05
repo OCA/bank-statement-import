@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2017 CompassionCH <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import base64
@@ -10,7 +9,7 @@ class TestImport(TransactionCase):
     """Run test to import camt import."""
 
     def setUp(self):
-        super(TestImport, self).setUp()
+        super().setUp()
         bank = self.env['res.partner.bank'].create({
             'acc_number': 'NL77ABNA0574908765',
             'partner_id': self.env.ref('base.main_partner').id,
@@ -51,7 +50,7 @@ class TestImport(TransactionCase):
             },
         ]
         with file_open(
-            'account_bank_statement_import_camt/test_files/test-camt053'
+            'account_bank_statement_import_camt_oca/test_files/test-camt053', mode="rb"
         ) as testfile:
             action = self.env['account.bank.statement.import'].create({
                 'data_file': base64.b64encode(testfile.read()),
@@ -61,7 +60,7 @@ class TestImport(TransactionCase):
         for i in range(0, len(line_details)):
             line = statement_lines[i]
             rec_data = line.get_statement_line_for_reconciliation_widget()
-            for key, val in line_details[i].iteritems():
+            for key, val in list(line_details[i].items()):
                 # test data is in reconcile data view
                 if key in ('partner_account', 'partner_address'):
                     self.assertEqual(val, rec_data.get(key))
