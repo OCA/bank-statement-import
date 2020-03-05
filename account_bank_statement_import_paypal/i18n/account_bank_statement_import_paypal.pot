@@ -349,6 +349,11 @@ msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: selection:account.bank.statement.import.paypal.map.line,date_format:0
+msgid "i.e. 15.12.2019"
+msgstr ""
+
+#. module: account_bank_statement_import_paypal
+#: selection:account.bank.statement.import.paypal.map.line,date_format:0
 msgid "i.e. 15/12/2019"
 msgstr ""
 
