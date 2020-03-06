@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="account_bank_statement_import_multi_form_view">
+        <field name="name">account.bank.statement.import.multi.form (in account_bank_statement_import_multi)</field>
+        <field name="model">account.bank.statement.import.multi</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="data_file" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="doit"
+                            string="OK"
+                            class="btn-primary"
+                            type="object"/>
+                    <button string="Cancel"
+                            class="btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="account_bank_statement_import_multi_act_window">
+        <field name="name">Import Multiples Statements</field>
+        <field name="res_model">account.bank.statement.import.multi</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.ui.menu" id="account_bank_statement_import_menu">
+        <field name="name">Import</field>
+        <field name="parent_id" ref="account.menu_finance"/>
+        <field name="sequence" eval="10"/>
+    </record>
+
+    <record model="ir.ui.menu" id="account_bank_statement_import_multi_menu">
+        <field name="name">Import Multiples Statements</field>
+        <field name="parent_id" ref="account_bank_statement_import_menu"/>
+        <field name="action" ref="account_bank_statement_import_multi_act_window"/>
+        <field name="sequence" eval="10"/>
+    </record>
+
+</odoo>

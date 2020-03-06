@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_bank_statement_import_multi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-09 07:39+0000\n"
+"PO-Revision-Date: 2020-03-09 07:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_data_file
+msgid "Bank Statements File"
+msgstr "Fichier de relevés bancaires"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.ui.view,arch_db:account_bank_statement_import_multi.account_bank_statement_import_multi_form_view
+msgid "Cancel"
+msgstr "Abandonner"
+
+#. module: account_bank_statement_import_multi
+#: code:addons/account_bank_statement_import_multi/wizards/account_bank_statement_import_multi.py:25
+#, python-format
+msgid "Could not make sense of the given file.\n"
+"Did you install the module to support this type of file ?"
+msgstr "Ce fichier est incompréhensible.\n"
+"Avez-vous installé le module qui supporte ce type de fichier ?"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_display_name
+msgid "Display Name"
+msgstr "Nom à afficher"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_filename
+msgid "Filename"
+msgstr "Nom du fichier"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.ui.menu,name:account_bank_statement_import_multi.account_bank_statement_import_menu
+msgid "Import"
+msgstr "Importer"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.actions.act_window,name:account_bank_statement_import_multi.account_bank_statement_import_multi_act_window
+#: model:ir.ui.menu,name:account_bank_statement_import_multi.account_bank_statement_import_multi_menu
+msgid "Import Multiples Statements"
+msgstr "Import de relevés multiples"
+
+#. module: account_bank_statement_import_multi
+#: code:addons/account_bank_statement_import_multi/wizards/account_bank_statement_import_multi.py:43
+#, python-format
+msgid "Journal %s doesn't exist"
+msgstr "Le Journal %s n'existe pas"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model.fields,field_description:account_bank_statement_import_multi.field_account_bank_statement_import_multi_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.ui.view,arch_db:account_bank_statement_import_multi.account_bank_statement_import_multi_form_view
+msgid "OK"
+msgstr "OK"
+
+#. module: account_bank_statement_import_multi
+#: model:ir.model,name:account_bank_statement_import_multi.model_account_bank_statement_import_multi
+msgid "account.bank.statement.import.multi"
+msgstr "account.bank.statement.import.multi"
+
