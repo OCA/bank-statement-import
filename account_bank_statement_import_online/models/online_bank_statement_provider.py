@@ -1,10 +1,11 @@
-# Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019 Dataplug (https://dataplug.io)
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from dateutil.relativedelta import relativedelta, MO
 from decimal import Decimal
 import logging
+from sys import exc_info
 
 from odoo import models, fields, api, _
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -167,7 +168,8 @@ class OnlineBankStatementProvider(models.Model):
                         statement_date_since,
                         statement_date_until
                     )
-                except Exception as e:
+                except:
+                    e = exc_info()[1]
                     if is_scheduled:
                         _logger.warning(
                             'Online Bank Statement Provider "%s" failed to'
@@ -186,7 +188,7 @@ class OnlineBankStatementProvider(models.Model):
                                 provider.name,
                                 statement_date_since,
                                 statement_date_until,
-                                str(e),
+                                str(e) if e else _('N/A'),
                             ),
                             subject=_(
                                 'Online Bank Statement Provider failure'
