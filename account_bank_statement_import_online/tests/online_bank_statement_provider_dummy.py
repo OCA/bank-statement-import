@@ -1,5 +1,5 @@
-# Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019 Dataplug (https://dataplug.io)
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from datetime import datetime, timedelta
@@ -22,7 +22,11 @@ class OnlineBankStatementProviderDummy(models.Model):
             )  # pragma: no cover
 
         if self.env.context.get('crash', False):
-            raise Exception('Expected')
+            exception = self.env.context.get(
+                'exception',
+                Exception('Expected')
+            )
+            raise exception
 
         line_step_options = self.env.context.get('step', {
             'minutes': 5,

@@ -1,10 +1,10 @@
-# Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019 Dataplug (https://dataplug.io)
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from dateutil.relativedelta import relativedelta
-
 from psycopg2 import IntegrityError
+from urllib.error import HTTPError
 
 from odoo.tests import common
 from odoo.tools import mute_logger
@@ -337,6 +337,28 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         with self.assertRaises(Exception):
             provider.with_context(
                 crash=True,
+            )._pull(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
+
+    def test_pull_httperror(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.statement_creation_mode = 'weekly'
+
+        with self.assertRaises(HTTPError):
+            provider.with_context(
+                crash=True,
+                exception=HTTPError(None, 500, 'Error', None, None),
             )._pull(
                 self.now - relativedelta(hours=1),
                 self.now,
