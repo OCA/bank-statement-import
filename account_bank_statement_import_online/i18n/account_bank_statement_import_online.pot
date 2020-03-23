@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:140
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:141
 #, python-format
 msgid "%(number)s %(type)s"
 msgstr ""
@@ -164,7 +164,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:137
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:138
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
@@ -240,6 +240,12 @@ msgid "Monthly statements"
 msgstr ""
 
 #. module: account_bank_statement_import_online
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:191
+#, python-format
+msgid "N/A"
+msgstr ""
+
+#. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__name
 msgid "Name"
 msgstr ""
@@ -288,14 +294,14 @@ msgid "Online Bank Statement Provider"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:182
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:184
 #, python-format
 msgid "Online Bank Statement Provider \"%s\" failed to obtain statement data since %s until %s:\n"
 "%s"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:191
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:193
 #, python-format
 msgid "Online Bank Statement Provider failure"
 msgstr ""
