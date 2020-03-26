@@ -130,6 +130,14 @@ class CamtParser(models.AbstractModel):
             ],
             transaction, 'ref'
         )
+        if self.env.context.get('journal_id'):
+            journal = self.env['account.journal'].browse(
+                self.env.context.get('journal_id')
+            )
+            if journal.group_return_statement_at_camt_import:
+                if amount < 0:
+                    yield transaction
+                    return
 
         details_nodes = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})

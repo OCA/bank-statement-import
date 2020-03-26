@@ -12,5 +12,6 @@
     ],
     'data': [
         'views/account_bank_statement_import.xml',
+        'views/account_journal.xml',
     ],
 }
