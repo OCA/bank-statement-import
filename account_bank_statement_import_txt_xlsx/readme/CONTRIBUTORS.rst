@@ -5,3 +5,4 @@
   * Victor M.M. Torres <victor.martin@tecnativa.com>
 * Eficent (https://www.eficent.com)
   * Jordi Ballester Alomar <jordi.ballester@eficent.com>
+* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
