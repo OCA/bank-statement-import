@@ -30,36 +30,36 @@
                         <group>
                             <field name="float_thousands_sep"/>
                             <field name="float_decimal_sep"/>
+                        </group>
+                        <group>
                             <field name="date_format"/>
                             <field name="time_format"/>
                         </group>
-                        <group string="Columns">
-                            <field name="date_column"/>
-                            <field name="time_column"/>
-                            <field name="tz_column"/>
-                            <field name="name_column"/>
-                            <field name="currency_column"/>
-                            <field name="gross_column"/>
-                            <field name="fee_column"/>
-                            <field name="balance_column"/>
-                            <field name="transaction_id_column"/>
-                            <field name="description_column"/>
-                            <field name="type_column"/>
-                            <field name="from_email_address_column"/>
-                            <field name="to_email_address_column"/>
-                            <field name="invoice_id_column"/>
-                            <field name="subject_column"/>
-                            <field name="note_column"/>
-                            <field name="bank_name_column"/>
-                            <field name="bank_account_column"/>
-                        </group>
+                    </group>
+                    <group string="Columns">
+                        <field name="date_column"/>
+                        <field name="time_column"/>
+                        <field name="tz_column"/>
+                        <field name="name_column"/>
+                        <field name="currency_column"/>
+                        <field name="gross_column"/>
+                        <field name="fee_column"/>
+                        <field name="balance_column"/>
+                        <field name="transaction_id_column"/>
+                        <field name="description_column"/>
+                        <field name="type_column"/>
+                        <field name="from_email_address_column"/>
+                        <field name="to_email_address_column"/>
+                        <field name="invoice_id_column"/>
+                        <field name="subject_column"/>
+                        <field name="note_column"/>
+                        <field name="bank_name_column"/>
+                        <field name="bank_account_column"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-
-    <!-- TODO: action that launches wizard that could import file header and assume columns by number and index of colums -->
 
     <record id="action_statement_import_paypal_report_mappings" model="ir.actions.act_window">
         <field name="name">PayPal Report Mappings</field>
