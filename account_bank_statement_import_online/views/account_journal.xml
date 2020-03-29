@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-    Copyright 2019 Dataplug (https://dataplug.io)
+    Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019-2020 Dataplug (https://dataplug.io)
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
@@ -94,14 +94,20 @@
         </field>
     </record>
 
-    <record id="account_journal_dashboard_kanban_view" model="ir.ui.view">
+    <record id="journal_dashboard_view_inherit" model="ir.ui.view">
         <field name="name">account.journal.dashboard.kanban</field>
         <field name="model">account.journal</field>
-        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="inherit_id" ref="account_bank_statement_import.journal_dashboard_view_inherit"/>
         <field name="arch" type="xml">
             <div name="bank_statement_create_button" position="attributes">
                 <attribute name="t-if">dashboard.bank_statements_source != 'online_sync' and dashboard.bank_statements_source != 'online'</attribute>
             </div>
+            <xpath expr="//a[@name='create_bank_statement']" position="attributes">
+                <attribute name="t-if">dashboard.bank_statements_source != 'online_sync' and dashboard.bank_statements_source != 'online'</attribute>
+            </xpath>
+            <xpath expr="//a[@name='import_statement']" position="attributes">
+                <attribute name="t-if">dashboard.bank_statements_source != 'online_sync' and dashboard.bank_statements_source != 'online'</attribute>
+            </xpath>
         </field>
     </record>
 
