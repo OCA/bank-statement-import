@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_bank_statement_import_caisse_epargne
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-01 05:40+0000\n"
+"PO-Revision-Date: 2020-04-01 05:40+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_statement_import_caisse_epargne
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_caisse_epargne.view_account_bank_statement_import_form
+msgid "CSV bank statement from Caisse d'Epargne"
+msgstr "Import de relevé CSV au format propriétaire de la Caisse d'Epargne"
+
+#. module: account_bank_statement_import_caisse_epargne
+#: model:ir.model,name:account_bank_statement_import_caisse_epargne.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importer Relevé Bancaire"
+
+#. module: account_bank_statement_import_caisse_epargne
+#: code:addons/account_bank_statement_import_caisse_epargne/models/account_bank_statement_import.py:132
+#, python-format
+msgid ""
+"Sum of opening balance and transaction lines is not equel to closing balance."
+msgstr ""
+"La somme du solde d'ouverture et de la somme des transactions du relevé "
+"n'est pas égale au solde de fermeture."
+
+#. module: account_bank_statement_import_caisse_epargne
+#: code:addons/account_bank_statement_import_caisse_epargne/models/account_bank_statement_import.py:135
+#, python-format
+msgid ""
+"The following problem occurred during import. The file might not be valid.\n"
+"\n"
+" %s"
+msgstr ""
+"Le problème suivant est survenu durant l'import. Le fichier n'est "
+"probablement pas valide.\n"
+"\n"
+" %s"
