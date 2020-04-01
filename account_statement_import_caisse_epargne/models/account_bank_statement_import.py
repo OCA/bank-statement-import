@@ -15,66 +15,66 @@ class AccountBankStatementImport(models.TransientModel):
 
     regexp_version = {
         'version_A': {
-            'line_1': "^Code de la banque : (?P<bank_group_code>\d{5});"
-                      "Code de l'agence : (?P<bank_local_code>\d{5});"
+            'line_1': r"Code de la banque : (?P<bank_group_code>\d{5});"
+                      r"Code de l'agence : (?P<bank_local_code>\d{5});"
                       "Date de début de téléchargement : "
-                      "(?P<opening_date>\d{2}/\d{2}/\d{4});"
+                      r"(?P<opening_date>r'\d{2}/r'\d{2}/\d{4});"
                       "Date de fin de téléchargement : "
-                      "(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
-            'line_2': "^Numéro de compte : (?P<bank_account_number>\d{11})"
+                      r"(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
+            'line_2': r"^Numéro de compte : (?P<bank_account_number>\d{11})"
                       ";Nom du compte : (?P<bank_account_name>.*);"
                       "Devise : (?P<currency>.{3});;;$",
-            'line_closing_balance': "^Solde en fin de période;;;;"
-                                    "(?P<balance>\d+(,\d{1,2})?);$",
+            'line_closing_balance': r"^Solde en fin de période;;;;"
+                                    r"(?P<balance>\d+(,\d{1,2})?);$",
             'line_opening_balance': "^Solde en début de période;;;;"
-                                    "(?P<balance>\d+(,\d{1,2})?);$",
-            'line_credit': "^(?P<date>\d{2}/\d{2}/\d{4});"
+                                    r"(?P<balance>\d+(,\d{1,2})?);$",
+            'line_credit': r"^(?P<date>\d{2}/\d{2}/\d{4});"
                            "(?P<unique_import_id>.*);(?P<name>.*);;"
-                           "(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
-            'line_debit': "^(?P<date>\d{2}/\d{2}/\d{4});"
+                           r"(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
+            'line_debit': r"^(?P<date>\d{2}/\d{2}/\d{4});"
                           "(?P<unique_import_id>.*);(?P<name>.*);"
-                          "(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
+                          r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
             'line_date_format': '%d/%m/%Y',
         },
         'version_B': {
-            'line_1': "^Code de la banque : (?P<bank_group_code>\d{5})"
+            'line_1': r"^Code de la banque : (?P<bank_group_code>\d{5})"
                       ";Date de début de téléchargement : "
-                      "(?P<opening_date>\d{2}/\d{2}/\d{4});"
+                      r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
                       "Date de fin de téléchargement : "
-                      "(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
+                      r"(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
             'line_2': "^Numéro de compte : "
-                      "(?P<bank_account_number>\d{11});Devise :"
-                      " (?P<currency>.{3});;;$",
+                      r"(?P<bank_account_number>\d{11});Devise :"
+                      r" (?P<currency>.{3});;;$",
             'line_closing_balance': "^Solde en fin de période;;;"
-                                    "(?P<balance>\d+(,\d{1,2})?);$",
+                                    r"(?P<balance>\d+(,\d{1,2})?);$",
             'line_opening_balance': "^Solde en début de période;;;"
-                                    "(?P<balance>\d+(,\d{1,2})?);$",
-            'line_credit': "^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);;"
-                           "(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
-            'line_debit': "^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);"
-                          "(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
+                                    r"(?P<balance>\d+(,\d{1,2})?);$",
+            'line_credit': r"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);;"
+                           r"(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
+            'line_debit': r"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);"
+                          r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
             'line_date_format': '%d/%m/%Y',
         },
         'version_C': {
-            'line_1': "^Code de la banque : (?P<bank_group_code>\d{5});"
-                      "Code de l'agence : (?P<bank_local_code>\d{5});"
+            'line_1': r"^Code de la banque : (?P<bank_group_code>\d{5});"
+                      r"Code de l'agence : (?P<bank_local_code>\d{5});"
                       "Date de début de téléchargement : "
-                      "(?P<opening_date>\d{2}/\d{2}/\d{4});"
+                      r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
                       "Date de fin de téléchargement : "
-                      "(?P<closing_date>\d{2}/\d{2}/\d{4});$",
-            'line_2': "^Numéro de compte : (?P<bank_account_number>\d{11})"
+                      r"(?P<closing_date>\d{2}/\d{2}/\d{4});$",
+            'line_2': r"^Numéro de compte : (?P<bank_account_number>\d{11})"
                       ";Nom du compte : (?P<nom_compte>.*);"
                       "Devise : (?P<currency>.{3});$",
             'line_closing_balance': "^Solde en fin de période;;;;"
-                                    "(?P<balance>(\+|-)?\d+(,\d{1,2})?)$",
+                                    r"(?P<balance>(\+|-)?\d+(,\d{1,2})?)$",
             'line_opening_balance': "^Solde en début de période;;;;"
-                                    "(?P<balance>(\+|-)?\d+(,\d{1,2})?)$",
-            'line_credit': "^(?P<date>\d{2}/\d{2}/\d{2});(?P<ref>.*);"
-                           "(?P<name>.*);;\+(?P<credit>\d+(,\d{1,2})?)"
+                                    r"(?P<balance>(\+|-)?\d+(,\d{1,2})?)$",
+            'line_credit': r"^(?P<date>\d{2}/\d{2}/\d{2});(?P<ref>.*);"
+                           r"(?P<name>.*);;\+(?P<credit>\d+(,\d{1,2})?)"
                            ";(?P<note>.*);$",
-            'line_debit': "^(?P<date>\d{2}/\d{2}/\d{2});"
+            'line_debit': r"^(?P<date>\d{2}/\d{2}/\d{2});"
                           "(?P<ref>.*);(?P<name>.*);"
-                          "(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*);$",
+                          r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*);$",
             'line_date_format': '%d/%m/%y',
         }
     }
@@ -153,8 +153,8 @@ class AccountBankStatementImport(models.TransientModel):
                 data_file)
 
         file_version, bank_group_code, openning_date,\
-        closing_date, bank_account_number,\
-        opening_balance, closing_balance, currency = result
+            closing_date, bank_account_number,\
+            opening_balance, closing_balance, currency = result
         transactions = []
         total_amt = 0.00
         try:
