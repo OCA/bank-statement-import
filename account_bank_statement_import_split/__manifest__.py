@@ -3,7 +3,7 @@
 
 {
     'name': 'Account Bank Statement Import: Split by date',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'author':
         'Brainbean Apps, '
         'Odoo Community Association (OCA)',
