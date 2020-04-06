@@ -7,9 +7,11 @@ from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 import json
 from unittest import mock
+from urllib.error import HTTPError
 
-from odoo.tests import common
 from odoo import fields
+from odoo.exceptions import UserError
+from odoo.tests import common
 
 _module_ns = 'odoo.addons.account_bank_statement_import_online_paypal'
 _provider_class = (
@@ -17,6 +19,31 @@ _provider_class = (
     + '.models.online_bank_statement_provider_paypal'
     + '.OnlineBankStatementProviderPayPal'
 )
+
+
+class FakeHTTPError(HTTPError):
+    def __init__(self, content):
+        self.content = content
+
+    def read(self):
+        return self.content.encode('utf-8')
+
+
+class UrlopenRetValMock:
+    def __init__(self, content, throw=False):
+        self.content = content
+        self.throw = throw
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, tb):
+        pass
+
+    def read(self):
+        if self.throw:
+            raise FakeHTTPError(self.content)
+        return self.content.encode('utf-8')
 
 
 class TestAccountBankAccountStatementImportOnlinePayPal(
@@ -155,6 +182,87 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
         ):
             with self.assertRaises(Exception):
                 provider._paypal_get_token()
+
+    def test_no_data_on_monday(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_eur.id,
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'paypal',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        mocked_response = UrlopenRetValMock("""{
+    "debug_id": "eec890ebd5798",
+    "details": "xxxxxx",
+    "links": "xxxxxx",
+    "message": "Data for the given start date is not available.",
+    "name": "INVALID_REQUEST"
+}""", throw=True)
+        with mock.patch(
+            _provider_class + '._paypal_urlopen',
+            return_value=mocked_response,
+        ), self.mock_token():
+            data = provider.with_context(
+                test_account_bank_statement_import_online_paypal_monday=True,
+            )._obtain_statement_data(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
+
+        self.assertIsNone(data)
+
+    def test_error_handling_1(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_eur.id,
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'paypal',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        mocked_response = UrlopenRetValMock("""{
+    "message": "MSG",
+    "name": "ERROR"
+}""", throw=True)
+        with mock.patch(
+            _provider_class + '._paypal_urlopen',
+            return_value=mocked_response,
+        ), self.mock_token():
+            with self.assertRaises(UserError):
+                provider._obtain_statement_data(
+                    self.now - relativedelta(years=5),
+                    self.now,
+                )
+
+    def test_error_handling_2(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_eur.id,
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'paypal',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        mocked_response = UrlopenRetValMock("""{
+    "error_description": "DESC",
+    "error": "ERROR"
+}""", throw=True)
+        with mock.patch(
+            _provider_class + '._paypal_urlopen',
+            return_value=mocked_response,
+        ), self.mock_token():
+            with self.assertRaises(UserError):
+                provider._obtain_statement_data(
+                    self.now - relativedelta(years=5),
+                    self.now,
+                )
 
     def test_empty_pull(self):
         journal = self.AccountJournal.create({
