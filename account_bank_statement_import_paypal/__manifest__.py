@@ -17,6 +17,8 @@
     'installable': True,
     'depends': [
         'account_bank_statement_import',
+        'multi_step_wizard',
+        'web_widget_dropdown_dynamic',
     ],
     'external_dependencies': {
         'python': [
