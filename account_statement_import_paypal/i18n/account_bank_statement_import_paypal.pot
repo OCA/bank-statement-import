@@ -15,91 +15,109 @@ msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__balance_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__balance_column
 msgid "\"Balance\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__bank_account_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__bank_account_column
 msgid "\"Bank Account\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__bank_name_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__bank_name_column
 msgid "\"Bank Name\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__currency_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__currency_column
 msgid "\"Currency\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__date_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__date_column
 msgid "\"Date\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__description_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__description_column
 msgid "\"Description\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__fee_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__fee_column
 msgid "\"Fee\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__from_email_address_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__from_email_address_column
 msgid "\"From Email Address\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__gross_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__gross_column
 msgid "\"Gross\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__invoice_id_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__invoice_id_column
 msgid "\"Invoice ID\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__name_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__name_column
 msgid "\"Name\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__note_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__note_column
 msgid "\"Note\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__subject_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__subject_column
 msgid "\"Subject\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__time_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__time_column
 msgid "\"Time\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__tz_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__tz_column
 msgid "\"Timezone\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__to_email_address_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__to_email_address_column
 msgid "\"To Email Address\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__transaction_id_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__transaction_id_column
 msgid "\"Transaction ID\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__type_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__type_column
 msgid "\"Type\" column"
 msgstr ""
 
@@ -122,11 +140,6 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import_paypal_parser
 msgid "Account Bank Statement Import PayPal Parser"
-msgstr ""
-
-#. module: account_bank_statement_import_paypal
-#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__data_file
-msgid "Bank Statement File"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
@@ -182,14 +195,13 @@ msgid "Fee for %s"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:70
-#, python-format
-msgid "File structure does not look like a PayPal report, please check the file or create the mapping manually."
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__filename
+msgid "Filename"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__filename
-msgid "Filename"
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__header
+msgid "Header"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
@@ -215,7 +227,7 @@ msgid "Import Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:78
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:162
 #, python-format
 msgid "Imported Mapping"
 msgstr ""
@@ -253,7 +265,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:26
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:130
 #, python-format
 msgid "Mapping from %s"
 msgstr ""
@@ -261,6 +273,11 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__name
 msgid "Name"
+msgstr ""
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__data_file
+msgid "PayPal Report File"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
@@ -282,6 +299,11 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_wizard_form
 msgid "Select a PayPal report file to import mapping."
+msgstr ""
+
+#. module: account_bank_statement_import_paypal
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__state
+msgid "State"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
