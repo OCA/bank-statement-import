@@ -1,0 +1,5 @@
+"Fecha","Hora","Zona horaria","Descripción","Divisa","Bruto","Comisión","Neto","Saldo","Id. de transacción","Correo electrónico del remitente","Nombre","Nombre del banco","Cuenta bancaria","Importe de envío y manipulación","Impuesto de ventas","Id. de factura","Id. de referencia de trans.",,,,,,
+"2/1/2020","11:05:56","Europe/Berlin","Pago estándar","EUR","49,37","-1,78","47,59","4.626,81","TID1","paypal@partner1.com","Partner 1","","","0,00","0,00","",""
+"2/1/2020","13:06:07","Europe/Berlin","Pago estándar","EUR","28,82","-1,19","27,63","4.654,44","TID2","paypal@partner2.com","Partner 2","","","0,00","0,00","",""
+"2/1/2020","19:20:05","Europe/Berlin","Pago estándar","EUR","35,78","-1,39","34,39","4.688,83","TID3","paypal@partner3.com","Partner 3","","","0,00","0,00","",""
+"3/1/2020","09:44:24","Europe/Berlin","Pago estándar","EUR","22,47","-1,00","21,47","4.710,30","TID4","paypal@partner4.com","Partner 4","","","0,00","0,00","",""

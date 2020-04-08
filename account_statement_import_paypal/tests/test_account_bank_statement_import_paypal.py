@@ -20,6 +20,9 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         self.paypal_statement_map_en = self.env.ref(
             'account_bank_statement_import_paypal.paypal_statement_map_en'
         )
+        self.paypal_statement_map_es = self.env.ref(
+            'account_bank_statement_import_paypal.paypal_statement_map_es'
+        )
         self.paypal_activity_map_en = self.env.ref(
             'account_bank_statement_import_paypal.paypal_activity_map_en'
         )
@@ -62,6 +65,30 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         ])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 18)
+
+    def test_import_statement_es(self):
+        journal = self.AccountJournal.create({
+            'name': 'PayPal',
+            'type': 'bank',
+            'code': 'PP',
+            'currency_id': self.currency_eur.id,
+        })
+        wizard = self.AccountBankStatementImport.with_context({
+            'journal_id': journal.id,
+        }).create({
+            'filename': 'fixtures/statement_es.csv',
+            'data_file': self._data_file('fixtures/statement_es.csv'),
+            'paypal_mapping_id': self.paypal_statement_map_es.id,
+        })
+        wizard.with_context({
+            'journal_id': journal.id,
+            'account_bank_statement_import_paypal_test': True,
+        }).import_file()
+        statement = self.AccountBankStatement.search([
+            ('journal_id', '=', journal.id),
+        ])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 8)
 
     def test_import_activity_en(self):
         journal = self.AccountJournal.create({
@@ -112,21 +139,39 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         self.assertEqual(len(statement), 0)
 
     def test_import_activity_mapping_en(self):
-        wizard = self.AccountBankStatementImportPayPalMappingWizard.create({
-            'filename': 'fixtures/activity_en.csv',
-            'data_file': self._data_file('fixtures/activity_en.csv'),
-        })
-        mapping = self.AccountBankStatementImportPayPalMapping.browse(
-            wizard.import_mapping()['res_id']
-        )
-        self.assertTrue(mapping)
+        with common.Form(
+                self.AccountBankStatementImportPayPalMappingWizard) as form:
+            form.filename = 'fixtures/activity_en.csv'
+            form.data_file = self._data_file(
+                'fixtures/activity_en.csv'
+            )
+            self.assertEqual(
+                len(
+                    self.AccountBankStatementImportPayPalMappingWizard
+                        .with_context(
+                            header=form.header,
+                        ).statement_columns()
+                ),
+                22
+            )
+            wizard = form.save()
+        wizard.import_mapping()
 
     def test_import_statement_mapping_en(self):
-        wizard = self.AccountBankStatementImportPayPalMappingWizard.create({
-            'filename': 'fixtures/statement_en.csv',
-            'data_file': self._data_file('fixtures/statement_en.csv'),
-        })
-        mapping = self.AccountBankStatementImportPayPalMapping.browse(
-            wizard.import_mapping()['res_id']
-        )
-        self.assertTrue(mapping)
+        with common.Form(
+                self.AccountBankStatementImportPayPalMappingWizard) as form:
+            form.filename = 'fixtures/statement_en.csv'
+            form.data_file = self._data_file(
+                'fixtures/statement_en.csv'
+            )
+            self.assertEqual(
+                len(
+                    self.AccountBankStatementImportPayPalMappingWizard
+                        .with_context(
+                            header=form.header,
+                        ).statement_columns()
+                ),
+                18
+            )
+            wizard = form.save()
+        wizard.import_mapping()
