@@ -86,6 +86,10 @@ Known issues / Roadmap
 * `PayPal Transaction Info <https://developer.paypal.com/docs/api/sync/v1/#definition-transaction_info>`_
   defines extra fields like ``tip_amount``, ``shipping_amount``, etc. that
   could be useful to be decomposed from a single transaction.
+* There's a known issue with PayPal API that on every Monday for couple of
+  hours after UTC midnight it returns ``INVALID_REQUEST`` incorrectly: their
+  servers have not inflated the data yet. PayPal tech support confirmed this
+  behaviour in case #06650320 (private).
 
 Bug Tracker
 ===========
