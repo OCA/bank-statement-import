@@ -554,7 +554,7 @@ msgid "Mobile payment, made through a mobile phone"
 msgstr ""
 
 #. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:522
+#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:520
 #, python-format
 msgid "No authentication specified!"
 msgstr ""
@@ -852,14 +852,14 @@ msgid "Transfer to external GL entity"
 msgstr ""
 
 #. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:538
+#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:536
 #, python-format
 msgid "Unknown authentication specified!"
 msgstr ""
 
 #. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:485
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:492
+#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:484
+#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:490
 #, python-format
 msgid "Unknown error"
 msgstr ""
