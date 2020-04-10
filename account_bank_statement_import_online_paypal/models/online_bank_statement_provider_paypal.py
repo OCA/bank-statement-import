@@ -478,18 +478,16 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     @api.model
     def _paypal_decode_error(self, content):
-        generic_error = content.get('name')
-        if generic_error:
+        if 'name' in content:
             return UserError('%s: %s' % (
-                generic_error,
-                content.get('message') or _('Unknown error'),
+                content['name'],
+                content.get('message', _('Unknown error')),
             ))
 
-        identity_error = content.get('error')
-        if identity_error:
-            UserError('%s: %s' % (
-                generic_error,
-                content.get('error_description') or _('Unknown error'),
+        if 'error' in content:
+            return UserError('%s: %s' % (
+                content['error'],
+                content.get('error_description', _('Unknown error')),
             ))
 
         return None
