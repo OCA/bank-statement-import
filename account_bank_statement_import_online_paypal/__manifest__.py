@@ -4,7 +4,7 @@
 
 {
     'name': 'Online Bank Statements: PayPal.com',
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'author':
         'Brainbean Apps, '
         'Dataplug, '
