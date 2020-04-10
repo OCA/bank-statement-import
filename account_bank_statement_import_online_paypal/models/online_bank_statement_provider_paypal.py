@@ -166,6 +166,7 @@ EVENT_DESCRIPTIONS = {
     'T9800': _('Display only transaction'),
     'T9900': _('Other'),
 }
+NO_DATA_FOR_DATE_AVAIL_MSG = 'Data for the given start date is not available.'
 
 
 class OnlineBankStatementProviderPayPal(models.Model):
@@ -416,7 +417,18 @@ class OnlineBankStatementProviderPayPal(models.Model):
                         interval_end.isoformat() + 'Z',
                         page,
                     ))
-                data = self._paypal_retrieve(url, token)
+
+                # NOTE: Workaround for INVALID_REQUEST (see ROADMAP.rst)
+                invalid_data_workaround = self.env.context.get(
+                    'test_account_bank_statement_import_online_paypal_monday',
+                    interval_start.weekday() == 0 and (
+                        datetime.utcnow() - interval_start
+                    ).total_seconds() < 28800
+                )
+
+                data = self.with_context(
+                    invalid_data_workaround=invalid_data_workaround,
+                )._paypal_retrieve(url, token)
                 interval_transactions = map(
                     lambda transaction: self._paypal_preparse_transaction(
                         transaction
@@ -465,15 +477,22 @@ class OnlineBankStatementProviderPayPal(models.Model):
         return Decimal(transaction_amount['value'])
 
     @api.model
-    def _paypal_validate(self, content):
-        content = json.loads(content)
-        if 'error' in content and content['error']:
-            raise UserError(
-                content['error_description']
-                if 'error_description' in content
-                else 'Unknown error'
-            )
-        return content
+    def _paypal_decode_error(self, content):
+        generic_error = content.get('name')
+        if generic_error:
+            return UserError('%s: %s' % (
+                generic_error,
+                content.get('message') or _('Unknown error'),
+            ))
+
+        identity_error = content.get('error')
+        if identity_error:
+            UserError('%s: %s' % (
+                generic_error,
+                content.get('error_description') or _('Unknown error'),
+            ))
+
+        return None
 
     @api.model
     def _paypal_retrieve(self, url, auth, data=None):
@@ -481,18 +500,21 @@ class OnlineBankStatementProviderPayPal(models.Model):
             with self._paypal_urlopen(url, auth, data) as response:
                 content = response.read().decode('utf-8')
         except HTTPError as e:
-            content = self._paypal_validate(
-                e.read().decode('utf-8')
-            )
-            if 'name' in content and content['name']:
-                raise UserError('%s: %s' % (
-                    content['name'],
-                    content['error_description']
-                    if 'error_description' in content
-                    else 'Unknown error',
-                ))
-            raise e
-        return self._paypal_validate(content)
+            content = json.loads(e.read().decode('utf-8'))
+
+            # NOTE: Workaround for INVALID_REQUEST (see ROADMAP.rst)
+            if self.env.context.get('invalid_data_workaround') \
+                    and content.get('name') == 'INVALID_REQUEST' \
+                    and content.get('message') == NO_DATA_FOR_DATE_AVAIL_MSG:
+                return {
+                    'transaction_details': [],
+                    'page': 1,
+                    'total_items': 0,
+                    'total_pages': 0,
+                }
+
+            raise self._paypal_decode_error(content) or e
+        return json.loads(content)
 
     @api.model
     def _paypal_urlopen(self, url, auth, data=None):
