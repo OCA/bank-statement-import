@@ -226,18 +226,15 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
 
         provider = journal.online_bank_statement_provider_id
         mocked_response = UrlopenRetValMock("""{
-    "message": "MSG",
+    "message": "MESSAGE",
     "name": "ERROR"
 }""", throw=True)
         with mock.patch(
             _provider_class + '._paypal_urlopen',
             return_value=mocked_response,
-        ), self.mock_token():
+        ):
             with self.assertRaises(UserError):
-                provider._obtain_statement_data(
-                    self.now - relativedelta(years=5),
-                    self.now,
-                )
+                provider._paypal_retrieve('https://url', '')
 
     def test_error_handling_2(self):
         journal = self.AccountJournal.create({
@@ -251,18 +248,15 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
 
         provider = journal.online_bank_statement_provider_id
         mocked_response = UrlopenRetValMock("""{
-    "error_description": "DESC",
+    "error_description": "ERROR DESCRIPTION",
     "error": "ERROR"
 }""", throw=True)
         with mock.patch(
             _provider_class + '._paypal_urlopen',
             return_value=mocked_response,
-        ), self.mock_token():
+        ):
             with self.assertRaises(UserError):
-                provider._obtain_statement_data(
-                    self.now - relativedelta(years=5),
-                    self.now,
-                )
+                provider._paypal_retrieve('https://url', '')
 
     def test_empty_pull(self):
         journal = self.AccountJournal.create({
