@@ -438,6 +438,10 @@ for details.</li>
 <li><a class="reference external" href="https://developer.paypal.com/docs/api/sync/v1/#definition-transaction_info">PayPal Transaction Info</a>
 defines extra fields like <tt class="docutils literal">tip_amount</tt>, <tt class="docutils literal">shipping_amount</tt>, etc. that
 could be useful to be decomposed from a single transaction.</li>
+<li>There’s a known issue with PayPal API that on every Monday for couple of
+hours after UTC midnight it returns <tt class="docutils literal">INVALID_REQUEST</tt> incorrectly: their
+servers have not inflated the data yet. PayPal tech support confirmed this
+behaviour in case #06650320 (private).</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
