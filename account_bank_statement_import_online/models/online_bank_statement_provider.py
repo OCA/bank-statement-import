@@ -41,7 +41,7 @@ class OnlineBankStatementProvider(models.Model):
         related='journal_id.currency_id',
     )
     account_number = fields.Char(
-        related='journal_id.bank_account_id.acc_number'
+        related='journal_id.bank_account_id.sanitized_acc_number'
     )
     service = fields.Selection(
         selection=lambda self: self._selection_service(),
@@ -258,6 +258,15 @@ class OnlineBankStatementProvider(models.Model):
                                 [('unique_import_id', '=', unique_import_id)],
                                 limit=1):
                             continue
+                    bank_account_number = line_values.get('account_number')
+                    if bank_account_number:
+                        line_values.update({
+                            'account_number': (
+                                self._sanitize_bank_account_number(
+                                    bank_account_number
+                                )
+                            ),
+                        })
                     filtered_lines.append(line_values)
                 statement_values.update({
                     'line_ids': [[0, False, line] for line in filtered_lines],
@@ -340,10 +349,15 @@ class OnlineBankStatementProvider(models.Model):
     @api.multi
     def _generate_unique_import_id(self, unique_import_id):
         self.ensure_one()
-        sanitized_account_number = sanitize_account_number(self.account_number)
         return (
-            sanitized_account_number and sanitized_account_number + '-' or ''
+            self.account_number and self.account_number + '-' or ''
         ) + str(self.journal_id.id) + '-' + unique_import_id
+
+    @api.multi
+    def _sanitize_bank_account_number(self, bank_account_number):
+        """Hook for extension"""
+        self.ensure_one()
+        return sanitize_account_number(bank_account_number)
 
     @api.multi
     def _get_next_run_period(self):
