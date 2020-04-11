@@ -219,7 +219,7 @@ msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:245
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:253
 #, python-format
 msgid "Fee for %s"
 msgstr ""
@@ -268,7 +268,7 @@ msgid "Imported Mapping"
 msgstr "Importar las lineas de la plantilla de Paypal"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:215
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
 #, fuzzy, python-format
 #| msgid "Invoice ID"
 msgid "Invoice %s"
@@ -366,7 +366,7 @@ msgid "Time Format"
 msgstr "Formato de fecha"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:250
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
 #, fuzzy, python-format
 #| msgid "Transaction ID"
 msgid "Transaction fee for %s"
