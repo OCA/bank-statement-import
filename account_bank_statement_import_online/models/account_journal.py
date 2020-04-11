@@ -1,5 +1,5 @@
-# Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019 Dataplug (https://dataplug.io)
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -37,9 +37,12 @@ class AccountJournal(models.Model):
 
     @api.model
     def values_online_bank_statement_provider(self):
-        return self.env[
+        res = self.env[
             'online.bank.statement.provider'
         ]._get_available_services()
+        if self.user_has_groups('base.group_no_one'):
+            res += [('dummy', 'Dummy')]
+        return res
 
     @api.multi
     def _update_online_bank_statement_provider_id(self):
@@ -92,5 +95,6 @@ class AccountJournal(models.Model):
             'target': 'new',
             'context': {
                 'default_provider_ids': [(6, False, provider_ids)],
+                'active_test': False,
             },
         }
