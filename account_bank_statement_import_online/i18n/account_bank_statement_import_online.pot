@@ -307,7 +307,7 @@ msgid "Online Bank Statement Providers"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/account_journal.py:88
+#: code:addons/account_bank_statement_import_online/models/account_journal.py:91
 #: model:ir.model,name:account_bank_statement_import_online.model_online_bank_statement_pull_wizard
 #, python-format
 msgid "Online Bank Statement Pull Wizard"

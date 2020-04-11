@@ -21,6 +21,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.OnlineBankStatementProvider = self.env[
             'online.bank.statement.provider'
         ]
+        self.OnlineBankStatementPullWizard = self.env[
+            'online.bank.statement.pull.wizard'
+        ]
         self.AccountBankStatement = self.env['account.bank.statement']
         self.AccountBankStatementLine = self.env['account.bank.statement.line']
 
@@ -84,9 +87,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         provider = journal.online_bank_statement_provider_id
         provider.active = True
-        provider.with_context({
-            'expand_by': 1,
-        })._pull(
+        provider.with_context(
+            expand_by=1,
+        )._pull(
             self.now - relativedelta(hours=1),
             self.now,
         )
@@ -363,3 +366,58 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 self.now - relativedelta(hours=1),
                 self.now,
             )
+
+    def test_pull_no_balance(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.statement_creation_mode = 'daily'
+
+        provider.with_context(
+            step={'hours': 2},
+            balance_start=0,
+            balance=False,
+        )._pull(
+            self.now - relativedelta(days=1),
+            self.now,
+        )
+        statements = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+            order='date asc',
+        )
+        self.assertFalse(statements[0].balance_start)
+        self.assertFalse(statements[0].balance_end_real)
+        self.assertTrue(statements[0].balance_end)
+        self.assertTrue(statements[1].balance_start)
+        self.assertFalse(statements[1].balance_end_real)
+
+    def test_wizard(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+        action = journal.action_online_bank_statements_pull_wizard()
+        self.assertTrue(action['context']['default_provider_ids'][0][2])
+
+        wizard = self.OnlineBankStatementPullWizard.with_context(
+            action['context']
+        ).create({
+            'date_since': self.now - relativedelta(hours=1),
+            'date_until': self.now,
+        })
+        self.assertTrue(wizard.provider_ids)
+
+        wizard.action_pull()
+        self.assertTrue(self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+        ))
