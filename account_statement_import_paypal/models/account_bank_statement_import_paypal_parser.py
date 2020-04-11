@@ -195,6 +195,8 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
                 'balance_amount': balance_amount,
                 'payer_name': name_value,
                 'payer_email': payer_email,
+                'partner_bank_name': bank_name_value,
+                'partner_bank_account': bank_account_value,
             })
         return lines
 
@@ -211,6 +213,8 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
         fee_amount = line['fee_amount']
         payer_name = line['payer_name']
         payer_email = line['payer_email']
+        partner_bank_account = line['partner_bank_account']
+
         if invoice:
             invoice = _('Invoice %s') % invoice
         note = '%s %s' % (
@@ -237,6 +241,10 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
         if payer_name:
             line.update({
                 'partner_name': payer_name,
+            })
+        if partner_bank_account:
+            line.update({
+                'account_number': partner_bank_account,
             })
         transactions.append(transaction)
 

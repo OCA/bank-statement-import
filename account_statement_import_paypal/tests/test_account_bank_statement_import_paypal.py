@@ -42,7 +42,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         with open(path.join(path.dirname(__file__), filename)) as file:
             return b64encode(file.read().encode('utf-8'))
 
-    def test_import_statement_en(self):
+    def test_import_statement_en_usd(self):
         journal = self.AccountJournal.create({
             'name': 'PayPal',
             'type': 'bank',
@@ -65,6 +65,30 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         ])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 18)
+
+    def test_import_statement_en_eur(self):
+        journal = self.AccountJournal.create({
+            'name': 'PayPal',
+            'type': 'bank',
+            'code': 'PP',
+            'currency_id': self.currency_eur.id,
+        })
+        wizard = self.AccountBankStatementImport.with_context({
+            'journal_id': journal.id,
+        }).create({
+            'filename': 'fixtures/statement_en.csv',
+            'data_file': self._data_file('fixtures/statement_en.csv'),
+            'paypal_mapping_id': self.paypal_statement_map_en.id,
+        })
+        wizard.with_context({
+            'journal_id': journal.id,
+            'account_bank_statement_import_paypal_test': True,
+        }).import_file()
+        statement = self.AccountBankStatement.search([
+            ('journal_id', '=', journal.id),
+        ])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 8)
 
     def test_import_statement_es(self):
         journal = self.AccountJournal.create({

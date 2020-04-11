@@ -96,4 +96,49 @@
         <field name="note_column">Nota</field>
     </record>
 
+    <record id="paypal_statement_map_de" model="account.bank.statement.import.paypal.mapping">
+        <field name="name">PayPal Statement (DE)</field>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="date_format">%d.%m.%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Datum</field>
+        <field name="time_column">Uhrzeit</field>
+        <field name="tz_column">Zeitzone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Währung</field>
+        <field name="gross_column">Brutto</field>
+        <field name="fee_column">Gebühr</field>
+        <field name="balance_column">Guthaben</field>
+        <field name="transaction_id_column">Transaktionscode</field>
+        <field name="description_column">Beschreibung</field>
+        <field name="from_email_address_column">Absender E-Mail-Adresse</field>
+        <field name="invoice_id_column">Rechnungsnummer</field>
+        <field name="bank_name_column">Name der Bank</field>
+        <field name="bank_account_column">Bankkonto</field>
+    </record>
+
+    <record id="paypal_activity_map_de" model="account.bank.statement.import.paypal.mapping">
+        <field name="name">PayPal Activity (DE)</field>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="date_format">%d.%m.%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Datum</field>
+        <field name="time_column">Uhrzeit</field>
+        <field name="tz_column">Zeitzone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Währung</field>
+        <field name="gross_column">Brutto</field>
+        <field name="fee_column">Gebühr</field>
+        <field name="balance_column">Guthaben</field>
+        <field name="transaction_id_column">Transaktionscode</field>
+        <field name="type_column">Typ</field>
+        <field name="from_email_address_column">Absender E-Mail-Adresse</field>
+        <field name="to_email_address_column">Empfänger E-Mail-Adresse</field>
+        <field name="invoice_id_column">Rechnungsnummer</field>
+        <field name="subject_column">Betreff</field>
+        <field name="note_column">Hinweis</field>
+    </record>
+
 </odoo>

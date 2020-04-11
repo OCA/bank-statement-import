@@ -189,7 +189,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:245
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:253
 #, python-format
 msgid "Fee for %s"
 msgstr ""
@@ -233,7 +233,7 @@ msgid "Imported Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:215
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
 #, python-format
 msgid "Invoice %s"
 msgstr ""
@@ -317,7 +317,7 @@ msgid "Time Format"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:250
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
 #, python-format
 msgid "Transaction fee for %s"
 msgstr ""
