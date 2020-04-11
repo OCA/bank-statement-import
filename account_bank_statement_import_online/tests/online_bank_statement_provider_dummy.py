@@ -49,6 +49,8 @@ class OnlineBankStatementProviderDummy(models.Model):
                 'unique_import_id': str(int(
                     (date - datetime(1970, 1, 1)) / timedelta(seconds=1)
                 )),
+                'partner_name': 'John Doe',
+                'account_number': 'XX00 0000 0000 0000',
             })
             balance += amount
             date += line_step
