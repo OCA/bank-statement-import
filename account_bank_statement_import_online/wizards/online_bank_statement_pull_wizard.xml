@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-    Copyright 2019 Dataplug (https://dataplug.io)
+    Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019-2020 Dataplug (https://dataplug.io)
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
@@ -11,6 +11,7 @@
         <field name="model">online.bank.statement.pull.wizard</field>
         <field name="arch" type="xml">
             <form>
+                <field name="provider_ids" invisible="1"/>
                 <group name="filter">
                     <group name="date_range" colspan="2">
                         <group>

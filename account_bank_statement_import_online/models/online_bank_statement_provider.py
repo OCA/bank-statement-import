@@ -217,7 +217,9 @@ class OnlineBankStatementProvider(models.Model):
                         'journal_id': provider.journal_id.id,
                         'date': statement_date,
                     })
-                    statement = AccountBankStatement.create(
+                    statement = AccountBankStatement.with_context(
+                        journal_id=provider.journal_id.id,
+                    ).create(
                         # NOTE: This is needed since create() alters values
                         statement_values.copy()
                     )
@@ -275,9 +277,9 @@ class OnlineBankStatementProvider(models.Model):
                     statement_values['balance_start'] = float(
                         statement_values['balance_start']
                     )
-                if 'balance_start' in statement_values:
-                    statement_values['balance_start'] = float(
-                        statement_values['balance_start']
+                if 'balance_end_real' in statement_values:
+                    statement_values['balance_end_real'] = float(
+                        statement_values['balance_end_real']
                     )
                 statement.write(statement_values)
                 statement_date_since = statement_date_until
