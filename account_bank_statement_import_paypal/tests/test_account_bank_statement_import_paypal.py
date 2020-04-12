@@ -1,5 +1,5 @@
 # Copyright 2019 Tecnativa - Vicent Cubells
-# Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields
@@ -12,7 +12,7 @@ from os import path
 
 class TestAccountBankStatementImportPayPal(common.TransactionCase):
     def setUp(self):
-        super().setUp()
+        super(TestAccountBankStatementImportPayPal, self).setUp()
 
         self.now = fields.Datetime.now()
         self.currency_eur = self.env.ref('base.EUR')
@@ -47,7 +47,6 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             'name': 'PayPal',
             'type': 'bank',
             'code': 'PP',
-            'currency_id': self.currency_usd.id,
         })
         wizard = self.AccountBankStatementImport.with_context({
             'journal_id': journal.id,
@@ -119,7 +118,6 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             'name': 'PayPal',
             'type': 'bank',
             'code': 'PP',
-            'currency_id': self.currency_usd.id,
         })
         wizard = self.AccountBankStatementImport.with_context({
             'journal_id': journal.id,
@@ -143,7 +141,6 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             'name': 'PayPal',
             'type': 'bank',
             'code': 'PP',
-            'currency_id': self.currency_usd.id,
         })
         wizard = self.AccountBankStatementImport.with_context({
             'journal_id': journal.id,
@@ -163,39 +160,27 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         self.assertEqual(len(statement), 0)
 
     def test_import_activity_mapping_en(self):
-        with common.Form(
-                self.AccountBankStatementImportPayPalMappingWizard) as form:
-            form.filename = 'fixtures/activity_en.csv'
-            form.data_file = self._data_file(
-                'fixtures/activity_en.csv'
-            )
-            self.assertEqual(
-                len(
-                    self.AccountBankStatementImportPayPalMappingWizard
-                        .with_context(
-                            header=form.header,
-                        ).statement_columns()
-                ),
-                22
-            )
-            wizard = form.save()
+        wizard = self.AccountBankStatementImportPayPalMappingWizard.new({
+            'filename': 'fixtures/activity_en.csv',
+            'data_file': self._data_file('fixtures/activity_en.csv'),
+        })
+        wizard._onchange_data_file()
+        self.assertEqual(
+            len(self.AccountBankStatementImportPayPalMappingWizard
+                .with_context(header=wizard.header).statement_columns()),
+            22
+        )
         wizard.import_mapping()
 
     def test_import_statement_mapping_en(self):
-        with common.Form(
-                self.AccountBankStatementImportPayPalMappingWizard) as form:
-            form.filename = 'fixtures/statement_en.csv'
-            form.data_file = self._data_file(
-                'fixtures/statement_en.csv'
-            )
-            self.assertEqual(
-                len(
-                    self.AccountBankStatementImportPayPalMappingWizard
-                        .with_context(
-                            header=form.header,
-                        ).statement_columns()
-                ),
-                18
-            )
-            wizard = form.save()
+        wizard = self.AccountBankStatementImportPayPalMappingWizard.new({
+            'filename': 'fixtures/statement_en.csv',
+            'data_file': self._data_file('fixtures/statement_en.csv'),
+        })
+        wizard._onchange_data_file()
+        self.assertEqual(
+            len(self.AccountBankStatementImportPayPalMappingWizard
+                .with_context(header=wizard.header).statement_columns()),
+            18
+        )
         wizard.import_mapping()

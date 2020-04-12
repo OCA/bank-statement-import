@@ -32,4 +32,4 @@ class AccountBankStatementImport(models.TransientModel):
                     'account_bank_statement_import_paypal_test'):
                 raise
             _logger.warning('PayPal parser error', exc_info=True)
-        return super()._parse_file(data_file)
+        return super(AccountBankStatementImport, self)._parse_file(data_file)

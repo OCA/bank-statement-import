@@ -1,3 +1,2 @@
 web
-server-ux
 connector-jira

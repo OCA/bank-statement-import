@@ -3,4 +3,3 @@
 from . import account_bank_statement_import_paypal_mapping
 from . import account_bank_statement_import_paypal_parser
 from . import account_bank_statement_import
-from . import account_journal
