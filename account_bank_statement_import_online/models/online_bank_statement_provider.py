@@ -246,7 +246,7 @@ class OnlineBankStatementProvider(models.Model):
                                 )
                             )
                         continue
-                    elif date <= date_since or date > date_until:
+                    elif date <= statement_date_since or date > statement_date_until:
                         continue
                     unique_import_id = line_values.get('unique_import_id')
                     if unique_import_id:
