@@ -2,6 +2,7 @@
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from psycopg2 import IntegrityError
 from urllib.error import HTTPError
@@ -97,8 +98,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         statement = self.AccountBankStatement.search(
             [('journal_id', '=', journal.id)],
         )
-        self.assertEquals(len(statement), 1)
-        self.assertEquals(len(statement.line_ids), 12)
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 12)
 
     def test_pull_mode_daily(self):
         journal = self.AccountJournal.create({
@@ -117,7 +118,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             self.now - relativedelta(days=1),
             self.now,
         )
-        self.assertEquals(
+        self.assertEqual(
             len(self.AccountBankStatement.search(
                 [('journal_id', '=', journal.id)]
             )),
@@ -141,7 +142,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             self.now - relativedelta(weeks=1),
             self.now,
         )
-        self.assertEquals(
+        self.assertEqual(
             len(self.AccountBankStatement.search(
                 [('journal_id', '=', journal.id)]
             )),
@@ -165,7 +166,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             self.now - relativedelta(months=1),
             self.now,
         )
-        self.assertEquals(
+        self.assertEqual(
             len(self.AccountBankStatement.search(
                 [('journal_id', '=', journal.id)]
             )),
@@ -196,7 +197,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         statement = self.AccountBankStatement.search(
             [('journal_id', '=', journal.id)],
         )
-        self.assertEquals(len(statement), 1)
+        self.assertEqual(len(statement), 1)
 
     def test_pull_skip_duplicates_by_unique_import_id(self):
         journal = self.AccountJournal.create({
@@ -215,7 +216,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             self.now - relativedelta(weeks=2),
             self.now,
         )
-        self.assertEquals(
+        self.assertEqual(
             len(self.AccountBankStatementLine.search(
                 [('journal_id', '=', journal.id)]
             )),
@@ -226,7 +227,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             self.now - relativedelta(weeks=3),
             self.now - relativedelta(weeks=1),
         )
-        self.assertEquals(
+        self.assertEqual(
             len(self.AccountBankStatementLine.search(
                 [('journal_id', '=', journal.id)]
             )),
@@ -237,7 +238,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             self.now - relativedelta(weeks=1),
             self.now,
         )
-        self.assertEquals(
+        self.assertEqual(
             len(self.AccountBankStatementLine.search(
                 [('journal_id', '=', journal.id)]
             )),
@@ -421,3 +422,64 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertTrue(self.AccountBankStatement.search(
             [('journal_id', '=', journal.id)],
         ))
+
+    def test_pull_statement_partially(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.statement_creation_mode = 'monthly'
+
+        provider_context = {
+            'step': {'hours': 24},
+            'data_since': datetime(2020, 1, 1),
+            'data_until': datetime(2020, 2, 29),
+            'amount': 1.0,
+            'balance_start': 0,
+        }
+
+        provider.with_context(**provider_context)._pull(
+            datetime(2020, 1, 1),
+            datetime(2020, 1, 31),
+        )
+        statements = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+            order='date asc',
+        )
+        self.assertEqual(len(statements), 1)
+        self.assertEqual(statements[0].balance_start, 0.0)
+        self.assertEqual(statements[0].balance_end_real, 30.0)
+
+        provider.with_context(**provider_context)._pull(
+            datetime(2020, 1, 1),
+            datetime(2020, 2, 15),
+        )
+        statements = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+            order='date asc',
+        )
+        self.assertEqual(len(statements), 2)
+        self.assertEqual(statements[0].balance_start, 0.0)
+        self.assertEqual(statements[0].balance_end_real, 31.0)
+        self.assertEqual(statements[1].balance_start, 31.0)
+        self.assertEqual(statements[1].balance_end_real, 45.0)
+
+        provider.with_context(**provider_context)._pull(
+            datetime(2020, 1, 1),
+            datetime(2020, 2, 29),
+        )
+        statements = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+            order='date asc',
+        )
+        self.assertEqual(len(statements), 2)
+        self.assertEqual(statements[0].balance_start, 0.0)
+        self.assertEqual(statements[0].balance_end_real, 31.0)
+        self.assertEqual(statements[1].balance_start, 31.0)
+        self.assertEqual(statements[1].balance_end_real, 59.0)
