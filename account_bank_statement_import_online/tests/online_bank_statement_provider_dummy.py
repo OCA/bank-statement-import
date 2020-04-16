@@ -33,8 +33,10 @@ class OnlineBankStatementProviderDummy(models.Model):
         })
         line_step = relativedelta(**line_step_options)
         expand_by = self.env.context.get('expand_by', 0)
-        date_since -= expand_by * line_step
-        date_until += expand_by * line_step
+        data_since = self.env.context.get('data_since', date_since)
+        data_until = self.env.context.get('data_until', date_until)
+        data_since -= expand_by * line_step
+        data_until += expand_by * line_step
 
         balance_start = self.env.context.get(
             'balance_start',
@@ -42,9 +44,12 @@ class OnlineBankStatementProviderDummy(models.Model):
         )
         balance = balance_start
         lines = []
-        date = date_since
-        while date < date_until:
-            amount = randrange(-100, 100, 1) * 0.1
+        date = data_since
+        while date < data_until:
+            amount = self.env.context.get(
+                'amount',
+                randrange(-100, 100, 1) * 0.1
+            )
             lines.append({
                 'name': 'payment',
                 'amount': amount,
