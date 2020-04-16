@@ -226,7 +226,7 @@ class OnlineBankStatementProvider(models.Model):
                 filtered_lines = []
                 for line_values in lines_data:
                     date = fields.Datetime.from_string(line_values['date'])
-                    if date < statement_date_since:
+                    if date < statement_date_since or date < date_since:
                         if 'balance_start' in statement_values:
                             statement_values['balance_start'] = (
                                 Decimal(
@@ -236,7 +236,7 @@ class OnlineBankStatementProvider(models.Model):
                                 )
                             )
                         continue
-                    elif date >= statement_date_until:
+                    elif date >= statement_date_until or date >= date_until:
                         if 'balance_end_real' in statement_values:
                             statement_values['balance_end_real'] = (
                                 Decimal(
@@ -245,8 +245,6 @@ class OnlineBankStatementProvider(models.Model):
                                     line_values['amount']
                                 )
                             )
-                        continue
-                    elif date <= date_since or date > date_until:
                         continue
                     unique_import_id = line_values.get('unique_import_id')
                     if unique_import_id:
