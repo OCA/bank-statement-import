@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_bank_provider_form_view" model="ir.ui.view">
+        <field name="name">account.bank.provider.form</field>
+        <field name="model">account.bank.provider</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_sync_now" string="SYNC NOW" type="object"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" text="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="Name ..."/></h1>
+                    </div>
+                    <group>
+                        <group name="provider_type">
+                            <field name="provider_type"/>
+                            <field name="last_sync"/>
+                        </group>
+                        <group>
+                            <field name="journal_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="account_bank_provider_tree_view" model="ir.ui.view">
+        <field name="name">account.bank.provider.tree</field>
+        <field name="model">account.bank.provider</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_bank_provider_filter" model="ir.ui.view">
+        <field name="name">account.bank.provider.select</field>
+        <field name="model">account.bank.provider</field>
+        <field name="arch" type="xml">
+            <search string="Search Sheet">
+                <field name="name"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="account_bank_provider_action" model="ir.actions.act_window">
+        <field name="name">Bank Provider</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.bank.provider</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="account_bank_provider_filter"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create an provider.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_account_bank_provider" action="account_bank_provider_action" parent="account.account_account_menu" sequence="10"/>
+</odoo>

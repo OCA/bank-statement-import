@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_bank_provider_form_view" model="ir.ui.view">
+        <field name="name">account_bank_provider_qonto</field>
+        <field name="model">account.bank.provider</field>
+        <field name="inherit_id" ref="account_bank_provider.account_bank_provider_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='provider_type']" position="after">
+                <group name="ponto" attrs="{'invisible':[('provider_type','!=','ponto')]}">
+                    <field name="provider_ponto_cliend_id"/>
+                    <field name="provider_ponto_key"/>
+                    <field name="provider_ponto_endpoint"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

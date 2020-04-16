@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="name">account_bank_provider</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='bank_account']/group" position="inside">
+                <group name="bank_online" string="Bank Provider"
+                       attrs="{'invisible':[('type','!=','bank')]}"
+                       groups="account.group_account_user">
+                    <group name="bank_online_provider">
+                        <field name="bank_provider_id"/>
+                        <field name="bank_provider_last_transaction_date"/>
+                        <field name="bank_provider_last_transaction_identifier"/>
+                        <button name="action_bank_provider_sync_now" type="object" string="SYNC NOW"
+                                attrs="{'invisible':[('bank_provider_id','=',False)]}"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="account_journal_dashboard_kanban_view" model="ir.ui.view">
+        <field name="name">account_bank_provider</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <field name="kanban_dashboard" position="after">
+                <field name="bank_provider_id"/>
+                <field name="bank_provider_last_transaction_date"/>
+            </field>
+            <xpath expr='//div[@name="bank_journal_cta"]' position='inside'>
+                <t attrs="{'invisible': [('bank_provider_id', '=', False)]}">
+                    <a type="object" name="action_bank_provider_sync_now" class="oe_inline"
+                       groups="account.group_account_user">Synchronize now
+                    </a>
+                    <span attrs="{'invisible': [('bank_provider_last_transaction_date', '=', False)]}"
+                          class="text-muted">Last transaction:
+                        <t t-esc="record.bank_provider_last_transaction_date.value"/>
+                    </span>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>

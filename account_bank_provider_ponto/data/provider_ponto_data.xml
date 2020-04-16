@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="provider_ponto" model="account.bank.provider">
+            <field name="name">Ponto</field>
+            <field name="provider_type">ponto</field>
+        </record>
+    </data>
+</odoo>
