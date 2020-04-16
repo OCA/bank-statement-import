@@ -204,11 +204,29 @@ class OnlineBankStatementProvider(models.Model):
                     statement_date_since = statement_date_until
                     continue
                 lines_data, statement_values = data
-
+                statement = AccountBankStatement.search([
+                    ('journal_id', '=', provider.journal_id.id),
+                    ('state', '=', 'open'),
+                    ('date', '=', statement_date),
+                ], limit=1)
+                if not statement:
+                    statement_values.update({
+                        'name': provider.journal_id.sequence_id.with_context(
+                            ir_sequence_date=statement_date,
+                        ).next_by_id(),
+                        'journal_id': provider.journal_id.id,
+                        'date': statement_date,
+                    })
+                    statement = AccountBankStatement.with_context(
+                        journal_id=provider.journal_id.id,
+                    ).create(
+                        # NOTE: This is needed since create() alters values
+                        statement_values.copy()
+                    )
                 filtered_lines = []
                 for line_values in lines_data:
                     date = fields.Datetime.from_string(line_values['date'])
-                    if date < statement_date_since:
+                    if date < date_since:
                         if 'balance_start' in statement_values:
                             statement_values['balance_start'] = (
                                 Decimal(
@@ -218,7 +236,7 @@ class OnlineBankStatementProvider(models.Model):
                                 )
                             )
                         continue
-                    elif date >= statement_date_until:
+                    elif date >= date_until:
                         if 'balance_end_real' in statement_values:
                             statement_values['balance_end_real'] = (
                                 Decimal(
@@ -252,38 +270,18 @@ class OnlineBankStatementProvider(models.Model):
                             ),
                         })
                     filtered_lines.append(line_values)
-                if filtered_lines:
-                    statement = AccountBankStatement.search([
-                        ('journal_id', '=', provider.journal_id.id),
-                        ('state', '=', 'open'),
-                        ('date', '=', statement_date),
-                        ], limit=1)
-                    if not statement:
-                        statement_values.update({
-                            'name': provider.journal_id.sequence_id.with_context(
-                                ir_sequence_date=statement_date,
-                            ).next_by_id(),
-                            'journal_id': provider.journal_id.id,
-                            'date': statement_date,
-                        })
-                        statement = AccountBankStatement.with_context(
-                            journal_id=provider.journal_id.id,
-                        ).create(
-                            # NOTE: This is needed since create() alters values
-                            statement_values.copy()
-                        )
-                    statement_values.update({
-                        'line_ids': [[0, False, line] for line in filtered_lines],
-                    })
-                    if 'balance_start' in statement_values:
-                        statement_values['balance_start'] = float(
-                            statement_values['balance_start']
-                        )
-                    if 'balance_end_real' in statement_values:
-                        statement_values['balance_end_real'] = float(
-                            statement_values['balance_end_real']
-                        )
-                    statement.write(statement_values)
+                statement_values.update({
+                    'line_ids': [[0, False, line] for line in filtered_lines],
+                })
+                if 'balance_start' in statement_values:
+                    statement_values['balance_start'] = float(
+                        statement_values['balance_start']
+                    )
+                if 'balance_end_real' in statement_values:
+                    statement_values['balance_end_real'] = float(
+                        statement_values['balance_end_real']
+                    )
+                statement.write(statement_values)
                 statement_date_since = statement_date_until
             if is_scheduled:
                 provider._schedule_next_run()
