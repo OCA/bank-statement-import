@@ -1,26 +1,30 @@
 # Copyright 2014-2017 Akretion (http://www.akretion.com).
-# @author Alexis de Lattre <alexis.delattre@akretion.com>
-# @author Sébastien BEAU <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2019 Tecnativa - Vicent Cubells
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
 {
-    "name": "Import Paypal Bank Statements",
-    'summary': 'Import Paypal CSV files as Bank Statements in Odoo',
-    "version": "11.0.2.1.0",
-    "category": "Accounting",
-    "website": "https://github.com/OCA/bank-statement-import",
-    "author": " Akretion, Odoo Community Association (OCA)",
-    "license": "AGPL-3",
-    "installable": True,
-    "depends": [
-        "account_bank_statement_import",
-        "sale",
+    'name': 'PayPal CSV Format Bank Statements Import',
+    'summary': 'Import PayPal CSV files as Bank Statements in Odoo',
+    'version': '11.0.3.0.0',
+    'category': 'Accounting',
+    'website': 'https://github.com/OCA/bank-statement-import',
+    'author':
+        'Akretion, '
+        'Brainbean Apps, '
+        'Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
+    'installable': True,
+    'depends': [
+        'account_bank_statement_import',
+        'multi_step_wizard',
+        'web_widget_dropdown_dynamic',
     ],
-    "data": [
-        "security/ir.model.access.csv",
-        "data/paypal_map_data.xml",
-        "wizards/create_map_lines_from_file_views.xml",
-        "wizards/account_bank_statement_import_view.xml",
-        "views/account_journal_views.xml",
-        "views/paypal_map_views.xml",
-    ]
+    'data': [
+        'security/ir.model.access.csv',
+        'data/maps.xml',
+        'views/account_bank_statement_import_paypal_mapping.xml',
+        'views/account_bank_statement_import.xml',
+        'wizards/account_bank_statement_import_paypal_mapping_wizard.xml',
+    ],
 }

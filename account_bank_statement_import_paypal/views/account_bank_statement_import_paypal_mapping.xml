@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 Tecnativa - Vicent Cubells
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="account_bank_statement_import_paypal_mapping_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.import.paypal.mapping.form</field>
+        <field name="model">account.bank.statement.import.paypal.mapping</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_bank_statement_import_paypal_mapping_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.import.paypal.mapping.tree</field>
+        <field name="model">account.bank.statement.import.paypal.mapping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="float_thousands_sep"/>
+                            <field name="float_decimal_sep"/>
+                        </group>
+                        <group>
+                            <field name="date_format"/>
+                            <field name="time_format"/>
+                        </group>
+                    </group>
+                    <group string="Columns">
+                        <field name="date_column"/>
+                        <field name="time_column"/>
+                        <field name="tz_column"/>
+                        <field name="name_column"/>
+                        <field name="currency_column"/>
+                        <field name="gross_column"/>
+                        <field name="fee_column"/>
+                        <field name="balance_column"/>
+                        <field name="transaction_id_column"/>
+                        <field name="description_column"/>
+                        <field name="type_column"/>
+                        <field name="from_email_address_column"/>
+                        <field name="to_email_address_column"/>
+                        <field name="invoice_id_column"/>
+                        <field name="subject_column"/>
+                        <field name="note_column"/>
+                        <field name="bank_name_column"/>
+                        <field name="bank_account_column"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_statement_import_paypal_report_mappings" model="ir.actions.act_window">
+        <field name="name">PayPal Report Mappings</field>
+        <field name="res_model">account.bank.statement.import.paypal.mapping</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_statement_import_paypal_mapping"
+        parent="account.account_account_menu"
+        action="action_statement_import_paypal_report_mappings"
+        name="PayPal Report Mappings"
+    />
+
+</odoo>
