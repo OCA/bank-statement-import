@@ -2,7 +2,7 @@
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
+from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 from psycopg2 import IntegrityError
 from urllib.error import HTTPError
@@ -384,6 +384,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.with_context(
             step={'hours': 2},
             balance_start=0,
+            amount=100.0,
             balance=False,
         )._pull(
             self.now - relativedelta(days=1),
@@ -483,3 +484,162 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[0].balance_end_real, 31.0)
         self.assertEqual(statements[1].balance_start, 31.0)
         self.assertEqual(statements[1].balance_end_real, 59.0)
+
+    def test_tz_utc(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.tz = 'UTC'
+        provider.with_context(
+            step={'hours': 1},
+            tz='UTC',
+        )._pull(
+            datetime(2020, 4, 17, 22, 0),
+            datetime(2020, 4, 18, 2, 0),
+        )
+
+        statement = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+        )
+        self.assertEqual(len(statement), 2)
+
+        lines = statement.mapped('line_ids').sorted()
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(lines[0].date, date(2020, 4, 17))
+        self.assertEqual(lines[1].date, date(2020, 4, 17))
+        self.assertEqual(lines[2].date, date(2020, 4, 18))
+        self.assertEqual(lines[3].date, date(2020, 4, 18))
+
+    def test_tz_non_utc(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.tz = 'Etc/GMT-2'
+        provider.with_context(
+            step={'hours': 1},
+            tz='UTC',
+        )._pull(
+            datetime(2020, 4, 17, 22, 0),
+            datetime(2020, 4, 18, 2, 0),
+        )
+
+        statement = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+        )
+        self.assertEqual(len(statement), 2)
+
+        lines = statement.mapped('line_ids').sorted()
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(lines[0].date, date(2020, 4, 18))
+        self.assertEqual(lines[1].date, date(2020, 4, 18))
+        self.assertEqual(lines[2].date, date(2020, 4, 18))
+        self.assertEqual(lines[3].date, date(2020, 4, 18))
+
+    def test_other_tz_to_utc(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.with_context(
+            step={'hours': 1},
+            tz='Etc/GMT-2',
+            data_since=datetime(2020, 4, 18, 0, 0),
+            data_until=datetime(2020, 4, 18, 4, 0),
+        )._pull(
+            datetime(2020, 4, 17, 22, 0),
+            datetime(2020, 4, 18, 2, 0),
+        )
+
+        statement = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+        )
+        self.assertEqual(len(statement), 2)
+
+        lines = statement.mapped('line_ids').sorted()
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(lines[0].date, date(2020, 4, 17))
+        self.assertEqual(lines[1].date, date(2020, 4, 17))
+        self.assertEqual(lines[2].date, date(2020, 4, 18))
+        self.assertEqual(lines[3].date, date(2020, 4, 18))
+
+    def test_timestamp_date_only(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.with_context(
+            step={'hours': 1},
+            timestamp_mode='date',
+        )._pull(
+            datetime(2020, 4, 18, 0, 0),
+            datetime(2020, 4, 18, 4, 0),
+        )
+
+        statement = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+        )
+        self.assertEqual(len(statement), 1)
+
+        lines = statement.line_ids
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(lines[0].date, date(2020, 4, 18))
+        self.assertEqual(lines[1].date, date(2020, 4, 18))
+        self.assertEqual(lines[2].date, date(2020, 4, 18))
+        self.assertEqual(lines[3].date, date(2020, 4, 18))
+
+    def test_timestamp_date_only(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'dummy',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.with_context(
+            step={'hours': 1},
+            timestamp_mode='str',
+        )._pull(
+            datetime(2020, 4, 18, 0, 0),
+            datetime(2020, 4, 18, 4, 0),
+        )
+
+        statement = self.AccountBankStatement.search(
+            [('journal_id', '=', journal.id)],
+        )
+        self.assertEqual(len(statement), 1)
+
+        lines = statement.line_ids
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(lines[0].date, date(2020, 4, 18))
+        self.assertEqual(lines[1].date, date(2020, 4, 18))
+        self.assertEqual(lines[2].date, date(2020, 4, 18))
+        self.assertEqual(lines[3].date, date(2020, 4, 18))

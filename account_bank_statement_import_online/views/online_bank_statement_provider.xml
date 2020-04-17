@@ -80,6 +80,7 @@
                             <group>
                                 <group>
                                     <field name="statement_creation_mode"/>
+                                    <field name="tz"/>
                                 </group>
                             </group>
                         </page>
