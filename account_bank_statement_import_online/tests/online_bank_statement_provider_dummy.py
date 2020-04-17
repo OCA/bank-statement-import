@@ -4,9 +4,10 @@
 
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from pytz import timezone
 from random import randrange
 
-from odoo import models, api
+from odoo import api, fields, models
 
 
 class OnlineBankStatementProviderDummy(models.Model):
@@ -43,6 +44,13 @@ class OnlineBankStatementProviderDummy(models.Model):
             randrange(-10000, 10000, 1) * 0.1
         )
         balance = balance_start
+
+        tz = self.env.context.get('tz')
+        if tz:
+            tz = timezone(tz)
+
+        timestamp_mode = self.env.context.get('timestamp_mode')
+
         lines = []
         date = data_since
         while date < data_until:
@@ -50,10 +58,15 @@ class OnlineBankStatementProviderDummy(models.Model):
                 'amount',
                 randrange(-100, 100, 1) * 0.1
             )
+            transaction_date = date.replace(tzinfo=tz)
+            if timestamp_mode == 'date':
+                transaction_date = transaction_date.date()
+            elif timestamp_mode == 'str':
+                transaction_date = fields.Datetime.to_string(transaction_date)
             lines.append({
                 'name': 'payment',
                 'amount': amount,
-                'date': date,
+                'date': transaction_date,
                 'unique_import_id': str(int(
                     (date - datetime(1970, 1, 1)) / timedelta(seconds=1)
                 )),
