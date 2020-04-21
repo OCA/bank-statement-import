@@ -232,11 +232,13 @@ msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:162
+#, python-format
 msgid "Imported Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
+#, python-format
 msgid "Invoice %s"
 msgstr ""
 
@@ -268,6 +270,7 @@ msgstr "Última actualización en"
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:130
+#, python-format
 msgid "Mapping from %s"
 msgstr ""
 
@@ -319,6 +322,7 @@ msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
+#, python-format
 msgid "Transaction fee for %s"
 msgstr ""
 
