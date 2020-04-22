@@ -19,34 +19,26 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_balance_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_balance_column
-#, fuzzy
-#| msgid "Balance"
 msgid "\"Balance\" column"
-msgstr "Saldo"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_bank_account_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_bank_account_column
-#, fuzzy
-#| msgid "Bank Account"
 msgid "\"Bank Account\" column"
-msgstr "Cuenta bancaria"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_bank_name_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_bank_name_column
-#, fuzzy
-#| msgid "Bank Name"
 msgid "\"Bank Name\" column"
-msgstr "Nombre del banco"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_currency_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_currency_column
-#, fuzzy
-#| msgid "Currency"
 msgid "\"Currency\" column"
-msgstr "Moneda"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_date_column
@@ -57,10 +49,8 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_description_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_description_column
-#, fuzzy
-#| msgid "Description"
 msgid "\"Description\" column"
-msgstr "Descripción"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_fee_column
@@ -71,10 +61,8 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_from_email_address_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_from_email_address_column
-#, fuzzy
-#| msgid "From Email Address"
 msgid "\"From Email Address\" column"
-msgstr "Correo electrónico del remitente"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_gross_column
@@ -85,10 +73,8 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_invoice_id_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_invoice_id_column
-#, fuzzy
-#| msgid "Invoice ID"
 msgid "\"Invoice ID\" column"
-msgstr "Número de factura"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_name_column
@@ -123,18 +109,14 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_to_email_address_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_to_email_address_column
-#, fuzzy
-#| msgid "From Email Address"
 msgid "\"To Email Address\" column"
 msgstr "Correo electrónico del remitente"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_transaction_id_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_transaction_id_column
-#, fuzzy
-#| msgid "Transaction ID"
 msgid "\"Transaction ID\" column"
-msgstr "Id. de transacción"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_type_column
@@ -150,24 +132,18 @@ msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import_paypal_mapping
-#, fuzzy
-#| msgid "account.bank.statement.import.paypal.map.line"
 msgid "Account Bank Statement Import PayPal Mapping"
-msgstr "account.bank.statement.import.paypal.map.line"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import_paypal_mapping_wizard
-#, fuzzy
-#| msgid "account.bank.statement.import.paypal.map.line"
 msgid "Account Bank Statement Import PayPal Mapping Wizard"
-msgstr "account.bank.statement.import.paypal.map.line"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import_paypal_parser
-#, fuzzy
-#| msgid "account.bank.statement.import.paypal.map"
 msgid "Account Bank Statement Import PayPal Parser"
-msgstr "account.bank.statement.import.paypal.map"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_wizard_form
@@ -223,10 +199,8 @@ msgstr "Nombre de archivo"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_header
-#, fuzzy
-#| msgid "Header Name"
 msgid "Header"
-msgstr "Nombre de la cabecera"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_id
@@ -247,24 +221,18 @@ msgstr "Importar Extracto Bancario"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.actions.act_window,name:account_bank_statement_import_paypal.action_account_bank_statement_import_paypal_mapping_wizard
-#, fuzzy
-#| msgid "Import Paypal Map Lines"
 msgid "Import Mapping"
-msgstr "Importar las lineas de la plantilla de Paypal"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:162
-#, fuzzy, python-format
-#| msgid "Import Paypal Map Lines"
 msgid "Imported Mapping"
-msgstr "Importar las lineas de la plantilla de Paypal"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
-#, fuzzy, python-format
-#| msgid "Invoice ID"
 msgid "Invoice %s"
-msgstr "Número de factura"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping___last_update
@@ -289,10 +257,8 @@ msgstr "Última actualización en"
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:130
-#, fuzzy, python-format
-#| msgid "Mapping Lines"
 msgid "Mapping from %s"
-msgstr "Líneas de la plantilla"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_name
@@ -301,32 +267,24 @@ msgstr "Nombre"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard_data_file
-#, fuzzy
-#| msgid "PayPal Import %s > %s"
 msgid "PayPal Report File"
-msgstr "Importación de Paypal %s > %s"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.actions.act_window,name:account_bank_statement_import_paypal.action_statement_import_paypal_report_mappings
 #: model:ir.ui.menu,name:account_bank_statement_import_paypal.menu_statement_import_paypal_mapping
-#, fuzzy
-#| msgid "Paypal Mapping"
 msgid "PayPal Report Mappings"
-msgstr "Plantilla de Paypal"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_view
-#, fuzzy
-#| msgid "Paypal Mapping"
 msgid "PayPal Report mapping:"
-msgstr "Plantilla de Paypal"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_id_3961
-#, fuzzy
-#| msgid "Paypal Mapping"
 msgid "PayPal mapping"
-msgstr "Plantilla de Paypal"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_wizard_form
@@ -340,17 +298,13 @@ msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_time_format
-#, fuzzy
-#| msgid "Date Format"
 msgid "Time Format"
-msgstr "Formato de fecha"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
-#, fuzzy, python-format
-#| msgid "Transaction ID"
 msgid "Transaction fee for %s"
-msgstr "Id. de transacción"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: selection:account.bank.statement.import.paypal.mapping,float_decimal_sep:0
@@ -369,114 +323,3 @@ msgstr ""
 #: selection:account.bank.statement.import.paypal.mapping,float_thousands_sep:0
 msgid "none"
 msgstr ""
-
-#~ msgid "All the Paypal map lines will be created automatically."
-#~ msgstr "Todas las lineas de la plantilla se crearán automáticamente."
-
-#~ msgid "Bank Statement File"
-#~ msgstr "Archivo de extracto bancario"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Create Lines"
-#~ msgstr "Crear líneas"
-
-#~ msgid "Create Paypal Map Lines"
-#~ msgstr "Crear las líneas de la plantilla de Paypal"
-
-#~ msgid "Date"
-#~ msgstr "Fecha"
-
-#~ msgid "Date format of map file and Paypal date does not match."
-#~ msgstr ""
-#~ "El format de fecha del archivo de plantilla y la fecha de Paypal no "
-#~ "coinciden."
-
-#~ msgid "Download a bank statement from your bank and import it here."
-#~ msgstr "Descargue un extracto bancario desde su banco e impórtelo aquí."
-
-#~ msgid "Fee"
-#~ msgstr "Tarifa"
-
-#~ msgid "Field number"
-#~ msgstr "Nº de campo"
-
-#~ msgid "Gross"
-#~ msgstr "Bruto"
-
-#~ msgid "Headers of file to import and Paypal map lines does not match."
-#~ msgstr ""
-#~ "La cabecera del archivo a importar y las lineas de la plantilla de Paypal "
-#~ "no coinciden."
-
-#~ msgid "Journal"
-#~ msgstr "Diario"
-
-#~ msgid "Map Parent"
-#~ msgstr "Plantilla padre"
-
-#~ msgid "Map lines"
-#~ msgstr "Líneas de la plantilla"
-
-#~ msgid "Origin Transaction ID"
-#~ msgstr "Id. de transacción"
-
-#~ msgid "PAYPAL-COSTS"
-#~ msgstr "COSTES-PAYPAL"
-
-#~ msgid "Paypal Map"
-#~ msgstr "Plantilla de Paypal"
-
-#~ msgid "Paypal commissions"
-#~ msgstr "Tarifa de Paypal"
-
-#~ msgid "Paypal map"
-#~ msgstr "Plantilla de Paypal"
-
-#~ msgid "Paypal mapping line"
-#~ msgstr "Línea de plantilla de Paypal"
-
-#~ msgid "Paypal mapping lines"
-#~ msgstr "Líneas de plantilla de Paypal"
-
-#~ msgid "Paypal with Template:"
-#~ msgstr "Paypal con la plantilla:"
-
-#~ msgid ""
-#~ "Select a Paypal bank statement file to create all the map lines from "
-#~ "headers file."
-#~ msgstr ""
-#~ "Seleccione un archivo de extracto bancario de Paypal para crear todas las "
-#~ "lineas de la plantilla a partir de la cabecera del archivo."
-
-#~ msgid "Statement Field to Assign"
-#~ msgstr "Campo del extracto a asignar"
-
-#~ msgid "Time"
-#~ msgstr "Hora"
-
-#~ msgid ""
-#~ "Value '%s' for the field '%s' on line %d, cannot be converted to float"
-#~ msgstr ""
-#~ "El valor '%s' del campo '%s' en la línea %d, no se puede convertir a float"
-
-#~ msgid "You must run this wizard from the journal"
-#~ msgstr "Debe ejecutar este asistente des del diario"
-
-#~ msgid "currency %s on line %d cannot be found in odoo"
-#~ msgstr "la monea %s de la línea %d no se puede encontrar en odoo"
-
-#~ msgid "i.e. 12/15/2019"
-#~ msgstr "p.e. 12/15/2019"
-
-#, fuzzy
-#~| msgid "i.e. 15/12/2019"
-#~ msgid "i.e. 15.12.2019"
-#~ msgstr "p.e. 15/12/2019"
-
-#~ msgid "i.e. 15/12/2019"
-#~ msgstr "p.e. 15/12/2019"
-
-#~ msgid "wizard.paypal.map.create"
-#~ msgstr "wizard.paypal.map.create"
