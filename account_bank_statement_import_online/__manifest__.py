@@ -9,6 +9,7 @@
         'Brainbean Apps, '
         'Dataplug, '
         'Odoo Community Association (OCA)',
+    'maintainers': ['alexey-pelykh'],
     'website': 'https://github.com/OCA/bank-statement-import/',
     'license': 'AGPL-3',
     'category': 'Accounting',
