@@ -5,6 +5,7 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta, MO
 from decimal import Decimal
+from html import escape
 import logging
 from pytz import timezone, utc
 from sys import exc_info
@@ -182,7 +183,6 @@ class OnlineBankStatementProvider(models.Model):
                         statement_date_until
                     )
                 except:
-                    e = exc_info()[1]
                     if is_scheduled:
                         _logger.warning(
                             'Online Bank Statement Provider "%s" failed to'
@@ -195,16 +195,16 @@ class OnlineBankStatementProvider(models.Model):
                         )
                         provider.message_post(
                             body=_(
-                                'Online Bank Statement Provider "%s" failed to'
-                                ' obtain statement data since %s until %s:\n%s'
+                                'Failed to obtain statement data for period '
+                                'since %s until %s: %s. See server logs for '
+                                'more details.'
                             ) % (
-                                provider.name,
                                 statement_date_since,
                                 statement_date_until,
-                                str(e) if e else _('N/A'),
+                                escape(str(exc_info()[1])) or _('N/A')
                             ),
                             subject=_(
-                                'Online Bank Statement Provider failure'
+                                'Issue with Online Bank Statement Provider'
                             ),
                         )
                         break
