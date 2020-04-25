@@ -8,13 +8,12 @@ from random import randrange
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class OnlineBankStatementProviderDummy(models.Model):
     _inherit = "online.bank.statement.provider"
 
-    @api.multi
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "dummy":

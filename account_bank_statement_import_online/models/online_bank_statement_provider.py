@@ -10,7 +10,7 @@ from html import escape
 from dateutil.relativedelta import MO, relativedelta
 from pytz import timezone, utc
 
-from odoo import _, api, fields, models
+from odoo import SUPERUSER_ID, _, api, fields, models
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.addons.base.models.res_partner import _tz_get
@@ -115,7 +115,6 @@ class OnlineBankStatementProvider(models.Model):
     def values_service(self):
         return self._get_available_services()
 
-    @api.multi
     @api.depends("service")
     def _compute_name(self):
         for provider in self:
@@ -123,7 +122,6 @@ class OnlineBankStatementProvider(models.Model):
                 filter(lambda x: x[0] == provider.service, self._selection_service())
             )[0][1]
 
-    @api.multi
     @api.depends("active", "interval_type", "interval_number")
     def _compute_update_schedule(self):
         for provider in self:
@@ -141,8 +139,7 @@ class OnlineBankStatementProvider(models.Model):
                 )[0][1],
             }
 
-    @api.multi  # noqa: C901
-    def _pull(self, date_since, date_until):
+    def _pull(self, date_since, date_until):  # noqa: C901
         AccountBankStatement = self.env["account.bank.statement"]
         is_scheduled = self.env.context.get("scheduled")
         if is_scheduled:
@@ -255,7 +252,7 @@ class OnlineBankStatementProvider(models.Model):
                             unique_import_id
                         )
                         line_values.update({"unique_import_id": unique_import_id})
-                        if AccountBankStatementLine.sudo().search(
+                        if AccountBankStatementLine.with_user(SUPERUSER_ID).search(
                             [("unique_import_id", "=", unique_import_id)], limit=1
                         ):
                             continue
@@ -289,13 +286,11 @@ class OnlineBankStatementProvider(models.Model):
             if is_scheduled:
                 provider._schedule_next_run()
 
-    @api.multi
     def _schedule_next_run(self):
         self.ensure_one()
         self.last_successful_run = self.next_run
         self.next_run += self._get_next_run_period()
 
-    @api.multi
     def _get_statement_date_since(self, date):
         self.ensure_one()
         date = date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -306,7 +301,6 @@ class OnlineBankStatementProvider(models.Model):
         elif self.statement_creation_mode == "monthly":
             return date.replace(day=1)
 
-    @api.multi
     def _get_statement_date_step(self):
         self.ensure_one()
         if self.statement_creation_mode == "daily":
@@ -320,7 +314,6 @@ class OnlineBankStatementProvider(models.Model):
                 months=1, day=1, hour=0, minute=0, second=0, microsecond=0,
             )
 
-    @api.multi
     def _get_statement_date(self, date_since, date_until):
         self.ensure_one()
         # NOTE: Statement date is treated by Odoo as start of period. Details
@@ -330,7 +323,6 @@ class OnlineBankStatementProvider(models.Model):
         date_since = date_since.replace(tzinfo=utc).astimezone(tz)
         return date_since.date()
 
-    @api.multi
     def _generate_unique_import_id(self, unique_import_id):
         self.ensure_one()
         return (
@@ -340,13 +332,11 @@ class OnlineBankStatementProvider(models.Model):
             + unique_import_id
         )
 
-    @api.multi
     def _sanitize_bank_account_number(self, bank_account_number):
         """Hook for extension"""
         self.ensure_one()
         return sanitize_account_number(bank_account_number)
 
-    @api.multi
     def _get_next_run_period(self):
         self.ensure_one()
         if self.interval_type == "minutes":
@@ -381,7 +371,6 @@ class OnlineBankStatementProvider(models.Model):
 
         _logger.info("Scheduled pull of online bank statements complete.")
 
-    @api.multi
     def _obtain_statement_data(self, date_since, date_until):
         """Hook for extension"""
         # Check tests/online_bank_statement_provider_dummy.py for reference
