@@ -101,14 +101,11 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account_bank_statement_import.journal_dashboard_view_inherit"/>
         <field name="arch" type="xml">
-            <div name="bank_statement_create_button" position="attributes">
-                <attribute name="t-if">dashboard.bank_statements_source != 'online_sync' and dashboard.bank_statements_source != 'online'</attribute>
-            </div>
-            <xpath expr="//a[@name='create_bank_statement']" position="attributes">
-                <attribute name="t-if">dashboard.bank_statements_source != 'online_sync' and dashboard.bank_statements_source != 'online'</attribute>
+            <xpath expr="//div[@name='bank_cash_commands']//a[@name='create_bank_statement']" position="attributes">
+                <attribute name="t-if">dashboard.bank_statements_source == 'file_import'</attribute>
             </xpath>
-            <xpath expr="//a[@name='import_statement']" position="attributes">
-                <attribute name="t-if">dashboard.bank_statements_source != 'online_sync' and dashboard.bank_statements_source != 'online'</attribute>
+            <xpath expr="//div[@name='bank_cash_commands']/..//a[@name='import_statement']" position="attributes">
+                <attribute name="t-if">dashboard.bank_statements_source == 'file_import'</attribute>
             </xpath>
         </field>
     </record>

@@ -33,7 +33,7 @@ class OnlineBankStatementPullWizard(models.TransientModel):
         self.with_context(
             active_test=False,
         ).provider_ids._pull(
-            self.date_since,
-            self.date_until
+            fields.Datetime.from_string(self.date_since),
+            fields.Datetime.from_string(self.date_until)
         )
         return {'type': 'ir.actions.act_window_close'}

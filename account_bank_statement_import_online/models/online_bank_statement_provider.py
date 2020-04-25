@@ -11,8 +11,8 @@ from pytz import timezone, utc
 from sys import exc_info
 
 from odoo import models, fields, api, _
-from odoo.addons.base.models.res_bank import sanitize_account_number
-from odoo.addons.base.models.res_partner import _tz_get
+from odoo.addons.base.res.res_bank import sanitize_account_number
+from odoo.addons.base.res.res_partner import _tz_get
 
 _logger = logging.getLogger(__name__)
 
@@ -24,6 +24,7 @@ class OnlineBankStatementProvider(models.Model):
 
     company_id = fields.Many2one(
         related='journal_id.company_id',
+        readonly=True,
         store=True,
     )
     active = fields.Boolean()
@@ -43,9 +44,11 @@ class OnlineBankStatementProvider(models.Model):
     )
     currency_id = fields.Many2one(
         related='journal_id.currency_id',
+        readonly=True,
     )
     account_number = fields.Char(
-        related='journal_id.bank_account_id.sanitized_acc_number'
+        related='journal_id.bank_account_id.sanitized_acc_number',
+        readonly=True,
     )
     tz = fields.Selection(
         selection=_tz_get,
@@ -220,15 +223,17 @@ class OnlineBankStatementProvider(models.Model):
                 statement = AccountBankStatement.search([
                     ('journal_id', '=', provider.journal_id.id),
                     ('state', '=', 'open'),
-                    ('date', '=', statement_date),
+                    ('date', '=', fields.Date.to_string(statement_date)),
                 ], limit=1)
                 if not statement:
                     statement_values.update({
                         'name': provider.journal_id.sequence_id.with_context(
-                            ir_sequence_date=statement_date,
+                            ir_sequence_date=fields.Date.to_string(
+                                statement_date
+                            ),
                         ).next_by_id(),
                         'journal_id': provider.journal_id.id,
-                        'date': statement_date,
+                        'date': fields.Date.to_string(statement_date),
                     })
                     statement = AccountBankStatement.with_context(
                         journal_id=provider.journal_id.id,
@@ -269,7 +274,7 @@ class OnlineBankStatementProvider(models.Model):
 
                     date = date.replace(tzinfo=utc)
                     date = date.astimezone(provider_tz).replace(tzinfo=None)
-                    line_values['date'] = date
+                    line_values['date'] = fields.Datetime.to_string(date)
 
                     unique_import_id = line_values.get('unique_import_id')
                     if unique_import_id:
@@ -315,7 +320,8 @@ class OnlineBankStatementProvider(models.Model):
     def _schedule_next_run(self):
         self.ensure_one()
         self.last_successful_run = self.next_run
-        self.next_run += self._get_next_run_period()
+        self.next_run = fields.Datetime.from_string(self.next_run) \
+            + self._get_next_run_period()
 
     @api.multi
     def _get_statement_date_since(self, date):
@@ -413,12 +419,13 @@ class OnlineBankStatementProvider(models.Model):
                 providers.mapped('journal_id.name')
             ))
             for provider in providers.with_context({'scheduled': True}):
-                date_since = (
+                next_run = fields.Datetime.from_string(provider.next_run)
+                date_since = fields.Datetime.from_string(
                     provider.last_successful_run
                 ) if provider.last_successful_run else (
-                    provider.next_run - provider._get_next_run_period()
+                    next_run - provider._get_next_run_period()
                 )
-                date_until = provider.next_run
+                date_until = next_run
                 provider._pull(date_since, date_until)
 
         _logger.info('Scheduled pull of online bank statements complete.')

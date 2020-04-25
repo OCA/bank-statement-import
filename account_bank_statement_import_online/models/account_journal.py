@@ -12,6 +12,9 @@ _logger = logging.getLogger(__name__)
 class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
+    bank_statements_source = fields.Selection(
+        selection_add=[('online', 'Online (OCA)')],
+    )
     online_bank_statement_provider = fields.Selection(
         selection=lambda self: self.env[
             'account.journal'
@@ -23,11 +26,6 @@ class AccountJournal(models.Model):
         ondelete='restrict',
         copy=False,
     )
-
-    def __get_bank_statements_available_sources(self):
-        result = super().__get_bank_statements_available_sources()
-        result.append(('online', _('Online (OCA)')))
-        return result
 
     @api.model
     def _selection_online_bank_statement_provider(self):
@@ -70,7 +68,7 @@ class AccountJournal(models.Model):
 
     @api.model
     def create(self, vals):
-        rec = super().create(vals)
+        rec = super(AccountJournal, self).create(vals)
         if 'bank_statements_source' in vals \
                 or 'online_bank_statement_provider' in vals:
             rec._update_online_bank_statement_provider_id()
@@ -78,7 +76,7 @@ class AccountJournal(models.Model):
 
     @api.multi
     def write(self, vals):
-        res = super().write(vals)
+        res = super(AccountJournal, self).write(vals)
         if 'bank_statements_source' in vals \
                 or 'online_bank_statement_provider' in vals:
             self._update_online_bank_statement_provider_id()

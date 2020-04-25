@@ -2,7 +2,7 @@
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import date, datetime
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from psycopg2 import IntegrityError
 from urllib.error import HTTPError
@@ -15,9 +15,9 @@ from odoo import fields
 class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
     def setUp(self):
-        super().setUp()
+        super(TestAccountBankAccountStatementImportOnline, self).setUp()
 
-        self.now = fields.Datetime.now()
+        self.now = fields.Datetime.from_string(fields.Datetime.now())
         self.AccountJournal = self.env['account.journal']
         self.OnlineBankStatementProvider = self.env[
             'online.bank.statement.provider'
@@ -34,10 +34,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             'type': 'bank',
             'code': 'BANK',
         })
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = 'online'
-            journal_form.online_bank_statement_provider = 'dummy'
-        journal_form.save()
+        journal.bank_statements_source = 'online'
+        journal.online_bank_statement_provider = 'dummy'
 
         with self.assertRaises(IntegrityError), mute_logger('odoo.sql_db'):
             journal.online_bank_statement_provider_id.unlink()
@@ -48,10 +46,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             'type': 'bank',
             'code': 'BANK',
         })
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = 'online'
-            journal_form.online_bank_statement_provider = 'dummy'
-        journal_form.save()
+        journal.bank_statements_source = 'online'
+        journal.online_bank_statement_provider = 'dummy'
 
         self.assertTrue(journal.online_bank_statement_provider_id)
         journal.unlink()
@@ -63,16 +59,12 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             'type': 'bank',
             'code': 'BANK',
         })
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = 'online'
-            journal_form.online_bank_statement_provider = 'dummy'
-        journal_form.save()
+        journal.bank_statements_source = 'online'
+        journal.online_bank_statement_provider = 'dummy'
 
         self.assertTrue(journal.online_bank_statement_provider_id)
 
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = 'undefined'
-        journal_form.save()
+        journal.bank_statements_source = 'undefined'
 
         self.assertFalse(journal.online_bank_statement_provider_id)
         self.assertFalse(self.OnlineBankStatementProvider.search([]))
@@ -512,10 +504,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         lines = statement.mapped('line_ids').sorted()
         self.assertEqual(len(lines), 4)
-        self.assertEqual(lines[0].date, date(2020, 4, 17))
-        self.assertEqual(lines[1].date, date(2020, 4, 17))
-        self.assertEqual(lines[2].date, date(2020, 4, 18))
-        self.assertEqual(lines[3].date, date(2020, 4, 18))
+        self.assertEqual(lines[0].date, '2020-04-17')
+        self.assertEqual(lines[1].date, '2020-04-17')
+        self.assertEqual(lines[2].date, '2020-04-18')
+        self.assertEqual(lines[3].date, '2020-04-18')
 
     def test_tz_non_utc(self):
         journal = self.AccountJournal.create({
@@ -544,10 +536,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         lines = statement.mapped('line_ids').sorted()
         self.assertEqual(len(lines), 4)
-        self.assertEqual(lines[0].date, date(2020, 4, 18))
-        self.assertEqual(lines[1].date, date(2020, 4, 18))
-        self.assertEqual(lines[2].date, date(2020, 4, 18))
-        self.assertEqual(lines[3].date, date(2020, 4, 18))
+        self.assertEqual(lines[0].date, '2020-04-18')
+        self.assertEqual(lines[1].date, '2020-04-18')
+        self.assertEqual(lines[2].date, '2020-04-18')
+        self.assertEqual(lines[3].date, '2020-04-18')
 
     def test_other_tz_to_utc(self):
         journal = self.AccountJournal.create({
@@ -577,10 +569,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         lines = statement.mapped('line_ids').sorted()
         self.assertEqual(len(lines), 4)
-        self.assertEqual(lines[0].date, date(2020, 4, 17))
-        self.assertEqual(lines[1].date, date(2020, 4, 17))
-        self.assertEqual(lines[2].date, date(2020, 4, 18))
-        self.assertEqual(lines[3].date, date(2020, 4, 18))
+        self.assertEqual(lines[0].date, '2020-04-17')
+        self.assertEqual(lines[1].date, '2020-04-17')
+        self.assertEqual(lines[2].date, '2020-04-18')
+        self.assertEqual(lines[3].date, '2020-04-18')
 
     def test_timestamp_date_only(self):
         journal = self.AccountJournal.create({
@@ -608,10 +600,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         lines = statement.line_ids
         self.assertEqual(len(lines), 4)
-        self.assertEqual(lines[0].date, date(2020, 4, 18))
-        self.assertEqual(lines[1].date, date(2020, 4, 18))
-        self.assertEqual(lines[2].date, date(2020, 4, 18))
-        self.assertEqual(lines[3].date, date(2020, 4, 18))
+        self.assertEqual(lines[0].date, '2020-04-18')
+        self.assertEqual(lines[1].date, '2020-04-18')
+        self.assertEqual(lines[2].date, '2020-04-18')
+        self.assertEqual(lines[3].date, '2020-04-18')
 
     def test_timestamp_date_only(self):
         journal = self.AccountJournal.create({
@@ -639,7 +631,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         lines = statement.line_ids
         self.assertEqual(len(lines), 4)
-        self.assertEqual(lines[0].date, date(2020, 4, 18))
-        self.assertEqual(lines[1].date, date(2020, 4, 18))
-        self.assertEqual(lines[2].date, date(2020, 4, 18))
-        self.assertEqual(lines[3].date, date(2020, 4, 18))
+        self.assertEqual(lines[0].date, '2020-04-18')
+        self.assertEqual(lines[1].date, '2020-04-18')
+        self.assertEqual(lines[2].date, '2020-04-18')
+        self.assertEqual(lines[3].date, '2020-04-18')
