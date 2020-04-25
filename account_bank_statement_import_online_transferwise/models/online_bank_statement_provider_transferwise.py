@@ -46,15 +46,16 @@ class OnlineBankStatementProviderTransferwise(models.Model):
 
     @api.model
     def _get_available_services(self):
-        return super()._get_available_services() + [
-            ('transferwise', 'TransferWise.com'),
-        ]
+        return super(OnlineBankStatementProviderTransferwise, self) \
+            ._get_available_services() + [('transferwise', 'TransferWise.com')]
 
     @api.multi
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != 'transferwise':
-            return super()._obtain_statement_data(
+            return super(
+                OnlineBankStatementProviderTransferwise, self
+            )._obtain_statement_data(
                 date_since,
                 date_until,
             )  # pragma: no cover

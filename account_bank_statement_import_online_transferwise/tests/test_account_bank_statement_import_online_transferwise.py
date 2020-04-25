@@ -24,9 +24,11 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
 ):
 
     def setUp(self):
-        super().setUp()
+        super(
+            TestAccountBankAccountStatementImportOnlineTransferwise, self
+        ).setUp()
 
-        self.now = fields.Datetime.now()
+        self.now = fields.Datetime.from_string(fields.Datetime.now())
         self.currency_eur = self.env.ref('base.EUR')
         self.currency_usd = self.env.ref('base.USD')
         self.AccountJournal = self.env['account.journal']
