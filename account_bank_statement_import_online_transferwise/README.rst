@@ -104,6 +104,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
+.. |maintainer-alexey-pelykh| image:: https://github.com/alexey-pelykh.png?size=40px
+    :target: https://github.com/alexey-pelykh
+    :alt: alexey-pelykh
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-alexey-pelykh| 
+
 This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/12.0/account_bank_statement_import_online_transferwise>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
