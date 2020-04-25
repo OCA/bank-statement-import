@@ -42,7 +42,6 @@ class AccountJournal(models.Model):
             res += [("dummy", "Dummy")]
         return res
 
-    @api.multi
     def _update_online_bank_statement_provider_id(self):
         OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
         for journal in self.filtered("id"):
@@ -72,14 +71,12 @@ class AccountJournal(models.Model):
             rec._update_online_bank_statement_provider_id()
         return rec
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         if "bank_statements_source" in vals or "online_bank_statement_provider" in vals:
             self._update_online_bank_statement_provider_id()
         return res
 
-    @api.multi
     def action_online_bank_statements_pull_wizard(self):
         provider_ids = self.mapped("online_bank_statement_provider_id").ids
         return {

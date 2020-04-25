@@ -2,7 +2,7 @@
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class OnlineBankStatementPullWizard(models.TransientModel):
@@ -23,7 +23,6 @@ class OnlineBankStatementPullWizard(models.TransientModel):
         relation="online_bank_statement_provider_pull_wizard_rel",
     )
 
-    @api.multi
     def action_pull(self):
         self.ensure_one()
         self.with_context(active_test=False,).provider_ids._pull(
