@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-11 10:43+0000\n"
-"PO-Revision-Date: 2019-07-23 01:43+0000\n"
-"Last-Translator: Josep M <jmyepes@mac.com>\n"
+"PO-Revision-Date: 2020-05-07 15:19+0000\n"
+"Last-Translator: oihane <oihanecruce@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__balance_column
@@ -159,7 +159,7 @@ msgstr "Escoja un archivo a importar..."
 #. module: account_bank_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_tree
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__create_uid
@@ -183,7 +183,7 @@ msgstr "Formato de fecha"
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__float_decimal_sep
 msgid "Decimals Separator"
-msgstr ""
+msgstr "Separador de decimales"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__display_name
@@ -196,7 +196,7 @@ msgstr "Nombre mostrado"
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:253
 #, python-format
 msgid "Fee for %s"
-msgstr ""
+msgstr "Tasa para %s"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__filename
@@ -206,7 +206,7 @@ msgstr "Nombre de archivo"
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__header
 msgid "Header"
-msgstr ""
+msgstr "Cabecera"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__id
@@ -218,7 +218,7 @@ msgstr "ID"
 #. module: account_bank_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_wizard_form
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_account_bank_statement_import
@@ -240,7 +240,7 @@ msgstr ""
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
 #, python-format
 msgid "Invoice %s"
-msgstr ""
+msgstr "Factura %s"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model,name:account_bank_statement_import_paypal.model_account_journal
@@ -272,7 +272,7 @@ msgstr "Última actualización en"
 #: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:130
 #, python-format
 msgid "Mapping from %s"
-msgstr ""
+msgstr "Mapeo para %s"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__name
@@ -313,7 +313,7 @@ msgstr ""
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__float_thousands_sep
 msgid "Thousands Separator"
-msgstr ""
+msgstr "Separador de millares"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__time_format
@@ -324,7 +324,7 @@ msgstr ""
 #: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
 #, python-format
 msgid "Transaction fee for %s"
-msgstr ""
+msgstr "Tasa de transacción para %s"
 
 #. module: account_bank_statement_import_paypal
 #: selection:account.bank.statement.import.paypal.mapping,float_decimal_sep:0
