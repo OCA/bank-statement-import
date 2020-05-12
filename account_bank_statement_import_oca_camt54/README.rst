@@ -32,6 +32,9 @@ Customer invoices will be reconciled/Paid. Payment entries will be posted into a
 After this first step, import normally your CAMT.053 (full bank statement) into the bank journal. You will be able to clear the internal transfer account to end up the accounting flow.
 
 
+Switzerland localisation
+------------------------
+
 For ISR containing a partner reference, uses the config parameter key `isr_partner_ref`.
 Doing so will fill the partners on bank statement lines and speed up the matches in the reconciliation process.
 
