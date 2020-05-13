@@ -1,5 +1,7 @@
-# coding: utf-8
-from openerp import api, models
+# © 2017 Opener BV (<https://opener.amsterdam>)
+# © 2020 Vanmoof BV (<https://www.vanmoof.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo import api, models
 
 
 class BankStatement(models.Model):
@@ -7,25 +9,26 @@ class BankStatement(models.Model):
 
     @api.multi
     def get_reconcile_clearing_account_lines(self):
+        """ If this statement qualifies for clearing account reconciliation,
+        return the relevant lines to (un)reconcile. This is the case if the
+        default journal account is reconcilable, each statement line has a
+        counterpart line on this account for the full amount and the sum of
+        the counterpart lines is zero.
+        """
+        self.ensure_one()
         if (self.journal_id.default_debit_account_id !=
                 self.journal_id.default_credit_account_id or
                 not self.journal_id.default_debit_account_id.reconcile):
             return False
         account = self.journal_id.default_debit_account_id
-        currency = self.journal_id.currency or self.company_id.currency_id
+        currency = self.journal_id.currency_id or self.company_id.currency_id
 
         def get_bank_line(st_line):
-            for line in st_line.journal_entry_id.line_id:
-                if st_line.amount > 0:
-                    compare_amount = st_line.amount
-                    field = 'debit'
-                else:
-                    compare_amount = -st_line.amount
-                    field = 'credit'
-                if (line[field] and
-                        not currency.compare_amounts(
-                            line[field], compare_amount) and
-                        line.account_id == account):
+            for line in st_line.journal_entry_ids:
+                field = 'debit' if st_line.amount > 0 else 'credit'
+                if (line.account_id == account and
+                    not currency.compare_amounts(
+                        line[field], abs(st_line.amount))):
                     return line
             return False
 
@@ -42,31 +45,35 @@ class BankStatement(models.Model):
 
     @api.multi
     def reconcile_clearing_account(self):
+        """ If applicable, reconcile the clearing account lines in case
+        all lines are still unreconciled. """
         self.ensure_one()
         lines = self.get_reconcile_clearing_account_lines()
-        if not lines:
+        if not lines or any(
+                li.matched_debit_ids or li.matched_credit_ids
+                for li in lines):
             return False
-        if any(line.reconcile_id or line.reconcile_partial_id
-               for line in lines):
-            return False
-        lines.reconcile_partial()
+        lines.reconcile()
+        return True
 
     @api.multi
     def unreconcile_clearing_account(self):
+        """ If applicable, unreconcile the clearing account lines
+        if still fully reconciled with each other. """
         self.ensure_one()
         lines = self.get_reconcile_clearing_account_lines()
         if not lines:
             return False
-        reconciliation = lines[0].reconcile_id
-        if reconciliation and all(
-                line.reconcile_id == reconciliation
-                for line in lines) and all(
-                    line in lines
-                    for line in reconciliation.line_id):
-            reconciliation.unlink()
+        reconciliation = lines[0].full_reconcile_id
+        if reconciliation and lines == reconciliation.reconciled_line_ids:
+            lines.remove_move_reconcile()
+            return True
+        return False
 
     @api.multi
     def button_draft(self):
+        """ When setting the statement back to draft, unreconcile the
+        reconciliation on the clearing account """
         res = super(BankStatement, self).button_draft()
         for statement in self:
             statement.unreconcile_clearing_account()
@@ -74,6 +81,8 @@ class BankStatement(models.Model):
 
     @api.multi
     def button_confirm_bank(self):
+        """ When confirming the statement, trigger the reconciliation of
+        the lines on the clearing account (if applicable) """
         res = super(BankStatement, self).button_confirm_bank()
         for statement in self:
             statement.reconcile_clearing_account()
