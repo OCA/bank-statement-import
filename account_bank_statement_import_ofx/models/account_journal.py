@@ -8,5 +8,5 @@ class AccountJournal(models.Model):
         """ Adds ofx to supported import formats.
         """
         rslt = super()._get_bank_statements_available_import_formats()
-        rslt.append('ofx')
+        rslt.append("ofx")
         return rslt
