@@ -5,13 +5,15 @@ from odoo import fields, models
 
 
 class AccountBankStatement(models.Model):
-    _inherit = 'account.bank.statement'
+    _inherit = "account.bank.statement"
 
-    import_file = fields.Many2one(
-        'ir.attachment', 'Import file', readonly=True)
+    import_file = fields.Many2one("ir.attachment", "Import file", readonly=True)
     import_date = fields.Datetime(
-        related='import_file.create_date', string='Imported on')
+        related="import_file.create_date", string="Imported on"
+    )
     import_user = fields.Many2one(
-        related='import_file.create_uid', string='Imported by')
+        related="import_file.create_uid", string="Imported by"
+    )
     import_log = fields.Text(
-        related='import_file.description', string='Import Warnings')
+        related="import_file.description", string="Import Warnings"
+    )
