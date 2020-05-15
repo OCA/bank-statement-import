@@ -3,11 +3,11 @@
 
 {
     'name': 'Save imported bank statements',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'author': 'Odoo Community Association (OCA), Therp BV',
     'license': 'AGPL-3',
     'category': 'Banking addons',
-    'summary': 'Keep imported bank statements as raw data',
+    'summary': 'Attach imported bank statement file to the bank statement',
     'depends': [
         'account_bank_statement_import',
     ],
