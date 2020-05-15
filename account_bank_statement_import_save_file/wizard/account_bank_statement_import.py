@@ -9,31 +9,32 @@ from odoo import api, fields, models
 class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.bank.statement.import"
 
-    current_data_file = fields.Binary(readonly=True)
+    current_attachment_id = fields.Many2one("ir.attachment", readonly=True)
 
     def _parse_file(self, data_file):
         res = super(AccountBankStatementImport, self)._parse_file(data_file)
-        self.write({"current_data_file": base64.b64encode(data_file)})
+        attach_vals = self._prepare_import_file_attachment(data_file)
+        attach = self.env["ir.attachment"].create(attach_vals)
+        self.write({"current_attachment_id": attach.id})
         return res
 
     def _create_bank_statements(self, stmts_vals):
         res = super()._create_bank_statements(stmts_vals)
-        if self.current_data_file and res[0]:
+        attach = self.current_attachment_id
+        if attach and res[0]:
             statement_line = self.env["account.bank.statement.line"].browse(res[0][0])
-            statement = statement_line.statement_id
-            attach_vals = self._prepare_import_file_attachment(
-                self.current_data_file, statement
+            attach.write(
+                {
+                    "res_model": "account.bank.statement",
+                    "res_id": statement_line.statement_id.id,
+                }
             )
-            attach = self.env["ir.attachment"].create(attach_vals)
-            statement.write({"import_file": attach.id})
         return res
 
     @api.model
-    def _prepare_import_file_attachment(self, current_data_file, statement):
+    def _prepare_import_file_attachment(self, data_file):
         filename = "imported_bank_statement_file"
         return {
             "name": filename,
-            "res_model": "account.bank.statement",
-            "res_id": statement.id,
-            "datas": current_data_file,
+            "datas": base64.b64encode(data_file),
         }

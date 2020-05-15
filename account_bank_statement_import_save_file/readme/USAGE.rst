@@ -1,1 +1,1 @@
-On a successful import, the form view of the bank statement will have an additional tab *Imported File* which contains the original file.
+On a successful bank statement file import, the file will be attached to the bank statement.

@@ -9,7 +9,6 @@
     "category": "Banking addons",
     "summary": "Attach imported bank statement file to the bank statement",
     "depends": ["account_bank_statement_import",],
-    "data": ["views/account_bank_statement.xml",],
     "installable": True,
     "application": False,
 }
