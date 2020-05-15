@@ -19,9 +19,7 @@ class AccountBankStatementImport(models.TransientModel):
     _inherit = 'account.bank.statement.import'
 
     def _check_journal_bank_account(self, journal, account_number):
-        res = super(
-            AccountBankStatementImport, self
-        )._check_journal_bank_account(journal, account_number)
+        res = super()._check_journal_bank_account(journal, account_number)
         if not res:
             e_acc_num = journal.bank_account_id.sanitized_acc_number
             e_acc_num = e_acc_num.replace(" ", "")
@@ -70,8 +68,7 @@ class AccountBankStatementImport(models.TransientModel):
     def _parse_file(self, data_file):
         ofx = self._check_ofx(data_file)
         if not ofx:
-            return super(AccountBankStatementImport, self)._parse_file(
-                data_file)
+            return super()._parse_file(data_file)
 
         transactions = []
         total_amt = 0.00

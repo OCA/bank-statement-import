@@ -15,6 +15,7 @@ class TestOfxFile(TransactionCase):
         self.abs_model = self.env['account.bank.statement']
         self.j_model = self.env['account.journal']
         self.absl_model = self.env['account.bank.statement.line']
+        self.ia_model = self.env['ir.attachment']
         cur = self.env.ref('base.USD')
         self.env.ref('base.main_company').currency_id = cur.id
         bank = self.env['res.partner.bank'].create({
@@ -49,8 +50,12 @@ class TestOfxFile(TransactionCase):
             'account_bank_statement_import_ofx',
             'tests/test_ofx_file/', 'test_ofx_wrong.ofx')
         ofx_file_wrong = base64.b64encode(open(ofx_file_path, 'rb').read())
+        attach = self.ia_model.create({
+            'name': 'test_ofx_wrong.ofx',
+            'datas': ofx_file_wrong,
+            })
         bank_statement = self.absi_model.create(
-            dict(data_file=ofx_file_wrong))
+            dict(attachment_ids=[(6, 0, [attach.id])]))
         self.assertFalse(bank_statement._check_ofx(data_file=ofx_file_wrong))
 
     def test_ofx_file_import(self):
@@ -58,8 +63,12 @@ class TestOfxFile(TransactionCase):
             'account_bank_statement_import_ofx',
             'tests/test_ofx_file/', 'test_ofx.ofx')
         ofx_file = base64.b64encode(open(ofx_file_path, 'rb').read())
+        attach = self.ia_model.create({
+            'name': 'test_ofx.ofx',
+            'datas': ofx_file,
+            })
         bank_statement = self.absi_model.create(
-            dict(data_file=ofx_file))
+            dict(attachment_ids=[(6, 0, [attach.id])]))
         bank_statement.import_file()
         bank_st_record = self.abs_model.search(
             [('name', 'like', '123456')])[0]
@@ -77,8 +86,12 @@ class TestOfxFile(TransactionCase):
             'account_bank_statement_import_ofx',
             'tests/test_ofx_file/', 'test_ofx_iban.ofx')
         ofx_file = base64.b64encode(open(ofx_file_path, 'rb').read())
+        attach = self.ia_model.create({
+            'name': 'test_ofx.ofx',
+            'datas': ofx_file,
+            })
         bank_st = self.absi_model.create(
-            dict(data_file=ofx_file))
+            dict(attachment_ids=[(6, 0, [attach.id])]))
         journal_iban_ofx = self.j_model.search([
             ('name', '=', 'FR7630001007941234567890185')])
         res = bank_st._check_journal_bank_account(journal_iban_ofx,
