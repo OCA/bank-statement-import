@@ -30,6 +30,7 @@
         "data/map_data.xml",
         "views/account_bank_statement_import_sheet_mapping.xml",
         "views/account_bank_statement_import.xml",
+        "views/account_journal_views.xml",
         "wizards/account_bank_statement_import_sheet_mapping_wizard.xml",
     ]
 }
