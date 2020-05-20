@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2019 ForgeFlow, S.L.
+    Copyright 2020 Brainbean Apps (https://brainbeanapps.com)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="account_bank_statement_import_sheet_mapping_wizard_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.import.sheet.mapping.wizard.form</field>
+        <field name="model">account.bank.statement.import.sheet.mapping.wizard</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="multi_step_wizard.multi_step_wizard_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//footer" position="before">
+                <h2>Select a statement file to import mapping</h2>
+                <group name="start" attrs="{'invisible': [('state', '!=', 'start')]}">
+                    <group colspan="2">
+                        <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                    <group string="Options" colspan="2">
+                        <field name="file_encoding"/>
+                        <field name="delimiter"/>
+                        <field name="quotechar"/>
+                    </group>
+                </group>
+                <group name="final" attrs="{'invisible': [('state', '!=', 'final')]}">
+                    <group colspan="2">
+                        <field name="header" invisible="1"/>
+                        <field
+                            name="timestamp_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="currency_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="amount_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="balance_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="original_currency_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="original_amount_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="debit_credit_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="transaction_id_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="description_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="notes_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="reference_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="partner_name_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="bank_name_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="bank_account_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                    </group>
+                    <group string="Debit/Credit column" colspan="2" attrs="{'invisible': [('debit_credit_column', '=', False)]}">
+                        <field name="debit_value" attrs="{'required': [('debit_credit_column', '!=', False)]}"/>
+                        <field name="credit_value" attrs="{'required': [('debit_credit_column', '!=', False)]}"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//div[@name='final_buttons']/button" position="attributes">
+                <attribute name="class">btn-default</attribute>
+                <attribute name="string">Cancel</attribute>
+            </xpath>
+            <xpath expr="//div[@name='final_buttons']/button" position="before">
+                <button name="import_mapping" string="Import" type="object" class="btn-primary" />
+            </xpath>
+        </field>
+    </record>
+
+    <act_window
+        id="action_account_bank_statement_import_sheet_mapping_wizard"
+        name="Import Mapping"
+        res_model="account.bank.statement.import.sheet.mapping.wizard"
+        src_model="account.bank.statement.import.sheet.mapping"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+    />
+
+</odoo>

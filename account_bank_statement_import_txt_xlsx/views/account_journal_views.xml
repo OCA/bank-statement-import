@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="account.view_account_journal_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='advanced_settings']/group" position="inside">
-                <group string="Statement Import Txt Map" attrs="{'invisible': [('type','!=','bank')]}">
-                    <field name="statement_import_txt_map_id"/>
+                <group string="Statement Import Map" attrs="{'invisible': [('type','!=','bank')]}">
+                    <field name="default_sheet_mapping_id"/>
                 </group>
             </xpath>
         </field>
