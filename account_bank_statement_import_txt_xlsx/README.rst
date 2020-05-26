@@ -17,7 +17,7 @@ Account Bank Statement Import TXT XLSX
     :target: https://github.com/OCA/bank-statement-import/tree/13.0/account_bank_statement_import_txt_xlsx
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-13.0/bank-statement-import-13.0-account_bank_statement_import_txt_xlsx
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-13-0/bank-statement-import-13-0-account_bank_statement_import_txt_xlsx
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/174/13.0
@@ -36,25 +36,29 @@ statements.
 Configuration
 =============
 
-* Create or go to a bank journal where you want to import the txt statement.
-* Edit that journal and set a Txt map in **Statement Import Map** section in **Advanced
-  Settings** tab.
+To create TXT/CSV/XLSX statement sheet columns mapping:
 
-* Now you can import Text based statements in that journal.
-
-Note: if existent Txt Map does not fit to your file to import, you can
-create another map in **Invoicing > Configuration > Accounting >
-Statement Import Map**.
-
-You can import headers from any Txt file in **Action > Create Map
-Lines** and set every line with which field of statement have to match.
+#. Open *Invoicing > Configuration > Accounting > Statement Sheet Mappings*
+#. Create mapping(s) according to your online banking software statement format
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to your bank online and download your Bank Statement in TXT/CSV or XLSX format.
+#. Get statement in TXT/CSV or XLSX from your online banking software
+#. Go to Odoo and and import the statement file, selecting corresponding format
+
+Changelog
+=========
+
+12.0.2.0.0
+~~~~~~~~~~
+
+* [BREAKING] New mapping, please review mappings after upgrade.
+* [BREAKING] Different bank accounts have to be used per each currency.
+* [ADD] Support for both Statement and Activity reports.
+* [ADD] Separate fee and currency exchange parsing.
 
 Bug Tracker
 ===========
@@ -73,6 +77,7 @@ Authors
 ~~~~~~~
 
 * ForgeFlow
+* Brainbean Apps
 
 Contributors
 ~~~~~~~~~~~~
@@ -84,6 +89,8 @@ Contributors
   * Victor M.M. Torres <victor.martin@tecnativa.com>
 * ForgeFlow (https://www.forgeflow.com)
   * Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+  * Miquel Raïch Regué <miquel.raich@forgeflow.com>
+* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
 
 Maintainers
 ~~~~~~~~~~~
