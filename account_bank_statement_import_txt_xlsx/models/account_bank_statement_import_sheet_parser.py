@@ -26,21 +26,24 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
     _description = 'Account Bank Statement Import Sheet Parser'
 
     @api.model
-    def parse_header(self, data_file, encoding, csv_options):
+    def parse_header(
+        self, data_file, encoding, csv_options,column_names_line=1):
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
                 encoding_override=encoding if encoding else None,
             )
             sheet = workbook.sheet_by_index(0)
-            values = sheet.row_values(0)
+            values = sheet.row_values(column_names_line -1)
             return [str(value) for value in values]
         except xlrd.XLRDError:
             pass
 
         data = StringIO(data_file.decode(encoding or 'utf-8'))
         csv_data = reader(data, **csv_options)
-        return list(next(csv_data))
+        csv_data_lst = list(csv_data)
+        header = [value.strip() for value in csv_data_lst[column_names_line - 1]]
+        return header
 
     @api.model
     def parse(self, mapping, data_file, filename):
@@ -113,11 +116,13 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 StringIO(data_file.decode(mapping.file_encoding or 'utf-8')),
                 **csv_options
             )
-
+        csv_or_xlsx_lst = []
+        # import pdb; pdb.set_trace()
         if isinstance(csv_or_xlsx, tuple):
-            header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
+            header = [str(value) for value in csv_or_xlsx[1].row_values(mapping.column_names_line - 1)]
         else:
-            header = [value.strip() for value in next(csv_or_xlsx)]
+            csv_or_xlsx_lst = list(csv_or_xlsx)
+            header = [value.strip() for value in csv_or_xlsx_lst[mapping.column_names_line - 1]]
         timestamp_column = header.index(mapping.timestamp_column)
         currency_column = header.index(mapping.currency_column) \
             if mapping.currency_column else None
@@ -150,9 +155,10 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             if mapping.bank_account_column else None
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(1, csv_or_xlsx[1].nrows)
+            rows = range(mapping.header_lines_number,
+                    csv_or_xlsx[1].nrows - mapping.footer_lines_number)
         else:
-            rows = csv_or_xlsx
+            rows = csv_or_xlsx_lst[mapping.header_lines_number:-mapping.footer_lines_number]
 
         lines = []
         for row in rows:
@@ -160,7 +166,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
                 values = []
-                for col_index in range(sheet.row_len(row)):
+                for col_index in range(0, sheet.row_len(row)):
                     cell_type = sheet.cell_type(row, col_index)
                     cell_value = sheet.cell_value(row, col_index)
                     if cell_type == xlrd.XL_CELL_DATE:

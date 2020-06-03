@@ -147,6 +147,26 @@ class AccountBankStatementImportSheetMapping(models.Model):
         string='Bank Account column',
         help='Partner\'s bank account',
     )
+    header_lines_number = fields.Integer(
+        string='Header lines number',
+        help='Set the Header lines number.'
+             'Used in some csv file that integrate meta data in'
+             'first lines. This number contain the number of'
+             'the all meta data lines including columns names',
+        default="1",
+    )
+    footer_lines_number = fields.Integer(
+        string='Footer lines number',
+        help='Set the Footer lines number.'
+             'Used in some csv file that integrate meta data in'
+             'last lines.',
+        default="0",
+    )
+    column_names_line = fields.Integer(
+        string='The number of line that contan column names',
+        help='The number of line that contan column names.',
+        default="1",
+    )
 
     @api.onchange('float_thousands_sep')
     def onchange_thousands_separator(self):
