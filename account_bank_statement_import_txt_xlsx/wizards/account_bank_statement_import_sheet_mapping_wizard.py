@@ -20,6 +20,13 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         required=True,
         relation="account_bank_statement_import_sheet_mapping_wiz_attachment_rel",
     )
+    column_names_line = fields.Integer(
+        string='Header line',
+        help='The number of line that contan column names.\n'
+             'Used if csv/xls files contain\n'
+             'meta data in first lines\n ',
+        default="1",
+    )
     header = fields.Char()
     file_encoding = fields.Selection(
         string="Encoding", selection=lambda self: self._selection_file_encoding(),
@@ -36,8 +43,32 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             "transaction from"
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ('simple_value', 'Simple value'),
+            ('absolute_value', 'Absolute value'),
+            ('distinct_credit_debit', 'Distinct Credit/debit Column'),
+        ],
+        string='Amount type',
+        required=True,
+        default="simple_value",
+        help=(
+            'Simple value: use igned amount in ammount comlumn\n'
+            'Absolute Value: use a same comlumn for debit and credit\n'
+            '(absolute value + indicate sign)\n'
+            'Distinct Credit/debit Column: use a distinct comlumn for debit and credit'
+        ),
+    )
     amount_column = fields.Char(
         string="Amount column", help="Amount of transaction in journal's currency",
+    )
+    debit_column = fields.Char(
+        string='Debit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
+    )
+    credit_column = fields.Char(
+        string='Credit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
     )
     balance_column = fields.Char(
         string="Balance column", help="Balance after transaction in journal's currency",
@@ -117,7 +148,7 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         header = []
         for data_file in self.attachment_ids:
             header += Parser.parse_header(
-                b64decode(data_file.datas), self.file_encoding, csv_options
+                b64decode(data_file.datas), self.file_encoding, csv_options, self.column_names_line
             )
         header = list(set(header))
         self.header = json.dumps(header)
@@ -143,6 +174,9 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             "timestamp_format": "%d/%m/%Y",
             "timestamp_column": self.timestamp_column,
             "currency_column": self.currency_column,
+            "amount_type": self.amount_type,
+            "debit_column": self.debit_column,
+            "credit_column": self.credit_column,
             "amount_column": self.amount_column,
             "balance_column": self.balance_column,
             "original_currency_column": self.original_currency_column,

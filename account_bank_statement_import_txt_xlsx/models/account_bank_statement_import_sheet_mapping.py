@@ -86,11 +86,43 @@ class AccountBankStatementImportSheetMapping(models.Model):
             "transaction amount in original transaction currency from"
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ('simple_value', 'Simple value'),
+            ('absolute_value', 'Absolute value'),
+            ('distinct_credit_debit', 'Distinct Credit/debit Column'),
+        ],
+        string='Amount type',
+        required=True,
+        default="simple_value",
+        help=(
+            'Simple value: use igned amount in ammount comlumn\n'
+            'Absolute Value: use a same comlumn for debit and credit\n'
+            '(absolute value + indicate sign)\n'
+            'Distinct Credit/debit Column: use a distinct comlumn for debit and credit'
+        ),
+    )
+    amount_column = fields.Char(
+        string='Amount column',
+        help=(
+            'Used if amount type is "Simple value" or "Absolute value"\n'
+            'Amount of transaction in journal\'s currency\n'
+            'Some statement formats use credit/debit columns'),
+    )
+    debit_column = fields.Char(
+        string='Debit column',
+        help='Used if amount type is "Distinct Credit/debit Column"',
+    )
+    credit_column = fields.Char(
+        string='Credit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
+    )
     debit_credit_column = fields.Char(
         string="Debit/credit column",
         help=(
-            "Some statement formats use absolute amount value and indicate sign"
-            "of the transaction by specifying if it was a debit or a credit one"
+            'Used if amount type is "Absolute value"\n'
+            'Some statement formats use absolute amount value and indicate sign\n'
+            'of the transaction by specifying if it was a debit or a credit one'
         ),
     )
     debit_value = fields.Char(
@@ -111,6 +143,30 @@ class AccountBankStatementImportSheetMapping(models.Model):
     bank_name_column = fields.Char(string="Bank Name column", help="Partner's bank",)
     bank_account_column = fields.Char(
         string="Bank Account column", help="Partner's bank account",
+    )
+    with_metadata = fields.Boolean(
+        string='File wWth Metadata ',
+        help='Check if file containt meta data in first lines',
+    )
+    header_lines_count = fields.Integer(
+        string='Header lines number',
+        help='Set the Header lines number.'
+             'Used in some csv file that integrate meta data in'
+             'first lines. This number contain the number of'
+             'the all meta data lines including columns names',
+        default="1",
+    )
+    footer_lines_count = fields.Integer(
+        string='Footer lines number',
+        help='Set the Footer lines number.'
+             'Used in some csv file that integrate meta data in'
+             'last lines.',
+        default="0",
+    )
+    column_names_line = fields.Integer(
+        string='The number of line that contan column names',
+        help='The number of line that contan column names.',
+        default="1",
     )
 
     @api.onchange("float_thousands_sep")
