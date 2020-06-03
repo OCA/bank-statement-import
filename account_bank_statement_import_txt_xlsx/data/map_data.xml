@@ -8,6 +8,9 @@
 
     <record id="sample_statement_map" model="account.bank.statement.import.sheet.mapping">
         <field name="name">Sample Statement</field>
+        <field name="header_lines_number">1</field>
+        <field name="footer_lines_number">0</field>
+        <field name="column_names_line">1</field>
         <field name="float_thousands_sep">comma</field>
         <field name="float_decimal_sep">dot</field>
         <field name="delimiter">comma</field>

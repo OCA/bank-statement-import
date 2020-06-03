@@ -14,6 +14,13 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
     _description = 'Account Bank Statement Import Sheet Mapping Wizard'
     _inherit = ['multi.step.wizard.mixin']
 
+    column_names_line = fields.Integer(
+        string='Header line',
+        help='The number of line that contan column names.\n'
+             'Used if csv/xls files contain\n'
+             'meta data in first lines\n ',
+        default="1",
+    )
     data_file = fields.Binary(
         string='Bank Statement File',
         required=True,
@@ -134,7 +141,8 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         header = Parser.parse_header(
             b64decode(self.data_file),
             self.file_encoding,
-            csv_options
+            csv_options,
+            self.column_names_line
         )
         self.header = json.dumps(header)
 

@@ -16,6 +16,7 @@
                 <h2>Select a statement file to import mapping</h2>
                 <group name="start" attrs="{'invisible': [('state', '!=', 'start')]}">
                     <group colspan="2">
+                        <field name="column_names_line"/>
                         <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
                         <field name="filename" invisible="1"/>
                     </group>

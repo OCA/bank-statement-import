@@ -27,6 +27,11 @@
                         <h1><field name="name"/></h1>
                     </div>
                     <group>
+                         <group>
+                            <field name="header_lines_number"/>
+                            <field name="footer_lines_number"/>
+                            <field name="column_names_line"/>
+                        </group>
                         <group>
                             <field name="float_thousands_sep"/>
                             <field name="float_decimal_sep"/>
