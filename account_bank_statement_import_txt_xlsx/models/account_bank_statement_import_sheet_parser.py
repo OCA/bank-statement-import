@@ -117,7 +117,6 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 **csv_options
             )
         csv_or_xlsx_lst = []
-        # import pdb; pdb.set_trace()
         if isinstance(csv_or_xlsx, tuple):
             header = [str(value) for value in csv_or_xlsx[1].row_values(mapping.column_names_line - 1)]
         else:
@@ -158,7 +157,12 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             rows = range(mapping.header_lines_number,
                     csv_or_xlsx[1].nrows - mapping.footer_lines_number)
         else:
-            rows = csv_or_xlsx_lst[mapping.header_lines_number:-mapping.footer_lines_number]
+            stat_first_index = mapping.header_lines_number 
+            stat_last_index = - mapping.footer_lines_number
+            if stat_last_index:
+                rows = csv_or_xlsx_lst[stat_first_index:- stat_last_index]
+            else:
+                rows = csv_or_xlsx_lst[stat_first_index:]
 
         lines = []
         for row in rows:
