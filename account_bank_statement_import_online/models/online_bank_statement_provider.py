@@ -214,9 +214,12 @@ class OnlineBankStatementProvider(models.Model):
                     statement_date_until,
                 )
                 if not data:
-                    statement_date_since = statement_date_until
-                    continue
+                    data = ([], {})
                 lines_data, statement_values = data
+                if not lines_data:
+                    lines_data = []
+                if not statement_values:
+                    statement_values = {}
                 statement = AccountBankStatement.search([
                     ('journal_id', '=', provider.journal_id.id),
                     ('state', '=', 'open'),
