@@ -574,7 +574,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[2].date, '2020-04-18')
         self.assertEqual(lines[3].date, '2020-04-18')
 
-    def test_timestamp_date_only(self):
+    def test_timestamp_date_only_date(self):
         journal = self.AccountJournal.create({
             'name': 'Bank',
             'type': 'bank',
@@ -599,13 +599,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(len(statement), 1)
 
         lines = statement.line_ids
-        self.assertEqual(len(lines), 4)
-        self.assertEqual(lines[0].date, '2020-04-18')
-        self.assertEqual(lines[1].date, '2020-04-18')
-        self.assertEqual(lines[2].date, '2020-04-18')
-        self.assertEqual(lines[3].date, '2020-04-18')
+        self.assertEqual(len(lines), 24)
+        for line in lines:
+            self.assertEqual(line.date, '2020-04-18')
 
-    def test_timestamp_date_only(self):
+    def test_timestamp_date_only_str(self):
         journal = self.AccountJournal.create({
             'name': 'Bank',
             'type': 'bank',
