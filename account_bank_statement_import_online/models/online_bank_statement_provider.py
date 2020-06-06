@@ -248,6 +248,8 @@ class OnlineBankStatementProvider(models.Model):
                 for line_values in lines_data:
                     date = line_values['date']
                     if not isinstance(date, datetime):
+                        if not isinstance(date, str):
+                            date = fields.Datetime.to_string(date)
                         date = fields.Datetime.from_string(date)
 
                     if date.tzinfo is None:
