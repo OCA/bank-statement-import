@@ -27,14 +27,14 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
 
     @api.model
     def parse_header(
-        self, data_file, encoding, csv_options,column_names_line=1):
+            self, data_file, encoding, csv_options, column_names_line=1):
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
                 encoding_override=encoding if encoding else None,
             )
             sheet = workbook.sheet_by_index(0)
-            values = sheet.row_values(column_names_line -1)
+            values = sheet.row_values(column_names_line - 1)
             return [str(value) for value in values]
         except xlrd.XLRDError:
             pass
@@ -118,14 +118,23 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             )
         csv_or_xlsx_lst = []
         if isinstance(csv_or_xlsx, tuple):
-            header = [str(value) for value in csv_or_xlsx[1].row_values(mapping.column_names_line - 1)]
+            header = [
+                str(value) for value in
+                csv_or_xlsx[1].row_values(mapping.column_names_line - 1)]
         else:
             csv_or_xlsx_lst = list(csv_or_xlsx)
-            header = [value.strip() for value in csv_or_xlsx_lst[mapping.column_names_line - 1]]
+            header = [
+                value.strip() for value
+                in csv_or_xlsx_lst[mapping.column_names_line - 1]]
         timestamp_column = header.index(mapping.timestamp_column)
         currency_column = header.index(mapping.currency_column) \
             if mapping.currency_column else None
-        amount_column = header.index(mapping.amount_column)
+        amount_column = header.index(mapping.amount_column)\
+            if mapping.amount_column else None
+        debit_column = header.index(mapping.debit_column) \
+            if mapping.debit_column else None
+        credit_column = header.index(mapping.credit_column) \
+            if mapping.credit_column else None
         balance_column = header.index(mapping.balance_column) \
             if mapping.balance_column else None
         original_currency_column = (
@@ -154,13 +163,14 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             if mapping.bank_account_column else None
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(mapping.header_lines_number,
-                    csv_or_xlsx[1].nrows - mapping.footer_lines_number)
+            rows = range(
+                mapping.header_lines_number,
+                csv_or_xlsx[1].nrows - mapping.footer_lines_number)
         else:
-            stat_first_index = mapping.header_lines_number 
+            stat_first_index = mapping.header_lines_number
             stat_last_index = - mapping.footer_lines_number
             if stat_last_index:
-                rows = csv_or_xlsx_lst[stat_first_index:- stat_last_index]
+                rows = csv_or_xlsx_lst[stat_first_index: stat_last_index]
             else:
                 rows = csv_or_xlsx_lst[stat_first_index:]
 
@@ -182,7 +192,6 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             timestamp = values[timestamp_column]
             currency = values[currency_column] \
                 if currency_column is not None else currency_code
-            amount = values[amount_column]
             balance = values[balance_column] \
                 if balance_column is not None else None
             original_currency = values[original_currency_column] \
@@ -215,16 +224,23 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                     mapping.timestamp_format
                 )
 
-            amount = self._parse_decimal(amount, mapping)
-            if balance:
-                balance = self._parse_decimal(balance, mapping)
-            else:
-                balance = None
-
-            if debit_credit:
+            if amount_column:
+                amount = self._parse_decimal(
+                    values[amount_column], mapping)
+            if debit_credit is not None:
                 amount = amount.copy_abs()
                 if debit_credit == mapping.debit_value:
                     amount = -amount
+            if debit_column and credit_column:
+                debit_amount = self._parse_decimal(
+                    values[debit_column], mapping)
+                debit_amount = debit_amount.copy_abs()
+                credit_amount = self._parse_decimal(
+                    values[credit_column], mapping)
+                amount = -debit_amount or credit_amount
+
+            if balance is not None:
+                balance = self._parse_decimal(balance, mapping)
 
             if not original_currency:
                 original_currency = currency
@@ -343,6 +359,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             return value
         elif isinstance(value, float):
             return Decimal(value)
+        value = value or "0"
         thousands, decimal = mapping._get_float_separators()
         value = value.replace(thousands, '')
         value = value.replace(decimal, '.')

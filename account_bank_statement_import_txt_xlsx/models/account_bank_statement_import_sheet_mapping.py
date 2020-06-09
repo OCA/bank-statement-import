@@ -82,11 +82,6 @@ class AccountBankStatementImportSheetMapping(models.Model):
             'transaction from'
         ),
     )
-    amount_column = fields.Char(
-        string='Amount column',
-        required=True,
-        help='Amount of transaction in journal\'s currency',
-    )
     balance_column = fields.Char(
         string='Balance column',
         help='Balance after transaction in journal\'s currency',
@@ -107,10 +102,42 @@ class AccountBankStatementImportSheetMapping(models.Model):
             'transaction amount in original transaction currency from'
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ('simple_value', 'Simple value'),
+            ('absolute_value', 'Absolute value'),
+            ('distinct_credit_debit', 'Distinct Credit/debit Column'),
+        ],
+        string='Amount type',
+        required=True,
+        default="simple_value",
+        help=(
+            'simple_value: use igned amount in ammount comlumn\n'
+            'absolute_value: use a same comlumn for debit and credit\n'
+            '(absolute value + indicate sign)\n'
+            'distinct_credit_debit: use a distinct comlumn for debit and credit'
+        ),
+    )
+    amount_column = fields.Char(
+        string='Amount column',
+        help=(
+            'Used if amount type is "Simple value" or "Absolute value"\n'
+            'Amount of transaction in journal\'s currency\n'
+            'Some statement formats use credit/debit columns'),
+    )
+    debit_column = fields.Char(
+        string='Debit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
+    )
+    credit_column = fields.Char(
+        string='Credit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
+    )
     debit_credit_column = fields.Char(
         string='Debit/credit column',
         help=(
-            'Some statement formats use absolute amount value and indicate sign'
+            'Used if amount type is "Absolute value"\n'
+            'Some statement formats use absolute amount value and indicate sign\n'
             'of the transaction by specifying if it was a debit or a credit one'
         ),
     )
@@ -146,6 +173,10 @@ class AccountBankStatementImportSheetMapping(models.Model):
     bank_account_column = fields.Char(
         string='Bank Account column',
         help='Partner\'s bank account',
+    )
+    with_metadata = fields.Boolean(
+        string='File wWth Metadata ',
+        help='Check if file containt meta data in first lines',
     )
     header_lines_number = fields.Integer(
         string='Header lines number',
