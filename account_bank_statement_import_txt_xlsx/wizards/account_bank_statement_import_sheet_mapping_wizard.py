@@ -49,9 +49,33 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             'transaction from'
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ('simple_value', 'Simple value'),
+            ('absolute_value', 'Absolute value'),
+            ('distinct_credit_debit', 'Distinct Credit/debit Column'),
+        ],
+        string='Amount type',
+        required=True,
+        default="simple_value",
+        help=(
+            'simple_value: use igned amount in ammount comlumn\n'
+            'absolute_value: use a same comlumn for debit and credit\n'
+            '(absolute value + indicate sign)\n'
+            'distinct_credit_debit: use a distinct comlumn for debit and credit'
+        ),
+    )
     amount_column = fields.Char(
         string='Amount column',
         help='Amount of transaction in journal\'s currency',
+    )
+    debit_column = fields.Char(
+        string='Debit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
+    )
+    credit_column = fields.Char(
+        string='Credit column',
+        help='Used if amount type is "Distinct Credit/debit Column"\n',
     )
     balance_column = fields.Char(
         string='Balance column',
@@ -167,6 +191,9 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
             'timestamp_format': '%d/%m/%Y',
             'timestamp_column': self.timestamp_column,
             'currency_column': self.currency_column,
+            'amount_type': self.amount_type,
+            'debit_column': self.debit_column,
+            'credit_column': self.credit_column,
             'amount_column': self.amount_column,
             'balance_column': self.balance_column,
             'original_currency_column': self.original_currency_column,

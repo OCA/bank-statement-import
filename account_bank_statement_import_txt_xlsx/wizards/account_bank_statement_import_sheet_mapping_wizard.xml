@@ -15,15 +15,15 @@
             <xpath expr="//footer" position="before">
                 <h2>Select a statement file to import mapping</h2>
                 <group name="start" attrs="{'invisible': [('state', '!=', 'start')]}">
-                    <group colspan="2">
-                        <field name="column_names_line"/>
-                        <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
-                        <field name="filename" invisible="1"/>
-                    </group>
                     <group string="Options" colspan="2">
+                        <field name="column_names_line"/>
                         <field name="file_encoding"/>
                         <field name="delimiter"/>
                         <field name="quotechar"/>
+                    </group>
+                    <group colspan="2">
+                        <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
+                        <field name="filename" invisible="1"/>
                     </group>
                 </group>
                 <group name="final" attrs="{'invisible': [('state', '!=', 'final')]}">
@@ -42,13 +42,43 @@
                             values="statement_columns"
                             context="{'header': header}"
                         />
+                        <field name="amount_type"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                            />
                         <field
                             name="amount_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            attrs="{
+                            'required': [('amount_type', '!=', 'distinct_credit_debit'),  ('state', '=', 'final')],
+                            'invisible': [('amount_type', '=', 'distinct_credit_debit')],}"
                         />
+                        <field name="debit_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{
+                            'required': [('amount_type', '=', 'distinct_credit_debit'),  ('state', '=', 'final')],
+                            'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
+                            }"/>
+                        <field name="credit_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{
+                            'required': [('amount_type', '=', 'distinct_credit_debit'),  ('state', '=', 'final')],
+                            'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
+                            }"/>
+                        <field
+                            name="debit_credit_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{
+                            'required': [('amount_type', '=', 'absolute_value')],
+                            'invisible': [('amount_type', '!=', 'absolute_value')],
+                            }"/>
                         <field
                             name="balance_column"
                             widget="dynamic_dropdown"
@@ -63,12 +93,6 @@
                         />
                         <field
                             name="original_amount_column"
-                            widget="dynamic_dropdown"
-                            values="statement_columns"
-                            context="{'header': header}"
-                        />
-                        <field
-                            name="debit_credit_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"

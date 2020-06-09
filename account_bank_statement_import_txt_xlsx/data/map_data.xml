@@ -17,6 +17,7 @@
         <field name="quotechar">"</field>
         <field name="timestamp_format">%m/%d/%Y</field>
         <field name="timestamp_column">Date</field>
+        <field name="amount_type">simple_value</field>
         <field name="amount_column">Amount</field>
         <field name="original_currency_column">Currency</field>
         <field name="original_amount_column">Amount Currency</field>
