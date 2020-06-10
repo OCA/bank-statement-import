@@ -285,7 +285,7 @@ msgid "PayPal Report mapping:"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_id_4015
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_id_4025
 msgid "PayPal mapping"
 msgstr ""
 
