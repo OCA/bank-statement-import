@@ -6,3 +6,4 @@
 * Eficent (https://www.eficent.com)
   * Jordi Ballester Alomar <jordi.ballester@eficent.com>
 * Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`_)
+* Mourad EL HADJ MIMOUNE <mourad.elhadj.mimoune@akretion.com>
