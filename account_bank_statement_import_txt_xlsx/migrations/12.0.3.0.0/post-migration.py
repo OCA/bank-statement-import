@@ -9,7 +9,7 @@ def migrate(env, version):
     openupgrade.logged_query(
         env.cr,
         """
-UPDATE account_bank_statement_import_sheet_mapping 
+UPDATE account_bank_statement_import_sheet_mapping
     set header_lines_number = 1,
     footer_lines_number = 0,
     column_names_line = 1;
@@ -19,7 +19,7 @@ UPDATE account_bank_statement_import_sheet_mapping
     openupgrade.logged_query(
         env.cr,
         """
-UPDATE account_bank_statement_import_sheet_mapping 
+UPDATE account_bank_statement_import_sheet_mapping
     set amount_type = 'absolute_value'
     WHERE debit_credit_column is not null;
        """
@@ -28,7 +28,7 @@ UPDATE account_bank_statement_import_sheet_mapping
     openupgrade.logged_query(
         env.cr,
         """
-UPDATE account_bank_statement_import_sheet_mapping 
+UPDATE account_bank_statement_import_sheet_mapping
     set amount_type = 'simple_value'
     WHERE debit_credit_column is null;
        """
