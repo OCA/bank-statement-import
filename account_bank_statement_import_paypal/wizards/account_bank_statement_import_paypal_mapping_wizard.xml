@@ -144,7 +144,7 @@
                 </group>
             </xpath>
             <xpath expr="//div[@name='states_buttons']/button" position="before">
-                <button name="import_mapping" string="Import" type="object" class="btn-primary" attrs="{'invisible': [('state', '=', 'final')]}" />
+                <button name="import_mapping" string="Import" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'final')]}"/>
             </xpath>
         </field>
     </record>
