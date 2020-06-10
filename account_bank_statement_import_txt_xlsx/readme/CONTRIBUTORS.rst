@@ -12,3 +12,5 @@
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
+
+* Mourad EL HADJ MIMOUNE <mourad.elhadj.mimoune@akretion.com>
