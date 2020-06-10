@@ -164,5 +164,5 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
             'res_id': mapping.id,
             'view_mode': 'form',
             'view_id': False,
-            'target': 'new',
+            'target': 'current',
         }

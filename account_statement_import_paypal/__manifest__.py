@@ -6,7 +6,7 @@
 {
     'name': 'PayPal CSV Format Bank Statements Import',
     'summary': 'Import PayPal CSV files as Bank Statements in Odoo',
-    'version': '12.0.2.2.0',
+    'version': '12.0.2.2.1',
     'category': 'Accounting',
     'website': 'https://github.com/OCA/bank-statement-import',
     'author':
