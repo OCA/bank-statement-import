@@ -41,6 +41,11 @@ msgid "Account: %s; "
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__allow_back
+msgid "Allow Back"
+msgstr ""
+
+#. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount column"
@@ -90,11 +95,6 @@ msgstr ""
 #: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:294
 #, python-format
 msgid "Bank: %s; "
-msgstr ""
-
-#. module: account_bank_statement_import_txt_xlsx
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
-msgid "Cancel"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
