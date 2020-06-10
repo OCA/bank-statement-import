@@ -147,9 +147,9 @@ msgid "Account Bank Statement Import PayPal Parser"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_wizard_form
-msgid "Cancel"
-msgstr "Cancelar"
+#: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__allow_back
+msgid "Allow Back"
+msgstr ""
 
 #. module: account_bank_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_paypal.account_bank_statement_import_paypal_mapping_wizard_form
@@ -343,3 +343,6 @@ msgstr "punto (.)"
 #: selection:account.bank.statement.import.paypal.mapping,float_thousands_sep:0
 msgid "none"
 msgstr "nada"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
