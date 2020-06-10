@@ -50,6 +50,11 @@ msgid "Account: %s; "
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__allow_back
+msgid "Allow Back"
+msgstr ""
+
+#. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount column"
@@ -104,11 +109,6 @@ msgstr "Ficheiro de Extrato Bancário"
 #, python-format
 msgid "Bank: %s; "
 msgstr ""
-
-#. module: account_bank_statement_import_txt_xlsx
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
-msgid "Cancel"
-msgstr "Cancelar"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
@@ -562,6 +562,9 @@ msgstr "Espaço"
 #| msgid "Tab"
 msgid "tab"
 msgstr "Tab"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
 
 #~ msgid "%s Import %s > %s"
 #~ msgstr "%s Importar %s > %s"
