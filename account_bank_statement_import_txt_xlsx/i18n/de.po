@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import_txt_xlsx
+# 	* account_bank_statement_import_txt_xlsx
 #
 msgid ""
 msgstr ""
@@ -38,7 +38,7 @@ msgid "Account Bank Statement Import Sheet Parser"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:298
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:301
 #, python-format
 msgid "Account: %s; "
 msgstr "Konto: %s; "
@@ -95,7 +95,7 @@ msgid "Bank Statement File"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:294
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:297
 #, python-format
 msgid "Bank: %s; "
 msgstr ""
@@ -249,19 +249,26 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__currency_column
-msgid "In case statement is multi-currency, column to get currency of transaction from"
+msgid ""
+"In case statement is multi-currency, column to get currency of transaction "
+"from"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_currency_column
-msgid "In case statement provides original currency for transactions with automatic currency conversion, column to get original currency of transaction from"
+msgid ""
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_amount_column
-msgid "In case statement provides original currency for transactions with automatic currency conversion, column to get original transaction amount in original transaction currency from"
+msgid ""
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
+"transaction currency from"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
@@ -303,7 +310,7 @@ msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,delimiter:0
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:288
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:291
 #, python-format
 msgid "N/A"
 msgstr ""
@@ -373,7 +380,9 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__debit_credit_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__debit_credit_column
-msgid "Some statement formats use absolute amount value and indicate signof the transaction by specifying if it was a debit or a credit one"
+msgid ""
+"Some statement formats use absolute amount value and indicate signof the "
+"transaction by specifying if it was a debit or a credit one"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
@@ -425,7 +434,7 @@ msgid "Traditional Chinese (big5)"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:302
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:305
 #, python-format
 msgid "Transaction ID: %s; "
 msgstr ""
