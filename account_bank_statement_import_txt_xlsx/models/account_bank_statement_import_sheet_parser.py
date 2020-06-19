@@ -266,7 +266,10 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             elif original_currency == currency:
                 original_amount = amount
 
-            original_amount = self._parse_decimal(original_amount, mapping)
+            if original_amount is not None:
+                original_amount = self._parse_decimal(original_amount, mapping)
+            else:
+                original_amount = 0.0
 
             line = {
                 "timestamp": timestamp,
