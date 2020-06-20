@@ -194,16 +194,39 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
         })
 
         provider = journal.online_bank_statement_provider_id
-        mocked_response = UrlopenRetValMock("""{
+        mocked_response_1 = UrlopenRetValMock("""{
     "debug_id": "eec890ebd5798",
     "details": "xxxxxx",
     "links": "xxxxxx",
     "message": "Data for the given start date is not available.",
     "name": "INVALID_REQUEST"
 }""", throw=True)
+        mocked_response_2 = UrlopenRetValMock("""{
+    "balances": [
+        {
+            "currency": "EUR",
+            "primary": true,
+            "total_balance": {
+                "currency_code": "EUR",
+                "value": "0.75"
+            },
+            "available_balance": {
+                "currency_code": "EUR",
+                "value": "0.75"
+            },
+            "withheld_balance": {
+                "currency_code": "EUR",
+                "value": "0.00"
+            }
+        }
+    ],
+    "account_id": "1234567890",
+    "as_of_time": "2019-08-01T00:00:00+0000",
+    "last_refresh_time": "2019-08-01T00:00:00+0000"
+}""")
         with mock.patch(
             _provider_class + '._paypal_urlopen',
-            return_value=mocked_response,
+            side_effect=[mocked_response_1, mocked_response_2],
         ), self.mock_token():
             data = provider.with_context(
                 test_account_bank_statement_import_online_paypal_monday=True,
@@ -212,7 +235,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
                 self.now,
             )
 
-        self.assertIsNone(data)
+        self.assertEqual(data, ([], {
+            'balance_start': 0.75,
+            'balance_end_real': 0.75,
+        }))
 
     def test_error_handling_1(self):
         journal = self.AccountJournal.create({
@@ -269,7 +295,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
         })
 
         provider = journal.online_bank_statement_provider_id
-        mocked_response = json.loads("""{
+        mocked_response_1 = json.loads("""{
     "transaction_details": [],
     "account_number": "1234567890",
     "start_date": "2019-08-01T00:00:00+0000",
@@ -279,16 +305,42 @@ class TestAccountBankAccountStatementImportOnlinePayPal(
     "total_items": 0,
     "total_pages": 0
 }""", parse_float=Decimal)
+        mocked_response_2 = json.loads("""{
+    "balances": [
+        {
+            "currency": "EUR",
+            "primary": true,
+            "total_balance": {
+                "currency_code": "EUR",
+                "value": "0.75"
+            },
+            "available_balance": {
+                "currency_code": "EUR",
+                "value": "0.75"
+            },
+            "withheld_balance": {
+                "currency_code": "EUR",
+                "value": "0.00"
+            }
+        }
+    ],
+    "account_id": "1234567890",
+    "as_of_time": "2019-08-01T00:00:00+0000",
+    "last_refresh_time": "2019-08-01T00:00:00+0000"
+}""", parse_float=Decimal)
         with mock.patch(
             _provider_class + '._paypal_retrieve',
-            return_value=mocked_response,
+            side_effect=[mocked_response_1, mocked_response_2],
         ), self.mock_token():
             data = provider._obtain_statement_data(
                 self.now - relativedelta(hours=1),
                 self.now,
             )
 
-        self.assertIsNone(data)
+        self.assertEqual(data, ([], {
+            'balance_start': 0.75,
+            'balance_end_real': 0.75,
+        }))
 
     def test_ancient_pull(self):
         journal = self.AccountJournal.create({
