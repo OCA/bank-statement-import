@@ -4,7 +4,7 @@
 
 {
     'name': 'Online Bank Statements',
-    'version': '12.0.1.5.1',
+    'version': '12.0.1.5.2',
     'author':
         'Brainbean Apps, '
         'Dataplug, '
