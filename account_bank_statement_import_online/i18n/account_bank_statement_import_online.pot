@@ -306,6 +306,11 @@ msgid "Since"
 msgstr ""
 
 #. module: account_bank_statement_import_online
+#: model:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_pull_wizard_form
+msgid "Since (at least)"
+msgstr ""
+
+#. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider_statement_creation_mode
 msgid "Statement Creation Mode"
 msgstr ""
@@ -333,6 +338,11 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard_date_until
 msgid "Until"
+msgstr ""
+
+#. module: account_bank_statement_import_online
+#: model:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_pull_wizard_form
+msgid "Until (at least)"
 msgstr ""
 
 #. module: account_bank_statement_import_online
