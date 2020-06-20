@@ -1,5 +1,5 @@
-# Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019 Dataplug (https://dataplug.io)
+# Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from base64 import b64encode
@@ -212,7 +212,15 @@ class OnlineBankStatementProviderPayPal(models.Model):
             date_until
         )
         if not transactions:
-            return None
+            balance = self._paypal_get_balance(
+                token,
+                currency,
+                date_since
+            )
+            return [], {
+                'balance_start': balance,
+                'balance_end_real': balance,
+            }
 
         # Normalize transactions, sort by date, and get lines
         transactions = list(sorted(
@@ -364,6 +372,20 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 'Failed to acquire token using Client ID and Secret!'
             ))
         return data['access_token']
+
+    @api.multi
+    def _paypal_get_balance(self, token, currency, as_of_timestamp):
+        self.ensure_one()
+        url = (self.api_base or PAYPAL_API_BASE) \
+            + '/v1/reporting/balances?currency_code=%s&as_of_time=%s' % (
+                currency,
+                as_of_timestamp.isoformat() + 'Z',
+            )
+        data = self._paypal_retrieve(url, token)
+        available_balance = data['balances'][0].get('available_balance')
+        if not available_balance:
+            return Decimal()
+        return Decimal(available_balance['value'])
 
     @api.multi
     def _paypal_get_transaction(self, token, transaction_id, timestamp):
