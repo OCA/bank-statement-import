@@ -15,10 +15,10 @@
                 <group name="filter">
                     <group name="date_range" colspan="2">
                         <group>
-                            <field name="date_since"/>
+                            <field name="date_since" string="Since (at least)"/>
                         </group>
                         <group>
-                            <field name="date_until"/>
+                            <field name="date_until" string="Until (at least)"/>
                         </group>
                     </group>
                 </group>

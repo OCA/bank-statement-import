@@ -69,30 +69,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertFalse(journal.online_bank_statement_provider_id)
         self.assertFalse(self.OnlineBankStatementProvider.search([]))
 
-    def test_pull_boundary(self):
-        journal = self.AccountJournal.create({
-            'name': 'Bank',
-            'type': 'bank',
-            'code': 'BANK',
-            'bank_statements_source': 'online',
-            'online_bank_statement_provider': 'dummy',
-        })
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.with_context(
-            expand_by=1,
-        )._pull(
-            self.now - relativedelta(hours=1),
-            self.now,
-        )
-
-        statement = self.AccountBankStatement.search(
-            [('journal_id', '=', journal.id)],
-        )
-        self.assertEqual(len(statement), 1)
-        self.assertEqual(len(statement.line_ids), 12)
-
     def test_pull_mode_daily(self):
         journal = self.AccountJournal.create({
             'name': 'Bank',
@@ -204,7 +180,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.active = True
         provider.statement_creation_mode = 'weekly'
 
-        provider.with_context(step={'hours': 8})._pull(
+        provider.with_context(
+            step={'hours': 8},
+            data_since=self.now - relativedelta(weeks=2),
+            data_until=self.now,
+        )._pull(
             self.now - relativedelta(weeks=2),
             self.now,
         )
@@ -215,7 +195,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             14 * (24 / 8)
         )
 
-        provider.with_context(step={'hours': 8})._pull(
+        provider.with_context(
+            step={'hours': 8},
+            data_since=self.now - relativedelta(weeks=3),
+            data_until=self.now - relativedelta(weeks=1),
+        )._pull(
             self.now - relativedelta(weeks=3),
             self.now - relativedelta(weeks=1),
         )
@@ -226,7 +210,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             21 * (24 / 8)
         )
 
-        provider.with_context(step={'hours': 8})._pull(
+        provider.with_context(
+            step={'hours': 8},
+            data_since=self.now - relativedelta(weeks=1),
+            data_until=self.now,
+        )._pull(
             self.now - relativedelta(weeks=1),
             self.now,
         )
@@ -432,12 +420,14 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider_context = {
             'step': {'hours': 24},
             'data_since': datetime(2020, 1, 1),
-            'data_until': datetime(2020, 2, 29),
             'amount': 1.0,
             'balance_start': 0,
         }
 
-        provider.with_context(**provider_context)._pull(
+        provider.with_context(
+            **provider_context,
+            data_until=datetime(2020, 1, 31),
+        )._pull(
             datetime(2020, 1, 1),
             datetime(2020, 1, 31),
         )
@@ -449,9 +439,12 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[0].balance_start, 0.0)
         self.assertEqual(statements[0].balance_end_real, 30.0)
 
-        provider.with_context(**provider_context)._pull(
+        provider.with_context(
+            **provider_context,
+            data_until=datetime(2020, 2, 15),
+        )._pull(
             datetime(2020, 1, 1),
-            datetime(2020, 2, 15),
+            datetime(2020, 2, 29),
         )
         statements = self.AccountBankStatement.search(
             [('journal_id', '=', journal.id)],
@@ -463,7 +456,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[1].balance_start, 31.0)
         self.assertEqual(statements[1].balance_end_real, 45.0)
 
-        provider.with_context(**provider_context)._pull(
+        provider.with_context(
+            **provider_context,
+            data_until=datetime(2020, 2, 29),
+        )._pull(
             datetime(2020, 1, 1),
             datetime(2020, 2, 29),
         )
@@ -491,6 +487,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.tz = 'UTC'
         provider.with_context(
             step={'hours': 1},
+            data_since=datetime(2020, 4, 17, 22, 0),
+            data_until=datetime(2020, 4, 18, 2, 0),
             tz='UTC',
         )._pull(
             datetime(2020, 4, 17, 22, 0),
@@ -523,6 +521,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.tz = 'Etc/GMT-2'
         provider.with_context(
             step={'hours': 1},
+            data_since=datetime(2020, 4, 17, 22, 0),
+            data_until=datetime(2020, 4, 18, 2, 0),
             tz='UTC',
         )._pull(
             datetime(2020, 4, 17, 22, 0),
@@ -616,6 +616,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.active = True
         provider.with_context(
             step={'hours': 1},
+            data_since=datetime(2020, 4, 18, 0, 0),
+            data_until=datetime(2020, 4, 18, 4, 0),
             timestamp_mode='str',
         )._pull(
             datetime(2020, 4, 18, 0, 0),

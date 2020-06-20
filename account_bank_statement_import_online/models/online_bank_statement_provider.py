@@ -256,7 +256,7 @@ class OnlineBankStatementProvider(models.Model):
                         date = date.replace(tzinfo=utc)
                     date = date.astimezone(utc).replace(tzinfo=None)
 
-                    if date < statement_date_since or date < date_since:
+                    if date < statement_date_since:
                         if 'balance_start' in statement_values:
                             statement_values['balance_start'] = (
                                 Decimal(
@@ -266,7 +266,7 @@ class OnlineBankStatementProvider(models.Model):
                                 )
                             )
                         continue
-                    elif date >= statement_date_until or date >= date_until:
+                    elif date >= statement_date_until:
                         if 'balance_end_real' in statement_values:
                             statement_values['balance_end_real'] = (
                                 Decimal(
