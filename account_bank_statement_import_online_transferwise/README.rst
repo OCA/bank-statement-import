@@ -17,13 +17,13 @@ Online Bank Statements: TransferWise.com
     :target: https://github.com/OCA/bank-statement-import/tree/11.0/account_bank_statement_import_online_transferwise
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-12-0/bank-statement-import-12-0-account_bank_statement_import_online_transferwise
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-11-0/bank-statement-import-11-0-account_bank_statement_import_online_transferwise
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/174/11.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module provides online bank statements from
 `TransferWise.com <https://transferwise.com/>`_.
@@ -110,7 +110,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-alexey-pelykh|
+|maintainer-alexey-pelykh| 
 
 This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/11.0/account_bank_statement_import_online_transferwise>`_ project on GitHub.
 
