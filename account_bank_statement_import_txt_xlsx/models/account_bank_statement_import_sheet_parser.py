@@ -250,13 +250,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             elif original_currency == currency:
                 original_amount = amount
 
-            if original_amount:
-                original_amount = self._parse_decimal(
-                    original_amount,
-                    mapping
-                ).copy_sign(amount)
-            else:
-                original_amount = 0.0
+            original_amount = self._parse_decimal(original_amount, mapping)
 
             line = {
                 'timestamp': timestamp,
