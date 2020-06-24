@@ -46,8 +46,8 @@
                         <group>
                             <field name="with_metadata"/>
                             <group>
-                                <field name="header_lines_number"/>
-                                <field name="footer_lines_number"/>
+                                <field name="header_lines_count"/>
+                                <field name="footer_lines_count"/>
                                 <field name="column_names_line"/>
                             </group>
                         </group>

@@ -42,7 +42,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         data = StringIO(data_file.decode(encoding or 'utf-8'))
         csv_data = reader(data, **csv_options)
         csv_data_lst = list(csv_data)
-        header = [value.strip() for value in csv_data_lst[column_names_line - 1]]
+        header = [value.strip()
+                  for value in csv_data_lst[column_names_line - 1]]
         return header
 
     @api.model
@@ -164,11 +165,11 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
 
         if isinstance(csv_or_xlsx, tuple):
             rows = range(
-                mapping.header_lines_number,
-                csv_or_xlsx[1].nrows - mapping.footer_lines_number)
+                mapping.header_lines_count,
+                csv_or_xlsx[1].nrows - mapping.footer_lines_count)
         else:
-            stat_first_index = mapping.header_lines_number
-            stat_last_index = - mapping.footer_lines_number
+            stat_first_index = mapping.header_lines_count
+            stat_last_index = - mapping.footer_lines_count
             if stat_last_index:
                 rows = csv_or_xlsx_lst[stat_first_index: stat_last_index]
             else:
@@ -184,7 +185,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                     cell_type = sheet.cell_type(row, col_index)
                     cell_value = sheet.cell_value(row, col_index)
                     if cell_type == xlrd.XL_CELL_DATE:
-                        cell_value = xldate_as_datetime(cell_value, book.datemode)
+                        cell_value = xldate_as_datetime(
+                            cell_value, book.datemode)
                     values.append(cell_value)
             else:
                 values = list(row)
@@ -237,7 +239,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 debit_amount = debit_amount.copy_abs()
                 credit_amount = self._parse_decimal(
                     values[credit_column], mapping)
-                amount = -debit_amount or credit_amount
+                amount = credit_amount - debit_amount
 
             if balance is not None:
                 balance = self._parse_decimal(balance, mapping)

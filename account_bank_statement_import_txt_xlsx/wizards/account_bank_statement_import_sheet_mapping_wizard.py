@@ -59,10 +59,10 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         required=True,
         default="simple_value",
         help=(
-            'simple_value: use igned amount in ammount comlumn\n'
-            'absolute_value: use a same comlumn for debit and credit\n'
+            'Simple value: use igned amount in ammount comlumn\n'
+            'Absolute Value: use a same comlumn for debit and credit\n'
             '(absolute value + indicate sign)\n'
-            'distinct_credit_debit: use a distinct comlumn for debit and credit'
+            'Distinct Credit/debit Column: use a distinct comlumn for debit and credit'
         ),
     )
     amount_column = fields.Char(
