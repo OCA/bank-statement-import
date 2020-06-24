@@ -10,8 +10,8 @@ def migrate(env, version):
         env.cr,
         """
 UPDATE account_bank_statement_import_sheet_mapping
-    set header_lines_number = 1,
-    footer_lines_number = 0,
+    SET header_lines_count = 1,
+    footer_lines_count = 0,
     column_names_line = 1;
        """
     )
@@ -20,8 +20,8 @@ UPDATE account_bank_statement_import_sheet_mapping
         env.cr,
         """
 UPDATE account_bank_statement_import_sheet_mapping
-    set amount_type = 'absolute_value'
-    WHERE debit_credit_column is not null;
+    SET amount_type = 'absolute_value'
+    WHERE debit_credit_column IS NOT NULL;
        """
     )
 
@@ -29,7 +29,7 @@ UPDATE account_bank_statement_import_sheet_mapping
         env.cr,
         """
 UPDATE account_bank_statement_import_sheet_mapping
-    set amount_type = 'simple_value'
-    WHERE debit_credit_column is null;
+    SET amount_type = 'simple_value'
+    WHERE debit_credit_column IS NULL;
        """
     )

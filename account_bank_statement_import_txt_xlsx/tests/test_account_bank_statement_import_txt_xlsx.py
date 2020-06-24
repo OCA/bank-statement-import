@@ -365,8 +365,8 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
             'currency_id': self.currency_usd.id,
         })
         statement_map = self.sample_statement_map.copy({
-            'header_lines_number': 5,
-            'footer_lines_number': 1,
+            'header_lines_count': 5,
+            'footer_lines_count': 1,
             'column_names_line': 5,
             'amount_column': None,
             'partner_name_column': None,
@@ -383,9 +383,9 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         wizard = self.AccountBankStatementImport.with_context({
             'journal_id': journal.id,
         }).create({
-            'filename': 'fixtures/meta_data_separeted_credit_debit.csv',
+            'filename': 'fixtures/meta_data_separated_credit_debit.csv',
             'data_file': self._data_file(
-                'fixtures/meta_data_separeted_credit_debit.csv',
+                'fixtures/meta_data_separated_credit_debit.csv',
                 'utf-8'
             ),
             'sheet_mapping_id': statement_map.id,

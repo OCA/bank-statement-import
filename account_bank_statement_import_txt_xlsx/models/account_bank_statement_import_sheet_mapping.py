@@ -112,10 +112,10 @@ class AccountBankStatementImportSheetMapping(models.Model):
         required=True,
         default="simple_value",
         help=(
-            'simple_value: use igned amount in ammount comlumn\n'
-            'absolute_value: use a same comlumn for debit and credit\n'
+            'Simple value: use igned amount in ammount comlumn\n'
+            'Absolute Value: use a same comlumn for debit and credit\n'
             '(absolute value + indicate sign)\n'
-            'distinct_credit_debit: use a distinct comlumn for debit and credit'
+            'Distinct Credit/debit Column: use a distinct comlumn for debit and credit'
         ),
     )
     amount_column = fields.Char(
@@ -178,7 +178,7 @@ class AccountBankStatementImportSheetMapping(models.Model):
         string='File wWth Metadata ',
         help='Check if file containt meta data in first lines',
     )
-    header_lines_number = fields.Integer(
+    header_lines_count = fields.Integer(
         string='Header lines number',
         help='Set the Header lines number.'
              'Used in some csv file that integrate meta data in'
@@ -186,7 +186,7 @@ class AccountBankStatementImportSheetMapping(models.Model):
              'the all meta data lines including columns names',
         default="1",
     )
-    footer_lines_number = fields.Integer(
+    footer_lines_count = fields.Integer(
         string='Footer lines number',
         help='Set the Footer lines number.'
              'Used in some csv file that integrate meta data in'
