@@ -351,9 +351,14 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             note = note.strip()
         if note:
             transaction["note"] = note
+        if notes:
+            transaction['note'] = notes
 
         if partner_name:
             transaction["partner_name"] = partner_name
+            partner_id = self.env["res.partner"].search([("name", "=", partner_name)], limit=1)
+            if partner_id:
+                transaction["partner_id"] = partner_id.id
         if bank_account:
             transaction["account_number"] = bank_account
 
