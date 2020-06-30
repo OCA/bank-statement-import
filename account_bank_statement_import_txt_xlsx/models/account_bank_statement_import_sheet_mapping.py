@@ -127,7 +127,7 @@ class AccountBankStatementImportSheetMapping(models.Model):
     )
     debit_column = fields.Char(
         string='Debit column',
-        help='Used if amount type is "Distinct Credit/debit Column"\n',
+        help='Used if amount type is "Distinct Credit/debit Column"',
     )
     credit_column = fields.Char(
         string='Credit column',
