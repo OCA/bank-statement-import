@@ -53,8 +53,16 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             {"journal_id": journal.id}
         ).create(
             {
-                "filename": "fixtures/statement_en.csv",
-                "data_file": self._data_file("fixtures/statement_en.csv"),
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self._data_file("fixtures/statement_en.csv"),
+                        },
+                    )
+                ],
                 "paypal_mapping_id": self.paypal_statement_map_en.id,
             }
         )
@@ -81,8 +89,16 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             {"journal_id": journal.id}
         ).create(
             {
-                "filename": "fixtures/statement_en.csv",
-                "data_file": self._data_file("fixtures/statement_en.csv"),
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self._data_file("fixtures/statement_en.csv"),
+                        },
+                    )
+                ],
                 "paypal_mapping_id": self.paypal_statement_map_en.id,
             }
         )
@@ -109,8 +125,16 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             {"journal_id": journal.id}
         ).create(
             {
-                "filename": "fixtures/statement_es.csv",
-                "data_file": self._data_file("fixtures/statement_es.csv"),
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_es.csv",
+                            "datas": self._data_file("fixtures/statement_es.csv"),
+                        },
+                    )
+                ],
                 "paypal_mapping_id": self.paypal_statement_map_es.id,
             }
         )
@@ -137,8 +161,16 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             {"journal_id": journal.id}
         ).create(
             {
-                "filename": "fixtures/activity_en.csv",
-                "data_file": self._data_file("fixtures/activity_en.csv"),
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/activity_en.csv",
+                            "datas": self._data_file("fixtures/activity_en.csv"),
+                        },
+                    )
+                ],
                 "paypal_mapping_id": self.paypal_activity_map_en.id,
             }
         )
@@ -165,8 +197,16 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             {"journal_id": journal.id}
         ).create(
             {
-                "filename": "fixtures/empty_activity.csv",
-                "data_file": self._data_file("fixtures/empty_activity.csv"),
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/empty_activity.csv",
+                            "datas": self._data_file("fixtures/empty_activity.csv"),
+                        },
+                    )
+                ],
                 "paypal_mapping_id": self.paypal_activity_map_en.id,
             }
         )

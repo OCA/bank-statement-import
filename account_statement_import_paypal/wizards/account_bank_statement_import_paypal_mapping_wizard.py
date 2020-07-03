@@ -83,7 +83,6 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
             return []
         return [(x, x) for x in json.loads(header)]
 
-    @api.multi
     def _get_mapping_values(self):
         """Hook for extension"""
         self.ensure_one()
@@ -113,7 +112,6 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
             "bank_account_column": self.bank_account_column,
         }
 
-    @api.multi
     def import_mapping(self):
         self.ensure_one()
         mapping = self.env["account.bank.statement.import.paypal.mapping"].create(
