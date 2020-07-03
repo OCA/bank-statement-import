@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
     Copyright 2019 Tecnativa - Vicent Cubells
     Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo noupdate="1">
-
-    <record id="paypal_statement_map_en" model="account.bank.statement.import.paypal.mapping">
+    <record
+        id="paypal_statement_map_en"
+        model="account.bank.statement.import.paypal.mapping"
+    >
         <field name="name">PayPal Statement (EN)</field>
         <field name="float_thousands_sep">comma</field>
         <field name="float_decimal_sep">dot</field>
@@ -27,8 +29,10 @@
         <field name="bank_name_column">Bank Name</field>
         <field name="bank_account_column">Bank Account</field>
     </record>
-
-    <record id="paypal_activity_map_en" model="account.bank.statement.import.paypal.mapping">
+    <record
+        id="paypal_activity_map_en"
+        model="account.bank.statement.import.paypal.mapping"
+    >
         <field name="name">PayPal Activity (EN)</field>
         <field name="float_thousands_sep">comma</field>
         <field name="float_decimal_sep">dot</field>
@@ -50,8 +54,10 @@
         <field name="subject_column">Subject</field>
         <field name="note_column">Note</field>
     </record>
-
-    <record id="paypal_statement_map_es" model="account.bank.statement.import.paypal.mapping">
+    <record
+        id="paypal_statement_map_es"
+        model="account.bank.statement.import.paypal.mapping"
+    >
         <field name="name">PayPal Statement (ES)</field>
         <field name="float_thousands_sep">dot</field>
         <field name="float_decimal_sep">comma</field>
@@ -72,8 +78,10 @@
         <field name="bank_name_column">Nombre del banco</field>
         <field name="bank_account_column">Cuenta bancaria</field>
     </record>
-
-    <record id="paypal_activity_map_es" model="account.bank.statement.import.paypal.mapping">
+    <record
+        id="paypal_activity_map_es"
+        model="account.bank.statement.import.paypal.mapping"
+    >
         <field name="name">PayPal Activity (ES)</field>
         <field name="float_thousands_sep">dot</field>
         <field name="float_decimal_sep">comma</field>
@@ -90,13 +98,17 @@
         <field name="transaction_id_column">Id. de transacción</field>
         <field name="type_column">Tipo</field>
         <field name="from_email_address_column">Correo electrónico del remitente</field>
-        <field name="to_email_address_column">Correo electrónico del destinatario</field>
+        <field
+            name="to_email_address_column"
+        >Correo electrónico del destinatario</field>
         <field name="invoice_id_column">Número de factura</field>
         <field name="subject_column">Asunto</field>
         <field name="note_column">Nota</field>
     </record>
-
-    <record id="paypal_statement_map_de" model="account.bank.statement.import.paypal.mapping">
+    <record
+        id="paypal_statement_map_de"
+        model="account.bank.statement.import.paypal.mapping"
+    >
         <field name="name">PayPal Statement (DE)</field>
         <field name="float_thousands_sep">dot</field>
         <field name="float_decimal_sep">comma</field>
@@ -117,8 +129,10 @@
         <field name="bank_name_column">Name der Bank</field>
         <field name="bank_account_column">Bankkonto</field>
     </record>
-
-    <record id="paypal_activity_map_de" model="account.bank.statement.import.paypal.mapping">
+    <record
+        id="paypal_activity_map_de"
+        model="account.bank.statement.import.paypal.mapping"
+    >
         <field name="name">PayPal Activity (DE)</field>
         <field name="float_thousands_sep">dot</field>
         <field name="float_decimal_sep">comma</field>
@@ -140,5 +154,4 @@
         <field name="subject_column">Betreff</field>
         <field name="note_column">Hinweis</field>
     </record>
-
 </odoo>
