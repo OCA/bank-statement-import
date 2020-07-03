@@ -126,7 +126,7 @@ msgid "\"Type\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:43
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:0
 #, python-format
 msgid "%s: %s"
 msgstr ""
@@ -193,7 +193,7 @@ msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:253
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Fee for %s"
 msgstr "Tasa para %s"
@@ -231,13 +231,13 @@ msgid "Import Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:162
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:0
 #, python-format
 msgid "Imported Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Invoice %s"
 msgstr "Factura %s"
@@ -269,7 +269,7 @@ msgid "Last Updated on"
 msgstr "Última actualización en"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:130
+#: code:addons/account_bank_statement_import_paypal/wizards/account_bank_statement_import_paypal_mapping_wizard.py:0
 #, python-format
 msgid "Mapping from %s"
 msgstr "Mapeo para %s"
@@ -321,26 +321,26 @@ msgid "Time Format"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Transaction fee for %s"
 msgstr "Tasa de transacción para %s"
 
 #. module: account_bank_statement_import_paypal
-#: selection:account.bank.statement.import.paypal.mapping,float_decimal_sep:0
-#: selection:account.bank.statement.import.paypal.mapping,float_thousands_sep:0
+#: model:ir.model.fields.selection,name:account_bank_statement_import_paypal.selection__account_bank_statement_import_paypal_mapping__float_decimal_sep__comma
+#: model:ir.model.fields.selection,name:account_bank_statement_import_paypal.selection__account_bank_statement_import_paypal_mapping__float_thousands_sep__comma
 msgid "comma (,)"
 msgstr "coma (,)"
 
 #. module: account_bank_statement_import_paypal
-#: selection:account.bank.statement.import.paypal.mapping,float_decimal_sep:0
-#: selection:account.bank.statement.import.paypal.mapping,float_thousands_sep:0
+#: model:ir.model.fields.selection,name:account_bank_statement_import_paypal.selection__account_bank_statement_import_paypal_mapping__float_decimal_sep__dot
+#: model:ir.model.fields.selection,name:account_bank_statement_import_paypal.selection__account_bank_statement_import_paypal_mapping__float_thousands_sep__dot
 msgid "dot (.)"
 msgstr "punto (.)"
 
 #. module: account_bank_statement_import_paypal
-#: selection:account.bank.statement.import.paypal.mapping,float_decimal_sep:0
-#: selection:account.bank.statement.import.paypal.mapping,float_thousands_sep:0
+#: model:ir.model.fields.selection,name:account_bank_statement_import_paypal.selection__account_bank_statement_import_paypal_mapping__float_decimal_sep__none
+#: model:ir.model.fields.selection,name:account_bank_statement_import_paypal.selection__account_bank_statement_import_paypal_mapping__float_thousands_sep__none
 msgid "none"
 msgstr "nada"
 
