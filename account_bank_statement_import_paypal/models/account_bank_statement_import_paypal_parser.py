@@ -70,136 +70,107 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             ],
         )
 
+    def _data_dict_constructor(self, mapping, header):
+        list_of_content = [
+            "date_column",
+            "time_column",
+            "tz_column",
+            "name_column",
+            "currency_column",
+            "gross_column",
+            "fee_column",
+            "balance_column",
+            "transaction_id_column",
+            "description_column",
+            "type_column",
+            "from_email_address_column",
+            "to_email_address_column",
+            "invoice_id_column",
+            "subject_column",
+            "note_column",
+            "bank_name_column",
+            "bank_account_column",
+        ]
+        data_dict = {}
+        for key in list_of_content:
+            try:
+                data_dict[key] = header.index(getattr(mapping, key))
+            except ValueError:
+                data_dict[key] = None
+        return data_dict
+
     def _parse_lines(self, mapping, data_file, currency_code):
         data = StringIO(data_file.decode("utf-8-sig"))
         csv_data = reader(data)
 
         header = list(next(csv_data))
-        date_column = header.index(mapping.date_column)
-        time_column = header.index(mapping.time_column)
-        tz_column = header.index(mapping.tz_column)
-        name_column = header.index(mapping.name_column)
-        currency_column = header.index(mapping.currency_column)
-        gross_column = header.index(mapping.gross_column)
-        fee_column = header.index(mapping.fee_column)
-        balance_column = header.index(mapping.balance_column)
-        transaction_id_column = header.index(mapping.transaction_id_column)
-        try:
-            description_column = header.index(mapping.description_column)
-        except ValueError:
-            description_column = None
-        try:
-            type_column = header.index(mapping.type_column)
-        except ValueError:
-            type_column = None
-        try:
-            from_email_address_column = header.index(mapping.from_email_address_column)
-        except ValueError:
-            from_email_address_column = None
-        try:
-            to_email_address_column = header.index(mapping.to_email_address_column)
-        except ValueError:
-            to_email_address_column = None
-        try:
-            invoice_id_column = header.index(mapping.invoice_id_column)
-        except ValueError:
-            invoice_id_column = None
-        try:
-            subject_column = header.index(mapping.subject_column)
-        except ValueError:
-            subject_column = None
-        try:
-            note_column = header.index(mapping.note_column)
-        except ValueError:
-            note_column = None
-        try:
-            bank_name_column = header.index(mapping.bank_name_column)
-        except ValueError:
-            bank_name_column = None
-        try:
-            bank_account_column = header.index(mapping.bank_account_column)
-        except ValueError:
-            bank_account_column = None
+        data_dict = self._data_dict_constructor(mapping, header)
 
+        return self._calculate_lines(csv_data, data_dict, mapping, currency_code)
+
+    def _calculate_lines(self, csv_data, data_dict, mapping, currency_code):
         lines = []
         for row in csv_data:
             row = list(row)
-            date_value = row[date_column]
-            time_value = row[time_column]
-            tz_value = row[tz_column]
-            name_value = row[name_column]
-            currency_value = row[currency_column]
-            gross_value = row[gross_column]
-            fee_value = row[fee_column]
-            balance_value = row[balance_column]
-            transaction_id_value = row[transaction_id_column]
-            description_value = (
-                row[description_column] if description_column is not None else None
-            )
-            type_value = row[type_column] if type_column is not None else None
-            from_email_address_value = (
-                row[from_email_address_column]
-                if from_email_address_column is not None
-                else None
-            )
-            to_email_address_value = (
-                row[to_email_address_column]
-                if to_email_address_column is not None
-                else None
-            )
-            invoice_id_value = (
-                row[invoice_id_column] if invoice_id_column is not None else None
-            )
-            subject_value = row[subject_column] if subject_column is not None else None
-            note_value = row[note_column] if note_column is not None else None
-            bank_name_value = (
-                row[bank_name_column] if bank_name_column is not None else None
-            )
-            bank_account_value = (
-                row[bank_account_column] if bank_account_column is not None else None
-            )
-
-            if currency_value != currency_code:
+            dict_values = {}
+            for key in data_dict:
+                dict_values[key] = (
+                    row[data_dict.get(key)] if data_dict.get(key) is not None else None
+                )
+            if dict_values.get("currency_column") != currency_code:
                 continue
 
-            date = datetime.strptime(date_value, mapping.date_format).date()
-            time = datetime.strptime(time_value, mapping.time_format).time()
+            date = datetime.strptime(
+                dict_values.get("date_column"), mapping.date_format
+            ).date()
+            time = datetime.strptime(
+                dict_values.get("time_column"), mapping.time_format
+            ).time()
             timestamp = datetime.combine(date, time)
-            tz_value = self._normalize_tz(tz_value)
+            tz_value = self._normalize_tz(dict_values.get("tz_column"))
             tz = timezone(tz_value)
             timestamp = timestamp.replace(tzinfo=tz)
             timestamp = timestamp.astimezone(utc).replace(tzinfo=None)
-            gross_amount = self._parse_decimal(gross_value, mapping)
-            fee_amount = self._parse_decimal(fee_value, mapping)
-            balance_amount = self._parse_decimal(balance_value, mapping)
+            gross_amount = self._parse_decimal(dict_values.get("gross_column"), mapping)
+            fee_amount = self._parse_decimal(dict_values.get("fee_column"), mapping)
+            balance_amount = self._parse_decimal(
+                dict_values.get("balance_column"), mapping
+            )
             bank = (
-                "{} - {}".format(bank_name_value, bank_account_value)
-                if bank_name_value and bank_account_value
+                "{} - {}".format(
+                    dict_values.get("bank_name_column"),
+                    dict_values.get("bank_account_column"),
+                )
+                if dict_values.get("bank_name_column")
+                and dict_values.get("bank_account_column")
                 else None
             )
-            if to_email_address_column is None:
-                payer_email = from_email_address_value
+            if data_dict.get("to_email_address_column") is None:
+                payer_email = dict_values.get("from_email_address_column")
             else:
                 payer_email = (
-                    to_email_address_value
+                    dict_values.get("to_email_address_column")
                     if gross_amount < 0.0
-                    else from_email_address_value
+                    else dict_values.get("from_email_address_column")
                 )
 
             lines.append(
                 {
-                    "transaction_id": transaction_id_value,
-                    "invoice": invoice_id_value,
-                    "description": description_value or type_value,
-                    "details": subject_value or note_value or bank,
+                    "transaction_id": dict_values.get("transaction_id_column"),
+                    "invoice": dict_values.get("invoice_id_column"),
+                    "description": dict_values.get("description_column")
+                    or dict_values.get("type_column"),
+                    "details": dict_values.get("subject_column")
+                    or dict_values.get("note_column")
+                    or bank,
                     "timestamp": timestamp,
                     "gross_amount": gross_amount,
                     "fee_amount": fee_amount,
                     "balance_amount": balance_amount,
-                    "payer_name": name_value,
+                    "payer_name": dict_values.get("name_column"),
                     "payer_email": payer_email,
-                    "partner_bank_name": bank_name_value,
-                    "partner_bank_account": bank_account_value,
+                    "partner_bank_name": dict_values.get("bank_name_column"),
+                    "partner_bank_account": dict_values.get("bank_account_column"),
                 }
             )
         return lines

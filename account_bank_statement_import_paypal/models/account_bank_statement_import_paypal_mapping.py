@@ -59,7 +59,6 @@ class AccountBankStatementImportPayPalMapping(models.Model):
         elif "comma" == self.float_thousands_sep == self.float_decimal_sep:
             self.float_thousands_sep = "dot"
 
-    @api.multi
     def _get_float_separators(self):
         self.ensure_one()
         separators = {
