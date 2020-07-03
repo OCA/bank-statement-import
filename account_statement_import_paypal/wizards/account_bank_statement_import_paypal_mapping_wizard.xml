@@ -166,9 +166,9 @@
         id="action_account_bank_statement_import_paypal_mapping_wizard"
         name="Import Mapping"
         res_model="account.bank.statement.import.paypal.mapping.wizard"
-        src_model="account.bank.statement.import.paypal.mapping"
+        binding_model="account.bank.statement.import.paypal.mapping"
         view_mode="form"
         target="new"
-        key2="client_action_multi"
+        binding_views="form"
     />
 </odoo>

@@ -14,13 +14,13 @@ PayPal CSV Format Bank Statements Import
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/12.0/account_bank_statement_import_paypal
+    :target: https://github.com/OCA/bank-statement-import/tree/13.0/account_bank_statement_import_paypal
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-12-0/bank-statement-import-12-0-account_bank_statement_import_paypal
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-13-0/bank-statement-import-13-0-account_bank_statement_import_paypal
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/174/12.0
+    :target: https://runbot.odoo-community.org/runbot/174/13.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -46,8 +46,8 @@ Usage
 
 To import statements from PayPal via Statement report:
 
-#. Go to `PayPal <https://paypal.com/>`__
-#. Open *Reports > Statements* and select *Monthly* or *Custom*
+#. Go to `PayPal <https://business.paypal.com/merchantdata/reportHome/>`__
+#. Open *Statements* and select *Monthly* or *Custom*
 #. Select date range of interest and click *Request* under *CSV* column
 #. Wait for statement report to be generated
 #. Download it and save to a file
@@ -55,8 +55,8 @@ To import statements from PayPal via Statement report:
 
 To import statements from PayPal via Activity report:
 
-#. Go to `PayPal <https://paypal.com/>`__
-#. Open *Reports > Activity download*
+#. Go to `PayPal <https://business.paypal.com/merchantdata/reportHome/>`__
+#. Open *Activity download*
 #. Set *Transaction type* to *Balance affecting*
 #. Set *Format* to *CSV*
 #. Select date range of interest and click *Create report*
@@ -81,7 +81,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_bank_statement_import_paypal%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_bank_statement_import_paypal%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -103,6 +103,7 @@ Contributors
 
   * Vicent Cubells <vicent.cubells@tecnativa.com>
   * Victor M.M. Torres <victor.martin@tecnativa.com>
+  * Carlos Roca
 
 * Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
 
@@ -119,6 +120,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/12.0/account_bank_statement_import_paypal>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/13.0/account_bank_statement_import_paypal>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
