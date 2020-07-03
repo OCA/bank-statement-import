@@ -99,5 +99,5 @@ LEFT JOIN _mappings AS _bank_name
     ON m.id = _bank_name.id AND _bank_name.field_to_assign = 'bank_name'
 LEFT JOIN _mappings AS _bank_acc
     ON m.id = _bank_acc.id AND _bank_acc.field_to_assign = 'bank_account';
-        """
+        """,
     )
