@@ -295,6 +295,7 @@ msgstr ""
 
 #. module: account_bank_statement_import_online
 #: model:ir.model,name:account_bank_statement_import_online.model_online_bank_statement_provider
+#: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_bank_statement_import_journal_creation__online_bank_statement_provider
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_journal__online_bank_statement_provider
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
 msgid "Online Bank Statement Provider"
@@ -407,6 +408,7 @@ msgid "Statement Creation Mode"
 msgstr ""
 
 #. module: account_bank_statement_import_online
+#: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_bank_statement_import_journal_creation__online_bank_statement_provider_id
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_journal__online_bank_statement_provider_id
 msgid "Statement Provider"
 msgstr ""
