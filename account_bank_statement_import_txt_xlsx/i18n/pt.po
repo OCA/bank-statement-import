@@ -193,6 +193,7 @@ msgid "Decimals Separator"
 msgstr "Separador decimal"
 
 #. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_journal_creation__default_sheet_mapping_id
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_journal__default_sheet_mapping_id
 msgid "Default Sheet Mapping"
 msgstr ""
