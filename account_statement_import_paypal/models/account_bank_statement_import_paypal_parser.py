@@ -269,5 +269,7 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
     @api.model
     def _normalize_tz(self, value):
         if value in ['PDT', 'PST']:
-            return 'PST8PDT'
+            return 'America/Los_Angeles'
+        elif value in ['CET', 'CEST']:
+            return 'Europe/Paris'
         return value
