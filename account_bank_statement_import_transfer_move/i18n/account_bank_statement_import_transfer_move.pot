@@ -14,6 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_transfer_move
+#: model:ir.model.fields,field_description:account_bank_statement_import_transfer_move.field_account_bank_statement_import_journal_creation__transfer_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_transfer_move.field_account_journal__transfer_line
 msgid "Add balance Line"
 msgstr ""
@@ -24,6 +25,7 @@ msgid "Bank statement configuration"
 msgstr ""
 
 #. module: account_bank_statement_import_transfer_move
+#: model:ir.model.fields,help:account_bank_statement_import_transfer_move.field_account_bank_statement_import_journal_creation__transfer_line
 #: model:ir.model.fields,help:account_bank_statement_import_transfer_move.field_account_journal__transfer_line
 msgid "Generate balance line on total of bank statemen import"
 msgstr ""
