@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-07-29 10:15+0000\n"
+"PO-Revision-Date: 2020-07-29 12:59+0000\n"
 "Last-Translator: Dong <dong@freshoo.cn>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -35,36 +35,36 @@ msgstr "银行对帐单表格导入解析"
 #: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:0
 #, python-format
 msgid "Account: %s; "
-msgstr ""
+msgstr "账户: %s; "
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__allow_back
 msgid "Allow Back"
-msgstr ""
+msgstr "允许返回"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount column"
-msgstr ""
+msgstr "金额列名"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount of transaction in journal's currency"
-msgstr ""
+msgstr "原币的交易金额"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__balance_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__balance_column
 msgid "Balance after transaction in journal's currency"
-msgstr ""
+msgstr "原币交易后的余额"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__balance_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__balance_column
 msgid "Balance column"
-msgstr ""
+msgstr "余额列名"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_bank_statement_import_txt_xlsx.selection__account_bank_statement_import_sheet_mapping__file_encoding__iso-8859-4
