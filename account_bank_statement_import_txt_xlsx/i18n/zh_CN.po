@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-07-29 12:59+0000\n"
+"PO-Revision-Date: 2020-07-29 19:59+0000\n"
 "Last-Translator: Dong <dong@freshoo.cn>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -35,7 +35,7 @@ msgstr "银行对帐单表格导入解析"
 #: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:0
 #, python-format
 msgid "Account: %s; "
-msgstr "账户: %s; "
+msgstr "账户： %s; "
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__allow_back
@@ -75,19 +75,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_account_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_account_column
 msgid "Bank Account column"
-msgstr ""
+msgstr "对方账户列名"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_name_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_name_column
 msgid "Bank Name column"
-msgstr ""
+msgstr "对方开户行列名"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:0
 #, python-format
 msgid "Bank: %s; "
-msgstr ""
+msgstr "银行 %s; "
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_bank_statement_import_txt_xlsx.selection__account_bank_statement_import_sheet_mapping__file_encoding__iso-8859-2
