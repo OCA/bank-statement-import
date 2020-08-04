@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-08-01 09:59+0000\n"
+"PO-Revision-Date: 2020-08-04 15:59+0000\n"
 "Last-Translator: Dong <dong@freshoo.cn>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -389,7 +389,7 @@ msgstr "银行对账表格导入方案"
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_view
 msgid "TXT/CSV/XLSX mapping:"
-msgstr "TXT/CSV/XLSX 表格导入方案:"
+msgstr "TXT/CSV/XLSX 表格导入方案："
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__quotechar
