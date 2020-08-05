@@ -24,10 +24,12 @@ class CamtParser(models.AbstractModel):
                 '../../ns:CdtDbtInd', namespaces={'ns': ns})
         if sign_node and sign_node[0].text == 'DBIT':
             sign = -1
-        amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
+        amount_node = node.xpath('../../ns:Amt', namespaces={'ns': ns})
         if not amount_node:
-            amount_node = node.xpath(
-                './ns:AmtDtls/ns:TxAmt/ns:Amt', namespaces={'ns': ns})
+            amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
+            if not amount_node:
+                amount_node = node.xpath(
+                    './ns:AmtDtls/ns:TxAmt/ns:Amt', namespaces={'ns': ns})
         if amount_node:
             amount = sign * float(amount_node[0].text)
         return amount
