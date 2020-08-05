@@ -1,6 +1,7 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import base64
+import unittest
 
 from odoo.modules.module import get_module_resource
 from odoo.tests.common import SavepointCase
@@ -36,6 +37,16 @@ class TestGenerateBankStatement(SavepointCase):
         )
 
     def _load_statement(self):
+        module = self.env["ir.module.module"].search(
+            [
+                ("name", "=", "account_bank_statement_import_camt_oca"),
+                ("state", "=", "installed"),
+            ]
+        )
+        if not (module):
+            raise unittest.SkipTest(
+                "account_bank_statement_import_camt_oca module is not installed"
+            )
 
         testfile = get_module_resource(
             "account_bank_statement_import_camt_oca", "test_files", "test-camt053"
