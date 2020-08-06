@@ -242,8 +242,11 @@ class CamtParser(models.AbstractModel):
         try:
             root = etree.fromstring(data, parser=etree.XMLParser(recover=True))
         except etree.XMLSyntaxError:
-            # ABNAmro is known to mix up encodings
-            root = etree.fromstring(data.decode("iso-8859-15").encode("utf-8"))
+            try:
+                # ABNAmro is known to mix up encodings
+                root = etree.fromstring(data.decode("iso-8859-15").encode("utf-8"))
+            except etree.XMLSyntaxError:
+                root = None
         if root is None:
             raise ValueError("Not a valid xml file, or not an xml file at all.")
         ns = root.tag[1 : root.tag.index("}")]
