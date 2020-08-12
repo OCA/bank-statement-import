@@ -18,20 +18,26 @@ class CamtParser(models.AbstractModel):
             return 0.0
         sign = 1
         amount = 0.0
+        exchange_rate = 1
         sign_node = node.xpath('ns:CdtDbtInd', namespaces={'ns': ns})
         if not sign_node:
             sign_node = node.xpath(
                 '../../ns:CdtDbtInd', namespaces={'ns': ns})
         if sign_node and sign_node[0].text == 'DBIT':
             sign = -1
-        amount_node = node.xpath('../../ns:Amt', namespaces={'ns': ns})
+        amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
+        exchange_rate_node = node.xpath(
+            '../..//ns:XchgRate', namespaces={'ns': ns})
         if not amount_node:
-            amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
-            if not amount_node:
-                amount_node = node.xpath(
-                    './ns:AmtDtls/ns:TxAmt/ns:Amt', namespaces={'ns': ns})
+            amount_node = node.xpath(
+                './ns:AmtDtls/ns:TxAmt/ns:Amt', namespaces={'ns': ns})
+            exchange_rate_node = node.xpath(
+                './ns:AmtDtls//ns:XchgRate', namespaces={'ns': ns})
+
+        if exchange_rate_node:
+            exchange_rate = float(exchange_rate_node[0].text)
         if amount_node:
-            amount = sign * float(amount_node[0].text)
+            amount = sign * float(amount_node[0].text) * exchange_rate
         return amount
 
     def add_value_from_node(
