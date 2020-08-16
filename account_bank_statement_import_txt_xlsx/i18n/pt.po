@@ -25,21 +25,18 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_mapping
 #, fuzzy
-#| msgid "Account Bank Statement Import Txt Map"
 msgid "Account Bank Statement Import Sheet Mapping"
 msgstr "Mapa Txt para Importação de Extratos Bancários"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_mapping_wizard
 #, fuzzy
-#| msgid "Account Bank Statement Import Txt Map"
 msgid "Account Bank Statement Import Sheet Mapping Wizard"
 msgstr "Mapa Txt para Importação de Extratos Bancários"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_parser
 #, fuzzy
-#| msgid "Account Bank Statement Import Txt Map"
 msgid "Account Bank Statement Import Sheet Parser"
 msgstr "Mapa Txt para Importação de Extratos Bancários"
 
@@ -64,7 +61,6 @@ msgstr ""
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
 #, fuzzy
-#| msgid "Amount in the journal currency"
 msgid "Amount of transaction in journal's currency"
 msgstr "Montante na moeda do diário"
 
@@ -89,7 +85,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_account_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_account_column
 #, fuzzy
-#| msgid "Bank Account Number"
 msgid "Bank Account column"
 msgstr "Nº de Conta Bancária"
 
@@ -149,7 +144,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__currency_column
 #, fuzzy
-#| msgid "Currency"
 msgid "Currency column"
 msgstr "Moeda"
 
@@ -188,7 +182,6 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__float_decimal_sep
 #, fuzzy
-#| msgid "Decimals separator"
 msgid "Decimals Separator"
 msgstr "Separador decimal"
 
@@ -202,7 +195,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__delimiter
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__delimiter
 #, fuzzy
-#| msgid "String delimiter"
 msgid "Delimiter"
 msgstr "Delimitador de texto"
 
@@ -233,7 +225,6 @@ msgstr "Ficheiro"
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__header
 #, fuzzy
-#| msgid "Header Name"
 msgid "Header"
 msgstr "Nome do Cabeçalho"
 
@@ -257,14 +248,12 @@ msgstr "Importar Extrato Bancário"
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.actions.act_window,name:account_bank_statement_import_txt_xlsx.action_account_bank_statement_import_sheet_mapping_wizard
 #, fuzzy
-#| msgid "Statement Import Mapping"
 msgid "Import Mapping"
 msgstr "Importar Mapeamento do Extrato"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_sheet_mapping_wizard.py:185
 #, fuzzy, python-format
-#| msgid "Statement Import Mapping"
 msgid "Imported Mapping"
 msgstr "Importar Mapeamento do Extrato"
 
@@ -327,7 +316,6 @@ msgstr "Última Atualização em"
 #. module: account_bank_statement_import_txt_xlsx
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_sheet_mapping_wizard.py:153
 #, fuzzy, python-format
-#| msgid "Mapping Lines"
 msgid "Mapping from %s"
 msgstr "Linhas de Mapeamento"
 
@@ -388,21 +376,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__reference_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__reference_column
 #, fuzzy
-#| msgid "Reference"
 msgid "Reference column"
 msgstr "Referência"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
 #, fuzzy
-#| msgid "Statement Import Mapping"
 msgid "Select a statement file to import mapping"
 msgstr "Importar Mapeamento do Extrato"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import__sheet_mapping_id
 #, fuzzy
-#| msgid "Statement Import Mapping"
 msgid "Sheet mapping"
 msgstr "Importar Mapeamento do Extrato"
 
@@ -428,7 +413,6 @@ msgstr "Importar Mapa do Extrato"
 #: model:ir.actions.act_window,name:account_bank_statement_import_txt_xlsx.action_statement_import_sheet_report_mappings
 #: model:ir.ui.menu,name:account_bank_statement_import_txt_xlsx.menu_statement_import_sheet_mapping
 #, fuzzy
-#| msgid "Statement Import Mapping"
 msgid "Statement Sheet Mappings"
 msgstr "Importar Mapeamento do Extrato"
 
@@ -446,7 +430,6 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__float_thousands_sep
 #, fuzzy
-#| msgid "Thousands separator"
 msgid "Thousands Separator"
 msgstr "Separador de milhares"
 
@@ -553,14 +536,12 @@ msgstr "ponto e vírgula (;)"
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,delimiter:0
 #, fuzzy
-#| msgid "Space"
 msgid "space"
 msgstr "Espaço"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,delimiter:0
 #, fuzzy
-#| msgid "Tab"
 msgid "tab"
 msgstr "Tab"
 
