@@ -19,6 +19,9 @@ class CamtParser(models.AbstractModel):
         sign = 1
         amount = 0.0
         exchange_rate = 1
+        journal_id = self.env.context.get("journal_id")
+        journal = self.env["account.journal"].browse(journal_id)
+        currency = journal.company_id.currency_id.name
         sign_node = node.xpath('ns:CdtDbtInd', namespaces={'ns': ns})
         if not sign_node:
             sign_node = node.xpath(
@@ -26,15 +29,19 @@ class CamtParser(models.AbstractModel):
         if sign_node and sign_node[0].text == 'DBIT':
             sign = -1
         amount_node = node.xpath('ns:Amt', namespaces={'ns': ns})
+        currency_node = node.xpath('ns:Amt/@Ccy', namespaces={'ns': ns})
         exchange_rate_node = node.xpath(
             '../..//ns:XchgRate', namespaces={'ns': ns})
         if not amount_node:
             amount_node = node.xpath(
                 './ns:AmtDtls/ns:TxAmt/ns:Amt', namespaces={'ns': ns})
+            currency_node = node.xpath(
+                './ns:AmtDtls/ns:TxAmt/ns:Amt/@Ccy', namespaces={'ns': ns})
             exchange_rate_node = node.xpath(
                 './ns:AmtDtls//ns:XchgRate', namespaces={'ns': ns})
 
-        if exchange_rate_node:
+        if (not currency_node or currency_node[0] != currency) \
+                and exchange_rate_node:
             exchange_rate = float(exchange_rate_node[0].text)
         if amount_node:
             amount = sign * float(amount_node[0].text) * exchange_rate
