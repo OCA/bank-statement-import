@@ -61,6 +61,7 @@ class CamtParser(models.AbstractModel):
                 "./ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf",
                 "./ns:AddtlNtryInf",
                 "./ns:Refs/ns:InstrId",
+                "./ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref",
             ],
             transaction,
             "name",
