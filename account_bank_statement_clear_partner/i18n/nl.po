@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_bank_statement_clear_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-01-20 18:44+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: account_bank_statement_clear_partner
+#: model:ir.model,name:account_bank_statement_clear_partner.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Bank afschriften"
+
+#. module: account_bank_statement_clear_partner
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_clear_partner.view_bank_statement_form
+msgid "Clear partners"
+msgstr ""
