@@ -35,7 +35,7 @@ msgid "Account Bank Statement Import Sheet Parser"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:301
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:306
 #, python-format
 msgid "Account: %s; "
 msgstr ""
@@ -92,7 +92,7 @@ msgid "Bank Statement File"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:297
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:302
 #, python-format
 msgid "Bank: %s; "
 msgstr ""
@@ -301,7 +301,7 @@ msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,delimiter:0
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:291
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:296
 #, python-format
 msgid "N/A"
 msgstr ""
@@ -423,7 +423,7 @@ msgid "Traditional Chinese (big5)"
 msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
-#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:305
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:310
 #, python-format
 msgid "Transaction ID: %s; "
 msgstr ""
