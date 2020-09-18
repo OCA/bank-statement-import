@@ -217,6 +217,37 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(line.currency_id, self.currency_eur)
         self.assertEqual(line.amount_currency, 1000.0)
 
+    def test_original_currency_empty(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_usd.id,
+        })
+        wizard = self.AccountBankStatementImport.with_context({
+            'journal_id': journal.id,
+        }).create({
+            'filename': 'fixtures/original_currency_empty.csv',
+            'data_file': self._data_file(
+                'fixtures/original_currency_empty.csv',
+                'utf-8'
+            ),
+            'sheet_mapping_id': self.sample_statement_map.id,
+        })
+        wizard.with_context({
+            'journal_id': journal.id,
+            'account_bank_statement_import_txt_xlsx_test': True,
+        }).import_file()
+        statement = self.AccountBankStatement.search([
+            ('journal_id', '=', journal.id),
+        ])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 1)
+
+        line = statement.line_ids
+        self.assertFalse(line.currency_id)
+        self.assertEqual(line.amount_currency, 0.0)
+
     def test_multi_currency(self):
         journal = self.AccountJournal.create({
             'name': 'Bank',
