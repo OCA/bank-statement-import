@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-bank-statement-import Odoo addons",
     version=version,
     install_requires=[
+        'odoo12-addon-account_bank_statement_clear_partner',
         'odoo12-addon-account_bank_statement_import_camt_oca',
         'odoo12-addon-account_bank_statement_import_move_line',
         'odoo12-addon-account_bank_statement_import_ofx',
