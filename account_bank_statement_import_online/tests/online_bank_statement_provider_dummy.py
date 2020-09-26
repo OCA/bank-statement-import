@@ -1,5 +1,5 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019-2020 Dataplug (https://dataplug.io)
+# CCopyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from datetime import datetime, timedelta
