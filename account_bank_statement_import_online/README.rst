@@ -27,6 +27,8 @@ Online Bank Statements
 
 This module provides base for building online bank statements providers.
 
+For support please contact `CorporateHub <mailto:support@corphub.eu>`__.
+
 **Table of contents**
 
 .. contents::
@@ -88,13 +90,12 @@ Credits
 Authors
 ~~~~~~~
 
-* Brainbean Apps
-* Dataplug
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
 
 Maintainers
 ~~~~~~~~~~~
