@@ -28,6 +28,8 @@ Online Bank Statements: TransferWise.com
 This module provides online bank statements from
 `TransferWise.com <https://transferwise.com/>`_.
 
+For support please contact `CorporateHub <mailto:support@corphub.eu>`__.
+
 **Table of contents**
 
 .. contents::
@@ -83,13 +85,12 @@ Credits
 Authors
 ~~~~~~~
 
-* Brainbean Apps
-* Dataplug
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
 
 Maintainers
 ~~~~~~~~~~~
