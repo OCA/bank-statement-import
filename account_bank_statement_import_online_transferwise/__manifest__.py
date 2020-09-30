@@ -1,13 +1,12 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019 Dataplug (https://dataplug.io)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Online Bank Statements: TransferWise.com',
     'version': '11.0.1.0.0',
     'author':
-        'Brainbean Apps, '
-        'Dataplug, '
+        'CorporateHub, '
         'Odoo Community Association (OCA)',
     'maintainers': ['alexey-pelykh'],
     'website': 'https://github.com/OCA/bank-statement-import/',
