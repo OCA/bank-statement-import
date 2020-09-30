@@ -1,6 +1,7 @@
 # Copyright 2014-2017 Akretion (http://www.akretion.com).
 # Copyright 2019 Tecnativa - Vicent Cubells
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
@@ -9,7 +10,7 @@
     "version": "13.0.1.0.0",
     "category": "Accounting",
     "website": "https://github.com/OCA/bank-statement-import",
-    "author": "Akretion, " "Brainbean Apps, " "Odoo Community Association (OCA)",
+    "author": "Akretion, CorporateHub, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
     "depends": [
