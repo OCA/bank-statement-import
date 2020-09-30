@@ -1,11 +1,12 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Account Bank Statement Import: Split by date',
     'version': '12.0.1.0.1',
     'author':
-        'Brainbean Apps, '
+        'CorporateHub, '
         'Odoo Community Association (OCA)',
     'maintainers': ['alexey-pelykh'],
     'website': 'https://github.com/OCA/bank-statement-import/',
