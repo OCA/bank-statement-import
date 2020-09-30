@@ -31,6 +31,8 @@ This module allows splitting statements by date during import:
 * as weekly statements
 * as monthly statements
 
+For support please contact `CorporateHub <mailto:support@corphub.eu>`__.
+
 **Table of contents**
 
 .. contents::
@@ -52,12 +54,12 @@ Credits
 Authors
 ~~~~~~~
 
-* Brainbean Apps
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
 
 Maintainers
 ~~~~~~~~~~~
