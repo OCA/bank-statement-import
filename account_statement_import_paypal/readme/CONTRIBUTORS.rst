@@ -6,4 +6,4 @@
   * Victor M.M. Torres <victor.martin@tecnativa.com>
   * Carlos Roca
 
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
