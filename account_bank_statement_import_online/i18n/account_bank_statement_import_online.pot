@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:157
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:156
 #, python-format
 msgid "%(number)s %(type)s"
 msgstr ""
@@ -108,7 +108,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:200
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:199
 #, python-format
 msgid "Failed to obtain statement data for period since %s until %s: %s. See server logs for more details."
 msgstr ""
@@ -125,7 +125,7 @@ msgid "ID"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:154
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:153
 #: model:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
@@ -137,7 +137,7 @@ msgid "Interval Type"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:209
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:208
 #, python-format
 msgid "Issue with Online Bank Statement Provider"
 msgstr ""
@@ -187,7 +187,7 @@ msgid "Monthly statements"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:207
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:206
 #, python-format
 msgid "N/A"
 msgstr ""
@@ -215,7 +215,7 @@ msgid "Online Bank Statement Providers"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/account_journal.py:89
+#: code:addons/account_bank_statement_import_online/models/account_journal.py:88
 #: model:ir.model,name:account_bank_statement_import_online.model_online_bank_statement_pull_wizard
 #, python-format
 msgid "Online Bank Statement Pull Wizard"
