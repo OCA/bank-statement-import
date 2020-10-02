@@ -1,5 +1,4 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models, api
