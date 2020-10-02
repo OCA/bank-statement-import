@@ -31,8 +31,6 @@ This module allows splitting statements by date during import:
 * as weekly statements
 * as monthly statements
 
-For support please contact `CorporateHub <mailto:support@corphub.eu>`__.
-
 **Table of contents**
 
 .. contents::
@@ -59,7 +57,9 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
