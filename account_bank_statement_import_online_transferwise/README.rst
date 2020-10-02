@@ -26,9 +26,7 @@ Online Bank Statements: TransferWise.com
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module provides online bank statements from
-`TransferWise.com <https://transferwise.com/>`_.
-
-For support please contact `CorporateHub <mailto:support@corphub.eu>`__.
+`TransferWise.com <https://transferwise.com/>`__.
 
 **Table of contents**
 
@@ -90,7 +88,9 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~

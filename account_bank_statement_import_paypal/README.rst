@@ -92,7 +92,7 @@ Authors
 ~~~~~~~
 
 * Akretion
-* Brainbean Apps
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~

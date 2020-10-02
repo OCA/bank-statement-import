@@ -27,8 +27,6 @@ Online Bank Statements
 
 This module provides base for building online bank statements providers.
 
-For support please contact `CorporateHub <mailto:support@corphub.eu>`__.
-
 **Table of contents**
 
 .. contents::
@@ -95,7 +93,9 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
