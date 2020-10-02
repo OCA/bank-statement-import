@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:154
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:153
 #, python-format
 msgid "%(number)s %(type)s"
 msgstr ""
@@ -118,7 +118,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:197
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:196
 #, python-format
 msgid "Failed to obtain statement data for period since %s until %s: %s. See server logs for more details."
 msgstr ""
@@ -165,7 +165,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:151
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:150
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
@@ -182,7 +182,7 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:206
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:205
 #, python-format
 msgid "Issue with Online Bank Statement Provider"
 msgstr ""
@@ -247,7 +247,7 @@ msgid "Monthly statements"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:204
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:203
 #, python-format
 msgid "N/A"
 msgstr ""
@@ -288,7 +288,7 @@ msgid "Number of unread messages"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/account_journal.py:29
+#: code:addons/account_bank_statement_import_online/models/account_journal.py:28
 #, python-format
 msgid "Online (OCA)"
 msgstr ""
@@ -307,7 +307,7 @@ msgid "Online Bank Statement Providers"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/account_journal.py:91
+#: code:addons/account_bank_statement_import_online/models/account_journal.py:90
 #: model:ir.model,name:account_bank_statement_import_online.model_online_bank_statement_pull_wizard
 #, python-format
 msgid "Online Bank Statement Pull Wizard"
