@@ -26,9 +26,7 @@ Online Bank Statements: PayPal.com
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module provides online bank statements from
-`PayPal.com <https://paypal.com/>`_.
-
-For support please contact `CorporateHub <mailto:support@corphub.eu>`_.
+`PayPal.com <https://paypal.com/>`__.
 
 **Table of contents**
 
@@ -114,7 +112,9 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
