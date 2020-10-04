@@ -1,0 +1,9 @@
+{
+    "data": {
+        "report": {
+            "paymentLevelFees": {
+                "url": "https://example.com/"
+            }
+        }
+    }
+}

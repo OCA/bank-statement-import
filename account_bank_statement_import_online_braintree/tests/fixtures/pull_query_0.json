@@ -1,0 +1,41 @@
+{
+    "data": {
+        "search": {
+            "transactions": {
+                "edges": [
+                    {
+                        "node": {
+                            "id": "abcdef0100000000",
+                            "legacyId": "abcdef01",
+                            "merchantAccountId": "usd",
+                            "amount": {
+                                "value": "1085.00",
+                                "currencyIsoCode": "USD"
+                            },
+                            "statusHistory": [
+                                {
+                                    "status": "SETTLED",
+                                    "terminal": true,
+                                    "timestamp": "2020-04-06T00:00:00.000000Z"
+                                }
+                            ],
+                            "disbursementDetails": {
+                                "date": "2020-04-08",
+                                "amount": {
+                                    "value": "993.53",
+                                    "currencyIsoCode": "EUR"
+                                },
+                                "exchangeRate": "0",
+                                "fundsHeld": false
+                            }
+                        }
+                    }
+                ],
+                "pageInfo": {
+                    "hasNextPage": true,
+                    "endCursor": "cursor"
+                }
+            }
+        }
+    }
+}

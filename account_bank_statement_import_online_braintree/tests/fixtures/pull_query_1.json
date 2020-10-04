@@ -1,0 +1,60 @@
+{
+    "data": {
+        "search": {
+            "transactions": {
+                "edges": [
+                    {
+                        "node": {
+                            "id": "abcdef02",
+                            "legacyId": null,
+                            "merchantAccountId": "usd",
+                            "amount": {
+                                "value": "2448.00",
+                                "currencyIsoCode": "USD"
+                            },
+                            "statusHistory": [
+                                {
+                                    "status": "SETTLED",
+                                    "terminal": true,
+                                    "timestamp": "2020-04-07T00:00:00.000000Z"
+                                }
+                            ],
+                            "disbursementDetails": {
+                                "date": "2020-04-08",
+                                "amount": {
+                                    "value": "2241.63",
+                                    "currencyIsoCode": "EUR"
+                                },
+                                "exchangeRate": "0",
+                                "fundsHeld": false
+                            }
+                        }
+                    },
+                    {
+                        "node": {
+                            "id": "abcdef03",
+                            "legacyId": null,
+                            "merchantAccountId": "usd",
+                            "amount": {
+                                "value": "599.00",
+                                "currencyIsoCode": "USD"
+                            },
+                            "statusHistory": [
+                                {
+                                    "status": "SETTLED",
+                                    "terminal": true,
+                                    "timestamp": "2020-04-07T00:00:00.000000Z"
+                                }
+                            ],
+                            "disbursementDetails": null
+                        }
+                    }
+                ],
+                "pageInfo": {
+                    "hasNextPage": false,
+                    "endCursor": "cursor"
+                }
+            }
+        }
+    }
+}
