@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo12-addon-account_bank_statement_import_ofx',
         'odoo12-addon-account_bank_statement_import_online',
         'odoo12-addon-account_bank_statement_import_online_paypal',
+        'odoo12-addon-account_bank_statement_import_online_qonto',
         'odoo12-addon-account_bank_statement_import_online_transferwise',
         'odoo12-addon-account_bank_statement_import_paypal',
         'odoo12-addon-account_bank_statement_import_split',
