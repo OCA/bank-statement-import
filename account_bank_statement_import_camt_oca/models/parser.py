@@ -76,6 +76,27 @@ class CamtParser(models.AbstractModel):
             ],
             transaction, 'ref'
         )
+        # creditor
+        self.add_value_from_node(
+            ns, node, [
+                './ns:RltdPties/ns:Cdtr/ns:Nm',
+            ],
+            transaction, 'creditor'
+        )
+        # debitor
+        self.add_value_from_node(
+            ns, node, [
+                './ns:RltdPties/ns:Dbtr/ns:Nm',
+            ],
+            transaction, 'debitor'
+        )
+        # info
+        self.add_value_from_node(
+            ns, node, [
+                './ns:RmtInf/ns:Ustrd',
+            ],
+            transaction, 'info'
+        )
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction['amount'] = amount
@@ -95,6 +116,7 @@ class CamtParser(models.AbstractModel):
             './ns:RltdPties/ns:%sAcct/ns:Id' % party_type,
             namespaces={'ns': ns}
         )
+
         if account_node:
             iban_node = account_node[0].xpath(
                 './ns:IBAN', namespaces={'ns': ns})
