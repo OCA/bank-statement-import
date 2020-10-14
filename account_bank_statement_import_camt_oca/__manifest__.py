@@ -12,5 +12,7 @@
     ],
     'data': [
         'views/account_bank_statement_import.xml',
+        'views/account_bank_statement_line_view.xml',
     ],
+    'qweb': ["static/src/xml/reconciliation.xml"],
 }
