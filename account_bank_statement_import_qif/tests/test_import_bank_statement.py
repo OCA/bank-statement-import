@@ -16,11 +16,11 @@ class TestQifFile(TransactionCase):
     """
 
     def setUp(self):
-        super(TestQifFile, self).setUp()
+        super().setUp()
         self.statement_import_model = self.env["account.bank.statement.import"]
         self.statement_line_model = self.env["account.bank.statement.line"]
         self.journal = self.env["account.journal"].create(
-            {"name": "Test bank journal", "code": "TEST", "type": "bank",}
+            {"name": "Test bank journal", "code": "TEST", "type": "bank"}
         )
         self.partner = self.env["res.partner"].create(
             {
@@ -36,7 +36,7 @@ class TestQifFile(TransactionCase):
         qif_file = base64.b64encode(open(qif_file_path, "rb").read())
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
-        ).create(dict(data_file=qif_file))
+        ).create({"attachment_ids": [(0, 0, {"name": "test file", "datas": qif_file})]})
         wizard.import_file()
         statement = self.statement_line_model.search(
             [("name", "=", "YOUR LOCAL SUPERMARKET")], limit=1,
