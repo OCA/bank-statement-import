@@ -61,6 +61,9 @@ class CamtParser(models.AbstractModel):
                     './ns:AddtlNtryInf',
                     './ns:Refs/ns:InstrId',
                     './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                    './ns:RltdPties/ns:Cdtr/ns:Nm',
+                    './ns:RltdPties/ns:Dbtr/ns:Nm',
+                    './ns:RmtInf/ns:Ustrd',
                 ], transaction, 'name', join_str='\n')
         # name
         self.add_value_from_node(
@@ -77,26 +80,16 @@ class CamtParser(models.AbstractModel):
             transaction, 'ref'
         )
         # creditor
-        self.add_value_from_node(
-            ns, node, [
-                './ns:RltdPties/ns:Cdtr/ns:Nm',
-            ],
-            transaction, 'creditor'
-        )
+        creditor = node.xpath('./ns:RltdPties/ns:Cdtr/ns:Nm', namespaces={'ns': ns})
         # debitor
-        self.add_value_from_node(
-            ns, node, [
-                './ns:RltdPties/ns:Dbtr/ns:Nm',
-            ],
-            transaction, 'debitor'
-        )
+        debitor = node.xpath('./ns:RltdPties/ns:Dbtr/ns:Nm', namespaces={'ns': ns})
         # info
-        self.add_value_from_node(
-            ns, node, [
-                './ns:RmtInf/ns:Ustrd',
-            ],
-            transaction, 'info'
-        )
+        info = node.xpath('./ns:RmtInf/ns:Ustrd', namespaces={'ns': ns})
+        additional_info = "{} {} {}".format(creditor[0].text, debitor[0].text, info[0].text)
+        if additional_info:
+            transaction['name'] = "{} {}".format(transaction['name'], additional_info)
+
+
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction['amount'] = amount
