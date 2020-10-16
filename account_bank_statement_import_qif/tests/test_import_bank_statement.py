@@ -36,7 +36,7 @@ class TestQifFile(TransactionCase):
         qif_file = base64.b64encode(open(qif_file_path, "rb").read())
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
-        ).create(dict(data_file=qif_file))
+        ).create({"attachment_ids": [(0, 0, {"name": "test file", "datas": qif_file})]})
         wizard.import_file()
         statement = self.statement_line_model.search(
             [("name", "=", "YOUR LOCAL SUPERMARKET")], limit=1,
