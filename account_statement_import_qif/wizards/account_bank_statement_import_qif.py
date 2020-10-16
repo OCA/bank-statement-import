@@ -4,6 +4,8 @@
 # Copyright 2016-2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import base64
+
 import dateutil.parser
 
 from odoo import api, models
@@ -20,7 +22,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _parse_file(self, data_file):
         if not self._check_qif(data_file):
-            return super(AccountBankStatementImport, self)._parse_file(data_file)
+            return super()._parse_file(data_file)
         try:
             file_data = data_file.decode()
             if "\r" in file_data:
@@ -29,7 +31,7 @@ class AccountBankStatementImport(models.TransientModel):
                 data_list = file_data.split("\n")
             header = data_list[0].strip()
             header = header.split(":")[1]
-        except:
+        except Exception:
             raise UserError(_("Could not decipher the QIF file."))
         transactions = []
         vals_line = {}
@@ -82,12 +84,14 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _complete_stmts_vals(self, stmt_vals, journal_id, account_number):
         """Match partner_id if hasn't been deducted yet."""
-        res = super(AccountBankStatementImport, self)._complete_stmts_vals(
-            stmt_vals, journal_id, account_number,
-        )
+        res = super()._complete_stmts_vals(stmt_vals, journal_id, account_number)
         # Since QIF doesn't provide account numbers (normal behaviour is to
         # provide 'account_number', which the generic module uses to find
         # the partner), we have to find res.partner through the name
+        if not self.attachment_ids or not self._check_qif(
+            base64.b64decode(self.attachment_ids[0].datas)
+        ):
+            return res
         partner_obj = self.env["res.partner"]
         for statement in res:
             for line_vals in statement["transactions"]:
