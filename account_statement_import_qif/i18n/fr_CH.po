@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:34
+#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:0
 #, python-format
 msgid "Could not decipher the QIF file."
 msgstr ""
@@ -31,12 +31,17 @@ msgid "Import Bank Statement"
 msgstr "Importer Relevé"
 
 #. module: account_bank_statement_import_qif
-#: model:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view
+#: model:ir.model,name:account_bank_statement_import_qif.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_bank_statement_import_qif
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view
 msgid "Quicken Interchange Format (.qif)"
 msgstr ""
 
 #. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:69
+#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:0
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr ""
