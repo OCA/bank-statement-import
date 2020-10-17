@@ -24,19 +24,19 @@ msgid "API key"
 msgstr ""
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:125
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:126
 #, python-format
 msgid "Ending balance unavailable"
 msgstr ""
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:240
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:239
 #, python-format
 msgid "Fee for %s"
 msgstr ""
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:271
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:270
 #, python-format
 msgid "No API key specified!"
 msgstr ""
@@ -52,7 +52,7 @@ msgid "Profile"
 msgstr ""
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:245
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:244
 #, python-format
 msgid "Transaction fee for %s"
 msgstr ""
