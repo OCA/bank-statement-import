@@ -1,4 +1,5 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from dateutil.relativedelta import relativedelta
@@ -170,9 +171,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             )
         amount = transaction['amount']
         amount_value = amount.get('value', 0)
-        fees_value = total_fees.get('value', Decimal()).copy_abs()
-        if amount_value.is_signed():
-            fees_value = fees_value.copy_negate()
+        fees_value = total_fees.get('value', Decimal()).copy_negate()
         amount_value -= fees_value
         unique_import_id = '%s-%s-%s' % (
             transaction['type'],
