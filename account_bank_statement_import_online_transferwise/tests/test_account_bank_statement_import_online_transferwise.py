@@ -1,4 +1,5 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
@@ -548,4 +549,88 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'amount': '-0.05',
             'partner_name': 'TransferWise',
             'unique_import_id': 'DEBIT-BALANCE-123456789-946684800-FEE',
+        })
+
+    def test_transaction_parse_9(self):
+        lines = self.transferwise_parse_transaction("""{
+            "type": "CREDIT",
+            "date": "2000-01-01T00:00:00.000Z",
+            "amount": {
+                "value": 25.00,
+                "currency": "USD"
+            },
+            "totalFees": {
+                "value": 0.68,
+                "currency": "USD"
+            },
+            "details": {
+                "type": "MONEY_ADDED",
+                "description": "Topped up balance"
+            },
+            "exchangeDetails": null,
+            "runningBalance": {
+                "value": 25.68,
+                "currency": "USD"
+            },
+            "referenceNumber": "TRANSFER-123456789"
+}""")
+        self.assertEqual(len(lines), 2)
+        self.assertEqual(lines[0], {
+            'date': datetime(2000, 1, 1),
+            'name': 'Topped up balance',
+            'note': 'TRANSFER-123456789: Topped up balance',
+            'amount': '25.68',
+            'unique_import_id': 'CREDIT-TRANSFER-123456789-946684800',
+        })
+        self.assertEqual(lines[1], {
+            'date': datetime(2000, 1, 1),
+            'name': 'Fee for TRANSFER-123456789',
+            'note': 'Transaction fee for TRANSFER-123456789',
+            'amount': '-0.68',
+            'partner_name': 'TransferWise',
+            'unique_import_id': 'CREDIT-TRANSFER-123456789-946684800-FEE',
+        })
+
+    def test_transaction_parse_10(self):
+        lines = self.transferwise_parse_transaction("""{
+            "type": "CREDIT",
+            "date": "2000-01-01T00:00:00.000Z",
+            "amount": {
+                "value": 1804.33,
+                "currency": "USD"
+            },
+            "totalFees": {
+                "value": 4.33,
+                "currency": "USD"
+            },
+            "details": {
+                "type": "TRANSFER",
+                "description": "Sent money to Acme Inc.",
+                "recipient": {
+                    "name": "Acme Inc."
+                }
+            },
+            "exchangeDetails": null,
+            "runningBalance": {
+                "value": 1804.33,
+                "currency": "USD"
+            },
+            "referenceNumber": "TRANSFER-123456789"
+}""")
+        self.assertEqual(len(lines), 2)
+        self.assertEqual(lines[0], {
+            'date': datetime(2000, 1, 1),
+            'name': 'Sent money to Acme Inc.',
+            'note': 'TRANSFER-123456789: Sent money to Acme Inc.',
+            'partner_name': 'Acme Inc.',
+            'amount': '1800.00',
+            'unique_import_id': 'CREDIT-TRANSFER-123456789-946684800',
+        })
+        self.assertEqual(lines[1], {
+            'date': datetime(2000, 1, 1),
+            'name': 'Fee for TRANSFER-123456789',
+            'note': 'Transaction fee for TRANSFER-123456789',
+            'amount': '4.33',
+            'partner_name': 'TransferWise',
+            'unique_import_id': 'CREDIT-TRANSFER-123456789-946684800-FEE',
         })
