@@ -85,7 +85,10 @@ class CamtParser(models.AbstractModel):
         debitor = node.xpath('./ns:RltdPties/ns:Dbtr/ns:Nm', namespaces={'ns': ns})
         # info
         info = node.xpath('./ns:RmtInf/ns:Ustrd', namespaces={'ns': ns})
-        additional_info = "{} {} {}".format(creditor[0].text, debitor[0].text, info[0].text)
+        company_name = self.env.user.company_id.name
+        creditor_text = '' if creditor[0].text == company_name else creditor[0].text
+        debitor_text = '' if debitor[0].text == company_name else debitor[0].text
+        additional_info = "{} {} {}".format(creditor_text, debitor_text, info[0].text)
         if additional_info:
             transaction['name'] = "{} {}".format(transaction['name'], additional_info)
 
