@@ -84,7 +84,7 @@ class CamtParser(models.AbstractModel):
         # creditor
         creditor = node.xpath('./ns:RltdPties/ns:Cdtr/ns:Nm', namespaces={'ns': ns})
         if creditor and creditor[0].text is not None:
-            if creditor[0].text == company_name:
+            if not creditor[0].text == company_name:
                 creditor_text = creditor[0].text
         # debitor
         debitor = node.xpath('./ns:RltdPties/ns:Dbtr/ns:Nm', namespaces={'ns': ns})
