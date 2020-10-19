@@ -53,6 +53,7 @@ class CamtParser(models.AbstractModel):
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse TxDtls node."""
+        creditor_text = debitor_text = info_text = ''
         # message
         if transaction['name'] == '/':
             self.add_value_from_node(
@@ -79,16 +80,23 @@ class CamtParser(models.AbstractModel):
             ],
             transaction, 'ref'
         )
+        company_name = self.env.user.company_id.name
         # creditor
         creditor = node.xpath('./ns:RltdPties/ns:Cdtr/ns:Nm', namespaces={'ns': ns})
+        if creditor and creditor[0].text is not None:
+            if creditor[0].text == company_name:
+                creditor_text = creditor[0].text
         # debitor
         debitor = node.xpath('./ns:RltdPties/ns:Dbtr/ns:Nm', namespaces={'ns': ns})
+        if debitor and debitor[0].text is not None:
+            if not debitor[0].text == company_name:
+                    debitor_text = debitor[0].text
         # info
         info = node.xpath('./ns:RmtInf/ns:Ustrd', namespaces={'ns': ns})
-        company_name = self.env.user.company_id.name
-        creditor_text = '' if creditor[0].text == company_name else creditor[0].text
-        debitor_text = '' if debitor[0].text == company_name else debitor[0].text
-        additional_info = "{} {} {}".format(creditor_text, debitor_text, info[0].text)
+        if info and info[0].text is not None:
+            info_text = info[0].text
+
+        additional_info = "{} {} {}".format(creditor_text, debitor_text, info_text)
         if additional_info:
             transaction['name'] = "{} {}".format(transaction['name'], additional_info)
 
