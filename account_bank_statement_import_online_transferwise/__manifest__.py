@@ -4,7 +4,7 @@
 
 {
     'name': 'Online Bank Statements: TransferWise.com',
-    'version': '12.0.1.0.2',
+    'version': '12.0.1.0.3',
     'author':
         'CorporateHub, '
         'Odoo Community Association (OCA)',
