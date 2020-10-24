@@ -14,6 +14,10 @@ import urllib.request
 from odoo import models, api, _
 from odoo.exceptions import UserError
 
+import logging
+_logger = logging.getLogger(__name__)
+
+
 TRANSFERWISE_API_BASE = 'https://api.transferwise.com'
 
 
@@ -30,6 +34,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             url = api_base + '/v1/profiles'
             data = self._transferwise_retrieve(url, api_key)
         except:
+            _logger.warning('Unable to get profiles', exc_info=True)
             return []
         return list(map(
             lambda entry: (
@@ -267,7 +272,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
     def _transferwise_retrieve(self, url, api_key):
         with self._transferwise_urlopen(url, api_key) as response:
             content = response.read().decode(
-                response.headers.get_content_charset()
+                response.headers.get_content_charset() or 'utf-8'
             )
         return self._transferwise_validate(content)
 
