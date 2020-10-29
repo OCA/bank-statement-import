@@ -5,7 +5,6 @@ import requests
 import json
 import base64
 import time
-import pytz
 import re
 from datetime import datetime
 
@@ -49,7 +48,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 date_since,
                 date_until,
             )
-        return date_since.astimezone(pytz.timezone('Europe/Paris')).date()
+        return date_since.date()
 
     #########
     # ponto #
