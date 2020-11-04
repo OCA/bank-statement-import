@@ -23,7 +23,7 @@ PayPal CSV Format Bank Statements Import
     :target: https://runbot.odoo-community.org/runbot/174/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module allows you to import the PayPal CSV files in Odoo as bank
 statements.
