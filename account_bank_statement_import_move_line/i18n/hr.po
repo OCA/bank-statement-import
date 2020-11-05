@@ -26,12 +26,12 @@ msgid "Add All Move Lines"
 msgstr "Dodaj sve stavke temeljnica"
 
 #. module: account_bank_statement_import_move_line
-#: selection:account.statement.line.create,target_move:0
+#: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__target_move__all
 msgid "All Entries"
 msgstr "Sve stavke"
 
 #. module: account_bank_statement_import_move_line
-#: selection:account.statement.line.create,target_move:0
+#: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__target_move__posted
 msgid "All Posted Entries"
 msgstr "Sve proknjižene stavke"
 
@@ -89,8 +89,8 @@ msgid "Display Name"
 msgstr "Naziv"
 
 #. module: account_bank_statement_import_move_line
-#: selection:account.statement.line.create,date_type:0
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__due_date
+#: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__date_type__due
 msgid "Due Date"
 msgstr ""
 
@@ -140,8 +140,8 @@ msgid "Linked to an Invoice or Refund"
 msgstr ""
 
 #. module: account_bank_statement_import_move_line
-#: selection:account.statement.line.create,date_type:0
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__move_date
+#: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__date_type__move
 msgid "Move Date"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgid "Partner Related"
 msgstr ""
 
 #. module: account_bank_statement_import_move_line
-#: code:addons/account_bank_statement_import_move_line/wizards/account_statement_line_create.py:95
+#: code:addons/account_bank_statement_import_move_line/wizards/account_statement_line_create.py:0
 #, python-format
 msgid "Select Move Lines to Create Statement"
 msgstr ""
