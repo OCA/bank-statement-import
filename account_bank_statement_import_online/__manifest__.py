@@ -1,11 +1,11 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2019-2020 Dataplug (https://dataplug.io)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     "name": "Online Bank Statements",
     "version": "13.0.1.0.0",
-    "author": "Brainbean Apps, Dataplug, Odoo Community Association (OCA)",
+    "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import/",
     "license": "AGPL-3",
