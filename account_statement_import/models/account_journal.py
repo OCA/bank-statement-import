@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Copyright 2004-2020 Odoo S.A.
+# Copyright 2020 Akretion France (http://www.akretion.com/)
+# @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
-from odoo import models, api, _
+from odoo import models, _
 
 
 class AccountJournal(models.Model):
@@ -14,7 +16,7 @@ class AccountJournal(models.Model):
         return []
 
     def __get_bank_statements_available_sources(self):
-        rslt = super(AccountJournal, self).__get_bank_statements_available_sources()
+        rslt = super().__get_bank_statements_available_sources()
         formats_list = self._get_bank_statements_available_import_formats()
         if formats_list:
             formats_list.sort()
@@ -24,8 +26,7 @@ class AccountJournal(models.Model):
 
     def import_statement(self):
         """return action to import bank/cash statements. This button should be called only on journals with type =='bank'"""
-        action_name = 'action_account_bank_statement_import'
-        [action] = self.env.ref('account_bank_statement_import.%s' % action_name).read()
-        # Note: this drops action['context'], which is a dict stored as a string, which is not easy to update
-        action.update({'context': (u"{'journal_id': " + str(self.id) + u"}")})
+        action = self.env.ref(
+            'account_statement_import.account_statement_import_action').read()[0]
+        action['context'] = {'journal_id': self.id}
         return action
