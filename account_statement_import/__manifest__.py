@@ -4,22 +4,22 @@
 # Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
 {
-    'name': 'Import Bank Statement Files',
-    'category': 'Accounting',
-    'version': '14.0.1.0.0',
-    'license': 'LGPL-3',
-    'depends': ['account'],
-    'author': 'Odoo SA, Akretion',
-    'maintainers': ['alexis-via'],
-    'website': 'https://github.com/OCA/bank-statement-import/',
-    'data': [
-        'security/ir.model.access.csv',
-        'wizard/account_statement_import_view.xml',
-        'views/account_journal.xml',
-        'views/account_bank_statement_line.xml',
+    "name": "Import Bank Statement Files",
+    "category": "Accounting",
+    "version": "14.0.1.0.0",
+    "license": "LGPL-3",
+    "depends": ["account"],
+    "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
+    "maintainers": ["alexis-via"],
+    "website": "https://github.com/OCA/bank-statement-import",
+    "data": [
+        "security/ir.model.access.csv",
+        "wizard/account_statement_import_view.xml",
+        "views/account_journal.xml",
+        "views/account_bank_statement_line.xml",
     ],
-    'demo': [
-        'demo/partner_bank.xml',
+    "demo": [
+        "demo/partner_bank.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

@@ -9,7 +9,7 @@
 
     <record id="journal_dashboard_view_inherit" model="ir.ui.view">
         <field name="model">account.journal</field>
-        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
         <field name="arch" type="xml">
             <xpath expr='//span[@name="button_import_placeholder"]' position='inside'>
                 <span>or <a type="object" name="import_statement">Import</a></span>
