@@ -1,15 +1,15 @@
 # Copyright 2004-2020 Odoo S.A.
 # Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
-from odoo import api, fields, models
+from odoo import models
 
 
-class SetupBarBankConfigWizard(models.TransientModel):
+class AccountSetupBankManualConfig(models.TransientModel):
     _inherit = "account.setup.bank.manual.config"
 
     def validate(self):
         """Default the bank statement source of new bank journals as 'file_import'"""
-        super(SetupBarBankConfigWizard, self).validate()
+        super().validate()
         if (
             self.num_journals_without_account == 0
             or self.linked_journal_id.bank_statements_source == "undefined"
