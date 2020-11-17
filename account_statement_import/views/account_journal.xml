@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright 2004-2020 Odoo S.A.
+  Copyright 2020 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+-->
+<odoo>
+
+    <record id="journal_dashboard_view_inherit" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr='//span[@name="button_import_placeholder"]' position='inside'>
+                <span>or <a type="object" name="import_statement">Import</a></span>
+            </xpath>
+            <xpath expr='//div[@name="bank_cash_commands"]' position="before">
+                <div t-if="journal_type == 'bank'">
+                    <a type="object" name="import_statement">Import Statement</a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
