@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright 2004-2020 Odoo S.A.
+  Copyright 2020 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+-->
+<odoo>
+
+        <record id="account_statement_import_form" model="ir.ui.view">
+            <field name="model">account.statement.import</field>
+            <field name="arch" type="xml">
+                <form string="Upload Bank Statements">
+                    <h2>Upload a bank statement file</h2>
+                    <p>Supported formats:</p>
+                    <ul id="statement_format">
+                        <!-- <li>xxx format</li> is added by format-specific modules -->
+                    </ul>
+                    <field name="statement_file" filename="statement_filename" />
+                    <field name="statement_filename" invisible="1" />
+                    <footer>
+                        <button
+                        name="import_file_button"
+                        string="Import"
+                        type="object"
+                        class="btn-primary"
+                        context="{'return_regular_interface_action': True}"
+                    />  <!-- The context may be temporary... waiting for the port of the reconcile interface -->
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="account_statement_import_action" model="ir.actions.act_window">
+            <field name="name">Import Bank Statement File</field>
+            <field name="res_model">account.statement.import</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>
