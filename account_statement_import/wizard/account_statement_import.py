@@ -154,8 +154,8 @@ class AccountStatementImport(models.TransientModel):
         """
         raise UserError(
             _(
-                "Could not make sense of the given file.\n"
-                "Did you install the module to support this type of file?"
+                "This bank statement file format is not supported.\n"
+                "Did you install the Odoo module to support this format?"
             )
         )
 
