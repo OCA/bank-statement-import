@@ -7,7 +7,7 @@ from odoo.tests import common
 class TestGetPartnerRef(common.TransactionCase):
     def setUp(self):
         super().setUp()
-        self.Parser = self.env["account.bank.statement.import.camt.parser"]
+        self.Parser = self.env["account.statement.import.camt.parser"]
         self.ICP = self.env["ir.config_parameter"]
 
     def test_no_ICP(self):

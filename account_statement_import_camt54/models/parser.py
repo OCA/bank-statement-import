@@ -7,7 +7,7 @@ from odoo import _, exceptions, models
 class CamtParser(models.AbstractModel):
     """Parser for camt bank statement import files."""
 
-    _inherit = "account.bank.statement.import.camt.parser"
+    _inherit = "account.statement.import.camt.parser"
 
     def _get_partner_ref(self, isr):
         ICP = self.env["ir.config_parameter"]

@@ -7,10 +7,10 @@ from odoo import models
 _logger = logging.getLogger(__name__)
 
 
-class AccountBankStatementImport(models.TransientModel):
+class AccountStatementImport(models.TransientModel):
     """Add process_camt method to account.bank.statement.import."""
 
-    _inherit = "account.bank.statement.import"
+    _inherit = "account.statement.import"
 
     def _create_bank_statements(self, stmts_vals):
         """ Set balance_end_real if not already provided by the file."""
