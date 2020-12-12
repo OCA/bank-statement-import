@@ -42,7 +42,6 @@ class OnlineBankStatementProviderPonto(models.Model):
             )
         return self._ponto_obtain_statement_data(date_since, date_until)
 
-
     #########
     # ponto #
     #########
