@@ -14,8 +14,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:88
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:104
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:81
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:97
 #, python-format
 msgid "%s \n"
 "\n"
@@ -23,7 +23,7 @@ msgid "%s \n"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:123
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:116
 #, python-format
 msgid "Error during Create Synchronisation %s \n"
 "\n"
@@ -31,7 +31,7 @@ msgid "Error during Create Synchronisation %s \n"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:178
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:171
 #, python-format
 msgid "Error during get transaction.\n"
 "\n"
@@ -51,19 +51,19 @@ msgid "Online Bank Statement Provider"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:65
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:58
 #, python-format
 msgid "Please fill login and key."
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:81
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:74
 #, python-format
 msgid "Ponto : no token"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:197
+#: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:195
 #, python-format
 msgid "Ponto : wrong configuration, unknow account %s"
 msgstr ""
