@@ -6,6 +6,7 @@ import json
 import base64
 import time
 import re
+import pytz
 from datetime import datetime
 
 from odoo import api, fields, models, _
@@ -41,14 +42,6 @@ class OnlineBankStatementProviderPonto(models.Model):
             )
         return self._ponto_obtain_statement_data(date_since, date_until)
 
-    def _get_statement_date(self, date_since, date_until):
-        self.ensure_one()
-        if self.service != 'ponto':
-            return super()._get_statement_date(
-                date_since,
-                date_until,
-            )
-        return date_since.date()
 
     #########
     # ponto #
@@ -182,47 +175,53 @@ class OnlineBankStatementProviderPonto(models.Model):
         return transaction_lines
 
     def _ponto_date_from_string(self, date_str):
-        return datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
+        """Dates in Ponto are expressed in UTC, so we need to convert them
+        to supplied tz for proper classification.
+        """
+        dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
+        dt = dt.replace(tzinfo=pytz.utc).astimezone(
+            pytz.timezone(self.tz or 'utc')
+        )
+        return dt.replace(tzinfo=None)
 
     def _ponto_obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
-
         account_ids = self._ponto_get_account_ids()
         journal = self.journal_id
-
         iban = self.account_number
         account_id = account_ids.get(iban)
         if not account_id:
             raise UserError(
                 _('Ponto : wrong configuration, unknow account %s')
                 % journal.bank_account_id.acc_number)
-
         self._ponto_synchronisation(account_id)
-
-        transaction_lines = self._ponto_get_transaction(account_id,
-                                                        date_since,
-                                                        date_until)
-
+        transaction_lines = self._ponto_get_transaction(
+            account_id, date_since, date_until)
         new_transactions = []
         sequence = 0
         for transaction in transaction_lines:
             sequence += 1
             attributes = transaction.get('attributes', {})
-            ref = '%s %s' % (
-                attributes.get('description'),
-                attributes.get('counterpartName'))
+            ref_list = [attributes.get(x) for x in {
+                "description",
+                "counterpartName",
+                "counterpartReference",
+            } if attributes.get(x)]
+            ref = " ".join(ref_list)
             date = self._ponto_date_from_string(attributes.get('executionDate'))
-
             vals_line = {
                 'sequence': sequence,
                 'date': date,
-                'name': re.sub(' +', ' ', ref) or '/',
-                'ref': attributes.get('remittanceInformation', ''),
+                'ref': re.sub(' +', ' ', ref) or '/',
+                'name': attributes.get('remittanceInformation', ref),
                 'unique_import_id': transaction['id'],
                 'amount': attributes['amount'],
             }
+            if attributes.get("counterpartReference"):
+                vals_line["account_number"] = attributes["counterpartReference"]
+            if attributes.get("counterpartName"):
+                vals_line["partner_name"] = attributes["counterpartName"]
             new_transactions.append(vals_line)
-
         if new_transactions:
             return new_transactions, {}
         return
