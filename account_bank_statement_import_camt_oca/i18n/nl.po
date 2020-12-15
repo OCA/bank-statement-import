@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-16 08:08+0000\n"
-"PO-Revision-Date: 2020-12-13 03:55+0000\n"
+"PO-Revision-Date: 2020-12-15 21:19+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/"
 "OCA-bank-statement-import-8-0/language/nl/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
@@ -63,7 +63,7 @@ msgstr "Importeer bankafschrift"
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Dagboek"
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser____last_update
@@ -74,7 +74,7 @@ msgstr "Laatst gewijzigd op"
 #: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:0
 #, python-format
 msgid "camt.053.001.02"
-msgstr ""
+msgstr "camt.053.001.02"
 
 #. module: account_bank_statement_import_camt_oca
 #: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:0
