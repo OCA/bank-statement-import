@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import_save_file
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Udo Bremer <info@bremerd.de>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-12 00:39+0000\n"
+"PO-Revision-Date: 2017-08-12 00:39+0000\n"
+"Last-Translator: Udo Bremer <info@bremerd.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Kontoauszug"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_date
+msgid "Date Created"
+msgstr "Erstellungsdatum"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_log
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Kontoauszug importieren"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_file
+msgid "Import file"
+msgstr "Datei importieren"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported file"
+msgstr "Importierte Datei"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_user
+msgid "Owner"
+msgstr "Besitzer"
