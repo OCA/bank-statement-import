@@ -38,7 +38,7 @@ class OnlineBankStatementProviderPonto(models.Model):
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "ponto":
-            return super()._obtain_statement_data(date_since, date_until,)
+            return super()._obtain_statement_data(date_since, date_until)
         return self._ponto_obtain_statement_data(date_since, date_until)
 
     #########
@@ -221,7 +221,7 @@ class OnlineBankStatementProviderPonto(models.Model):
             attributes = transaction.get("attributes", {})
             ref_list = [
                 attributes.get(x)
-                for x in {"description", "counterpartName", "counterpartReference",}
+                for x in {"description", "counterpartName", "counterpartReference"}
                 if attributes.get(x)
             ]
             ref = " ".join(ref_list)
