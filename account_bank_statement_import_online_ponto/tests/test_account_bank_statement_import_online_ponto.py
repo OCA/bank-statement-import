@@ -142,7 +142,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         )
 
     def test_ponto(self):
-        with self.mock_transaction(), self.mock_header(), self.mock_synchronisation(), self.mock_account_ids():
+        with self.mock_transaction(), self.mock_header(), self.mock_synchronisation(), self.mock_account_ids():  # noqa: B950
             lines, statement_values = self.provider._obtain_statement_data(
                 datetime(2019, 11, 3), datetime(2019, 11, 17),
             )
