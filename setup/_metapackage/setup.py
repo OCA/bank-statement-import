@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-account_bank_statement_import_move_line',
         'odoo13-addon-account_bank_statement_import_oca_camt54',
         'odoo13-addon-account_bank_statement_import_online',
+        'odoo13-addon-account_bank_statement_import_online_ponto',
         'odoo13-addon-account_bank_statement_import_paypal',
         'odoo13-addon-account_bank_statement_import_transfer_move',
         'odoo13-addon-account_bank_statement_import_txt_xlsx',
