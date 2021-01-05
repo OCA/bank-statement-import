@@ -51,14 +51,14 @@ class AccountStatementImport(models.TransientModel):
                 action["domain"] = [("id", "in", result["statement_ids"])]
         else:
             # dispatch to reconciliation interface
-            line_ids = self.env["account.bank.statement.line"].search(
+            lines = self.env["account.bank.statement.line"].search(
                 [("statement_id", "in", result["statement_ids"])]
             )
             action = {
                 "type": "ir.actions.client",
                 "tag": "bank_statement_reconciliation_view",
                 "context": {
-                    "statement_line_ids": line_ids,
+                    "statement_line_ids": lines.ids,
                     "company_ids": self.env.user.company_ids.ids,
                     "notifications": result["notifications"],
                 },
