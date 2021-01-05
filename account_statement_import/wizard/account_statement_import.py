@@ -147,7 +147,6 @@ class AccountStatementImport(models.TransientModel):
                     - 'unique_import_id': string
                     -o 'account_number': string
                         Will be used to find/create the res.partner.bank in odoo
-                    -o 'note': string
                     -o 'partner_name': string
         If the file is a multi-statement file, this method must return
         a list of triplets.
