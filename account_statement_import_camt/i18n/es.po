@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_statement_import_camt
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-16 08:08+0000\n"
+"PO-Revision-Date: 2018-06-08 08:27+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
+#, fuzzy
+msgid "Account Bank Statement Import CAMT parser"
+msgstr "account.bank.statement.import.camt.parser"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
+#, fuzzy
+msgid "Bank Statement"
+msgstr "Importar extracto bancario"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
+#, fuzzy
+msgid "Bank Statement Line"
+msgstr "Importar extracto bancario"
+
+#. module: account_statement_import_camt
+#: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
+msgid "CAMT"
+msgstr "CAMT"
+
+#. module: account_statement_import_camt
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement__display_name
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import__display_name
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: account_statement_import_camt
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement__id
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import__id
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "Importar extracto bancario"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement____last_update
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement_line____last_update
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import____last_update
+#: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: account_statement_import_camt
+#: code:addons/account_statement_import_camt/models/account_journal.py:0
+#, python-format
+msgid "camt.053.001.02"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: code:addons/account_statement_import_camt/models/account_journal.py:0
+#, python-format
+msgid "camt.054.001.02"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
+msgid "zipped CAMT"
+msgstr "CAMT en .zip"
