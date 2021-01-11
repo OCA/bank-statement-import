@@ -10,12 +10,12 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
-    _inherit = "account.bank.statement.import"
+    _inherit = "account.statement.import"
 
     def _parse_file(self, data_file):
         """Parse a CAMT053 XML file."""
         try:
-            parser = self.env["account.bank.statement.import.camt.parser"]
+            parser = self.env["account.statement.import.camt.parser"]
             _logger.debug("Try parsing with camt.")
             return parser.parse(data_file)
         except ValueError:
@@ -34,4 +34,4 @@ class AccountBankStatementImport(models.TransientModel):
                 pass
             # Not a camt file, returning super will call next candidate:
             _logger.debug("Statement file was not a camt file.", exc_info=True)
-        return super(AccountBankStatementImport, self)._parse_file(data_file)
+        return super()._parse_file(data_file)

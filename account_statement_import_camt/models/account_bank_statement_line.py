@@ -24,4 +24,4 @@ class AccountBankStatementLine(models.Model):
             and self.name == "/"
         ):
             return True
-        return super(AccountBankStatementLine, self).write(vals)
+        return super().write(vals)

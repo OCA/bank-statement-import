@@ -10,7 +10,7 @@ from odoo import models
 
 
 class CamtParser(models.AbstractModel):
-    _name = "account.bank.statement.import.camt.parser"
+    _name = "account.statement.import.camt.parser"
     _description = "Account Bank Statement Import CAMT parser"
 
     def parse_amount(self, ns, node):
@@ -44,7 +44,9 @@ class CamtParser(models.AbstractModel):
         for search_str in xpath_str:
             found_node = node.xpath(search_str, namespaces={"ns": ns})
             if found_node:
-                if join_str is None:
+                if isinstance(found_node[0], str):
+                    attr_value = found_node[0]
+                elif join_str is None:
                     attr_value = found_node[0].text
                 else:
                     attr_value = join_str.join([x.text for x in found_node])
@@ -68,7 +70,7 @@ class CamtParser(models.AbstractModel):
         )
         # name
         self.add_value_from_node(
-            ns, node, ["./ns:AddtlTxInf"], transaction, "note", join_str="\n"
+            ns, node, ["./ns:AddtlTxInf"], transaction, "payment_ref", join_str="\n"
         )
         # eref
         self.add_value_from_node(
@@ -199,7 +201,9 @@ class CamtParser(models.AbstractModel):
             "account_number",
         )
         self.add_value_from_node(ns, node, "./ns:Id", result, "name")
-        self.add_value_from_node(ns, node, "./ns:Acct/ns:Ccy", result, "currency")
+        self.add_value_from_node(
+            ns, node, ["./ns:Acct/ns:Ccy", "./ns:Bal/ns:Amt/@Ccy"], result, "currency"
+        )
         result["balance_start"], result["balance_end_real"] = self.get_balance_amounts(
             ns, node
         )
