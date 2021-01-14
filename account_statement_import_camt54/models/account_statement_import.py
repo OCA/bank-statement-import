@@ -12,18 +12,29 @@ class AccountStatementImport(models.TransientModel):
 
     _inherit = "account.statement.import"
 
-    def _create_bank_statements(self, stmts_vals):
-        """ Set balance_end_real if not already provided by the file."""
+    def _create_bank_statements(self, stmts_vals, result):
+        """Create additional line in statement to set bank statement statement
+        to 0 balance"""
 
-        statement_line_ids, notifications = super()._create_bank_statements(stmts_vals)
-        statements = self.env["account.bank.statement"].search(
-            [("line_ids", "in", statement_line_ids)]
-        )
+        super()._create_bank_statements(stmts_vals, result)
+        statements = self.env["account.bank.statement"].browse(result["statement_ids"])
         for statement in statements:
-            if not statement.balance_end_real:
-                amount = sum(statement.line_ids.mapped("amount"))
+            amount = sum(statement.line_ids.mapped("amount"))
+            if statement.journal_id.transfer_line:
+                if amount != 0:
+                    amount = -amount
+                statement.line_ids.create(
+                    {
+                        "name": statement.name,
+                        "amount": amount,
+                        "statement_id": statement.id,
+                        "date": statement.date,
+                        "payment_ref": "/",
+                    }
+                )
+                statement.balance_end_real = statement.balance_start
+            else:
                 statement.balance_end_real = statement.balance_start + amount
-        return statement_line_ids, notifications
 
     def _complete_stmts_vals(self, stmts_vals, journal, account_number):
         """Search partner from partner reference"""
