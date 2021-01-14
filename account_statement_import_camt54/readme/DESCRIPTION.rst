@@ -4,6 +4,11 @@ Customer invoices will be reconciled/Paid. Payment entries will be posted into a
 
 After this first step, import normally your CAMT.053 (full bank statement) into the bank journal. You will be able to clear the internal transfer account to end up the accounting flow.
 
+Optionally we can activate add generation of additional line in bank statement which will balance your bank statement total to 0.
+This line can be consolidated later with different account.
+To enable option of final statement line you need properly set flag on Account Journal
+Configuration -> Journals -> tab Advanced Settings -> Bank statement configuration
+
 
 Switzerland localisation
 ------------------------
