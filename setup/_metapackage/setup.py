@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-account_statement_import',
+        'odoo14-addon-account_statement_import_camt',
     ],
     classifiers=[
         'Programming Language :: Python',
