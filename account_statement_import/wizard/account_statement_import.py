@@ -141,6 +141,7 @@ class AccountStatementImport(models.TransientModel):
                 -o 'balance_start': float (e.g: 8368.56)
                 -o 'balance_end_real': float (e.g: 8888.88)
                 - 'transactions': list of dict containing :
+                    - 'sequence': sequence to order the transactions
                     - 'payment_ref': string (label of the line)
                     - 'date': date
                     - 'amount': float
