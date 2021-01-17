@@ -65,7 +65,7 @@ class CamtParser(models.AbstractModel):
                 "./ns:Refs/ns:InstrId",
             ],
             transaction,
-            "name",
+            "payment_ref",
             join_str="\n",
         )
         # name
@@ -130,12 +130,14 @@ class CamtParser(models.AbstractModel):
 
     def parse_entry(self, ns, node):
         """Parse an Ntry node and yield transactions"""
-        transaction = {"name": "/", "amount": 0}  # fallback defaults
+        transaction = {"payment_ref": "/", "amount": 0}  # fallback defaults
         self.add_value_from_node(ns, node, "./ns:BookgDt/ns:Dt", transaction, "date")
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction["amount"] = amount
-        self.add_value_from_node(ns, node, "./ns:AddtlNtryInf", transaction, "name")
+        self.add_value_from_node(
+            ns, node, "./ns:AddtlNtryInf", transaction, "narration"
+        )
         self.add_value_from_node(
             ns,
             node,
@@ -217,6 +219,8 @@ class CamtParser(models.AbstractModel):
             result["date"] = sorted(
                 transactions, key=lambda x: x["date"], reverse=True
             )[0]["date"]
+        for seq, vals in enumerate(transactions, start=1):
+            vals["sequence"] = seq
         return result
 
     def check_version(self, ns, root):
