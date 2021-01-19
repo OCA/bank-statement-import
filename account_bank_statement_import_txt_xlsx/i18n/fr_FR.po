@@ -1,0 +1,543 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import_txt_xlsx
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: Pascal GOUHIER <p.gouhier@khetys.fr>\n"
+"Language: fr_FR\n"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:55
+#, python-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_mapping
+msgid "Account Bank Statement Import Sheet Mapping"
+msgstr "Correspondance des relevés bancaires"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_mapping_wizard
+msgid "Account Bank Statement Import Sheet Mapping Wizard"
+msgstr ""
+"Assistant de cartographie de feuille d’importation de relevé bancaire de "
+"compte"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_parser
+msgid "Account Bank Statement Import Sheet Parser"
+msgstr "Analyseur de relevé de compte bancaire"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:306
+#, python-format
+msgid "Account: %s; "
+msgstr "Compte: %s; "
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__allow_back
+msgid "Allow Back"
+msgstr "Autoriser le retour"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
+msgid "Amount column"
+msgstr "Colonne « montant »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
+msgid "Amount of transaction in journal's currency"
+msgstr "Montant de la transaction dans la devise du journal"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__balance_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__balance_column
+msgid "Balance after transaction in journal's currency"
+msgstr "Solde après transaction dans la devise du journal"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__balance_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__balance_column
+msgid "Balance column"
+msgstr "Colonne « Equilibre »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Baltic (Latin-4 / ISO 8859-4)"
+msgstr "Baltique (Latin-4 / ISO 8859-4)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_account_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_account_column
+msgid "Bank Account column"
+msgstr "Colonne « Compte bancaire »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_name_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_name_column
+msgid "Bank Name column"
+msgstr "Colonne « Nom de banque »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__data_file
+msgid "Bank Statement File"
+msgstr "Fichier de relevé bancaire"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:302
+#, python-format
+msgid "Bank: %s; "
+msgstr "Banque: %s; "
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Central European (Latin-2 / ISO 8859-2)"
+msgstr "Europe centrale (Latin-2 / ISO 8859-2)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
+msgid "Choose a file to import..."
+msgstr "Choisissez un fichier à importer..."
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_tree
+msgid "Columns"
+msgstr "Colonnes"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__create_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__create_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__create_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__create_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__credit_value
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__credit_value
+msgid "Credit value"
+msgstr "Crédit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__currency_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__currency_column
+msgid "Currency column"
+msgstr "Colonne « Devise »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cyrillique (KOI8-R)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Cyrillic (KOI8-U)"
+msgstr "Cyrillique (KOI8-U)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Cyrillic (Windows-1251)"
+msgstr "Cyrillique (Windows-1251)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__debit_value
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__debit_value
+msgid "Debit value"
+msgstr "Débit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
+msgid "Debit/Credit column"
+msgstr "Colonne débit/crédit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__debit_credit_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__debit_credit_column
+msgid "Debit/credit column"
+msgstr "Colonne débit/crédit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__float_decimal_sep
+msgid "Decimals Separator"
+msgstr "Séparateur Décimales"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_journal_creation__default_sheet_mapping_id
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_journal__default_sheet_mapping_id
+msgid "Default Sheet Mapping"
+msgstr "Correspondance par défaut"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__delimiter
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__delimiter
+msgid "Delimiter"
+msgstr "Délimiteur"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__description_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__description_column
+msgid "Description column"
+msgstr "Colonne « Description »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__file_encoding
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__file_encoding
+msgid "Encoding"
+msgstr "Encodage"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__filename
+msgid "Filename"
+msgstr "Nom du fichier"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__header
+msgid "Header"
+msgstr "En-tête"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__id
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__id
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
+msgid "Import"
+msgstr "Importer"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr "Importer le relevé bancaire CSV"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.actions.act_window,name:account_bank_statement_import_txt_xlsx.action_account_bank_statement_import_sheet_mapping_wizard
+msgid "Import Mapping"
+msgstr "Importer la configuration/ mapping"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_sheet_mapping_wizard.py:185
+#, python-format
+msgid "Imported Mapping"
+msgstr "Correspondance importée"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__currency_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__currency_column
+msgid ""
+"In case statement is multi-currency, column to get currency of transaction "
+"from"
+msgstr ""
+"Dans le cas où le relevé est multi-devises, colonne pour obtenir la devise "
+"de la transaction de"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_currency_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_currency_column
+msgid ""
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
+msgstr ""
+"Dans le cas où le relevé fournit la devise originale pour les transactions "
+"avec conversion automatique de devise, colonne pour obtenir la devise "
+"originale de la transaction de"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_amount_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_amount_column
+msgid ""
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
+"transaction currency from"
+msgstr ""
+"Dans le cas où le relevé fournit la devise originale pour les transactions "
+"avec conversion automatique de devise, colonne pour obtenir le montant "
+"original de transaction dans la devise originale de transaction de"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Japanese (Shift JIS)"
+msgstr "Japonais (Shift JIS)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_journal
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping____last_update
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard____last_update
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__write_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__write_uid
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser__write_uid
+msgid "Last Updated by"
+msgstr "Dernière modification par"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__write_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__write_date
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_parser__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_sheet_mapping_wizard.py:153
+#, python-format
+msgid "Mapping from %s"
+msgstr "Correspondance à partir de %s"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,delimiter:0
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:296
+#, python-format
+msgid "N/A"
+msgstr "N/A"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__notes_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__notes_column
+msgid "Notes column"
+msgstr "Colonne « Note »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
+msgid "Options"
+msgstr "Options"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_amount_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_amount_column
+msgid "Original amount column"
+msgstr "Colonne « montant d’origine »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_currency_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_currency_column
+msgid "Original currency column"
+msgstr "Colonne « devise originale »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__partner_name_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__partner_name_column
+msgid "Partner Name column"
+msgstr "Colonne « nom du partenaire »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_name_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_name_column
+msgid "Partner's bank"
+msgstr "Banque du partenaire"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_account_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_account_column
+msgid "Partner's bank account"
+msgstr "Compte bancaire du partenaire"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__reference_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__reference_column
+msgid "Reference column"
+msgstr "Colonne « Référence »"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
+msgid "Select a statement file to import mapping"
+msgstr "Sélectionnez un fichier de relevé pour l’import"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import__sheet_mapping_id
+msgid "Sheet mapping"
+msgstr "Feuille de correspondance"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__debit_credit_column
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__debit_credit_column
+msgid ""
+"Some statement formats use absolute amount value and indicate signof the "
+"transaction by specifying if it was a debit or a credit one"
+msgstr ""
+"Certains formats de relevé utilisent la valeur du montant absolu et "
+"indiquent le signe de la transaction en précisant s’il s’agissait d’un débit "
+"ou d’un crédit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__state
+msgid "State"
+msgstr "État"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.view_account_journal_form_n43
+msgid "Statement Import Map"
+msgstr "Carte d’importation des relevés"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.actions.act_window,name:account_bank_statement_import_txt_xlsx.action_statement_import_sheet_report_mappings
+#: model:ir.ui.menu,name:account_bank_statement_import_txt_xlsx.menu_statement_import_sheet_mapping
+msgid "Statement Sheet Mappings"
+msgstr "Correspondances de champ"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_view
+msgid "TXT/CSV/XLSX mapping:"
+msgstr "Correspondance TXT/CSV/XLSX :"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__quotechar
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__quotechar
+msgid "Text qualifier"
+msgstr "Séparateur de chaine de caractère"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__float_thousands_sep
+msgid "Thousands Separator"
+msgstr "Séparateur des milliers"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__timestamp_format
+msgid "Timestamp Format"
+msgstr "Format de l’horadatage"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__timestamp_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__timestamp_column
+msgid "Timestamp column"
+msgstr "Colonne d'horodatage"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Traditional Chinese (big5)"
+msgstr "Chinois traditionnel (big5)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:310
+#, python-format
+msgid "Transaction ID: %s; "
+msgstr "Transaction ID: %s; "
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "UTF-16"
+msgstr "UTF-16"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "UTF-16 (with BOM)"
+msgstr "UTF-16 (avec BOM)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "UTF-8"
+msgstr "UTF-8 (en)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "UTF-8 (with BOM)"
+msgstr "UTF-8 (avec BOM)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Unified Chinese (gb18030)"
+msgstr "Chinois unifié (gb18030)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__transaction_id_column
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__transaction_id_column
+msgid "Unique transaction ID column"
+msgstr "Colonne ID de transaction unique"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__credit_value
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__credit_value
+msgid "Value of debit/credit column that indicates if it's a credit"
+msgstr "Valeur de la colonne débit/crédit qui indique s’il s’agit d’un crédit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__debit_value
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__debit_value
+msgid "Value of debit/credit column that indicates if it's a debit"
+msgstr "Valeur de la colonne débit/crédit qui indique s’il s’agit d’un débit"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Western (Latin-1 / ISO 8859-1)"
+msgstr "Occidental (Latin-1 / ISO 8859-1)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
+msgid "Western (Windows-1252)"
+msgstr "Occidental (Windows-1252)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,delimiter:0
+#: selection:account.bank.statement.import.sheet.mapping,float_decimal_sep:0
+#: selection:account.bank.statement.import.sheet.mapping,float_thousands_sep:0
+msgid "comma (,)"
+msgstr "virgule (,)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,delimiter:0
+#: selection:account.bank.statement.import.sheet.mapping,float_decimal_sep:0
+#: selection:account.bank.statement.import.sheet.mapping,float_thousands_sep:0
+msgid "dot (.)"
+msgstr "point (.)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,float_decimal_sep:0
+#: selection:account.bank.statement.import.sheet.mapping,float_thousands_sep:0
+msgid "none"
+msgstr "aucune"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,delimiter:0
+msgid "semicolon (;)"
+msgstr "point-virgule (;)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,delimiter:0
+msgid "space"
+msgstr "espace"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: selection:account.bank.statement.import.sheet.mapping,delimiter:0
+msgid "tab"
+msgstr "tabulation"

@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import_online_transferwise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: Pascal GOUHIER <p.gouhier@khetys.fr>\n"
+"Language: fr_FR\n"
+
+#. module: account_bank_statement_import_online_transferwise
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "API base"
+msgstr "API Base"
+
+#. module: account_bank_statement_import_online_transferwise
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "API key"
+msgstr "Clé API"
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:131
+#, python-format
+msgid "Ending balance unavailable"
+msgstr "Solde final indisponible"
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:250
+#, python-format
+msgid "Fee for %s"
+msgstr "Frais pour %s"
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:281
+#, python-format
+msgid "No API key specified!"
+msgstr "Aucune clé API spécifiée !"
+
+#. module: account_bank_statement_import_online_transferwise
+#: model:ir.model,name:account_bank_statement_import_online_transferwise.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Fournisseur de relevés bancaires en ligne"
+
+#. module: account_bank_statement_import_online_transferwise
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "Profile"
+msgstr "Profil"
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:255
+#, python-format
+msgid "Transaction fee for %s"
+msgstr "Frais de transaction pour %s"
