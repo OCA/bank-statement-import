@@ -10,4 +10,17 @@
             </ul>
         </field>
     </record>
+
+
+    <record id="journal_view_inherit" model="ir.ui.view">
+        <field name="name">account.journal.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="bank_statements_source"]' position='after'>
+                <field name="use_ref_as_label_stmt_import"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
+

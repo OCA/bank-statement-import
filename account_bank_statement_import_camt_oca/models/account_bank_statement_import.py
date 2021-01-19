@@ -3,6 +3,7 @@
 import logging
 from io import BytesIO
 import zipfile
+
 from odoo import api, models
 
 _logger = logging.getLogger(__name__)

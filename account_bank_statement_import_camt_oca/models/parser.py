@@ -41,13 +41,16 @@ class CamtParser(models.AbstractModel):
         in a found node will be used to set a value."""
         if not isinstance(xpath_str, (list, tuple)):
             xpath_str = [xpath_str]
+
         for search_str in xpath_str:
             found_node = node.xpath(search_str, namespaces={'ns': ns})
             if found_node:
                 if join_str is None:
                     attr_value = found_node[0].text
                 else:
-                    attr_value = join_str.join([x.text for x in found_node])
+                    attr_value = join_str.join(
+                        list(set([x.text for x in found_node]))
+                    )
                 obj[attr_name] = attr_value
                 break
 
@@ -59,10 +62,23 @@ class CamtParser(models.AbstractModel):
                 './ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf',
                 './ns:AddtlNtryInf',
                 './ns:Refs/ns:InstrId',
-                './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
-                './ns:Refs/ns:EndToEndId',
-                './ns:Ntry/ns:AcctSvcrRef',
             ], transaction, 'name', join_str='\n')
+        if self._get_journal_use_ref_as_label_stmt_import():
+            # use a temporary holder for the value found
+            # and delete it later from the returned dict
+            self.add_value_from_node(
+                ns, node, [
+                    './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                    './ns:Refs/ns:EndToEndId',
+                    './ns:Ntry/ns:AcctSvcrRef',
+                ], transaction, 'name2')
+            if (
+                transaction['name'] != '/'
+                and transaction['name2']
+                and transaction['name'] != transaction['name2']
+            ):
+                transaction['name'] += ' ' + transaction['name2']
+                del transaction['name2']
         # name
         self.add_value_from_node(
             ns, node, [
@@ -73,7 +89,7 @@ class CamtParser(models.AbstractModel):
             ns, node, [
                 './ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:Refs/ns:EndToEndId',
-                './ns:Ntry/ns:AcctSvcrRef'
+                './ns:Ntry/ns:AcctSvcrRef',
             ],
             transaction, 'ref'
         )
@@ -126,13 +142,35 @@ class CamtParser(models.AbstractModel):
         self.add_value_from_node(
             ns, node, './ns:AddtlNtryInf', transaction, 'name')
         self.add_value_from_node(
-            ns, node, [
+            ns, node,
+            [
                 './ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
                 './ns:NtryDtls/ns:Btch/ns:PmtInfId',
                 './ns:NtryDtls/ns:TxDtls/ns:Refs/ns:AcctSvcrRef'
             ],
             transaction, 'ref'
         )
+        if self._get_journal_use_ref_as_label_stmt_import():
+            # use a temporary holder for the value found
+            # and delete it later from the returned dict
+            self.add_value_from_node(
+                ns, node,
+                [
+                    './ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref',
+                    './ns:NtryDtls/ns:Btch/ns:PmtInfId',
+                    './ns:NtryDtls/ns:TxDtls/ns:Refs/ns:AcctSvcrRef',
+                ],
+                transaction, 'name2', join_str='\n',
+            )
+            if (
+                transaction['name2']
+                and transaction['name2'] not in transaction['name']
+            ):
+                if transaction['name'] != '/' and transaction['name2']:
+                    transaction['name'] += ' ' + transaction['name2']
+                else:
+                    transaction['name'] = transaction['name2']
+                del transaction['name2']
 
         details_nodes = node.xpath(
             './ns:NtryDtls/ns:TxDtls', namespaces={'ns': ns})
@@ -257,3 +295,17 @@ class CamtParser(models.AbstractModel):
                     account_number = statement.pop('account_number')
                 statements.append(statement)
         return currency, account_number, statements
+
+    def _get_journal_use_ref_as_label_stmt_import(self):
+        # force_use_ref context is used only into unit test
+        # because on unit test we don't have a defined journal
+        force_use_ref = self.env.context.get('force_use_ref')
+        if force_use_ref:
+            return True
+
+        journal_id = self.env.context.get('journal_id')
+        if journal_id:
+            journal = self.env['account.journal'].browse(journal_id)
+            return journal.use_ref_as_label_stmt_import
+
+        return False
