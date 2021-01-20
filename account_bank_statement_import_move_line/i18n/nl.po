@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-11 02:41+0000\n"
-"PO-Revision-Date: 2017-08-11 02:41+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2021-01-20 18:44+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -26,7 +27,7 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: selection:account.statement.line.create,target_move:0
 msgid "All Entries"
-msgstr ""
+msgstr "Alle invoeren"
 
 #. module: account_bank_statement_import_move_line
 #: selection:account.statement.line.create,target_move:0
@@ -46,7 +47,7 @@ msgstr "Bankafschrift"
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -74,43 +75,43 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Weergavenaam"
 
 #. module: account_bank_statement_import_move_line
 #: selection:account.statement.line.create,date_type:0
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__due_date
 msgid "Due Date"
-msgstr ""
+msgstr "Vervaldatum"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.view_bank_statement_form
 msgid "Import Journal Items"
-msgstr ""
+msgstr "Import Dagboek items"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model,name:account_bank_statement_import_move_line.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Dagboek items"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__journal_ids
 msgid "Journals Filter"
-msgstr ""
+msgstr "Dagboek filter"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -120,17 +121,17 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__invoice
@@ -151,7 +152,7 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__partner_id
 msgid "Partner Related"
-msgstr ""
+msgstr "Gerelateerde partner"
 
 #. module: account_bank_statement_import_move_line
 #: code:addons/account_bank_statement_import_move_line/wizards/account_statement_line_create.py:95
