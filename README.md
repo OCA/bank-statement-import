@@ -21,6 +21,7 @@ addon | version | summary
 --- | --- | ---
 [account_statement_import](account_statement_import/) | 14.0.1.0.0 | Import Statement Files
 [account_statement_import_camt](account_statement_import_camt/) | 14.0.1.0.0 | CAMT Format Bank Statements Import
+[account_statement_import_camt54](account_statement_import_camt54/) | 14.0.1.0.0 | Bank Account Camt54 Import
 
 [//]: # (end addons)
 
