@@ -141,7 +141,6 @@ class AccountStatementImport(models.TransientModel):
                 -o 'balance_start': float (e.g: 8368.56)
                 -o 'balance_end_real': float (e.g: 8888.88)
                 - 'transactions': list of dict containing :
-                    - 'sequence': sequence to order the transactions
                     - 'payment_ref': string (label of the line)
                     - 'date': date
                     - 'amount': float
@@ -333,6 +332,9 @@ class AccountStatementImport(models.TransientModel):
                     st_lines_to_create.append(lvals)
 
             if len(st_lines_to_create) > 0:
+                if not st_lines_to_create[0].get("sequence"):
+                    for seq, vals in enumerate(st_lines_to_create, start=1):
+                        vals["sequence"] = seq
                 # Remove values that won't be used to create records
                 st_vals.pop("transactions", None)
                 # Create the statement with lines
