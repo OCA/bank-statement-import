@@ -118,6 +118,7 @@ class TestImport(TransactionCase):
         )
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
+
             self.env["account.statement.import"].create(
                 {
                     "statement_filename": "test import",
@@ -156,4 +157,5 @@ class TestImport(TransactionCase):
                 [("name", "in", ["1234Test/2", "1234Test/3"])]
             )
 
-            self.assertTrue(all([st.line_ids for st in bank_st_record]))
+        self.assertTrue(all([st.line_ids for st in bank_st_record]))
+        self.assertEqual(bank_st_record[0].line_ids.mapped("sequence"), [1, 2, 3])
