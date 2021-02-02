@@ -3,8 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import base64
 
-import mock
-
 from odoo.modules.module import get_module_resource
 from odoo.tests.common import SavepointCase
 
@@ -39,12 +37,7 @@ class TestGenerateBankStatement(SavepointCase):
             }
         )
 
-    @mock.patch(
-        "odoo.addons.account.models.sequence_mixin."
-        "SequenceMixin._constrains_date_sequence",
-        side_effect=False,
-    )
-    def _load_statement(self, constraint):
+    def _load_statement(self):
         testfile = get_module_resource(
             "account_statement_import_camt", "test_files", "test-camt053"
         )
