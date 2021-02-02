@@ -27,21 +27,21 @@ class TestGetPartnerRef(common.TransactionCase):
         self.ICP.set_param("isr_partner_ref", "12")
         ref = "11 11111 11112 34567 11111 11111".replace(" ", "")
         partner_ref = self.Parser._get_partner_ref(ref)
-        self.assertEquals(partner_ref, "234567")
+        self.assertEqual(partner_ref, "234567")
 
     def test_ICP_full(self):
         """Test full format of partner ref definition"""
         self.ICP.set_param("isr_partner_ref", "12,6")
         ref = "11 11111 11112 34567 11111 11111".replace(" ", "")
         partner_ref = self.Parser._get_partner_ref(ref)
-        self.assertEquals(partner_ref, "234567")
+        self.assertEqual(partner_ref, "234567")
 
     def test_zero_stripped(self):
         """Test full format of partner ref definition"""
         self.ICP.set_param("isr_partner_ref", "12,6")
         ref = "11 11111 11110 00560 11111 11111".replace(" ", "")
         partner_ref = self.Parser._get_partner_ref(ref)
-        self.assertEquals(partner_ref, "560")
+        self.assertEqual(partner_ref, "560")
 
     def test_bad_ICP(self):
         """Test ir config parameter validation"""
