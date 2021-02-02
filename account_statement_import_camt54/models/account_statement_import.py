@@ -25,11 +25,10 @@ class AccountStatementImport(models.TransientModel):
                     amount = -amount
                 statement.line_ids.create(
                     {
-                        "name": statement.name,
                         "amount": amount,
                         "statement_id": statement.id,
                         "date": statement.date,
-                        "payment_ref": "/",
+                        "payment_ref": statement.name,
                     }
                 )
                 statement.balance_end_real = statement.balance_start
