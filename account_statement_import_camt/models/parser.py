@@ -219,8 +219,6 @@ class CamtParser(models.AbstractModel):
             result["date"] = sorted(
                 transactions, key=lambda x: x["date"], reverse=True
             )[0]["date"]
-        for seq, vals in enumerate(transactions, start=1):
-            vals["sequence"] = seq
         return result
 
     def check_version(self, ns, root):
