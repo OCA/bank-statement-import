@@ -332,6 +332,9 @@ class AccountStatementImport(models.TransientModel):
                     st_lines_to_create.append(lvals)
 
             if len(st_lines_to_create) > 0:
+                if not st_lines_to_create[0].get("sequence"):
+                    for seq, vals in enumerate(st_lines_to_create, start=1):
+                        vals["sequence"] = seq
                 # Remove values that won't be used to create records
                 st_vals.pop("transactions", None)
                 # Create the statement with lines

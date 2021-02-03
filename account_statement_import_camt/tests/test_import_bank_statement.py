@@ -8,8 +8,6 @@ import pprint
 import tempfile
 from datetime import date
 
-import mock
-
 from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
 
@@ -113,12 +111,7 @@ class TestImport(TransactionCase):
             }
         )
 
-    @mock.patch(
-        "odoo.addons.account.models.sequence_mixin."
-        "SequenceMixin._constrains_date_sequence",
-        side_effect=False,
-    )
-    def test_statement_import(self, constraint):
+    def test_statement_import(self):
         """Test correct creation of single statement."""
         testfile = get_module_resource(
             "account_statement_import_camt", "test_files", "test-camt053"
@@ -150,12 +143,7 @@ class TestImport(TransactionCase):
                 )
             )
 
-    @mock.patch(
-        "odoo.addons.account.models.sequence_mixin."
-        "SequenceMixin._constrains_date_sequence",
-        side_effect=False,
-    )
-    def test_zip_import(self, constraint):
+    def test_zip_import(self):
         """Test import of multiple statements from zip file."""
         testfile = get_module_resource(
             "account_statement_import_camt", "test_files", "test-camt053.zip"
@@ -169,4 +157,5 @@ class TestImport(TransactionCase):
                 [("name", "in", ["1234Test/2", "1234Test/3"])]
             )
 
-            self.assertTrue(all([st.line_ids for st in bank_st_record]))
+        self.assertTrue(all([st.line_ids for st in bank_st_record]))
+        self.assertEqual(bank_st_record[0].line_ids.mapped("sequence"), [1, 2, 3])
