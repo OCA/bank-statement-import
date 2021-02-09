@@ -25,8 +25,10 @@ class AccountJournal(models.Model):
     def import_statement(self):
         """return action to import bank/cash statements.
         This button should be called only on journals with type =='bank'"""
-        action = self.env.ref(
-            "account_statement_import.account_statement_import_action"
-        ).read()[0]
+        action = (
+            self.env.ref("account_statement_import.account_statement_import_action")
+            .sudo()
+            .read()[0]
+        )
         action["context"] = {"journal_id": self.id}
         return action
