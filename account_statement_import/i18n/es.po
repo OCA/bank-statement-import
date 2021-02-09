@@ -21,14 +21,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 09:10+0000\n"
-"PO-Revision-Date: 2019-08-26 09:08+0000\n"
-"Last-Translator: Mariana Santos Romo <msn@odoo.com>, 2019\n"
+"PO-Revision-Date: 2021-02-09 21:44+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -44,9 +45,8 @@ msgstr "1 transacción ha sido ya importada y será ignorada."
 
 #. module: account_statement_import
 #: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
 msgid "A bank account transaction can be imported only once!"
-msgstr "Las transacciones de una cuenta bancaria puede importarse sólo una vez"
+msgstr "¡Una transacción bancaria solo se puede importar una vez!"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -220,13 +220,13 @@ msgstr ""
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
 msgstr ""
-"La moneda de del estado de cuenta  (%s) no es la misma moneda que la de los "
-"diarios (%s)."
+"La moneda del extracto bancario  (%s) no es la misma que la moneda del "
+"diario '%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
