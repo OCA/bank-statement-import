@@ -11,7 +11,7 @@ class TestAccountBankStatementClearPartner(common.SavepointCase):
         cls.partner_1 = cls.env["res.partner"].create({"name": "Partner 1"})
         cls.partner_2 = cls.env["res.partner"].create({"name": "Partner 2"})
         cls.account_type_1 = cls.env["account.account.type"].create(
-            {"name": "Test Account Type 1", "type": "other"}
+            {"name": "Test Account Type 1", "type": "other", "internal_group": "income"}
         )
         cls.account_1 = cls.env["account.account"].create(
             {
