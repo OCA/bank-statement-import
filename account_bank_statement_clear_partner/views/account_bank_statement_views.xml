@@ -6,10 +6,7 @@
         <field name="model">account.bank.statement</field>
         <field name="inherit_id" ref="account.view_bank_statement_form" />
         <field name="arch" type="xml">
-            <button
-                name="%(account.action_bank_reconcile_bank_statements)d"
-                position="after"
-            >
+            <button name="action_bank_reconcile_bank_statements" position="after">
                 <button
                     name="clear_partners"
                     string="Clear partners"
