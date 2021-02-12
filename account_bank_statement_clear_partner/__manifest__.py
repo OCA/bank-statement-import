@@ -9,10 +9,6 @@
     "website": "https://github.com/OCA/bank-statement-import",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "depends": [
-        'account',
-    ],
-    "data": [
-        "views/account_bank_statement_views.xml"
-    ]
+    "depends": ["account"],
+    "data": ["views/account_bank_statement_views.xml"],
 }
