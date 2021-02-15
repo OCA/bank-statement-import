@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-18 14:07+0000\n"
-"PO-Revision-Date: 2021-02-13 12:45+0000\n"
+"PO-Revision-Date: 2021-02-15 17:45+0000\n"
 "Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
 "Language-Team: French (Belgium) (http://www.transifex.com/odoo/odoo-9/"
 "language/fr_BE/)\n"
@@ -161,9 +161,8 @@ msgstr "Référence de paiement manquant sur une transaction."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
 msgid "Partner Bank Account"
-msgstr "Partenaire de Compte bancaire"
+msgstr "Compte bancaire du partenaire"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
@@ -177,7 +176,6 @@ msgstr "Nom de fichier de l'instruction"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
-#, fuzzy
 msgid "Supported formats:"
 msgstr "Formats pris en charge:"
 
@@ -189,15 +187,15 @@ msgstr ""
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The bank account with number '%s' exists in Odoo but it is not set on any "
 "bank journal. You should set it on the related bank journal. If the related "
 "bank journal doesn't exist yet, you should create a new one."
 msgstr ""
 "Le compte bancaire avec le numéro '% s' existe dans Odoo mais il n'est "
-"défini dans aucun journal bancaire. Vous devez le définir dans le journal "
-"bancaire associé. Si le journal bancaire associé n'existe pas encore, vous "
+"défini dans aucun journal de banque. Vous devez le définir dans le journal "
+"de banque associé. Si le journal de banque associé n'existe pas encore, vous "
 "devez en créer un nouveau."
 
 #. module: account_statement_import
