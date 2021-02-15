@@ -38,7 +38,9 @@ class AccountStatementImport(models.TransientModel):
         logger.debug("result=%s", result)
         self.env["ir.attachment"].create(self._prepare_create_attachment(result))
         if self.env.context.get("return_regular_interface_action"):
-            action = self.env.ref("account.action_bank_statement_tree").read([])[0]
+            action = (
+                self.env.ref("account.action_bank_statement_tree").sudo().read([])[0]
+            )
             if len(result["statement_ids"]) == 1:
                 action.update(
                     {
