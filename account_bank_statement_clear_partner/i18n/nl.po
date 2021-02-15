@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_clear_partner
+# 	* account_bank_statement_clear_partner
 #
 msgid ""
 msgstr ""
