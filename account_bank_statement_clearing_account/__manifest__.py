@@ -8,8 +8,6 @@
     "category": "Banking addons",
     "website": "https://opener.am",
     "license": "AGPL-3",
-    "depends": [
-        "account_cancel",
-    ],
+    "depends": ["account_cancel",],
     "installable": True,
 }
