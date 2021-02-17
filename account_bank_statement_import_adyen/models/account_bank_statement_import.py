@@ -16,8 +16,18 @@ class AccountBankStatementImport(models.TransientModel):
     def _parse_file(self, data_file):
         """Parse an Adyen xlsx file and map merchant account strings to journals."""
         try:
-            return self.import_adyen_xlsx(data_file)
+            try:
+                return self._parse_adyen_file(data_file)
+            except Exception as exc:
+                if self.env.context.get("account_bank_statement_import_adyen", False):
+                    raise
+                _logger.info("Adyen parser error", exc_info=True)
+                raise ValueError("Not an adyen settlements file: %s" % exc)
         except ValueError:
+            _logger.debug(
+                _("Statement file was not a Adyen settlement details file."),
+                exc_info=True,
+            )
             return super()._parse_file(data_file)
 
     def _find_additional_data(self, currency_code, account_number):
@@ -40,25 +50,25 @@ class AccountBankStatementImport(models.TransientModel):
         return super()._find_additional_data(currency_code, account_number)
 
     @api.model
-    def balance(self, row):
+    def _balance(self, row):
         return -(float(row[15]) if row[15] else 0.0) + sum(
             float(row[i]) if row[i] else 0.0 for i in (16, 17, 18, 19, 20)
         )
 
     @api.model
-    def import_adyen_transaction(self, statement, statement_id, row):
+    def _import_adyen_transaction(self, statement, statement_id, row):
         transaction_id = str(len(statement["transactions"])).zfill(4)
         transaction = dict(
             unique_import_id=statement_id + transaction_id,
             date=fields.Date.from_string(row[6]),
-            amount=self.balance(row),
+            amount=self._balance(row),
             note="{} {} {} {}".format(row[2], row[3], row[4], row[21]),
             name="%s" % (row[3] or row[4] or row[9]),
         )
         statement["transactions"].append(transaction)
 
     @api.model
-    def parse_adyen_file(self, data_file):
+    def _parse_adyen_file(self, data_file):
         statements = []
         statement = None
         headers = False
@@ -70,6 +80,9 @@ class AccountBankStatementImport(models.TransientModel):
         import_model = self.env["base_import.import"]
         importer = import_model.create(
             {"file": data_file, "file_name": "Ayden settlemnt details"}
+        import_model = self.env["base_import.import"]
+        importer = import_model.create(
+            {"file": data_file, "file_name": "Ayden settlement details"}
         )
         rows = importer._read_file({})
 
@@ -105,10 +118,10 @@ class AccountBankStatementImport(models.TransientModel):
 
             row[8] = row[8].strip()
             if row[8] == "MerchantPayout":
-                payout -= self.balance(row)
+                payout -= self._balance(row)
             else:
-                balance += self.balance(row)
-            self.import_adyen_transaction(statement, statement_id, row)
+                balance += self._balance(row)
+            self._import_adyen_transaction(statement, statement_id, row)
             fees += sum(float(row[i]) if row[i] else 0.0 for i in (17, 18, 19, 20))
 
         if not headers:
