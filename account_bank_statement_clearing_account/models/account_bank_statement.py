@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class BankStatement(models.Model):
-    _inherit = 'account.bank.statement'
+    _inherit = "account.bank.statement"
 
     @api.multi
     def get_reconcile_clearing_account_lines(self):
@@ -16,23 +16,25 @@ class BankStatement(models.Model):
         the counterpart lines is zero.
         """
         self.ensure_one()
-        if (self.journal_id.default_debit_account_id !=
-                self.journal_id.default_credit_account_id or
-                not self.journal_id.default_debit_account_id.reconcile):
+        if (
+            self.journal_id.default_debit_account_id
+            != self.journal_id.default_credit_account_id
+            or not self.journal_id.default_debit_account_id.reconcile
+        ):
             return False
         account = self.journal_id.default_debit_account_id
         currency = self.journal_id.currency_id or self.company_id.currency_id
 
         def get_bank_line(st_line):
             for line in st_line.journal_entry_ids:
-                field = 'debit' if st_line.amount > 0 else 'credit'
-                if (line.account_id == account and
-                    not currency.compare_amounts(
-                        line[field], abs(st_line.amount))):
+                field = "debit" if st_line.amount > 0 else "credit"
+                if line.account_id == account and not currency.compare_amounts(
+                    line[field], abs(st_line.amount)
+                ):
                     return line
             return False
 
-        move_lines = self.env['account.move.line']
+        move_lines = self.env["account.move.line"]
         for st_line in self.line_ids:
             bank_line = get_bank_line(st_line)
             if not bank_line:
@@ -50,8 +52,8 @@ class BankStatement(models.Model):
         self.ensure_one()
         lines = self.get_reconcile_clearing_account_lines()
         if not lines or any(
-                li.matched_debit_ids or li.matched_credit_ids
-                for li in lines):
+            li.matched_debit_ids or li.matched_credit_ids for li in lines
+        ):
             return False
         lines.reconcile()
         return True
