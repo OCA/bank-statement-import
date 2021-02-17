@@ -23,9 +23,6 @@ class TestImportAdyen(SavepointCase):
                 "currency_id": cls.env.ref("base.USD").id,
             }
         )
-        # Enable reconcilation on the default journal account to trigger
-        # the functionality from account_bank_statement_clearing_account
-        cls.journal.default_debit_account_id.reconcile = True
 
     def test_01_import_adyen(self):
         """ Test that the Adyen statement can be imported and that the
@@ -68,7 +65,9 @@ class TestImportAdyen(SavepointCase):
             import_wizard = self.env["account.bank.statement.import"].create(
                 {"attachment_ids": [(0, 0, {"name": "test file", "datas": data_file})]}
             )
-            import_wizard.import_file()
+            import_wizard.with_context(
+                {"account_bank_statement_import_adyen": True}
+            ).import_file()
             # statement name is account number + '-' + date of last line:
             statements = self.env["account.bank.statement"].search(
                 [("name", "=", statement_name)]
