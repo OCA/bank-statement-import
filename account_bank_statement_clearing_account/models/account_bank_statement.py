@@ -1,13 +1,12 @@
-# © 2017 Opener BV (<https://opener.amsterdam>)
-# © 2020 Vanmoof BV (<https://www.vanmoof.com>)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import api, models
+# Copyright 2017 Opener BV (<https://opener.amsterdam>)
+# Copyright 2020 Vanmoof BV (<https://www.vanmoof.com>)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo import models
 
 
 class BankStatement(models.Model):
     _inherit = "account.bank.statement"
 
-    @api.multi
     def get_reconcile_clearing_account_lines(self):
         """ If this statement qualifies for clearing account reconciliation,
         return the relevant lines to (un)reconcile. This is the case if the
@@ -45,7 +44,6 @@ class BankStatement(models.Model):
             return False
         return move_lines
 
-    @api.multi
     def reconcile_clearing_account(self):
         """ If applicable, reconcile the clearing account lines in case
         all lines are still unreconciled. """
@@ -58,7 +56,6 @@ class BankStatement(models.Model):
         lines.reconcile()
         return True
 
-    @api.multi
     def unreconcile_clearing_account(self):
         """ If applicable, unreconcile the clearing account lines
         if still fully reconciled with each other. """
@@ -72,16 +69,14 @@ class BankStatement(models.Model):
             return True
         return False
 
-    @api.multi
-    def button_draft(self):
+    def button_reopen(self):
         """ When setting the statement back to draft, unreconcile the
         reconciliation on the clearing account """
-        res = super(BankStatement, self).button_draft()
+        res = super(BankStatement, self).button_reopen()
         for statement in self:
             statement.unreconcile_clearing_account()
         return res
 
-    @api.multi
     def button_confirm_bank(self):
         """ When confirming the statement, trigger the reconciliation of
         the lines on the clearing account (if applicable) """
