@@ -12,13 +12,7 @@
         "account_bank_statement_import",
         "account_bank_statement_clearing_account",
     ],
-    "external_dependencies": {
-        "python": [
-            "openpyxl",
-        ],
-    },
-    "data": [
-        "views/account_journal.xml",
-    ],
+    "external_dependencies": {"python": ["openpyxl",],},
+    "data": ["views/account_journal.xml",],
     "installable": True,
 }
