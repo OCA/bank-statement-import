@@ -1,10 +1,10 @@
-# © 2017 Opener BV (<https://opener.amsterdam>)
-# © 2020 Vanmoof BV (<https://www.vanmoof.com>)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2017 Opener BV (<https://opener.amsterdam>)
+# Copyright 2020 Vanmoof BV (<https://www.vanmoof.com>)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo import fields, models
 
 
-class Journal(models.Model):
+class AccountJournal(models.Model):
     _inherit = "account.journal"
 
     adyen_merchant_account = fields.Char(
@@ -15,6 +15,6 @@ class Journal(models.Model):
     )
 
     def _get_bank_statements_available_import_formats(self):
-        res = super(Journal, self)._get_bank_statements_available_import_formats()
+        res = super()._get_bank_statements_available_import_formats()
         res.append("adyen")
         return res
