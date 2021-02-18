@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-18 14:07+0000\n"
-"PO-Revision-Date: 2021-02-15 17:45+0000\n"
+"PO-Revision-Date: 2021-02-18 11:45+0000\n"
 "Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
 "Language-Team: French (Belgium) (http://www.transifex.com/odoo/odoo-9/"
 "language/fr_BE/)\n"
@@ -62,6 +62,10 @@ msgid ""
 "should create the bank account and set it on the related bank journal. If "
 "the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Impossible de trouver un compte bancaire avec le numéro '% s' lié au "
+"partenaire '% s'. Vous devez créer le compte bancaire et le définir dans le "
+"journal bancaire associé. Si le journal bancaire associé n'existe pas "
+"encore, vous devez en créer un nouveau."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
@@ -117,7 +121,7 @@ msgstr "Importer des fichiers de relevé bancaire"
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
 msgid "Import ID"
-msgstr ""
+msgstr "ID d'importation"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
@@ -183,7 +187,7 @@ msgstr "Formats pris en charge:"
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr ""
+msgstr "Le compte comptable bancaire n'est pas défini sur le journal '% s'."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
