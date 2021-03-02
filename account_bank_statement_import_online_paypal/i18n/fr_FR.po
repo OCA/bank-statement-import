@@ -6,617 +6,584 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 14:29+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Pascal GOUHIER <p.gouhier@khetys.fr>\n"
 "Language-Team: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
 "X-Generator: Poedit 2.4.2\n"
-"Last-Translator: Pascal GOUHIER <p.gouhier@khetys.fr>\n"
-"Language: fr_FR\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:62
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:23
+msgid "General PayPal-to-PayPal payment"
+msgstr "Paiement PayPal de la PayPal à l’hôpital"
+
+#: models/online_bank_statement_provider_paypal.py:24
+msgid "MassPay payment"
+msgstr "Paiement MassPay"
+
+#: models/online_bank_statement_provider_paypal.py:25
+msgid "Subscription payment"
+msgstr "Paiement par abonnement"
+
+#: models/online_bank_statement_provider_paypal.py:26
+msgid "Pre-approved payment (BillUser API)"
+msgstr "Paiement pré-approuvé (API BillUser)"
+
+#: models/online_bank_statement_provider_paypal.py:27
+msgid "eBay auction payment"
+msgstr "paiement aux enchères eBay"
+
+#: models/online_bank_statement_provider_paypal.py:28
+msgid "Direct payment API"
+msgstr "API de paiement direct"
+
+#: models/online_bank_statement_provider_paypal.py:29
+msgid "PayPal Checkout APIs"
+msgstr "PayPal API de paiement"
+
+#: models/online_bank_statement_provider_paypal.py:30
+msgid "Website payments standard payment"
+msgstr "Paiement standard des paiements sur le site Web"
+
+#: models/online_bank_statement_provider_paypal.py:31
+msgid "Postage payment to carrier"
+msgstr "Paiement d’affranchissement au transporteur"
+
+#: models/online_bank_statement_provider_paypal.py:32
+msgid "Gift certificate payment, purchase of gift certificate"
+msgstr "Paiement d’un certificat-cadeau, achat d’un certificat-cadeau"
+
+#: models/online_bank_statement_provider_paypal.py:33
+msgid "Third-party auction payment"
+msgstr "Paiement aux enchères par des tiers"
+
+#: models/online_bank_statement_provider_paypal.py:34
+msgid "Mobile payment, made through a mobile phone"
+msgstr "Paiement mobile, effectué via un téléphone mobile"
+
+#: models/online_bank_statement_provider_paypal.py:35
+msgid "Virtual terminal payment"
+msgstr "Paiement de terminaux virtuels"
+
+#: models/online_bank_statement_provider_paypal.py:36
+msgid "Donation payment"
+msgstr "Paiement des dons"
+
+#: models/online_bank_statement_provider_paypal.py:37
+msgid "Rebate payments"
+msgstr "Paiements de remboursement"
+
+#: models/online_bank_statement_provider_paypal.py:38
+msgid "Third-party payout"
+msgstr "Paiement par des tiers"
+
+#: models/online_bank_statement_provider_paypal.py:39
+msgid "Third-party recoupment"
+msgstr "Récupération par des tiers"
+
+#: models/online_bank_statement_provider_paypal.py:40
+msgid "Store-to-store transfers"
+msgstr "Transferts magasin à magasin"
+
+#: models/online_bank_statement_provider_paypal.py:41
+msgid "PayPal Here payment"
+msgstr "PayPal Ici paiement"
+
+#: models/online_bank_statement_provider_paypal.py:42
+msgid "Generic instrument-funded payment"
+msgstr "Paiement générique financé par des instruments"
+
+#: models/online_bank_statement_provider_paypal.py:43
+msgid "General non-payment fee"
+msgstr "Frais généraux de non-paiement"
+
+#: models/online_bank_statement_provider_paypal.py:44
+msgid "Website payments. Pro account monthly fee"
+msgstr "Paiements sur le site Web. Frais mensuels du compte Pro"
+
+#: models/online_bank_statement_provider_paypal.py:45
+msgid "Foreign bank withdrawal fee"
+msgstr "Frais de retrait bancaire à l’étranger"
+
+#: models/online_bank_statement_provider_paypal.py:46
+msgid "WorldLink check withdrawal fee"
+msgstr "WorldLink vérifier les frais de retrait"
+
+#: models/online_bank_statement_provider_paypal.py:47
+msgid "Mass payment batch fee"
+msgstr "Frais de lot de paiement de masse"
+
+#: models/online_bank_statement_provider_paypal.py:48
+msgid "Check withdrawal"
+msgstr "Vérifier le retrait"
+
+#: models/online_bank_statement_provider_paypal.py:49
+msgid "Chargeback processing fee"
+msgstr "Frais de traitement de la réduction des frais"
+
+#: models/online_bank_statement_provider_paypal.py:50
+msgid "Payment fee"
+msgstr "Frais de transaction"
+
+#: models/online_bank_statement_provider_paypal.py:51
+msgid "ATM withdrawal"
+msgstr "Retrait des guichets automatiques"
+
+#: models/online_bank_statement_provider_paypal.py:52
+msgid "Auto-sweep from account"
+msgstr "Balayage automatique du compte"
+
+#: models/online_bank_statement_provider_paypal.py:53
+msgid "International credit card withdrawal"
+msgstr "Retrait international de carte de crédit"
+
+#: models/online_bank_statement_provider_paypal.py:54
+msgid "Warranty fee for warranty purchase"
+msgstr "Frais de garantie pour l’achat sous garantie"
+
+#: models/online_bank_statement_provider_paypal.py:55
+msgid "Gift certificate expiration fee"
+msgstr "Frais d’expiration des certificats-cadeaux"
+
+#: models/online_bank_statement_provider_paypal.py:56
+msgid "Partner fee"
+msgstr "Frais de partenaire"
+
+#: models/online_bank_statement_provider_paypal.py:57
+msgid "General currency conversion"
+msgstr "Conversion générale des devises"
+
+#: models/online_bank_statement_provider_paypal.py:58
+msgid "User-initiated currency conversion"
+msgstr "Conversion de devises initiée par l’utilisateur"
+
+#: models/online_bank_statement_provider_paypal.py:59
+msgid "Currency conversion required to cover negative balance"
+msgstr "Conversion de devises nécessaire pour couvrir le solde négatif"
+
+#: models/online_bank_statement_provider_paypal.py:60
+msgid "General funding of PayPal account"
+msgstr "Financement général du compte PayPal santé"
+
+#: models/online_bank_statement_provider_paypal.py:61
+msgid "PayPal balance manager funding of PayPal account"
+msgstr "PayPal de gestionnaire de solde de PayPal compte"
+
+#: models/online_bank_statement_provider_paypal.py:62
 msgid "ACH funding for funds recovery from account balance"
 msgstr ""
+"Financement de l’ACH pour le recouvrement des fonds à partir du solde du "
+"compte"
 
-#. module: account_bank_statement_import_online_paypal
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_paypal.online_bank_statement_provider_form
-msgid "API base"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:51
-#, python-format
-msgid "ATM withdrawal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:128
-#, python-format
-msgid "Account hold for ACH deposit"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:127
-#, python-format
-msgid "Account hold for open authorization"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:160
-#, python-format
-msgid "Account receivable for shipping"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:52
-#, python-format
-msgid "Auto-sweep from account"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:65
-#, python-format
-msgid "AutoSweep"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:131
-#, python-format
-msgid "BML credit, transfer from BML"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:137
-#, python-format
-msgid "BML withdrawal, transfer to BML"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:78
-#, python-format
-msgid "Balance manager account bonus"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:93
-#, python-format
-msgid "Bill pay transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:155
-#, python-format
-msgid "Blocked payments"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:84
-#, python-format
-msgid "Bonus for first ACH use"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:132
-#, python-format
-msgid "Buyer credit payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:133
-#, python-format
-msgid "Buyer credit payment withdrawal, transfer to BML"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:105
-#, python-format
-msgid "Cancellation of hold for dispute resolution"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:117
-#, python-format
-msgid "Charge-off adjustment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:115
-#, python-format
-msgid "Chargeback"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:121
-#, python-format
-msgid "Chargeback cancellation"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:49
-#, python-format
-msgid "Chargeback processing fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:120
-#, python-format
-msgid "Chargeback re-presentment rejection"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:116
-#, python-format
-msgid "Chargeback reversal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:48
-#, python-format
-msgid "Check withdrawal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_paypal.online_bank_statement_provider_form
-msgid "Client ID"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:90
-#, python-format
-msgid "Coupon redemption"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:86
-#, python-format
-msgid "Credit card cash back bonus"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:74
-#, python-format
-msgid "Credit card deposit for negative PayPal account balance"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:85
-#, python-format
-msgid "Credit card security charge refund"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:59
-#, python-format
-msgid "Currency conversion required to cover negative balance"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:76
-#, python-format
-msgid "Debit card cash back bonus"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:158
-#, python-format
-msgid "Deferred disbursement, funds collected for disbursement"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:159
-#, python-format
-msgid "Delayed disbursement, funds disbursed"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:28
-#, python-format
-msgid "Direct payment API"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:165
-#, python-format
-msgid "Display only transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:36
-#, python-format
-msgid "Donation payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:63
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:63
 msgid "Electronic funds transfer (EFT)"
-msgstr ""
+msgstr "Transfert électronique de fonds (EFT)"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:370
-#, python-format
-msgid "Failed to acquire token using Client ID and Secret!"
-msgstr ""
-"Vous n’avez pas réussi à acquérir un jeton à l’aide de l’id client et du "
-"secret !"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:248
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:274
-#, python-format
-msgid "Failed to resolve transaction %s (%s)"
-msgstr "Échec de la résolution de la transaction %s (%s)"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:344
-#, python-format
-msgid "Fee for %s"
-msgstr "Frais pour %s"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:103
-#, python-format
-msgid "Fee refund"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:102
-#, python-format
-msgid "Fee reversal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:45
-#, python-format
-msgid "Foreign bank withdrawal fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:154
-#, python-format
-msgid "Funds available"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:153
-#, python-format
-msgid "Funds not yet available"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:161
-#, python-format
-msgid "Funds payable: PayPal-provided funds that must be paid back"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:162
-#, python-format
-msgid "Funds receivable: PayPal-provided funds that are being paid back"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:66
-#, python-format
-msgid "General PayPal debit card transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:23
-#, python-format
-msgid "General PayPal-to-PayPal payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:114
-#, python-format
-msgid "General account adjustment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:138
-#, python-format
-msgid "General adjustment without business-related event"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:122
-#, python-format
-msgid "General authorization"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:75
-#, python-format
-msgid "General bonus"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:136
-#, python-format
-msgid "General buyer credit payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:73
-#, python-format
-msgid "General credit card deposit"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:72
-#, python-format
-msgid "General credit card withdrawal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:57
-#, python-format
-msgid "General currency conversion"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:125
-#, python-format
-msgid "General dividend"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:60
-#, python-format
-msgid "General funding of PayPal account"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:143
-#, python-format
-msgid "General hold"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:144
-#, python-format
-msgid "General hold release"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:87
-#, python-format
-msgid "General incentive or certificate redemption"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:139
-#, python-format
-msgid "General intra-account transfer"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:43
-#, python-format
-msgid "General non-payment fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:94
-#, python-format
-msgid "General reversal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:126
-#, python-format
-msgid "General temporary hold"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:64
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:64
 msgid "General withdrawal from PayPal account"
-msgstr ""
+msgstr "Retrait général de PayPal compte"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:134
-#, python-format
-msgid "General withdrawal to non-bank institution"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:65
+msgid "AutoSweep"
+msgstr "Balayage automatique"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:42
-#, python-format
-msgid "Generic instrument-funded payment"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:66
+msgid "General PayPal debit card transaction"
+msgstr "Transaction générale PayPal carte de débit"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:113
-#, python-format
-msgid "Generic instrument/Open Wallet reversals (buyer side)"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:67
+msgid "Virtual PayPal debit card transaction"
+msgstr "Transaction virtuelle PayPal carte de débit"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:112
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:68
+msgid "PayPal debit card withdrawal to ATM"
+msgstr "PayPal de carte de débit au guichet automatique"
+
+#: models/online_bank_statement_provider_paypal.py:69
+msgid "Hidden virtual PayPal debit card transaction"
+msgstr "Paiement virtuel caché PayPal transaction par carte de débit"
+
+#: models/online_bank_statement_provider_paypal.py:70
+msgid "PayPal debit card cash advance"
+msgstr "PayPal’avance de fonds de la carte de débit"
+
+#: models/online_bank_statement_provider_paypal.py:71
+msgid "PayPal debit authorization"
+msgstr "PayPal de débit"
+
+#: models/online_bank_statement_provider_paypal.py:72
+msgid "General credit card withdrawal"
+msgstr "Retrait général de la carte de crédit"
+
+#: models/online_bank_statement_provider_paypal.py:73
+msgid "General credit card deposit"
+msgstr "Dépôt général par carte de crédit"
+
+#: models/online_bank_statement_provider_paypal.py:74
+msgid "Credit card deposit for negative PayPal account balance"
+msgstr "Dépôt par carte de crédit pour solde PayPal de compte"
+
+#: models/online_bank_statement_provider_paypal.py:75
+msgid "General bonus"
+msgstr "Bonus général"
+
+#: models/online_bank_statement_provider_paypal.py:76
+msgid "Debit card cash back bonus"
+msgstr "Bonus de remise en argent par carte de débit"
+
+#: models/online_bank_statement_provider_paypal.py:77
+msgid "Merchant referral account bonus"
+msgstr "Bonus de compte de référence marchand"
+
+#: models/online_bank_statement_provider_paypal.py:78
+msgid "Balance manager account bonus"
+msgstr "Bonus de compte de gestionnaire de solde"
+
+#: models/online_bank_statement_provider_paypal.py:79
+msgid "PayPal buyer warranty bonus"
+msgstr "PayPal de garantie de l’acheteur"
+
+#: models/online_bank_statement_provider_paypal.py:81
+msgid ""
+"PayPal protection bonus, payout for PayPal buyer protection, payout for full "
+"protection with PayPal buyer credit."
+msgstr ""
+"PayPal de protection, paiement pour la protection PayPal l’acheteur, "
+"paiement pour une protection complète avec PayPal d’acheteur."
+
+#: models/online_bank_statement_provider_paypal.py:84
+msgid "Bonus for first ACH use"
+msgstr "Bonus pour la première utilisation d’ACH"
+
+#: models/online_bank_statement_provider_paypal.py:85
+msgid "Credit card security charge refund"
+msgstr "Remboursement des frais de sécurité par carte de crédit"
+
+#: models/online_bank_statement_provider_paypal.py:86
+msgid "Credit card cash back bonus"
+msgstr "Bonus de remise en argent par carte de crédit"
+
+#: models/online_bank_statement_provider_paypal.py:87
+msgid "General incentive or certificate redemption"
+msgstr "Incitation générale ou rachat de certificat"
+
+#: models/online_bank_statement_provider_paypal.py:88
+#: models/online_bank_statement_provider_paypal.py:152
+msgid "Gift certificate redemption"
+msgstr "Rachat de certificat-cadeau"
+
+#: models/online_bank_statement_provider_paypal.py:89
+msgid "Points incentive redemption"
+msgstr "Rachat d’incitation de points"
+
+#: models/online_bank_statement_provider_paypal.py:90
+msgid "Coupon redemption"
+msgstr "Validation du code promo"
+
+#: models/online_bank_statement_provider_paypal.py:91
+msgid "eBay loyalty incentive"
+msgstr "incitation à la fidélité eBay"
+
+#: models/online_bank_statement_provider_paypal.py:92
+msgid "Offers used as funding source"
+msgstr "Offres utilisées comme source de financement"
+
+#: models/online_bank_statement_provider_paypal.py:93
+msgid "Bill pay transaction"
+msgstr "Transaction de paiement de facture"
+
+#: models/online_bank_statement_provider_paypal.py:94
+msgid "General reversal"
+msgstr "Inversion générale"
+
+#: models/online_bank_statement_provider_paypal.py:95
+msgid "Reversal of ACH withdrawal transaction"
+msgstr "Annulation de la transaction de retrait d’ACH"
+
+#: models/online_bank_statement_provider_paypal.py:96
+msgid "Reversal of debit card transaction"
+msgstr "Inversion de la transaction par carte de débit"
+
+#: models/online_bank_statement_provider_paypal.py:97
+msgid "Reversal of points usage"
+msgstr "Inversion de l’utilisation des points"
+
+#: models/online_bank_statement_provider_paypal.py:98
+msgid "Reversal of ACH deposit"
+msgstr "Inversion du gisement ACH"
+
+#: models/online_bank_statement_provider_paypal.py:99
+msgid "Reversal of general account hold"
+msgstr "Inversion de la comptabilité générale"
+
+#: models/online_bank_statement_provider_paypal.py:100
+msgid "Payment reversal, initiated by PayPal"
+msgstr "Inversion de paiement, initiée par PayPal"
+
+#: models/online_bank_statement_provider_paypal.py:101
+msgid "Payment refund, initiated by merchant"
+msgstr "Remboursement de paiement, initié par le commerçant"
+
+#: models/online_bank_statement_provider_paypal.py:102
+msgid "Fee reversal"
+msgstr "Inversion des frais"
+
+#: models/online_bank_statement_provider_paypal.py:103
+msgid "Fee refund"
+msgstr "Remboursement des frais"
+
+#: models/online_bank_statement_provider_paypal.py:104
+msgid "Hold for dispute investigation"
+msgstr "Tenir pour l’enquête sur les différends"
+
+#: models/online_bank_statement_provider_paypal.py:105
+msgid "Cancellation of hold for dispute resolution"
+msgstr "Annulation de la retenue suite au règlement des différends"
+
+#: models/online_bank_statement_provider_paypal.py:106
+msgid "MAM reversal"
+msgstr "Inversion MAM"
+
+#: models/online_bank_statement_provider_paypal.py:107
+msgid "Non-reference credit payment"
+msgstr "Paiement de crédit non référencé"
+
+#: models/online_bank_statement_provider_paypal.py:108
+msgid "MassPay reversal transaction"
+msgstr "Transaction d’inversion MassPay"
+
+#: models/online_bank_statement_provider_paypal.py:109
+msgid "MassPay refund transaction"
+msgstr "Transaction de remboursement MassPay"
+
+#: models/online_bank_statement_provider_paypal.py:110
+msgid "Instant payment review (IPR) reversal"
+msgstr "Inversion instantanée de l’examen des paiements (DPI)"
+
+#: models/online_bank_statement_provider_paypal.py:111
+msgid "Rebate or cash back reversal"
+msgstr "Remise ou inversion de remise en espèces"
+
+#: models/online_bank_statement_provider_paypal.py:112
 msgid "Generic instrument/Open Wallet reversals (seller side)"
 msgstr ""
+"Inversions génériques de l’instrument/portefeuille ouvert (côté vendeur)"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:157
-#, python-format
-msgid "Generic instrument/Open Wallet transaction"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:113
+msgid "Generic instrument/Open Wallet reversals (buyer side)"
+msgstr "Instruments génériques/inversions open wallet (côté acheteur)"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:55
-#, python-format
-msgid "Gift certificate expiration fee"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:114
+msgid "General account adjustment"
+msgstr "Compte d’ajustement"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:32
-#, python-format
-msgid "Gift certificate payment, purchase of gift certificate"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:115
+msgid "Chargeback"
+msgstr "Rétrofacturation"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:151
-#, python-format
-msgid "Gift certificate purchase"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:116
+msgid "Chargeback reversal"
+msgstr "Inversion de chargeback"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:88
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:152
-#, python-format
-msgid "Gift certificate redemption"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:117
+msgid "Charge-off adjustment"
+msgstr "Ajustement de frais"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:69
-#, python-format
-msgid "Hidden virtual PayPal debit card transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:104
-#, python-format
-msgid "Hold for dispute investigation"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:118
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:118
 msgid "Incentive adjustment"
+msgstr "Ajustement incitatif"
+
+#: models/online_bank_statement_provider_paypal.py:119
+msgid "Reimbursement of chargeback"
+msgstr "Remboursement de la chargeback"
+
+#: models/online_bank_statement_provider_paypal.py:120
+msgid "Chargeback re-presentment rejection"
+msgstr "Rejet de la ré-présentation de chargeback"
+
+#: models/online_bank_statement_provider_paypal.py:121
+msgid "Chargeback cancellation"
+msgstr "Annulation de frais"
+
+#: models/online_bank_statement_provider_paypal.py:122
+msgid "General authorization"
+msgstr "Autorisation générale"
+
+#: models/online_bank_statement_provider_paypal.py:123
+msgid "Reauthorization"
+msgstr "Reauthorization"
+
+#: models/online_bank_statement_provider_paypal.py:124
+msgid "Void of authorization"
+msgstr "Annulation de l’autorisation"
+
+#: models/online_bank_statement_provider_paypal.py:125
+msgid "General dividend"
+msgstr "Dividende général"
+
+#: models/online_bank_statement_provider_paypal.py:126
+msgid "General temporary hold"
+msgstr "Prise temporaire générale"
+
+#: models/online_bank_statement_provider_paypal.py:127
+msgid "Account hold for open authorization"
+msgstr "Tenir compte de l’autorisation ouverte"
+
+#: models/online_bank_statement_provider_paypal.py:128
+msgid "Account hold for ACH deposit"
+msgstr "Prise de compte pour le dépôt ACH"
+
+#: models/online_bank_statement_provider_paypal.py:129
+msgid "Temporary hold on available balance"
+msgstr "Retenue temporaire sur le solde disponible"
+
+#: models/online_bank_statement_provider_paypal.py:130
+msgid "PayPal buyer credit payment funding"
+msgstr "PayPal de paiement de crédit d’acheteur"
+
+#: models/online_bank_statement_provider_paypal.py:131
+msgid "BML credit, transfer from BML"
+msgstr "Crédit BML, transfert de BML"
+
+#: models/online_bank_statement_provider_paypal.py:132
+msgid "Buyer credit payment"
+msgstr "Paiement de crédit d’acheteur"
+
+#: models/online_bank_statement_provider_paypal.py:133
+msgid "Buyer credit payment withdrawal, transfer to BML"
+msgstr "Retrait de paiement de crédit d’acheteur, transfert à BML"
+
+#: models/online_bank_statement_provider_paypal.py:134
+msgid "General withdrawal to non-bank institution"
+msgstr "Retrait général à l’institution non bancaire"
+
+#: models/online_bank_statement_provider_paypal.py:135
+msgid "WorldLink withdrawal"
+msgstr "Retrait de WorldLink"
+
+#: models/online_bank_statement_provider_paypal.py:136
+msgid "General buyer credit payment"
+msgstr "Paiement général de crédit d’acheteur"
+
+#: models/online_bank_statement_provider_paypal.py:137
+msgid "BML withdrawal, transfer to BML"
+msgstr "Retrait de BML, transfert à BML"
+
+#: models/online_bank_statement_provider_paypal.py:138
+msgid "General adjustment without business-related event"
+msgstr "Ajustement général sans événement lié à l’entreprise"
+
+#: models/online_bank_statement_provider_paypal.py:139
+msgid "General intra-account transfer"
+msgstr "Transfert général intra-compte"
+
+#: models/online_bank_statement_provider_paypal.py:140
+msgid "Settlement consolidation"
+msgstr "Consolidation des règlements"
+
+#: models/online_bank_statement_provider_paypal.py:141
+msgid "Transfer of funds from payable"
+msgstr "Transfert de fonds à partir de payables"
+
+#: models/online_bank_statement_provider_paypal.py:142
+msgid "Transfer to external GL entity"
+msgstr "Transfert vers une entité GL externe"
+
+#: models/online_bank_statement_provider_paypal.py:143
+msgid "General hold"
+msgstr "Prise générale"
+
+#: models/online_bank_statement_provider_paypal.py:144
+msgid "General hold release"
+msgstr "Libération générale de la prise"
+
+#: models/online_bank_statement_provider_paypal.py:145
+msgid "Reserve hold"
+msgstr "Réserve maintenez"
+
+#: models/online_bank_statement_provider_paypal.py:146
+msgid "Reserve release"
+msgstr "Libération de réserve"
+
+#: models/online_bank_statement_provider_paypal.py:147
+msgid "Payment review hold"
+msgstr "Tenir l’examen des paiements"
+
+#: models/online_bank_statement_provider_paypal.py:148
+msgid "Payment review release"
+msgstr "Communiqué d’examen des paiements"
+
+#: models/online_bank_statement_provider_paypal.py:149
+msgid "Payment hold"
+msgstr "Prise de paiement"
+
+#: models/online_bank_statement_provider_paypal.py:150
+msgid "Payment hold release"
+msgstr "Libération de la prise de paiement"
+
+#: models/online_bank_statement_provider_paypal.py:151
+msgid "Gift certificate purchase"
+msgstr "Achat d’un certificat-cadeau"
+
+#: models/online_bank_statement_provider_paypal.py:153
+msgid "Funds not yet available"
+msgstr "Fonds non encore disponibles"
+
+#: models/online_bank_statement_provider_paypal.py:154
+msgid "Funds available"
+msgstr "Fonds disponibles"
+
+#: models/online_bank_statement_provider_paypal.py:155
+msgid "Blocked payments"
+msgstr "Paiements bloqués"
+
+#: models/online_bank_statement_provider_paypal.py:156
+msgid "Transfer to and from a credit-card-funded restricted balance"
 msgstr ""
+"Transfert vers et depuis un solde restreint financé par carte de crédit"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:110
-#, python-format
-msgid "Instant payment review (IPR) reversal"
+#: models/online_bank_statement_provider_paypal.py:157
+msgid "Generic instrument/Open Wallet transaction"
+msgstr "Transaction instrument générique/Portefeuille ouvert"
+
+#: models/online_bank_statement_provider_paypal.py:158
+msgid "Deferred disbursement, funds collected for disbursement"
+msgstr "Décaissement différé, fonds collectés pour le décaissement"
+
+#: models/online_bank_statement_provider_paypal.py:159
+msgid "Delayed disbursement, funds disbursed"
+msgstr "Décaissement retardé, fonds décaissés"
+
+#: models/online_bank_statement_provider_paypal.py:160
+msgid "Account receivable for shipping"
+msgstr "Compte débiteur pour l’expédition"
+
+#: models/online_bank_statement_provider_paypal.py:161
+msgid "Funds payable: PayPal-provided funds that must be paid back"
 msgstr ""
+"Fonds à payer : PayPal de fonds fournis par l’argent qui doivent être "
+"remboursés"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:53
-#, python-format
-msgid "International credit card withdrawal"
+#: models/online_bank_statement_provider_paypal.py:163
+msgid "Funds receivable: PayPal-provided funds that are being paid back"
 msgstr ""
+"Fonds à recevoir : PayPal de fonds fournis par les fonds qui sont remboursés"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:368
-#, python-format
-msgid "Invalid token type!"
-msgstr "Type de jeton invalide!"
+#: models/online_bank_statement_provider_paypal.py:165
+msgid "Display only transaction"
+msgstr "Afficher uniquement la transaction"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:310
-#, python-format
-msgid "Invoice %s"
-msgstr "Facture %s"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:106
-#, python-format
-msgid "MAM reversal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:47
-#, python-format
-msgid "Mass payment batch fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:24
-#, python-format
-msgid "MassPay payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:109
-#, python-format
-msgid "MassPay refund transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:108
-#, python-format
-msgid "MassPay reversal transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:77
-#, python-format
-msgid "Merchant referral account bonus"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:34
-#, python-format
-msgid "Mobile payment, made through a mobile phone"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:541
-#, python-format
-msgid "No authentication specified!"
-msgstr "Aucune authentification spécifiée!"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:107
-#, python-format
-msgid "Non-reference credit payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:92
-#, python-format
-msgid "Offers used as funding source"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: model:ir.model,name:account_bank_statement_import_online_paypal.model_online_bank_statement_provider
-msgid "Online Bank Statement Provider"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:166
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:166
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:56
-#, python-format
-msgid "Partner fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:364
-#, python-format
-msgid "PayPal App features are configured incorrectly!"
-msgstr ""
-"Les fonctionnalités de l’application PayPal sont configurées de manière "
-"incorrecte !"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:29
-#, python-format
-msgid "PayPal Checkout APIs"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:41
-#, python-format
-msgid "PayPal Here payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:199
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:200
 msgid ""
 "PayPal allows retrieving transactions only up to 3 years in the past. Please "
 "import older transactions manually. See https://www.paypal.com/us/smarthelp/"
@@ -627,322 +594,52 @@ msgstr ""
 "manuellement. Voir https://www.PayPal.com/us/smarthelp/article/why-can’t-i-"
 "access-transaction-history-greater-than-3-years-ts2241"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:61
+#: models/online_bank_statement_provider_paypal.py:248
+#: models/online_bank_statement_provider_paypal.py:274
 #, python-format
-msgid "PayPal balance manager funding of PayPal account"
-msgstr ""
+msgid "Failed to resolve transaction %s (%s)"
+msgstr "Échec de la résolution de la transaction %s (%s)"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:130
+#: models/online_bank_statement_provider_paypal.py:310
 #, python-format
-msgid "PayPal buyer credit payment funding"
-msgstr ""
+msgid "Invoice %s"
+msgstr "Facture %s"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:79
+#: models/online_bank_statement_provider_paypal.py:344
 #, python-format
-msgid "PayPal buyer warranty bonus"
-msgstr ""
+msgid "Fee for %s"
+msgstr "Frais pour %s"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:71
-#, python-format
-msgid "PayPal debit authorization"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:70
-#, python-format
-msgid "PayPal debit card cash advance"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:68
-#, python-format
-msgid "PayPal debit card withdrawal to ATM"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:80
-#, python-format
-msgid ""
-"PayPal protection bonus, payout for PayPal buyer protection, payout for full "
-"protection with PayPal buyer credit."
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:50
-#, python-format
-msgid "Payment fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:149
-#, python-format
-msgid "Payment hold"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:150
-#, python-format
-msgid "Payment hold release"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:101
-#, python-format
-msgid "Payment refund, initiated by merchant"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:100
-#, python-format
-msgid "Payment reversal, initiated by PayPal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:147
-#, python-format
-msgid "Payment review hold"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:148
-#, python-format
-msgid "Payment review release"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:89
-#, python-format
-msgid "Points incentive redemption"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:31
-#, python-format
-msgid "Postage payment to carrier"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:26
-#, python-format
-msgid "Pre-approved payment (BillUser API)"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:123
-#, python-format
-msgid "Reauthorization"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:111
-#, python-format
-msgid "Rebate or cash back reversal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:37
-#, python-format
-msgid "Rebate payments"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:119
-#, python-format
-msgid "Reimbursement of chargeback"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:145
-#, python-format
-msgid "Reserve hold"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:146
-#, python-format
-msgid "Reserve release"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:98
-#, python-format
-msgid "Reversal of ACH deposit"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:95
-#, python-format
-msgid "Reversal of ACH withdrawal transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:96
-#, python-format
-msgid "Reversal of debit card transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:99
-#, python-format
-msgid "Reversal of general account hold"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:97
-#, python-format
-msgid "Reversal of points usage"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_paypal.online_bank_statement_provider_form
-msgid "Secret"
-msgstr "Secret"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:140
-#, python-format
-msgid "Settlement consolidation"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:40
-#, python-format
-msgid "Store-to-store transfers"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:25
-#, python-format
-msgid "Subscription payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:129
-#, python-format
-msgid "Temporary hold on available balance"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:33
-#, python-format
-msgid "Third-party auction payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:38
-#, python-format
-msgid "Third-party payout"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:39
-#, python-format
-msgid "Third-party recoupment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:349
+#: models/online_bank_statement_provider_paypal.py:349
 #, python-format
 msgid "Transaction fee for %s"
 msgstr "Frais de transaction pour %s"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:141
-#, python-format
-msgid "Transfer of funds from payable"
+#: models/online_bank_statement_provider_paypal.py:365
+msgid "PayPal App features are configured incorrectly!"
 msgstr ""
+"Les fonctionnalités de l’application PayPal sont configurées de manière "
+"incorrecte !"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:156
-#, python-format
-msgid "Transfer to and from a credit-card-funded restricted balance"
+#: models/online_bank_statement_provider_paypal.py:368
+msgid "Invalid token type!"
+msgstr "Type de jeton invalide!"
+
+#: models/online_bank_statement_provider_paypal.py:371
+msgid "Failed to acquire token using Client ID and Secret!"
 msgstr ""
+"Vous n’avez pas réussi à acquérir un jeton à l’aide de l’id client et du "
+"secret !"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:142
-#, python-format
-msgid "Transfer to external GL entity"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:557
-#, python-format
-msgid "Unknown authentication specified!"
-msgstr "Authentification inconnue spécifiée!"
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:505
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:511
-#, python-format
+#: models/online_bank_statement_provider_paypal.py:505
+#: models/online_bank_statement_provider_paypal.py:511
 msgid "Unknown error"
 msgstr "Erreur inconnue"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:58
-#, python-format
-msgid "User-initiated currency conversion"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:541
+msgid "No authentication specified!"
+msgstr "Aucune authentification spécifiée!"
 
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:67
-#, python-format
-msgid "Virtual PayPal debit card transaction"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:35
-#, python-format
-msgid "Virtual terminal payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:124
-#, python-format
-msgid "Void of authorization"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:54
-#, python-format
-msgid "Warranty fee for warranty purchase"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:30
-#, python-format
-msgid "Website payments standard payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:44
-#, python-format
-msgid "Website payments. Pro account monthly fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:46
-#, python-format
-msgid "WorldLink check withdrawal fee"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:135
-#, python-format
-msgid "WorldLink withdrawal"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:27
-#, python-format
-msgid "eBay auction payment"
-msgstr ""
-
-#. module: account_bank_statement_import_online_paypal
-#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:91
-#, python-format
-msgid "eBay loyalty incentive"
-msgstr ""
+#: models/online_bank_statement_provider_paypal.py:557
+msgid "Unknown authentication specified!"
+msgstr "Authentification inconnue spécifiée!"

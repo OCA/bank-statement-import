@@ -21,7 +21,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__balance_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__balance_column
 msgid "\"Balance\" column"
-msgstr "Colonne « Equilibre »"
+msgstr "Colonne « Solde »"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__bank_account_column
@@ -33,13 +33,13 @@ msgstr "Colonne « Compte bancaire »"
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__bank_name_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__bank_name_column
 msgid "\"Bank Name\" column"
-msgstr "Colonne « Nom de banque »"
+msgstr "Colonne « Nom de la banque »"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__currency_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__currency_column
 msgid "\"Currency\" column"
-msgstr "Colonne « Monnaie »"
+msgstr "Colonne « Devise »"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__date_column
@@ -75,7 +75,7 @@ msgstr "Colonne « Brute »"
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__invoice_id_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__invoice_id_column
 msgid "\"Invoice ID\" column"
-msgstr "Colonne « Id facture »"
+msgstr "Colonne « ID facture »"
 
 #. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping__name_column
