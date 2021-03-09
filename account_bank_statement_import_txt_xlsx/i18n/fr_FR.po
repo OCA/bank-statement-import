@@ -55,7 +55,7 @@ msgstr "Autoriser le retour"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount column"
-msgstr "Colonne « montant »"
+msgstr "Colonne \"montant\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__amount_column
@@ -73,7 +73,7 @@ msgstr "Solde après transaction dans la devise du journal"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__balance_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__balance_column
 msgid "Balance column"
-msgstr "Colonne « Equilibre »"
+msgstr "Colonne \"Equilibre\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
@@ -84,13 +84,13 @@ msgstr "Baltique (Latin-4 / ISO 8859-4)"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_account_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_account_column
 msgid "Bank Account column"
-msgstr "Colonne « Compte bancaire »"
+msgstr "Colonne \"Compte bancaire\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_name_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__bank_name_column
 msgid "Bank Name column"
-msgstr "Colonne « Nom de banque »"
+msgstr "Colonne \"Nom de banque\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__data_file
@@ -142,7 +142,7 @@ msgstr "Crédit"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__currency_column
 msgid "Currency column"
-msgstr "Colonne « Devise »"
+msgstr "Colonne \"Devise\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,file_encoding:0
@@ -197,7 +197,7 @@ msgstr "Délimiteur"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__description_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__description_column
 msgid "Description column"
-msgstr "Colonne « Description »"
+msgstr "Colonne \"Description\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__display_name
@@ -336,7 +336,7 @@ msgstr "Nom"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__notes_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__notes_column
 msgid "Notes column"
-msgstr "Colonne « Note »"
+msgstr "Colonne \"Note\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form
@@ -347,19 +347,19 @@ msgstr "Options"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_amount_column
 msgid "Original amount column"
-msgstr "Colonne « montant d’origine »"
+msgstr "Colonne \"montant d’origine\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_currency_column
 msgid "Original currency column"
-msgstr "Colonne « devise originale »"
+msgstr "Colonne \"devise originale\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__partner_name_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__partner_name_column
 msgid "Partner Name column"
-msgstr "Colonne « nom du partenaire »"
+msgstr "Colonne \"nom du partenaire\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__bank_name_column
@@ -377,7 +377,7 @@ msgstr "Compte bancaire du partenaire"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__reference_column
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__reference_column
 msgid "Reference column"
-msgstr "Colonne « Référence »"
+msgstr "Colonne \"Référence\""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_wizard_form

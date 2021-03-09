@@ -72,7 +72,7 @@ msgstr "Fournisseur de relevés bancaires en ligne"
 #: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:57
 #, python-format
 msgid "Please fill login and key."
-msgstr "S’il vous plaît remplir le login et la clé"
+msgstr "S’il vous plaît remplir le login et la clé."
 
 #. module: account_bank_statement_import_online_ponto
 #: code:addons/account_bank_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:73

@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-11 21:55+0000\n"
-"PO-Revision-Date: 2017-04-11 21:55+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"PO-Revision-Date: 2021-03-09 10:11+0100\n"
+"Last-Translator: Pascal GOUHIER <p.gouhier@khetys.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #. module: account_bank_statement_import_ofx
 #: model:ir.model,name:account_bank_statement_import_ofx.model_account_bank_statement_import
@@ -26,7 +27,7 @@ msgstr "Importer Relevé Bancaire"
 #. module: account_bank_statement_import_ofx
 #: model:ir.model,name:account_bank_statement_import_ofx.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_bank_statement_import_ofx
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_ofx.view_account_bank_statement_import_form
