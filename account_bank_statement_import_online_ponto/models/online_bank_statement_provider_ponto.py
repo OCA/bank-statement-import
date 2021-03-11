@@ -183,6 +183,63 @@ class OnlineBankStatementProviderPonto(models.Model):
         )
         return dt.replace(tzinfo=None)
 
+    def _ponto_synchronisation_account_details(self, account_id, subtype):
+        url = PONTO_ENDPOINT + '/synchronizations'
+        data = {'data': {
+            'type': 'synchronization',
+            'attributes': {
+                'resourceType': 'account',
+                'resourceId': account_id,
+                'subtype': subtype
+            }
+        }}
+        response = requests.post(url, verify=False,
+                                 headers=self._ponto_header(),
+                                 json=data)
+        if response.status_code in (200, 201, 400):
+            data = json.loads(response.text)
+            sync_id = data.get('attributes', {}).get('resourceId', False)
+        else:
+            raise UserError(_('Error during Create Synchronisation %s \n\n %s') % (
+                response.status_code, response.text))
+
+        # Check synchronisation
+        if not sync_id:
+            return
+        url = PONTO_ENDPOINT + '/synchronizations/' + sync_id
+        number = 0
+        while number == 100:
+            number += 1
+            response = requests.get(url, verify=False, headers=self._ponto_header())
+            if response.status_code == 200:
+                data = json.loads(response.text)
+                status = data.get('status', {})
+                if status in ('success', 'error'):
+                    return
+            time.sleep(4)
+
+    def _ponto_get_account_endind_balance(self,account_id,date_since,date_until):
+        page_url = PONTO_ENDPOINT + '/accounts/' + account_id
+        params = {'limit': 1}
+
+        while page_url:
+            response = requests.get(page_url, verify=False, params=params,
+                                    headers=self._ponto_header())
+            if response.status_code == 200:
+                data = json.loads(response.text)
+                accountInfo = data.get('data', [])
+                if accountInfo:
+                    account_ending_balance = accountInfo.get(
+                        'attributes', {}).get('availableBalance')
+
+            else:
+                raise UserError(
+                      _('Error during get account informations.\n\n%s \n\n %s') % (
+                         response.status_code, response.text))
+
+        return account_ending_balance
+
+
     def _ponto_obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         account_ids = self._ponto_get_account_ids()
@@ -193,10 +250,21 @@ class OnlineBankStatementProviderPonto(models.Model):
             raise UserError(
                 _('Ponto : wrong configuration, unknow account %s')
                 % journal.bank_account_id.acc_number)
+        #
+        #Add function to collect ending balance
+        #
+        self._ponto_synchronisation_account_details(account_id, 'accountDetails')
+        balance_end_real = self._ponto_get_account_endind_balance(
+            account_id, date_since, date_until)
+        #
         self._ponto_synchronisation(account_id)
         transaction_lines = self._ponto_get_transaction(
             account_id, date_since, date_until)
         new_transactions = []
+        #
+        #Add variable balance_start that will be compute with transaction_lines
+        #
+        balance_start = balance_end_real
         sequence = 0
         for transaction in transaction_lines:
             sequence += 1
@@ -216,11 +284,18 @@ class OnlineBankStatementProviderPonto(models.Model):
                 'unique_import_id': transaction['id'],
                 'amount': attributes['amount'],
             }
+            #
+            #Compute balance start from balance_end_real and transaction amount
+            #
+            balance_start -= attributes['amount']
             if attributes.get("counterpartReference"):
                 vals_line["account_number"] = attributes["counterpartReference"]
             if attributes.get("counterpartName"):
                 vals_line["partner_name"] = attributes["counterpartName"]
             new_transactions.append(vals_line)
         if new_transactions:
+            new_transactions.append({
+            'balance_end_real': balance_end_real,
+            'balance_start': balance_start})
             return new_transactions, {}
         return
