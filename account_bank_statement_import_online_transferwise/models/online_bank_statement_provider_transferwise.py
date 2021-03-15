@@ -55,7 +55,6 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             ('transferwise', 'TransferWise.com'),
         ]
 
-    @api.multi
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != 'transferwise':
