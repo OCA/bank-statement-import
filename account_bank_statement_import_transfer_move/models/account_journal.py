@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class AccountBankStatementImport(models.Model):
+class AccountJournal(models.Model):
 
     _inherit = "account.journal"
 
