@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_bank_statement_import_save_file
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement
+msgid "Bank Statement"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_date:0
+msgid "Date Created"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_log:0
+msgid "Description"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_file:0
+msgid "Import file"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: view:account.bank.statement:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported file"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: field:account.bank.statement,import_user:0
+msgid "Owner"
+msgstr ""
+
