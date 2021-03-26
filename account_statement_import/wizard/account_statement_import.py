@@ -36,6 +36,13 @@ class AccountStatementImport(models.TransientModel):
         file_data = base64.b64decode(self.statement_file)
         self.import_single_file(file_data, result)
         logger.debug("result=%s", result)
+        if not result["statement_ids"]:
+            raise UserError(
+                _(
+                    "You have already imported this file, or this file "
+                    "only contains already imported transactions."
+                )
+            )
         self.env["ir.attachment"].create(self._prepare_create_attachment(result))
         if self.env.context.get("return_regular_interface_action"):
             action = (
@@ -101,7 +108,8 @@ class AccountStatementImport(models.TransientModel):
             )
         currency_code, account_number, stmts_vals = single_statement_data
         # Check raw data
-        self._check_parsed_data(stmts_vals)
+        if not self._check_parsed_data(stmts_vals):
+            return False
         if not currency_code:
             raise UserError(_("Missing currency code in the bank statement file."))
         # account_number can be None (example : QIF)
@@ -161,9 +169,14 @@ class AccountStatementImport(models.TransientModel):
         )
 
     def _check_parsed_data(self, stmts_vals):
-        """ Basic and structural verifications """
+        """
+        Basic and structural verifications.
+        Return False when empty data (don't raise en error, because we
+        support multi-statement files and we don't want one empty
+        statement to block the import of others)
+        """
         if len(stmts_vals) == 0:
-            raise UserError(_("This file doesn't contain any statement."))
+            return False
 
         no_st_line = True
         for vals in stmts_vals:
@@ -171,7 +184,8 @@ class AccountStatementImport(models.TransientModel):
                 no_st_line = False
                 break
         if no_st_line:
-            raise UserError(_("This file doesn't contain any transaction."))
+            return False
+        return True
 
     @api.model
     def _match_currency(self, currency_code):
@@ -345,12 +359,7 @@ class AccountStatementImport(models.TransientModel):
                 statement_ids.append(statement.id)
 
         if not statement_ids:
-            raise UserError(
-                _(
-                    "You have already imported this file, or this file "
-                    "only contains already imported transactions."
-                )
-            )
+            return False
         result["statement_ids"].extend(statement_ids)
 
         # Prepare import feedback
