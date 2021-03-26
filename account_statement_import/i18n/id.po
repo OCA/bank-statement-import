@@ -1,0 +1,513 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import
+#
+# Translators:
+# Bonny Useful <bonny.useful@gmail.com>, 2017
+# Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2017
+# Febrasari Almania <febrasari.almania@gmail.com>, 2017
+# Martin Trigaux <mat@odoo.com>, 2017
+# Lorenz Damara <lorenzrenz@gmail.com>, 2017
+# William Surya Permana <zarambie_game@yahoo.com>, 2017
+# Andhitia Rama <andhitia.r@gmail.com>, 2017
+# Azhe 403 <azhe403@gmail.com>, 2017
+# Yani Dama Putera <yanidp@gmail.com>, 2017
+# Rizki Mudhar <mudharrizki@gmail.com>, 2017
+# Ryanto The <ry.the77@gmail.com>, 2017
+# Gusti Rini <gustirini@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-30 13:11+0000\n"
+"PO-Revision-Date: 2017-11-30 13:11+0000\n"
+"Last-Translator: Gusti Rini <gustirini@gmail.com>, 2017\n"
+"Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d transaksi sudah diimpor dan diabaikan."
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1 transaksi sudah diimpor dan diabaikan"
+
+#. module: account_statement_import
+#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
+msgid "A bank account transaction can be imported only once!"
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "Already imported items"
+msgstr "Barang yang sudah diimpor"
+
+#. module: account_statement_import
+#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Transaksi buku bank"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Cancel"
+msgstr "Batal"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%s' linked to partner '%s'. You "
+"should create the bank account and set it on the related bank journal. If "
+"the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "Dibuat oleh"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "Dibuat pada"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "Nama Tampilan"
+
+#. module: account_statement_import
+#: model:ir.model.fields,help:account_statement_import.field_account_statement_import__statement_file
+msgid ""
+"Get you bank statements in electronic format from your bank and select them "
+"here."
+msgstr ""
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/models/account_journal.py:0
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+#, python-format
+msgid "Import"
+msgstr "Impor"
+
+#. module: account_statement_import
+#: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "Memasukan Rekening Koran"
+
+#. module: account_statement_import
+#: model:ir.model,name:account_statement_import.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "Memasukan Rekening Koran"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
+msgid "Import ID"
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+msgid "Import Statement"
+msgstr ""
+
+#. module: account_statement_import
+#: model:ir.model,name:account_statement_import.model_account_journal
+msgid "Journal"
+msgstr "Jurnal"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
+#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "Terakhir diubah pada"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "Terakhir diperbarui oleh"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "Terakhir diperbarui pada"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr ""
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
+#, fuzzy
+msgid "Partner Bank Account"
+msgstr "Akun Bank"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "Arsip buku bank"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "Arsip buku bank"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "The Bank Accounting Account in not set on the journal '%s'."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%s' exists in Odoo but it is not set on any "
+"bank journal. You should set it on the related bank journal. If the related "
+"bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%s) is not the same as the currency of "
+"the journal '%s' (%s)."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "This file doesn't contain any statement."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "This file doesn't contain any transaction."
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#, fuzzy
+msgid "Upload Bank Statements"
+msgstr "Memasukan Rekening Koran"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "Arsip buku bank"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+msgid "or"
+msgstr ""
+
+#~ msgid "Account Number"
+#~ msgstr "Nomor Akun"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "Jenis akun yang diperbolehkan"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "Akun yang diperbolehkan"
+
+#~ msgid "Active"
+#~ msgstr "Aktif"
+
+#~ msgid "Allow Cancelling Entries"
+#~ msgstr "Memungkinkan membatalkan entri"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "Sekurangnya Satu Masukan"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "Sekurangnya Satu Keluaran"
+
+#~ msgid "Bank"
+#~ msgstr "Bank"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "Bank feed"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "Nama jurnal bank"
+
+#~ msgid "Bank setup marked as done"
+#~ msgstr "Pengaturan bank ditandai sebagai selesai"
+
+#~ msgid "Belong to the user's current company"
+#~ msgstr "Milik Penguna Perusahaan Saat Ini"
+
+#~ msgid ""
+#~ "Check this box if you don't want to share the same sequence for invoices "
+#~ "and credit notes made from this journal"
+#~ msgstr ""
+#~ "Centang kotak ini jika Anda tidak ingin menggunakan nomor yang sama untuk "
+#~ "faktur dan catatan kredit yang dibuat dari jurnal ini"
+
+#~ msgid ""
+#~ "Check this box if you want to allow the cancellation the entries related "
+#~ "to this journal or of the invoice related to this journal"
+#~ msgstr ""
+#~ "Centang kotak ini jika Anda ingin memperbolehkan pembatalan entri yang "
+#~ "berhubungan dengan jurnal ini atau tagihan terkait dengan jurnal ini"
+
+#~ msgid "Choose a file to import..."
+#~ msgstr "Pilih file yang akan diimpor"
+
+#~ msgid "Color Index"
+#~ msgstr "Indeks Warna"
+
+#~ msgid "Company"
+#~ msgstr "Perusahaan"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "Perusahaan terkait jurnal ini"
+
+#~ msgid "Credit Note Entry Sequence"
+#~ msgstr "Nomor Ayat Catatan Kredit"
+
+#~ msgid "Credit Notes: Next Number"
+#~ msgstr "Catatan Kredit: Nomor Berikutnya"
+
+#~ msgid "Currency"
+#~ msgstr "Mata Uang"
+
+#~ msgid "Debit Methods"
+#~ msgstr "Metode debit"
+
+#~ msgid "Dedicated Credit Note Sequence"
+#~ msgstr "Nomor Catatan Kredit Khusus"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "Akun Kredit Standar"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "Default Akun Debit"
+
+#~ msgid ""
+#~ "Download a bank statement from your bank and import it here. Supported "
+#~ "formats:"
+#~ msgstr ""
+#~ "Unduh transaksi rekening bank anda dan impor di sini. Format yang "
+#~ "didukung:"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "Urutan Masukan"
+
+#~ msgid "Filename"
+#~ msgstr "Nama file"
+
+#~ msgid "Group Invoice Lines"
+#~ msgstr "Kelompok tagihan baris"
+
+#~ msgid ""
+#~ "If this box is checked, the system will try to group the accounting lines "
+#~ "when generating them from invoices."
+#~ msgstr ""
+#~ "Jika kotak ini dicentang, sistem akan mencoba untuk kelompok garis "
+#~ "akuntansi ketika menghasilkan mereka dari tagihan."
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "Bertindak sebagai default Akun untuk jumlah kredit"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "Bertindak sebagai default Akun untuk jumlah debit"
+
+#~ msgid "Journal Name"
+#~ msgstr "Nama jurnal"
+
+#~ msgid "Kanban Dashboard"
+#~ msgstr "Dasbor Kanban"
+
+#~ msgid "Kanban Dashboard Graph"
+#~ msgstr "Grafik Dasbor Kanban"
+
+#~ msgid "Loss Account"
+#~ msgstr "Rugi"
+
+#~ msgid ""
+#~ "Manual:Pay bill by cash or any other method outside of Odoo.\n"
+#~ "Check:Pay bill by check and print it from Odoo.\n"
+#~ "SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you "
+#~ "submit to your bank. Enable this option from the settings."
+#~ msgstr ""
+#~ "Manual: Dibayar dengan kas, cek atau semua cara lain di luar Odoo.\n"
+#~ "Cek: Bayar tagihan dengan cek dan cetak dari Odoo.\n"
+#~ "SEPA Credit Transfer: Bayar tagihan Anda dari file SEPA Credit Transfer "
+#~ "yang Anda serahkan ke bank Anda. Aktifkan pilihan ini dari pengaturan."
+
+#~ msgid "Next Number"
+#~ msgstr "Jumlah Berikutnya"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Payment Methods"
+#~ msgstr "Metode Pembayaran"
+
+#~ msgid "Profit Account"
+#~ msgstr "Keuntungan akun"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "Pilih 'Penjualan' untuk jurnal faktur pelanggan.\n"
+#~ "Pilih 'Pembelian' untuk jurnal tagihan pemasok.\n"
+#~ "Pilih 'Kas' atau 'Bank' untuk jurnal yang digunakan dalam pembayaran "
+#~ "pelanggan atau pemasok.\n"
+#~ "Pilih 'Umum' untuk jurnal operasi lainnya.\n"
+#~ "Pilih 'Situasi pembukaan/penutupan' untuk entri yang dihasilkan untuk "
+#~ "tahun fiskal baru."
+
+#~ msgid "Sequence"
+#~ msgstr "Urutan"
+
+#~ msgid "Set active to false to hide the Journal without removing it."
+#~ msgstr ""
+#~ "Set kolom aktif jadi salah untuk menyembunyikan Jurnal tanpa menghapusnya."
+
+#~ msgid "Short Code"
+#~ msgstr "Kode pendek"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "Jurnal Tampilkan pada dashboard"
+
+#~ msgid "Technical field used in the special view for the setup bar step."
+#~ msgstr ""
+#~ "Kolom teknis yang digunakan pada tampilan spesial untuk bar langkah "
+#~ "pengaturan."
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "Mata uang yang digunakan untuk memasukkan pernyataan"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr "Entri jurnal jurnal ini akan diberi nama menggunakan prefiks ini."
+
+#~ msgid "The next sequence number will be used for the next credit note."
+#~ msgstr "Nomor berikutnya akan digunakan untuk catatan kredit berikutnya."
+
+#~ msgid "The next sequence number will be used for the next invoice."
+#~ msgstr "Nomor berikutnya akan digunakan untuk faktur berikutnya."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "credit note entries of this journal."
+#~ msgstr ""
+#~ "Kolom ini meyimpan informasi yang terkait dengan penomoran pada ayat "
+#~ "catatan kredit dari jurnal ini."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr ""
+#~ "Bidang ini berisi informasi yang berhubungan dengan penomoran entri "
+#~ "jurnal jurnal ini."
+
+#~ msgid "Type"
+#~ msgstr "Tipe"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr "Digunakan untuk memesan jurnal di tampilan dashboard"
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Digunakan untuk mendaftar kerugian ketika saldo akhir kasir berbeda dari "
+#~ "apa yang menghitung sistem"
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Digunakan untuk mendaftarkan keuntungan ketika saldo akhir kasir berbeda "
+#~ "dari apa yang menghitung sistem"
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "Apakah jurnal ini harus ditampilkan di dasbor atau tidak"
+
+#~ msgid "_Import"
+#~ msgstr "_Impor"

@@ -1,0 +1,525 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import
+#
+# Translators:
+# Martin Trigaux, 2019
+# krnkris, 2019
+# gezza <geza.nagy@oregional.hu>, 2019
+# Kovács Tibor <kovika@gmail.com>, 2019
+# Ákos Nagy <akos.nagy@oregional.hu>, 2019
+# Tibor Kőnig <konig.tibor@evitalit.hu>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~12.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-27 09:10+0000\n"
+"PO-Revision-Date: 2019-08-26 09:08+0000\n"
+"Last-Translator: Tibor Kőnig <konig.tibor@evitalit.hu>, 2019\n"
+"Language-Team: Hungarian (https://www.transifex.com/odoo/teams/41243/hu/)\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d tranzakció importálva és mellőzve."
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1 tranzakció importálva és mellőzve."
+
+#. module: account_statement_import
+#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
+#, fuzzy
+msgid "A bank account transaction can be imported only once!"
+msgstr "A bank számla tranzakciókat csak egyszer lehet importálni !"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "Already imported items"
+msgstr "Már importált tételek"
+
+#. module: account_statement_import
+#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Bankkivonat tételsor"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Cancel"
+msgstr "Mégse"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%s' linked to partner '%s'. You "
+"should create the bank account and set it on the related bank journal. If "
+"the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "Létrehozta"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "Létrehozva"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "Megjelenített név"
+
+#. module: account_statement_import
+#: model:ir.model.fields,help:account_statement_import.field_account_statement_import__statement_file
+msgid ""
+"Get you bank statements in electronic format from your bank and select them "
+"here."
+msgstr ""
+"Bankjától szerezze be a kivonatokat elektronikus formátumban és azokat "
+"válassza ki itt."
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
+msgid "ID"
+msgstr "Azonosító"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/models/account_journal.py:0
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+#, python-format
+msgid "Import"
+msgstr "Importálás"
+
+#. module: account_statement_import
+#: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "Bankkivonat importálása"
+
+#. module: account_statement_import
+#: model:ir.model,name:account_statement_import.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "Bankkivonat importálása"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
+msgid "Import ID"
+msgstr "Importálás ID azonosító"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+msgid "Import Statement"
+msgstr "Kivonat importálása"
+
+#. module: account_statement_import
+#: model:ir.model,name:account_statement_import.model_account_journal
+msgid "Journal"
+msgstr "Napló"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
+#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "Legutóbb frissítve"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "Frissítette"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "Frissítve "
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr "Ez a fájl nem tartalmaz pénzügyi tranzakciót."
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
+#, fuzzy
+msgid "Partner Bank Account"
+msgstr "Bankszámla"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "Bankkivonat tételsor"
+
+#. module: account_statement_import
+#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "Bankkivonat tételsor"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "The Bank Accounting Account in not set on the journal '%s'."
+msgstr "Ennek a bankkivonatnak (%s) a számlája nem egyezik a naplójéval (%s)."
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%s' exists in Odoo but it is not set on any "
+"bank journal. You should set it on the related bank journal. If the related "
+"bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid ""
+"The currency of the bank statement (%s) is not the same as the currency of "
+"the journal '%s' (%s)."
+msgstr "Ennek a bankkivonatnak (%s) a számlája nem egyezik a naplójéval (%s)."
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+"A megadott állományt a rendszer nem tudja értelmezni.\n"
+"Telepítette a fájl típus támogatását szolgáló modult?"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "This file doesn't contain any statement."
+msgstr "Ez a fájl nem tartalmaz kivonatot."
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid "This file doesn't contain any transaction."
+msgstr "Ez a fájl nem tartalmaz pénzügyi tranzakciót."
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Upload Bank Statements"
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "Bankkivonat tételsor"
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+msgid "or"
+msgstr "vagy"
+
+#~ msgid "Account Holder"
+#~ msgstr "Számla birtokosa"
+
+#~ msgid "Account Number"
+#~ msgstr "Bankszámlaszám"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "Engedélyezett főkönyvi számla típusok"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "Engedélyezett főkönyvi számlák"
+
+#~ msgid "Action Needed"
+#~ msgstr "Akció szükséges"
+
+#~ msgid "Active"
+#~ msgstr "Aktív"
+
+#~ msgid "Activities"
+#~ msgstr "Tevékenységek"
+
+#~ msgid "Activity State"
+#~ msgstr "Tevékenység állapota"
+
+#~ msgid "Alias"
+#~ msgstr "Álnév"
+
+#~ msgid "Alias Name"
+#~ msgstr "Álnév elnevezése"
+
+#~ msgid "Alias domain"
+#~ msgstr "Álnév tartomány"
+
+#~ msgid "Attachment Count"
+#~ msgstr "Mellékletek száma"
+
+#~ msgid "Bank"
+#~ msgstr "Bank"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "Banki tételek"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "Banki napló neve"
+
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr ""
+#~ "Nem található, melyik naplóba importáljuk ezt a kivonatot. Kérem "
+#~ "válasszon egy könyvelési naplót."
+
+#~ msgid "Color Index"
+#~ msgstr "Színjegyzék"
+
+#~ msgid "Communication Type"
+#~ msgstr "Közlemény típusa"
+
+#~ msgid "Company"
+#~ msgstr "Vállalat"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "Ehhez a naplóhoz kapcsolt vállalat"
+
+#~ msgid "Currency"
+#~ msgstr "Pénznem"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "Alapértelmezett követel főkönyvi számla"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "Alapértelmezett tartozik főkönyvi számla"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "Bevitel sorszámozás"
+
+#~ msgid "Filename"
+#~ msgstr "Fájlnév"
+
+#~ msgid "Followers"
+#~ msgstr "Követők"
+
+#~ msgid "Followers (Channels)"
+#~ msgstr "Követők (Csatornák)"
+
+#~ msgid "Followers (Partners)"
+#~ msgstr "Követők (Partnerek)"
+
+#~ msgid "Icon"
+#~ msgstr "Ikon"
+
+#~ msgid "If checked, new messages require your attention."
+#~ msgstr "Ha be van jelölve, akkor az új üzenetek figyelmet igényelnek."
+
+#~ msgid "If checked, some messages have a delivery error."
+#~ msgstr ""
+#~ "Ha be van jelölve, akkor néhány üzenetnél kézbesítési hiba lépett fel."
+
+#~ msgid "Is Follower"
+#~ msgstr "Követő"
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "Követel összegek alapértelmezett főkönyvi számlája"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "Tartozik összegek alapértelmezett főkönyvi számlája"
+
+#~ msgid "Journal Creation"
+#~ msgstr "Napló létrehozás"
+
+#~ msgid "Journal Name"
+#~ msgstr "Napló neve"
+
+#~ msgid "Loss Account"
+#~ msgstr "Veszteség számla"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Fő melléklet"
+
+#~ msgid "Message Delivery error"
+#~ msgstr "Üzenetkézbesítési hiba"
+
+#~ msgid "Messages"
+#~ msgstr "Üzenetek"
+
+#~ msgid "Next Activity Deadline"
+#~ msgstr "Következő tevékenység határideje"
+
+#~ msgid "Next Activity Summary"
+#~ msgstr "Következő tevékenység összegzés"
+
+#~ msgid "Next Activity Type"
+#~ msgstr "Következő tevékenység típusa"
+
+#~ msgid "Next Number"
+#~ msgstr "Köv. szám"
+
+#~ msgid "No currency found matching '%s'."
+#~ msgstr "Nem található ilyen pénznem: '%s'."
+
+#~ msgid "Number of Actions"
+#~ msgstr "Akciók száma"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Üzenetek száma, melyek akciót igényelnek"
+
+#~ msgid "Number of messages with delivery error"
+#~ msgstr "Kézbesítési hibával rendelkező üzenetek száma"
+
+#~ msgid "Number of unread messages"
+#~ msgstr "Olvasatlan üzenetek száma"
+
+#~ msgid "OK"
+#~ msgstr "Ok"
+
+#~ msgid "Profit Account"
+#~ msgstr "Nyereség számla"
+
+#~ msgid "Responsible User"
+#~ msgstr "Felelős felhasználó"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "Válassza az 'Értékesítés'-t a vevői számlák naplózásához. Válassza a "
+#~ "'Beszerzés'-t a szállítói számlák naplózásához. Válassza a 'Készpénz'-t "
+#~ "vagy a 'Bank'-ot olyan naplókhoz melyek a vevői vagy szállítói "
+#~ "fizetéseket rögzítik. Válassza az 'Általános'-t az egyéb műveletek "
+#~ "naplózásához. "
+
+#~ msgid "Sequence"
+#~ msgstr "Sorszám"
+
+#~ msgid "Short Code"
+#~ msgstr "Rövidített kód"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "Napló megjelenítése a műszerfalon"
+
+#~ msgid ""
+#~ "Status based on activities\n"
+#~ "Overdue: Due date is already passed\n"
+#~ "Today: Activity date is today\n"
+#~ "Planned: Future activities."
+#~ msgstr ""
+#~ "Tevékenységeken alapuló állapot\n"
+#~ "Lejárt: A tevékenység határideje lejárt\n"
+#~ "Ma: A határidő ma van\n"
+#~ "Tervezett: Jövőbeli határidő."
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "Számlakivonat tételek rögzítésének pénzneme"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr "A napló bejegyzései ezen előtag használatával kerülnek elnevezésre."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr ""
+#~ "Ez a mező tartalmazza ennek a naplónak a bejegyzéseihez tartozó számok "
+#~ "információit."
+
+#~ msgid "Type"
+#~ msgstr "Típus"
+
+#~ msgid "Unread Messages"
+#~ msgstr "Olvasatlan üzenetek"
+
+#~ msgid "Unread Messages Counter"
+#~ msgstr "Olvasatlan üzenetek száma"
+
+#~ msgid "Upload"
+#~ msgstr "Feltöltés"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr "Műszerfal nézetben a Naplók rendezéséhez használja"
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Veszteség rögzítésére használja, ha a záró egyenleg a kasszánál eltér a "
+#~ "rendszer által számítottól"
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Nyereség rögzítésére használja, ha a záró egyenleg a kasszánál eltér a "
+#~ "rendszer által számítottól"
+
+#~ msgid "Website Messages"
+#~ msgstr "Weboldali üzenetek"
+
+#~ msgid "Website communication history"
+#~ msgstr "Weboldali kommunikációs előzmények"
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "Ez a napló megjelenítésre kerüljön a műszerfalon vagy nem"
