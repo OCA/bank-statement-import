@@ -38,16 +38,11 @@ class OnlineBankStatementProvider(models.Model):
                 date_since, date_until
             )
         for provider in adyen_providers:
-            # TODO: incrementing batch number
             is_scheduled = self.env.context.get("scheduled")
             try:
-                data_file = self._adyen_get_settlement_details_file()
+                data_file, filename = self._adyen_get_settlement_details_file()
                 import_wizard = self.env["account.bank.statement.import"].create(
-                    {
-                        "attachment_ids": [
-                            (0, 0, {"name": "test file", "datas": data_file})
-                        ]
-                    }
+                    {"attachment_ids": [(0, 0, {"name": filename, "datas": data_file})]}
                 )
                 import_wizard.with_context(
                     {"account_bank_statement_import_adyen": True}
@@ -84,13 +79,13 @@ class OnlineBankStatementProvider(models.Model):
                 [YourMerchantAccount]/[ReportFileName]"
         """
         batch_number = self.next_batch_number
-        download_file_name = self.download_file_name % batch_number
+        filename = self.download_file_name % batch_number
         URL = "/".join(
-            [self.api_base, self.journal_id.adyen_merchant_account, download_file_name]
+            [self.api_base, self.journal_id.adyen_merchant_account, filename]
         )
         response = requests.get(URL, auth=(self.username, self.password))
         if response.status_code == 200:
-            return response.content
+            return response.content, filename
         else:
             raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
 
