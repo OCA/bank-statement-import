@@ -14,10 +14,11 @@ class OnlineBankStatementProviderDummy(models.Model):
         if self.service != "dummy_adyen":
             # Not a dummy, get the regular adyen method.
             return super()._adyen_get_settlement_details_file()
+        filename = self.download_file_name
         testfile = get_module_resource(
-            "account_bank_statement_import_adyen", "test_files", self.download_file_name
+            "account_bank_statement_import_adyen", "test_files", filename
         )
         with open(testfile, "rb") as datafile:
             data_file = datafile.read()
             data_file = base64.b64encode(data_file)
-        return data_file
+        return data_file, filename
