@@ -54,7 +54,7 @@ class TestImportOnline(TestImportAdyen):
         # Pull from yesterday, until today
         yesterday = self.now - relativedelta(days=1)
         provider.with_context(scheduled=True)._pull(yesterday, self.now)
-        # statement name is account number + '-' + date of last line:
+        # statement name is account number + '-' + date of last line.
         statements = self.env["account.bank.statement"].search(
             [("name", "=", statement_name)]
         )
