@@ -50,10 +50,27 @@ class TestImportAdyen(SavepointCase):
 
     def test_03_import_adyen_invalid(self):
         """ Trying to hit that coverall target """
-        with self.assertRaisesRegex(UserError, "Could not make sense"):
+        with self.assertRaisesRegex(UserError, "not a Adyen settlement details file"):
             self._test_statement_import(
                 "adyen_test_invalid.xls", "invalid",
             )
+
+    def test_04_import_adyen_csv(self):
+        """ Test that the Adyen statement can be imported in csv format."""
+        self._test_statement_import(
+            "settlement_detail_report_batch_380.csv", "YOURCOMPANY_ACCOUNT 2021/380",
+        )
+        statement = self.env["account.bank.statement"].search(
+            [], order="create_date desc", limit=1
+        )
+        self.assertEqual(statement.journal_id, self.journal)
+        # Csv lines has 229 lines. Minus 1 header. Plus 1 extra transaction line.
+        self.assertEqual(len(statement.line_ids), 229)
+        self.assertTrue(
+            self.env.user.company_id.currency_id.is_zero(
+                sum(line.amount for line in statement.line_ids)
+            )
+        )
 
     def _test_statement_import(self, file_name, statement_name):
         """Test correct creation of single statement."""
@@ -63,12 +80,12 @@ class TestImportAdyen(SavepointCase):
         with open(testfile, "rb") as datafile:
             data_file = base64.b64encode(datafile.read())
             import_wizard = self.env["account.bank.statement.import"].create(
-                {"attachment_ids": [(0, 0, {"name": "test file", "datas": data_file})]}
+                {"attachment_ids": [(0, 0, {"name": file_name, "datas": data_file})]}
             )
             import_wizard.with_context(
                 {"account_bank_statement_import_adyen": True}
             ).import_file()
-            # statement name is account number + '-' + date of last line:
+            # statement name is account number + '-' + date of last line.
             statements = self.env["account.bank.statement"].search(
                 [("name", "=", statement_name)]
             )
