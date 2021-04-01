@@ -258,18 +258,6 @@ msgstr ""
 "Hai installato il supporto per questo formato di file ?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Il file non contiene alcuna registrazione."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Il file non contiene alcuna transazione."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -292,6 +280,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "/"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Il file non contiene alcuna registrazione."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Il file non contiene alcuna transazione."
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "Importare un modello per gli estratti conto"

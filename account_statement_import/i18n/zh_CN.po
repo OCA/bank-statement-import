@@ -253,18 +253,6 @@ msgstr ""
 "你安装了模块来支持这种类型的文件吗？"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "这个文件不包含任何对账单"
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "这个文件不包含任何交易"
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr "上传银行对账单"
@@ -287,6 +275,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "或"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "这个文件不包含任何对账单"
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "这个文件不包含任何交易"
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "银行对账单导入模板."
