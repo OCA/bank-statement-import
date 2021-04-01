@@ -249,18 +249,6 @@ msgstr ""
 "Ar įdiegėte modulį, kuris palaikytų tokio tipo failus?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Šiame faile nėra jokių išrašų."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Šiame faile nėra jokių operacijų."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -283,6 +271,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "arba"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Šiame faile nėra jokių išrašų."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Šiame faile nėra jokių operacijų."
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "Importuoti šabloną banko išrašams"

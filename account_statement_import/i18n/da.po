@@ -246,18 +246,6 @@ msgstr ""
 "Har du installeret modulet til at understøtte denne type fil?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Denne fil indeholder intet kontoudtog."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Denne fil indeholder ingen transaktion."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -280,6 +268,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "eller"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Denne fil indeholder intet kontoudtog."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Denne fil indeholder ingen transaktion."
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "Importskabelon for bank kontoudtog"
