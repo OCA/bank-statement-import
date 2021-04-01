@@ -243,18 +243,6 @@ msgstr ""
 "Oletko asentanut modulin, joka tulee tämän tyyppisiä tiedostoja?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Tiedosto ei sisällä lainkaan tiliotteita."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Tiedostossa ei ole lainkaan tapahtumia."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, fuzzy
 msgid "Upload Bank Statements"
@@ -278,6 +266,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "tai"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Tiedosto ei sisällä lainkaan tiliotteita."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Tiedostossa ei ole lainkaan tapahtumia."
 
 #~ msgid "Account Number"
 #~ msgstr "Tilinumero"

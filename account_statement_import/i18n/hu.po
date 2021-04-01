@@ -244,18 +244,6 @@ msgstr ""
 "Telepítette a fájl típus támogatását szolgáló modult?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Ez a fájl nem tartalmaz kivonatot."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Ez a fájl nem tartalmaz pénzügyi tranzakciót."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -278,6 +266,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "vagy"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Ez a fájl nem tartalmaz kivonatot."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Ez a fájl nem tartalmaz pénzügyi tranzakciót."
 
 #~ msgid "Account Holder"
 #~ msgstr "Számla birtokosa"
