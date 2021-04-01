@@ -255,18 +255,6 @@ msgstr ""
 "Você instalou o módulo de apoio a este tipo de arquivo?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Este arquivo não contém qualquer extrato."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Este arquivo não contém qualquer transação."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -289,6 +277,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "ou"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Este arquivo não contém qualquer extrato."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Este arquivo não contém qualquer transação."
 
 #~ msgid "Account Holder"
 #~ msgstr "Titular da Conta"

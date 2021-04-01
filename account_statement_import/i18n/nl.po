@@ -250,18 +250,6 @@ msgstr ""
 "Hebt u de module geïnstalleerd die dit bestandstype ondersteunt ?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Dit bestand bevat geen enkel afschrift."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Dit bestand bevat geen enkele transactie."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -284,6 +272,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "of"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Dit bestand bevat geen enkel afschrift."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Dit bestand bevat geen enkele transactie."
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "Importeer sjabloon voor bankafschriften"

@@ -246,18 +246,6 @@ msgstr ""
 "aquest tipus d'arxiu?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Aquest fitxer no conte cap declaració."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Aquest fitxer no conte cap transacció."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, fuzzy
 msgid "Upload Bank Statements"
@@ -281,6 +269,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "o"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Aquest fitxer no conte cap declaració."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Aquest fitxer no conte cap transacció."
 
 #~ msgid "Account Holder"
 #~ msgstr "Titular"
