@@ -250,18 +250,6 @@ msgstr ""
 "Haben Sie das, diesem Dateityp unterstützende, Modul installiert?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Diese Datei enthält keine Buchung."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Diese Datei enthält keinen Vorgang."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr "Kontoauszüge hochladen"
@@ -284,6 +272,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "oder"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Diese Datei enthält keine Buchung."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Diese Datei enthält keinen Vorgang."
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "Import Vorlage für Bankauszüge"

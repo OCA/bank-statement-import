@@ -262,18 +262,6 @@ msgstr ""
 "Avez-vous installé le module qui supporte ce type de fichier ?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Ce fichier ne contient aucun relevé."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Ce fichier ne contient aucune transaction."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr "Télécharger les relevés bancaires"
@@ -297,6 +285,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "ou"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Ce fichier ne contient aucun relevé."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Ce fichier ne contient aucune transaction."
 
 #~ msgid " Import Template for Bank Statements"
 #~ msgstr "Importer un modèle pour les relevés bancaires"

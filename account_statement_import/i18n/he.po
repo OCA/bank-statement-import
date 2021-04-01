@@ -246,18 +246,6 @@ msgstr ""
 "האם התקנתם את המודול המתאים לתמיכה בסוג קובץ זה? "
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "קובץ זה אינו מכיל תנועות בחשבון."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "קובץ זה אינו מכיל עסקאות."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -280,6 +268,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "או"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "קובץ זה אינו מכיל תנועות בחשבון."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "קובץ זה אינו מכיל עסקאות."
 
 #~ msgid "Account Holder"
 #~ msgstr "בעל החשבון"
