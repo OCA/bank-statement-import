@@ -242,18 +242,6 @@ msgstr ""
 "Nainštalovali ste modul pre podporu tohto typu súboru?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Tento súbor neobsahuje žiadny výpis."
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Tento súbor neobsahuje žiadnu transakciu."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, fuzzy
 msgid "Upload Bank Statements"
@@ -277,6 +265,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "alebo"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Tento súbor neobsahuje žiadny výpis."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Tento súbor neobsahuje žiadnu transakciu."
 
 #~ msgid "Account Holder"
 #~ msgstr "Majiteľ Účtu"

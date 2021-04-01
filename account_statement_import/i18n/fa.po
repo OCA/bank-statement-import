@@ -240,18 +240,6 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "این فایل دارای هیچ صورتحسابی نیست"
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "این فایل دارای هیچ تراکنسی نیست."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, fuzzy
 msgid "Upload Bank Statements"
@@ -275,6 +263,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "یا"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "این فایل دارای هیچ صورتحسابی نیست"
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "این فایل دارای هیچ تراکنسی نیست."
 
 #~ msgid "Account Holder"
 #~ msgstr "دارنده حساب"

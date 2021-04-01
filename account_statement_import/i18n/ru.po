@@ -244,18 +244,6 @@ msgstr ""
 "Хотите установить модуль для поддержки данного типа файлов?"
 
 #. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any statement."
-msgstr "Данный файл не содержит ни одной выписки"
-
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "This file doesn't contain any transaction."
-msgstr "Данный файл не содержит ни одного перевода."
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr ""
@@ -278,6 +266,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "или"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Данный файл не содержит ни одной выписки"
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Данный файл не содержит ни одного перевода."
 
 #~ msgid "Account Holder"
 #~ msgstr "Владелец счёта"
