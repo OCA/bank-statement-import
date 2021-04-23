@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-01-20 18:44+0000\n"
+"PO-Revision-Date: 2021-04-23 18:47+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -50,22 +50,23 @@ msgstr "Annuleer"
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__certificate
 msgid "Certificate"
-msgstr ""
+msgstr "Certificaat"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__certificate_chain
+#, fuzzy
 msgid "Certificate Chain"
-msgstr ""
+msgstr "Certificaat reeks"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__certificate_private_key
 msgid "Certificate Private Key"
-msgstr ""
+msgstr "Certificaat privé sleutel"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__certificate_public_key
 msgid "Certificate Public Key"
-msgstr ""
+msgstr "Certificaat publieke sleutel"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__company_id
@@ -304,12 +305,12 @@ msgstr "Online (OCA)"
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_journal__online_bank_statement_provider
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
 msgid "Online Bank Statement Provider"
-msgstr "Online Bank afschrift Leverancier"
+msgstr "Online Bank afschrift Aanbieder"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 msgid "Online Bank Statement Providers"
-msgstr ""
+msgstr "Online Bank afschrift Aanbieders"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/account_journal.py:90
@@ -333,6 +334,7 @@ msgstr ""
 #: sql_constraint:online.bank.statement.provider:0
 msgid "Only one online banking statement provider per journal!"
 msgstr ""
+"Er kan slechts een bankafschrift leverancier worden ingesteld per rekening!"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__origin
@@ -342,7 +344,7 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__passphrase
 msgid "Passphrase"
-msgstr ""
+msgstr "wachtwoordzin"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__password
@@ -410,7 +412,7 @@ msgstr "sinds (ten minste)"
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
 msgid "Statement Creation Mode"
-msgstr ""
+msgstr "Bankafschrift creatie modus"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_bank_statement_import_journal_creation__online_bank_statement_provider_id
@@ -441,7 +443,7 @@ msgstr "Ongelezen berichten"
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Aantal ongelezen berichten"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__date_until
