@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-11 02:41+0000\n"
-"PO-Revision-Date: 2021-01-20 18:44+0000\n"
+"PO-Revision-Date: 2021-04-23 18:47+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "Language: nl\n"
@@ -22,17 +22,17 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
 msgid "Add All Move Lines"
-msgstr ""
+msgstr "Toevoegen alle mutaties"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__target_move__all
 msgid "All Entries"
-msgstr ""
+msgstr "Alle invoeren"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__target_move__posted
 msgid "All Posted Entries"
-msgstr ""
+msgstr "Ale definitieve boekingen"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__allow_blocked
@@ -47,12 +47,12 @@ msgstr "Bankafschrift"
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
 msgid "Choose Move Lines Filter Options"
-msgstr ""
+msgstr "Selecteer de filters voor de boekingsregels"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
@@ -106,17 +106,17 @@ msgstr "Import Dagboek items"
 #. module: account_bank_statement_import_move_line
 #: model:ir.model,name:account_bank_statement_import_move_line.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Dagboek items"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__journal_ids
 msgid "Journals Filter"
-msgstr ""
+msgstr "Dagboek filter"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
 msgid "Keep empty for using all journals"
-msgstr ""
+msgstr "Laat leeg voor alle dagboeken"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create____last_update
@@ -136,18 +136,18 @@ msgstr "Laatst bijgewerkt op"
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__invoice
 msgid "Linked to an Invoice or Refund"
-msgstr ""
+msgstr "Gekoppeld aan ene factuur of credit factuur"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__move_date
 #: model:ir.model.fields.selection,name:account_bank_statement_import_move_line.selection__account_statement_line_create__date_type__move
 msgid "Move Date"
-msgstr ""
+msgstr "Mutatie datum"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__move_line_ids
 msgid "Move Lines"
-msgstr ""
+msgstr "Mutatieregels"
 
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__partner_id
@@ -168,7 +168,7 @@ msgstr ""
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create__target_move
 msgid "Target Moves"
-msgstr ""
+msgstr "Welke mutaties"
 
 #. module: account_bank_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_move_line.account_statement_line_create_view_form
