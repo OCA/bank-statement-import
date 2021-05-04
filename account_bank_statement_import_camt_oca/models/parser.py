@@ -4,9 +4,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import re
 
+import pytz
+from dateutil.parser import isoparse
 from lxml import etree
 
-from odoo import models
+from odoo import fields, models
 
 
 class CamtParser(models.AbstractModel):
@@ -130,6 +132,19 @@ class CamtParser(models.AbstractModel):
         """Parse an Ntry node and yield transactions"""
         transaction = {"name": "/", "amount": 0}  # fallback defaults
         self.add_value_from_node(ns, node, "./ns:BookgDt/ns:Dt", transaction, "date")
+        # Check `DtTm` if date was not found in `Dt`.
+        if "date" not in transaction:
+            self.add_value_from_node(
+                ns, node, "./ns:BookgDt/ns:DtTm", transaction, "date"
+            )
+            date_val = transaction.get("date")
+            if date_val:
+                # Get the date respectful of the timezone. Credit to @StefanRijnhart.
+                dt_no_tz = isoparse(date_val).astimezone(pytz.utc).replace(tzinfo=None)
+                transaction["date"] = fields.Date.to_string(
+                    fields.Date.context_today(self, timestamp=dt_no_tz)
+                )
+
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction["amount"] = amount
