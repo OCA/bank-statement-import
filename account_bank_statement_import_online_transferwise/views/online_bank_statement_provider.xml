@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
     Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
     Copyright 2021 CorporateHub (https://corporatehub.eu)
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
     <record model="ir.ui.view" id="online_bank_statement_provider_form">
         <field name="name">online.bank.statement.provider.form</field>
         <field name="model">online.bank.statement.provider</field>
-        <field name="inherit_id" ref="account_bank_statement_import_online.online_bank_statement_provider_form"/>
+        <field
+            name="inherit_id"
+            ref="account_bank_statement_import_online.online_bank_statement_provider_form"
+        />
         <field name="arch" type="xml">
             <xpath expr="//page[@name='configuration']" position="inside">
                 <group attrs="{'invisible': [('service', '!=', 'transferwise')]}">
@@ -42,10 +44,7 @@
                             string="Private key"
                             password="True"
                         />
-                        <field
-                            name="certificate_public_key"
-                            string="Public key"
-                        />
+                        <field name="certificate_public_key" string="Public key" />
                         <div col="2" colspan="2">
                             <button
                                 name="button_transferwise_generate_key"
@@ -59,5 +58,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
