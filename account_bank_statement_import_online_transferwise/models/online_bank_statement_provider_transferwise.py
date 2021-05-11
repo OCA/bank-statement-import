@@ -66,7 +66,6 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             ("transferwise", "Wise.com (TransferWise.com)"),
         ]
 
-    @api.multi
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "transferwise":
@@ -325,7 +324,6 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             _logger.warning("Unable to parse key", exc_info=True)
             raise UserError(_("Unable to parse key"))
 
-    @api.multi
     def _transferwise_generate_key(self):
         self.ensure_one()
 
@@ -344,7 +342,6 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             .decode()
         )
 
-    @api.multi
     def button_transferwise_generate_key(self):
         for provider in self:
             provider._transferwise_generate_key()

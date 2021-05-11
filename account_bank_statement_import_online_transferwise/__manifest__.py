@@ -4,8 +4,8 @@
 
 {
     "name": "Online Bank Statements: Wise.com (TransferWise.com)",
-    "version": "12.0.1.0.3",
-    "author": "CorporateHub, " "Odoo Community Association (OCA)",
+    "version": "13.0.1.0.0",
+    "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import/",
     "license": "AGPL-3",
