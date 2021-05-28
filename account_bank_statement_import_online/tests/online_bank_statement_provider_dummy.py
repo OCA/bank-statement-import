@@ -18,7 +18,8 @@ class OnlineBankStatementProviderDummy(models.Model):
         self.ensure_one()
         if self.service != "dummy":
             return super()._obtain_statement_data(
-                date_since, date_until,
+                date_since,
+                date_until,
             )  # pragma: no cover
 
         if self.env.context.get("crash", False):

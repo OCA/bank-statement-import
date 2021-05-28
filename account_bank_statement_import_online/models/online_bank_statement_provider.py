@@ -47,7 +47,9 @@ class OnlineBankStatementProvider(models.Model):
         ),
     )
     service = fields.Selection(
-        selection=lambda self: self._selection_service(), required=True, readonly=True,
+        selection=lambda self: self._selection_service(),
+        required=True,
+        readonly=True,
     )
     interval_type = fields.Selection(
         selection=[
@@ -60,14 +62,19 @@ class OnlineBankStatementProvider(models.Model):
         required=True,
     )
     interval_number = fields.Integer(
-        string="Scheduled update interval", default=1, required=True,
+        string="Scheduled update interval",
+        default=1,
+        required=True,
     )
     update_schedule = fields.Char(
-        string="Update Schedule", compute="_compute_update_schedule",
+        string="Update Schedule",
+        compute="_compute_update_schedule",
     )
     last_successful_run = fields.Datetime(string="Last successful pull")
     next_run = fields.Datetime(
-        string="Next scheduled pull", default=fields.Datetime.now, required=True,
+        string="Next scheduled pull",
+        default=fields.Datetime.now,
+        required=True,
     )
     statement_creation_mode = fields.Selection(
         selection=[
@@ -186,7 +193,8 @@ class OnlineBankStatementProvider(models.Model):
                         break
                     raise
                 statement_date = provider._get_statement_date(
-                    statement_date_since, statement_date_until,
+                    statement_date_since,
+                    statement_date_until,
                 )
                 if not data:
                     data = ([], {})
@@ -307,11 +315,21 @@ class OnlineBankStatementProvider(models.Model):
             return relativedelta(days=1, hour=0, minute=0, second=0, microsecond=0)
         elif self.statement_creation_mode == "weekly":
             return relativedelta(
-                weeks=1, weekday=MO, hour=0, minute=0, second=0, microsecond=0,
+                weeks=1,
+                weekday=MO,
+                hour=0,
+                minute=0,
+                second=0,
+                microsecond=0,
             )
         elif self.statement_creation_mode == "monthly":
             return relativedelta(
-                months=1, day=1, hour=0, minute=0, second=0, microsecond=0,
+                months=1,
+                day=1,
+                hour=0,
+                minute=0,
+                second=0,
+                microsecond=0,
             )
 
     def _get_statement_date(self, date_since, date_until):

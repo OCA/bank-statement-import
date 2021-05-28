@@ -10,10 +10,14 @@ class OnlineBankStatementPullWizard(models.TransientModel):
     _description = "Online Bank Statement Pull Wizard"
 
     date_since = fields.Datetime(
-        string="Since", required=True, default=fields.Datetime.now,
+        string="Since",
+        required=True,
+        default=fields.Datetime.now,
     )
     date_until = fields.Datetime(
-        string="Until", required=True, default=fields.Datetime.now,
+        string="Until",
+        required=True,
+        default=fields.Datetime.now,
     )
     provider_ids = fields.Many2many(
         string="Providers",
@@ -25,7 +29,7 @@ class OnlineBankStatementPullWizard(models.TransientModel):
 
     def action_pull(self):
         self.ensure_one()
-        self.with_context(active_test=False,).provider_ids._pull(
-            self.date_since, self.date_until
-        )
+        self.with_context(
+            active_test=False,
+        ).provider_ids._pull(self.date_since, self.date_until)
         return {"type": "ir.actions.act_window_close"}
