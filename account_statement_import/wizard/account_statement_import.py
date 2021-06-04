@@ -249,7 +249,7 @@ class AccountStatementImport(models.TransientModel):
                             "bank journal doesn't exist yet, you should create "
                             "a new one."
                         )
-                        % (account_number, company.partner_id.display_name)
+                        % (account_number,)
                     )
                 else:
                     raise UserError(
