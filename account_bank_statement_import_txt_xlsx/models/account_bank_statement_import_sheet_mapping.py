@@ -12,6 +12,13 @@ class AccountBankStatementImportSheetMapping(models.Model):
     name = fields.Char(
         required=True,
     )
+
+    delete_rows = fields.Integer(
+        string="Ignore First Rows",
+        help="The import will ignore the specified initial rows amount",
+        default=0,
+    )
+
     float_thousands_sep = fields.Selection(
         string='Thousands Separator',
         selection=[
