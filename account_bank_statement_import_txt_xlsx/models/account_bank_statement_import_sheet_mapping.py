@@ -13,9 +13,9 @@ class AccountBankStatementImportSheetMapping(models.Model):
         required=True,
     )
 
-    delete_rows = fields.Integer(
+    skipped_rows = fields.Integer(
         string="Ignore First Rows",
-        help="The import will ignore the specified initial rows amount",
+        help="The number of lines to skip at the beginning of the file.",
         default=0,
     )
 

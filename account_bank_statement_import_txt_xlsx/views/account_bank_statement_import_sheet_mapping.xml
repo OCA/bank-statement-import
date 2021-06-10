@@ -38,7 +38,7 @@
                         </group>
                         <group>
                             <field name="timestamp_format"/>
-                            <field name="delete_rows"/>
+                            <field name="skipped_rows"/>
                         </group>
                         <group attrs="{'invisible': [('debit_credit_column', '=', False)]}">
                             <field name="debit_value" attrs="{'required': [('debit_credit_column', '!=', False)]}"/>

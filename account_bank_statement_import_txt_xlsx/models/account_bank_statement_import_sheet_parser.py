@@ -56,8 +56,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             journal.code,
             path.basename(filename),
         )
-        if mapping.delete_rows > 0 and name.lower().endswith('.csv'):
-            for i in range(mapping.delete_rows):
+        if mapping.skipped_rows > 0 and name.lower().endswith('.csv'):
+            for i in range(mapping.skipped_rows):
                 aux = data_file.decode("utf-8")
                 index = aux.find("\n")
                 data_file = aux[index + 1:].encode('utf-8')
@@ -121,7 +121,9 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             )
 
         if isinstance(csv_or_xlsx, tuple):
-            header = [str(value) for value in csv_or_xlsx[1].row_values(mapping.delete_rows)]
+            header = [str(value) for value in csv_or_xlsx[1].row_values(
+                mapping.skipped_rows
+            )]
         else:
             header = [value.strip() for value in next(csv_or_xlsx)]
         timestamp_column = header.index(mapping.timestamp_column)
@@ -156,7 +158,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             if mapping.bank_account_column else None
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(mapping.delete_rows + 1, csv_or_xlsx[1].nrows)
+            rows = range(mapping.skipped_rows + 1, csv_or_xlsx[1].nrows)
         else:
             rows = csv_or_xlsx
 
