@@ -40,7 +40,13 @@ msgid "Last Modified on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: account_bank_statement_import_camt
-#: code:addons/account_bank_statement_import_camt/models/parser.py:99
+#: code:addons/account_bank_statement_import_camt/models/parser.py:97
 #, python-format
 msgid "No description"
+msgstr ""
+
+#. module: account_bank_statement_import_camt
+#: code:addons/account_bank_statement_import_camt/models/parser.py:263
+#, python-format
+msgid "Start balance %s calculated from end balance %s and Total amount %s."
 msgstr ""
