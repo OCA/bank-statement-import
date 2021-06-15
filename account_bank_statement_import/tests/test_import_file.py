@@ -66,13 +66,12 @@ class TestStatementFile(TransactionCase):
             # We will get assertion error, but to solve we need to see
             # what transactions have been added:
             self.cr.execute(
-                "select name, date, amount, ref, bank_account_id"
-                " from account_bank_statement_line"
-                " where statement_id=%d" % statement_obj.id)
+                "SELECT statement_id, name, date, amount, ref, bank_account_id"
+                " FROM account_bank_statement_line"
+                " WHERE statement_id=%s", (statement_obj.id, ))
             _logger.error(
-                "Transaction not found in %s" %
-                str(self.cr.fetchall())
-            )
+                "No transaction with domain %s found in %s" %
+                (str(domain), str(self.cr.fetchall())))
         self.assertTrue(
             ids,
             'Transaction %s not found after parse.' % str(domain)
