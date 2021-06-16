@@ -1,4 +1,4 @@
-# Copyright 2020 Florent de Labarre
+# Copyright 2020-2021 Florent de Labarre
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import requests
 import json
@@ -9,7 +9,7 @@ from odoo import api, models, _
 from odoo.exceptions import UserError
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
-QONTO_ENDPOINT = 'https://thirdparty.qonto.eu/v2'
+QONTO_ENDPOINT = 'https://thirdparty.qonto.com/v2'
 
 
 class OnlineBankStatementProviderQonto(models.Model):
@@ -17,26 +17,18 @@ class OnlineBankStatementProviderQonto(models.Model):
 
     @api.model
     def _get_available_services(self):
-        return super()._get_available_services() + [
-            ('qonto', 'Qonto.eu'),
-        ]
+        return super()._get_available_services() + [('qonto', 'Qonto.com')]
 
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != 'qonto':
-            return super()._obtain_statement_data(
-                date_since,
-                date_until,
-            )
+            return super()._obtain_statement_data(date_since, date_until)
         return self._qonto_obtain_statement_data(date_since, date_until)
 
     def _get_statement_date(self, date_since, date_until):
         self.ensure_one()
         if self.service != 'qonto':
-            return super()._get_statement_date(
-                date_since,
-                date_until,
-            )
+            return super()._get_statement_date(date_since, date_until)
         return date_since.astimezone(pytz.timezone('Europe/Paris')).date()
 
     #########
@@ -93,37 +85,44 @@ class OnlineBankStatementProviderQonto(models.Model):
 
     def _qonto_prepare_statement_line(
             self, transaction, sequence, journal_currency, currencies_code2id):
-        date = datetime.strptime(transaction['settled_at'], '%Y-%m-%dT%H:%M:%S.%fZ')
-        side = 1 if transaction['side'] == 'credit' else -1
-        name = transaction['label'] or '/'
-        if transaction['reference']:
-            name = '%s %s' % (name, transaction['reference'])
-        vals_line = {
-            'sequence': sequence,
-            'date': date,
-            'name': name,
-            'ref': transaction['reference'],
-            'unique_import_id': transaction['transaction_id'],
-            'amount': transaction['amount'] * side,
-        }
-
+        if not transaction['currency']:
+            raise UserError(_(
+                "Transaction ID %s doesn't have any currency. "
+                "This should never happen.") % transaction['transaction_id'])
         if not transaction['local_currency']:
             raise UserError(_(
-                "Transaction ID %s has not local_currency. "
+                "Transaction ID %s doesn't have any local_currency. "
                 "This should never happen.") % transaction['transaction_id'])
-        if transaction['local_currency'] not in currencies_code2id:
+        if transaction['currency'] not in currencies_code2id or transaction['local_currency'] not in currencies_code2id:
             raise UserError(_(
                 "Currency %s used in transaction ID %s doesn't exist "
                 "in Odoo.") % (
-                    transaction['local_currency'],
+                    transaction['currency'],
                     transaction['transaction_id']))
+
+        date = datetime.strptime(transaction['settled_at'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        sign = 1 if transaction['side'] == 'credit' else -1
+        payment_ref_list = [
+            transaction['label'],
+            transaction['reference'],
+            ]
+        vals_line = {
+            'sequence': sequence,
+            'date': date,
+            'payment_ref': ' - '.join([x for x in payment_ref_list if x]) or '/',
+            'narration': transaction['note'],
+            'transaction_type': transaction['operation_type'],
+            'unique_import_id': transaction['transaction_id'],
+            'amount': transaction['amount'] * sign,
+            'currency_id': currencies_code2id[transaction['currency']],
+        }
 
         line_currency_id = currencies_code2id[transaction['local_currency']]
 
         if journal_currency.id != line_currency_id:
             vals_line.update({
-                'currency_id': line_currency_id,
-                'amount_currency': transaction['local_amount'] * side,
+                'foreign_currency_id': line_currency_id,
+                'amount_currency': transaction['local_amount'] * sign,
                 })
         return vals_line
 
