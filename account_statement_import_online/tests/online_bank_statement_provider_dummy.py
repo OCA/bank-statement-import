@@ -56,7 +56,7 @@ class OnlineBankStatementProviderDummy(models.Model):
                 transaction_date = fields.Datetime.to_string(transaction_date)
             lines.append(
                 {
-                    "name": "payment",
+                    "payment_ref": "payment",
                     "amount": amount,
                     "date": transaction_date,
                     "unique_import_id": str(
