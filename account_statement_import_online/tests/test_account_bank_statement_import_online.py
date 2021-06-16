@@ -383,10 +383,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             order="date asc",
         )
         self.assertFalse(statements[0].balance_start)
-        self.assertFalse(statements[0].balance_end_real)
         self.assertTrue(statements[0].balance_end)
         self.assertTrue(statements[1].balance_start)
-        self.assertFalse(statements[1].balance_end_real)
 
     def test_wizard(self):
         journal = self.AccountJournal.create(
@@ -398,11 +396,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 "online_bank_statement_provider": "dummy",
             }
         )
-        action = journal.action_online_bank_statements_pull_wizard()
-        self.assertTrue(action["context"]["default_provider_ids"][0][2])
-
         wizard = self.OnlineBankStatementPullWizard.with_context(
-            action["context"]
+            active_model="account.journal", active_id=journal.id
         ).create(
             {"date_since": self.now - relativedelta(hours=1), "date_until": self.now}
         )
