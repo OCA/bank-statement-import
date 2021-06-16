@@ -76,17 +76,3 @@ class AccountJournal(models.Model):
         if "bank_statements_source" in vals or "online_bank_statement_provider" in vals:
             self._update_online_bank_statement_provider_id()
         return res
-
-    def action_online_bank_statements_pull_wizard(self):
-        provider_ids = self.mapped("online_bank_statement_provider_id").ids
-        return {
-            "name": _("Online Bank Statement Pull Wizard"),
-            "type": "ir.actions.act_window",
-            "res_model": "online.bank.statement.pull.wizard",
-            "views": [[False, "form"]],
-            "target": "new",
-            "context": {
-                "default_provider_ids": [(6, False, provider_ids)],
-                "active_test": False,
-            },
-        }
