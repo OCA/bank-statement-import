@@ -10,16 +10,10 @@
         <field name="model">online.bank.statement.pull.wizard</field>
         <field name="arch" type="xml">
             <form>
-                <field name="provider_ids" invisible="1" />
-                <group name="filter">
-                    <group name="date_range" colspan="2">
-                        <group>
-                            <field name="date_since" string="Since (at least)" />
-                        </group>
-                        <group>
-                            <field name="date_until" string="Until (at least)" />
-                        </group>
-                    </group>
+                <group name="main">
+                    <field name="provider_ids" widget="many2many_tags" required="1" />
+                            <field name="date_since" />
+                            <field name="date_until" />
                 </group>
                 <footer>
                     <button
@@ -27,11 +21,19 @@
                         string="Pull"
                         type="object"
                         default_focus="1"
-                        class="oe_highlight"
+                        class="btn-primary"
                     />
-                    <button string="Cancel" class="oe_link" special="cancel" />
+                    <button string="Cancel" special="cancel" />
                 </footer>
             </form>
         </field>
     </record>
+
+    <record id="online_bank_statement_pull_wizard_action" model="ir.actions.act_window">
+            <field name="name">Pull Online Bank Statement</field>
+            <field name="res_model">online.bank.statement.pull.wizard</field>
+            <field name="view_mode">form</field>
+                    <field name="target">new</field>
+    </record>
+
 </odoo>
