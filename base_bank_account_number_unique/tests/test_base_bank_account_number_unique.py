@@ -41,7 +41,7 @@ class TestBaseBankAccountNumberUnique(TransactionCase):
         same number, but belonging to another company."""
         bank_account_model = self.env['res.partner.bank']
         company_model = self.env['res.company']
-        company = company_model.create({
+        company_model.create({
             'name': 'Schmidt AG',
         })
         bank_account_model.create({
