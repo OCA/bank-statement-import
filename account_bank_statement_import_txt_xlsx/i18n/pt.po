@@ -317,7 +317,7 @@ msgstr "Última Atualização em"
 #: code:addons/account_bank_statement_import_txt_xlsx/wizards/account_bank_statement_import_sheet_mapping_wizard.py:153
 #, fuzzy, python-format
 msgid "Mapping from %s"
-msgstr "Linhas de Mapeamento"
+msgstr "Linhas de Mapeamento de %s"
 
 #. module: account_bank_statement_import_txt_xlsx
 #: selection:account.bank.statement.import.sheet.mapping,delimiter:0
