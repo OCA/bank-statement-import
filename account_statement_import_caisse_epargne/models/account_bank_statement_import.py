@@ -146,6 +146,7 @@ class AccountBankStatementImport(models.TransientModel):
 
     @api.model
     def _parse_file(self, data_file):
+        data_file = data_file.decode('cp1252')
         data_file = data_file.splitlines()
         result = self._check_file(data_file)
         if not result:
