@@ -23,8 +23,8 @@ except (ImportError, IOError) as err:
 
 
 class AccountBankStatementImportPayPalParser(models.TransientModel):
-    _name = "account.bank.statement.import.paypal.parser"
-    _description = "Account Bank Statement Import PayPal Parser"
+    _name = "account.statement.import.paypal.parser"
+    _description = "Account Statement Import PayPal Parser"
 
     @api.model
     def parse_header(self, data_file):
@@ -75,7 +75,7 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
         )
 
     def _data_dict_constructor(self, mapping, header):
-        list_of_content = [
+        required_list = [
             "date_column",
             "time_column",
             "tz_column",
@@ -85,6 +85,8 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             "fee_column",
             "balance_column",
             "transaction_id_column",
+        ]
+        optional_list = [
             "description_column",
             "type_column",
             "from_email_address_column",
@@ -96,7 +98,9 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             "bank_account_column",
         ]
         data_dict = {}
-        for key in list_of_content:
+        for key in required_list:
+            data_dict[key] = header.index(getattr(mapping, key))
+        for key in optional_list:
             try:
                 data_dict[key] = header.index(getattr(mapping, key))
             except ValueError:
@@ -208,7 +212,7 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             "name": invoice or details or description or "",
             "amount": str(gross_amount),
             "date": timestamp,
-            "note": note,
+            "payment_ref": note,
             "unique_import_id": unique_import_id,
         }
         if payer_name:
@@ -225,7 +229,7 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
                     "date": timestamp,
                     "partner_name": "PayPal",
                     "unique_import_id": "%s-FEE" % unique_import_id,
-                    "note": _("Transaction fee for %s") % note,
+                    "payment_ref": _("Transaction fee for %s") % note,
                 }
             )
         return transactions

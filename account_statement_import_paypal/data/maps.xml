@@ -8,7 +8,7 @@
 <odoo noupdate="1">
     <record
         id="paypal_statement_map_en"
-        model="account.bank.statement.import.paypal.mapping"
+        model="account.statement.import.paypal.mapping"
     >
         <field name="name">PayPal Statement (EN)</field>
         <field name="float_thousands_sep">comma</field>
@@ -30,10 +30,7 @@
         <field name="bank_name_column">Bank Name</field>
         <field name="bank_account_column">Bank Account</field>
     </record>
-    <record
-        id="paypal_activity_map_en"
-        model="account.bank.statement.import.paypal.mapping"
-    >
+    <record id="paypal_activity_map_en" model="account.statement.import.paypal.mapping">
         <field name="name">PayPal Activity (EN)</field>
         <field name="float_thousands_sep">comma</field>
         <field name="float_decimal_sep">dot</field>
@@ -57,7 +54,7 @@
     </record>
     <record
         id="paypal_statement_map_es"
-        model="account.bank.statement.import.paypal.mapping"
+        model="account.statement.import.paypal.mapping"
     >
         <field name="name">PayPal Statement (ES)</field>
         <field name="float_thousands_sep">dot</field>
@@ -79,10 +76,7 @@
         <field name="bank_name_column">Nombre del banco</field>
         <field name="bank_account_column">Cuenta bancaria</field>
     </record>
-    <record
-        id="paypal_activity_map_es"
-        model="account.bank.statement.import.paypal.mapping"
-    >
+    <record id="paypal_activity_map_es" model="account.statement.import.paypal.mapping">
         <field name="name">PayPal Activity (ES)</field>
         <field name="float_thousands_sep">dot</field>
         <field name="float_decimal_sep">comma</field>
@@ -108,7 +102,7 @@
     </record>
     <record
         id="paypal_statement_map_de"
-        model="account.bank.statement.import.paypal.mapping"
+        model="account.statement.import.paypal.mapping"
     >
         <field name="name">PayPal Statement (DE)</field>
         <field name="float_thousands_sep">dot</field>
@@ -130,10 +124,7 @@
         <field name="bank_name_column">Name der Bank</field>
         <field name="bank_account_column">Bankkonto</field>
     </record>
-    <record
-        id="paypal_activity_map_de"
-        model="account.bank.statement.import.paypal.mapping"
-    >
+    <record id="paypal_activity_map_de" model="account.statement.import.paypal.mapping">
         <field name="name">PayPal Activity (DE)</field>
         <field name="float_thousands_sep">dot</field>
         <field name="float_decimal_sep">comma</field>

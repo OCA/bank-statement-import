@@ -7,8 +7,8 @@ from odoo import api, fields, models
 
 
 class AccountBankStatementImportPayPalMapping(models.Model):
-    _name = "account.bank.statement.import.paypal.mapping"
-    _description = "Account Bank Statement Import PayPal Mapping"
+    _name = "account.statement.import.paypal.mapping"
+    _description = "Account Statement Import PayPal Mapping"
 
     name = fields.Char(
         required=True,
