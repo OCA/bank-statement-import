@@ -6,14 +6,9 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <record
-        id="account_bank_statement_import_paypal_mapping_wizard_form"
-        model="ir.ui.view"
-    >
-        <field
-            name="name"
-        >account.bank.statement.import.paypal.mapping.wizard.form</field>
-        <field name="model">account.bank.statement.import.paypal.mapping.wizard</field>
+    <record id="account_statement_import_paypal_mapping_wizard_form" model="ir.ui.view">
+        <field name="name">account.statement.import.paypal.mapping.wizard.form</field>
+        <field name="model">account.statement.import.paypal.mapping.wizard</field>
         <field name="mode">primary</field>
         <field name="inherit_id" ref="multi_step_wizard.multi_step_wizard_form" />
         <field name="arch" type="xml">
@@ -163,13 +158,18 @@
             </xpath>
         </field>
     </record>
-    <act_window
-        id="action_account_bank_statement_import_paypal_mapping_wizard"
-        name="Import Mapping"
-        res_model="account.bank.statement.import.paypal.mapping.wizard"
-        binding_model="account.bank.statement.import.paypal.mapping"
-        view_mode="form"
-        target="new"
-        binding_views="form"
-    />
+    <record
+        id="action_account_statement_import_paypal_mapping_wizard"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Import Mapping</field>
+        <field name="res_model">account.statement.import.paypal.mapping.wizard</field>
+        <field
+            name="binding_model_id"
+            ref="model_account_statement_import_paypal_mapping"
+        />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_view_types">form</field>
+    </record>
 </odoo>
