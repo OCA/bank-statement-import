@@ -15,27 +15,66 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
     _description = "Account Bank Statement Import PayPal Mapping Wizard"
     _inherit = ["multi.step.wizard.mixin"]
 
-    data_file = fields.Binary(string="PayPal Report File", required=True,)
+    data_file = fields.Binary(
+        string="PayPal Report File",
+        required=True,
+    )
     filename = fields.Char()
     header = fields.Char()
-    date_column = fields.Char(string='"Date" column',)
-    time_column = fields.Char(string='"Time" column',)
-    tz_column = fields.Char(string='"Timezone" column',)
-    name_column = fields.Char(string='"Name" column',)
-    currency_column = fields.Char(string='"Currency" column',)
-    gross_column = fields.Char(string='"Gross" column',)
-    fee_column = fields.Char(string='"Fee" column',)
-    balance_column = fields.Char(string='"Balance" column',)
-    transaction_id_column = fields.Char(string='"Transaction ID" column',)
-    description_column = fields.Char(string='"Description" column',)
-    type_column = fields.Char(string='"Type" column',)
-    from_email_address_column = fields.Char(string='"From Email Address" column',)
-    to_email_address_column = fields.Char(string='"To Email Address" column',)
-    invoice_id_column = fields.Char(string='"Invoice ID" column',)
-    subject_column = fields.Char(string='"Subject" column',)
-    note_column = fields.Char(string='"Note" column',)
-    bank_name_column = fields.Char(string='"Bank Name" column',)
-    bank_account_column = fields.Char(string='"Bank Account" column',)
+    date_column = fields.Char(
+        string='"Date" column',
+    )
+    time_column = fields.Char(
+        string='"Time" column',
+    )
+    tz_column = fields.Char(
+        string='"Timezone" column',
+    )
+    name_column = fields.Char(
+        string='"Name" column',
+    )
+    currency_column = fields.Char(
+        string='"Currency" column',
+    )
+    gross_column = fields.Char(
+        string='"Gross" column',
+    )
+    fee_column = fields.Char(
+        string='"Fee" column',
+    )
+    balance_column = fields.Char(
+        string='"Balance" column',
+    )
+    transaction_id_column = fields.Char(
+        string='"Transaction ID" column',
+    )
+    description_column = fields.Char(
+        string='"Description" column',
+    )
+    type_column = fields.Char(
+        string='"Type" column',
+    )
+    from_email_address_column = fields.Char(
+        string='"From Email Address" column',
+    )
+    to_email_address_column = fields.Char(
+        string='"To Email Address" column',
+    )
+    invoice_id_column = fields.Char(
+        string='"Invoice ID" column',
+    )
+    subject_column = fields.Char(
+        string='"Subject" column',
+    )
+    note_column = fields.Char(
+        string='"Note" column',
+    )
+    bank_name_column = fields.Char(
+        string='"Bank Name" column',
+    )
+    bank_account_column = fields.Char(
+        string='"Bank Account" column',
+    )
 
     @api.onchange("data_file")
     def _onchange_data_file(self):
