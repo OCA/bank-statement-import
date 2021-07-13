@@ -11,8 +11,8 @@ from odoo import _, api, fields, models
 
 
 class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
-    _name = "account.bank.statement.import.paypal.mapping.wizard"
-    _description = "Account Bank Statement Import PayPal Mapping Wizard"
+    _name = "account.statement.import.paypal.mapping.wizard"
+    _description = "Account Statement Import PayPal Mapping Wizard"
     _inherit = ["multi.step.wizard.mixin"]
 
     data_file = fields.Binary(
@@ -78,7 +78,7 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
 
     @api.onchange("data_file")
     def _onchange_data_file(self):
-        Parser = self.env["account.bank.statement.import.paypal.parser"]
+        Parser = self.env["account.statement.import.paypal.parser"]
         if not self.data_file:
             return
         header = Parser.parse_header(b64decode(self.data_file))
@@ -154,13 +154,13 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
 
     def import_mapping(self):
         self.ensure_one()
-        mapping = self.env["account.bank.statement.import.paypal.mapping"].create(
+        mapping = self.env["account.statement.import.paypal.mapping"].create(
             self._get_mapping_values()
         )
         return {
             "type": "ir.actions.act_window",
             "name": _("Imported Mapping"),
-            "res_model": "account.bank.statement.import.paypal.mapping",
+            "res_model": "account.statement.import.paypal.mapping",
             "res_id": mapping.id,
             "view_mode": "form",
             "view_id": False,
