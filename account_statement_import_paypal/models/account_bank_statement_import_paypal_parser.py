@@ -38,7 +38,10 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
         currency_code = (journal.currency_id or journal.company_id.currency_id).name
         account_number = journal.bank_account_id.acc_number
 
-        name = _("%s: %s") % (journal.code, path.basename(filename),)
+        name = _("%s: %s") % (
+            journal.code,
+            path.basename(filename),
+        )
         lines = self._parse_lines(mapping, data_file, currency_code)
         if not lines:
             return currency_code, account_number, [{"name": name, "transactions": []}]
