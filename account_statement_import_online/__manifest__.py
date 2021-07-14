@@ -21,6 +21,7 @@
         "security/ir.model.access.csv",
         "security/online_bank_statement_provider.xml",
         "wizards/online_bank_statement_pull_wizard.xml",
+        "views/actions.xml",
         "views/account_journal.xml",
         "views/online_bank_statement_provider.xml",
     ],
