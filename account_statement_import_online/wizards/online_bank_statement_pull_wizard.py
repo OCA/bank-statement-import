@@ -19,6 +19,8 @@ class OnlineBankStatementPullWizard(models.TransientModel):
         required=True,
         default=fields.Datetime.now,
     )
+    # The link to providers is Many2many, because you can select multiple
+    # journals for the action to pull statements.
     provider_ids = fields.Many2many(
         string="Providers",
         comodel_name="online.bank.statement.provider",
@@ -29,25 +31,25 @@ class OnlineBankStatementPullWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Retrieve providers from the journals for which this wizard is launched."""
         res = super().default_get(fields_list)
+        journal_ids = []
         if self.env.context.get("active_model") == "account.journal":
             if self.env.context.get("active_ids"):
-                journals = self.env["account.journal"].browse(
-                    self.env.context["active_ids"]
-                )
-                res["provider_ids"] = journals.online_bank_statement_provider_id.ids
+                journal_ids = self.env.context["active_ids"]
             elif self.env.context.get("active_id"):
-                journal = self.env["account.journal"].browse(
-                    self.env.context["active_id"]
-                )
-                res["provider_ids"] = [journal.online_bank_statement_provider_id.id]
+                journal_ids = [self.env.context["active_id"]]
+        if journal_ids:
+            journals = self.env["account.journal"].browse(journal_ids)
+            res["provider_ids"] = [journals.online_bank_statement_provider_id.id]
         return res
 
     def action_pull(self):
+        """Pull statements from providers and then show list of statements."""
         self.ensure_one()
-        self.with_context(
-            active_test=False,
-        ).provider_ids._pull(self.date_since, self.date_until)
+        self.with_context(active_test=False).provider_ids._pull(
+            self.date_since, self.date_until
+        )
         action = self.env.ref("account.action_bank_statement_tree").sudo().read([])[0]
         if len(self.provider_ids) == 1:
             action["context"] = {

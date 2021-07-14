@@ -48,8 +48,15 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         journal_form.save()
 
         self.assertTrue(journal.online_bank_statement_provider_id)
+        save_provider_id = journal.online_bank_statement_provider_id.id
         journal.unlink()
-        self.assertFalse(self.OnlineBankStatementProvider.search([]))
+        self.assertFalse(
+            self.OnlineBankStatementProvider.search(
+                [
+                    ("id", "=", save_provider_id),
+                ]
+            )
+        )
 
     def test_source_change_cleanup(self):
         journal = self.AccountJournal.create(
@@ -61,13 +68,25 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         journal_form.save()
 
         self.assertTrue(journal.online_bank_statement_provider_id)
+        save_provider_id = journal.online_bank_statement_provider_id.id
+
+        # Stuff should not change when doing unrelated write.
+        journal.write({"code": "BIGBANK"})
+        self.assertTrue(journal.online_bank_statement_provider_id)
+        self.assertEqual(journal.online_bank_statement_provider_id.id, save_provider_id)
 
         with common.Form(journal) as journal_form:
             journal_form.bank_statements_source = "undefined"
         journal_form.save()
 
         self.assertFalse(journal.online_bank_statement_provider_id)
-        self.assertFalse(self.OnlineBankStatementProvider.search([]))
+        self.assertFalse(
+            self.OnlineBankStatementProvider.search(
+                [
+                    ("id", "=", save_provider_id),
+                ]
+            )
+        )
 
     def test_pull_mode_daily(self):
         journal = self.AccountJournal.create(
@@ -396,13 +415,13 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 "online_bank_statement_provider": "dummy",
             }
         )
-        wizard = self.OnlineBankStatementPullWizard.with_context(
+        vals = self.OnlineBankStatementPullWizard.with_context(
             active_model="account.journal", active_id=journal.id
-        ).create(
-            {"date_since": self.now - relativedelta(hours=1), "date_until": self.now}
-        )
+        ).default_get(fields_list=["provider_ids"])
+        vals["date_since"] = self.now - relativedelta(hours=1)
+        vals["date_until"] = self.now
+        wizard = self.OnlineBankStatementPullWizard.create(vals)
         self.assertTrue(wizard.provider_ids)
-
         wizard.action_pull()
         self.assertTrue(
             self.AccountBankStatement.search([("journal_id", "=", journal.id)])

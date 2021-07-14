@@ -24,7 +24,7 @@ class OnlineBankStatementProvider(models.Model):
     _description = "Online Bank Statement Provider"
 
     company_id = fields.Many2one(related="journal_id.company_id", store=True)
-    active = fields.Boolean()
+    active = fields.Boolean(default=True)
     name = fields.Char(string="Name", compute="_compute_name", store=True)
     journal_id = fields.Many2one(
         comodel_name="account.journal",
@@ -122,12 +122,11 @@ class OnlineBankStatementProvider(models.Model):
     def values_service(self):
         return self._get_available_services()
 
-    @api.depends("service")
+    @api.depends("service", "journal_id.name")
     def _compute_name(self):
+        """We can have multiple providers/journals for the same service."""
         for provider in self:
-            provider.name = list(
-                filter(lambda x: x[0] == provider.service, self._selection_service())
-            )[0][1]
+            provider.name = " ".join([provider.journal_id.name, provider.service])
 
     @api.depends("active", "interval_type", "interval_number")
     def _compute_update_schedule(self):
