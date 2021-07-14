@@ -11,9 +11,14 @@
         <field name="arch" type="xml">
             <form>
                 <group name="main">
-                    <field name="provider_ids" widget="many2many_tags" required="1" />
-                            <field name="date_since" />
-                            <field name="date_until" />
+                    <field
+                        name="provider_ids"
+                        widget="many2many_tags"
+                        required="1"
+                        options="{'create': false, 'create_edit': false}"
+                    />
+                    <field name="date_since" />
+                    <field name="date_until" />
                 </group>
                 <footer>
                     <button
@@ -27,13 +32,6 @@
                 </footer>
             </form>
         </field>
-    </record>
-
-    <record id="online_bank_statement_pull_wizard_action" model="ir.actions.act_window">
-            <field name="name">Pull Online Bank Statement</field>
-            <field name="res_model">online.bank.statement.pull.wizard</field>
-            <field name="view_mode">form</field>
-                    <field name="target">new</field>
     </record>
 
 </odoo>
