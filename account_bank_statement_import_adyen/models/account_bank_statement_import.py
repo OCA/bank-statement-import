@@ -44,6 +44,23 @@ class AccountBankStatementImport(models.TransientModel):
             for i in (16, 17, 18, 19, 20))
 
     @api.model
+    def _import_adyen_transaction_find_partner(
+            self, statement, statement_id, row
+    ):
+        """ Return exactly one partner matched for this transaction, or an
+        empty recordset """
+
+        return self.env['account.move.line'].search([
+            ('account_id.reconcile', '=', True),
+            ('account_id.internal_type', '=', 'receivable'),
+            ('reconciled', '=', False),
+            ('balance', '=', self.balance(row)),
+            '|',
+            ('move_id.name', '=', row[3] or row[4] or row[9]),
+            ('name', '=', row[3] or row[4] or row[9]),
+        ], limit=1).partner_id
+
+    @api.model
     def import_adyen_transaction(self, statement, statement_id, row):
         transaction_id = str(len(statement['transactions'])).zfill(4)
         transaction = dict(
@@ -52,6 +69,9 @@ class AccountBankStatementImport(models.TransientModel):
             amount=self.balance(row),
             note='%s %s %s %s' % (row[2], row[3], row[4], row[21]),
             name="%s" % (row[3] or row[4] or row[9]),
+            partner_id=self._import_adyen_transaction_find_partner(
+                statement, statement_id, row,
+            ).id,
         )
         statement['transactions'].append(transaction)
 
