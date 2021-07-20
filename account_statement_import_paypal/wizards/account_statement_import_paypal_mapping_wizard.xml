@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 Tecnativa - Vicent Cubells
+    Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="account_statement_import_paypal_mapping_wizard_form" model="ir.ui.view">
+        <field name="name">account.statement.import.paypal.mapping.wizard.form</field>
+        <field name="model">account.statement.import.paypal.mapping.wizard</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="multi_step_wizard.multi_step_wizard_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//footer" position="before">
+                <h2>Select a PayPal report file to import mapping.</h2>
+                <group name="start" attrs="{'invisible': [('state', '!=', 'start')]}">
+                    <group colspan="2">
+                        <field
+                            name="data_file"
+                            filename="filename"
+                            placeholder="Choose a file to import..."
+                        />
+                        <field name="filename" invisible="1" />
+                    </group>
+                </group>
+                <group name="final" attrs="{'invisible': [('state', '!=', 'final')]}">
+                    <group colspan="2">
+                        <field name="header" invisible="1" />
+                        <field
+                            name="date_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="time_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="tz_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="name_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="currency_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="gross_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="fee_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="balance_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="transaction_id_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                            attrs="{'required': [('state', '=', 'final')]}"
+                        />
+                        <field
+                            name="description_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="type_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="from_email_address_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="to_email_address_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="invoice_id_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="subject_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="note_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="bank_name_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="bank_account_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//div[@name='states_buttons']/button" position="before">
+                <button
+                    name="import_mapping"
+                    string="Import"
+                    type="object"
+                    class="btn-primary"
+                    attrs="{'invisible': [('state', '!=', 'final')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record
+        id="action_account_statement_import_paypal_mapping_wizard"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Import Mapping</field>
+        <field name="res_model">account.statement.import.paypal.mapping.wizard</field>
+        <field
+            name="binding_model_id"
+            ref="model_account_statement_import_paypal_mapping"
+        />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_view_types">form</field>
+    </record>
+</odoo>

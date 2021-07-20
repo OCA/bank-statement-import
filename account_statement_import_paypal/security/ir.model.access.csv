@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_account_statement_import_paypal_mapping_manager","account.statement.import.paypal.mapping:account.group_account_manager","model_account_statement_import_paypal_mapping","account.group_account_manager","1","1","1","1"
+"access_account_statement_import_paypal_mapping_user","account.statement.import.paypal.mapping:account.group_account_user","model_account_statement_import_paypal_mapping","account.group_account_user","1","0","0","0"
+"access_account_statement_import_paypal_parser","account.statement.import.paypal.parser:account.group_account_user","model_account_statement_import_paypal_parser","account.group_account_user","1","1","1","1"
+"access_account_statement_import_paypal_mapping_wizard","Full access on account.statement.import.paypal.mapping.wizard","model_account_statement_import_paypal_mapping_wizard","account.group_account_user","1","1","1","1"
