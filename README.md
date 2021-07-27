@@ -23,6 +23,8 @@ addon | version | summary
 [account_statement_import_camt](account_statement_import_camt/) | 14.0.1.1.0 | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 14.0.1.1.0 | Bank Account Camt54 Import
 [account_statement_import_ofx](account_statement_import_ofx/) | 14.0.1.0.0 | Import OFX Bank Statement
+[account_statement_import_online](account_statement_import_online/) | 14.0.1.0.0 | Online bank statements update
+[account_statement_import_online_ponto](account_statement_import_online_ponto/) | 14.0.1.0.0 | Online Bank Statements: MyPonto.com
 [account_statement_import_paypal](account_statement_import_paypal/) | 14.0.1.0.0 | Import PayPal CSV files as Bank Statements in Odoo
 
 [//]: # (end addons)
