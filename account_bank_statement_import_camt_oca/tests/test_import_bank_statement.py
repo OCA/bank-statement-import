@@ -152,3 +152,23 @@ class TestImport(TransactionCase):
             )
 
             self.assertTrue(all([st.line_ids for st in bank_st_record]))
+
+    def test_import_transaction_bookgdt_datetime(self):
+        """Test correct date is set when `BookgDt` is a datetime (`DtTm`)."""
+        testfile = get_module_resource(
+            "account_bank_statement_import_camt_oca",
+            "test_files",
+            "test-camt053-bookgdt-dttm",
+        )
+        with open(testfile, "rb") as datafile:
+            camt_file = base64.b64encode(datafile.read())
+
+            self.env["account.bank.statement.import"].create(
+                {"attachment_ids": [(0, 0, {"name": "test file", "datas": camt_file})]}
+            ).import_file()
+
+            bank_st_record = self.env["account.bank.statement"].search(
+                [("name", "=", "1234Test/1")], limit=1
+            )
+            statement_lines = bank_st_record.line_ids
+            self.assertEqual(statement_lines.mapped("date"), [date(2014, 1, 5)])
