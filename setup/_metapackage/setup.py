@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo10-addon-account_bank_statement_import_camt_oca',
         'odoo10-addon-account_bank_statement_import_move_line',
         'odoo10-addon-account_bank_statement_import_mt940_base',
+        'odoo10-addon-account_bank_statement_import_mt940_nl_mollie',
         'odoo10-addon-account_bank_statement_import_ofx',
         'odoo10-addon-account_bank_statement_import_qif',
         'odoo10-addon-account_bank_statement_import_save_file',
