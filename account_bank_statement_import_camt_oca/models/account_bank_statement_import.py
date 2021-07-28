@@ -1,4 +1,4 @@
-# Copyright 2013-2016 Therp BV <https://therp.nl>
+# Copyright 2013-2021 Therp BV <https://therp.nl>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import logging
 import zipfile
@@ -25,7 +25,7 @@ class AccountBankStatementImport(models.TransientModel):
                     account_number = None
                     transactions = []
                     for member in data.namelist():
-                        currency, account_number, new = self._parse_file(
+                        currency, account_number, new = parser.parse(
                             data.open(member).read()
                         )
                         transactions.extend(new)
