@@ -4,11 +4,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import re
 
-import pytz
-from dateutil.parser import isoparse
 from lxml import etree
 
-from odoo import fields, models
+from odoo import models
 
 
 class CamtParser(models.AbstractModel):
@@ -132,19 +130,6 @@ class CamtParser(models.AbstractModel):
         """Parse an Ntry node and yield transactions"""
         transaction = {"name": "/", "amount": 0}  # fallback defaults
         self.add_value_from_node(ns, node, "./ns:BookgDt/ns:Dt", transaction, "date")
-        # Check `DtTm` if date was not found in `Dt`.
-        if "date" not in transaction:
-            self.add_value_from_node(
-                ns, node, "./ns:BookgDt/ns:DtTm", transaction, "date"
-            )
-            date_val = transaction.get("date")
-            if date_val:
-                # Get the date respectful of the timezone. Credit to @StefanRijnhart.
-                dt_no_tz = isoparse(date_val).astimezone(pytz.utc).replace(tzinfo=None)
-                transaction["date"] = fields.Date.to_string(
-                    fields.Date.context_today(self, timestamp=dt_no_tz)
-                )
-
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction["amount"] = amount
@@ -257,11 +242,8 @@ class CamtParser(models.AbstractModel):
         try:
             root = etree.fromstring(data, parser=etree.XMLParser(recover=True))
         except etree.XMLSyntaxError:
-            try:
-                # ABNAmro is known to mix up encodings
-                root = etree.fromstring(data.decode("iso-8859-15").encode("utf-8"))
-            except etree.XMLSyntaxError:
-                root = None
+            # ABNAmro is known to mix up encodings
+            root = etree.fromstring(data.decode("iso-8859-15").encode("utf-8"))
         if root is None:
             raise ValueError("Not a valid xml file, or not an xml file at all.")
         ns = root.tag[1 : root.tag.index("}")]
