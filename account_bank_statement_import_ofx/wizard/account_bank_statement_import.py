@@ -87,7 +87,8 @@ class AccountBankStatementImport(models.TransientModel):
                     "The following problem occurred during import. "
                     "The file might not be valid.\n\n %s"
                 )
-                % e.message
+                # % e.message # flake8  B306 `BaseException.message`
+                % e.args[0]
             )
 
         balance = float(ofx.account.statement.balance)

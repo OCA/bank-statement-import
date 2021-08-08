@@ -11,8 +11,8 @@
     "Le Filament,"
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/bank-statement-import",
-    "depends": ["account_bank_statement_import",],
-    "data": ["views/view_account_bank_statement_import.xml",],
-    "external_dependencies": {"python": ["ofxparse"],},
+    "depends": ["account_bank_statement_import"],
+    "data": ["views/view_account_bank_statement_import.xml"],
+    "external_dependencies": {"python": ["ofxparse"]},
     "installable": True,
 }

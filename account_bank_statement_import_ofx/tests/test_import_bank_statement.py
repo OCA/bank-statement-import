@@ -62,7 +62,7 @@ class TestOfxFile(TransactionCase):
         )
         ofx_file_wrong = base64.b64encode(open(ofx_file_path, "rb").read())
         attach = self.ia_model.create(
-            {"name": "test_ofx_wrong.ofx", "datas": ofx_file_wrong,}
+            {"name": "test_ofx_wrong.ofx", "datas": ofx_file_wrong}
         )
         bank_statement = self.absi_model.create(
             dict(attachment_ids=[(6, 0, [attach.id])])
@@ -74,7 +74,7 @@ class TestOfxFile(TransactionCase):
             "account_bank_statement_import_ofx", "tests/test_ofx_file/", "test_ofx.ofx"
         )
         ofx_file = base64.b64encode(open(ofx_file_path, "rb").read())
-        attach = self.ia_model.create({"name": "test_ofx.ofx", "datas": ofx_file,})
+        attach = self.ia_model.create({"name": "test_ofx.ofx", "datas": ofx_file})
         bank_statement = self.absi_model.create(
             dict(attachment_ids=[(6, 0, [attach.id])])
         )
@@ -96,7 +96,7 @@ class TestOfxFile(TransactionCase):
             "test_ofx_iban.ofx",
         )
         ofx_file = base64.b64encode(open(ofx_file_path, "rb").read())
-        attach = self.ia_model.create({"name": "test_ofx.ofx", "datas": ofx_file,})
+        attach = self.ia_model.create({"name": "test_ofx.ofx", "datas": ofx_file})
         bank_st = self.absi_model.create(dict(attachment_ids=[(6, 0, [attach.id])]))
         journal_iban_ofx = self.j_model.search(
             [("name", "=", "FR7630001007941234567890185")]
