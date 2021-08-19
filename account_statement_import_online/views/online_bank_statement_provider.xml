@@ -79,6 +79,7 @@
                         <group name="configuration" string="Configuration">
                             <field name="statement_creation_mode" />
                             <field name="tz" />
+                            <field name="allow_empty_statements" />
                         </group>
                     </group>
                 </sheet>
