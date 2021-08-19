@@ -1,11 +1,11 @@
 # Copyright 2020 Florent de Labarre
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
+from datetime import date, datetime
 from unittest import mock
 
 from odoo import fields
-from odoo.tests import common
+from odoo.tests import Form, common
 
 _module_ns = "odoo.addons.account_statement_import_online_ponto"
 _provider_class = (
@@ -27,6 +27,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         self.OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
         self.AccountBankStatement = self.env["account.bank.statement"]
         self.AccountBankStatementLine = self.env["account.bank.statement.line"]
+        self.AccStatemenPull = self.env["online.bank.statement.pull.wizard"]
 
         self.bank_account = self.ResPartnerBank.create(
             {
@@ -142,11 +143,53 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
             ],
         )
 
+    def test_balance_start(self):
+        st_form = Form(self.AccountBankStatement)
+        st_form.journal_id = self.journal
+        st_form.date = date(2019, 11, 1)
+        st_form.balance_end_real = 100
+        with st_form.line_ids.new() as line_form:
+            line_form.payment_ref = "test move"
+            line_form.amount = 100
+        initial_statement = st_form.save()
+        initial_statement.button_post()
+        with self.mock_transaction(), self.mock_header(), self.mock_synchronisation(), self.mock_account_ids():  # noqa: B950
+            vals = {
+                "provider_ids": self.provider.ids,
+                "date_since": datetime(2019, 11, 4),
+                "date_until": datetime(2019, 11, 5),
+            }
+            wizard = self.AccStatemenPull.with_context(
+                active_model="account.journal",
+                active_id=self.journal.id,
+            ).create(vals)
+            wizard.action_pull()
+            statements = self.AccountBankStatement.search(
+                [("journal_id", "=", self.journal.id)]
+            )
+            new_statement = statements - initial_statement
+            self.assertEqual(len(new_statement.line_ids), 1)
+            self.assertEqual(new_statement.balance_start, 100)
+            self.assertEqual(new_statement.balance_end_real, 105.83)
+
     def test_ponto(self):
         with self.mock_transaction(), self.mock_header(), self.mock_synchronisation(), self.mock_account_ids():  # noqa: B950
-            lines, statement_values = self.provider._obtain_statement_data(
-                datetime(2019, 11, 3),
-                datetime(2019, 11, 17),
+            vals = {
+                "provider_ids": self.provider.ids,
+                "date_since": datetime(2019, 11, 3),
+                "date_until": datetime(2019, 11, 17),
+            }
+            wizard = self.AccStatemenPull.with_context(
+                active_model="account.journal",
+                active_id=self.journal.id,
+            ).create(vals)
+            # To get all the moves at once
+            self.provider.statement_creation_mode = "monthly"
+            wizard.action_pull()
+            statement = self.AccountBankStatement.search(
+                [("journal_id", "=", self.journal.id)]
             )
-
-        self.assertEqual(len(lines), 3)
+            self.assertEqual(len(statement), 1)
+            self.assertEqual(len(statement.line_ids), 3)
+            self.assertEqual(statement.line_ids.mapped("amount"), [6.08, 5.48, 5.83])
+            self.assertEqual(statement.balance_end_real, 17.39)
