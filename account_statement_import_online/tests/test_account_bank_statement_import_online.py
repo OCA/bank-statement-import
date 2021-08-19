@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import date, datetime
+from unittest import mock
 from urllib.error import HTTPError
 
 from dateutil.relativedelta import relativedelta
@@ -11,6 +12,12 @@ from psycopg2 import IntegrityError
 from odoo import fields
 from odoo.tests import common
 from odoo.tools import mute_logger
+
+mock_obtain_statement_data = (
+    "odoo.addons.account_statement_import_online.tests."
+    + "online_bank_statement_provider_dummy.OnlineBankStatementProviderDummy."
+    + "_obtain_statement_data"
+)
 
 
 class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
@@ -657,3 +664,94 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[1].date, date(2020, 4, 18))
         self.assertEqual(lines[2].date, date(2020, 4, 18))
         self.assertEqual(lines[3].date, date(2020, 4, 18))
+
+    def _get_statement_line_data(self, statement_date):
+        return [
+            {
+                "payment_ref": "payment",
+                "amount": 100,
+                "date": statement_date,
+                "unique_import_id": str(statement_date),
+                "partner_name": "John Doe",
+                "account_number": "XX00 0000 0000 0000",
+            }
+        ], {}
+
+    def test_dont_create_empty_statements(self):
+        """Test the default behavior of not creating empty bank
+        statements ('Allow empty statements' field is uncheck at the
+        provider level.).
+        """
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "dummy",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.statement_creation_mode = "daily"
+        with mock.patch(mock_obtain_statement_data) as mock_data:
+            mock_data.side_effect = [
+                self._get_statement_line_data(date(2021, 8, 10)),
+                ([], {}),  # August 8th, doesn't have statement
+                ([], {}),  # August 9th, doesn't have statement
+                self._get_statement_line_data(date(2021, 8, 13)),
+            ]
+            provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
+        statements = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statements), 2)
+        self.assertEqual(statements[1].balance_start, 0)
+        self.assertEqual(statements[1].balance_end_real, 100)
+        self.assertEqual(len(statements[1].line_ids), 1)
+        self.assertEqual(statements[0].balance_start, 100)
+        self.assertEqual(statements[0].balance_end_real, 200)
+        self.assertEqual(len(statements[0].line_ids), 1)
+
+    def test_create_empty_statements(self):
+        """Test creating empty bank statements
+        ('Allow empty statements' field is check at the provider level).
+        """
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "dummy",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.allow_empty_statements = True
+        provider.statement_creation_mode = "daily"
+        with mock.patch(mock_obtain_statement_data) as mock_data:
+            mock_data.side_effect = [
+                self._get_statement_line_data(date(2021, 8, 10)),
+                ([], {}),  # August 8th, doesn't have statement
+                ([], {}),  # August 9th, doesn't have statement
+                self._get_statement_line_data(date(2021, 8, 13)),
+            ]
+            provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
+        statements = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        # 4 Statements: 2 with movements and 2 empty
+        self.assertEqual(len(statements), 4)
+        # With movement
+        self.assertEqual(statements[3].balance_start, 0)
+        self.assertEqual(statements[3].balance_end_real, 100)
+        self.assertEqual(len(statements[3].line_ids), 1)
+        # Empty
+        self.assertEqual(statements[2].balance_start, 100)
+        self.assertEqual(statements[2].balance_end_real, 100)
+        self.assertEqual(len(statements[2].line_ids), 0)
+        # Empty
+        self.assertEqual(statements[1].balance_start, 100)
+        self.assertEqual(statements[1].balance_end_real, 100)
+        self.assertEqual(len(statements[1].line_ids), 0)
+        # With movement
+        self.assertEqual(statements[0].balance_start, 100)
+        self.assertEqual(statements[0].balance_end_real, 200)
+        self.assertEqual(len(statements[0].line_ids), 1)

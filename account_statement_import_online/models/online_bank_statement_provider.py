@@ -95,6 +95,7 @@ class OnlineBankStatementProvider(models.Model):
     certificate_public_key = fields.Text()
     certificate_private_key = fields.Text()
     certificate_chain = fields.Text()
+    allow_empty_statements = fields.Boolean(string="Allow empty statements")
 
     _sql_constraints = [
         (
@@ -204,6 +205,8 @@ class OnlineBankStatementProvider(models.Model):
             )
         if not data:
             data = ([], {})
+        if not data[0] and not data[1] and not self.allow_empty_statements:
+            return
         lines_data, statement_values = data
         if not lines_data:
             lines_data = []
