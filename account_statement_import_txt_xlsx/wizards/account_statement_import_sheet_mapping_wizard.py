@@ -9,16 +9,16 @@ from os import path
 from odoo import _, api, fields, models
 
 
-class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
-    _name = "account.bank.statement.import.sheet.mapping.wizard"
-    _description = "Account Bank Statement Import Sheet Mapping Wizard"
+class AccountStatementImportSheetMappingWizard(models.TransientModel):
+    _name = "account.statement.import.sheet.mapping.wizard"
+    _description = "Account Statement Import Sheet Mapping Wizard"
     _inherit = ["multi.step.wizard.mixin"]
 
     attachment_ids = fields.Many2many(
         comodel_name="ir.attachment",
         string="Files",
         required=True,
-        relation="account_bank_statement_import_sheet_mapping_wiz_attachment_rel",
+        relation="account_statement_import_sheet_mapping_wiz_attachment_rel",
     )
     header = fields.Char()
     file_encoding = fields.Selection(

@@ -5,9 +5,9 @@
 from odoo import api, fields, models
 
 
-class AccountBankStatementImportSheetMapping(models.Model):
-    _name = "account.bank.statement.import.sheet.mapping"
-    _description = "Account Bank Statement Import Sheet Mapping"
+class AccountStatementImportSheetMapping(models.Model):
+    _name = "account.statement.import.sheet.mapping"
+    _description = "Account Statement Import Sheet Mapping"
 
     name = fields.Char(required=True,)
     float_thousands_sep = fields.Selection(

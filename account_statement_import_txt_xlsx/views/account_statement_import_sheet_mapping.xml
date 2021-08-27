@@ -5,18 +5,18 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <record id="account_bank_statement_import_sheet_mapping_form" model="ir.ui.view">
-        <field name="name">account.bank.statement.import.sheet.mapping.form</field>
-        <field name="model">account.bank.statement.import.sheet.mapping</field>
+    <record id="account_statement_import_sheet_mapping_form" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.form</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
             </tree>
         </field>
     </record>
-    <record id="account_bank_statement_import_sheet_mapping_tree" model="ir.ui.view">
-        <field name="name">account.bank.statement.import.sheet.mapping.tree</field>
-        <field name="model">account.bank.statement.import.sheet.mapping</field>
+    <record id="account_statement_import_sheet_mapping_tree" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.tree</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
@@ -77,7 +77,7 @@
         model="ir.actions.act_window"
     >
         <field name="name">Statement Sheet Mappings</field>
-        <field name="res_model">account.bank.statement.import.sheet.mapping</field>
+        <field name="res_model">account.statement.import.sheet.mapping</field>
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem

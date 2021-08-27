@@ -20,9 +20,9 @@ except (ImportError, IOError) as err:  # pragma: no cover
     _logger.error(err)
 
 
-class AccountBankStatementImportSheetParser(models.TransientModel):
-    _name = "account.bank.statement.import.sheet.parser"
-    _description = "Account Bank Statement Import Sheet Parser"
+class AccountStatementImportSheetParser(models.TransientModel):
+    _name = "account.statement.import.sheet.parser"
+    _description = "Account Statement Import Sheet Parser"
 
     @api.model
     def parse_header(self, data_file, encoding, csv_options):

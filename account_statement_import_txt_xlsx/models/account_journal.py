@@ -9,7 +9,7 @@ class AccountJournal(models.Model):
     _inherit = "account.journal"
 
     default_sheet_mapping_id = fields.Many2one(
-        comodel_name="account.bank.statement.import.sheet.mapping",
+        comodel_name="account.statement.import.sheet.mapping",
     )
 
     def _get_bank_statements_available_import_formats(self):
