@@ -24,10 +24,10 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.AccountBankStatement = self.env["account.bank.statement"]
         self.AccountBankStatementImport = self.env["account.bank.statement.import"]
         self.AccountBankStatementImportSheetMapping = self.env[
-            "account.bank.statement.import.sheet.mapping"
+            "account.statement.import.sheet.mapping"
         ]
         self.AccountBankStatementImportSheetMappingWizard = self.env[
-            "account.bank.statement.import.sheet.mapping.wizard"
+            "account.statement.import.sheet.mapping.wizard"
         ]
 
     def _data_file(self, filename, encoding=None):
