@@ -18,11 +18,11 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.currency_eur = self.env.ref("base.EUR")
         self.currency_usd = self.env.ref("base.USD")
         self.sample_statement_map = self.env.ref(
-            "account_bank_statement_import_txt_xlsx.sample_statement_map"
+            "account_statement_import_txt_xlsx.sample_statement_map"
         )
         self.AccountJournal = self.env["account.journal"]
-        self.AccountBankStatement = self.env["account.bank.statement"]
-        self.AccountBankStatementImport = self.env["account.bank.statement.import"]
+        self.AccountBankStatement = self.env["account.statement"]
+        self.AccountBankStatementImport = self.env["account.statement.import"]
         self.AccountBankStatementImportSheetMapping = self.env[
             "account.statement.import.sheet.mapping"
         ]
@@ -58,9 +58,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
@@ -87,7 +85,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                account_bank_statement_import_txt_xlsx_test=True
+                account_statement_import_txt_xlsx_test=True
             ).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
@@ -112,9 +110,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
@@ -141,7 +137,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                account_bank_statement_import_txt_xlsx_test=True
+                account_statement_import_txt_xlsx_test=True
             ).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
@@ -212,9 +208,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
@@ -247,9 +241,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
@@ -285,9 +277,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
@@ -323,9 +313,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
@@ -363,9 +351,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": statement_map.id,
             }
         )
-        wizard.with_context(
-            account_bank_statement_import_txt_xlsx_test=True
-        ).import_file()
+        wizard.with_context(account_statement_import_txt_xlsx_test=True).import_file()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
