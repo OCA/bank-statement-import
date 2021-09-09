@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 
 try:
     from csv import reader
+
     import xlrd
     from xlrd.xldate import xldate_as_datetime
 except (ImportError, IOError) as err:  # pragma: no cover
@@ -323,7 +324,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         }
         if currency != original_currency:
             original_currency = self.env["res.currency"].search(
-                [("name", "=", original_currency)], limit=1,
+                [("name", "=", original_currency)],
+                limit=1,
             )
             if original_currency:
                 transaction.update(
@@ -335,7 +337,8 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
 
         if transaction_id:
             transaction["unique_import_id"] = "{}-{}".format(
-                transaction_id, int(timestamp.timestamp()),
+                transaction_id,
+                int(timestamp.timestamp()),
             )
 
         transaction["name"] = description or _("N/A")
