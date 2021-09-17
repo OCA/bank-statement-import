@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2021 CorporateHub (https://corporatehub.eu)
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
@@ -27,13 +28,32 @@
                     </group>
                     <group>
                         <field
-                            name="origin"
+                            name="transferwise_profile"
                             string="Profile"
                             attrs="{'required': [('service', '=', 'transferwise')]}"
                             widget="dynamic_dropdown"
                             values="values_transferwise_profile"
                             context="{'api_key': password, 'api_base': api_base}"
                         />
+                    </group>
+                    <group string="Strong Customer Authentication" colspan="4">
+                        <field
+                            name="certificate_private_key"
+                            string="Private key"
+                            password="True"
+                        />
+                        <field
+                            name="certificate_public_key"
+                            string="Public key"
+                        />
+                        <div col="2" colspan="2">
+                            <button
+                                name="button_transferwise_generate_key"
+                                string="Generate Key"
+                                type="object"
+                                class="oe_edit_only"
+                            />
+                        </div>
                     </group>
                 </group>
             </xpath>
