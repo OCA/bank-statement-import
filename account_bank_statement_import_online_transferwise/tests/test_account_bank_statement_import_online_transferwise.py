@@ -1,5 +1,5 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2020-2021 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 import json
 from unittest import mock
+from urllib.error import HTTPError
 
 from odoo.tests import common
 from odoo import fields
@@ -17,6 +18,29 @@ _provider_class = (
     + '.models.online_bank_statement_provider_transferwise'
     + '.OnlineBankStatementProviderTransferwise'
 )
+
+
+class MockedResponse:
+
+    class Headers(dict):
+        def get_content_charset(self):
+            return None
+
+    def __init__(self, data=None, exception=None):
+        self.data = data
+        self.exception = exception
+        self.headers = MockedResponse.Headers()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
+
+    def read(self):
+        if self.exception is not None:
+            raise self.exception()
+        return self.data
 
 
 class TestAccountBankAccountStatementImportOnlineTransferwise(
@@ -47,6 +71,33 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
                 )
             )
         )
+        self.response_balance = MockedResponse(data="""[
+            {
+                "id": 42,
+                "balances": [
+                    {
+                        "currency": "EUR"
+                    }
+                ]
+            }
+        ]""".encode())
+        self.response_ott = MockedResponse(exception=lambda: HTTPError(
+            'https://wise.com/',
+            403,
+            '403',
+            {
+                'X-2FA-Approval-Result': 'REJECTED',
+                'X-2FA-Approval': '0123456789',
+            },
+            None,
+        ))
+        self.response_transactions = MockedResponse(data="""{
+            "transactions": [],
+            "endOfStatementBalance": {
+                "value": 42.00,
+                "currency": "EUR"
+            }
+        }""".encode())
 
     def test_values_transferwise_profile(self):
         mocked_response = json.loads(
@@ -86,6 +137,28 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             ]
         )
 
+    def test_values_transferwise_profile_no_key(self):
+        values_transferwise_profile = (
+            self.OnlineBankStatementProvider.with_context({
+                'api_base': 'https://example.com',
+            }).values_transferwise_profile()
+        )
+        self.assertEqual(values_transferwise_profile, [])
+
+    def test_values_transferwise_profile_error(self):
+        values_transferwise_profile = []
+        with mock.patch(
+            _provider_class + '._transferwise_retrieve',
+            side_effect=lambda: Exception(),
+        ):
+            values_transferwise_profile = (
+                self.OnlineBankStatementProvider.with_context({
+                    'api_base': 'https://example.com',
+                    'api_key': 'dummy',
+                }).values_transferwise_profile()
+            )
+        self.assertEqual(values_transferwise_profile, [])
+
     def test_pull(self):
         journal = self.AccountJournal.create({
             'name': 'Bank',
@@ -99,7 +172,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
         provider = journal.online_bank_statement_provider_id
         provider.origin = '1234567891'
 
-        def mock_response(url, api_key):
+        def mock_response(url, api_key, private_key=None):
             if '/borderless-accounts?profileId=1234567891' in url:
                 payload = """[
     {
@@ -123,6 +196,112 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
         with mock.patch(
             _provider_class + '._transferwise_retrieve',
             side_effect=mock_response,
+        ):
+            data = provider._obtain_statement_data(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
+
+        self.assertEqual(len(data[0]), 0)
+        self.assertEqual(data[1]['balance_start'], 42.0)
+        self.assertEqual(data[1]['balance_end_real'], 42.0)
+
+    def test_pull_no_data(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_eur.id,
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'transferwise',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.origin = '1234567891'
+        provider.password = 'API_KEY'
+
+        with mock.patch(
+            _provider_class + '._transferwise_retrieve',
+            return_value=[],
+        ):
+            data = provider._obtain_statement_data(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
+
+        self.assertFalse(data)
+
+    def test_update_public_key(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_eur.id,
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'transferwise',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.origin = '1234567891'
+        provider.password = 'API_KEY'
+
+        with common.Form(provider) as provider_form:
+            provider_form.certificate_private_key = """
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAxC7aYWigCwPIB4mfyLpsALYPnqDm3/IC8I/3GdEwfK8eqXoF
+sU1BHnVytFycBDEObmJ2Acpxe8Dk61FnbWPrrl6rXVnXfIRqfFl94TvgwFsuwG7u
+8crncD6gPfe1QGkEykHcfBURr74OcSE8590ngNJcKMGvac0cuyZ2/NEszTw7EFJg
+obpMWjp0m5ItgZ/UNsPLR/D4gFE9vZz7a4+FYQMa9Wbv+xaVxUS6z9rQCJfUQx7N
+iih4etIvAafbfAnX6rFv8PwPzz+XvexPWWJxnbS4iV1LN2atrPDxqw73g5hc3W88
+a0V2AVubtxhw9L2VK1VmRb/gnqsZpRXhDPSUIwIDAQABAoIBAQCMvnRLV80hudfC
+mJh6YEvlgrfX/OVFmpFDVnVXHz2i5dugiHsXBS6HlIjzHlGLrEoHJTo19K/PscZJ
+kEAcOYg2s5JLSY4PtcvTZDyr3tJSDdiPk8Z2zzOU0kkRy+lLyUv3cqKknlTu+PHR
+daAFVCLoB4K4dqPKyq0nEuRgYgy7O42SPBY5DHgWYBKqkYGlTu+ImwpDD9unbv3e
+mwvdcBCp9hAlYAArc1Ip/6aUkZdKxJYgVhovruaH309yuOmBfAEgguhsy3vR18t5
+IZXbAF3C6iXCQXi8l+S1NUu8XWPLEavldb+ZA2hI2L+NPSBVIYqhI4jDiI7lfs1c
+HE8BRsRpAoGBAO6BnK3qD8sRvg6JsrBhppoIGsudOdpZ/KVp9ZpYCBJNJmfrkqLR
+bWx1KF2UjAoYUmaKDTS2GP8JQd7X2n4T5LX8q+7iG9/wzdSWZYZuBOnjvWlNyJu4
+OiUKX4aEgdvZHiuEIin5xTP98/c5LTZXwM3bq8IrOXEz8LBLLPrTCGRvAoGBANKS
+i3cn1jtVirJWbvhSIjjqhpfuZN0361FB6j1Aho+7z0WVd4NQjPQqA6cAqnWoa/kj
+cX0X8Ncu5eHqf6CuW+HsQda3yp3bvCXi1Yc2nKBTHnWtMm721O4ZW6rbaALzBZYW
+qeJr0m9pNlfCAL0INTcy7IVAtqcCJ/7CEN6Hjm2NAoGAIGSgKArDLFxziLvw9f29
+R+xT31WyVtKj+r9iaR0Ns5ag4bpgBxcUmodq/RLA1lopTt3vHzqgOHtEZATDGx6O
+kJ0JqP8ys/6bpgTrMw/cQPv6bMPwvB2QYBmBkd6LWJWrgFOI5FSVEROrv+cXGetf
+N1ZfhJakTZi1VuxO5p4k5KcCgYAZS9OHR/jbfeZAkFOabzt/POVYYSIq1SnmxBVg
+sFy57aTzxgXqd4XHWzi/GjxgEBCQiGp8zaB4KUEih6o3YlrVZC1wnvmvRxNuNbbT
+HINqWzHgjyLs46gmxlMVzm/LUuiL5EMaWTuZeLk3h63RB6hk7jAtvd1zaLXnS+b8
+5Kn+jQKBgQCDeMO6rvB2rbfqSbHvPPuTru1sPIsJBKm1YZpXTFI+VMjwtk7+meYb
+UQnfZ1t5rjp9q4LEcRYuSa+PfifIkM6p+wMHVQhtltUCzXWWRYkLkmQrBWKu+qiP
+edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
+-----END RSA PRIVATE KEY-----
+            """
+
+        self.assertTrue(provider.certificate_public_key)
+
+    def test_sca(self):
+        journal = self.AccountJournal.create({
+            'name': 'Bank',
+            'type': 'bank',
+            'code': 'BANK',
+            'currency_id': self.currency_eur.id,
+            'bank_statements_source': 'online',
+            'online_bank_statement_provider': 'transferwise',
+        })
+
+        provider = journal.online_bank_statement_provider_id
+        provider.origin = '1234567891'
+        provider.password = 'API_KEY'
+        provider.button_transferwise_generate_key()
+
+        with mock.patch(
+            'urllib.request.urlopen',
+            side_effect=[
+                self.response_balance,
+                self.response_ott,
+                self.response_transactions,
+                self.response_transactions,
+                self.response_transactions,
+            ],
         ):
             data = provider._obtain_statement_data(
                 self.now - relativedelta(hours=1),
@@ -216,7 +395,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'amount': '-0.60',
             'name': 'Fee for TRANSFER-123456789',
             'note': 'Transaction fee for TRANSFER-123456789',
-            'partner_name': 'TransferWise',
+            'partner_name': 'Wise (former TransferWise)',
             'unique_import_id': 'DEBIT-TRANSFER-123456789-946684800-FEE',
         })
 
@@ -342,7 +521,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'amount': '-1.23',
             'name': 'Fee for CARD-123456789',
             'note': 'Transaction fee for CARD-123456789',
-            'partner_name': 'TransferWise',
+            'partner_name': 'Wise (former TransferWise)',
             'unique_import_id': 'DEBIT-CARD-123456789-946684800-FEE',
         })
 
@@ -400,7 +579,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'date': datetime(2000, 1, 1),
             'name': 'Fee for TRANSFER-123456789',
             'note': 'Transaction fee for TRANSFER-123456789',
-            'partner_name': 'TransferWise',
+            'partner_name': 'Wise (former TransferWise)',
             'amount': '-5.21',
             'unique_import_id': 'DEBIT-TRANSFER-123456789-946684800-FEE',
         })
@@ -547,7 +726,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'name': 'Fee for BALANCE-123456789',
             'note': 'Transaction fee for BALANCE-123456789',
             'amount': '-0.05',
-            'partner_name': 'TransferWise',
+            'partner_name': 'Wise (former TransferWise)',
             'unique_import_id': 'DEBIT-BALANCE-123456789-946684800-FEE',
         })
 
@@ -587,7 +766,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'name': 'Fee for TRANSFER-123456789',
             'note': 'Transaction fee for TRANSFER-123456789',
             'amount': '-0.68',
-            'partner_name': 'TransferWise',
+            'partner_name': 'Wise (former TransferWise)',
             'unique_import_id': 'CREDIT-TRANSFER-123456789-946684800-FEE',
         })
 
@@ -631,6 +810,6 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(
             'name': 'Fee for TRANSFER-123456789',
             'note': 'Transaction fee for TRANSFER-123456789',
             'amount': '4.33',
-            'partner_name': 'TransferWise',
+            'partner_name': 'Wise (former TransferWise)',
             'unique_import_id': 'CREDIT-TRANSFER-123456789-946684800-FEE',
         })
