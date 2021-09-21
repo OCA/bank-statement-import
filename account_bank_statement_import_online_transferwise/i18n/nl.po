@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import_online_transferwise
+# 	* account_bank_statement_import_online_transferwise
 #
 msgid ""
 msgstr ""
@@ -27,19 +27,24 @@ msgid "API key"
 msgstr "API Sleutel"
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:131
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:155
 #, python-format
 msgid "Ending balance unavailable"
 msgstr "Eindbalans is niet beschikbaar"
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:250
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:274
 #, fuzzy, python-format
 msgid "Fee for %s"
 msgstr "Transactievergoeding voor %s"
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:281
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "Generate Key"
+msgstr ""
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:331
 #, python-format
 msgid "No API key specified!"
 msgstr "Geen API sleutel ingegeven!"
@@ -50,12 +55,44 @@ msgid "Online Bank Statement Provider"
 msgstr "Online Bankafschrift Provider"
 
 #. module: account_bank_statement_import_online_transferwise
+#: model:ir.model.fields,field_description:account_bank_statement_import_online_transferwise.field_online_bank_statement_provider__transferwise_profile
+msgid "Origin"
+msgstr ""
+
+#. module: account_bank_statement_import_online_transferwise
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "Private key"
+msgstr ""
+
+#. module: account_bank_statement_import_online_transferwise
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
 msgid "Profile"
 msgstr "Profiel"
 
 #. module: account_bank_statement_import_online_transferwise
-#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:255
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "Public key"
+msgstr ""
+
+#. module: account_bank_statement_import_online_transferwise
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_transferwise.online_bank_statement_provider_form
+msgid "Strong Customer Authentication"
+msgstr ""
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:306
+#, python-format
+msgid "Strong Customer Authentication is not configured"
+msgstr ""
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:279
 #, python-format
 msgid "Transaction fee for %s"
 msgstr "Transactievergoeding voor %s"
+
+#. module: account_bank_statement_import_online_transferwise
+#: code:addons/account_bank_statement_import_online_transferwise/models/online_bank_statement_provider_transferwise.py:360
+#, python-format
+msgid "Unable to parse key"
+msgstr ""
