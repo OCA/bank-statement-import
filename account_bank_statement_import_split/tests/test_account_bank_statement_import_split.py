@@ -1,4 +1,5 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2021 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from base64 import b64encode
@@ -19,9 +20,7 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
 
         self.now = fields.Datetime.now()
         self.currency_usd = self.env.ref("base.USD")
-        self.empty_data_file = b64encode(
-            b"TestAccountBankAccountStatementImportSplit"
-        )
+        self.empty_data_file = b64encode(b"TestAccountBankAccountStatementImportSplit")
         self.AccountJournal = self.env["account.journal"]
         self.AccountBankStatement = self.env["account.bank.statement"]
         self.AccountBankStatementImport = self.env["account.bank.statement.import"]
@@ -36,8 +35,21 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             }
         )
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
-        ).create({"filename": "file.ext", "data_file": self.empty_data_file,})
+            {"journal_id": journal.id}
+        ).create(
+            {
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self.empty_data_file,
+                        },
+                    )
+                ],
+            }
+        )
         data = (
             journal.currency_id.name,
             journal.bank_account_id.acc_number,
@@ -60,8 +72,8 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             ],
         )
         with mock.patch(_parse_file_method, return_value=data):
-            wizard.with_context({"journal_id": journal.id,}).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+            wizard.with_context({"journal_id": journal.id}).import_file()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
 
@@ -75,11 +87,19 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             }
         )
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            {"journal_id": journal.id}
         ).create(
             {
-                "filename": "file.ext",
-                "data_file": self.empty_data_file,
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self.empty_data_file,
+                        },
+                    )
+                ],
                 "import_mode": "single",
             }
         )
@@ -105,8 +125,8 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             ],
         )
         with mock.patch(_parse_file_method, return_value=data):
-            wizard.with_context({"journal_id": journal.id,}).import_file()
-        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id),])
+            wizard.with_context({"journal_id": journal.id}).import_file()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
 
@@ -120,11 +140,19 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             }
         )
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            {"journal_id": journal.id}
         ).create(
             {
-                "filename": "file.ext",
-                "data_file": self.empty_data_file,
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self.empty_data_file,
+                        },
+                    )
+                ],
                 "import_mode": "daily",
             }
         )
@@ -157,9 +185,9 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             ],
         )
         with mock.patch(_parse_file_method, return_value=data):
-            wizard.with_context({"journal_id": journal.id,}).import_file()
+            wizard.with_context({"journal_id": journal.id}).import_file()
         statements = self.AccountBankStatement.search(
-            [("journal_id", "=", journal.id),]
+            [("journal_id", "=", journal.id)]
         ).sorted(key=lambda statement: statement.date)
         self.assertEqual(len(statements), 2)
         self.assertEqual(len(statements[0].line_ids), 1)
@@ -179,11 +207,19 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             }
         )
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            {"journal_id": journal.id}
         ).create(
             {
-                "filename": "file.ext",
-                "data_file": self.empty_data_file,
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self.empty_data_file,
+                        },
+                    )
+                ],
                 "import_mode": "weekly",
             }
         )
@@ -216,9 +252,9 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             ],
         )
         with mock.patch(_parse_file_method, return_value=data):
-            wizard.with_context({"journal_id": journal.id,}).import_file()
+            wizard.with_context({"journal_id": journal.id}).import_file()
         statements = self.AccountBankStatement.search(
-            [("journal_id", "=", journal.id),]
+            [("journal_id", "=", journal.id)]
         ).sorted(key=lambda statement: statement.date)
         self.assertEqual(len(statements), 2)
         self.assertEqual(len(statements[0].line_ids), 1)
@@ -238,11 +274,19 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             }
         )
         wizard = self.AccountBankStatementImport.with_context(
-            {"journal_id": journal.id,}
+            {"journal_id": journal.id}
         ).create(
             {
-                "filename": "file.ext",
-                "data_file": self.empty_data_file,
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/statement_en.csv",
+                            "datas": self.empty_data_file,
+                        },
+                    )
+                ],
                 "import_mode": "monthly",
             }
         )
@@ -275,9 +319,9 @@ class TestAccountBankAccountStatementImportSplit(common.TransactionCase):
             ],
         )
         with mock.patch(_parse_file_method, return_value=data):
-            wizard.with_context({"journal_id": journal.id,}).import_file()
+            wizard.with_context({"journal_id": journal.id}).import_file()
         statements = self.AccountBankStatement.search(
-            [("journal_id", "=", journal.id),]
+            [("journal_id", "=", journal.id)]
         ).sorted(key=lambda statement: statement.date)
         self.assertEqual(len(statements), 2)
         self.assertEqual(len(statements[0].line_ids), 1)

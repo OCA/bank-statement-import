@@ -1,11 +1,12 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2021 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from decimal import Decimal
 
 from dateutil.relativedelta import MO, relativedelta
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -84,9 +85,7 @@ class AccountBankStatementImport(models.TransientModel):
                     }
                 )
                 if balance_start is not None:
-                    statement_values.update(
-                        {"balance_start": float(balance_start),}
-                    )
+                    statement_values.update({"balance_start": float(balance_start)})
                     for transaction in statement_transactions:
                         balance_start += Decimal(transaction["amount"])
                 if balance_end is not None:
@@ -94,21 +93,17 @@ class AccountBankStatementImport(models.TransientModel):
                     for transaction in transactions:
                         statement_balance_end -= Decimal(transaction["amount"])
                     statement_values.update(
-                        {"balance_end_real": float(statement_balance_end),}
+                        {"balance_end_real": float(statement_balance_end)}
                     )
 
                 statements.append(statement_values)
                 statement_date_since = statement_date_until
         return statements
 
-    @api.multi
     def _prepare_transaction(self, transaction):
-        transaction.update(
-            {"date": fields.Date.from_string(transaction["date"]),}
-        )
+        transaction.update({"date": fields.Date.from_string(transaction["date"])})
         return transaction
 
-    @api.multi
     def _get_statement_date_since(self, date):
         self.ensure_one()
         if self.import_mode == "daily":
@@ -118,7 +113,6 @@ class AccountBankStatementImport(models.TransientModel):
         elif self.import_mode == "monthly":
             return date.replace(day=1,)
 
-    @api.multi
     def _get_statement_date_step(self):
         self.ensure_one()
         if self.import_mode == "daily":
@@ -128,7 +122,6 @@ class AccountBankStatementImport(models.TransientModel):
         elif self.import_mode == "monthly":
             return relativedelta(months=1, day=1,)
 
-    @api.multi
     def _get_statement_date(self, date_since, date_until):
         self.ensure_one()
         # NOTE: Statement date is treated by Odoo as start of period. Details
@@ -136,7 +129,6 @@ class AccountBankStatementImport(models.TransientModel):
         #  - def get_line_graph_datas()
         return date_since
 
-    @api.multi
     def _get_statement_name(self, journal, date_since, date_until):
         self.ensure_one()
         return journal.sequence_id.with_context(
