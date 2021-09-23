@@ -1,4 +1,5 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2021 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import itertools
@@ -175,7 +176,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
             ("paypal", "PayPal.com"),
         ]
 
-    @api.multi
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "paypal":
@@ -206,7 +206,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
         )
         if not transactions:
             balance = self._paypal_get_balance(token, currency, date_since)
-            return [], {"balance_start": balance, "balance_end_real": balance,}
+            return [], {"balance_start": balance, "balance_end_real": balance}
 
         # Normalize transactions, sort by date, and get lines
         transactions = list(
@@ -249,7 +249,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             )
         balance_end = self._paypal_get_transaction_ending_balance(last_transaction)
 
-        return lines, {"balance_start": balance_start, "balance_end_real": balance_end,}
+        return lines, {"balance_start": balance_start, "balance_end_real": balance_end}
 
     @api.model
     def _paypal_preparse_transaction(self, transaction):
@@ -301,9 +301,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "alternate_full_name"
         )
         if payer_full_name:
-            line.update(
-                {"partner_name": payer_full_name,}
-            )
+            line.update({"partner_name": payer_full_name})
         lines = [line]
         if fee_amount:
             lines += [
@@ -318,13 +316,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
             ]
         return lines
 
-    @api.multi
     def _paypal_get_token(self):
         self.ensure_one()
         data = self._paypal_retrieve(
             (self.api_base or PAYPAL_API_BASE) + "/v1/oauth2/token",
             (self.username, self.password),
-            data=urlencode({"grant_type": "client_credentials",}).encode("utf-8"),
+            data=urlencode({"grant_type": "client_credentials"}).encode("utf-8"),
         )
         if "scope" not in data or TRANSACTIONS_SCOPE not in data["scope"]:
             raise UserError(_("PayPal App features are configured incorrectly!"))
@@ -334,14 +331,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
             raise UserError(_("Failed to acquire token using Client ID and Secret!"))
         return data["access_token"]
 
-    @api.multi
     def _paypal_get_balance(self, token, currency, as_of_timestamp):
         self.ensure_one()
         url = (
             self.api_base or PAYPAL_API_BASE
         ) + "/v1/reporting/balances?currency_code={}&as_of_time={}".format(
-            currency,
-            as_of_timestamp.isoformat() + "Z",
+            currency, as_of_timestamp.isoformat() + "Z",
         )
         data = self._paypal_retrieve(url, token)
         available_balance = data["balances"][0].get("available_balance")
@@ -349,7 +344,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
             return Decimal()
         return Decimal(available_balance["value"])
 
-    @api.multi
     def _paypal_get_transaction(self, token, transaction_id, timestamp):
         self.ensure_one()
         transaction_date = timestamp.isoformat() + "Z"
@@ -367,7 +361,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
             return transaction
         return None
 
-    @api.multi
     def _paypal_get_transactions(self, token, currency, since, until):
         self.ensure_one()
         # NOTE: Not more than 31 days in a row
@@ -507,7 +500,8 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 "Authorization",
                 "Basic %s"
                 % str(
-                    b64encode(("{}:{}".format(auth[0], auth[1])).encode("utf-8")), "utf-8"
+                    b64encode(("{}:{}".format(auth[0], auth[1])).encode("utf-8")),
+                    "utf-8",
                 ),
             )
         elif isinstance(auth, str):
