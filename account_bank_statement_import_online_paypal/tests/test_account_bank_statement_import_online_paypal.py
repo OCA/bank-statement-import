@@ -1,4 +1,5 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2021 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -25,6 +26,7 @@ class FakeHTTPError(HTTPError):
     def __init__(self, content):
         self.content = content
 
+    # pylint: disable=method-required-super
     def read(self):
         return self.content.encode("utf-8")
 
@@ -37,9 +39,10 @@ class UrlopenRetValMock:
     def __enter__(self):
         return self
 
-    def __exit__(self, type, value, tb):
+    def __exit__(self, exc_type, exc_value, traceback):
         pass
 
+    # pylint: disable=method-required-super
     def read(self):
         if self.throw:
             raise FakeHTTPError(self.content)
@@ -246,7 +249,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 test_account_bank_statement_import_online_paypal_monday=True,
             )._obtain_statement_data(self.now - relativedelta(hours=1), self.now,)
 
-        self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75,}))
+        self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
 
     def test_error_handling_1(self):
         journal = self.AccountJournal.create(
@@ -360,7 +363,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 self.now - relativedelta(hours=1), self.now,
             )
 
-        self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75,}))
+        self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
 
     def test_ancient_pull(self):
         journal = self.AccountJournal.create(
@@ -536,7 +539,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "unique_import_id": "1234567890-1564617600-FEE",
             },
         )
-        self.assertEqual(data[1], {"balance_start": 0.0, "balance_end_real": 900.0,})
+        self.assertEqual(data[1], {"balance_start": 0.0, "balance_end_real": 900.0})
 
     def test_transaction_parse_1(self):
         lines = self.paypal_parse_transaction(
