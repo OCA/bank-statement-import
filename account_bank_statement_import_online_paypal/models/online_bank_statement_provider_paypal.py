@@ -277,6 +277,27 @@ class OnlineBankStatementProviderPayPal(models.Model):
             'balance_end_real': balance_end,
         }
 
+    @api.multi
+    def _get_statement_date_step(self):
+        delta = super()._get_statement_date_step()
+        if self.service == 'paypal':
+            delta.__dict__.update(
+                hour=None,
+                minute=None,
+                second=None,
+                microsecond=None,
+            )
+        return delta
+
+    @api.multi
+    def _get_statement_date_since(self, date):
+        date = super()._get_statement_date_since(date)
+        if self.service == 'paypal' and self.tz and not date.tzinfo:
+            date = pytz.timezone(self.tz).localize(date).astimezone(
+                pytz.utc
+            ).replace(tzinfo=None)
+        return date
+
     @api.model
     def _paypal_preparse_transaction(self, transaction):
         date = dateutil.parser.parse(
