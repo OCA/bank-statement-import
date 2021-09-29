@@ -68,7 +68,6 @@ class OnlineBankStatementProviderPonto(models.Model):
             url = PONTO_ENDPOINT + "/oauth2/token"
             response = requests.post(
                 url,
-                verify=False,
                 params={"grant_type": "client_credentials"},
                 headers=self._ponto_header_token(),
             )
@@ -93,7 +92,7 @@ class OnlineBankStatementProviderPonto(models.Model):
     def _ponto_get_account_ids(self):
         url = PONTO_ENDPOINT + "/accounts"
         response = requests.get(
-            url, verify=False, params={"limit": 100}, headers=self._ponto_header()
+            url, params={"limit": 100}, headers=self._ponto_header()
         )
         if response.status_code == 200:
             data = json.loads(response.text)
@@ -118,9 +117,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 },
             }
         }
-        response = requests.post(
-            url, verify=False, headers=self._ponto_header(), json=data
-        )
+        response = requests.post(url, headers=self._ponto_header(), json=data)
         if response.status_code in (200, 201, 400):
             data = json.loads(response.text)
             sync_id = data.get("attributes", {}).get("resourceId", False)
@@ -137,7 +134,7 @@ class OnlineBankStatementProviderPonto(models.Model):
         number = 0
         while number == 100:
             number += 1
-            response = requests.get(url, verify=False, headers=self._ponto_header())
+            response = requests.get(url, headers=self._ponto_header())
             if response.status_code == 200:
                 data = json.loads(response.text)
                 status = data.get("status", {})
@@ -157,7 +154,7 @@ class OnlineBankStatementProviderPonto(models.Model):
         latest_identifier = False
         while page_url:
             response = requests.get(
-                page_url, verify=False, params=params, headers=self._ponto_header()
+                page_url, params=params, headers=self._ponto_header()
             )
             if response.status_code == 200:
                 if params.get("before"):
