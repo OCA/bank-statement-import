@@ -299,6 +299,8 @@ class OnlineBankStatementProvider(models.Model):
                         ),
                     }
                 )
+            if not line_values.get("payment_ref"):
+                line_values["payment_ref"] = line_values.get("ref")
             filtered_lines.append(line_values)
         return filtered_lines
 
