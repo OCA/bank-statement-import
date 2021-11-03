@@ -1,3 +1,4 @@
+from . import res_config_settings
 from . import parser
 from . import account_bank_statement_line
 from . import account_statement_import

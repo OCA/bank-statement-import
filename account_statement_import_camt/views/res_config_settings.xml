@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_check_name_unique" model="ir.ui.view">
+        <field
+            name="name"
+        >account_bank_statement_import res.config.settings form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div id="print_vendor_checks_setting_container" position="after">
+                <h2>Bank Statement Import</h2>
+                <div class="row mt16 o_settings_container" id="bank_statement_import">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="checking_bank_statement_name_unique" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="checking_bank_statement_name_unique" />
+                            <div class="text-muted">
+                                Bank statement name must be unique
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

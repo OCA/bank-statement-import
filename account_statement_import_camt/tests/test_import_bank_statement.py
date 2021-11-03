@@ -8,8 +8,11 @@ import pprint
 import tempfile
 from datetime import date
 
+from odoo.exceptions import ValidationError
 from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
+
+from ..models.res_config_settings import CHECKING_NAME_UNIQUE
 
 
 class TestParser(TransactionCase):
@@ -142,6 +145,30 @@ class TestImport(TransactionCase):
                     for line in statement_lines
                 )
             )
+
+    def test_statement_import_twice(self):
+        """Test preventing importing twice when config param is set."""
+        testfile = get_module_resource(
+            "account_statement_import_camt", "test_files", "test-camt053"
+        )
+        config_param = self.env["ir.config_parameter"].sudo()
+        config_param.set_param(CHECKING_NAME_UNIQUE, True)
+        with open(testfile, "rb") as datafile:
+            camt_file = base64.b64encode(datafile.read())
+
+            wizard = self.env["account.statement.import"].create(
+                {
+                    "statement_filename": "test import",
+                    "statement_file": camt_file,
+                }
+            )
+            wizard.import_file_button()
+            datafile.seek(0)
+            with self.assertRaises(ValidationError):
+                wizard.import_file_button()
+            datafile.seek(0)
+            config_param.set_param(CHECKING_NAME_UNIQUE, False)
+            self.assertTrue(wizard.import_file_button())
 
     def test_zip_import(self):
         """Test import of multiple statements from zip file."""

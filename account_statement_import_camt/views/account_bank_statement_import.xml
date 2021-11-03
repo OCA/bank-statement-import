@@ -11,6 +11,11 @@
                 <li>CAMT</li>
                 <li>zipped CAMT</li>
             </ul>
+            <ul id="statement_format" position="after">
+                <p
+                    id="checking_name_unique"
+                >Unique bank statement name checking (needed by CAMT importing) can be turned on at Settings > Invoicing > Bank Statement Import > Bank Statement Import.</p>
+            </ul>
         </field>
     </record>
 </odoo>
