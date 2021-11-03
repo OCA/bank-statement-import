@@ -8,7 +8,5 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["account_statement_import_online"],
-    "data": [
-        "view/online_bank_statement_provider.xml"
-    ],
+    "data": ["view/online_bank_statement_provider.xml"],
 }
