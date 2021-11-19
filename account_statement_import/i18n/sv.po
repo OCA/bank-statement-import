@@ -13,32 +13,32 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-21 13:17+0000\n"
-"PO-Revision-Date: 2016-08-05 12:55+0000\n"
-"Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>, 2018\n"
+"PO-Revision-Date: 2021-11-19 15:36+0000\n"
+"Last-Translator: Simon S <simon.stromberg@vertel.se>\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
-msgstr "%d överföringarna har redan blivit importerade och ignorerades därför."
+msgstr "%d transaktionerna hade redan importerats och ignorerades därför."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
-msgstr "1 överföring har redan importerats och ignorerats."
+msgstr "1 transaktion hade redan importerats och ignorerats därför."
 
 #. module: account_statement_import
 #: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
 msgid "A bank account transaction can be imported only once!"
-msgstr "Banktransaktioner kan bara importeras en gång!"
+msgstr "En banktransaktion kan endast importeras en gång!"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -49,7 +49,7 @@ msgstr "Redan importerade transaktioner"
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Bankutdrag-rad"
+msgstr "Bankutdragsrad"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -64,6 +64,9 @@ msgid ""
 "should create the bank account and set it on the related bank journal. If "
 "the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Kunde inte hitta något bankkonto med nummer '%s' kopplat till partner '%s'. "
+"Du bör skapa bankkontot och ange det i den relaterade bankjournalen. Om den "
+"relaterade bankjournalen inte finns ännu bör du skapa en ny."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
@@ -88,6 +91,7 @@ msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
 msgstr ""
+"Hämta dina kontoutdrag i elektroniskt format från din bank och välj dem här."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
@@ -119,7 +123,7 @@ msgstr "Importera bankkontoutdrag"
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
 msgid "Import ID"
-msgstr ""
+msgstr "Import ID"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
@@ -136,7 +140,7 @@ msgstr "Journal"
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
-msgstr "Senast redigerad"
+msgstr "Senast ändrad den"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_uid
@@ -146,48 +150,45 @@ msgstr "Senast uppdaterad av"
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_date
 msgid "Last Updated on"
-msgstr "Senast uppdaterad"
+msgstr "Senast uppdaterad den"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing currency code in the bank statement file."
-msgstr ""
+msgstr "Saknar valutakod i bankkontoutdraget."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing payment_ref on a transaction."
-msgstr ""
+msgstr "Det saknas payment_ref på en transaktion."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
 msgid "Partner Bank Account"
-msgstr "Bankkonto"
+msgstr "Partners bankkonto"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
-#, fuzzy
 msgid "Statement File"
-msgstr "Bankutdrag-rad"
+msgstr "Kontoutdragsfil"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
-msgstr "Bankutdrag-rad"
+msgstr "Kontoutdragets filnamn"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "Format som stöds:"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr ""
+msgstr "Bankbokföringskontot är inte inställt i journalen '%s'."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -197,6 +198,9 @@ msgid ""
 "bank journal. You should set it on the related bank journal. If the related "
 "bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Bankkontot med nummer '%s' finns i systemet men är inte angivet i någon "
+"bankjournal. Du bör ange det i den relaterade bankjournalen. Om den "
+"relaterade bankjournalen inte finns ännu bör du skapa en ny."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -205,6 +209,8 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
+"Bankutdragsraden använder valutan '%s' men det finns inte någon sådan valuta "
+"i Odoo."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -213,6 +219,8 @@ msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
 msgstr ""
+"Valutan för kontoutdraget (%s) är inte densamma som valutan för journalen "
+"'%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -222,6 +230,8 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"Formatet för den här kontoutdragsfilen innehåller inte bankkontonumret, så "
+"du måste starta guiden från rätt bankjournal i instrumentpanelen."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -236,6 +246,8 @@ msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
 msgstr ""
+"Detta filformat för bankutdrag stöds inte.\n"
+"Har du installerat en modul för att stödja detta format?"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -256,6 +268,8 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+"Du har redan importerat den här filen eller så innehåller den här filen "
+"endast transaktioner som redan har importerats."
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
