@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-account_statement_import_online',
         'odoo14-addon-account_statement_import_online_ponto',
         'odoo14-addon-account_statement_import_paypal',
+        'odoo14-addon-account_statement_import_txt_xlsx',
     ],
     classifiers=[
         'Programming Language :: Python',
