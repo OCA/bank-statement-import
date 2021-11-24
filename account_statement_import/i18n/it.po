@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 09:10+0000\n"
-"PO-Revision-Date: 2021-11-24 15:35+0000\n"
+"PO-Revision-Date: 2021-11-24 20:36+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "Language: it\n"
@@ -100,7 +100,7 @@ msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
 msgstr ""
-"Scarica gli estratti conto bancari in formato elettronico e selezionali qui."
+"Selezionare gli estratti conto in formato elettronico ottenuti dalla banca."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
@@ -165,7 +165,7 @@ msgstr "Ultimo aggiornamento il"
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing currency code in the bank statement file."
-msgstr ""
+msgstr "Codice valuta mancante nel file di estratto conto."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -244,13 +244,13 @@ msgstr ""
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
 msgstr ""
-"Impossibile leggere il file caricato.\n"
-"Hai installato il supporto per questo formato di file ?"
+"Formato del file di estratto conto non supportato.\n"
+"Verificare che sia stato installato il modulo Odoo che supporta il formato."
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
