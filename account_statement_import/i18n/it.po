@@ -25,38 +25,36 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 09:10+0000\n"
-"PO-Revision-Date: 2019-08-26 09:08+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
+"PO-Revision-Date: 2021-11-24 15:35+0000\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
-msgstr "%d transazioni ignorate perchè già importate in precedenza "
+msgstr "%d operazioni sono state ignorate perché già importate."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
-msgstr "1 transazione è già stata importata in precedenza ed è stata ignorata."
+msgstr "1 operazione è stata ignorata perché già importata."
 
 #. module: account_statement_import
 #: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
 msgid "A bank account transaction can be imported only once!"
-msgstr ""
-"Le singole transazioni su conto corrente possono essere importate una sola "
-"volta !"
+msgstr "Un'operazione di un conto bancario può essere importata una sola volta."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Already imported items"
 msgstr "Voci già importate"
 
@@ -177,26 +175,23 @@ msgstr "Il file non contiene alcuna transazione."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
 msgid "Partner Bank Account"
-msgstr "Conto bancario"
+msgstr "Conto bancario partner"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
-#, fuzzy
 msgid "Statement File"
-msgstr "Riga estratto conto bancario"
+msgstr "File estratto conto"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
-msgstr "Riga estratto conto bancario"
+msgstr "Nome file estratto conto"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "Formati supportati:"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -224,13 +219,13 @@ msgstr ""
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
 msgstr ""
-"La valuta dell'estratto conto (%s) non è la stessa di quella del registro "
-"(%s)."
+"La valuta dell'estratto conto bancario (%s) non corrisponde a quella del "
+"registro \"%s\" (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
