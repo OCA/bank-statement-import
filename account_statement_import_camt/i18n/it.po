@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-11-25 17:36+0000\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
@@ -22,17 +24,17 @@ msgstr ""
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Estratto conto bancario"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Riga estratto conto bancario"
 
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
 msgid "CAMT"
-msgstr ""
+msgstr "CAMT"
 
 #. module: account_statement_import_camt
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement__display_name
@@ -41,7 +43,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: account_statement_import_camt
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement__id
@@ -50,17 +52,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import
 msgid "Import Bank Statement Files"
-msgstr ""
+msgstr "Importazione file estratto conto bancario"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Registro"
 
 #. module: account_statement_import_camt
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement____last_update
@@ -69,19 +71,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import____last_update
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/account_journal.py:0
 #, python-format
 msgid "camt.053.001.02"
-msgstr ""
+msgstr "camt.053.001.02"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/account_journal.py:0
 #, python-format
 msgid "camt.054.001.02"
-msgstr ""
+msgstr "camt.054.001.02"
 
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
