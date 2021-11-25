@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 09:10+0000\n"
-"PO-Revision-Date: 2021-11-24 20:36+0000\n"
+"PO-Revision-Date: 2021-11-25 17:36+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "Language: it\n"
@@ -76,6 +76,9 @@ msgid ""
 "should create the bank account and set it on the related bank journal. If "
 "the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Impossibile trovare conti bancari con numero \"%s\" collegati al partner \"%"
+"s\", creare il conto e impostarlo nel relativo registro banca. Se il "
+"registro ancora non esiste crearne uno nuovo."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
@@ -85,7 +88,7 @@ msgstr "Creato da"
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_date
 msgid "Created on"
-msgstr "Creato il"
+msgstr "Data creazione"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
@@ -119,15 +122,13 @@ msgstr "Importa"
 
 #. module: account_statement_import
 #: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "Importa estratto conto bancario"
+msgstr "Importa file estratto conto bancario"
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Importa estratto conto bancario"
+msgstr "Importazione file estratto conto bancario"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
@@ -169,9 +170,9 @@ msgstr "Codice valuta mancante nel file di estratto conto."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Missing payment_ref on a transaction."
-msgstr "Il file non contiene alcuna transazione."
+msgstr "payment_ref mancante in una operazione."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
@@ -195,10 +196,9 @@ msgstr "Formati supportati:"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr ""
-"Il conto di questa dichiarazione (%s) non è la stessa della rivista (%s)."
+msgstr "Conto banca non impostato nel registro \"%s\"."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -208,6 +208,9 @@ msgid ""
 "bank journal. You should set it on the related bank journal. If the related "
 "bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Il conto con numero \"%s\" esiste in Odoo ma non è impostato in alcun "
+"registro banca, assegnarlo nel relativo registro. Se tale registro ancora "
+"non esiste, crearne uno nuovo."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -216,6 +219,8 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
+"Il file di estratto conto utilizza la valuta \"%s\" che non è presente in "
+"Odoo."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -235,12 +240,16 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"Il formato del file di estratto conto non contiene il numero di conto "
+"bancario, è necessario quindi far partire la procedura dal registro banca "
+"corretto nella bacheca."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr ""
+"L'analisi del file di estratto conto ha restituito un risultato non valido."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -259,9 +268,8 @@ msgstr ""
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
-msgstr "Riga estratto conto bancario"
+msgstr "Caricamento file di estratto conto bancario"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -270,6 +278,7 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+"Il file è già stato importato oppure contiene solo operazioni già importate."
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
