@@ -11,6 +11,7 @@
     "depends": ["account"],
     "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
+    "development_status": "Mature",
     "website": "https://github.com/OCA/bank-statement-import",
     "data": [
         "security/ir.model.access.csv",
