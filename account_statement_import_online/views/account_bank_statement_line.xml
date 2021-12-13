@@ -13,7 +13,11 @@
             <xpath expr="//sheet" position="inside">
                 <group colspan="4" col="1">
                     <separator string="Raw Data" />
-                    <field name="raw_data" nolabel="1" groups="base.group_no_one" />
+                    <field
+                        name="online_raw_data"
+                        nolabel="1"
+                        groups="base.group_no_one"
+                    />
                 </group>
             </xpath>
         </field>
