@@ -195,6 +195,7 @@ class OnlineBankStatementProviderPonto(models.Model):
         return dt.replace(tzinfo=None)
 
     def _ponto_obtain_statement_data(self, date_since, date_until):
+        """Translate information from Ponto to Odoo bank statement lines."""
         self.ensure_one()
         account_ids = self._ponto_get_account_ids()
         journal = self.journal_id
@@ -213,27 +214,33 @@ class OnlineBankStatementProviderPonto(models.Model):
         sequence = 0
         for transaction in transaction_lines:
             sequence += 1
-            attributes = transaction.get("attributes", {})
-            ref_list = [
-                attributes.get(x)
-                for x in {"description", "counterpartName", "counterpartReference"}
-                if attributes.get(x)
-            ]
-            ref = " ".join(ref_list)
-            date = self._ponto_date_from_string(attributes.get("executionDate"))
-            vals_line = {
-                "sequence": sequence,
-                "date": date,
-                "ref": re.sub(" +", " ", ref) or "/",
-                "payment_ref": attributes.get("remittanceInformation", ref),
-                "unique_import_id": transaction["id"],
-                "amount": attributes["amount"],
-            }
-            if attributes.get("counterpartReference"):
-                vals_line["account_number"] = attributes["counterpartReference"]
-            if attributes.get("counterpartName"):
-                vals_line["partner_name"] = attributes["counterpartName"]
+            vals_line = self._ponto_get_transaction_vals(transaction, sequence)
             new_transactions.append(vals_line)
         if new_transactions:
             return new_transactions, {}
         return
+
+    def _ponto_get_transaction_vals(self, transaction, sequence):
+        """Translate information from Ponto to statement line vals."""
+        attributes = transaction.get("attributes", {})
+        ref_list = [
+            attributes.get(x)
+            for x in {"description", "counterpartName", "counterpartReference"}
+            if attributes.get(x)
+        ]
+        ref = " ".join(ref_list)
+        date = self._ponto_date_from_string(attributes.get("executionDate"))
+        vals_line = {
+            "sequence": sequence,
+            "date": date,
+            "ref": re.sub(" +", " ", ref) or "/",
+            "payment_ref": attributes.get("remittanceInformation", ref),
+            "unique_import_id": transaction["id"],
+            "amount": attributes["amount"],
+            "online_raw_data": transaction,
+        }
+        if attributes.get("counterpartReference"):
+            vals_line["account_number"] = attributes["counterpartReference"]
+        if attributes.get("counterpartName"):
+            vals_line["partner_name"] = attributes["counterpartName"]
+        return vals_line
