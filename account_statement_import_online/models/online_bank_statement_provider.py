@@ -292,13 +292,11 @@ class OnlineBankStatementProvider(models.Model):
                     continue
             bank_account_number = line_values.get("account_number")
             if bank_account_number:
-                line_values.update(
-                    {
-                        "account_number": (
-                            self._sanitize_bank_account_number(bank_account_number)
-                        ),
-                    }
+                sanitized_account_number = self._sanitize_bank_account_number(
+                    bank_account_number
                 )
+                line_values["account_number"] = sanitized_account_number
+                self._update_partner_from_account_number(line_values)
             if not line_values.get("payment_ref"):
                 line_values["payment_ref"] = line_values.get("ref")
             filtered_lines.append(line_values)
@@ -364,6 +362,14 @@ class OnlineBankStatementProvider(models.Model):
         """Hook for extension"""
         self.ensure_one()
         return sanitize_account_number(bank_account_number)
+
+    def _update_partner_from_account_number(self, line_values):
+        partner_bank = self.env["res.partner.bank"].search(
+            [("acc_number", "=", line_values["account_number"])], limit=1
+        )
+        if partner_bank:
+            line_values["partner_bank_id"] = partner_bank.id
+            line_values["partner_id"] = partner_bank.partner_id.id
 
     def _get_next_run_period(self):
         self.ensure_one()
