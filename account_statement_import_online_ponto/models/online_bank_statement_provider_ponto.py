@@ -156,34 +156,32 @@ class OnlineBankStatementProviderPonto(models.Model):
             response = requests.get(
                 page_url, params=params, headers=self._ponto_header()
             )
-            if response.status_code == 200:
-                if params.get("before"):
-                    params.pop("before")
-                data = json.loads(response.text)
-                links = data.get("links", {})
-                if page_next:
-                    page_url = links.get("next", False)
-                else:
-                    page_url = links.get("prev", False)
-                transactions = data.get("data", [])
-                if transactions:
-                    current_transactions = []
-                    for transaction in transactions:
-                        date = self._ponto_date_from_string(
-                            transaction.get("attributes", {}).get("executionDate")
-                        )
-                        if date_since <= date < date_until:
-                            current_transactions.append(transaction)
-
-                    if current_transactions:
-                        if not page_next or (page_next and not latest_identifier):
-                            latest_identifier = current_transactions[0].get("id")
-                        transaction_lines.extend(current_transactions)
-            else:
+            if response.status_code != 200:
                 raise UserError(
                     _("Error during get transaction.\n\n%s \n\n %s")
                     % (response.status_code, response.text)
                 )
+            if params.get("before"):
+                params.pop("before")
+            data = json.loads(response.text)
+            links = data.get("links", {})
+            if page_next:
+                page_url = links.get("next", False)
+            else:
+                page_url = links.get("prev", False)
+            transactions = data.get("data", [])
+            if transactions:
+                current_transactions = []
+                for transaction in transactions:
+                    date = self._ponto_date_from_string(
+                        transaction.get("attributes", {}).get("executionDate")
+                    )
+                    if date_since <= date < date_until:
+                        current_transactions.append(transaction)
+                if current_transactions:
+                    if not page_next or (page_next and not latest_identifier):
+                        latest_identifier = current_transactions[0].get("id")
+                    transaction_lines.extend(current_transactions)
         if latest_identifier:
             self.ponto_last_identifier = latest_identifier
         return transaction_lines
