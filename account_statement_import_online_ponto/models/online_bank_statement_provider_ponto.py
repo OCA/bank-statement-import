@@ -237,7 +237,7 @@ class OnlineBankStatementProviderPonto(models.Model):
             "payment_ref": attributes.get("remittanceInformation", ref),
             "unique_import_id": transaction["id"],
             "amount": attributes["amount"],
-            "raw_data": transaction,
+            "online_raw_data": transaction,
         }
         if attributes.get("counterpartReference"):
             vals_line["account_number"] = attributes["counterpartReference"]
