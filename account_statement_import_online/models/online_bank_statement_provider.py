@@ -364,8 +364,16 @@ class OnlineBankStatementProvider(models.Model):
         return sanitize_account_number(bank_account_number)
 
     def _update_partner_from_account_number(self, line_values):
+        """Lookup partner using account number."""
+        self.ensure_one()
         partner_bank = self.env["res.partner.bank"].search(
-            [("acc_number", "=", line_values["account_number"])], limit=1
+            [
+                ("acc_number", "=", line_values["account_number"]),
+                "|",
+                ("company_id", "=", False),
+                ("company_id", "=", self.company_id.id),
+            ],
+            limit=1,
         )
         if partner_bank:
             line_values["partner_bank_id"] = partner_bank.id
