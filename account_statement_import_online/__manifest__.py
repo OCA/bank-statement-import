@@ -23,6 +23,7 @@
         "wizards/online_bank_statement_pull_wizard.xml",
         "views/actions.xml",
         "views/account_journal.xml",
+        "views/account_bank_statement_line.xml",
         "views/online_bank_statement_provider.xml",
     ],
     "installable": True,
