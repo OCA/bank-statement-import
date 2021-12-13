@@ -11,7 +11,7 @@ class AccountBankStatementLine(models.Model):
 
     _inherit = "account.bank.statement.line"
 
-    raw_data = fields.Text(
+    online_raw_data = fields.Text(
         help="The complete data retrieved online for this transaction",
         readonly=True,
         copy=False,
