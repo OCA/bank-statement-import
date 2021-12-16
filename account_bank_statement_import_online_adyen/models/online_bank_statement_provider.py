@@ -84,10 +84,18 @@ class OnlineBankStatementProvider(models.Model):
             [self.api_base, self.journal_id.adyen_merchant_account, filename]
         )
         response = requests.get(URL, auth=(self.username, self.password))
-        if response.status_code == 200:
-            return response.content, filename
-        else:
+        if response.status_code != 200:
             raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
+        # Check base64 decoding and padding of response.content.
+        # Remember: response.text is unicode, response.content is in bytes.
+        byte_count = len(response.content)
+        _logger.debug(
+            _("Retrieved %d bytes, starting with %s"), byte_count, response.text[:32]
+        )
+        # Make sure base64 encoded content contains multiple of 4 bytes.
+        byte_padding = b"=" * (byte_count % 4)
+        data_file = response.content + byte_padding
+        return data_file, filename
 
     def _schedule_next_run(self):
         """Set next run date and autoincrement batch number."""
