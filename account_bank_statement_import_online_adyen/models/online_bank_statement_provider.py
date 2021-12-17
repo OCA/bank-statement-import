@@ -1,5 +1,6 @@
 # Copyright 2021 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import base64
 import logging
 from html import escape
 
@@ -40,9 +41,9 @@ class OnlineBankStatementProvider(models.Model):
         for provider in adyen_providers:
             is_scheduled = self.env.context.get("scheduled")
             try:
-                data_file, filename = self._adyen_get_settlement_details_file()
+                attachment_vals = self._get_attachment_vals()
                 import_wizard = self.env["account.bank.statement.import"].create(
-                    {"attachment_ids": [(0, 0, {"name": filename, "datas": data_file})]}
+                    {"attachment_ids": [(0, 0, attachment_vals)]}
                 )
                 import_wizard.with_context(
                     {"account_bank_statement_import_adyen": True}
@@ -67,6 +68,17 @@ class OnlineBankStatementProvider(models.Model):
             if is_scheduled:
                 provider._schedule_next_run()
 
+    def _get_attachment_vals(self):
+        """Retrieve settlement details and convert to attachment vals."""
+        content, filename = self._adyen_get_settlement_details_file()
+        encoded_content = base64.encodebytes(content)
+        # Make sure base64 encoded content contains multiple of 4 bytes.
+        byte_count = len(encoded_content)
+        byte_padding = b"=" * (byte_count % 4)
+        data_file = encoded_content + byte_padding
+        attachment_vals = {"name": filename, "datas": data_file}
+        return attachment_vals
+
     def _adyen_get_settlement_details_file(self):
         """Retrieve daily generated settlement details file.
 
@@ -86,6 +98,7 @@ class OnlineBankStatementProvider(models.Model):
         response = requests.get(URL, auth=(self.username, self.password))
         if response.status_code != 200:
             raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
+        _logger.debug(_("Headers returned by Adyen %s"), response.headers)
         # Check base64 decoding and padding of response.content.
         # Remember: response.text is unicode, response.content is in bytes.
         text_count = len(response.text)
@@ -100,10 +113,7 @@ class OnlineBankStatementProvider(models.Model):
             byte_count,
             response.content[:64],
         )
-        # Make sure base64 encoded content contains multiple of 4 bytes.
-        byte_padding = b"=" * (byte_count % 4)
-        data_file = response.content + byte_padding
-        return data_file, filename
+        return response.content, filename
 
     def _schedule_next_run(self):
         """Set next run date and autoincrement batch number."""
