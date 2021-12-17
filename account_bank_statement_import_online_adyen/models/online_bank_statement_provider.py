@@ -88,9 +88,17 @@ class OnlineBankStatementProvider(models.Model):
             raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
         # Check base64 decoding and padding of response.content.
         # Remember: response.text is unicode, response.content is in bytes.
+        text_count = len(response.text)
+        _logger.debug(
+            _("Retrieved %d length text from Adyen, starting with %s"),
+            text_count,
+            response.text[:64],
+        )
         byte_count = len(response.content)
         _logger.debug(
-            _("Retrieved %d bytes, starting with %s"), byte_count, response.text[:32]
+            _("Retrieved %d bytes from Adyen, starting with %s"),
+            byte_count,
+            response.content[:64],
         )
         # Make sure base64 encoded content contains multiple of 4 bytes.
         byte_padding = b"=" * (byte_count % 4)
