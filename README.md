@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_statement_import](account_statement_import/) | 14.0.1.2.2 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files
+[account_statement_import](account_statement_import/) | 14.0.1.2.3 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files
 [account_statement_import_camt](account_statement_import_camt/) | 14.0.1.1.0 |  | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 14.0.1.1.0 |  | Bank Account Camt54 Import
 [account_statement_import_ofx](account_statement_import_ofx/) | 14.0.1.0.0 |  | Import OFX Bank Statement
