@@ -249,8 +249,7 @@ class CamtParser(models.AbstractModel):
         AddtlTxInf = transaction.pop("AddtlTxInf", None)
         if AddtlTxInf:
             transaction["note"] += (
-                _("\nAdditional Transaction Information: %s")
-                % transaction["AddtlTxInf"].strip()
+                _("\nAdditional Transaction Information: %s") % AddtlTxInf.strip()
             )
 
     def check_version(self, ns, root):
