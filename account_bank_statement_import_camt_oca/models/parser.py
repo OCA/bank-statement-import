@@ -8,7 +8,7 @@ import pytz
 from dateutil.parser import isoparse
 from lxml import etree
 
-from odoo import fields, models
+from odoo import _, fields, models
 
 
 class CamtParser(models.AbstractModel):
@@ -70,7 +70,7 @@ class CamtParser(models.AbstractModel):
         )
         # name
         self.add_value_from_node(
-            ns, node, ["./ns:AddtlTxInf"], transaction, "note", join_str="\n"
+            ns, node, ["./ns:AddtlTxInf"], transaction, "AddtlTxInf", join_str="\n"
         )
         # eref
         self.add_value_from_node(
@@ -222,6 +222,8 @@ class CamtParser(models.AbstractModel):
         transactions = []
         for entry_node in entry_nodes:
             transactions.extend(self.parse_entry(ns, entry_node))
+        for transaction in transactions:
+            self._add_line_note(transaction)
         result["transactions"] = transactions
         result["date"] = None
         if transactions:
@@ -229,6 +231,27 @@ class CamtParser(models.AbstractModel):
                 transactions, key=lambda x: x["date"], reverse=True
             )[0]["date"]
         return result
+
+    def _add_line_note(self, transaction):
+        transaction["note"] = _(
+            "Partner Name: %s"
+            "\nPartner Account Number: %s"
+            "\nTransaction Date: %s"
+            "\nReference: %s"
+            "\nCommunication: %s"
+        ) % (
+            transaction.get("partner_name", "").strip(),
+            transaction.get("account_number", ""),
+            transaction.get("date", ""),
+            transaction.get("ref", "").strip(),
+            transaction.get("name", "").strip(),
+        )
+        AddtlTxInf = transaction.pop("AddtlTxInf", None)
+        if AddtlTxInf:
+            transaction["note"] += (
+                _("\nAdditional Transaction Information: %s")
+                % transaction["AddtlTxInf"].strip()
+            )
 
     def check_version(self, ns, root):
         """Validate validity of camt file."""
