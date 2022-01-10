@@ -1,0 +1,1013 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<merchantReconciliationXML>
+	<fileHeader>
+		<interfaceVersionNo>V1.5</interfaceVersionNo>
+		<fileCreationDate>2017-07-24</fileCreationDate>
+		<processingDate>2017-07-24</processingDate>
+		<productionFlag>T</productionFlag>
+	</fileHeader>
+	<mercNoticeHeader>
+		<mercNoticeUniqueID>10000200000051719560</mercNoticeUniqueID>
+		<mercNoticeDate>2017-07-24</mercNoticeDate>
+		<noticePerFrom>2017-07-24</noticePerFrom>
+		<noticePerTo>2017-07-24</noticePerTo>
+	</mercNoticeHeader>
+	<acqContact>
+		<contact>Customer Services CH</contact>
+		<phoneNo>+41 848 83 2000</phoneNo>
+		<faxNo>+41 848 83 2111</faxNo>
+		<eMailAddr>peva-peds@six-multipay.com</eMailAddr>
+	</acqContact>
+	<reportingPart>
+		<settlingPart>
+			<stlAccount>
+				<payment>
+					<businessPart>
+						<contract>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000241</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">50.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:26:33.000</trxTime>
+										<pan>492113XXXXXX2364</pan>
+										<authNo>689996</authNo>
+										<refNo>356650</refNo>
+										<trmTrxNo>31488</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>74063777205072400002410</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">50.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">49.050000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.950000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.950000000</aComEffBC>
+										<cardProduct>F</cardProduct>
+										<unBlendCat>1</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>VISA</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:55:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000385</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30093068</trmId>
+									<trmPer>1467</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">49.050000000</aNetSC>
+											<aGrosSC c="CHF" e="2">50.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">50.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">49.050000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.950000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.950000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">50.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">50.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000533</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">25.600000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:15:29.000</trxTime>
+										<pan>513659XXXXXX1527</pan>
+										<authNo>806130</authNo>
+										<refNo>451283</refNo>
+										<trmTrxNo>180993</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>05404437205072400005333</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">25.600000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">25.300000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.300000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.300000000</aComEffBC>
+										<cardProduct>MNW</cardProduct>
+										<unBlendCat>1</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>ECAMC</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>01:01:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000883</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30901659</trmId>
+									<trmPer>5807</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">25.300000000</aNetSC>
+											<aGrosSC c="CHF" e="2">25.600000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">25.600000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">25.300000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.300000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.300000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">25.600000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">25.600000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240002299</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">30.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:02:36.000</trxTime>
+										<pan>487881XXXXXXXXX9602</pan>
+										<authNo>020015</authNo>
+										<refNo>141043</refNo>
+										<trmTrxNo>1467</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>74063777205072400022996</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">30.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">29.350000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.650000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.650000000</aComEffBC>
+										<cardProduct>V</cardProduct>
+										<unBlendCat>2</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>VPAY</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:07:27.000</sumSlipTime>
+									<passStlEntryNo>201707240001862</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>21403267</trmId>
+									<trmPer>0074</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">29.350000000</aNetSC>
+											<aGrosSC c="CHF" e="2">30.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">30.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">29.350000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.650000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.650000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">30.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">30.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000937</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">57.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:07:55.000</trxTime>
+										<pan>671024XXXXXXXXX3261</pan>
+										<authNo>FX2AQ7</authNo>
+										<refNo>535422</refNo>
+										<trmTrxNo>21343</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>05404437205072400009376</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">57.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">56.690000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.310000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.310000000</aComEffBC>
+										<cardProduct>MSI</cardProduct>
+										<unBlendCat>2</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>ECDIR</prod>
+									<sumSlipDate>2017-05-31</sumSlipDate>
+									<sumSlipTime>01:01:15.000</sumSlipTime>
+									<passStlEntryNo>201707240000141</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>10078112</trmId>
+									<trmPer>9321</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">56.690000000</aNetSC>
+											<aGrosSC c="CHF" e="2">57.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">57.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">56.690000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.310000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.310000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">57.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">57.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000237</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">380.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:25:24.000</trxTime>
+										<pan>671081XXXXXXXXX9480</pan>
+										<authNo>020223</authNo>
+										<refNo>245435</refNo>
+										<trmTrxNo>31487</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>05404437205072400002371</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">380.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">379.620000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.380000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.380000000</aComEffBC>
+										<cardProduct>MSI</cardProduct>
+										<unBlendCat>2</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>ECDIR</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:55:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000373</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30093068</trmId>
+									<trmPer>1467</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">379.620000000</aNetSC>
+											<aGrosSC c="CHF" e="2">380.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">380.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">379.620000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.380000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.380000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">380.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">380.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<extVPNo>173305130</extVPNo>
+							<contractCategory>9</contractCategory>
+							<sum>
+								<sumSC>
+									<noValidTrx>5</noValidTrx>
+									<noValidTrxPwcb>0</noValidTrxPwcb>
+									<noSumSlip>5</noSumSlip>
+									<aNetSC c="CHF" e="2">540.010000000</aNetSC>
+									<aGrosSC c="CHF" e="2">542.600000000</aGrosSC>
+									<aTrxGrosSC c="CHF" e="2">542.600000000</aTrxGrosSC>
+									<aTrxNetSC c="CHF" e="2">540.010000000</aTrxNetSC>
+									<aComEffSC c="CHF" e="2">-2.590000000</aComEffSC>
+									<aComEffBC c="CHF" e="2">-2.590000000</aComEffBC>
+								</sumSC>
+								<sumOC>
+									<noValidTrx>5</noValidTrx>
+									<noValidTrxPwcb>0</noValidTrxPwcb>
+									<noDelTrx>5</noDelTrx>
+									<noSumSlip>5</noSumSlip>
+									<aTrxOC c="CHF" e="2">542.600000000</aTrxOC>
+									<aDelTrxOC c="CHF" e="2">542.600000000</aDelTrxOC>
+								</sumOC>
+							</sum>
+						</contract>
+						<contract>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000242</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">50.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:26:33.000</trxTime>
+										<pan>492113XXXXXX2364</pan>
+										<authNo>689996</authNo>
+										<refNo>356650</refNo>
+										<trmTrxNo>31488</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>74063777205072400002428</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">50.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">48.970000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-1.030000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-1.030000000</aComEffBC>
+										<cardProduct>F</cardProduct>
+										<unBlendCat>1</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>VISA</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:55:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000389</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30093068</trmId>
+									<trmPer>1467</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">48.970000000</aNetSC>
+											<aGrosSC c="CHF" e="2">50.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">50.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">48.970000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-1.030000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-1.030000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">50.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">50.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000534</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">25.600000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:15:29.000</trxTime>
+										<pan>513659XXXXXX1527</pan>
+										<authNo>806130</authNo>
+										<refNo>451283</refNo>
+										<trmTrxNo>180993</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>05404437205072400005341</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">25.600000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">25.080000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.520000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.520000000</aComEffBC>
+										<cardProduct>MNW</cardProduct>
+										<unBlendCat>1</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>ECAMC</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>01:01:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000885</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30901659</trmId>
+									<trmPer>5807</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">25.080000000</aNetSC>
+											<aGrosSC c="CHF" e="2">25.600000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">25.600000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">25.080000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.520000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.520000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">25.600000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">25.600000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240002300</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">30.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:02:36.000</trxTime>
+										<pan>487881XXXXXXXXX9602</pan>
+										<authNo>020015</authNo>
+										<refNo>141043</refNo>
+										<trmTrxNo>1467</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>74063777205072400023002</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">30.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">29.500000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.500000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.500000000</aComEffBC>
+										<cardProduct>V</cardProduct>
+										<unBlendCat>2</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>VPAY</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:07:27.000</sumSlipTime>
+									<passStlEntryNo>201707240001864</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>21403267</trmId>
+									<trmPer>0074</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">29.500000000</aNetSC>
+											<aGrosSC c="CHF" e="2">30.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">30.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">29.500000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.500000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.500000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">30.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">30.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<extVPNo>173305154</extVPNo>
+							<contractCategory>8</contractCategory>
+							<sum>
+								<sumSC>
+									<noValidTrx>3</noValidTrx>
+									<noValidTrxPwcb>0</noValidTrxPwcb>
+									<noSumSlip>3</noSumSlip>
+									<aNetSC c="CHF" e="2">103.550000000</aNetSC>
+									<aGrosSC c="CHF" e="2">105.600000000</aGrosSC>
+									<aTrxGrosSC c="CHF" e="2">105.600000000</aTrxGrosSC>
+									<aTrxNetSC c="CHF" e="2">103.550000000</aTrxNetSC>
+									<aComEffSC c="CHF" e="2">-2.050000000</aComEffSC>
+									<aComEffBC c="CHF" e="2">-2.050000000</aComEffBC>
+								</sumSC>
+								<sumOC>
+									<noValidTrx>3</noValidTrx>
+									<noValidTrxPwcb>0</noValidTrxPwcb>
+									<noDelTrx>3</noDelTrx>
+									<noSumSlip>3</noSumSlip>
+									<aTrxOC c="CHF" e="2">105.600000000</aTrxOC>
+									<aDelTrxOC c="CHF" e="2">105.600000000</aDelTrxOC>
+								</sumOC>
+							</sum>
+						</contract>
+						<passBusPartId>241766</passBusPartId>
+						<busPartAddr>
+							<name>Muster Shop A</name>
+							<line3>Mustergasse 13</line3>
+							<city>Bern</city>
+							<zip>3006</zip>
+							<country>CHE</country>
+						</busPartAddr>
+						<sum>
+							<sumSC>
+								<noValidTrx>8</noValidTrx>
+								<noValidTrxPwcb>0</noValidTrxPwcb>
+								<noSumSlip>8</noSumSlip>
+								<aNetSC c="CHF" e="2">643.560000000</aNetSC>
+								<aGrosSC c="CHF" e="2">648.200000000</aGrosSC>
+								<aTrxGrosSC c="CHF" e="2">648.200000000</aTrxGrosSC>
+								<aTrxNetSC c="CHF" e="2">643.560000000</aTrxNetSC>
+								<aComEffSC c="CHF" e="2">-4.640000000</aComEffSC>
+								<aComEffBC c="CHF" e="2">-4.640000000</aComEffBC>
+							</sumSC>
+							<sumOC>
+								<noValidTrx>8</noValidTrx>
+								<noValidTrxPwcb>0</noValidTrxPwcb>
+								<noDelTrx>8</noDelTrx>
+								<noSumSlip>8</noSumSlip>
+								<aTrxOC c="CHF" e="2">648.200000000</aTrxOC>
+								<aDelTrxOC c="CHF" e="2">648.200000000</aDelTrxOC>
+							</sumOC>
+						</sum>
+					</businessPart>
+					<businessPart>
+						<contract>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000243</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">50.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:26:33.000</trxTime>
+										<pan>492113XXXXXX2364</pan>
+										<authNo>689996</authNo>
+										<refNo>356650</refNo>
+										<trmTrxNo>31488</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>74063777205072400002436</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">50.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">49.050000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.950000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.950000000</aComEffBC>
+										<cardProduct>F</cardProduct>
+										<unBlendCat>1</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>VISA</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:55:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000393</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30093068</trmId>
+									<trmPer>1467</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">49.050000000</aNetSC>
+											<aGrosSC c="CHF" e="2">50.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">50.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">49.050000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.950000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.950000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">50.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">50.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000535</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">25.600000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:15:29.000</trxTime>
+										<pan>513659XXXXXX1527</pan>
+										<authNo>806130</authNo>
+										<refNo>451283</refNo>
+										<trmTrxNo>180993</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>05404437205072400005358</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">25.600000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">25.300000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.300000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.300000000</aComEffBC>
+										<cardProduct>MNW</cardProduct>
+										<unBlendCat>1</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>ECAMC</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>01:01:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000889</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30901659</trmId>
+									<trmPer>5807</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">25.300000000</aNetSC>
+											<aGrosSC c="CHF" e="2">25.600000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">25.600000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">25.300000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.300000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.300000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">25.600000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">25.600000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240002301</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">30.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:02:36.000</trxTime>
+										<pan>487881XXXXXXXXX9602</pan>
+										<authNo>020015</authNo>
+										<refNo>141043</refNo>
+										<trmTrxNo>1467</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>74063777205072400023010</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">30.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">29.350000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.650000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.650000000</aComEffBC>
+										<cardProduct>V</cardProduct>
+										<unBlendCat>2</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>VPAY</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:07:27.000</sumSlipTime>
+									<passStlEntryNo>201707240001866</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>21403267</trmId>
+									<trmPer>0074</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">29.350000000</aNetSC>
+											<aGrosSC c="CHF" e="2">30.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">30.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">29.350000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.650000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.650000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">30.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">30.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<stlEntry>
+								<sumSlip>
+									<trx>
+										<trxType>Retail</trxType>
+										<trxTypeId>1</trxTypeId>
+										<passTrxId>201707240000239</passTrxId>
+										<trxIndicator>100</trxIndicator>
+										<aTrxOC c="CHF" e="2">380.000000000</aTrxOC>
+										<trxDate>2017-07-24</trxDate>
+										<trxTime>00:25:24.000</trxTime>
+										<pan>671081XXXXXXXXX9480</pan>
+										<authNo>020223</authNo>
+										<refNo>245435</refNo>
+										<trmTrxNo>31487</trmTrxNo>
+										<addlMercData>012345678901234567890123456789</addlMercData>
+										<addlStmntText>012345678901234567890123456789</addlStmntText>
+										<arn>05404437205072400002397</arn>
+										<dccInd>0</dccInd>
+										<isReversal>0</isReversal>
+										<entryType>4</entryType>
+										<accountIndex>0</accountIndex>
+										<aTrxGrosSC c="CHF" e="2">380.000000000</aTrxGrosSC>
+										<aTrxNetSC c="CHF" e="2">379.620000000</aTrxNetSC>
+										<aComEffSC c="CHF" e="2">-0.380000000</aComEffSC>
+										<aComEffBC c="CHF" e="2">-0.380000000</aComEffBC>
+										<cardProduct>MSI</cardProduct>
+										<unBlendCat>2</unBlendCat>
+										<clearingRegion>
+											<id>1</id>
+											<name>Domestic</name>
+										</clearingRegion>
+									</trx>
+									<prod>ECDIR</prod>
+									<sumSlipDate>2017-07-03</sumSlipDate>
+									<sumSlipTime>00:55:11.000</sumSlipTime>
+									<passStlEntryNo>201707240000379</passStlEntryNo>
+									<origin>SaferPay</origin>
+									<sumSlipId>0</sumSlipId>
+									<trmId>30093068</trmId>
+									<trmPer>1467</trmPer>
+									<sum>
+										<sumSC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<aNetSC c="CHF" e="2">379.620000000</aNetSC>
+											<aGrosSC c="CHF" e="2">380.000000000</aGrosSC>
+											<aTrxGrosSC c="CHF" e="2">380.000000000</aTrxGrosSC>
+											<aTrxNetSC c="CHF" e="2">379.620000000</aTrxNetSC>
+											<aComEffSC c="CHF" e="2">-0.380000000</aComEffSC>
+											<aComEffBC c="CHF" e="2">-0.380000000</aComEffBC>
+										</sumSC>
+										<sumOC>
+											<noValidTrx>1</noValidTrx>
+											<noValidTrxPwcb>0</noValidTrxPwcb>
+											<noDelTrx>1</noDelTrx>
+											<aTrxOC c="CHF" e="2">380.000000000</aTrxOC>
+											<aDelTrxOC c="CHF" e="2">380.000000000</aDelTrxOC>
+										</sumOC>
+									</sum>
+								</sumSlip>
+							</stlEntry>
+							<extVPNo>173305147</extVPNo>
+							<contractCategory>9</contractCategory>
+							<sum>
+								<sumSC>
+									<noValidTrx>4</noValidTrx>
+									<noValidTrxPwcb>0</noValidTrxPwcb>
+									<noSumSlip>4</noSumSlip>
+									<aNetSC c="CHF" e="2">483.320000000</aNetSC>
+									<aGrosSC c="CHF" e="2">485.600000000</aGrosSC>
+									<aTrxGrosSC c="CHF" e="2">485.600000000</aTrxGrosSC>
+									<aTrxNetSC c="CHF" e="2">483.320000000</aTrxNetSC>
+									<aComEffSC c="CHF" e="2">-2.280000000</aComEffSC>
+									<aComEffBC c="CHF" e="2">-2.280000000</aComEffBC>
+								</sumSC>
+								<sumOC>
+									<noValidTrx>4</noValidTrx>
+									<noValidTrxPwcb>0</noValidTrxPwcb>
+									<noDelTrx>4</noDelTrx>
+									<noSumSlip>4</noSumSlip>
+									<aTrxOC c="CHF" e="2">485.600000000</aTrxOC>
+									<aDelTrxOC c="CHF" e="2">485.600000000</aDelTrxOC>
+								</sumOC>
+							</sum>
+						</contract>
+						<passBusPartId>241767</passBusPartId>
+						<busPartAddr>
+							<name>Muster Shop B</name>
+							<line3>Mustergasse 14</line3>
+							<city>Bern</city>
+							<zip>3006</zip>
+							<country>CHE</country>
+						</busPartAddr>
+						<sum>
+							<sumSC>
+								<noValidTrx>4</noValidTrx>
+								<noValidTrxPwcb>0</noValidTrxPwcb>
+								<noSumSlip>4</noSumSlip>
+								<aNetSC c="CHF" e="2">483.320000000</aNetSC>
+								<aGrosSC c="CHF" e="2">485.600000000</aGrosSC>
+								<aTrxGrosSC c="CHF" e="2">485.600000000</aTrxGrosSC>
+								<aTrxNetSC c="CHF" e="2">483.320000000</aTrxNetSC>
+								<aComEffSC c="CHF" e="2">-2.280000000</aComEffSC>
+								<aComEffBC c="CHF" e="2">-2.280000000</aComEffBC>
+							</sumSC>
+							<sumOC>
+								<noValidTrx>4</noValidTrx>
+								<noValidTrxPwcb>0</noValidTrxPwcb>
+								<noDelTrx>4</noDelTrx>
+								<noSumSlip>4</noSumSlip>
+								<aTrxOC c="CHF" e="2">485.600000000</aTrxOC>
+								<aDelTrxOC c="CHF" e="2">485.600000000</aDelTrxOC>
+							</sumOC>
+						</sum>
+					</businessPart>
+					<paymentType>P</paymentType>
+					<paymentDate>2017-07-24</paymentDate>
+					<paymentNo>201707240000592</paymentNo>
+					<valueDate>2017-07-26</valueDate>
+					<sum>
+						<sumSC>
+							<noValidTrx>12</noValidTrx>
+							<noValidTrxPwcb>0</noValidTrxPwcb>
+							<noSumSlip>12</noSumSlip>
+							<aNetSC c="CHF" e="2">1126.880000000</aNetSC>
+							<aGrosSC c="CHF" e="2">1133.800000000</aGrosSC>
+							<aPaymentSC c="CHF" e="2">1126.880000000</aPaymentSC>
+							<aTrxGrosSC c="CHF" e="2">1133.800000000</aTrxGrosSC>
+							<aTrxNetSC c="CHF" e="2">1126.880000000</aTrxNetSC>
+							<aComEffSC c="CHF" e="2">-6.920000000</aComEffSC>
+							<aComEffBC c="CHF" e="2">-6.920000000</aComEffBC>
+						</sumSC>
+						<sumOC>
+							<noValidTrx>12</noValidTrx>
+							<noValidTrxPwcb>0</noValidTrxPwcb>
+							<noDelTrx>12</noDelTrx>
+							<noSumSlip>12</noSumSlip>
+							<aTrxOC c="CHF" e="2">1133.800000000</aTrxOC>
+							<aDelTrxOC c="CHF" e="2">1133.800000000</aDelTrxOC>
+						</sumOC>
+					</sum>
+				</payment>
+				<acctNo>CH1572345678901234567</acctNo>
+				<passStlAcctNo>792608</passStlAcctNo>
+				<iban>CH1572345678901234567</iban>
+				<product>ALL</product>
+				<stlCurCode>CHF</stlCurCode>
+				<sum>
+					<sumSC>
+						<noPayments>1</noPayments>
+						<noValidTrx>12</noValidTrx>
+						<noValidTrxPwcb>0</noValidTrxPwcb>
+						<noSumSlip>24</noSumSlip>
+						<aNetSC c="CHF" e="2">1126.880000000</aNetSC>
+						<aGrosSC c="CHF" e="2">1133.800000000</aGrosSC>
+						<aPaymentSC c="CHF" e="2">1126.880000000</aPaymentSC>
+						<aTrxGrosSC c="CHF" e="2">1133.800000000</aTrxGrosSC>
+						<aTrxNetSC c="CHF" e="2">1126.880000000</aTrxNetSC>
+						<aComEffSC c="CHF" e="2">-6.920000000</aComEffSC>
+						<aComEffBC c="CHF" e="2">-6.920000000</aComEffBC>
+					</sumSC>
+					<sumOC>
+						<noValidTrx>12</noValidTrx>
+						<noValidTrxPwcb>0</noValidTrxPwcb>
+						<noDelTrx>12</noDelTrx>
+						<noSumSlip>12</noSumSlip>
+						<aTrxOC c="CHF" e="2">1133.800000000</aTrxOC>
+						<aDelTrxOC c="CHF" e="2">1133.800000000</aDelTrxOC>
+					</sumOC>
+				</sum>
+			</stlAccount>
+			<passStlPartId>241765</passStlPartId>
+			<stlPartAddr>
+				<name>Muster Shop</name>
+				<line3>Mustergasse 12</line3>
+				<city>Bern</city>
+				<zip>3006</zip>
+				<country>CHE</country>
+			</stlPartAddr>
+			<sum>
+				<sumSC>
+					<noPayments>1</noPayments>
+					<noValidTrx>12</noValidTrx>
+					<noValidTrxPwcb>0</noValidTrxPwcb>
+					<noSumSlip>24</noSumSlip>
+					<aNetSC c="CHF" e="2">1126.880000000</aNetSC>
+					<aGrosSC c="CHF" e="2">1133.800000000</aGrosSC>
+					<aPaymentSC c="CHF" e="2">1126.880000000</aPaymentSC>
+					<aTrxGrosSC c="CHF" e="2">1133.800000000</aTrxGrosSC>
+					<aTrxNetSC c="CHF" e="2">1126.880000000</aTrxNetSC>
+					<aComEffSC c="CHF" e="2">-6.920000000</aComEffSC>
+					<aComEffBC c="CHF" e="2">-6.920000000</aComEffBC>
+				</sumSC>
+				<sumOC>
+					<noValidTrx>12</noValidTrx>
+					<noValidTrxPwcb>0</noValidTrxPwcb>
+					<noDelTrx>12</noDelTrx>
+					<noSumSlip>12</noSumSlip>
+					<aTrxOC c="CHF" e="2">1133.800000000</aTrxOC>
+					<aDelTrxOC c="CHF" e="2">1133.800000000</aDelTrxOC>
+				</sumOC>
+			</sum>
+		</settlingPart>
+		<passRepPartId>241765</passRepPartId>
+		<repPartAddr>
+			<name>Muster Shop</name>
+			<line3>Mustergasse 12</line3>
+			<city>Bern</city>
+			<zip>3006</zip>
+		</repPartAddr>
+		<sum>
+			<sumSC>
+				<noPayments>1</noPayments>
+				<noValidTrx>12</noValidTrx>
+				<noValidTrxPwcb>0</noValidTrxPwcb>
+				<noSumSlip>24</noSumSlip>
+				<aNetSC c="CHF" e="2">1126.880000000</aNetSC>
+				<aGrosSC c="CHF" e="2">1133.800000000</aGrosSC>
+				<aPaymentSC c="CHF" e="2">1126.880000000</aPaymentSC>
+				<aTrxGrosSC c="CHF" e="2">1133.800000000</aTrxGrosSC>
+				<aTrxNetSC c="CHF" e="2">1126.880000000</aTrxNetSC>
+				<aComEffSC c="CHF" e="2">-6.920000000</aComEffSC>
+				<aComEffBC c="CHF" e="2">-6.920000000</aComEffBC>
+			</sumSC>
+			<sumOC>
+				<noValidTrx>12</noValidTrx>
+				<noValidTrxPwcb>0</noValidTrxPwcb>
+				<noDelTrx>12</noDelTrx>
+				<noSumSlip>12</noSumSlip>
+				<aTrxOC c="CHF" e="2">1133.800000000</aTrxOC>
+				<aDelTrxOC c="CHF" e="2">1133.800000000</aDelTrxOC>
+			</sumOC>
+		</sum>
+	</reportingPart>
+</merchantReconciliationXML>

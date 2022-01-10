@@ -1,5 +1,5 @@
-# Copyright 2019 ACSONE SA/NV <thomas.binsfeld@acsone.eu>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+# Copyright 2022 AGEPoly
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import _, models
 
