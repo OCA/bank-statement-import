@@ -221,7 +221,7 @@ class MRXParser(models.AbstractModel):
                         _logger.warning(foreign_currency)
                         _logger.warning(self.env['res.currency'].search([['name', 'ilike', foreign_currency]]))
     
-                        parsed_foreign_currency = self.env['res.currency'].search([['name', 'ilike', foreign_currency]])[0].id or None
+                        parsed_foreign_currency = self.env['res.currency'].search([['name', 'ilike', foreign_currency]]).mapped('id')[0] or None
     
                         amount_comm = self.parse_float(ns, trx, "./aComEffSC")
     
