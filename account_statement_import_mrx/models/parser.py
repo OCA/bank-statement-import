@@ -129,7 +129,7 @@ class MRXParser(models.AbstractModel):
 
             self.add_value_from_node(ns, payment, ["./clBalReason"], paymentMoreInfos, "clBalReason")
             self.add_value_from_node(ns, payment, ["./clBalDate"], paymentMoreInfos, "clBalDate")
-            result["clBalReasonText"] = ENDING_BALANCE_REASON[result["clBalReason"]] or _("Unknow Ending Balance Reason Code")
+            result["clBalReasonText"] = ENDING_BALANCE_REASON.get(result["clBalReason"], _("Unknow Ending Balance Reason Code"))
 
             trx["ref"] = _("Non Payment from Wordline (SIX)")
             trx["date"] = paymentMoreInfos["clBalDate"]
@@ -221,7 +221,7 @@ class MRXParser(models.AbstractModel):
                         _logger.warning(foreign_currency)
                         _logger.warning(self.env['res.currency'].search([['name', 'ilike', foreign_currency]]))
     
-                        parsed_foreign_currency = self.env['res.currency'].search([['name', 'ilike', foreign_currency]]).mapped('id')[0] or None
+                        parsed_foreign_currency = (self.env['res.currency'].search([['name', 'ilike', foreign_currency]]).mapped('id') or [None])[0]
     
                         amount_comm = self.parse_float(ns, trx, "./aComEffSC")
     
