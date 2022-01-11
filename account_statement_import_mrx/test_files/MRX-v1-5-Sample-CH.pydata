@@ -1,30 +1,341 @@
-('EUR',
- 'NL77ABNA0574908765',
- [{'balance_end_real': 15121.12,
-   'balance_start': 15568.27,
-   'date': '2014-01-05',
-   'name': '1234Test/1',
-   'transactions': [{'account_number': 'NL46ABNA0499998748',
-                     'amount': -754.25,
-                     'date': '2014-01-05',
-                     'partner_name': 'INSURANCE COMPANY TESTX',
-                     'payment_ref': 'MKB Insurance 859239PERIOD 01.01.2014 - 31.12.2014',
-                     'ref': '435005714488-ABNO33052620'},
-                    {'account_number': 'NL46ABNA0499998748',
-                     'amount': -564.05,
-                     'date': '2014-01-05',
-                     'partner_name': 'Test Customer',
-                     'payment_ref': 'Direct debit S14 0410 AC07 Rek.nummer blokkade TESTBANK/NL/20141229/01206408',
-                     'ref': 'TESTBANK/NL/20141229/01206408'},
-                    {'account_number': 'NL46ABNA0499998748',
-                     'amount': -100.0,
-                     'date': '2014-01-05',
-                     'partner_name': 'Test Customer',
-                     'payment_ref': 'Direct debit S14 0410 AC07 Rek.nummer blokkade TESTBANK/NL/20141229/01206408',
-                     'ref': 'TESTBANK/NL/20141229/01206407'},
-                    {'account_number': 'NL69ABNA0522123643',
-                     'amount': 1405.31,
-                     'date': '2014-01-05',
-                     'partner_name': '3rd party Media',
-                     'payment_ref': '#RD PARTY MEDIA CUSNO 90782 4210773',
-                     'ref': '115'}]}])
+('CHF',
+ None,
+ [{'balance_end_real': 0.0,
+   'balance_start': 0.0,
+   'date': '2017-07-26',
+   'name': '201707240000592',
+   'transactions': [{'account_number': 'CH1572345678901234567',
+                     'amount': -1126.88,
+                     'date': '2017-07-26',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26'}",
+                     'payment_ref': '201707240000592',
+                     'ref': 'Payment from Wordline (SIX)',
+                     'transaction_type': 'PAYMENT',
+                     'unique_import_id': 'pay201707240000592'},
+                    {'amount': 50.0,
+                     'date': '2017-07-24-00:26:33.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000385', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '492113XXXXXX2364', 'authNo': '689996', 'refNo': "
+                                  "'356650', 'trmTrxNo': '31488', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400002410', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'F', 'unBlendCat': '1', 'grossAmount': 50.0, 'commAmount': -0.95, 'netAmount': None}",
+                     'payment_ref': '201707240000241',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000241'},
+                    {'amount': -0.95,
+                     'date': '2017-07-24-00:26:33.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000385', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '492113XXXXXX2364', 'authNo': '689996', 'refNo': "
+                                  "'356650', 'trmTrxNo': '31488', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400002410', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'F', 'unBlendCat': '1', 'grossAmount': 50.0, 'commAmount': -0.95, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000241',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000241'},
+                    {'amount': 25.6,
+                     'date': '2017-07-24-00:15:29.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000883', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30901659', 'trmPer': '5807', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '513659XXXXXX1527', 'authNo': '806130', 'refNo': "
+                                  "'451283', 'trmTrxNo': '180993', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400005333', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MNW', 'unBlendCat': '1', 'grossAmount': 25.6, 'commAmount': -0.3, 'netAmount': None}",
+                     'payment_ref': '201707240000533',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000533'},
+                    {'amount': -0.3,
+                     'date': '2017-07-24-00:15:29.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000883', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30901659', 'trmPer': '5807', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '513659XXXXXX1527', 'authNo': '806130', 'refNo': "
+                                  "'451283', 'trmTrxNo': '180993', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400005333', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MNW', 'unBlendCat': '1', 'grossAmount': 25.6, 'commAmount': -0.3, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000533',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000533'},
+                    {'amount': 30.0,
+                     'date': '2017-07-24-00:02:36.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240001862', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '21403267', 'trmPer': '0074', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '487881XXXXXXXXX9602', 'authNo': '020015', 'refNo': "
+                                  "'141043', 'trmTrxNo': '1467', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400022996', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'V', 'unBlendCat': '2', 'grossAmount': 30.0, 'commAmount': -0.65, 'netAmount': None}",
+                     'payment_ref': '201707240002299',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240002299'},
+                    {'amount': -0.65,
+                     'date': '2017-07-24-00:02:36.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240001862', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '21403267', 'trmPer': '0074', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '487881XXXXXXXXX9602', 'authNo': '020015', 'refNo': "
+                                  "'141043', 'trmTrxNo': '1467', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400022996', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'V', 'unBlendCat': '2', 'grossAmount': 30.0, 'commAmount': -0.65, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240002299',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240002299'},
+                    {'amount': 57.0,
+                     'date': '2017-07-24-00:07:55.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000141', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '10078112', 'trmPer': '9321', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '671024XXXXXXXXX3261', 'authNo': 'FX2AQ7', 'refNo': "
+                                  "'535422', 'trmTrxNo': '21343', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400009376', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MSI', 'unBlendCat': '2', 'grossAmount': 57.0, 'commAmount': -0.31, 'netAmount': None}",
+                     'payment_ref': '201707240000937',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000937'},
+                    {'amount': -0.31,
+                     'date': '2017-07-24-00:07:55.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000141', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '10078112', 'trmPer': '9321', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '671024XXXXXXXXX3261', 'authNo': 'FX2AQ7', 'refNo': "
+                                  "'535422', 'trmTrxNo': '21343', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400009376', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MSI', 'unBlendCat': '2', 'grossAmount': 57.0, 'commAmount': -0.31, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000937',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000937'},
+                    {'amount': 380.0,
+                     'date': '2017-07-24-00:25:24.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000373', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '671081XXXXXXXXX9480', 'authNo': '020223', 'refNo': "
+                                  "'245435', 'trmTrxNo': '31487', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400002371', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MSI', 'unBlendCat': '2', 'grossAmount': 380.0, 'commAmount': -0.38, 'netAmount': None}",
+                     'payment_ref': '201707240000237',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000237'},
+                    {'amount': -0.38,
+                     'date': '2017-07-24-00:25:24.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305130', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000373', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '671081XXXXXXXXX9480', 'authNo': '020223', 'refNo': "
+                                  "'245435', 'trmTrxNo': '31487', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400002371', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MSI', 'unBlendCat': '2', 'grossAmount': 380.0, 'commAmount': -0.38, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000237',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000237'},
+                    {'amount': 50.0,
+                     'date': '2017-07-24-00:26:33.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305154', 'contractCategory': '8', "
+                                  "'passStlEntryNo': '201707240000389', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '492113XXXXXX2364', 'authNo': '689996', 'refNo': "
+                                  "'356650', 'trmTrxNo': '31488', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400002428', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'F', 'unBlendCat': '1', 'grossAmount': 50.0, 'commAmount': -1.03, 'netAmount': None}",
+                     'payment_ref': '201707240000242',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000242'},
+                    {'amount': -1.03,
+                     'date': '2017-07-24-00:26:33.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305154', 'contractCategory': '8', "
+                                  "'passStlEntryNo': '201707240000389', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '492113XXXXXX2364', 'authNo': '689996', 'refNo': "
+                                  "'356650', 'trmTrxNo': '31488', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400002428', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'F', 'unBlendCat': '1', 'grossAmount': 50.0, 'commAmount': -1.03, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000242',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000242'},
+                    {'amount': 25.6,
+                     'date': '2017-07-24-00:15:29.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305154', 'contractCategory': '8', "
+                                  "'passStlEntryNo': '201707240000885', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30901659', 'trmPer': '5807', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '513659XXXXXX1527', 'authNo': '806130', 'refNo': "
+                                  "'451283', 'trmTrxNo': '180993', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400005341', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MNW', 'unBlendCat': '1', 'grossAmount': 25.6, 'commAmount': -0.52, 'netAmount': None}",
+                     'payment_ref': '201707240000534',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000534'},
+                    {'amount': -0.52,
+                     'date': '2017-07-24-00:15:29.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305154', 'contractCategory': '8', "
+                                  "'passStlEntryNo': '201707240000885', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30901659', 'trmPer': '5807', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '513659XXXXXX1527', 'authNo': '806130', 'refNo': "
+                                  "'451283', 'trmTrxNo': '180993', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400005341', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MNW', 'unBlendCat': '1', 'grossAmount': 25.6, 'commAmount': -0.52, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000534',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000534'},
+                    {'amount': 30.0,
+                     'date': '2017-07-24-00:02:36.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305154', 'contractCategory': '8', "
+                                  "'passStlEntryNo': '201707240001864', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '21403267', 'trmPer': '0074', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '487881XXXXXXXXX9602', 'authNo': '020015', 'refNo': "
+                                  "'141043', 'trmTrxNo': '1467', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400023002', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'V', 'unBlendCat': '2', 'grossAmount': 30.0, 'commAmount': -0.5, 'netAmount': None}",
+                     'payment_ref': '201707240002300',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240002300'},
+                    {'amount': -0.5,
+                     'date': '2017-07-24-00:02:36.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241766', 'extVPNo': '173305154', 'contractCategory': '8', "
+                                  "'passStlEntryNo': '201707240001864', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '21403267', 'trmPer': '0074', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '487881XXXXXXXXX9602', 'authNo': '020015', 'refNo': "
+                                  "'141043', 'trmTrxNo': '1467', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400023002', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'V', 'unBlendCat': '2', 'grossAmount': 30.0, 'commAmount': -0.5, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240002300',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240002300'},
+                    {'amount': 50.0,
+                     'date': '2017-07-24-00:26:33.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000393', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '492113XXXXXX2364', 'authNo': '689996', 'refNo': "
+                                  "'356650', 'trmTrxNo': '31488', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400002436', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'F', 'unBlendCat': '1', 'grossAmount': 50.0, 'commAmount': -0.95, 'netAmount': None}",
+                     'payment_ref': '201707240000243',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000243'},
+                    {'amount': -0.95,
+                     'date': '2017-07-24-00:26:33.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000393', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '492113XXXXXX2364', 'authNo': '689996', 'refNo': "
+                                  "'356650', 'trmTrxNo': '31488', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400002436', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'F', 'unBlendCat': '1', 'grossAmount': 50.0, 'commAmount': -0.95, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000243',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000243'},
+                    {'amount': 25.6,
+                     'date': '2017-07-24-00:15:29.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000889', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30901659', 'trmPer': '5807', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '513659XXXXXX1527', 'authNo': '806130', 'refNo': "
+                                  "'451283', 'trmTrxNo': '180993', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400005358', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MNW', 'unBlendCat': '1', 'grossAmount': 25.6, 'commAmount': -0.3, 'netAmount': None}",
+                     'payment_ref': '201707240000535',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000535'},
+                    {'amount': -0.3,
+                     'date': '2017-07-24-00:15:29.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000889', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30901659', 'trmPer': '5807', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '513659XXXXXX1527', 'authNo': '806130', 'refNo': "
+                                  "'451283', 'trmTrxNo': '180993', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400005358', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MNW', 'unBlendCat': '1', 'grossAmount': 25.6, 'commAmount': -0.3, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000535',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000535'},
+                    {'amount': 30.0,
+                     'date': '2017-07-24-00:02:36.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240001866', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '21403267', 'trmPer': '0074', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '487881XXXXXXXXX9602', 'authNo': '020015', 'refNo': "
+                                  "'141043', 'trmTrxNo': '1467', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400023010', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'V', 'unBlendCat': '2', 'grossAmount': 30.0, 'commAmount': -0.65, 'netAmount': None}",
+                     'payment_ref': '201707240002301',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240002301'},
+                    {'amount': -0.65,
+                     'date': '2017-07-24-00:02:36.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240001866', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '21403267', 'trmPer': '0074', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '487881XXXXXXXXX9602', 'authNo': '020015', 'refNo': "
+                                  "'141043', 'trmTrxNo': '1467', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '74063777205072400023010', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'V', 'unBlendCat': '2', 'grossAmount': 30.0, 'commAmount': -0.65, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240002301',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240002301'},
+                    {'amount': 380.0,
+                     'date': '2017-07-24-00:25:24.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000379', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '671081XXXXXXXXX9480', 'authNo': '020223', 'refNo': "
+                                  "'245435', 'trmTrxNo': '31487', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400002397', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MSI', 'unBlendCat': '2', 'grossAmount': 380.0, 'commAmount': -0.38, 'netAmount': None}",
+                     'payment_ref': '201707240000239',
+                     'ref': '012345678901234567890123456789',
+                     'transaction_type': 'Retail',
+                     'unique_import_id': 'trx201707240000239'},
+                    {'amount': -0.38,
+                     'date': '2017-07-24-00:25:24.000',
+                     'narration': "{'account_number': '792608', 'iban': 'CH1572345678901234567', 'paymentType': 'P', 'paymentDate': '2017-07-24', 'paymentNo': "
+                                  "'201707240000592', 'valueDate': '2017-07-26', 'passBusPartId': '241767', 'extVPNo': '173305147', 'contractCategory': '9', "
+                                  "'passStlEntryNo': '201707240000379', 'origin': 'SaferPay', 'sumSlipId': '0', 'trmId': '30093068', 'trmPer': '1467', "
+                                  "'trxType': 'Retail', 'trxTypeId': '1', 'trxIndicator': '100', 'pan': '671081XXXXXXXXX9480', 'authNo': '020223', 'refNo': "
+                                  "'245435', 'trmTrxNo': '31487', 'addlMercData': '012345678901234567890123456789', 'addlStmntText': "
+                                  "'012345678901234567890123456789', 'arn': '05404437205072400002397', 'dccInd': '0', 'isReversal': '0', 'entryType': '4', "
+                                  "'accountIndex': '0', 'cardProduct': 'MSI', 'unBlendCat': '2', 'grossAmount': 380.0, 'commAmount': -0.38, 'netAmount': None, "
+                                  "'isComm': True}",
+                     'payment_ref': '201707240000239',
+                     'ref': 'Commission on transaction',
+                     'transaction_type': 'COMM-Retail',
+                     'unique_import_id': 'comm201707240000239'}]}])
+
+
