@@ -6,18 +6,12 @@ from lxml import etree
 
 from odoo import _, models
 
-SettlementCurrency = "SC"
-OriginalCurrency = "OC"
-
 ENDING_BALANCE_REASON = {
   '10' : "Negative balance of technical merchant account.",
   '20' : "Balance of technical merchant account is below minimum amount for settlement.",
   '30' : "Merchant settlement has been blocked by acquirer.",
   '40' : "Insufficient data for merchant settlement"
 }
-
-import logging
-_logger = logging.getLogger(__name__)
 
 class MRXParser(models.AbstractModel):
     _name = "account.statement.import.mrx.parser"
@@ -43,7 +37,6 @@ class MRXParser(models.AbstractModel):
 
     def parse_text(self, ns, node, search_str):
         found_node = node.xpath(search_str)
-        _logger.warning(found_node)
         if found_node:
             if isinstance(found_node[0], str):
                 return found_node[0]
@@ -61,7 +54,6 @@ class MRXParser(models.AbstractModel):
             xpath_str = [xpath_str]
         for search_str in xpath_str:
             found_node = node.xpath(search_str)
-            _logger.warning(found_node)
             if found_node:
                 if isinstance(found_node[0], str):
                     attr_value = found_node[0]
@@ -96,7 +88,6 @@ class MRXParser(models.AbstractModel):
         result = {}
         transactions = []
         paymentMoreInfos = {}
-        _logger.warning(node)
 
         self.add_value_from_node(
             ns, node, ["./passStlAcctNo"], paymentMoreInfos, "account_number",
@@ -155,9 +146,6 @@ class MRXParser(models.AbstractModel):
         transactions.append(trx)
 
         for businessPart in payment:
-            _logger.warning("bp")
-            _logger.warning(businessPart)
-
             if businessPart.tag == "fAdj":
                     #adj_type = parse_int(ns, contract, "./stlEntryType")
                     #if adj_type == 46:
@@ -196,7 +184,6 @@ class MRXParser(models.AbstractModel):
 
 
                     for trx in entry.xpath("./sumSlip/trx"):
-                        _logger.warning(trx)
                         trxMoreInfos = enMoreInfos.copy()
                         trxMoreInfos["trxType"] = self.parse_text(ns, trx, './trxType')
                         trxMoreInfos["trxTypeId"] = self.parse_text(ns, trx, './trxTypeId')
@@ -218,8 +205,6 @@ class MRXParser(models.AbstractModel):
                         amount = self.parse_float(ns, trx, "./aTrxGrosSC")
                         amount_currency = self.parse_float(ns, trx, "./aTrxOC")
                         foreign_currency = self.parse_text(ns, trx, "./aTrxOC/@c")
-                        _logger.warning(foreign_currency)
-                        _logger.warning(self.env['res.currency'].search([['name', 'ilike', foreign_currency]]))
     
                         parsed_foreign_currency = (self.env['res.currency'].search([['name', 'ilike', foreign_currency]]).mapped('id') or [None])[0]
     
@@ -275,16 +260,12 @@ class MRXParser(models.AbstractModel):
                 root = etree.fromstring(data.decode("iso-8859-15").encode("utf-8"))
             except etree.XMLSyntaxError:
                 root = None
-        _logger.warning("aa")
-
-        _logger.warning(root)
 
         if root is None:
             raise ValueError("Not a valid xml file, or not an xml file at all.")
 
         ns = ""
         stlAccounts = root.xpath("./reportingPart/settlingPart/stlAccount")
-        _logger.warning(stlAccounts)
 
         if not stlAccounts:
             raise ValueError("Not a valid mrx xml file.")
