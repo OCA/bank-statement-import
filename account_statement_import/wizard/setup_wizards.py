@@ -17,3 +17,4 @@ class AccountSetupBankManualConfig(models.TransientModel):
             "account.journal"
         ]._get_bank_statements_available_import_formats():
             self.linked_journal_id.bank_statements_source = "file_import"
+        return

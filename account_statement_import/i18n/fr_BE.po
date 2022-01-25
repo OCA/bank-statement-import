@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-18 14:07+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2021-02-18 11:45+0000\n"
 "Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
 "Language-Team: French (Belgium) (http://www.transifex.com/odoo/odoo-9/"
@@ -78,8 +78,6 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
 msgstr "Afficher le nom"
@@ -94,8 +92,6 @@ msgstr ""
 "et sélectionnez-les ici."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
@@ -135,8 +131,6 @@ msgid "Journal"
 msgstr "Journal"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
@@ -185,8 +179,8 @@ msgstr "Formats pris en charge:"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr "Le compte comptable bancaire n'est pas défini sur le journal '% s'."
 
 #. module: account_statement_import

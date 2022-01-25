@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 09:10+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2021-04-26 22:47+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
@@ -82,8 +82,6 @@ msgid "Created on"
 msgstr "Aangemaakt op"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
 msgstr "Schermnaam"
@@ -98,8 +96,6 @@ msgstr ""
 "deze hier."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
@@ -140,8 +136,6 @@ msgid "Journal"
 msgstr "Dagboek"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
@@ -190,8 +184,8 @@ msgstr "Ondersteunende formaten:"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr "De rekening van dit afschrift is niet hetzelfde als het dagboek '%s'."
 
 #. module: account_statement_import

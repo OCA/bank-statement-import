@@ -17,7 +17,6 @@ class AccountStatementImport(models.TransientModel):
     _description = "Import Bank Statement Files"
 
     statement_file = fields.Binary(
-        string="Statement File",
         required=True,
         help="Get you bank statements in electronic format from your bank "
         "and select them here.",
@@ -117,7 +116,7 @@ class AccountStatementImport(models.TransientModel):
         journal = self._match_journal(account_number, currency)
         if not journal.default_account_id:
             raise UserError(
-                _("The Bank Accounting Account in not set on the " "journal '%s'.")
+                _("The Bank Accounting Account is not set on the journal '%s'.")
                 % journal.display_name
             )
         # Prepare statement data to be used for bank statements creation
@@ -243,24 +242,25 @@ class AccountStatementImport(models.TransientModel):
                 if bank_accounts:
                     raise UserError(
                         _(
-                            "The bank account with number '%s' exists in Odoo "
+                            "The bank account with number '%(account_number)s' exists in Odoo "
                             "but it is not set on any bank journal. You should "
                             "set it on the related bank journal. If the related "
                             "bank journal doesn't exist yet, you should create "
-                            "a new one."
+                            "a new one.",
+                            account_number=account_number,
                         )
-                        % (account_number,)
                     )
                 else:
                     raise UserError(
                         _(
-                            "Could not find any bank account with number '%s' "
-                            "linked to partner '%s'. You should create the bank "
+                            "Could not find any bank account with number '%(account_number)s' "
+                            "linked to partner '%(partner_name)s'. You should create the bank "
                             "account and set it on the related bank journal. "
                             "If the related bank journal doesn't exist yet, you "
-                            "should create a new one."
+                            "should create a new one.",
+                            account_number=account_number,
+                            partner_name=company.partner_id.display_name,
                         )
-                        % (account_number, company.partner_id.display_name)
                     )
 
         # We support multi-file and multi-statement in a file
@@ -270,10 +270,13 @@ class AccountStatementImport(models.TransientModel):
         if journal_currency != currency:
             raise UserError(
                 _(
-                    "The currency of the bank statement (%s) is not the same as the "
-                    "currency of the journal '%s' (%s)."
+                    "The currency of the bank statement (%(currency_name)s) "
+                    "is not the same as the currency of the journal "
+                    "'%(journal_name)s' (%(journal_currency_name)s).",
+                    currency_name=currency.name,
+                    journal_name=journal.display_name,
+                    journal_currency_name=journal_currency.name,
                 )
-                % (currency.name, journal.display_name, journal_currency.name)
             )
         return journal
 
