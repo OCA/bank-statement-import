@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 09:10+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2019-08-26 09:08+0000\n"
 "Last-Translator: Stjepan Lovasić <stjepan.lovasic@gmail.com>, 2019\n"
 "Language-Team: Croatian (https://www.transifex.com/odoo/teams/41243/hr/)\n"
@@ -86,8 +86,6 @@ msgid "Created on"
 msgstr "Kreirano"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
 msgstr "Naziv"
@@ -101,8 +99,6 @@ msgstr ""
 "Preuzmite bankovne izvadke u elektronskom formatu i odaberite ih ovdje."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
@@ -143,8 +139,6 @@ msgid "Journal"
 msgstr "Dnevnik"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
 msgstr "Zadnja promjena"
@@ -197,8 +191,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr "Žiro račun ovog izvoda banke (%s) nije jednak dnevniku (%s)."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "Žiro račun ovog izvoda banke nije jednak dnevniku (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -223,7 +217,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
-msgstr "Žiro račun ovog izvoda banke (%s) nije jednak dnevniku (%s)."
+msgstr "Žiro račun ovog izvoda banke (%s) nije jednak dnevniku '%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
