@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 09:10+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2021-03-22 15:46+0000\n"
 "Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
@@ -88,8 +88,6 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
 msgstr "Afficher Nom"
@@ -104,8 +102,6 @@ msgstr ""
 "sélectionnez-les ici."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
@@ -146,8 +142,6 @@ msgid "Journal"
 msgstr "Journal"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
@@ -196,8 +190,8 @@ msgstr "Formats acceptés :"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
 "Le compte comptable de la banque n'est pas spécifié sur le journal (%s)."
 
@@ -231,7 +225,7 @@ msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
 msgstr ""
-"La devise de ce relevé (%s) n'est pas la même que celle du journal (%s)."
+"La devise de ce relevé (%s) n'est pas la même que celle du journal '%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0

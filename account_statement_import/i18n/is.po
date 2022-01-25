@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 13:17+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2018-08-24 09:15+0000\n"
 "Last-Translator: Bjorn Ingvarsson <boi@exigo.is>, 2018\n"
 "Language-Team: Icelandic (https://www.transifex.com/odoo/teams/41243/is/)\n"
@@ -74,8 +74,6 @@ msgid "Created on"
 msgstr "Stofnað þann"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
 msgstr "Nafn"
@@ -88,8 +86,6 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
 msgstr "Auðkenni"
@@ -130,8 +126,6 @@ msgid "Journal"
 msgstr "Færslubók"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
 msgstr "Síðast breytt þann"
@@ -184,7 +178,7 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
 
 #. module: account_statement_import
