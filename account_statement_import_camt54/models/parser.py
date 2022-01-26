@@ -35,7 +35,7 @@ class CamtParser(models.AbstractModel):
             start = int(start) - 1  # count from 1 instead of 0
             size = int(size)
             end = start + size
-        except ValueError:
+        except ValueError as err:
             raise exceptions.UserError(
                 _(
                     "Config parameter `isr_partner_ref` is wrong.\n"
@@ -43,7 +43,7 @@ class CamtParser(models.AbstractModel):
                     "`i` and `n` must be integers.\n"
                     'e.g. "13,6"'
                 )
-            )
+            ) from err
         return isr[start:end].lstrip("0")
 
     def parse_transaction_details(self, ns, node, transaction):
