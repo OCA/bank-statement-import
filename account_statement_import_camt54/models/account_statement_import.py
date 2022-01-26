@@ -34,6 +34,7 @@ class AccountStatementImport(models.TransientModel):
                 statement.balance_end_real = statement.balance_start
             else:
                 statement.balance_end_real = statement.balance_start + amount
+        return
 
     def _complete_stmts_vals(self, stmts_vals, journal, account_number):
         """Search partner from partner reference"""
