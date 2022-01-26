@@ -30,6 +30,7 @@ class AccountBankStatementImport(models.TransientModel):
                         )
                         transactions.extend(new)
                 return currency, account_number, transactions
+            # pylint: disable=except-pass
             except (zipfile.BadZipFile, ValueError):
                 pass
             # Not a camt file, returning super will call next candidate:

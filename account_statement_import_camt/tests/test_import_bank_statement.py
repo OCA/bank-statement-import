@@ -15,9 +15,10 @@ from odoo.tests.common import TransactionCase
 class TestParser(TransactionCase):
     """Tests for the camt parser itself."""
 
-    def setUp(self):
-        super(TestParser, self).setUp()
-        self.parser = self.env["account.statement.import.camt.parser"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.parser = cls.env["account.statement.import.camt.parser"]
 
     def _do_parse_test(self, inputfile, goldenfile):
         testfile = get_module_resource(
@@ -83,31 +84,34 @@ class TestImport(TransactionCase):
         },
     ]
 
-    def setUp(self):
-        super(TestImport, self).setUp()
-        bank = self.env["res.partner.bank"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        eur = cls.env.ref("base.EUR")
+        eur.write({"active": True})
+        bank = cls.env["res.partner.bank"].create(
             {
                 "acc_number": "NL77ABNA0574908765",
-                "partner_id": self.env.ref("base.main_partner").id,
-                "company_id": self.env.ref("base.main_company").id,
-                "bank_id": self.env.ref("base.res_bank_1").id,
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
-        self.env["res.partner.bank"].create(
+        cls.env["res.partner.bank"].create(
             {
                 "acc_number": "NL46ABNA0499998748",
-                "partner_id": self.env.ref("base.main_partner").id,
-                "company_id": self.env.ref("base.main_company").id,
-                "bank_id": self.env.ref("base.res_bank_1").id,
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
-        self.env["account.journal"].create(
+        cls.env["account.journal"].create(
             {
                 "name": "Bank Journal - (test camt)",
                 "code": "TBNKCAMT",
                 "type": "bank",
                 "bank_account_id": bank.id,
-                "currency_id": self.env.ref("base.EUR").id,
+                "currency_id": eur.id,
             }
         )
 
