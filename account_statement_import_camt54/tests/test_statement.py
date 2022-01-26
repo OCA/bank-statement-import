@@ -4,13 +4,15 @@
 import base64
 
 from odoo.modules.module import get_module_resource
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestGenerateBankStatement(SavepointCase):
+class TestGenerateBankStatement(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        eur = cls.env.ref("base.EUR")
+        eur.write({"active": True})
         bank = cls.env["res.partner.bank"].create(
             {
                 "acc_number": "NL77ABNA0574908765",
@@ -33,7 +35,7 @@ class TestGenerateBankStatement(SavepointCase):
                 "code": "TBNKCAMT",
                 "type": "bank",
                 "bank_account_id": bank.id,
-                "currency_id": cls.env.ref("base.EUR").id,
+                "currency_id": eur.id,
             }
         )
 
