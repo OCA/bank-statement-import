@@ -1,0 +1,13 @@
+('EUR',
+ 'NL77ABNA0574908765',
+ [{'balance_end_real': 0.0,
+   'balance_start': 0.0,
+   'date': '2022-01-26',
+   'name': '20220120000000000000000',
+   'transactions': [{'account_number': 'NL46ABNA0499998748',
+                     'amount': 5.0,
+                     'date': '2022-01-26',
+                     'narration': 'Additional entry info',
+                     'partner_name': 'Test Customer',
+                     'payment_ref': 'MIB InstrId305-312MM20211231v1',
+                     'ref': '000000000000000000000000003'}]}])
