@@ -47,6 +47,9 @@ class TestParser(TransactionCase):
     def test_parse(self):
         self._do_parse_test("test-camt053", "golden-camt053.pydata")
 
+    def test_parse_camt054(self):
+        self._do_parse_test("test-camt054", "golden-camt054.pydata")
+
     def test_parse_txdtls(self):
         self._do_parse_test("test-camt053-txdtls", "golden-camt053-txdtls.pydata")
 

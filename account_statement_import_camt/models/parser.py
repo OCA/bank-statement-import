@@ -204,7 +204,15 @@ class CamtParser(models.AbstractModel):
         )
         self.add_value_from_node(ns, node, "./ns:Id", result, "name")
         self.add_value_from_node(
-            ns, node, ["./ns:Acct/ns:Ccy", "./ns:Bal/ns:Amt/@Ccy"], result, "currency"
+            ns,
+            node,
+            [
+                "./ns:Acct/ns:Ccy",
+                "./ns:Bal/ns:Amt/@Ccy",
+                "./ns:Ntry/ns:Amt/@Ccy",
+            ],
+            result,
+            "currency",
         )
         result["balance_start"], result["balance_end_real"] = self.get_balance_amounts(
             ns, node
