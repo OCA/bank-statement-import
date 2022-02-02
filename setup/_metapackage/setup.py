@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-account_statement_import>=15.0dev,<15.1dev',
+        'odoo-addon-account_statement_import_camt54>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_camt>=15.0dev,<15.1dev',
     ],
     classifiers=[
