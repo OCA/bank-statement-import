@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_bank_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <page name="configuration" position="inside">
+                <group
+                    name="nordigen"
+                    attrs="{'invisible':[('service','!=','nordigen')]}"
+                >
+                    <field name="username" string="Login" />
+                    <field name="password" string="Secret Key" />
+                    <field
+                        name="nordigen_last_requisition_id"
+                        attrs="{'invisible': [('nordigen_last_requisition_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="nordigen_institution_id"
+                        attrs="{'invisible': [('nordigen_institution_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="nordigen_account_id"
+                        attrs="{'invisible': [('nordigen_account_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <button
+                        name="nordigen_reset_last_identifier"
+                        string="Reset Last identifier."
+                        type="object"
+                        attrs="{'invisible':[('nordigen_last_requisition_id','=',False)]}"
+                    />
+                    <button
+                        name="action_select_nordigen_bank"
+                        string="Select Nordigen Bank Identifier"
+                        type="object"
+                    />
+                </group>
+            </page>
+        </field>
+    </record>
+    <record id="online_bank_statement_provider_action" model="ir.actions.act_window">
+        <field name="name">Online Bank Statement Providers</field>
+        <field name="res_model">online.bank.statement.provider</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
