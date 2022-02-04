@@ -143,8 +143,6 @@ class OnlineBankStatementProviderNordigen(models.Model):
         self._update_token_nordigen()
         institution_id = self.nordigen_institution_id
         self.nordigen_last_requisition_ref = str(uuid4())
-        # TO DELETE
-        institution_id = "SANDBOXFINANCE_SFIN0000"
         url = NORDIGEN_ENDPOINT + "/requisitions/"
         response = requests.post(
             url,
