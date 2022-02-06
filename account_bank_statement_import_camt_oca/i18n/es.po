@@ -19,6 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_bank_statement_import_camt_oca
+#: code:addons/account_bank_statement_import_camt_oca/models/parser.py:0
+#, python-format
+msgid ""
+"\n"
+"Additional Transaction Information: %s"
+msgstr ""
+
+#. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
 #, fuzzy
 msgid "Account Bank Statement Import CAMT parser"
@@ -65,6 +73,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
+
+#. module: account_bank_statement_import_camt_oca
+#: code:addons/account_bank_statement_import_camt_oca/models/parser.py:0
+#, python-format
+msgid ""
+"Partner Name: %s\n"
+"Partner Account Number: %s\n"
+"Transaction Date: %s\n"
+"Reference: %s\n"
+"Communication: %s"
+msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
 #: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:0

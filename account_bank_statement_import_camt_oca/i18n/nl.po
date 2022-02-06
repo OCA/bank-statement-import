@@ -11,14 +11,22 @@ msgstr ""
 "POT-Creation-Date: 2019-04-16 08:08+0000\n"
 "PO-Revision-Date: 2021-01-20 18:44+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
-"Language-Team: Dutch (http://www.transifex.com/oca/"
-"OCA-bank-statement-import-8-0/language/nl/)\n"
+"Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-"
+"import-8-0/language/nl/)\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.3.2\n"
+
+#. module: account_bank_statement_import_camt_oca
+#: code:addons/account_bank_statement_import_camt_oca/models/parser.py:0
+#, python-format
+msgid ""
+"\n"
+"Additional Transaction Information: %s"
+msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
 #: model:ir.model,name:account_bank_statement_import_camt_oca.model_account_bank_statement_import_camt_parser
@@ -67,6 +75,17 @@ msgstr "Dagboek"
 #: model:ir.model.fields,field_description:account_bank_statement_import_camt_oca.field_account_bank_statement_import_camt_parser____last_update
 msgid "Last Modified on"
 msgstr "Laatst gewijzigd op"
+
+#. module: account_bank_statement_import_camt_oca
+#: code:addons/account_bank_statement_import_camt_oca/models/parser.py:0
+#, python-format
+msgid ""
+"Partner Name: %s\n"
+"Partner Account Number: %s\n"
+"Transaction Date: %s\n"
+"Reference: %s\n"
+"Communication: %s"
+msgstr ""
 
 #. module: account_bank_statement_import_camt_oca
 #: code:addons/account_bank_statement_import_camt_oca/models/account_journal.py:0
