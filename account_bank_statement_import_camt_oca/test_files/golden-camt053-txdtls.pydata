@@ -8,11 +8,21 @@
                      'amount': 2187.0,
                      'date': '2017-03-22',
                      'name': 'CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
+                     'note': 'Partner Name: Banque Cantonale Vaudoise\n'
+                             'Partner Account Number: CH2222000000123456789\n'
+                             'Transaction Date: 2017-03-22\n'
+                             'Reference: 302388292000011111111111111\n'
+                             'Communication: CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
                      'partner_name': 'Banque Cantonale Vaudoise',
                      'ref': '302388292000011111111111111'},
                     {'account_number': 'CH3333000000123456789',
                      'amount': 1296.0,
                      'date': '2017-03-22',
                      'name': 'CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
+                     'note': 'Partner Name: Banque Cantonale Vaudoise\n'
+                             'Partner Account Number: CH3333000000123456789\n'
+                             'Transaction Date: 2017-03-22\n'
+                             'Reference: 302388292000022222222222222\n'
+                             'Communication: CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
                      'partner_name': 'Banque Cantonale Vaudoise',
                      'ref': '302388292000022222222222222'}]}])
