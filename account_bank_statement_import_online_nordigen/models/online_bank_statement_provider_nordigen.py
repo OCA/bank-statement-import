@@ -251,6 +251,52 @@ class OnlineBankStatementProviderNordigen(models.Model):
             return super()._obtain_statement_data(date_since, date_until)
         return self._nordigen_obtain_statement_data(date_since, date_until)
 
+    def _nordigen_get_ref(self, tr):
+        """Override to change behaviour"""
+        amount = float(tr.get("transactionAmount", {}).get("amount", 0.0))
+        if amount >= 0:
+            partner_name = tr.get("debtorName", "") or ""
+        else:
+            partner_name = tr.get("creditorName", "") or ""
+        ref_list = []
+        ref_list.append(partner_name)
+        ref = " ".join(ref_list)
+        return ref
+
+    def _nordigen_get_note_elements(self):
+        return [
+            "additionalInformation",
+            "balanceAfterTransaction",
+            "bankTransactionCode",
+            "bookingDate",
+            "checkId",
+            "creditorAccount",
+            "creditorAgent",
+            "creditorId",
+            "creditorName",
+            "currencyExchange",
+            "debtorAccount",
+            "debtorAgent",
+            "debtorName",
+            "entryReference",
+            "mandateId",
+            "proprietaryBank",
+            "remittanceInformation Unstructured",
+            "transactionAmount",
+            "transactionId",
+            "ultimateCreditor",
+            "ultimateDebtor",
+            "valueDate",
+        ]
+
+    def _nordigen_get_note(self, tr):
+        """Override to change behaviour"""
+        notes = []
+        for element in self._nordigen_get_note_elements():
+            if element in tr.keys() and tr[element]:
+                notes.append(element + ": " + str(tr[element]))
+        return "\n".join(notes)
+
     def _nordigen_get_transactions(self, account_id, date_since, date_until):
         self._update_token_nordigen()
         currency_model = self.env["res.currency"]
@@ -269,6 +315,8 @@ class OnlineBankStatementProviderNordigen(models.Model):
                 transactions = json.loads(transaction_response.text)
             res = []
             sequence = 0
+            if not transactions:
+                return res
             for tr in transactions.get("transactions", {}).get("booked", []):
                 string_date = tr.get("bookingDate") or tr.get("valueDate")
                 # CHECK ME: if there's not date string, is transaction still valid?
@@ -295,19 +343,11 @@ class OnlineBankStatementProviderNordigen(models.Model):
                     )
                 # Reference:
                 # https://nordigen.com/en/docs/account-information/output/transactions/
-                ref_list = [
-                    tr.get(x)
-                    for x in {
-                        "checkId",
-                        "mandateId",
-                        "entryReference",
-                        "remittanceInformationStructured",
-                        "additionalInformation",
-                    }
-                    if tr.get(x)
-                ]
-                ref = " ".join(ref_list)
-                partner_name = tr.get("debtorName", "") or tr.get("creditorName", "")
+                if amount_currency >= 0:
+                    partner_name = tr.get("debtorName", "") or ""
+                else:
+                    partner_name = tr.get("creditorName", "") or ""
+                ref = self._nordigen_get_ref(tr)
                 account_number = ""
                 if tr.get("debtorAccount", {}):
                     account_number = tr.get("debtorAccount", {}).get("iban")
@@ -319,12 +359,12 @@ class OnlineBankStatementProviderNordigen(models.Model):
                         "date": current_date,
                         "ref": re.sub(" +", " ", ref) or "/",
                         "payment_ref": tr.get("remittanceInformationUnstructured", ref),
-                        "unique_import_id": tr["transactionId"],
+                        "unique_import_id": tr["entryReference"],
                         "amount": amount_currency,
                         "account_number": account_number,
                         "partner_name": partner_name,
                         "transaction_type": tr.get("bankTransactionCode", ""),
-                        "narration": tr.get("additionalInformation", ""),
+                        "narration": self._nordigen_get_note(tr),
                     }
                 )
             return res
