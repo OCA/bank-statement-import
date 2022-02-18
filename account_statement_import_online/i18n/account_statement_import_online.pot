@@ -50,6 +50,11 @@ msgid "Attachment Count"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model,name:account_statement_import_online.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Cancel"
 msgstr ""
@@ -117,6 +122,7 @@ msgid "Day(s)"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__display_name
@@ -157,6 +163,7 @@ msgid "Hour(s)"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__id
@@ -210,6 +217,7 @@ msgid "Key"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard____last_update
@@ -335,6 +343,11 @@ msgid "Online Bank Statements Pull Wizard"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line__online_raw_data
+msgid "Online Raw Data"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.constraint,message:account_statement_import_online.constraint_online_bank_statement_provider_journal_id_uniq
 msgid "Only one online banking statement provider per journal!"
 msgstr ""
@@ -379,6 +392,11 @@ msgstr ""
 #: model:ir.cron,cron_name:account_statement_import_online.ir_cron_account_pull_online_bank_statements
 #: model:ir.cron,name:account_statement_import_online.ir_cron_account_pull_online_bank_statements
 msgid "Pull Online Bank Statements"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_bank_statement_line_form
+msgid "Raw Data"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -432,6 +450,11 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
 msgid "Statement Provider"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model:ir.model.fields,help:account_statement_import_online.field_account_bank_statement_line__online_raw_data
+msgid "The complete data retrieved online for this transaction"
 msgstr ""
 
 #. module: account_statement_import_online
