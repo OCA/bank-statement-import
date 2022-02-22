@@ -216,9 +216,9 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             "unique_import_id": unique_import_id,
         }
         if payer_name:
-            line.update({"partner_name": payer_name})
+            transaction.update({"partner_name": payer_name})
         if partner_bank_account:
-            line.update({"account_number": partner_bank_account})
+            transaction.update({"account_number": partner_bank_account})
         transactions.append(transaction)
 
         if fee_amount:
