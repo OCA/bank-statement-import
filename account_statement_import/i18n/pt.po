@@ -157,11 +157,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "Falta o payment_ref numa transação."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Conta Bancária de Parceiro"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Ficheiro do Extrato"
@@ -210,8 +205,8 @@ msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
 msgstr ""
-"A moeda do extrato bancário (%s) não é a mesma que a moeda do diário '%s' "
-"(%s))."
+"A moeda do extrato bancário (%s) não é a mesma que a moeda do diário "
+"'%s' (%s))."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -264,3 +259,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "ou"
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Conta Bancária de Parceiro"

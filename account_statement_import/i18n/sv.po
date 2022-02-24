@@ -165,11 +165,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "Det saknas payment_ref på en transaktion."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Partners bankkonto"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Kontoutdragsfil"
@@ -275,6 +270,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "eller"
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Partners bankkonto"
 
 #~ msgid "Account Holder"
 #~ msgstr "Kontoinnehavare"
