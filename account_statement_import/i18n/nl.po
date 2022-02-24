@@ -63,13 +63,11 @@ msgstr "Annuleren"
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"Could not find any bank account with number '%s' linked to partner '%s'. You "
-"should create the bank account and set it on the related bank journal. If "
-"the related bank journal doesn't exist yet, you should create a new one."
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
 msgstr ""
-"Bankrekening '%s' van relatie '%s' kan niet worden gevonden. Maak de "
-"bankrekening aan en koppel deze aan het bijbehorende dagboek. Als het "
-"gerelateerde dagboek nog niet bestaat, maak dan een nieuwe aan."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
@@ -163,11 +161,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "Er ontbreekt een betaal referentie voor deze transactie."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Bankrekening van relatie"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Bankafschrift bestand"
@@ -192,13 +185,10 @@ msgstr "De rekening van dit afschrift is niet hetzelfde als het dagboek '%s'."
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"The bank account with number '%s' exists in Odoo but it is not set on any "
-"bank journal. You should set it on the related bank journal. If the related "
-"bank journal doesn't exist yet, you should create a new one."
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
-"Het bankrekening met nummer '%s' bestaat reeds maar er is geen dagboek "
-"ingesteld. U dient dit in te stellen in het betreffende dagboek. Indien het "
-"dagboek nog niet bestaat, dan dient u een nieuwe aan te maken."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -214,11 +204,9 @@ msgstr ""
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"The currency of the bank statement (%s) is not the same as the currency of "
-"the journal '%s' (%s)."
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
-"De valuta van de bankafschriften (%s) is niet gelijk aan de ingestelde "
-"valuta '%s' op het dagboek (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -273,6 +261,35 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "of"
+
+#~ msgid ""
+#~ "Could not find any bank account with number '%s' linked to partner '%s'. "
+#~ "You should create the bank account and set it on the related bank "
+#~ "journal. If the related bank journal doesn't exist yet, you should create "
+#~ "a new one."
+#~ msgstr ""
+#~ "Bankrekening '%s' van relatie '%s' kan niet worden gevonden. Maak de "
+#~ "bankrekening aan en koppel deze aan het bijbehorende dagboek. Als het "
+#~ "gerelateerde dagboek nog niet bestaat, maak dan een nieuwe aan."
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Bankrekening van relatie"
+
+#~ msgid ""
+#~ "The bank account with number '%s' exists in Odoo but it is not set on any "
+#~ "bank journal. You should set it on the related bank journal. If the "
+#~ "related bank journal doesn't exist yet, you should create a new one."
+#~ msgstr ""
+#~ "Het bankrekening met nummer '%s' bestaat reeds maar er is geen dagboek "
+#~ "ingesteld. U dient dit in te stellen in het betreffende dagboek. Indien "
+#~ "het dagboek nog niet bestaat, dan dient u een nieuwe aan te maken."
+
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr ""
+#~ "De valuta van de bankafschriften (%s) is niet gelijk aan de ingestelde "
+#~ "valuta '%s' op het dagboek (%s)."
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "Dit bestand bevat geen enkel afschrift."
