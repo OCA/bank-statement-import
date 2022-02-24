@@ -149,11 +149,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr ""
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr ""
