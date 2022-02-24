@@ -61,9 +61,10 @@ msgstr "取消"
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"Could not find any bank account with number '%s' linked to partner '%s'. You "
-"should create the bank account and set it on the related bank journal. If "
-"the related bank journal doesn't exist yet, you should create a new one."
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
 msgstr ""
 
 #. module: account_statement_import
@@ -156,12 +157,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "這個文件不包含任何交易"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
-msgid "Partner Bank Account"
-msgstr "銀行帳戶"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -188,9 +183,9 @@ msgstr "對帳單中的科目和日記帳(%s)中的不一樣"
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"The bank account with number '%s' exists in Odoo but it is not set on any "
-"bank journal. You should set it on the related bank journal. If the related "
-"bank journal doesn't exist yet, you should create a new one."
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
 
 #. module: account_statement_import
@@ -203,11 +198,11 @@ msgstr ""
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"The currency of the bank statement (%s) is not the same as the currency of "
-"the journal '%s' (%s)."
-msgstr "銀行報表 (%s) 的貨幣與日誌 '%s' (%s) 的幣種不同。"
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -257,6 +252,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "或"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "銀行帳戶"
+
+#, fuzzy
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr "銀行報表 (%s) 的貨幣與日誌 '%s' (%s) 的幣種不同。"
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "這個文件不包含任何對帳單"
