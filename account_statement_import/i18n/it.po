@@ -50,7 +50,8 @@ msgstr "1 operazione è stata ignorata perché già importata."
 #. module: account_statement_import
 #: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
 msgid "A bank account transaction can be imported only once!"
-msgstr "Un'operazione di un conto bancario può essere importata una sola volta."
+msgstr ""
+"Un'operazione di un conto bancario può essere importata una sola volta."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -76,9 +77,9 @@ msgid ""
 "should create the bank account and set it on the related bank journal. If "
 "the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
-"Impossibile trovare conti bancari con numero \"%s\" collegati al partner \"%"
-"s\", creare il conto e impostarlo nel relativo registro banca. Se il "
-"registro ancora non esiste crearne uno nuovo."
+"Impossibile trovare conti bancari con numero \"%s\" collegati al partner \"%s"
+"\", creare il conto e impostarlo nel relativo registro banca. Se il registro "
+"ancora non esiste crearne uno nuovo."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
@@ -173,11 +174,6 @@ msgstr "Codice valuta mancante nel file di estratto conto."
 #, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr "payment_ref mancante in una operazione."
-
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Conto bancario partner"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
@@ -284,6 +280,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "/"
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Conto bancario partner"
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "Il file non contiene alcuna registrazione."

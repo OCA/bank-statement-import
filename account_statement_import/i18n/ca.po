@@ -165,11 +165,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "Falta una referència de pagament en una transacció."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Compte bancari d'empresa"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Arxiu d'extracte bancari"
@@ -219,8 +214,8 @@ msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
 msgstr ""
-"La divisa de l'extracte bancari (%s) no és la mateixa que la del diari '%s' "
-"(%s)."
+"La divisa de l'extracte bancari (%s) no és la mateixa que la del diari "
+"'%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -273,6 +268,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "o"
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Compte bancari d'empresa"
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "Aquest fitxer no conte cap declaració."
