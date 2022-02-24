@@ -153,12 +153,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
-msgid "Partner Bank Account"
-msgstr "బ్యాంకు ఖాతా"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr ""
@@ -249,6 +243,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "బ్యాంకు ఖాతా"
 
 #~ msgid "Account Number"
 #~ msgstr "Khaatha sankhya"

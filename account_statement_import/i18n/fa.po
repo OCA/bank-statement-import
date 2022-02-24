@@ -163,12 +163,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "این فایل دارای هیچ تراکنسی نیست."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
-msgid "Partner Bank Account"
-msgstr "حساب بانکی"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -263,6 +257,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "یا"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "حساب بانکی"
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "این فایل دارای هیچ صورتحسابی نیست"

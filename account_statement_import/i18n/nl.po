@@ -169,11 +169,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "Er ontbreekt een betaal referentie voor deze transactie."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Bankrekening van relatie"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Bankafschrift bestand"
@@ -279,6 +274,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "of"
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Bankrekening van relatie"
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "Dit bestand bevat geen enkel afschrift."

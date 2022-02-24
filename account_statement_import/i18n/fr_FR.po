@@ -55,8 +55,8 @@ msgstr "Annuler"
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"Could not find any bank account with number '%s' linked to partner '%s'. You"
-" should create the bank account and set it on the related bank journal. If "
+"Could not find any bank account with number '%s' linked to partner '%s'. You "
+"should create the bank account and set it on the related bank journal. If "
 "the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
 "Impossible de trouver un compte bancaire avec le numéro '% s' associé au "
@@ -158,11 +158,6 @@ msgstr "Code de devise manquant dans le fichier de relevé bancaire."
 #, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr "Référence de paiement manquante sur la transaction."
-
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-msgid "Partner Bank Account"
-msgstr "Compte bancaire du partenaire"
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
@@ -270,3 +265,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "ou"
+
+#~ msgid "Partner Bank Account"
+#~ msgstr "Compte bancaire du partenaire"

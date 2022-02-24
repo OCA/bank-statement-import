@@ -163,12 +163,6 @@ msgid "Missing payment_ref on a transaction."
 msgstr "이 파일에 거래가 없습니다."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__partner_bank_id
-#, fuzzy
-msgid "Partner Bank Account"
-msgstr "은행 계좌"
-
-#. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -265,6 +259,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "또는"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "은행 계좌"
 
 #~ msgid "This file doesn't contain any statement."
 #~ msgstr "이 파일에 명세서가 없습니다."
