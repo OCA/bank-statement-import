@@ -1,5 +1,6 @@
 # Copyright 2021 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+# pylint: disable=missing-docstring,invalid-name,protected-access
 import base64
 import logging
 from html import escape
@@ -52,7 +53,8 @@ class OnlineBankStatementProvider(models.Model):
                 if is_scheduled:
                     _logger.warning(
                         'Online Bank Statement Provider "%s" failed to'
-                        " obtain statement data" % (provider.name,),
+                        " obtain statement data",
+                        provider.name,
                         exc_info=True,
                     )
                     provider.message_post(
@@ -99,14 +101,6 @@ class OnlineBankStatementProvider(models.Model):
         if response.status_code != 200:
             raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
         _logger.debug(_("Headers returned by Adyen %s"), response.headers)
-        # Check base64 decoding and padding of response.content.
-        # Remember: response.text is unicode, response.content is in bytes.
-        text_count = len(response.text)
-        _logger.debug(
-            _("Retrieved %d length text from Adyen, starting with %s"),
-            text_count,
-            response.text[:64],
-        )
         byte_count = len(response.content)
         _logger.debug(
             _("Retrieved %d bytes from Adyen, starting with %s"),
