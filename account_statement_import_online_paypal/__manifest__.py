@@ -4,14 +4,14 @@
 
 {
     "name": "Online Bank Statements: PayPal.com",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import",
     "license": "AGPL-3",
     "category": "Accounting",
     "summary": "Online bank statements for PayPal.com",
-    "depends": ["account_bank_statement_import_online"],
+    "depends": ["account_statement_import_online"],
     "data": ["views/online_bank_statement_provider.xml"],
     "installable": True,
 }
