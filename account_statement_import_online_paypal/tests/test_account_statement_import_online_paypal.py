@@ -14,7 +14,7 @@ from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common
 
-_module_ns = "odoo.addons.account_bank_statement_import_online_paypal"
+_module_ns = "odoo.addons.account_statement_import_online_paypal"
 _provider_class = (
     _module_ns
     + ".models.online_bank_statement_provider_paypal"
@@ -254,7 +254,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             side_effect=[mocked_response_1, mocked_response_2],
         ), self.mock_token():
             data = provider.with_context(
-                test_account_bank_statement_import_online_paypal_monday=True,
+                test_account_statement_import_online_paypal_monday=True,
             )._obtain_statement_data(
                 self.now - relativedelta(hours=1),
                 self.now,
@@ -535,13 +535,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
 
         self.assertEqual(len(data[0]), 2)
+        del data[0][0]["online_raw_data"]
         self.assertEqual(
             data[0][0],
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "1000.00",
-                "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "ref": "Invoice 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1564617600",
             },
@@ -551,8 +552,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "-100.00",
-                "name": "Fee for Invoice 1",
-                "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
+                "ref": "Fee for Invoice 1",
+                "payment_ref": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
                 "unique_import_id": "1234567890-1564617600-FEE",
             },
@@ -606,13 +607,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
 }"""
         )
         self.assertEqual(len(lines), 1)
+        del lines[0]["online_raw_data"]
         self.assertEqual(
             lines[0],
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "1000.00",
-                "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "ref": "Invoice 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1564617600",
             },
@@ -665,13 +667,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
 }"""
         )
         self.assertEqual(len(lines), 1)
+        del lines[0]["online_raw_data"]
         self.assertEqual(
             lines[0],
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "1000.00",
-                "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "ref": "Invoice 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1564617600",
             },
@@ -724,13 +727,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
 }"""
         )
         self.assertEqual(len(lines), 2)
+        del lines[0]["online_raw_data"]
         self.assertEqual(
             lines[0],
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "1000.00",
-                "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "ref": "Invoice 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1564617600",
             },
@@ -740,8 +744,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "-100.00",
-                "name": "Fee for Invoice 1",
-                "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
+                "ref": "Fee for Invoice 1",
+                "payment_ref": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
                 "unique_import_id": "1234567890-1564617600-FEE",
             },
@@ -790,13 +794,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
 }"""
         )
         self.assertEqual(len(lines), 1)
+        del lines[0]["online_raw_data"]
         self.assertEqual(
             lines[0],
             {
                 "date": datetime(2019, 8, 1),
                 "amount": "1000.00",
-                "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "ref": "Invoice 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1564617600",
             },
