@@ -1,12 +1,14 @@
 # Copyright 2017 Opener BV (<https://opener.amsterdam>)
-# Copyright 2021 Therp BV <https://therp.nl>.
+# Copyright 2021-2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+"""Add import of Adyen statements."""
+# pylint: disable=protected-access,no-self-use
 import logging
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
-_logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 COLUMNS = {
     "Company Account": 1,
@@ -43,6 +45,8 @@ COLUMNS = {
 
 
 class AccountBankStatementImport(models.TransientModel):
+    """Add import of Adyen statements."""
+
     _inherit = "account.bank.statement.import"
 
     def _parse_file(self, data_file):
@@ -50,7 +54,7 @@ class AccountBankStatementImport(models.TransientModel):
         try:
             _logger.debug(_("Try parsing as Adyen settlement details."))
             return self._parse_adyen_file(data_file)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             message = _("Statement file was not a Adyen settlement details file.")
             if self.env.context.get("account_bank_statement_import_adyen", False):
                 raise UserError(message)
@@ -58,7 +62,7 @@ class AccountBankStatementImport(models.TransientModel):
             return super()._parse_file(data_file)
 
     def _find_additional_data(self, currency_code, account_number):
-        """Try to find journal by Adyen merchant account."""
+        """Check if journal passed in the context matches Adyen Merchant Account."""
         if account_number:
             journal = self.env["account.journal"].search(
                 [("adyen_merchant_account", "=", account_number)], limit=1
@@ -73,33 +77,39 @@ class AccountBankStatementImport(models.TransientModel):
                         )
                         % account_number
                     )
-                self = self.with_context(journal_id=journal.id)
         return super()._find_additional_data(currency_code, account_number)
 
     def _parse_adyen_file(self, data_file):
         """Parse file assuming it is an Adyen file.
 
-        An Excception will be thrown if file cannot be parsed.
+        An Exception will be thrown if file cannot be parsed.
         """
         statement = None
         headers = False
+        batch_number = False
         fees = 0.0
         balance = 0.0
         payout = 0.0
         rows = self._get_rows(data_file)
+        num_rows = 0
         for row in rows:
+            num_rows += 1
+            if not row[1]:
+                continue
+            if not headers:
+                on_header_row = self._check_header_row(row)
+                if not on_header_row:
+                    continue
+                self._set_columns(row)
+                headers = True
+                continue
             if len(row) < 24:
                 raise ValueError(
                     "Not an Adyen statement. Unexpected row length %s "
                     "less then minimum of 24" % len(row)
                 )
-            if not row[1]:
-                continue
-            if not headers:
-                self._set_columns(row)
-                headers = True
-                continue
             if not statement:
+                batch_number = self._get_value(row, "Batch Number")
                 statement = self._make_statement(row)
                 currency_code = self._get_value(row, "Net Currency")
                 merchant_id = self._get_value(row, "Merchant Account")
@@ -112,12 +122,14 @@ class AccountBankStatementImport(models.TransientModel):
                 balance += self._balance(row)
             self._import_adyen_transaction(statement, row)
             fees += self._sum_fees(row)
-
         if not headers:
-            raise ValueError("Not an Adyen statement. Did not encounter header row.")
+            raise ValueError(
+                "Not an Adyen statement. Did not encounter header row in %d rows."
+                % (num_rows,)
+            )
         if fees:
             balance -= fees
-            self._add_fees_transaction(statement, fees, row)
+            self._add_fees_transaction(statement, fees, batch_number)
         if statement["transactions"] and not payout:
             raise UserError(_("No payout detected in Adyen statement."))
         if self.env.user.company_id.currency_id.compare_amounts(balance, payout) != 0:
@@ -138,6 +150,13 @@ class AccountBankStatementImport(models.TransientModel):
         import_model = self.env["base_import.import"]
         importer = import_model.create({"file": data_file, "file_name": filename})
         return importer._read_file({"quoting": '"', "separator": ","})
+
+    def _check_header_row(self, row):
+        """Header row is the first one with a "Company Account" header cell."""
+        for cell in row:
+            if cell == "Company Account":
+                return True
+        return False
 
     def _set_columns(self, row):
         """Set columns from headers. There MUST be a 'Company Account' header."""
@@ -229,13 +248,12 @@ class AccountBankStatementImport(models.TransientModel):
         """get unique import ID for transaction."""
         return statement["name"] + str(len(statement["transactions"])).zfill(4)
 
-    def _add_fees_transaction(self, statement, fees, row):
+    def _add_fees_transaction(self, statement, fees, batch_number):
         """Single transaction for all fees in statement."""
         transaction = dict(
             unique_import_id=self._get_unique_import_id(statement),
             date=max(t["date"] for t in statement["transactions"]),
             amount=-fees,
-            name="Commission, markup etc. batch %s"
-            % self._get_value(row, "Batch Number"),
+            name="Commission, markup etc. batch %s" % batch_number,
         )
         statement["transactions"].append(transaction)
