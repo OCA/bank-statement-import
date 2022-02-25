@@ -292,11 +292,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
             or ""
         )
         line = {
-            "name": name,
+            "ref": name,
             "amount": str(total_amount),
             "date": date,
-            "note": note,
+            "payment_ref": note,
             "unique_import_id": unique_import_id,
+            "online_raw_data": transaction,
         }
         payer_full_name = payer_name.get("full_name") or payer_name.get(
             "alternate_full_name"
@@ -307,12 +308,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
         if fee_amount:
             lines += [
                 {
-                    "name": _("Fee for %s") % (name or transaction_id),
+                    "ref": _("Fee for %s") % (name or transaction_id),
                     "amount": str(fee_amount),
                     "date": date,
                     "partner_name": "PayPal",
                     "unique_import_id": "%s-FEE" % unique_import_id,
-                    "note": _("Transaction fee for %s") % note,
+                    "payment_ref": _("Transaction fee for %s") % note,
                 }
             ]
         return lines
@@ -400,7 +401,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
                 # NOTE: Workaround for INVALID_REQUEST (see ROADMAP.rst)
                 invalid_data_workaround = self.env.context.get(
-                    "test_account_bank_statement_import_online_paypal_monday",
+                    "test_account_statement_import_online_paypal_monday",
                     interval_start.weekday() == 0
                     and (datetime.utcnow() - interval_start).total_seconds() < 28800,
                 )
