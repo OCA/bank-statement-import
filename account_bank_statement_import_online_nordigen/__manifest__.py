@@ -8,7 +8,13 @@
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["base", "base_iban", "account_statement_import_online", "web"],
+    "depends": [
+        "base",
+        "base_iban",
+        "account_statement_import_online",
+        "web",
+        "web_notify",
+    ],
     "data": ["view/assets.xml", "view/online_bank_statement_provider.xml"],
     "qweb": [
         "static/src/xml/*.xml",
