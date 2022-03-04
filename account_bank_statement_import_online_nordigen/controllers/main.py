@@ -32,14 +32,8 @@ class NordigenController(http.Controller):
             "action": action_id,
             "view_type": "list",
         }
+        url = "/web#" + url_encode(params)
         if current_provider:
             current_provider.update_nordigen_request()
-            params.update(
-                {
-                    "view_type": "form",
-                    "model": "online.bank.statement.provider",
-                    "id": current_provider.id,
-                }
-            )
-        url = "/web#" + url_encode(params)
+            url = current_provider._get_nordigen_url_action()
         return werkzeug.utils.redirect(url, 303)

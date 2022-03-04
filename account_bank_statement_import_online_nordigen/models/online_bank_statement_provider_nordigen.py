@@ -8,7 +8,7 @@ from uuid import uuid4
 
 import requests
 from dateutil.relativedelta import relativedelta
-from werkzeug.urls import url_join
+from werkzeug.urls import url_encode, url_join
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -17,6 +17,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 _logger = logging.getLogger(__name__)
 
 NORDIGEN_ENDPOINT = "https://ob.nordigen.com/api/v2"
+SANDBOX_INSTITUTION_ID = "SANDBOXFINANCE_SFIN0000"
 
 
 class OnlineBankStatementProviderNordigen(models.Model):
@@ -142,6 +143,16 @@ class OnlineBankStatementProviderNordigen(models.Model):
     def action_check_agreement(self):
         self._update_token_nordigen()
         institution_id = self.nordigen_institution_id
+        if (
+            self.env["ir.module.module"]
+            .sudo()
+            .search(
+                [("name", "=", "account_bank_statement_import_online_nordigen")],
+                limit=1,
+            )
+            .demo
+        ):
+            institution_id = SANDBOX_INSTITUTION_ID
         self.nordigen_last_requisition_ref = str(uuid4())
         url = NORDIGEN_ENDPOINT + "/requisitions/"
         response = requests.post(
@@ -162,32 +173,40 @@ class OnlineBankStatementProviderNordigen(models.Model):
             return redirect_url
         return self._create_redirect_url_nordigen()
 
-    def update_nordigen_request(self):
+    def _get_nordigen_agreement_validity(self, agreement_id):
         self._update_token_nordigen()
-        accounts = []
-        url = (
-            NORDIGEN_ENDPOINT
-            + "/requisitions/"
-            + self.nordigen_last_requisition_id
-            + "/"
+        agreement_data = {}
+        url = NORDIGEN_ENDPOINT + "/agreements/enduser/" + agreement_id + "/"
+        agreement_response = requests.get(
+            url, headers=self._get_nordigen_headers(self.nordigen_token),
         )
+        if agreement_response.status_code == 200:
+            agreement_data = json.loads(agreement_response.text)
+        return agreement_data
+
+    def _get_nordigen_requisition_data(self, requisition_id):
+        self._update_token_nordigen()
+        requisition_data = {}
+        url = NORDIGEN_ENDPOINT + "/requisitions/" + requisition_id + "/"
         requisition_response = requests.get(
             url, headers=self._get_nordigen_headers(self.nordigen_token),
         )
         if requisition_response.status_code == 200:
             requisition_data = json.loads(requisition_response.text)
+        return requisition_data
+
+    def update_nordigen_request(self):
+        self._update_token_nordigen()
+        accounts = []
+        requisition_data = self._get_nordigen_requisition_data(
+            self.nordigen_last_requisition_id
+        )
+        if requisition_data:
             accounts = requisition_data["accounts"]
-            url = (
-                NORDIGEN_ENDPOINT
-                + "/agreements/enduser/"
-                + requisition_data["agreement"]
-                + "/"
+            agreement_data = self._get_nordigen_agreement_validity(
+                requisition_data["agreement"]
             )
-            agreement_response = requests.get(
-                url, headers=self._get_nordigen_headers(self.nordigen_token),
-            )
-            if agreement_response.status_code == 200:
-                agreement_data = json.loads(agreement_response.text)
+            if agreement_data:
                 self.nordigen_last_requisition_expiration = datetime.strptime(
                     agreement_data["accepted"], "%Y-%m-%dT%H:%M:%S.%fZ"
                 ) + relativedelta(days=agreement_data["access_valid_for_days"])
@@ -255,28 +274,28 @@ class OnlineBankStatementProviderNordigen(models.Model):
 
     def _nordigen_get_note_elements(self):
         return [
-            'additionalInformation',
-            'balanceAfterTransaction',
-            'bankTransactionCode',
-            'bookingDate',
-            'checkId',
-            'creditorAccount',
-            'creditorAgent',
-            'creditorId',
-            'creditorName',
-            'currencyExchange',
-            'debtorAccount',
-            'debtorAgent',
-            'debtorName',
-            'entryReference',
-            'mandateId',
-            'proprietaryBank',
-            'remittanceInformation Unstructured',
-            'transactionAmount',
-            'transactionId',
-            'ultimateCreditor',
-            'ultimateDebtor',
-            'valueDate'
+            "additionalInformation",
+            "balanceAfterTransaction",
+            "bankTransactionCode",
+            "bookingDate",
+            "checkId",
+            "creditorAccount",
+            "creditorAgent",
+            "creditorId",
+            "creditorName",
+            "currencyExchange",
+            "debtorAccount",
+            "debtorAgent",
+            "debtorName",
+            "entryReference",
+            "mandateId",
+            "proprietaryBank",
+            "remittanceInformation Unstructured",
+            "transactionAmount",
+            "transactionId",
+            "ultimateCreditor",
+            "ultimateDebtor",
+            "valueDate",
         ]
 
     def _nordigen_get_note(self, tr):
@@ -284,12 +303,48 @@ class OnlineBankStatementProviderNordigen(models.Model):
         notes = []
         for element in self._nordigen_get_note_elements():
             if element in tr.keys() and tr[element]:
-                notes.append(element + ': ' + str(tr[element]))
+                notes.append(element + ": " + str(tr[element]))
         return "\n".join(notes)
 
     def _nordigen_get_transactions(self, account_id, date_since, date_until):
         self._update_token_nordigen()
         currency_model = self.env["res.currency"]
+        synchronization_message = False
+        url = self._get_nordigen_url_action()
+        if self.nordigen_last_requisition_id:
+            if not self.nordigen_last_requisition_expiration:
+                synchronization_message = (
+                    _(
+                        "You should complete authorization process "
+                        "for your bank account with Nordigen "
+                        "<a href=%s>Click here</a> to complete "
+                        "process in configuration page"
+                    )
+                    % url
+                )
+            elif self.nordigen_last_requisition_expiration <= fields.Datetime.now():
+                synchronization_message = (
+                    _(
+                        "You should renew authorization process "
+                        "for your bank account with Nordigen "
+                        "<a href=%s>Click here</a> to complete "
+                        "process in configuration page"
+                    )
+                    % url
+                )
+        else:
+            synchronization_message = (
+                _(
+                    "You should complete authorization process"
+                    " for your bank account with Nordigen "
+                    "<a href=%s>Click here</a> to complete "
+                    "process in configuration page"
+                )
+                % url
+            )
+        if synchronization_message:
+            self.env.user.notify_danger(message=synchronization_message)
+            return []
         try:
             transactions = []
             url = NORDIGEN_ENDPOINT + "/accounts/" + account_id + "/transactions/"
@@ -349,12 +404,13 @@ class OnlineBankStatementProviderNordigen(models.Model):
                         "date": current_date,
                         "ref": re.sub(" +", " ", ref) or "/",
                         "name": tr.get("remittanceInformationUnstructured", ref),
-                        "unique_import_id": tr["entryReference"],
+                        "unique_import_id": tr.get("entryReference", False)
+                        or tr.get("transactionId", False),
                         "amount": amount_currency,
                         "account_number": account_number,
                         "partner_name": partner_name,
                         "transaction_type": tr.get("bankTransactionCode", ""),
-                        "note": self._nordigen_get_note(tr)
+                        "note": self._nordigen_get_note(tr),
                     }
                 )
             return res
@@ -365,6 +421,20 @@ class OnlineBankStatementProviderNordigen(models.Model):
             )
         return []
 
+    def _get_nordigen_url_action(self):
+        action_id = self.env.ref(
+            "account_bank_statement_import_online_nordigen."
+            "online_bank_statement_provider_action"
+        ).id
+        params = {
+            "action": action_id,
+            "view_type": "form",
+            "model": "online.bank.statement.provider",
+            "id": self.id,
+        }
+        url = "/web#" + url_encode(params)
+        return url
+
     def _nordigen_obtain_statement_data(self, date_since, date_until):
         if self.nordigen_account_id:
             new_transactions = self._nordigen_get_transactions(
@@ -372,4 +442,15 @@ class OnlineBankStatementProviderNordigen(models.Model):
             )
             if new_transactions:
                 return new_transactions, {}
+        else:
+            url = self._get_nordigen_url_action()
+            self.env.user.notify_danger(
+                message=_(
+                    "You should complete authorization process "
+                    "for your bank account with Nordigen "
+                    "<a href=%s>Click here</a> to complete "
+                    "process in configuration page"
+                )
+                % url
+            )
         return
