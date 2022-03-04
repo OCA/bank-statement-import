@@ -3,6 +3,9 @@
 
 from odoo.tests import common
 
+SAMPLE_ACCOUNT_NUMBER_1 = "GL3343697694912188"
+SAMPLE_ACCOUNT_NUMBER_2 = "GL0865354374424724"
+
 
 class TestAccountBankAccountStatementImportOnlineNordigen(common.TransactionCase):
     def setUp(self):
