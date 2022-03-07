@@ -92,6 +92,7 @@ class AccountBankStatementImport(models.TransientModel):
         payout = 0.0
         rows = self._get_rows(data_file)
         num_rows = 0
+        num_transactions = 0
         for row in rows:
             num_rows += 1
             if not row[1]:
@@ -120,6 +121,7 @@ class AccountBankStatementImport(models.TransientModel):
                 payout -= self._balance(row)
             else:
                 balance += self._balance(row)
+            num_transactions += 1
             self._import_adyen_transaction(statement, row)
             fees += self._sum_fees(row)
         if not headers:
@@ -137,6 +139,11 @@ class AccountBankStatementImport(models.TransientModel):
                 _("Parse error. Balance %s not equal to merchant " "payout %s")
                 % (balance, payout)
             )
+        _logger.info(
+            _("Processed %d rows from Adyen statement file with %d transactions"),
+            num_rows,
+            num_transactions,
+        )
         return currency_code, merchant_id, [statement]
 
     def _get_rows(self, data_file):
