@@ -7,6 +7,7 @@ from unittest import mock
 from urllib.error import HTTPError
 
 from dateutil.relativedelta import relativedelta
+from odoo_test_helper import FakeModelLoader
 from psycopg2 import IntegrityError
 
 from odoo import fields
@@ -20,18 +21,27 @@ mock_obtain_statement_data = (
 )
 
 
-class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.now = fields.Datetime.now()
-        self.AccountJournal = self.env["account.journal"]
-        self.OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
-        self.OnlineBankStatementPullWizard = self.env[
-            "online.bank.statement.pull.wizard"
-        ]
-        self.AccountBankStatement = self.env["account.bank.statement"]
-        self.AccountBankStatementLine = self.env["account.bank.statement.line"]
+        # Load fake model
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+        cls.addClassCleanup(cls.loader.restore_registry)
+        from .online_bank_statement_provider_dummy import (
+            OnlineBankStatementProviderDummy,
+        )
+
+        cls.loader.update_registry((OnlineBankStatementProviderDummy,))
+
+        cls.now = fields.Datetime.now()
+        cls.AccountJournal = cls.env["account.journal"]
+        cls.OnlineBankStatementProvider = cls.env["online.bank.statement.provider"]
+        cls.OnlineBankStatementPullWizard = cls.env["online.bank.statement.pull.wizard"]
+        cls.AccountBankStatement = cls.env["account.bank.statement"]
+        cls.AccountBankStatementLine = cls.env["account.bank.statement.line"]
 
     def test_provider_unlink_restricted(self):
         journal = self.AccountJournal.create(
