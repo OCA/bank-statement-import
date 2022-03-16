@@ -381,9 +381,8 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
             'currency_id': self.currency_usd.id,
         })
         statement_map = self.sample_statement_map.copy({
-            'header_lines_count': 5,
             'footer_lines_count': 1,
-            'column_names_line': 5,
+            'column_labels_row': 5,
             'amount_column': None,
             'partner_name_column': None,
             'bank_account_column': None,

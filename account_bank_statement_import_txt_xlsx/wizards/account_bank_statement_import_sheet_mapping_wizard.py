@@ -20,7 +20,7 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         required=True,
         relation="account_bank_statement_import_sheet_mapping_wiz_attachment_rel",
     )
-    column_names_line = fields.Integer(
+    column_labels_row = fields.Integer(
         string='Header line',
         help='The number of line that contan column names.\n'
              'Used if csv/xls files contain\n'
@@ -148,7 +148,7 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         header = []
         for data_file in self.attachment_ids:
             header += Parser.parse_header(
-                b64decode(data_file.datas), self.file_encoding, csv_options, self.column_names_line
+                b64decode(data_file.datas), self.file_encoding, csv_options, self.column_labels_row
             )
         header = list(set(header))
         self.header = json.dumps(header)

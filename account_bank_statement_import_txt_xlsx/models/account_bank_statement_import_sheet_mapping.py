@@ -144,18 +144,6 @@ class AccountBankStatementImportSheetMapping(models.Model):
     bank_account_column = fields.Char(
         string="Bank Account column", help="Partner's bank account",
     )
-    with_metadata = fields.Boolean(
-        string='File wWth Metadata ',
-        help='Check if file containt meta data in first lines',
-    )
-    header_lines_count = fields.Integer(
-        string='Header lines number',
-        help='Set the Header lines number.'
-             'Used in some csv file that integrate meta data in'
-             'first lines. This number contain the number of'
-             'the all meta data lines including columns names',
-        default="1",
-    )
     footer_lines_count = fields.Integer(
         string='Footer lines number',
         help='Set the Footer lines number.'
@@ -163,9 +151,9 @@ class AccountBankStatementImportSheetMapping(models.Model):
              'last lines.',
         default="0",
     )
-    column_names_line = fields.Integer(
-        string='The number of line that contan column names',
-        help='The number of line that contan column names.',
+    column_labels_row = fields.Integer(
+        string='Row number for column labels',
+        help='The number of line that contain column names.',
         default="1",
     )
 

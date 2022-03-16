@@ -52,12 +52,8 @@
                             />
                         </group>
                         <group>
-                            <field name="with_metadata"/>
-                            <group>
-                                <field name="header_lines_count"/>
-                                <field name="footer_lines_count"/>
-                                <field name="column_names_line"/>
-                            </group>
+                            <field name="column_labels_row" />
+                            <field name="footer_lines_count" />
                         </group>
                     </group>
                     <group string="Columns">
