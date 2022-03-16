@@ -29,14 +29,10 @@
                         />
                     </group>
                     <group string="Options" colspan="2">
-                        <field name="column_names_line"/>
+                        <field name="column_labels_row" />
                         <field name="file_encoding" />
                         <field name="delimiter" />
                         <field name="quotechar" />
-                    </group>
-                    <group colspan="2">
-                        <field name="data_file" filename="filename" placeholder="Choose a file to import..."/>
-                        <field name="filename" invisible="1"/>
                     </group>
                 </group>
                 <group name="final" attrs="{'invisible': [('state', '!=', 'final')]}">
@@ -55,9 +51,10 @@
                             values="statement_columns"
                             context="{'header': header}"
                         />
-                        <field name="amount_type"
+                        <field
+                            name="amount_type"
                             attrs="{'required': [('state', '=', 'final')]}"
-                            />
+                        />
                         <field
                             name="amount_column"
                             widget="dynamic_dropdown"
@@ -67,22 +64,26 @@
                             'required': [('amount_type', '!=', 'distinct_credit_debit'),  ('state', '=', 'final')],
                             'invisible': [('amount_type', '=', 'distinct_credit_debit')],}"
                         />
-                        <field name="debit_column"
+                        <field
+                            name="debit_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
                             attrs="{
                             'required': [('amount_type', '=', 'distinct_credit_debit'),  ('state', '=', 'final')],
                             'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
-                            }"/>
-                        <field name="credit_column"
+                            }"
+                        />
+                        <field
+                            name="credit_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
                             attrs="{
                             'required': [('amount_type', '=', 'distinct_credit_debit'),  ('state', '=', 'final')],
                             'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
-                            }"/>
+                            }"
+                        />
                         <field
                             name="debit_credit_column"
                             widget="dynamic_dropdown"
@@ -91,7 +92,8 @@
                             attrs="{
                             'required': [('amount_type', '=', 'absolute_value')],
                             'invisible': [('amount_type', '!=', 'absolute_value')],
-                            }"/>
+                            }"
+                        />
                         <field
                             name="balance_column"
                             widget="dynamic_dropdown"

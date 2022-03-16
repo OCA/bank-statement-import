@@ -15,3 +15,7 @@
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
+* ADHOC (https://www.adhoc.com.ar/)
+
+  * Juan Jose Scarafia <jjs@adhoc.com.ar>
+  * Katherine Zaoral <kz@adhoc.com.ar>

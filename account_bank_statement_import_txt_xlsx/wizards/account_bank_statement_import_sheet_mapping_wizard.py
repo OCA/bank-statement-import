@@ -20,11 +20,11 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         required=True,
         relation="account_bank_statement_import_sheet_mapping_wiz_attachment_rel",
     )
-    column_names_line = fields.Integer(
-        string='Header line',
-        help='The number of line that contan column names.\n'
-             'Used if csv/xls files contain\n'
-             'meta data in first lines\n ',
+    column_labels_row = fields.Integer(
+        string="Header line",
+        help="The number of line that contan column names.\n"
+        "Used if csv/xls files contain\n"
+        "meta data in first lines\n ",
         default="1",
     )
     header = fields.Char()
@@ -45,29 +45,29 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
     )
     amount_type = fields.Selection(
         selection=[
-            ('simple_value', 'Simple value'),
-            ('absolute_value', 'Absolute value'),
-            ('distinct_credit_debit', 'Distinct Credit/debit Column'),
+            ("simple_value", "Simple value"),
+            ("absolute_value", "Absolute value"),
+            ("distinct_credit_debit", "Distinct Credit/debit Column"),
         ],
-        string='Amount type',
+        string="Amount type",
         required=True,
         default="simple_value",
         help=(
-            'Simple value: use igned amount in ammount comlumn\n'
-            'Absolute Value: use a same comlumn for debit and credit\n'
-            '(absolute value + indicate sign)\n'
-            'Distinct Credit/debit Column: use a distinct comlumn for debit and credit'
+            "Simple value: use igned amount in ammount comlumn\n"
+            "Absolute Value: use a same comlumn for debit and credit\n"
+            "(absolute value + indicate sign)\n"
+            "Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
         ),
     )
     amount_column = fields.Char(
         string="Amount column", help="Amount of transaction in journal's currency",
     )
     debit_column = fields.Char(
-        string='Debit column',
+        string="Debit column",
         help='Used if amount type is "Distinct Credit/debit Column"\n',
     )
     credit_column = fields.Char(
-        string='Credit column',
+        string="Credit column",
         help='Used if amount type is "Distinct Credit/debit Column"\n',
     )
     balance_column = fields.Char(
@@ -148,7 +148,10 @@ class AccountBankStatementImportSheetMappingWizard(models.TransientModel):
         header = []
         for data_file in self.attachment_ids:
             header += Parser.parse_header(
-                b64decode(data_file.datas), self.file_encoding, csv_options, self.column_names_line
+                b64decode(data_file.datas),
+                self.file_encoding,
+                csv_options,
+                self.column_labels_row,
             )
         header = list(set(header))
         self.header = json.dumps(header)

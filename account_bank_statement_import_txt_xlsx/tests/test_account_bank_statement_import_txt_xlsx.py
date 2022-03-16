@@ -423,49 +423,118 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(statement.balance_end_real, 1510.0)
         self.assertEqual(statement.balance_end, 1510.0)
 
-    def test_metadata_separated_debit_credit(self):
-        journal = self.AccountJournal.create({
-            'name': 'Bank',
-            'type': 'bank',
-            'code': 'BANK',
-            'currency_id': self.currency_usd.id,
-        })
-        statement_map = self.sample_statement_map.copy({
-            'header_lines_count': 5,
-            'footer_lines_count': 1,
-            'column_names_line': 5,
-            'amount_column': None,
-            'partner_name_column': None,
-            'bank_account_column': None,
-            'float_thousands_sep': 'none',
-            'float_decimal_sep': 'comma',
-            'timestamp_format': '%m/%d/%y',
-            'original_currency_column': None,
-            'original_amount_column': None,
-            'amount_type': 'distinct_credit_debit',
-            'debit_column': 'Debit',
-            'credit_column': 'Credit',
-        })
-        wizard = self.AccountBankStatementImport.with_context({
-            'journal_id': journal.id,
-        }).create({
-            'filename': 'fixtures/meta_data_separated_credit_debit.csv',
-            'data_file': self._data_file(
-                'fixtures/meta_data_separated_credit_debit.csv',
-                'utf-8'
-            ),
-            'sheet_mapping_id': statement_map.id,
-        })
-        wizard.with_context({
-            'journal_id': journal.id,
-            'account_bank_statement_import_txt_xlsx_test': True,
-        }).import_file()
-        statement = self.AccountBankStatement.search([
-            ('journal_id', '=', journal.id),
-        ])
+    def test_metadata_separated_debit_credit_csv(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
+            {
+                "footer_lines_count": 1,
+                "column_labels_row": 5,
+                "amount_column": None,
+                "partner_name_column": None,
+                "bank_account_column": None,
+                "float_thousands_sep": "none",
+                "float_decimal_sep": "comma",
+                "timestamp_format": "%m/%d/%y",
+                "original_currency_column": None,
+                "original_amount_column": None,
+                "amount_type": "distinct_credit_debit",
+                "debit_column": "Debit",
+                "credit_column": "Credit",
+            }
+        )
+        data = self._data_file("fixtures/meta_data_separated_credit_debit.csv", "utf-8")
+        wizard = self.AccountBankStatementImport.with_context(
+            {"journal_id": journal.id}
+        ).create(
+            {
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/meta_data_separated_credit_debit.csv",
+                            "datas": data,
+                        },
+                    )
+                ],
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            {
+                "journal_id": journal.id,
+                "account_bank_statement_import_txt_xlsx_test": True,
+            }
+        ).import_file()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 4)
-        line1 = statement.line_ids.filtered(lambda x: x.name == 'LABEL 1')
-        line4 = statement.line_ids.filtered(lambda x: x.name == 'LABEL 4')
+        line1 = statement.line_ids.filtered(lambda x: x.name == "LABEL 1")
+        line4 = statement.line_ids.filtered(lambda x: x.name == "LABEL 4")
+        self.assertEqual(line1.amount, -50)
+        self.assertEqual(line4.amount, 1300)
+
+    def test_metadata_separated_debit_credit_xlsx(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
+            {
+                "footer_lines_count": 1,
+                "column_labels_row": 5,
+                "amount_column": None,
+                "partner_name_column": None,
+                "bank_account_column": None,
+                "float_thousands_sep": "none",
+                "float_decimal_sep": "comma",
+                "timestamp_format": "%m/%d/%y",
+                "original_currency_column": None,
+                "original_amount_column": None,
+                "amount_type": "distinct_credit_debit",
+                "debit_column": "Debit",
+                "credit_column": "Credit",
+            }
+        )
+        data = self._data_file("fixtures/meta_data_separated_credit_debit.xlsx")
+        wizard = self.AccountBankStatementImport.with_context(
+            journal_id=journal.id
+        ).create(
+            {
+                "attachment_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "fixtures/meta_data_separated_credit_debit.xlsx",
+                            "datas": data,
+                        },
+                    )
+                ],
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            {
+                "journal_id": journal.id,
+                "account_bank_statement_import_txt_xlsx_test": True,
+            }
+        ).import_file()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 4)
+        line1 = statement.line_ids.filtered(lambda x: x.name == "LABEL 1")
+        line4 = statement.line_ids.filtered(lambda x: x.name == "LABEL 4")
         self.assertEqual(line1.amount, -50)
         self.assertEqual(line4.amount, 1300)
