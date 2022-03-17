@@ -84,6 +84,7 @@ class AccountBankStatementImport(models.TransientModel):
 
         An Exception will be thrown if file cannot be parsed.
         """
+        # pylint: disable=too-many-locals,too-many-branches
         statement = None
         headers = False
         batch_number = False
@@ -133,7 +134,7 @@ class AccountBankStatementImport(models.TransientModel):
             balance -= fees
             self._add_fees_transaction(statement, fees, batch_number)
         if statement["transactions"] and not payout:
-            raise UserError(_("No payout detected in Adyen statement."))
+            _logger.info(_("No payout detected in Adyen statement."))
         if self.env.user.company_id.currency_id.compare_amounts(balance, payout) != 0:
             raise UserError(
                 _("Parse error. Balance %s not equal to merchant " "payout %s")
@@ -169,6 +170,8 @@ class AccountBankStatementImport(models.TransientModel):
         """Set columns from headers. There MUST be a 'Company Account' header."""
         seen_company_account = False
         for num, header in enumerate(row):
+            if not header.strip():
+                continue  # Ignore empty columns.
             if header == "Company Account":
                 seen_company_account = True
             if header not in COLUMNS:
