@@ -1,9 +1,11 @@
-# Copyright 2021 Therp BV <https://therp.nl>.
+# Copyright 2021-2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+"""Test online Adyen reusing tests for manual import."""
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
 
+# pylint: disable=import-error
 from odoo.addons.account_bank_statement_import_adyen.tests.test_import_adyen import (
     TestImportAdyen,
 )
@@ -14,6 +16,8 @@ class TestImportOnline(TestImportAdyen):
 
     @classmethod
     def setUpClass(cls):
+        """Setup online journal."""
+        # pylint: disable=invalid-name
         super().setUpClass()
         cls.now = fields.Datetime.now()
         cls.journal.write(
@@ -53,6 +57,7 @@ class TestImportOnline(TestImportAdyen):
         )
         # Pull from yesterday, until today
         yesterday = self.now - relativedelta(days=1)
+        # pylint: disable=protected-access
         provider.with_context(scheduled=True)._pull(yesterday, self.now)
         # statement name is account number + '-' + date of last line.
         statements = self.env["account.bank.statement"].search(

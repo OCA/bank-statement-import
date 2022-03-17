@@ -42,13 +42,7 @@ class OnlineBankStatementProvider(models.Model):
         for provider in adyen_providers:
             is_scheduled = self.env.context.get("scheduled")
             try:
-                attachment_vals = self._get_attachment_vals()
-                import_wizard = self.env["account.bank.statement.import"].create(
-                    {"attachment_ids": [(0, 0, attachment_vals)]}
-                )
-                import_wizard.with_context(
-                    {"account_bank_statement_import_adyen": True}
-                ).import_file()
+                self._import_adyen_file()
             except BaseException as e:
                 if is_scheduled:
                     _logger.warning(
@@ -70,6 +64,21 @@ class OnlineBankStatementProvider(models.Model):
             if is_scheduled:
                 provider._schedule_next_run()
 
+    def _import_adyen_file(self):
+        """Import Adyen file using functionality from manual Adyen import module."""
+        self.ensure_one()
+        content, attachment_vals = self._get_attachment_vals()
+        wizard = (
+            self.env["account.bank.statement.import"]
+            .with_context({"journal_id": self.journal_id.id})
+            .create({"attachment_ids": [(0, 0, attachment_vals)]})
+        )
+        currency_code, account_number, stmts_vals = wizard._parse_adyen_file(content)
+        wizard._check_parsed_data(stmts_vals, account_number)
+        _currency, journal = wizard._find_additional_data(currency_code, account_number)
+        stmts_vals = wizard._complete_stmts_vals(stmts_vals, journal, account_number)
+        wizard._create_bank_statements(stmts_vals)
+
     def _get_attachment_vals(self):
         """Retrieve settlement details and convert to attachment vals."""
         content, filename = self._adyen_get_settlement_details_file()
@@ -79,7 +88,7 @@ class OnlineBankStatementProvider(models.Model):
         byte_padding = b"=" * (byte_count % 4)
         data_file = encoded_content + byte_padding
         attachment_vals = {"name": filename, "datas": data_file}
-        return attachment_vals
+        return content, attachment_vals
 
     def _adyen_get_settlement_details_file(self):
         """Retrieve daily generated settlement details file.
