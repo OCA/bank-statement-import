@@ -1,7 +1,8 @@
 # Copyright 2017 Opener BV <https://opener.amsterdam>
 # Copyright 2020 Vanmoof BV <https://www.vanmoof.com>
-# Copyright 2015-2021 Therp BV <https://therp.nl>)
+# Copyright 2015-2022 Therp BV <https://therp.nl>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+"""Run test imports of Adyen files."""
 import base64
 
 from odoo.exceptions import UserError
@@ -10,6 +11,8 @@ from odoo.tests.common import SavepointCase
 
 
 class TestImportAdyen(SavepointCase):
+    """Run test imports of Adyen files."""
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -72,6 +75,23 @@ class TestImportAdyen(SavepointCase):
             )
         )
 
+    def test_05_import_adyen_csv(self):
+        """ Test that the Adyen statement without Merchant Payoutcan be imported."""
+        self._test_statement_import(
+            "settlement_detail_report_batch_238.csv", "YOURCOMPANY_ACCOUNT 2022/238",
+        )
+        statement = self.env["account.bank.statement"].search(
+            [], order="create_date desc", limit=1
+        )
+        self.assertEqual(statement.journal_id, self.journal)
+        # Csv lines has 4 lines. Minus 1 header. No extra transaction line.
+        self.assertEqual(len(statement.line_ids), 3)
+        self.assertTrue(
+            self.env.user.company_id.currency_id.is_zero(
+                sum(line.amount for line in statement.line_ids)
+            )
+        )
+
     def _test_statement_import(self, file_name, statement_name):
         """Test correct creation of single statement."""
         testfile = get_module_resource(
@@ -83,7 +103,10 @@ class TestImportAdyen(SavepointCase):
                 {"attachment_ids": [(0, 0, {"name": file_name, "datas": data_file})]}
             )
             import_wizard.with_context(
-                {"account_bank_statement_import_adyen": True}
+                {
+                    "account_bank_statement_import_adyen": True,
+                    "journal_id": self.journal.id,
+                }
             ).import_file()
             # statement name is account number + '-' + date of last line.
             statements = self.env["account.bank.statement"].search(
