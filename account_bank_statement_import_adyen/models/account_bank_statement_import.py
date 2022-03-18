@@ -54,10 +54,10 @@ class AccountBankStatementImport(models.TransientModel):
         try:
             _logger.debug(_("Try parsing as Adyen settlement details."))
             return self._parse_adyen_file(data_file)
-        except Exception:  # pylint: disable=broad-except
+        except Exception as exc:  # pylint: disable=broad-except
             message = _("Statement file was not a Adyen settlement details file.")
             if self.env.context.get("account_bank_statement_import_adyen", False):
-                raise UserError(message)
+                raise UserError(message) from exc
             _logger.debug(message, exc_info=True)
             return super()._parse_file(data_file)
 
@@ -123,7 +123,9 @@ class AccountBankStatementImport(models.TransientModel):
             else:
                 balance += self._balance(row)
             num_transactions += 1
-            self._import_adyen_transaction(statement, row)
+            transaction = self._get_adyen_transaction(row)
+            transaction["unique_import_id"] = self._get_unique_import_id(statement)
+            statement["transactions"].append(transaction)
             fees += self._sum_fees(row)
         if not headers:
             raise ValueError(
@@ -233,26 +235,40 @@ class AccountBankStatementImport(models.TransientModel):
                 amount += float(value)
         return amount
 
-    def _import_adyen_transaction(self, statement, row):
-        """Add transaction from row to statements."""
-        transaction = dict(
-            unique_import_id=self._get_unique_import_id(statement),
-            date=self._get_transaction_date(row),
-            amount=self._balance(row),
-            note="{} {} {} {}".format(
-                self._get_value(row, "Merchant Account"),
-                self._get_value(row, "Psp Reference"),
-                self._get_value(row, "Merchant Reference"),
-                self._get_value(row, "Payment Method Variant"),
-            ),
-            name="%s"
-            % (
-                self._get_value(row, "Psp Reference")
-                or self._get_value(row, "Merchant Reference")
-                or self._get_value(row, "Modification Reference")
-            ),
+    def _get_adyen_transaction(self, row):
+        """Get transaction from row.
+
+        This can easily be overwritten in custom modules to add extra information.
+        """
+        merchant_account = self._get_value(row, "Merchant Account")
+        psp_reference = self._get_value(row, "Psp Reference")
+        merchant_reference = self._get_value(row, "Merchant Reference")
+        payment_method = self._get_value(row, "Payment Method Variant")
+        modification_reference = self._get_value(row, "Modification Reference")
+        transaction = {
+            "date": self._get_transaction_date(row),
+            "amount": self._balance(row),
+        }
+        transaction["note"] = " ".join(
+            [
+                part
+                for part in [
+                    merchant_account,
+                    psp_reference,
+                    merchant_reference,
+                    payment_method,
+                ]
+                if part
+            ]
         )
-        statement["transactions"].append(transaction)
+        transaction["name"] = (
+            merchant_reference or psp_reference or modification_reference
+        )
+        transaction["ref"] = (
+            psp_reference or modification_reference or merchant_reference
+        )
+        transaction["transaction_type"] = self._get_value(row, "Type")
+        return transaction
 
     def _get_unique_import_id(self, statement):
         """get unique import ID for transaction."""
