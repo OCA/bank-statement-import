@@ -61,24 +61,6 @@ class AccountBankStatementImport(models.TransientModel):
             _logger.debug(message, exc_info=True)
             return super()._parse_file(data_file)
 
-    def _find_additional_data(self, currency_code, account_number):
-        """Check if journal passed in the context matches Adyen Merchant Account."""
-        if account_number:
-            journal = self.env["account.journal"].search(
-                [("adyen_merchant_account", "=", account_number)], limit=1
-            )
-            if journal:
-                if self._context.get("journal_id", journal.id) != journal.id:
-                    raise UserError(
-                        _(
-                            "Selected journal Merchant Account does not match "
-                            "the import file Merchant Account "
-                            "column: %s"
-                        )
-                        % account_number
-                    )
-        return super()._find_additional_data(currency_code, account_number)
-
     def _parse_adyen_file(self, data_file):
         """Parse file assuming it is an Adyen file.
 
@@ -111,10 +93,11 @@ class AccountBankStatementImport(models.TransientModel):
                     "less then minimum of 24" % len(row)
                 )
             if not statement:
+                merchant_account = self._get_value(row, "Merchant Account")
+                self._validate_merchant_account(merchant_account)
                 batch_number = self._get_value(row, "Batch Number")
                 statement = self._make_statement(row)
                 currency_code = self._get_value(row, "Net Currency")
-                merchant_id = self._get_value(row, "Merchant Account")
             else:
                 self._update_statement(statement, row)
             row_type = self._get_value(row, "Type").strip()
@@ -147,7 +130,26 @@ class AccountBankStatementImport(models.TransientModel):
             num_rows,
             num_transactions,
         )
-        return currency_code, merchant_id, [statement]
+        return currency_code, merchant_account, [statement]
+
+    def _validate_merchant_account(self, merchant_account):
+        """Check wether merchant account exist, and belongs to the correct journal."""
+        journal = self.env["account.journal"].search(
+            [("adyen_merchant_account", "=", merchant_account)], limit=1
+        )
+        if not journal:
+            raise UserError(
+                _("No journal refers to Merchant Account %s") % merchant_account
+            )
+        if self._context.get("journal_id", journal.id) != journal.id:
+            raise UserError(
+                _(
+                    "Selected journal Merchant Account does not match "
+                    "the import file Merchant Account "
+                    "column: %s"
+                )
+                % merchant_account
+            )
 
     def _get_rows(self, data_file):
         """Get rows from data_file."""
