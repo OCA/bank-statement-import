@@ -17,10 +17,6 @@
         <xpath expr="//script[last()]" position="after">
             <script
                 type="text/javascript"
-                src="/account_bank_statement_import_online_nordigen/static/src/lib/nordigen-ui/selector.js"
-            />
-            <script
-                type="text/javascript"
                 src="/account_bank_statement_import_online_nordigen/static/src/js/select_bank_widget.js"
             />
         </xpath>
