@@ -23,16 +23,16 @@ class AccountBankStatementImport(models.TransientModel):
         """Try to find partner by searching invoice with reference."""
         if transaction.get("partner_id", False):
             return
-        if not transaction.get("ref", False):
-            return
-        ref = transaction["ref"]
         invoice_model = self.env["account.move"]
-        # We search each possibility in a separate statement, to prioritize
-        # invoice_origin over ref, and ref over name.
-        invoice = invoice_model.search([("invoice_origin", "=", ref)], limit=1)
-        if not invoice:
-            invoice = invoice_model.search([("ref", "=", ref)], limit=1)
-            if not invoice:
-                invoice = invoice_model.search([("name", "=", ref)], limit=1)
-        if invoice:
-            transaction["partner_id"] = invoice.partner_id.id
+        invoice = None
+        transaction_keys = ["ref", "name"]
+        invoice_fields = ["invoice_origin", "ref", "name"]
+        for key in transaction_keys:
+            value = transaction.get(key, False)
+            if not value:
+                continue
+            for fieldname in invoice_fields:
+                invoice = invoice_model.search([(fieldname, "=", value)], limit=1)
+                if invoice:
+                    transaction["partner_id"] = invoice.partner_id.id
+                    return
