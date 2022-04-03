@@ -113,6 +113,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
             header.index(mapping.currency_column) if mapping.currency_column else None
         )
         columns["amount_column"] = header.index(mapping.amount_column)
+        columns["amount2_column"] = (
+            header.index(mapping.amount2_column) if mapping.amount2_column else None
+        )
         columns["balance_column"] = (
             header.index(mapping.balance_column) if mapping.balance_column else None
         )
@@ -189,7 +192,13 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 if columns["currency_column"] is not None
                 else currency_code
             )
-            amount = values[columns["amount_column"]]
+            factor = -1 if mapping["amount2_reverse"] else 1
+            if values[columns["amount_column"]] in (False, "", "0.00"):
+                amount = values[columns["amount2_column"]]
+                amount = factor * self._parse_decimal(amount, mapping)
+            else:
+                amount = values[columns.get("amount_column")]
+                amount = self._parse_decimal(amount, mapping)
             balance = (
                 values[columns["balance_column"]]
                 if columns["balance_column"] is not None
@@ -252,7 +261,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
             if isinstance(timestamp, str):
                 timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
 
-            amount = self._parse_decimal(amount, mapping)
             if balance:
                 balance = self._parse_decimal(balance, mapping)
             else:

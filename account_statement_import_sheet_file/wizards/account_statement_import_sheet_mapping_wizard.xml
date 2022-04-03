@@ -53,6 +53,12 @@
                             attrs="{'required': [('state', '=', 'final')]}"
                         />
                         <field
+                            name="amount2_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
                             name="balance_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
