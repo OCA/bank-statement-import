@@ -66,6 +66,14 @@ class AccountStatementImportSheetMapping(models.Model):
         required=True,
         help="Amount of transaction in journal's currency",
     )
+    amount2_column = fields.Char(
+        string="Amount2 column",
+        help="Some statements have two amount columns, for IN and OUT",
+    )
+    amount2_reverse = fields.Boolean(
+        string="Amount2 reverse +/-",
+        help="If there are positive numbers for money going OUT, reverse +/-",
+    )
     balance_column = fields.Char(
         help="Balance after transaction in journal's currency",
     )
