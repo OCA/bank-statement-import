@@ -31,6 +31,15 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.AccountStatementImportSheetMappingWizard = self.env[
             "account.statement.import.sheet.mapping.wizard"
         ]
+        self.suspense_account = self.env["account.account"].create(
+            {
+                "code": "987654",
+                "name": "Suspense Account",
+                "user_type_id": self.env.ref(
+                    "account.data_account_type_current_assets"
+                ).id,
+            }
+        )
 
     def _data_file(self, filename, encoding=None):
         mode = "rt" if encoding else "rb"
@@ -47,6 +56,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         data = self._data_file("fixtures/sample_statement_en.csv", "utf-8")
@@ -71,6 +81,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         data = self._data_file("fixtures/empty_statement_en.csv", "utf-8")
@@ -95,6 +106,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         data = self._data_file("fixtures/sample_statement_en.xlsx")
@@ -119,6 +131,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         data = self._data_file("fixtures/empty_statement_en.xlsx")
@@ -189,6 +202,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         data = self._data_file("fixtures/original_currency.csv", "utf-8")
@@ -219,6 +233,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         data = self._data_file("fixtures/original_currency_empty.csv", "utf-8")
@@ -247,6 +262,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         statement_map = self.sample_statement_map.copy(
@@ -282,6 +298,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         statement_map = self.sample_statement_map.copy(
@@ -316,6 +333,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "type": "bank",
                 "code": "BANK",
                 "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
             }
         )
         statement_map = self.sample_statement_map.copy(
@@ -332,6 +350,43 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": "fixtures/debit_credit.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+        self.assertEqual(statement.balance_start, 10.0)
+        self.assertEqual(statement.balance_end_real, 1510.0)
+        self.assertEqual(statement.balance_end, 1510.0)
+
+    def test_amount2(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
+            {
+                "amount2_column": "Amount2",
+                "amount2_reverse": True,
+                "balance_column": "Balance",
+                "original_currency_column": None,
+                "original_amount_column": None,
+            }
+        )
+        data = self._data_file("fixtures/amount2.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/amount2.csv",
                 "statement_file": data,
                 "sheet_mapping_id": statement_map.id,
             }
