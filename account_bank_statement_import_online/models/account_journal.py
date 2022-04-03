@@ -61,6 +61,7 @@ class AccountJournal(models.Model):
                 OnlineBankStatementProvider.create({
                     "journal_id": journal.id,
                     "service": journal.online_bank_statement_provider,
+                    "active": True,
                 })
             # fmt: on
 
