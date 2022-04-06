@@ -404,8 +404,8 @@ class OnlineBankStatementProviderNordigen(models.Model):
                         "date": current_date,
                         "ref": re.sub(" +", " ", ref) or "/",
                         "name": tr.get("remittanceInformationUnstructured", ref),
-                        "unique_import_id": tr.get("entryReference", False)
-                        or tr.get("transactionId", False),
+                        "unique_import_id": tr.get("transactionId", False)
+                        or tr.get("entryReference", False),
                         "amount": amount_currency,
                         "account_number": account_number,
                         "partner_name": partner_name,
