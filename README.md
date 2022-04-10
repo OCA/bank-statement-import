@@ -17,7 +17,22 @@ This repository hosts additionnal parsers and import features for bank statement
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[account_bank_statement_clear_partner](account_bank_statement_clear_partner/) | 13.0.1.0.0 |  | Clear all partners in bank statement lines
+[account_bank_statement_import_camt_oca](account_bank_statement_import_camt_oca/) | 13.0.1.1.2 |  | CAMT Format Bank Statements Import
+[account_bank_statement_import_move_line](account_bank_statement_import_move_line/) | 13.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Import journal items into bank statement
+[account_bank_statement_import_oca_camt54](account_bank_statement_import_oca_camt54/) | 13.0.1.0.0 |  | Bank Account Camt54 Import
+[account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 13.0.1.0.0 |  | Import OFX Bank Statement
+[account_bank_statement_import_online](account_bank_statement_import_online/) | 13.0.1.0.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
+[account_bank_statement_import_online_paypal](account_bank_statement_import_online_paypal/) | 13.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
+[account_bank_statement_import_online_ponto](account_bank_statement_import_online_ponto/) | 13.0.1.0.1 |  | Online Bank Statements: MyPonto.com
+[account_bank_statement_import_online_transferwise](account_bank_statement_import_online_transferwise/) | 13.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for Wise.com (TransferWise.com)
+[account_bank_statement_import_paypal](account_bank_statement_import_paypal/) | 13.0.1.0.1 |  | Import PayPal CSV files as Bank Statements in Odoo
+[account_bank_statement_import_transfer_move](account_bank_statement_import_transfer_move/) | 13.0.1.0.0 |  | Bank Account Transfer Line
+[account_bank_statement_import_txt_xlsx](account_bank_statement_import_txt_xlsx/) | 13.0.1.0.4 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Import TXT/CSV or XLSX files as Bank Statements in Odoo
 
 [//]: # (end addons)
 
