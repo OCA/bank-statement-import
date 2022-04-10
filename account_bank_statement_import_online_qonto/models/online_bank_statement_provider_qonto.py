@@ -11,7 +11,7 @@ from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
-QONTO_ENDPOINT = "https://thirdparty.qonto.eu/v2"
+QONTO_ENDPOINT = "https://thirdparty.qonto.com/v2"
 
 
 class OnlineBankStatementProviderQonto(models.Model):
@@ -20,7 +20,7 @@ class OnlineBankStatementProviderQonto(models.Model):
     @api.model
     def _get_available_services(self):
         return super()._get_available_services() + [
-            ("qonto", "Qonto.eu"),
+            ("qonto", "Qonto"),
         ]
 
     def _obtain_statement_data(self, date_since, date_until):
@@ -95,18 +95,18 @@ class OnlineBankStatementProviderQonto(models.Model):
     ):
         date = datetime.strptime(transaction["settled_at"], "%Y-%m-%dT%H:%M:%S.%fZ")
         side = 1 if transaction["side"] == "credit" else -1
-        name = transaction["label"] or "/"
-        if transaction["reference"]:
-            name = "{} {}".format(name, transaction["reference"])
+        payment_ref_list = [
+            transaction["label"],
+            transaction["reference"],
+        ]
         vals_line = {
             "sequence": sequence,
             "date": date,
-            "name": name,
+            "name": " - ".join([x for x in payment_ref_list if x]) or "/",
             "ref": transaction["reference"],
             "unique_import_id": transaction["transaction_id"],
             "amount": transaction["amount"] * side,
         }
-
         if not transaction["local_currency"]:
             raise UserError(
                 _(
@@ -117,12 +117,10 @@ class OnlineBankStatementProviderQonto(models.Model):
             )
         if transaction["local_currency"] not in currencies_code2id:
             raise UserError(
-                _("Currency %s used in transaction ID %s doesn't exist " "in Odoo.")
+                _("Currency %s used in transaction ID %s doesn't exist in Odoo.")
                 % (transaction["local_currency"], transaction["transaction_id"])
             )
-
         line_currency_id = currencies_code2id[transaction["local_currency"]]
-
         if journal_currency.id != line_currency_id:
             vals_line.update(
                 {
@@ -135,7 +133,6 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         journal = self.journal_id
-
         slugs = self._qonto_get_slug()
         slug = slugs.get(self.account_number)
         if not slug:
@@ -143,11 +140,8 @@ class OnlineBankStatementProviderQonto(models.Model):
                 _("Qonto : wrong configuration, unknow account %s")
                 % journal.bank_account_id.acc_number
             )
-
         transactions = self._qonto_obtain_transactions(slug, date_since, date_until)
-
         journal_currency = journal.currency_id or journal.company_id.currency_id
-
         all_currencies = self.env["res.currency"].search_read([], ["name"])
         currencies_code2id = {x["name"]: x["id"] for x in all_currencies}
         new_transactions = []
@@ -158,7 +152,6 @@ class OnlineBankStatementProviderQonto(models.Model):
                 transaction, sequence, journal_currency, currencies_code2id
             )
             new_transactions.append(vals_line)
-
         if new_transactions:
             return new_transactions, {}
         return
