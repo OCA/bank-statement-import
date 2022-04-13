@@ -83,7 +83,9 @@ class OnlineBankStatementProviderPonto(models.Model):
                     )
                     self.sudo().ponto_token_expiration = expiration_date
             else:
-                raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
+                raise UserError(
+                    _("{} \n\n {}").format(response.status_code, response.text)
+                )
         return {
             "Accept": "application/json",
             "Authorization": "Bearer %s" % self.ponto_token,
@@ -103,7 +105,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 )
                 res[iban] = account.get("id")
             return res
-        raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
+        raise UserError(_("{} \n\n {}").format(response.status_code, response.text))
 
     def _ponto_synchronisation(self, account_id):
         url = PONTO_ENDPOINT + "/synchronizations"
@@ -123,8 +125,9 @@ class OnlineBankStatementProviderPonto(models.Model):
             sync_id = data.get("attributes", {}).get("resourceId", False)
         else:
             raise UserError(
-                _("Error during Create Synchronisation %s \n\n %s")
-                % (response.status_code, response.text)
+                _("Error during Create Synchronisation {} \n\n {}").format(
+                    response.status_code, response.text
+                )
             )
 
         # Check synchronisation
@@ -158,8 +161,9 @@ class OnlineBankStatementProviderPonto(models.Model):
             )
             if response.status_code != 200:
                 raise UserError(
-                    _("Error during get transaction.\n\n%s \n\n %s")
-                    % (response.status_code, response.text)
+                    _("Error during get transaction.\n\n{} \n\n {}").format(
+                        response.status_code, response.text
+                    )
                 )
             if params.get("before"):
                 params.pop("before")
