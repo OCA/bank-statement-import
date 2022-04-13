@@ -137,6 +137,8 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         self.AccountBankStatementLine = self.env["account.bank.statement.line"]
         self.AccountStatementPull = self.env["online.bank.statement.pull.wizard"]
 
+        self.currency_eur.write({"active": True})
+
         self.bank_account = self.ResPartnerBank.create(
             {
                 "acc_number": "FR0214508000302245362775K46",
