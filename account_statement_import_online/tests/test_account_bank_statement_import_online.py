@@ -21,7 +21,7 @@ mock_obtain_statement_data = (
 )
 
 
-class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
+class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -360,7 +360,7 @@ class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
         provider.active = True
         provider.statement_creation_mode = "weekly"
 
-        with self.assertRaises(Exception):
+        with self.assertRaisesRegex(Exception, "Expected"):
             provider.with_context(crash=True)._pull(
                 self.now - relativedelta(hours=1),
                 self.now,
