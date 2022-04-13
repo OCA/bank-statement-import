@@ -24,7 +24,7 @@ class OnlineBankStatementProvider(models.Model):
 
     company_id = fields.Many2one(related="journal_id.company_id", store=True)
     active = fields.Boolean(default=True)
-    name = fields.Char(string="Name", compute="_compute_name", store=True)
+    name = fields.Char(compute="_compute_name", store=True)
     journal_id = fields.Many2one(
         comodel_name="account.journal",
         required=True,
@@ -66,7 +66,6 @@ class OnlineBankStatementProvider(models.Model):
         required=True,
     )
     update_schedule = fields.Char(
-        string="Update Schedule",
         compute="_compute_update_schedule",
     )
     last_successful_run = fields.Datetime(string="Last successful pull")
@@ -94,7 +93,7 @@ class OnlineBankStatementProvider(models.Model):
     certificate_public_key = fields.Text()
     certificate_private_key = fields.Text()
     certificate_chain = fields.Text()
-    allow_empty_statements = fields.Boolean(string="Allow empty statements")
+    allow_empty_statements = fields.Boolean()
 
     _sql_constraints = [
         (
@@ -172,13 +171,12 @@ class OnlineBankStatementProvider(models.Model):
                         provider.message_post(
                             body=_(
                                 "Failed to obtain statement data for period "
-                                "since %s until %s: %s. See server logs for "
+                                "since {since} until {until}: {exception}. See server logs for "
                                 "more details."
-                            )
-                            % (
-                                statement_date_since,
-                                statement_date_until,
-                                escape(str(e)) or _("N/A"),
+                            ).format(
+                                since=statement_date_since,
+                                until=statement_date_until,
+                                exception=escape(str(e)) or _("N/A"),
                             ),
                             subject=_("Issue with Online Bank Statement Provider"),
                         )
@@ -368,7 +366,7 @@ class OnlineBankStatementProvider(models.Model):
                 "Pulling online bank statements of: %s"
                 % ", ".join(providers.mapped("journal_id.name"))
             )
-            for provider in providers.with_context({"scheduled": True}):
+            for provider in providers.with_context(**{"scheduled": True}):
                 date_since = (
                     (provider.last_successful_run)
                     if provider.last_successful_run
