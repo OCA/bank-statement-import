@@ -6,17 +6,22 @@ import re
 
 from lxml import etree
 
-from odoo import _, models
+from odoo import _, api, models
+from odoo.exceptions import UserError
 
 
 class CamtParser(models.AbstractModel):
     _name = "account.statement.import.camt.parser"
     _description = "Account Bank Statement Import CAMT parser"
 
-    def parse_amount(self, ns, node):
-        """Parse element that contains Amount and CreditDebitIndicator."""
+    def parse_amount(self, ns, node, ccy=None):
+        """Parse element that contains Amount and CreditDebitIndicator.
+        Return a tuple of (amount in statement currency,
+        amount in foreign currency, odoo id of the foreign currency).
+        When it is not able to find a value, it return None"""
+
         if node is None:
-            return 0.0
+            return (None, None, None)
         sign = 1
         amount = 0.0
         sign_node = node.xpath("ns:CdtDbtInd", namespaces={"ns": ns})
@@ -24,14 +29,53 @@ class CamtParser(models.AbstractModel):
             sign_node = node.xpath("../../ns:CdtDbtInd", namespaces={"ns": ns})
         if sign_node and sign_node[0].text == "DBIT":
             sign = -1
-        amount_node = node.xpath("ns:Amt", namespaces={"ns": ns})
-        if not amount_node:
-            amount_node = node.xpath(
-                "./ns:AmtDtls/ns:TxAmt/ns:Amt", namespaces={"ns": ns}
-            )
-        if amount_node:
-            amount = sign * float(amount_node[0].text)
-        return amount
+
+        found_correct_amount = False
+        for target_xpath in [
+            "ns:Amt",
+            "ns:AmtDtls/ns:CntrValAmt/ns:Amt",
+            "ns:AmtDtls/ns:TxAmt/ns:Amt",
+        ]:
+            amt_node = node.xpath(target_xpath, namespaces={"ns": ns})
+            if amt_node and (
+                ccy is None
+                or amt_node[0].xpath("./@Ccy", namespaces={"ns": ns})[0] == ccy
+            ):
+                found_correct_amount = True
+                break
+
+        if not found_correct_amount:
+            return (None, None, None)
+
+        amount = sign * float(amt_node[0].text)
+
+        if ccy is None:
+            return (amount, None, None)
+
+        # TODO : May need to search the currency exchange elsewhere
+        currency_exchange_node = node.xpath(
+            "./ns:AmtDtls/ns:CntrValAmt/ns:CcyXchg", namespaces={"ns": ns}
+        )
+        if not currency_exchange_node:
+            return (amount, None, None)
+
+        foreign_currency = (
+            currency_exchange_node[0]
+            .xpath("./ns:SrcCcy", namespaces={"ns": ns})[0]
+            .text
+        )
+        parsed_foreign_currency = (
+            self.env["res.currency"].search([["name", "ilike", foreign_currency]])[0].id
+            or None
+        )
+        foreign_amt_node = node.xpath(
+            "./ns:AmtDtls/ns:TxAmt/ns:Amt", namespaces={"ns": ns}
+        )
+        if not foreign_amt_node:
+            return (amount, None, None)
+        amount_currency = sign * float(foreign_amt_node[0].text)
+
+        return (amount, amount_currency, parsed_foreign_currency)
 
     def add_value_from_node(self, ns, node, xpath_str, obj, attr_name, join_str=None):
         """Add value to object from first or all nodes found with xpath.
@@ -53,7 +97,7 @@ class CamtParser(models.AbstractModel):
                 obj[attr_name] = attr_value
                 break
 
-    def parse_transaction_details(self, ns, node, transaction):
+    def parse_transaction_details(self, ns, node, transaction, currency):
         """Parse TxDtls node."""
         # message
         self.add_value_from_node(
@@ -180,9 +224,20 @@ class CamtParser(models.AbstractModel):
             transaction,
             "ref",
         )
-        amount = self.parse_amount(ns, node)
-        if amount != 0.0:
+        amount, amount_currency, foreign_currency = self.parse_amount(
+            ns, node, currency
+        )
+        if amount != 0.0 and amount is not None:
             transaction["amount"] = amount
+
+        if (
+            amount_currency != 0.0
+            and amount_currency is not None
+            and foreign_currency is not None
+        ):
+            transaction["amount_currency"] = amount_currency
+            transaction["foreign_currency_id"] = foreign_currency
+
         # remote party values
         party_type = "Dbtr"
         party_type_node = node.xpath("../../ns:CdtDbtInd", namespaces={"ns": ns})
@@ -270,9 +325,21 @@ class CamtParser(models.AbstractModel):
             "transaction_type": {},
         }  # fallback defaults
         self.add_value_from_node(ns, node, "./ns:BookgDt/ns:Dt", transaction, "date")
-        amount = self.parse_amount(ns, node)
-        if amount != 0.0:
+
+        amount, amount_currency, foreign_currency = self.parse_amount(
+            ns, node, currency
+        )
+        if amount != 0.0 and amount is not None:
             transaction["amount"] = amount
+
+        if (
+            amount_currency != 0.0
+            and amount_currency is not None
+            and foreign_currency is not None
+        ):
+            transaction["amount_currency"] = amount_currency
+            transaction["foreign_currency_id"] = foreign_currency
+
         self.add_value_from_node(
             ns,
             node,
@@ -334,7 +401,7 @@ class CamtParser(models.AbstractModel):
         transaction_base = transaction
         for node in details_nodes:
             transaction = transaction_base.copy()
-            self.parse_transaction_details(ns, node, transaction)
+            self.parse_transaction_details(ns, node, transaction, currency)
             self.generate_narration(transaction)
             yield transaction
 
@@ -366,8 +433,8 @@ class CamtParser(models.AbstractModel):
                     if not end_balance_node:
                         end_balance_node = balance_node[-1]
         return (
-            self.parse_amount(ns, start_balance_node),
-            self.parse_amount(ns, end_balance_node),
+            self.parse_amount(ns, start_balance_node)[0],
+            self.parse_amount(ns, end_balance_node)[0],
         )
 
     def parse_statement(self, ns, node):
@@ -398,7 +465,7 @@ class CamtParser(models.AbstractModel):
         entry_nodes = node.xpath("./ns:Ntry", namespaces={"ns": ns})
         transactions = []
         for entry_node in entry_nodes:
-            transactions.extend(self.parse_entry(ns, entry_node))
+            transactions.extend(self.parse_entry(ns, entry_node, result["currency"]))
         result["transactions"] = transactions
         result["date"] = None
         if transactions:

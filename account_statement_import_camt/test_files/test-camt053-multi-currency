@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04">
+<BkToCstmrStmt>
+	<GrpHdr>
+		<MsgId>CAMT053_20210915_004838403_OIE4KJJP</MsgId>
+		<CreDtTm>2021-09-15T00:48:38.403+02:00</CreDtTm>
+		<MsgPgntn>
+			<PgNb>1</PgNb>
+			<LastPgInd>true</LastPgInd>
+		</MsgPgntn>
+		<AddtlInf>SPS/1.7/PROD</AddtlInf>
+	</GrpHdr>
+	<Stmt>
+		<Id>47608f88362e485da1eaaa654ab4f84b</Id>
+		<ElctrncSeqNb>45</ElctrncSeqNb>
+		<CreDtTm>2021-09-15T00:48:38.432+02:00</CreDtTm>
+		<FrToDt>
+			<FrDtTm>2021-09-14T00:00:00+02:00</FrDtTm>
+			<ToDtTm>2021-09-14T23:59:00+02:00</ToDtTm>
+		</FrToDt>
+		<Acct>
+			<Id>
+				<IBAN>CH1904835028789771000</IBAN>
+			</Id>
+			<Ccy>CHF</Ccy>
+			<Ownr>
+				<Nm>Ass. Générale des Etudiants de l'</Nm>
+				<PstlAdr>
+					<AdrLine>Lausanne</AdrLine>
+				</PstlAdr>
+			</Ownr>
+			<Svcr>
+				<FinInstnId>
+					<BICFI>CRESCHZZ80A</BICFI>
+					<Nm>CREDIT SUISSE (Switzerland) Ltd.</Nm>
+					<Othr>
+						<Id>CHE-116.285.487 MWST</Id>
+						<Issr>VAT-ID</Issr>
+					</Othr>
+				</FinInstnId>
+			</Svcr>
+		</Acct>
+		<Bal>
+			<Tp>
+				<CdOrPrtry>
+					<Cd>OPBD</Cd>
+				</CdOrPrtry>
+			</Tp>
+			<Amt Ccy="CHF">350777.85</Amt>
+			<CdtDbtInd>CRDT</CdtDbtInd>
+			<Dt>
+				<Dt>2021-09-14</Dt>
+			</Dt>
+		</Bal>
+		<Bal>
+			<Tp>
+				<CdOrPrtry>
+					<Cd>CLAV</Cd>
+				</CdOrPrtry>
+			</Tp>
+			<Amt Ccy="CHF">350332.64</Amt>
+			<CdtDbtInd>CRDT</CdtDbtInd>
+			<Dt>
+				<Dt>2021-09-14</Dt>
+			</Dt>
+		</Bal>
+		<Bal>
+			<Tp>
+				<CdOrPrtry>
+					<Cd>CLBD</Cd>
+				</CdOrPrtry>
+			</Tp>
+			<Amt Ccy="CHF">350332.64</Amt>
+			<CdtDbtInd>CRDT</CdtDbtInd>
+			<Dt>
+				<Dt>2021-09-14</Dt>
+			</Dt>
+		</Bal>
+		<TxsSummry>
+			<TtlNtries>
+				<NbOfNtries>2</NbOfNtries>
+				<Sum>713.21</Sum>
+				<TtlNetNtry>
+					<Amt>445.21</Amt>
+					<CdtDbtInd>DBIT</CdtDbtInd>
+				</TtlNetNtry>
+			</TtlNtries>
+			<TtlCdtNtries>
+				<NbOfNtries>1</NbOfNtries>
+				<Sum>134.00</Sum>
+			</TtlCdtNtries>
+			<TtlDbtNtries>
+				<NbOfNtries>1</NbOfNtries>
+				<Sum>579.21</Sum>
+			</TtlDbtNtries>
+		</TxsSummry>
+		<Ntry>
+			<Amt Ccy="CHF">579.21</Amt>
+			<CdtDbtInd>DBIT</CdtDbtInd>
+			<RvslInd>false</RvslInd>
+			<Sts>BOOK</Sts>
+			<BookgDt>
+				<Dt>2021-09-14</Dt>
+			</BookgDt>
+			<ValDt>
+				<Dt>2021-09-14</Dt>
+			</ValDt>
+			<AcctSvcrRef>DNXK210913CS36481/1001</AcctSvcrRef>
+			<BkTxCd>
+				<Domn>
+					<Cd>PMNT</Cd>
+					<Fmly>
+						<Cd>ICDT</Cd>
+						<SubFmlyCd>ESCT</SubFmlyCd>
+					</Fmly>
+				</Domn>
+			</BkTxCd>
+			<AmtDtls>
+				<InstdAmt>
+					<Amt Ccy="EUR">522.39</Amt>
+				</InstdAmt>
+				<TxAmt>
+					<Amt Ccy="EUR">522.39</Amt>
+				</TxAmt>
+				<CntrValAmt>
+					<Amt Ccy="CHF">579.21</Amt>
+					<CcyXchg>
+						<SrcCcy>EUR</SrcCcy>
+						<TrgtCcy>CHF</TrgtCcy>
+						<XchgRate>1.1087693103</XchgRate>
+						<QtnDt>2021-09-14T00:00:00.000+02:00</QtnDt>
+					</CcyXchg>
+				</CntrValAmt>
+			</AmtDtls>
+			<NtryDtls>
+				<TxDtls>
+					<Refs>
+						<MsgId>08b4f098bba74e96848a85e7a7b4585a</MsgId>
+						<AcctSvcrRef>DNXK-210913-CS-36481</AcctSvcrRef>
+						<PmtInfId>DNCS-20210913-IXN0</PmtInfId>
+						<InstrId>DNCS-20210913-IXN0-TXN0</InstrId>
+						<EndToEndId>SP-98803960-0</EndToEndId>
+					</Refs>
+					<Amt Ccy="EUR">522.39</Amt>
+					<CdtDbtInd>DBIT</CdtDbtInd>
+					<RltdPties>
+						<Cdtr>
+							<Nm>Batelier</Nm>
+							<PstlAdr>
+								<AdrLine>32 rue Gallieni</AdrLine>
+								<AdrLine>92100 Boulogne-Billancourt</AdrLine>
+							</PstlAdr>
+						</Cdtr>
+						<CdtrAcct>
+							<Id>
+								<IBAN>FR7616806051006610853101177</IBAN>
+							</Id>
+						</CdtrAcct>
+					</RltdPties>
+					<RltdAgts>
+						<CdtrAgt>
+							<FinInstnId>
+								<BICFI>AGRIFRPP868</BICFI>
+								<Nm>CREDIT AGRICOLE</Nm>
+								<PstlAdr>
+									<Ctry>FR</Ctry>
+									<AdrLine>3 AVENUE DE LA LIBERATION    63000 </AdrLine>
+									<AdrLine>CLERMONT FERRAND FR</AdrLine>
+								</PstlAdr>
+							</FinInstnId>
+						</CdtrAgt>
+					</RltdAgts>
+					<RmtInf>
+						<Ustrd>Devis DEV-01387</Ustrd>
+					</RmtInf>
+				</TxDtls>
+			</NtryDtls>
+		</Ntry>
+		<Ntry>
+			<Amt Ccy="CHF">134.00</Amt>
+			<CdtDbtInd>CRDT</CdtDbtInd>
+			<RvslInd>false</RvslInd>
+			<Sts>BOOK</Sts>
+			<BookgDt>
+				<Dt>2021-09-14</Dt>
+			</BookgDt>
+			<ValDt>
+				<Dt>2021-09-14</Dt>
+			</ValDt>
+			<AcctSvcrRef>80XM210914CS02210/1001</AcctSvcrRef>
+			<BkTxCd>
+				<Domn>
+					<Cd>PMNT</Cd>
+					<Fmly>
+						<Cd>RCDT</Cd>
+						<SubFmlyCd>DMCT</SubFmlyCd>
+					</Fmly>
+				</Domn>
+			</BkTxCd>
+			<AmtDtls>
+				<TxAmt>
+					<Amt Ccy="CHF">134.00</Amt>
+				</TxAmt>
+			</AmtDtls>
+			<NtryDtls>
+				<TxDtls>
+					<Refs>
+						<MsgId>13SR-210914-MS-63566</MsgId>
+						<AcctSvcrRef>80XM-210914-CS-02210</AcctSvcrRef>
+						<PmtInfId>13SR-210914-MS-63566</PmtInfId>
+						<EndToEndId>1050079910</EndToEndId>
+					</Refs>
+					<Amt Ccy="CHF">134.00</Amt>
+					<CdtDbtInd>CRDT</CdtDbtInd>
+					<RltdPties>
+						<Dbtr>
+							<Nm>EPFL</Nm>
+							<PstlAdr>
+								<StrtNm>Station</StrtNm>
+								<BldgNb>7</BldgNb>
+								<PstCd>1015</PstCd>
+								<TwnNm>Lausanne</TwnNm>
+								<Ctry>CH</Ctry>
+							</PstlAdr>
+						</Dbtr>
+					</RltdPties>
+					<RmtInf>
+						<Ustrd>/INV/09.2021/01 7.9.2021</Ustrd>
+					</RmtInf>
+				</TxDtls>
+			</NtryDtls>
+		</Ntry>
+	</Stmt>
+</BkToCstmrStmt>
+</Document>

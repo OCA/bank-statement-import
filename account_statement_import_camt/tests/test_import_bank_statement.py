@@ -55,6 +55,10 @@ class TestParser(TransactionCase):
     def test_parse_no_ntry(self):
         self._do_parse_test("test-camt053-no-ntry", "golden-camt053-no-ntry.pydata")
 
+    def test_multi_currency(self):
+        self._do_parse_test(
+            "test-camt053-multi-currency", "golden-camt053-multi-currency.pydata"
+        )
 
 class TestImport(TransactionCase):
     """Run test to import camt import."""
