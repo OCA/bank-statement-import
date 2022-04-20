@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [account_bank_statement_import_online](account_bank_statement_import_online/) | 13.0.1.0.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
 [account_bank_statement_import_online_paypal](account_bank_statement_import_online_paypal/) | 13.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
 [account_bank_statement_import_online_ponto](account_bank_statement_import_online_ponto/) | 13.0.1.0.1 |  | Online Bank Statements: MyPonto.com
+[account_bank_statement_import_online_qonto](account_bank_statement_import_online_qonto/) | 13.0.1.0.0 |  | Online Bank Statements: Qonto
 [account_bank_statement_import_online_transferwise](account_bank_statement_import_online_transferwise/) | 13.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for Wise.com (TransferWise.com)
 [account_bank_statement_import_paypal](account_bank_statement_import_paypal/) | 13.0.1.0.1 |  | Import PayPal CSV files as Bank Statements in Odoo
 [account_bank_statement_import_transfer_move](account_bank_statement_import_transfer_move/) | 13.0.1.0.0 |  | Bank Account Transfer Line
