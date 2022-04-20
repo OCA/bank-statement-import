@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo13-addon-account_bank_statement_import_online',
         'odoo13-addon-account_bank_statement_import_online_paypal',
         'odoo13-addon-account_bank_statement_import_online_ponto',
+        'odoo13-addon-account_bank_statement_import_online_qonto',
         'odoo13-addon-account_bank_statement_import_online_transferwise',
         'odoo13-addon-account_bank_statement_import_paypal',
         'odoo13-addon-account_bank_statement_import_transfer_move',
