@@ -11,6 +11,7 @@
     "website": "https://github.com/OCA/bank-statement-import",
     "depends": ["account"],
     "data": [
+        "security/ir.model.access.csv",
         "wizards/account_statement_line_create_view.xml",
         "views/account_bank_statement_view.xml",
     ],

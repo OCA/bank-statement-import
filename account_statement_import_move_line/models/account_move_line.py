@@ -19,11 +19,12 @@ class AccountMoveLine(models.Model):
             "amount": amount,
             "partner_id": self.partner_id.id,
             "statement_id": statement.id,
-            "ref": self.ref,
+            "payment_ref": self.move_id.payment_reference,
             "date": self.date_maturity,
-            "amount_currency": self.amount_currency,
-            "currency_id": self.currency_id.id,
         }
+        if self.currency_id != self.env.company.currency_id:
+            vals["foreign_currency_id"] = self.currency_id.id
+            vals["amount_currency"] = self.amount_currency
         return vals
 
     def create_statement_line_from_move_line(self, statement):

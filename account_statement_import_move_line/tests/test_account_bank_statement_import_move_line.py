@@ -22,17 +22,32 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
                 "user_type_id": cls.account_type.id,
             }
         )
+        cls.a_suspense = cls.env["account.account"].create(
+            {
+                "code": "TSA",
+                "name": "Test Suspense Account",
+                "user_type_id": cls.account_type.id,
+            }
+        )
         cls.partner = cls.env["res.partner"].create(
             {"name": "Test Partner 2", "parent_id": False}
         )
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test Journal", "type": "sale", "code": "TJS0"}
         )
+        cls.bank_journal = cls.env["account.journal"].create(
+            {
+                "name": "Bank Journal - (test)",
+                "code": "TBNK",
+                "type": "bank",
+                "suspense_account_id": cls.a_suspense.id,
+            }
+        )
         cls.invoice = cls.env["account.move"].create(
             {
                 "name": "Test Invoice 3",
                 "partner_id": cls.partner.id,
-                "type": "out_invoice",
+                "move_type": "out_invoice",
                 "journal_id": cls.journal.id,
                 "invoice_line_ids": [
                     (
@@ -49,11 +64,11 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
             }
         )
         cls.statement = cls.env["account.bank.statement"].create(
-            {"journal_id": cls.journal.id}
+            {"journal_id": cls.bank_journal.id}
         )
 
     def test_global(self):
-        self.invoice.post()
+        self.invoice.action_post()
         self.assertTrue(self.invoice.id)
         wizard_o = self.env["account.statement.line.create"]
         context = wizard_o._context.copy()
