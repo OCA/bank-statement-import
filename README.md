@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [account_statement_import_camt](account_statement_import_camt/) | 15.0.1.0.0 |  | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 15.0.1.0.0 |  | Bank Account Camt54 Import
 [account_statement_import_online](account_statement_import_online/) | 15.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
+[account_statement_import_online_ponto](account_statement_import_online_ponto/) | 15.0.1.0.0 |  | Online Bank Statements: MyPonto.com
 
 [//]: # (end addons)
 
