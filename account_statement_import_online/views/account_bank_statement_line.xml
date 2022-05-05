@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_bank_statement_line_form" model="ir.ui.view">
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import.view_bank_statement_line_form"
+        />
+        <field name="arch" type="xml">
+            <field name="move_id" position="after">
+                <field name="partner_name" />
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <group colspan="4" col="1">
+                    <separator string="Raw Data" />
+                    <field
+                        name="online_raw_data"
+                        nolabel="1"
+                        groups="base.group_no_one"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
