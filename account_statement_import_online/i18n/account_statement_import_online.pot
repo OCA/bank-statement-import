@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__allow_empty_statements
-msgid "Allow empty statements"
+msgid "Allow Empty Statements"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -122,8 +122,6 @@ msgid "Day(s)"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__display_name
 msgid "Display Name"
@@ -133,18 +131,13 @@ msgstr ""
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid ""
-"Failed to obtain statement data for period since %s until %s: %s. See server"
-" logs for more details."
+"Failed to obtain statement data for period since {since} until {until}: "
+"{exception}. See server logs for more details."
 msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_follower_ids
 msgid "Followers"
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_channel_ids
-msgid "Followers (Channels)"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -158,13 +151,16 @@ msgid "From"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__hours
 msgid "Hour(s)"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__id
 msgid "ID"
@@ -217,8 +213,6 @@ msgid "Key"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard____last_update
 msgid "Last Modified on"
