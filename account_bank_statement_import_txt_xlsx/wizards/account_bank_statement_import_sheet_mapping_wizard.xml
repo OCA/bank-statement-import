@@ -151,12 +151,21 @@
             </xpath>
         </field>
     </record>
-    <act_window
+    <record
         id="action_account_bank_statement_import_sheet_mapping_wizard"
-        name="Import Mapping"
-        res_model="account.bank.statement.import.sheet.mapping.wizard"
-        binding_model="account.bank.statement.import.sheet.mapping"
-        view_mode="form"
-        target="new"
-    />
+        model="ir.actions.act_window"
+    >
+        <field name="name">Import Mapping</field>
+        <field
+            name="res_model"
+        >account.bank.statement.import.sheet.mapping.wizard</field>
+        <field
+            name="binding_model_id"
+            ref="model_account_bank_statement_import_sheet_mapping"
+        />
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">list,form</field>
+    </record>
 </odoo>

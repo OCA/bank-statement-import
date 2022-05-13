@@ -36,7 +36,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             values = sheet.row_values(0)
             return [str(value) for value in values]
         except xlrd.XLRDError:
-            pass
+            _logger.exception("An error ocurss with the file")
 
         data = StringIO(data_file.decode(encoding or "utf-8"))
         csv_data = reader(data, **csv_options)
