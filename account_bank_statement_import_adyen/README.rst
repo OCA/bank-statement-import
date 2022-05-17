@@ -25,10 +25,6 @@ Adyen statement import
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-======================
-Adyen statement import
-======================
-
 This module processes Adyen transaction statements in xlsx format. You can
 import the statements in a dedicated journal. Reconcile your sale invoices
 with the credit transations. Reconcile the aggregated counterpart
