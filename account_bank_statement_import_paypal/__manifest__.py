@@ -21,11 +21,6 @@
         'multi_step_wizard',
         'web_widget_dropdown_dynamic',
     ],
-    'external_dependencies': {
-        'python': [
-            'csv',
-        ]
-    },
     'data': [
         'security/ir.model.access.csv',
         'data/maps.xml',
