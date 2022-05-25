@@ -14,7 +14,7 @@ from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common
 
-_module_ns = "odoo.addons.account_bank_statement_import_online_paypal"
+_module_ns = "odoo.addons.account_statement_import_online_paypal"
 _provider_class = (
     _module_ns
     + ".models.online_bank_statement_provider_paypal"
@@ -65,12 +65,16 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.paypal_parse_transaction = lambda payload: (
             Provider._paypal_transaction_to_lines(
                 Provider._paypal_preparse_transaction(
-                    json.loads(payload, parse_float=Decimal,)
+                    json.loads(
+                        payload,
+                        parse_float=Decimal,
+                    )
                 )
             )
         )
         self.mock_token = lambda: mock.patch(
-            _provider_class + "._paypal_get_token", return_value="--TOKEN--",
+            _provider_class + "._paypal_get_token",
+            return_value="--TOKEN--",
         )
 
     def test_good_token(self):
@@ -99,7 +103,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         )
         token = None
         with mock.patch(
-            _provider_class + "._paypal_retrieve", return_value=mocked_response,
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_response,
         ):
             token = provider._paypal_get_token()
         self.assertEqual(token, "---TOKEN---")
@@ -129,9 +134,12 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             parse_float=Decimal,
         )
         with mock.patch(
-            _provider_class + "._paypal_retrieve", return_value=mocked_response,
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_response,
         ):
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(
+                UserError, "PayPal App features are configured incorrectly!"
+            ):
                 provider._paypal_get_token()
 
     def test_bad_token_type(self):
@@ -159,9 +167,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             parse_float=Decimal,
         )
         with mock.patch(
-            _provider_class + "._paypal_retrieve", return_value=mocked_response,
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_response,
         ):
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(UserError, "Invalid token type!"):
                 provider._paypal_get_token()
 
     def test_no_token(self):
@@ -188,9 +197,12 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             parse_float=Decimal,
         )
         with mock.patch(
-            _provider_class + "._paypal_retrieve", return_value=mocked_response,
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_response,
         ):
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(
+                UserError, "Failed to acquire token using Client ID and Secret!"
+            ):
                 provider._paypal_get_token()
 
     def test_no_data_on_monday(self):
@@ -237,8 +249,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         }
     ],
     "account_id": "1234567890",
-    "as_of_time": "2019-08-01T00:00:00+0000",
-    "last_refresh_time": "2019-08-01T00:00:00+0000"
+    "as_of_time": "2022-08-01T00:00:00+0000",
+    "last_refresh_time": "2022-08-01T00:00:00+0000"
 }"""
         )
         with mock.patch(
@@ -247,7 +259,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         ), self.mock_token():
             data = provider.with_context(
                 test_account_bank_statement_import_online_paypal_monday=True,
-            )._obtain_statement_data(self.now - relativedelta(hours=1), self.now,)
+            )._obtain_statement_data(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
 
         self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
 
@@ -266,13 +281,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         provider = journal.online_bank_statement_provider_id
         mocked_response = UrlopenRetValMock(
             """{
-    "message": "MESSAGE",
-    "name": "ERROR"
-}""",
+        "message": "MESSAGE",
+        "name": "ERROR"
+    }""",
             throw=True,
         )
         with mock.patch(
-            _provider_class + "._paypal_urlopen", return_value=mocked_response,
+            _provider_class + "._paypal_urlopen",
+            return_value=mocked_response,
         ):
             with self.assertRaises(UserError):
                 provider._paypal_retrieve("https://url", "")
@@ -298,7 +314,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             throw=True,
         )
         with mock.patch(
-            _provider_class + "._paypal_urlopen", return_value=mocked_response,
+            _provider_class + "._paypal_urlopen",
+            return_value=mocked_response,
         ):
             with self.assertRaises(UserError):
                 provider._paypal_retrieve("https://url", "")
@@ -320,9 +337,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             """{
     "transaction_details": [],
     "account_number": "1234567890",
-    "start_date": "2019-08-01T00:00:00+0000",
-    "end_date": "2019-08-01T00:00:00+0000",
-    "last_refreshed_datetime": "2019-09-01T00:00:00+0000",
+    "start_date": "2022-08-01T00:00:00+0000",
+    "end_date": "2022-08-01T00:00:00+0000",
+    "last_refreshed_datetime": "2022-09-01T00:00:00+0000",
     "page": 1,
     "total_items": 0,
     "total_pages": 0
@@ -350,8 +367,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         }
     ],
     "account_id": "1234567890",
-    "as_of_time": "2019-08-01T00:00:00+0000",
-    "last_refresh_time": "2019-08-01T00:00:00+0000"
+    "as_of_time": "2022-08-01T00:00:00+0000",
+    "last_refresh_time": "2022-08-01T00:00:00+0000"
 }""",
             parse_float=Decimal,
         )
@@ -360,7 +377,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             side_effect=[mocked_response_1, mocked_response_2],
         ), self.mock_token():
             data = provider._obtain_statement_data(
-                self.now - relativedelta(hours=1), self.now,
+                self.now - relativedelta(hours=1),
+                self.now,
             )
 
         self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
@@ -382,9 +400,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             """{
     "transaction_details": [],
     "account_number": "1234567890",
-    "start_date": "2019-08-01T00:00:00+0000",
-    "end_date": "2019-08-01T00:00:00+0000",
-    "last_refreshed_datetime": "2019-09-01T00:00:00+0000",
+    "start_date": "2022-08-01T00:00:00+0000",
+    "end_date": "2022-08-01T00:00:00+0000",
+    "last_refreshed_datetime": "2022-09-01T00:00:00+0000",
     "page": 1,
     "total_items": 0,
     "total_pages": 0
@@ -392,11 +410,17 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             parse_float=Decimal,
         )
         with mock.patch(
-            _provider_class + "._paypal_retrieve", return_value=mocked_response,
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_response,
         ), self.mock_token():
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(
+                UserError,
+                "PayPal allows retrieving transactions only up to 3 years in "
+                "the past. Please import older transactions manually.",
+            ):
                 provider._obtain_statement_data(
-                    self.now - relativedelta(years=5), self.now,
+                    self.now - relativedelta(years=5),
+                    self.now,
                 )
 
     def test_pull(self):
@@ -419,8 +443,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             "paypal_account_id": "1234567890",
             "transaction_id": "1234567890",
             "transaction_event_code": "T1234",
-            "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-            "transaction_updated_date": "2019-08-01T00:00:00+0000",
+            "transaction_initiation_date": "2022-08-01T00:00:00+0000",
+            "transaction_updated_date": "2022-08-01T00:00:00+0000",
             "transaction_amount": {
                 "currency_code": "USD",
                 "value": "1000.00"
@@ -461,8 +485,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             "paypal_account_id": "1234567890",
             "transaction_id": "1234567891",
             "transaction_event_code": "T1234",
-            "transaction_initiation_date": "2019-08-02T00:00:00+0000",
-            "transaction_updated_date": "2019-08-02T00:00:00+0000",
+            "transaction_initiation_date": "2022-08-02T00:00:00+0000",
+            "transaction_updated_date": "2022-08-02T00:00:00+0000",
             "transaction_amount": {
                 "currency_code": "USD",
                 "value": "1000.00"
@@ -500,9 +524,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "incentive_info": {}
     }],
     "account_number": "1234567890",
-    "start_date": "2019-08-01T00:00:00+0000",
-    "end_date": "2019-08-02T00:00:00+0000",
-    "last_refreshed_datetime": "2019-09-01T00:00:00+0000",
+    "start_date": "2022-08-01T00:00:00+0000",
+    "end_date": "2022-08-02T00:00:00+0000",
+    "last_refreshed_datetime": "2022-09-01T00:00:00+0000",
     "page": 1,
     "total_items": 1,
     "total_pages": 1
@@ -510,33 +534,35 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             parse_float=Decimal,
         )
         with mock.patch(
-            _provider_class + "._paypal_retrieve", return_value=mocked_response,
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_response,
         ), self.mock_token():
             data = provider._obtain_statement_data(
-                datetime(2019, 8, 1), datetime(2019, 8, 2),
+                datetime(2022, 8, 1),
+                datetime(2022, 8, 2),
             )
 
         self.assertEqual(len(data[0]), 2)
         self.assertEqual(
             data[0][0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-1659312000",
             },
         )
         self.assertEqual(
             data[0][1],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "-100.00",
                 "name": "Fee for Invoice 1",
                 "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
-                "unique_import_id": "1234567890-1564617600-FEE",
+                "unique_import_id": "1234567890-1659312000-FEE",
             },
         )
         self.assertEqual(data[1], {"balance_start": 0.0, "balance_end_real": 900.0})
@@ -548,8 +574,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "2022-08-01T00:00:00+0000",
+        "transaction_updated_date": "2022-08-01T00:00:00+0000",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -591,12 +617,12 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-1659312000",
             },
         )
 
@@ -607,8 +633,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "2022-08-01T00:00:00+0000",
+        "transaction_updated_date": "2022-08-01T00:00:00+0000",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -650,12 +676,12 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-1659312000",
             },
         )
 
@@ -666,8 +692,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "2022-08-01T00:00:00+0000",
+        "transaction_updated_date": "2022-08-01T00:00:00+0000",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -709,23 +735,23 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-1659312000",
             },
         )
         self.assertEqual(
             lines[1],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "-100.00",
                 "name": "Fee for Invoice 1",
                 "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
-                "unique_import_id": "1234567890-1564617600-FEE",
+                "unique_import_id": "1234567890-1659312000-FEE",
             },
         )
 
@@ -736,8 +762,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "2022-08-01T00:00:00+0000",
+        "transaction_updated_date": "2022-08-01T00:00:00+0000",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -775,11 +801,11 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-1659312000",
             },
         )
