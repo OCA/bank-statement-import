@@ -230,8 +230,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
         )
         if not first_transaction:
             raise UserError(
-                _("Failed to resolve transaction %s (%s)")
-                % (first_transaction_id, first_transaction_date)
+                _(
+                    "Failed to resolve transaction %(first_transaction_id)s "
+                    "(%(first_transaction_date)s)",
+                    first_transaction_id=first_transaction_id,
+                    first_transaction_date=first_transaction_date,
+                )
             )
         balance_start = self._paypal_get_transaction_ending_balance(first_transaction)
         balance_start -= self._paypal_get_transaction_total_amount(first_transaction)
@@ -245,8 +249,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
         )
         if not last_transaction:
             raise UserError(
-                _("Failed to resolve transaction %s (%s)")
-                % (last_transaction_id, last_transaction_date)
+                _(
+                    "Failed to resolve transaction %(last_transaction_id)s "
+                    "(%(last_transaction_date)s)",
+                    last_transaction_id=last_transaction_id,
+                    last_transaction_date=last_transaction_date,
+                )
             )
         balance_end = self._paypal_get_transaction_ending_balance(last_transaction)
 
@@ -496,7 +504,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     "total_pages": 0,
                 }
 
-            raise self._paypal_decode_error(content) or e
+            raise self._paypal_decode_error(content) or e from None
         return json.loads(content)
 
     @api.model
