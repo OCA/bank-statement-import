@@ -144,7 +144,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             _provider_class + "._paypal_retrieve",
             return_value=mocked_response,
         ):
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(
+                UserError, "PayPal App features are configured incorrectly!"
+            ):
                 provider._paypal_get_token()
 
     def test_bad_token_type(self):
@@ -175,7 +177,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             _provider_class + "._paypal_retrieve",
             return_value=mocked_response,
         ):
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(UserError, "Invalid token type!"):
                 provider._paypal_get_token()
 
     def test_no_token(self):
@@ -205,7 +207,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             _provider_class + "._paypal_retrieve",
             return_value=mocked_response,
         ):
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(
+                UserError, "Failed to acquire token using Client ID and Secret!"
+            ):
                 provider._paypal_get_token()
 
     def test_no_data_on_monday(self):
@@ -434,7 +438,11 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             _provider_class + "._paypal_retrieve",
             return_value=mocked_response,
         ), self.mock_token():
-            with self.assertRaises(Exception):
+            with self.assertRaisesRegex(
+                UserError,
+                "PayPal allows retrieving transactions only up to 3 years in "
+                "the past. Please import older transactions manually.",
+            ):
                 provider._obtain_statement_data(
                     self.now - relativedelta(years=5),
                     self.now,
