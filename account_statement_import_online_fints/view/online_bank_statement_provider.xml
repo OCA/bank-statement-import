@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group name="fints" attrs="{'invisible':[('service','!=','fints')]}">
+                    <field name="blz" string="Bank Code" />
+                    <field name="username" string="User Name"/>
+                    <field name="password" string="Password" />
+                    <field name="api_base" string="FinTS API Endpoint"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
