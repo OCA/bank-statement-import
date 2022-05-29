@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo14-addon-account_statement_import_move_line',
         'odoo14-addon-account_statement_import_ofx',
         'odoo14-addon-account_statement_import_online',
+        'odoo14-addon-account_statement_import_online_paypal',
         'odoo14-addon-account_statement_import_online_ponto',
         'odoo14-addon-account_statement_import_paypal',
         'odoo14-addon-account_statement_import_txt_xlsx',
