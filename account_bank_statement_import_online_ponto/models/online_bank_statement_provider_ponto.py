@@ -212,7 +212,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 'sequence': sequence,
                 'date': date,
                 'ref': re.sub(' +', ' ', ref) or '/',
-                'name': attributes.get('remittanceInformation', ref),
+                'name': attributes.get('remittanceInformation') or ref,
                 'unique_import_id': transaction['id'],
                 'amount': attributes['amount'],
             }
