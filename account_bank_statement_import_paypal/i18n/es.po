@@ -126,7 +126,7 @@ msgid "\"Type\" column"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:43
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:39
 #, python-format
 msgid "%s: %s"
 msgstr ""
@@ -193,7 +193,7 @@ msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:253
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:249
 #, python-format
 msgid "Fee for %s"
 msgstr "Tasa para %s"
@@ -237,7 +237,7 @@ msgid "Imported Mapping"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:219
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:215
 #, python-format
 msgid "Invoice %s"
 msgstr "Factura %s"
@@ -321,7 +321,7 @@ msgid "Time Format"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
-#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:258
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:254
 #, python-format
 msgid "Transaction fee for %s"
 msgstr "Tasa de transacción para %s"
