@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [account_statement_import_online](account_statement_import_online/) | 14.0.2.1.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
 [account_statement_import_online_paypal](account_statement_import_online_paypal/) | 14.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
 [account_statement_import_online_ponto](account_statement_import_online_ponto/) | 14.0.1.1.0 |  | Online Bank Statements: MyPonto.com
+[account_statement_import_online_ponto_ing](account_statement_import_online_ponto_ing/) | 14.0.1.0.0 |  | Online Bank Statements: MyPonto.com ING customization
 [account_statement_import_paypal](account_statement_import_paypal/) | 14.0.1.0.0 |  | Import PayPal CSV files as Bank Statements in Odoo
 [account_statement_import_txt_xlsx](account_statement_import_txt_xlsx/) | 14.0.1.0.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Import TXT/CSV or XLSX files as Bank Statements in Odoo
 
