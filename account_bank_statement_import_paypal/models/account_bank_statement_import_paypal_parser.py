@@ -1,23 +1,19 @@
 # Copyright 2019 Tecnativa - Vicent Cubells
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import itertools
+import logging
 
-from odoo import api, models, _
-
+from csv import reader
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
 from os import path
-import itertools
 from pytz import timezone, utc
 
-import logging
-_logger = logging.getLogger(__name__)
+from odoo import api, models, _
 
-try:
-    from csv import reader
-except (ImportError, IOError) as err:
-    _logger.error(err)
+_logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImportPayPalParser(models.TransientModel):
