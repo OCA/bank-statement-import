@@ -316,14 +316,26 @@ class CamtParser(models.AbstractModel):
             ["%s: %s" % (key, val) for key, val in transaction["narration"].items()]
         )
 
-    def parse_entry(self, ns, node):
+    @api.model
+    def _check_transaction(self, transaction):
+        if "amount" not in transaction or transaction["amount"] is None:
+            raise UserError(
+                _(
+                    "Error when parsing statement line, could not find"
+                    "amount in the right currency (line %s)."
+                )
+                % transaction["ref"]
+            )
+
+    def parse_entry(self, ns, node, currency):
         """Parse an Ntry node and yield transactions"""
         transaction = {
             "payment_ref": "/",
-            "amount": 0,
+            "amount": None,
             "narration": {},
             "transaction_type": {},
         }  # fallback defaults
+
         self.add_value_from_node(ns, node, "./ns:BookgDt/ns:Dt", transaction, "date")
 
         amount, amount_currency, foreign_currency = self.parse_amount(
@@ -396,6 +408,7 @@ class CamtParser(models.AbstractModel):
         details_nodes = node.xpath("./ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
         if len(details_nodes) == 0:
             self.generate_narration(transaction)
+            self._check_transaction(transaction)
             yield transaction
             return
         transaction_base = transaction
@@ -403,9 +416,10 @@ class CamtParser(models.AbstractModel):
             transaction = transaction_base.copy()
             self.parse_transaction_details(ns, node, transaction, currency)
             self.generate_narration(transaction)
+            self._check_transaction(transaction)
             yield transaction
 
-    def get_balance_amounts(self, ns, node):
+    def get_balance_amounts(self, ns, node, ccy=None):
         """Return opening and closing balance.
 
         Depending on kind of balance and statement, the balance might be in a
@@ -433,8 +447,8 @@ class CamtParser(models.AbstractModel):
                     if not end_balance_node:
                         end_balance_node = balance_node[-1]
         return (
-            self.parse_amount(ns, start_balance_node)[0],
-            self.parse_amount(ns, end_balance_node)[0],
+            self.parse_amount(ns, start_balance_node, ccy)[0],
+            self.parse_amount(ns, end_balance_node, ccy)[0],
         )
 
     def parse_statement(self, ns, node):
@@ -460,7 +474,7 @@ class CamtParser(models.AbstractModel):
             "currency",
         )
         result["balance_start"], result["balance_end_real"] = self.get_balance_amounts(
-            ns, node
+            ns, node, result["currency"]
         )
         entry_nodes = node.xpath("./ns:Ntry", namespaces={"ns": ns})
         transactions = []

@@ -1,0 +1,193 @@
+<Document
+	xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04 camt.053.001.04.xsd">
+	<BkToCstmrStmt>
+		<GrpHdr>
+			<MsgId>20220414375204816306862</MsgId>
+			<CreDtTm>2022-04-15T01:37:16</CreDtTm>
+			<MsgPgntn>
+				<PgNb>1</PgNb>
+				<LastPgInd>true</LastPgInd>
+			</MsgPgntn>
+			<AddtlInf>SPS/1.7/PROD</AddtlInf>
+		</GrpHdr>
+		<Stmt>
+			<Id>20220414375204816306878</Id>
+			<ElctrncSeqNb>74</ElctrncSeqNb>
+			<CreDtTm>2022-04-15T01:37:16</CreDtTm>
+			<FrToDt>
+				<FrDtTm>2022-04-14T00:00:00</FrDtTm>
+				<ToDtTm>2022-04-14T23:59:59</ToDtTm>
+			</FrToDt>
+			<Acct>
+				<Id>
+					<IBAN>CH3809000000122887695</IBAN>
+				</Id>
+				<Ownr>
+					<Nm>Association Générale des Etudiant-e-s de l'Ecole Polytechnique Fédérale de Lausanne (EPFL) / AGEPoly Lausanne</Nm>
+				</Ownr>
+			</Acct>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>OPBD</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="CHF">253854.98</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2022-04-14</Dt>
+				</Dt>
+			</Bal>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>CLBD</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="CHF">254338.57</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2022-04-14</Dt>
+				</Dt>
+			</Bal>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>CLAV</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="CHF">254338.57</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2022-04-14</Dt>
+				</Dt>
+			</Bal>
+			<Ntry>
+			    <Amt Ccy="CHF">134.00</Amt>
+			    <CdtDbtInd>CRDT</CdtDbtInd>
+			    <RvslInd>false</RvslInd>
+			    <Sts>BOOK</Sts>
+			    <BookgDt>
+				    <Dt>2021-09-14</Dt>
+			    </BookgDt>
+			    <ValDt>
+				    <Dt>2021-09-14</Dt>
+			    </ValDt>
+			    <AcctSvcrRef>80XM210914CS02210/1001</AcctSvcrRef>
+			    <BkTxCd>
+				    <Domn>
+					    <Cd>PMNT</Cd>
+					    <Fmly>
+						    <Cd>RCDT</Cd>
+						    <SubFmlyCd>DMCT</SubFmlyCd>
+					    </Fmly>
+				    </Domn>
+			    </BkTxCd>
+			    <AmtDtls>
+				    <TxAmt>
+					    <Amt Ccy="CHF">134.00</Amt>
+				    </TxAmt>
+			    </AmtDtls>
+		    </Ntry>
+			<Ntry>
+				<!-- <Amt Ccy="CHF">483.59</Amt> this line removed to raise an error -->
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<RvslInd>false</RvslInd>
+				<Sts>BOOK</Sts>
+				<BookgDt>
+					<Dt>2022-04-14</Dt>
+				</BookgDt>
+				<ValDt>
+					<Dt>2022-04-14</Dt>
+				</ValDt>
+				<AcctSvcrRef>104220008K40KKRK</AcctSvcrRef>
+				<BkTxCd>
+					<Domn>
+						<Cd>PMNT</Cd>
+						<Fmly>
+							<Cd>RCDT</Cd>
+							<SubFmlyCd>AUTT</SubFmlyCd>
+						</Fmly>
+					</Domn>
+				</BkTxCd>
+				<NtryDtls>
+					<Btch>
+						<NbOfTxs>1</NbOfTxs>
+					</Btch>
+					<TxDtls>
+						<Refs>
+							<MsgId>TWINT20220412-101-Merchant</MsgId>
+							<AcctSvcrRef>220413CH08K40KKR</AcctSvcrRef>
+							<PmtInfId>TWINT20220412-101-Merchant-B1</PmtInfId>
+							<InstrId>dcdb33ee029b409a863ff597a0527e47</InstrId>
+							<EndToEndId>TWINT20220412-101-Merchant-B1</EndToEndId>
+							<Prtry>
+								<Tp>00</Tp>
+								<Ref>220413CH08K40KKR</Ref>
+							</Prtry>
+						</Refs>
+						<Amt Ccy="EUR">483.59</Amt> <!-- this line is crafted to raise an error -->
+						<CdtDbtInd>CRDT</CdtDbtInd>
+						<BkTxCd>
+							<Domn>
+								<Cd>PMNT</Cd>
+								<Fmly>
+									<Cd>RCDT</Cd>
+									<SubFmlyCd>AUTT</SubFmlyCd>
+								</Fmly>
+							</Domn>
+						</BkTxCd>
+						<RltdPties>
+							<Dbtr>
+								<Nm>TWINT Acquiring AG</Nm>
+								<PstlAdr>
+									<StrtNm>Stauffacherstrasse</StrtNm>
+									<BldgNb>41</BldgNb>
+									<PstCd>8004</PstCd>
+									<TwnNm>Zürich</TwnNm>
+									<Ctry>CH</Ctry>
+								</PstlAdr>
+							</Dbtr>
+							<DbtrAcct>
+								<Id>
+									<IBAN>CH6609000000313087410</IBAN>
+								</Id>
+							</DbtrAcct>
+							<CdtrAcct>
+								<Id>
+									<IBAN>CH3809000000122887695</IBAN>
+								</Id>
+							</CdtrAcct>
+						</RltdPties>
+						<RltdAgts>
+							<DbtrAgt>
+								<FinInstnId>
+									<BICFI>POFICHBEXXX</BICFI>
+									<Nm>POSTFINANCE AG</Nm>
+									<PstlAdr>
+										<AdrLine>MINGERSTRASSE , 20</AdrLine>
+										<AdrLine>3030 BERN</AdrLine>
+									</PstlAdr>
+								</FinInstnId>
+							</DbtrAgt>
+						</RltdAgts>
+						<RmtInf>
+							<Ustrd>999999 TWINT 1389eba4-c512-4970-86b</Ustrd>
+							<Ustrd>b-136079d90a42 Payout 20220413 </Ustrd>
+							<Ustrd> Gross: 490.00 Fees: -6.41</Ustrd>
+							<Strd>
+								<AddtlRmtInf>?REJECT?0</AddtlRmtInf>
+								<AddtlRmtInf>?ERROR?000</AddtlRmtInf>
+							</Strd>
+						</RmtInf>
+						<RltdDts>
+							<AccptncDtTm>2022-04-14T20:00:00</AccptncDtTm>
+						</RltdDts>
+					</TxDtls>
+				</NtryDtls>
+				<AddtlNtryInf>CRÉDIT CH6609000000313087410 EXPÉDITEUR: TWINT Acquiring AG Stauffacherstrasse 41 8004 Zürich COMMUNICATIONS: 999999 TWINT 1389eba4-c512-4970-86b b-136079d90a42 Payout 20220413 Gross: 490.00 Fees: -6.41 REFERENCES: TWINT20220412-101-Merchant-B1</AddtlNtryInf>
+			</Ntry>
+		</Stmt>
+	</BkToCstmrStmt>
+</Document>

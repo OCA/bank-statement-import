@@ -9,7 +9,38 @@
                      'amount_currency': -522.39,
                      'date': '2021-09-14',
                      'foreign_currency_id': 1,
+                     'narration': 'Partner Name (RltdPties/Nm): Batelier\n'
+                                  'Partner Account Number (RltdPties/Acct): Batelier\n'
+                                  'Transaction Date (BookgDt): 2021-09-14\n'
+                                  'Reference: SP-98803960-0\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-ICDT-ESCT\n'
+                                  'Reversal Indicator (RvslInd): false\n'
+                                  'Unstructured Reference (RmtInf/Ustrd): Devis DEV-01387\n'
+                                  'Msg Id (Refs/MsgId): 08b4f098bba74e96848a85e7a7b4585a\n'
+                                  'Account Servicer Reference (Refs/AcctSvcrRef): DNXK-210913-CS-36481\n'
+                                  'End To End Id (Refs/EndToEndId): SP-98803960-0\n'
+                                  'Instructed Id (Refs/InstrId): DNCS-20210913-IXN0-TXN0\n'
+                                  'Postal Address (PstlAdr): 32 rue Gallieni | 92100 Boulogne-Billancourt',
                      'partner_name': 'Batelier',
                      'payment_ref': 'Devis DEV-01387',
-                     'ref': 'SP-98803960-0'},
-                    {'amount': 134.0, 'date': '2021-09-14', 'partner_name': 'EPFL', 'payment_ref': '/INV/09.2021/01 7.9.2021', 'ref': '1050079910'}]}])
+                     'ref': 'SP-98803960-0',
+                     'transaction_type': 'PMNT-ICDT-ESCT'},
+                    {'amount': 134.0,
+                     'date': '2021-09-14',
+                     'narration': 'Partner Name (RltdPties/Nm): EPFL\n'
+                                  'Partner Account Number (RltdPties/Acct): EPFL\n'
+                                  'Transaction Date (BookgDt): 2021-09-14\n'
+                                  'Reference: 1050079910\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-RCDT-DMCT\n'
+                                  'Reversal Indicator (RvslInd): false\n'
+                                  'Unstructured Reference (RmtInf/Ustrd): /INV/09.2021/01 7.9.2021\n'
+                                  'Msg Id (Refs/MsgId): 13SR-210914-MS-63566\n'
+                                  'Account Servicer Reference (Refs/AcctSvcrRef): 80XM-210914-CS-02210\n'
+                                  'End To End Id (Refs/EndToEndId): 1050079910\n'
+                                  'Postal Address (PstlAdr): Station | 7 | 1015 | Lausanne | CH',
+                     'partner_name': 'EPFL',
+                     'payment_ref': '/INV/09.2021/01 7.9.2021',
+                     'ref': '1050079910',
+                     'transaction_type': 'PMNT-RCDT-DMCT'}]}])

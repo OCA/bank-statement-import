@@ -8,6 +8,7 @@ import pprint
 import tempfile
 from datetime import date
 
+from odoo.exceptions import UserError
 from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
 
@@ -59,6 +60,15 @@ class TestParser(TransactionCase):
         self._do_parse_test(
             "test-camt053-multi-currency", "golden-camt053-multi-currency.pydata"
         )
+
+    def test_raise_on_wrong_amount(self):
+        testfile = get_module_resource(
+            "account_statement_import_camt", "test_files", "test-camt053-wrong-amount"
+        )
+        with open(testfile, "rb") as data:
+            with self.assertRaises(UserError):
+                self.parser.parse(data.read())
+
 
 class TestImport(TransactionCase):
     """Run test to import camt import."""
