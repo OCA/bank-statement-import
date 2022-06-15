@@ -20,7 +20,7 @@ class AccountBankStatementImport(models.TransientModel):
         return stmts_vals
 
     def _complete_transaction(self, transaction):
-        """Try to find partner by searching invoice with reference."""
+        """Find partner by searching invoice with reference or so name."""
         if transaction.get("partner_id", False):
             return
         invoice_model = self.env["account.move"]
@@ -36,3 +36,14 @@ class AccountBankStatementImport(models.TransientModel):
                 if invoice:
                     transaction["partner_id"] = invoice.partner_id.id
                     return
+        # In case there is not an invoice, check sale order
+        sale_order_name = transaction.get("name")
+        if sale_order_name:
+            sale_order = self.env["sale.order"].search(
+                [("name", "=", sale_order_name)], limit=1
+            )
+            if not sale_order:
+                return
+            transaction["partner_id"] = (
+                sale_order.partner_invoice_id.id or sale_order.partner_id.id
+            )
