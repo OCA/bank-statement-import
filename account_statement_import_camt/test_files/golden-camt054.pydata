@@ -1,0 +1,26 @@
+('EUR',
+ 'NL77ABNA0574908765',
+ [{'balance_end_real': 0.0,
+   'balance_start': 0.0,
+   'date': '2022-01-26',
+   'name': '20220120000000000000000',
+   'transactions': [{'account_number': 'NL46ABNA0499998748',
+                     'amount': 5.0,
+                     'date': '2022-01-26',
+                     'narration': 'Partner Name (RltdPties/Nm): Test Customer\n'
+                                  'Partner Account Number (RltdPties/Acct): Test Customer\n'
+                                  'Transaction Date (BookgDt): 2022-01-26\n'
+                                  'Reference: 000000000000000000000000003\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-RCDT-VCOM\n'
+                                  'Additional Entry Information (AddtlNtryInf): Additional entry info\n'
+                                  'Reversal Indicator (RvslInd): false\n'
+                                  'Structured Reference (RmtInf/Strd/CdtrRefInf/Ref): 000000000000000000000000003\n'
+                                  'Account Servicer Reference (Refs/AcctSvcrRef): 15180015077602405\n'
+                                  'End To End Id (Refs/EndToEndId): ENDTOENDID-01\n'
+                                  'Instructed Id (Refs/InstrId): MIB InstrId305-312MM20211231v1\n'
+                                  'Postal Address (PstlAdr): Test street 1 | 1234 AB  Test city',
+                     'partner_name': 'Test Customer',
+                     'payment_ref': 'MIB InstrId305-312MM20211231v1',
+                     'ref': '000000000000000000000000003',
+                     'transaction_type': 'PMNT-RCDT-VCOM'}]}])
