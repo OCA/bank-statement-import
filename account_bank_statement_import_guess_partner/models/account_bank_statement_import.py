@@ -34,7 +34,9 @@ class AccountBankStatementImport(models.TransientModel):
             for fieldname in invoice_fields:
                 invoice = invoice_model.search([(fieldname, "=", value)], limit=1)
                 if invoice:
-                    transaction["partner_id"] = invoice.partner_id.id
+                    # We need parent here because of reconciliation.
+                    # Lines cannot be reconciled if partner is an address
+                    transaction["partner_id"] = invoice.partner_id.parent_id.id
                     return
         # In case there is not an invoice, check sale order
         sale_order_name = transaction.get("name")
@@ -44,6 +46,5 @@ class AccountBankStatementImport(models.TransientModel):
             )
             if not sale_order:
                 return
-            transaction["partner_id"] = (
-                sale_order.partner_invoice_id.id or sale_order.partner_id.id
-            )
+            # Same as above
+            transaction["partner_id"] = sale_order.partner_id.id
