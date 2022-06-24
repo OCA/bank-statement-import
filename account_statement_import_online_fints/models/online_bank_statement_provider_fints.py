@@ -21,8 +21,8 @@ class OnlineBankStatementProviderFinTS(models.Model):
             self.blz,
             self.username,
             self.password,
-            self.api_base,  # ENDPOINT
-            # product_id='Your product ID'
+            self.api_base,
+            product_id='63A162FC4F225D1FA082CE36C'
         )
         return fints_connection
 
