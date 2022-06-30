@@ -8,6 +8,6 @@ class AccountBankStatementClearPartner(models.Model):
     _inherit = "account.bank.statement"
 
     def clear_partners(self):
-        self.mapped("line_ids").filtered(
-            lambda x: not x.journal_entry_ids and not x.account_id
-        ).write({"partner_id": False})
+        for line in self.line_ids:
+            if not line.is_reconciled:
+                line.write({"partner_id": False})
