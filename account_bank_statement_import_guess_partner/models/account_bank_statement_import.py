@@ -20,13 +20,15 @@ class AccountBankStatementImport(models.TransientModel):
         return stmts_vals
 
     def _complete_transaction(self, transaction):
-        """Try to find partner by searching invoice with reference."""
+        """Find partner by searching invoice with reference or so name."""
         if transaction.get("partner_id", False):
             return
         invoice_model = self.env["account.move"]
+        sale_order_model = self.env["sale.order"]
         invoice = None
         transaction_keys = ["ref", "name"]
         invoice_fields = ["invoice_origin", "ref", "name"]
+        sale_order_fields = ["client_order_ref", "name"]
         for key in transaction_keys:
             value = transaction.get(key, False)
             if not value:
@@ -34,5 +36,24 @@ class AccountBankStatementImport(models.TransientModel):
             for fieldname in invoice_fields:
                 invoice = invoice_model.search([(fieldname, "=", value)], limit=1)
                 if invoice:
-                    transaction["partner_id"] = invoice.partner_id.id
+                    # We need a partner of type contact here because of reconciliation.
+                    # Lines cannot be reconciled if partner is an address
+                    partner = self._get_effective_partner(invoice.partner_id)
+                    transaction["partner_id"] = partner.id
                     return
+            for fieldname in sale_order_fields:
+                sale_order = sale_order_model.search([(fieldname, "=", value)], limit=1)
+                if sale_order:
+                    partner = self._get_effective_partner(sale_order.partner_id)
+                    transaction["partner_id"] = partner.id
+                    return
+
+    def _get_effective_partner(self, partner):
+        """Find contact partner for invoice, sale order"""
+        if partner.type == "contact":
+            return partner
+        if partner.parent_id.type == "contact":
+            return partner.parent_id
+        # If there's no contact,
+        # return original partner
+        return partner
