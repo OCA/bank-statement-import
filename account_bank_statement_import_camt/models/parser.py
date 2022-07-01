@@ -173,6 +173,8 @@ class CamtParser(models.AbstractModel):
         transaction_base = transaction
         for i, dnode in enumerate(detail_nodes):
             transaction = copy(transaction_base)
+            if transaction.get('unique_import_id') and i > 0:
+                transaction['unique_import_id'] += '-%d' % (i,)
             self.parse_transaction_details(dnode, transaction)
             self.default_transaction_data(node, transaction)
             transaction.data = etree.tostring(dnode)
