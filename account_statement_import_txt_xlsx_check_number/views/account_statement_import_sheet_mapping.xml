@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_statement_import_sheet_mapping_tree" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.tree</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
+        <field name="inherit_id" ref="account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_account_column']" position="after">
+                <field name="check_number_column" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
