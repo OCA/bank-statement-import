@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-08 12:01+0000\n"
-"PO-Revision-Date: 2015-06-08 12:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +14,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_qif
-#: help:account.bank.statement.import,journal_id:0
-msgid "Accounting journal related to the bank statement you're importing. It has be be manually chosen for statement formats which doesn't allow automatic journal detection (QIF for example)."
-msgstr ""
-
-#. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:54
+#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:39
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr ""
-
-#. module: account_bank_statement_import_qif
-#: field:account.bank.statement.import,hide_journal_field:0
-msgid "Hide the journal field in the view"
 msgstr ""
 
 #. module: account_bank_statement_import_qif
@@ -37,12 +25,7 @@ msgid "Import Bank Statement"
 msgstr ""
 
 #. module: account_bank_statement_import_qif
-#: field:account.bank.statement.import,journal_id:0
-msgid "Journal"
-msgstr ""
-
-#. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:98
+#: code:addons/account_bank_statement_import_qif/account_bank_statement_import_qif.py:83
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr ""

@@ -1,39 +1,40 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    This module copyright (C) 2015 Therp BV (<http://therp.nl>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-from openerp import models
+# © 2015-2017 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from openerp import api, models, _
+from openerp.exceptions import ValidationError
 
 
 class ResPartnerBank(models.Model):
     _inherit = 'res.partner.bank'
 
     def copy_data(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        if context is None:
-            context = {}
+        default = default or {}
+        context = context or {}
         if 'acc_number' not in default and 'default_acc_number' not in context:
             default['acc_number'] = ''
         return super(ResPartnerBank, self).copy_data(
             cr, uid, id, default=default, context=context)
 
-    _sql_constraints = [
-        ('unique_number', 'unique(sanitized_acc_number)',
-         'Account Number must be unique'),
-    ]
+    @api.constrains('company_id', 'sanitized_acc_number')
+    def _check_unique_account(self):
+        for this in self:
+            check_domain = [
+                ('sanitized_acc_number', '=', this.sanitized_acc_number),
+            ]
+            # No problem if one record has a company and the other not:
+            if this.company_id:
+                check_domain.append(('company_id', '=', this.company_id.id))
+            else:
+                check_domain.append(('company_id', '=', False))
+            # Do not find same record, if existing:
+            if this.exists():
+                check_domain.append(('id', '<>', this.id))
+            already_existing = self.search(check_domain)
+            if already_existing:
+                raise ValidationError(
+                    _("Bank account %s already registered for %s.") %
+                    (this.acc_number,
+                     already_existing.partner_id.display_name or
+                     _("unknown partner"))
+                )

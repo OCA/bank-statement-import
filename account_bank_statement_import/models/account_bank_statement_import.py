@@ -53,6 +53,7 @@ class AccountBankStatementImport(models.TransientModel):
         'Bank Statement File', required=True,
         help='Get you bank statements in electronic format from your bank '
         'and select them here.')
+    filename = fields.Char()
 
     @api.multi
     def import_file(self):
@@ -62,7 +63,8 @@ class AccountBankStatementImport(models.TransientModel):
         data_file = base64.b64decode(self.data_file)
         # pylint: disable=protected-access
         statement_ids, notifications = self.with_context(
-            active_id=self.id  # pylint: disable=no-member
+            active_id=self.id,  # pylint: disable=no-member
+            filename=self.filename
         )._import_file(data_file)
         # dispatch to reconciliation interface
         action = self.env.ref(
@@ -78,22 +80,27 @@ class AccountBankStatementImport(models.TransientModel):
         }
 
     @api.model
+    def unzip(self, data_file):
+        filename = self.env.context.get('filename')
+        if filename and filename.lower().endswith('.xlsx'):
+            return [data_file]
+        try:
+            with ZipFile(StringIO(data_file), 'r') as archive:
+                return [
+                    archive.read(name) for name in archive.namelist()
+                    if not name.endswith('/')
+                    ]
+        except BadZipfile:
+            return [data_file]
+
+    @api.model
     def _parse_all_files(self, data_file):
         """Parse one file or multiple files from zip-file.
 
         Return array of statements for further processing.
         """
         statements = []
-        files = [data_file]
-        try:
-            with ZipFile(StringIO(data_file), 'r') as archive:
-                files = [
-                    archive.read(filename) for filename in archive.namelist()
-                    if not ( filename.endswith('/') or filename.endswith('.pdf') )
-                    ]
-        except BadZipfile:
-            pass
-
+        files = self.unzip(data_file)
         # Parse the file(s)
         for import_file in files:
             # The appropriate implementation module(s) returns the statements.
@@ -313,7 +320,7 @@ class AccountBankStatementImport(models.TransientModel):
         if partner_id:
             vals_acc['partner_id'] = partner_id
 
-        # Odoo uses bank accounts (which we import statement from) have
+        # Odoo users bank accounts (which we import statement from) have
         # company_id and journal_id set while 'counterpart' bank accounts
         # (from which statement transactions originate) don't.
         # Warning : if company_id is set, the method post_write of class
@@ -403,6 +410,8 @@ class AccountBankStatementImport(models.TransientModel):
             )
             if not unique_id or not bool(bsl_model.sudo().search(
                     [('unique_import_id', '=', unique_id)], limit=1)):
+                if line_vals.get('currency_code'):
+                    line_vals['currency_id'] = self._find_currency_id(line_vals.get('currency_code'))
                 filtered_st_lines.append(line_vals)
             else:
                 ignored_line_ids.append(unique_id)

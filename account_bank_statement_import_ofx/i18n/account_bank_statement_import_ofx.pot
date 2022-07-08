@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-08 09:11+0000\n"
-"PO-Revision-Date: 2015-06-08 09:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +19,7 @@ msgid "Import Bank Statement"
 msgstr ""
 
 #. module: account_bank_statement_import_ofx
-#: code:addons/account_bank_statement_import_ofx/account_bank_statement_import_ofx.py:67
+#: code:addons/account_bank_statement_import_ofx/account_bank_statement_import_ofx.py:81
 #, python-format
 msgid "The following problem occurred during import. The file might not be valid.\n"
 "\n"
