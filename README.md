@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_bank_statement_clear_partner](account_bank_statement_clear_partner/) | 15.0.1.0.0 |  | Clear all partners in bank statement lines
+[account_bank_statement_clear_partner](account_bank_statement_clear_partner/) | 15.0.1.0.1 |  | Clear all partners in bank statement lines
 [account_statement_import](account_statement_import/) | 15.0.2.1.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files
 [account_statement_import_camt](account_statement_import_camt/) | 15.0.1.0.0 |  | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 15.0.1.0.0 |  | Bank Account Camt54 Import
