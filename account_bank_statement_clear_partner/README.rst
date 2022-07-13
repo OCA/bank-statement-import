@@ -26,7 +26,9 @@ Clear all partners in bank statement lines
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 
-This module extends the functionality of `account_bank_statement` to allow you to **Clear all partners in a bank statement lines** where the line hasn't been **reconciled**.
+This module extends the functionality of `account_bank_statement`, and allows
+to **Clear all partners in a bank statement line** where the line hasn't been
+**reconciled**.
 
 **Table of contents**
 
@@ -44,11 +46,11 @@ Usage
 
 To use this module, you need to:
 
-#. Go to **Invoicing**
-#. Click on the name of a bank journal (**Bank** in demo data for example)
-#. Select a bank statement
+#. Go to **Invoicing**.
+#. Click on the name of a bank journal (**Bank** in demo data, for example).
+#. Select a bank statement.
 #. Press "Clear partners" button located on the header.
-#. All the partners in non reconciled lines will be cleared.
+#. All partners in non-reconciled lines will be cleared.
 
 Bug Tracker
 ===========
