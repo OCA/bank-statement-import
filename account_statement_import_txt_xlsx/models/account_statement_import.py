@@ -24,6 +24,12 @@ class AccountStatementImport(models.TransientModel):
         default=_get_default_mapping_id,
     )
 
+    bank_statement_id = fields.Many2one(
+        "account.bank.statement",
+        string="Statement",
+        domain=lambda self: [("journal_id", "=", self.env.context.get("journal_id"))],
+    )
+
     def _parse_file(self, data_file):
         self.ensure_one()
         if self.sheet_mapping_id:
@@ -47,3 +53,9 @@ class AccountStatementImport(models.TransientModel):
                 amount = sum(statement.line_ids.mapped("amount"))
                 statement.balance_end_real = statement.balance_start + amount
         return res
+
+    def import_file_button(self):
+        return super(
+            AccountStatementImport,
+            self.with_context(reuse_import_st_id=self.bank_statement_id.id),
+        ).import_file_button()
