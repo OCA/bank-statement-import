@@ -422,3 +422,45 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(statement.balance_start, 10.0)
         self.assertEqual(statement.balance_end_real, 1510.0)
         self.assertEqual(statement.balance_end, 1510.0)
+
+    def test_use_existing_bank_statement(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
+            {
+                "balance_column": "Balance",
+                "original_currency_column": None,
+                "original_amount_column": None,
+            }
+        )
+
+        statement = self.AccountBankStatement.create(
+            {"journal_id": journal.id, "name": "Existing Extract"}
+        )
+
+        data = self._data_file("fixtures/debit_credit.csv", "utf-8")
+        wizard = self.AccountBankStatementImport.with_context(
+            journal_id=journal.id
+        ).create(
+            {
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/debit_credit.csv", "datas": data})
+                ],
+                "sheet_mapping_id": statement_map.id,
+                "bank_statement_id": statement.id,
+            }
+        )
+        wizard.with_context(
+            account_bank_statement_import_txt_xlsx_test=True
+        ).import_file()
+        res_statement = self.AccountBankStatement.search(
+            [("journal_id", "=", journal.id)]
+        )
+        self.assertEqual(len(res_statement), 1)
+        self.assertEqual(statement, res_statement)
