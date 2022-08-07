@@ -297,7 +297,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "date": date,
             "payment_ref": note,
             "unique_import_id": unique_import_id,
-            "online_raw_data": transaction,
+            "raw_data": transaction,
         }
         payer_full_name = payer_name.get("full_name") or payer_name.get(
             "alternate_full_name"
