@@ -8,7 +8,7 @@
     "category": "Accounting",
     "version": "14.0.2.1.0",
     "license": "LGPL-3",
-    "depends": ["account"],
+    "depends": ["account_statement_import_base"],
     "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "development_status": "Mature",
@@ -17,7 +17,6 @@
         "security/ir.model.access.csv",
         "wizard/account_statement_import_view.xml",
         "views/account_journal.xml",
-        "views/account_bank_statement_line.xml",
     ],
     "demo": [
         "demo/partner_bank.xml",
