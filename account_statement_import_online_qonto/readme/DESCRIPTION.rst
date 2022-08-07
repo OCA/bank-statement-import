@@ -1,1 +1,1 @@
-This module provides online bank statements from `Qonto <https://qonto.com/>`_ via their `API <https://api-doc.qonto.com/>`_.
+This module provides online bank statements from `Qonto <https://qonto.com/>`__ via their `API <https://api-doc.qonto.com/>`_.
