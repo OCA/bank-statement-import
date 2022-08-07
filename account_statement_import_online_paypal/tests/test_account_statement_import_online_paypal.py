@@ -569,7 +569,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
 
         self.assertEqual(len(data[0]), 2)
-        del data[0][0]["online_raw_data"]
+        del data[0][0]["raw_data"]
         self.assertEqual(
             data[0][0],
             {
@@ -645,7 +645,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
         )
         self.assertEqual(len(lines), 1)
-        del lines[0]["online_raw_data"]
+        del lines[0]["raw_data"]
         self.assertEqual(
             lines[0],
             {
@@ -709,7 +709,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
         )
         self.assertEqual(len(lines), 1)
-        del lines[0]["online_raw_data"]
+        del lines[0]["raw_data"]
         self.assertEqual(
             lines[0],
             {
@@ -773,7 +773,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
         )
         self.assertEqual(len(lines), 2)
-        del lines[0]["online_raw_data"]
+        del lines[0]["raw_data"]
         self.assertEqual(
             lines[0],
             {
@@ -844,7 +844,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
         )
         self.assertEqual(len(lines), 1)
-        del lines[0]["online_raw_data"]
+        del lines[0]["raw_data"]
         self.assertEqual(
             lines[0],
             {
