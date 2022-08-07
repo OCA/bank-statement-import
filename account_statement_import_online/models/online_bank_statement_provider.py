@@ -12,7 +12,6 @@ from pytz import timezone, utc
 
 from odoo import _, api, fields, models
 
-from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.addons.base.models.res_partner import _tz_get
 
 _logger = logging.getLogger(__name__)
@@ -257,6 +256,8 @@ class OnlineBankStatementProvider(models.Model):
         """Get lines from line data, but only for the right date."""
         AccountBankStatementLine = self.env["account.bank.statement.line"]
         provider_tz = timezone(self.tz) if self.tz else utc
+        journal = self.journal_id
+        speeddict = journal._statement_line_import_speeddict()
         filtered_lines = []
         for line_values in lines_data:
             date = line_values["date"]
@@ -280,23 +281,18 @@ class OnlineBankStatementProvider(models.Model):
             date = date.replace(tzinfo=utc)
             date = date.astimezone(provider_tz).replace(tzinfo=None)
             line_values["date"] = date
+            journal._statement_line_import_update_unique_import_id(
+                line_values, self.account_number
+            )
             unique_import_id = line_values.get("unique_import_id")
             if unique_import_id:
-                unique_import_id = self._generate_unique_import_id(unique_import_id)
-                line_values.update({"unique_import_id": unique_import_id})
                 if AccountBankStatementLine.sudo().search(
                     [("unique_import_id", "=", unique_import_id)], limit=1
                 ):
                     continue
-            bank_account_number = line_values.get("account_number")
-            if bank_account_number:
-                sanitized_account_number = self._sanitize_bank_account_number(
-                    bank_account_number
-                )
-                line_values["account_number"] = sanitized_account_number
-                self._update_partner_from_account_number(line_values)
             if not line_values.get("payment_ref"):
                 line_values["payment_ref"] = line_values.get("ref")
+            journal._statement_line_import_update_hook(line_values, speeddict)
             filtered_lines.append(line_values)
         return filtered_lines
 
@@ -346,36 +342,6 @@ class OnlineBankStatementProvider(models.Model):
         tz = timezone(self.tz) if self.tz else utc
         date_since = date_since.replace(tzinfo=utc).astimezone(tz)
         return date_since.date()
-
-    def _generate_unique_import_id(self, unique_import_id):
-        self.ensure_one()
-        return (
-            (self.account_number and self.account_number + "-" or "")
-            + str(self.journal_id.id)
-            + "-"
-            + unique_import_id
-        )
-
-    def _sanitize_bank_account_number(self, bank_account_number):
-        """Hook for extension"""
-        self.ensure_one()
-        return sanitize_account_number(bank_account_number)
-
-    def _update_partner_from_account_number(self, line_values):
-        """Lookup partner using account number."""
-        self.ensure_one()
-        partner_bank = self.env["res.partner.bank"].search(
-            [
-                ("acc_number", "=", line_values["account_number"]),
-                "|",
-                ("company_id", "=", False),
-                ("company_id", "=", self.company_id.id),
-            ],
-            limit=1,
-        )
-        if partner_bank:
-            line_values["partner_bank_id"] = partner_bank.id
-            line_values["partner_id"] = partner_bank.partner_id.id
 
     def _get_next_run_period(self):
         self.ensure_one()

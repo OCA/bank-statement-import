@@ -4,7 +4,7 @@
 
 {
     "name": "Online Bank Statements",
-    "version": "15.0.2.0.0",
+    "version": "15.0.3.0.0",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import",
@@ -12,8 +12,7 @@
     "category": "Accounting",
     "summary": "Online bank statements update",
     "depends": [
-        "account",
-        "account_statement_import",
+        "account_statement_import_base",
         "web_widget_dropdown_dynamic",
     ],
     "data": [
@@ -23,7 +22,6 @@
         "wizards/online_bank_statement_pull_wizard.xml",
         "views/actions.xml",
         "views/account_journal.xml",
-        "views/account_bank_statement_line.xml",
         "views/online_bank_statement_provider.xml",
     ],
     "installable": True,

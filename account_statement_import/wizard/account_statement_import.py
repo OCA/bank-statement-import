@@ -283,43 +283,15 @@ class AccountStatementImport(models.TransientModel):
             )
         return journal
 
-    @api.model
-    def _update_partner_from_account_number(self, lvals):
-        partner_bank = self.env["res.partner.bank"].search(
-            [("acc_number", "=", lvals["account_number"])], limit=1
-        )
-        if partner_bank:
-            lvals["partner_bank_id"] = partner_bank.id
-            lvals["partner_id"] = partner_bank.partner_id.id
-
     def _complete_stmts_vals(self, stmts_vals, journal, account_number):
+        speeddict = journal._statement_line_import_speeddict()
         for st_vals in stmts_vals:
             st_vals["journal_id"] = journal.id
             for lvals in st_vals["transactions"]:
-                unique_import_id = lvals.get("unique_import_id")
-                if unique_import_id:
-                    sanitized_account_number = sanitize_account_number(account_number)
-                    lvals["unique_import_id"] = (
-                        (
-                            sanitized_account_number
-                            and sanitized_account_number + "-"
-                            or ""
-                        )
-                        + str(journal.id)
-                        + "-"
-                        + unique_import_id
-                    )
-
-                if (
-                    not lvals.get("partner_bank_id")
-                    and lvals.get("account_number")
-                    and not lvals.get("partner_id")
-                ):
-                    # Find the partner from his bank account number
-                    # The partner selected during the
-                    # reconciliation process will be linked to the bank account
-                    # when the statement is closed (code in the account module)
-                    self._update_partner_from_account_number(lvals)
+                journal._statement_line_import_update_unique_import_id(
+                    lvals, account_number
+                )
+                journal._statement_line_import_update_hook(lvals, speeddict)
                 if not lvals.get("payment_ref"):
                     raise UserError(_("Missing payment_ref on a transaction."))
         return stmts_vals
