@@ -8,7 +8,7 @@
     "category": "Accounting",
     "version": "16.0.1.0.0",
     "license": "LGPL-3",
-    "depends": ["account"],
+    "depends": ["account_statement_import_base"],
     "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "development_status": "Mature",
