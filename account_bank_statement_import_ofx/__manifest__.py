@@ -10,7 +10,7 @@
               'Nicolas JEUDY,'
               'Le Filament,'
               'Odoo Community Association (OCA)',
-    'website': 'https://odoo-community.org/',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'depends': [
         'account_bank_statement_import',
     ],
