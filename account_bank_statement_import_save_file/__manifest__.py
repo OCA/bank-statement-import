@@ -8,6 +8,7 @@
     'license': 'AGPL-3',
     'category': 'Banking addons',
     'summary': 'Keep imported bank statements as raw data',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'depends': [
         'account_bank_statement_import',
     ],
