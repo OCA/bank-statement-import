@@ -1,5 +1,5 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
-# Copyright 2021 CorporateHub (https://corporatehub.eu)
+# Copyright 2021-2022 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -54,6 +54,13 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         super().setUp()
 
         self.now = fields.Datetime.now()
+        self.now_isoformat = self.now.isoformat() + "+0000"
+        self.today = datetime(self.now.year, self.now.month, self.now.day)
+        self.today_isoformat = self.today.isoformat() + "+0000"
+        self.today_timestamp = str(int(self.today.timestamp()))
+        self.yesterday = self.today - relativedelta(days=1)
+        self.yesterday_isoformat = self.yesterday.isoformat() + "+0000"
+        self.yesterday_timestamp = str(int(self.yesterday.timestamp()))
         self.currency_eur = self.env.ref("base.EUR")
         self.currency_usd = self.env.ref("base.USD")
         self.AccountJournal = self.env["account.journal"]
@@ -237,9 +244,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         }
     ],
     "account_id": "1234567890",
-    "as_of_time": "2019-08-01T00:00:00+0000",
-    "last_refresh_time": "2019-08-01T00:00:00+0000"
+    "as_of_time": "%s",
+    "last_refresh_time": "%s"
 }"""
+            % (self.now_isoformat, self.now_isoformat,)
         )
         with mock.patch(
             _provider_class + "._paypal_urlopen",
@@ -320,13 +328,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             """{
     "transaction_details": [],
     "account_number": "1234567890",
-    "start_date": "2019-08-01T00:00:00+0000",
-    "end_date": "2019-08-01T00:00:00+0000",
-    "last_refreshed_datetime": "2019-09-01T00:00:00+0000",
+    "start_date": "%s",
+    "end_date": "%s",
+    "last_refreshed_datetime": "%s",
     "page": 1,
     "total_items": 0,
     "total_pages": 0
-}""",
+}"""
+            % (self.now_isoformat, self.now_isoformat, self.now_isoformat,),
             parse_float=Decimal,
         )
         mocked_response_2 = json.loads(
@@ -350,9 +359,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         }
     ],
     "account_id": "1234567890",
-    "as_of_time": "2019-08-01T00:00:00+0000",
-    "last_refresh_time": "2019-08-01T00:00:00+0000"
-}""",
+    "as_of_time": "%s",
+    "last_refresh_time": "%s"
+}"""
+            % (self.now_isoformat, self.now_isoformat,),
             parse_float=Decimal,
         )
         with mock.patch(
@@ -382,13 +392,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             """{
     "transaction_details": [],
     "account_number": "1234567890",
-    "start_date": "2019-08-01T00:00:00+0000",
-    "end_date": "2019-08-01T00:00:00+0000",
-    "last_refreshed_datetime": "2019-09-01T00:00:00+0000",
+    "start_date": "%s",
+    "end_date": "%s",
+    "last_refreshed_datetime": "%s",
     "page": 1,
     "total_items": 0,
     "total_pages": 0
-}""",
+}"""
+            % (self.now_isoformat, self.now_isoformat, self.now_isoformat,),
             parse_float=Decimal,
         )
         with mock.patch(
@@ -419,8 +430,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             "paypal_account_id": "1234567890",
             "transaction_id": "1234567890",
             "transaction_event_code": "T1234",
-            "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-            "transaction_updated_date": "2019-08-01T00:00:00+0000",
+            "transaction_initiation_date": "%s",
+            "transaction_updated_date": "%s",
             "transaction_amount": {
                 "currency_code": "USD",
                 "value": "1000.00"
@@ -461,8 +472,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             "paypal_account_id": "1234567890",
             "transaction_id": "1234567891",
             "transaction_event_code": "T1234",
-            "transaction_initiation_date": "2019-08-02T00:00:00+0000",
-            "transaction_updated_date": "2019-08-02T00:00:00+0000",
+            "transaction_initiation_date": "%s",
+            "transaction_updated_date": "%s",
             "transaction_amount": {
                 "currency_code": "USD",
                 "value": "1000.00"
@@ -500,43 +511,50 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "incentive_info": {}
     }],
     "account_number": "1234567890",
-    "start_date": "2019-08-01T00:00:00+0000",
-    "end_date": "2019-08-02T00:00:00+0000",
-    "last_refreshed_datetime": "2019-09-01T00:00:00+0000",
+    "start_date": "%s",
+    "end_date": "%s",
+    "last_refreshed_datetime": "%s",
     "page": 1,
     "total_items": 1,
     "total_pages": 1
-}""",
+}"""
+            % (
+                self.yesterday_isoformat,
+                self.yesterday_isoformat,
+                self.today_isoformat,
+                self.today_isoformat,
+                self.yesterday_isoformat,
+                self.today_isoformat,
+                self.now_isoformat,
+            ),
             parse_float=Decimal,
         )
         with mock.patch(
             _provider_class + "._paypal_retrieve", return_value=mocked_response,
         ), self.mock_token():
-            data = provider._obtain_statement_data(
-                datetime(2019, 8, 1), datetime(2019, 8, 2),
-            )
+            data = provider._obtain_statement_data(self.yesterday, self.today,)
 
         self.assertEqual(len(data[0]), 2)
         self.assertEqual(
             data[0][0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.yesterday,
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-%s" % (self.yesterday_timestamp,),
             },
         )
         self.assertEqual(
             data[0][1],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.yesterday,
                 "amount": "-100.00",
                 "name": "Fee for Invoice 1",
                 "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
-                "unique_import_id": "1234567890-1564617600-FEE",
+                "unique_import_id": "1234567890-%s-FEE" % (self.yesterday_timestamp,),
             },
         )
         self.assertEqual(data[1], {"balance_start": 0.0, "balance_end_real": 900.0})
@@ -548,8 +566,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "%s",
+        "transaction_updated_date": "%s",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -586,17 +604,18 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
     "auction_info": {},
     "incentive_info": {}
 }"""
+            % (self.today_isoformat, self.today_isoformat,)
         )
         self.assertEqual(len(lines), 1)
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.today,
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-%s" % (self.today_timestamp,),
             },
         )
 
@@ -607,8 +626,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "%s",
+        "transaction_updated_date": "%s",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -645,17 +664,18 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
     "auction_info": {},
     "incentive_info": {}
 }"""
+            % (self.today_isoformat, self.today_isoformat,)
         )
         self.assertEqual(len(lines), 1)
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.today,
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-%s" % (self.today_timestamp,),
             },
         )
 
@@ -666,8 +686,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "%s",
+        "transaction_updated_date": "%s",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -704,28 +724,29 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
     "auction_info": {},
     "incentive_info": {}
 }"""
+            % (self.today_isoformat, self.today_isoformat,)
         )
         self.assertEqual(len(lines), 2)
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.today,
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-%s" % (self.today_timestamp,),
             },
         )
         self.assertEqual(
             lines[1],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.today,
                 "amount": "-100.00",
                 "name": "Fee for Invoice 1",
                 "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
-                "unique_import_id": "1234567890-1564617600-FEE",
+                "unique_import_id": "1234567890-%s-FEE" % (self.today_timestamp,),
             },
         )
 
@@ -736,8 +757,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         "paypal_account_id": "1234567890",
         "transaction_id": "1234567890",
         "transaction_event_code": "T1234",
-        "transaction_initiation_date": "2019-08-01T00:00:00+0000",
-        "transaction_updated_date": "2019-08-01T00:00:00+0000",
+        "transaction_initiation_date": "%s",
+        "transaction_updated_date": "%s",
         "transaction_amount": {
             "currency_code": "USD",
             "value": "1000.00"
@@ -770,16 +791,17 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
     "auction_info": {},
     "incentive_info": {}
 }"""
+            % (self.today_isoformat, self.today_isoformat,)
         )
         self.assertEqual(len(lines), 1)
         self.assertEqual(
             lines[0],
             {
-                "date": datetime(2019, 8, 1),
+                "date": self.today,
                 "amount": "1000.00",
                 "name": "Invoice 1",
                 "note": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
-                "unique_import_id": "1234567890-1564617600",
+                "unique_import_id": "1234567890-%s" % (self.today_timestamp,),
             },
         )
