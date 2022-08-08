@@ -9,7 +9,7 @@
         'CorporateHub, '
         'Odoo Community Association (OCA)',
     'maintainers': ['alexey-pelykh'],
-    'website': 'https://github.com/OCA/bank-statement-import/',
+    'website': 'https://github.com/OCA/bank-statement-import',
     'license': 'AGPL-3',
     'category': 'Accounting',
     'summary': 'Split statements by date during import',
