@@ -7,9 +7,9 @@
 
 <!-- /!\ do not modify above this line -->
 
-# OCA bank statement import modules for Odoo
+# bank-statement-import
 
-This repository hosts additionnal parsers and import features for bank statements.
+TODO: add repo description.
 
 <!-- /!\ do not modify below this line -->
 
