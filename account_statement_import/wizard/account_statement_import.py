@@ -23,9 +23,7 @@ class AccountStatementImport(models.TransientModel):
     )
     statement_filename = fields.Char()
 
-    def import_file_button(self):
-        """Process the file chosen in the wizard, create bank statement(s)
-        and return an action."""
+    def _import_file(self):
         self.ensure_one()
         result = {
             "statement_ids": [],
@@ -43,34 +41,25 @@ class AccountStatementImport(models.TransientModel):
                 )
             )
         self.env["ir.attachment"].create(self._prepare_create_attachment(result))
-        if self.env.context.get("return_regular_interface_action"):
-            action = (
-                self.env.ref("account.action_bank_statement_tree").sudo().read([])[0]
+        return result
+
+    def import_file_button(self):
+        """Process the file chosen in the wizard, create bank statement(s)
+        and return an action."""
+        result = self._import_file()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_bank_statement_tree"
+        )
+        if len(result["statement_ids"]) == 1:
+            action.update(
+                {
+                    "view_mode": "form,tree",
+                    "views": False,
+                    "res_id": result["statement_ids"][0],
+                }
             )
-            if len(result["statement_ids"]) == 1:
-                action.update(
-                    {
-                        "view_mode": "form,tree",
-                        "views": False,
-                        "res_id": result["statement_ids"][0],
-                    }
-                )
-            else:
-                action["domain"] = [("id", "in", result["statement_ids"])]
         else:
-            # dispatch to reconciliation interface
-            lines = self.env["account.bank.statement.line"].search(
-                [("statement_id", "in", result["statement_ids"])]
-            )
-            action = {
-                "type": "ir.actions.client",
-                "tag": "bank_statement_reconciliation_view",
-                "context": {
-                    "statement_line_ids": lines.ids,
-                    "company_ids": self.env.user.company_ids.ids,
-                    "notifications": result["notifications"],
-                },
-            }
+            action["domain"] = [("id", "in", result["statement_ids"])]
         return action
 
     def _prepare_create_attachment(self, result):
