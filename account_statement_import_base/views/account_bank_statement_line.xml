@@ -21,16 +21,6 @@
         <field name="sequence" position="attributes">
             <attribute name="invisible">1</attribute>
         </field>
-        <!--
-            I don't see anything interesting in the 'ref' field of the
-            move linked to the statement line
-            and the field move_id is displayed in the view.
-            But if you think it's useful to see this field,
-            don't hesitate to remove the 2 lines below
-        -->
-        <field name="ref" position="attributes">
-            <attribute name="invisible">1</attribute>
-        </field>
         <field name="narration" position="attributes">
             <attribute name="invisible">1</attribute>
         </field>
