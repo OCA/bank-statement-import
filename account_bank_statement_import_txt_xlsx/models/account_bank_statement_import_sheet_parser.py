@@ -25,8 +25,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
     _description = "Account Bank Statement Import Sheet Parser"
 
     @api.model
-    def parse_header(
-            self, data_file, encoding, csv_options, column_labels_row=1):
+    def parse_header(self, data_file, encoding, csv_options, column_labels_row=1):
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
@@ -41,8 +40,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         data = StringIO(data_file.decode(encoding or "utf-8"))
         csv_data = reader(data, **csv_options)
         csv_data_lst = list(csv_data)
-        header = [value.strip()
-                  for value in csv_data_lst[column_labels_row - 1]]
+        header = [value.strip() for value in csv_data_lst[column_labels_row - 1]]
         return header
 
     @api.model
@@ -109,20 +107,32 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 StringIO(data_file.decode(mapping.file_encoding or "utf-8")),
                 **csv_options
             )
-        csv_or_xlsx_lst = []
         if isinstance(csv_or_xlsx, tuple):
             header = [
-                str(value).strip() for value in
-                csv_or_xlsx[1].row_values(mapping.column_labels_row - 1)]
+                str(value).strip()
+                for value in csv_or_xlsx[1].row_values(mapping.column_labels_row - 1)
+            ]
         else:
             header = [value.strip() for value in next(csv_or_xlsx)]
         columns["timestamp_column"] = header.index(mapping.timestamp_column)
         columns["currency_column"] = (
             header.index(mapping.currency_column) if mapping.currency_column else None
         )
-        columns["amount_column"] = header.index(mapping.amount_column) if mapping.amount_type != 'distinct_credit_debit' else None
-        columns["debit_column"] = header.index(mapping.debit_column) if mapping.amount_type == 'distinct_credit_debit' else None
-        columns["credit_column"] = header.index(mapping.credit_column) if mapping.amount_type == 'distinct_credit_debit' else None
+        columns["amount_column"] = (
+            header.index(mapping.amount_column)
+            if mapping.amount_type != "distinct_credit_debit"
+            else None
+        )
+        columns["debit_column"] = (
+            header.index(mapping.debit_column)
+            if mapping.amount_type == "distinct_credit_debit"
+            else None
+        )
+        columns["credit_column"] = (
+            header.index(mapping.credit_column)
+            if mapping.amount_type == "distinct_credit_debit"
+            else None
+        )
         columns["balance_column"] = (
             header.index(mapping.balance_column) if mapping.balance_column else None
         )
@@ -176,14 +186,15 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         if isinstance(csv_or_xlsx, tuple):
             rows = range(
                 mapping.column_labels_row,
-                csv_or_xlsx[1].nrows - mapping.footer_lines_count)
+                csv_or_xlsx[1].nrows - mapping.footer_lines_count,
+            )
         else:
             stat_first_index = mapping.column_labels_row
-            stat_last_index = - mapping.footer_lines_count
+            stat_last_index = -mapping.footer_lines_count
             if stat_last_index:
-                rows = csv_or_xlsx_lst[stat_first_index: stat_last_index]
+                rows = csv_or_xlsx[stat_first_index:stat_last_index]
             else:
-                rows = csv_or_xlsx_lst[stat_first_index:]
+                rows = csv_or_xlsx[stat_first_index:]
 
         lines = []
         for row in rows:
@@ -195,8 +206,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                     cell_type = sheet.cell_type(row, col_index)
                     cell_value = sheet.cell_value(row, col_index)
                     if cell_type == xlrd.XL_CELL_DATE:
-                        cell_value = xldate_as_datetime(
-                            cell_value, book.datemode)
+                        cell_value = xldate_as_datetime(cell_value, book.datemode)
                     values.append(cell_value)
             else:
                 values = list(row)
@@ -271,8 +281,7 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
 
             amount_column = columns["amount_column"]
             if amount_column and values[columns["amount_column"]]:
-                amount = self._parse_decimal(
-                    values[columns["amount_column"]], mapping)
+                amount = self._parse_decimal(values[columns["amount_column"]], mapping)
             if debit_credit is not None:
                 amount = amount.copy_abs()
                 if debit_credit == mapping.debit_value:
@@ -281,11 +290,9 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
             debit_column = columns["debit_column"]
             credit_column = columns["credit_column"]
             if debit_column and credit_column:
-                debit_amount = self._parse_decimal(
-                    values[debit_column], mapping)
+                debit_amount = self._parse_decimal(values[debit_column], mapping)
                 debit_amount = debit_amount.copy_abs()
-                credit_amount = self._parse_decimal(
-                    values[credit_column], mapping)
+                credit_amount = self._parse_decimal(values[credit_column], mapping)
                 amount = credit_amount - debit_amount
 
             if balance is not None:

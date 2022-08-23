@@ -11,5 +11,5 @@ def migrate(env, version):
 UPDATE account_bank_statement_import_sheet_mapping
     SET amount_type = 'absolute_value'
     WHERE debit_credit_column IS NOT NULL;
-       """
+       """,
     )
