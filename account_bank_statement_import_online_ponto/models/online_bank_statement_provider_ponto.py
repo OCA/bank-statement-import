@@ -1,18 +1,22 @@
 # Copyright 2020 Florent de Labarre
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import requests
-import json
 import base64
-import time
+import json
+import logging
 import re
-import pytz
+import time
 from datetime import datetime
+
+import pytz
+import requests
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from dateutil.relativedelta import relativedelta
 from odoo.addons.base.models.res_bank import sanitize_account_number
+
+_logger = logging.getLogger(__name__)
 
 PONTO_ENDPOINT = "https://api.myponto.com"
 
@@ -129,7 +133,6 @@ class OnlineBankStatementProviderPonto(models.Model):
                 _("Error during Create Synchronisation %s \n\n %s")
                 % (response.status_code, response.text)
             )
-
         # Check synchronisation
         if not sync_id:
             return
@@ -156,8 +159,15 @@ class OnlineBankStatementProviderPonto(models.Model):
         transaction_lines = []
         latest_identifier = False
         while page_url:
+            headers = self._ponto_header()
             response = requests.get(
-                page_url, params=params, headers=self._ponto_header()
+                page_url, params=params, headers=headers
+            )
+            _logger.debug(
+                _("Get request to %s, with headers %s and params %s"),
+                page_url,
+                params,
+                headers
             )
             if response.status_code != 200:
                 raise UserError(
@@ -173,7 +183,16 @@ class OnlineBankStatementProviderPonto(models.Model):
             else:
                 page_url = links.get("prev", False)
             transactions = data.get("data", [])
-            if transactions:
+            if not transactions:
+                _logger.debug(
+                    _("No transactions where found in response %s"),
+                    response.text,
+                )
+            else:
+                _logger.debug(
+                    _("%d transactions present in response data"),
+                    len(transactions),
+                )
                 current_transactions = []
                 for transaction in transactions:
                     date = self._ponto_date_from_string(
@@ -181,8 +200,15 @@ class OnlineBankStatementProviderPonto(models.Model):
                     )
                     if date_since <= date < date_until:
                         current_transactions.append(transaction)
-
-                if current_transactions:
+                if not current_transactions:
+                    _logger.debug(
+                        _("No lines selected from transactions")
+                    )
+                else:
+                    _logger.debug(
+                        _("%d lines selected from transactions"),
+                        len(current_transactions),
+                    )
                     if not page_next or (page_next and not latest_identifier):
                         latest_identifier = current_transactions[0].get("id")
                     transaction_lines.extend(current_transactions)
@@ -210,6 +236,12 @@ class OnlineBankStatementProviderPonto(models.Model):
                 _("Ponto : wrong configuration, unknow account %s")
                 % journal.bank_account_id.acc_number
             )
+        _logger.debug(
+            _("Ponto obtain statement data for journal %s from %s to %s"),
+            journal.name,
+            date_since,
+            date_until
+        )
         self._ponto_synchronisation(account_id)
         transaction_lines = self._ponto_get_transaction(
             account_id, date_since, date_until
