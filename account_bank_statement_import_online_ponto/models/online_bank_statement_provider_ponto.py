@@ -1,31 +1,21 @@
 # Copyright 2020 Florent de Labarre
+# Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
-import base64
+from datetime import datetime
 import json
+import pytz
+
 import logging
 import re
-import time
-from datetime import datetime
-
-import pytz
-import requests
-from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
-from odoo.addons.base.models.res_bank import sanitize_account_number
 
 _logger = logging.getLogger(__name__)
-
-PONTO_ENDPOINT = "https://api.myponto.com"
 
 
 class OnlineBankStatementProviderPonto(models.Model):
     _inherit = "online.bank.statement.provider"
 
-    ponto_token = fields.Char(readonly=True)
-    ponto_token_expiration = fields.Datetime(readonly=True)
     ponto_last_identifier = fields.Char(readonly=True)
 
     def ponto_reset_last_identifier(self):
@@ -37,6 +27,35 @@ class OnlineBankStatementProviderPonto(models.Model):
             ("ponto", "MyPonto.com"),
         ]
 
+    @api.multi
+    def _pull(self, date_since, date_until):
+        """Override pull to first retrieve data from Ponto."""
+        self.ensure_one()
+        if self.service == "ponto":
+            self._ponto_retrieve_data()
+        super()._pull(date_since, date_until)
+
+    def _ponto_retrieve_data(self):
+        """Fill buffer with data from Ponto."""
+        interface_model = self.env["ponto.interface"]
+        buffer_model = self.env["ponto.buffer"]
+        access_data = interface_model._login(self.username, self.password)
+        interface_model._set_access_account(access_data, self.account_number)
+        interface_model._ponto_synchronisation(access_data)
+        latest_identifier = self.ponto_last_identifier
+        transactions = interface_model._get_transactions(
+            access_data,
+            latest_identifier
+        )
+        while transactions:
+            buffer_model.sudo()._store_transactions(self, transactions)
+            latest_identifier = transactions[-1].get("id")
+            transactions = interface_model._get_transactions(
+                access_data,
+                latest_identifier
+            )
+        self.ponto_last_identifier = latest_identifier
+
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "ponto":
@@ -46,211 +65,31 @@ class OnlineBankStatementProviderPonto(models.Model):
             )
         return self._ponto_obtain_statement_data(date_since, date_until)
 
-    #########
-    # ponto #
-    #########
-
-    def _ponto_header_token(self):
-        self.ensure_one()
-        if self.username and self.password:
-            login = "%s:%s" % (self.username, self.password)
-            login = base64.b64encode(login.encode("UTF-8")).decode("UTF-8")
-            return {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json",
-                "Authorization": "Basic %s" % login,
-            }
-        raise UserError(_("Please fill login and key."))
-
-    def _ponto_header(self):
-        self.ensure_one()
-        if (
-            not self.ponto_token
-            or not self.ponto_token_expiration
-            or self.ponto_token_expiration <= fields.Datetime.now()
-        ):
-
-            url = PONTO_ENDPOINT + "/oauth2/token"
-            response = requests.post(
-                url,
-                params={"grant_type": "client_credentials"},
-                headers=self._ponto_header_token(),
-            )
-            if response.status_code == 200:
-                data = json.loads(response.text)
-                access_token = data.get("access_token", False)
-                if not access_token:
-                    raise UserError(_("Ponto : no token"))
-                else:
-                    self.sudo().ponto_token = access_token
-                    expiration_date = fields.Datetime.now() + relativedelta(
-                        seconds=data.get("expires_in", False)
-                    )
-                    self.sudo().ponto_token_expiration = expiration_date
-            else:
-                raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
-        return {
-            "Accept": "application/json",
-            "Authorization": "Bearer %s" % self.ponto_token,
-        }
-
-    def _ponto_get_account_ids(self):
-        url = PONTO_ENDPOINT + "/accounts"
-        response = requests.get(
-            url, params={"limit": 100}, headers=self._ponto_header()
-        )
-        if response.status_code == 200:
-            data = json.loads(response.text)
-            res = {}
-            for account in data.get("data", []):
-                iban = sanitize_account_number(
-                    account.get("attributes", {}).get("reference", "")
-                )
-                res[iban] = account.get("id")
-            return res
-        raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
-
-    def _ponto_synchronisation(self, account_id):
-        url = PONTO_ENDPOINT + "/synchronizations"
-        data = {
-            "data": {
-                "type": "synchronization",
-                "attributes": {
-                    "resourceType": "account",
-                    "resourceId": account_id,
-                    "subtype": "accountTransactions",
-                },
-            }
-        }
-        response = requests.post(
-            url, headers=self._ponto_header(), json=data
-        )
-        if response.status_code in (200, 201, 400):
-            data = json.loads(response.text)
-            sync_id = data.get("attributes", {}).get("resourceId", False)
-        else:
-            raise UserError(
-                _("Error during Create Synchronisation %s \n\n %s")
-                % (response.status_code, response.text)
-            )
-        # Check synchronisation
-        if not sync_id:
-            return
-        url = PONTO_ENDPOINT + "/synchronizations/" + sync_id
-        number = 0
-        while number == 100:
-            number += 1
-            response = requests.get(url, headers=self._ponto_header())
-            if response.status_code == 200:
-                data = json.loads(response.text)
-                status = data.get("status", {})
-                if status in ("success", "error"):
-                    return
-            time.sleep(4)
-
-    def _ponto_get_transaction(self, account_id, date_since, date_until):
-        page_url = PONTO_ENDPOINT + "/accounts/" + account_id + "/transactions"
-        params = {"limit": 100}
-        page_next = True
-        last_identifier = self.ponto_last_identifier
-        if last_identifier:
-            params["before"] = last_identifier
-            page_next = False
-        transaction_lines = []
-        latest_identifier = False
-        while page_url:
-            headers = self._ponto_header()
-            response = requests.get(
-                page_url, params=params, headers=headers
-            )
-            _logger.debug(
-                _("Get request to %s, with headers %s and params %s"),
-                page_url,
-                params,
-                headers
-            )
-            if response.status_code != 200:
-                raise UserError(
-                    _("Error during get transaction.\n\n%s \n\n %s")
-                    % (response.status_code, response.text)
-                )
-            if params.get("before"):
-                params.pop("before")
-            data = json.loads(response.text)
-            links = data.get("links", {})
-            if page_next:
-                page_url = links.get("next", False)
-            else:
-                page_url = links.get("prev", False)
-            transactions = data.get("data", [])
-            if not transactions:
-                _logger.debug(
-                    _("No transactions where found in response %s"),
-                    response.text,
-                )
-            else:
-                _logger.debug(
-                    _("%d transactions present in response data"),
-                    len(transactions),
-                )
-                current_transactions = []
-                for transaction in transactions:
-                    date = self._ponto_date_from_string(
-                        transaction.get("attributes", {}).get("executionDate")
-                    )
-                    if date_since <= date < date_until:
-                        current_transactions.append(transaction)
-                if not current_transactions:
-                    _logger.debug(
-                        _("No lines selected from transactions")
-                    )
-                else:
-                    _logger.debug(
-                        _("%d lines selected from transactions"),
-                        len(current_transactions),
-                    )
-                    if not page_next or (page_next and not latest_identifier):
-                        latest_identifier = current_transactions[0].get("id")
-                    transaction_lines.extend(current_transactions)
-        if latest_identifier:
-            self.ponto_last_identifier = latest_identifier
-        return transaction_lines
-
-    def _ponto_date_from_string(self, date_str):
-        """Dates in Ponto are expressed in UTC, so we need to convert them
-        to supplied tz for proper classification.
-        """
-        dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-        dt = dt.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.tz or "utc"))
-        return dt.replace(tzinfo=None)
-
     def _ponto_obtain_statement_data(self, date_since, date_until):
         """Translate information from Ponto to Odoo bank statement lines."""
         self.ensure_one()
-        account_ids = self._ponto_get_account_ids()
-        journal = self.journal_id
-        iban = self.account_number
-        account_id = account_ids.get(iban)
-        if not account_id:
-            raise UserError(
-                _("Ponto : wrong configuration, unknow account %s")
-                % journal.bank_account_id.acc_number
-            )
         _logger.debug(
             _("Ponto obtain statement data for journal %s from %s to %s"),
-            journal.name,
+            self.journal_id.name,
             date_since,
             date_until
         )
-        self._ponto_synchronisation(account_id)
-        transaction_lines = self._ponto_get_transaction(
-            account_id, date_since, date_until
+        line_model = self.env["ponto.buffer.line"]
+        lines = line_model.sudo().search(
+            [
+                ("buffer_id.provider_id", "=", self.id),
+                ("effective_date_time", ">=", date_since),
+                ("effective_date_time", "<=", date_until),
+            ]
         )
         new_transactions = []
         sequence = 0
-        for transaction in transaction_lines:
+        for transaction in lines:
             sequence += 1
-            vals_line = self._ponto_get_transaction_vals(transaction, sequence)
+            vals_line = self._ponto_get_transaction_vals(
+                json.loads(transaction.transaction_data),
+                sequence
+            )
             new_transactions.append(vals_line)
         if new_transactions:
             return new_transactions, {}
@@ -283,3 +122,11 @@ class OnlineBankStatementProviderPonto(models.Model):
         if attributes.get("counterpartName"):
             vals_line["partner_name"] = attributes["counterpartName"]
         return vals_line
+
+    def _ponto_date_from_string(self, date_str):
+        """Dates in Ponto are expressed in UTC, so we need to convert them
+        to supplied tz for proper classification.
+        """
+        dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+        dt = dt.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.tz or "utc"))
+        return dt.replace(tzinfo=None)
