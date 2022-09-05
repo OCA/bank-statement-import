@@ -28,9 +28,10 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
         self.AccountJournal = self.env["account.journal"]
         self.ResPartnerBank = self.env["res.partner.bank"]
         self.OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
+        self.AccountAccount = self.env["account.account"]
         self.AccountBankStatement = self.env["account.bank.statement"]
         self.AccountBankStatementLine = self.env["account.bank.statement.line"]
-        self.AccStatemenPull = self.env["online.bank.statement.pull.wizard"]
+        self.AccountStatementPull = self.env["online.bank.statement.pull.wizard"]
 
         self.bank_account = self.ResPartnerBank.create(
             {
@@ -47,6 +48,14 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
                 "bank_statements_source": "online",
                 "online_bank_statement_provider": "ponto",
                 "bank_account_id": self.bank_account.id,
+            }
+        )
+        self.receivable_account = self.AccountAccount.create(
+            {
+                "code": "1325",
+                "name": "Test receivable account",
+                "user_type_id": self.env.ref("account.data_account_type_payable").id,
+                "reconcile": True,
             }
         )
         self.provider = self.journal.online_bank_statement_provider_id
@@ -68,9 +77,10 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
             _interface_class + "._ponto_synchronisation",
             return_value=None,
         )
+        # return list of transactions on first call, empty list on second call.
         self.mock_get_transactions = lambda: mock.patch(
             _interface_class + "._get_transactions",
-            return_value=[
+            side_effect=[[
                 {
                     "type": "transaction",
                     "relationships": {
@@ -143,7 +153,7 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
                         "amount": 5.83,
                     },
                 },
-            ],
+            ], [], ]
         )
 
     def test_balance_start(self):
@@ -155,22 +165,23 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
             line_form.name = "test move"
             line_form.amount = 100
         initial_statement = st_form.save()
-        initial_statement.button_confirm_bank()  # button_post in 14.0.
-        with (
-            self.mock_login(),
-            self.mock_synchronisation(),
-            self.mock_set_access_account(),
-            self.mock_get_transactions()
-        ):  # noqa: B950
+        initial_statement.line_ids[0].account_id = self.receivable_account
+        initial_statement.button_confirm_bank()
+        with self.mock_login(), \
+            self.mock_synchronisation(), \
+            self.mock_set_access_account(),  \
+            self.mock_get_transactions():  # noqa: B950
             vals = {
-                "provider_ids": self.provider.ids,
+                "provider_ids": [(4, self.provider.id)],
                 "date_since": datetime(2019, 11, 4),
                 "date_until": datetime(2019, 11, 5),
             }
-            wizard = self.AccStatemenPull.with_context(
+            wizard = self.AccountStatementPull.with_context(
                 active_model="account.journal",
                 active_id=self.journal.id,
             ).create(vals)
+            # For some reason the provider is not set in the create.
+            wizard.provider_ids = self.provider
             wizard.action_pull()
             statements = self.AccountBankStatement.search(
                 [("journal_id", "=", self.journal.id)]
@@ -178,31 +189,36 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
             new_statement = statements - initial_statement
             self.assertEqual(len(new_statement.line_ids), 1)
             self.assertEqual(new_statement.balance_start, 100)
-            self.assertEqual(new_statement.balance_end_real, 105.83)
+            self.assertEqual(new_statement.balance_end, 105.83)
+            # Ponto does not give balance info in transactions.
+            # self.assertEqual(new_statement.balance_end_real, 105.83)
 
     def test_ponto(self):
-        with (
-            self.mock_login(),
-            self.mock_synchronisation(),
-            self.mock_set_access_account(),
-            self.mock_get_transactions()
-        ):  # noqa: B950
+        with self.mock_login(), \
+            self.mock_synchronisation(), \
+            self.mock_set_access_account(), \
+            self.mock_get_transactions():  # noqa: B950
             vals = {
-                "provider_ids": self.provider.ids,
+                "provider_ids": [(4, self.provider.id)],
                 "date_since": datetime(2019, 11, 3),
                 "date_until": datetime(2019, 11, 17),
             }
-            wizard = self.AccStatemenPull.with_context(
+            wizard = self.AccountStatementPull.with_context(
                 active_model="account.journal",
                 active_id=self.journal.id,
             ).create(vals)
             # To get all the moves at once
             self.provider.statement_creation_mode = "monthly"
+            # For some reason the provider is not set in the create.
+            wizard.provider_ids = self.provider
             wizard.action_pull()
             statement = self.AccountBankStatement.search(
                 [("journal_id", "=", self.journal.id)]
             )
             self.assertEqual(len(statement), 1)
             self.assertEqual(len(statement.line_ids), 3)
-            self.assertEqual(statement.line_ids.mapped("amount"), [6.08, 5.48, 5.83])
-            self.assertEqual(statement.balance_end_real, 17.39)
+            sorted_amounts = sorted(statement.line_ids.mapped("amount"))
+            self.assertEqual(sorted_amounts, [5.48, 5.83, 6.08])
+            self.assertEqual(statement.balance_end, 17.39)
+            # Ponto does not give balance info in transactions.
+            # self.assertEqual(statement.balance_end_real, 17.39)

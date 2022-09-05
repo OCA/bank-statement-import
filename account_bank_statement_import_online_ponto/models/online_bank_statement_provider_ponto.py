@@ -30,7 +30,6 @@ class OnlineBankStatementProviderPonto(models.Model):
     @api.multi
     def _pull(self, date_since, date_until):
         """Override pull to first retrieve data from Ponto."""
-        self.ensure_one()
         if self.service == "ponto":
             self._ponto_retrieve_data()
         super()._pull(date_since, date_until)
