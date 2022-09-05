@@ -1,4 +1,5 @@
 # Copyright 2020 Florent de Labarre
+# Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import date, datetime
@@ -8,14 +9,16 @@ from odoo import fields
 from odoo.tests import Form, common
 
 _module_ns = "odoo.addons.account_bank_statement_import_online_ponto"
-_provider_class = (
+_interface_class = (
     _module_ns
-    + ".models.online_bank_statement_provider_ponto"
-    + ".OnlineBankStatementProviderPonto"
+    + ".models.ponto_interface"
+    + ".PontoInterface"
 )
 
 
-class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
+class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
+    post_install = True
+
     def setUp(self):
         super().setUp()
 
@@ -48,25 +51,25 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         )
         self.provider = self.journal.online_bank_statement_provider_id
 
-        self.mock_header = lambda: mock.patch(
-            _provider_class + "._ponto_header",
+        self.mock_login = lambda: mock.patch(
+            _interface_class + "._login",
             return_value={
-                "Accept": "application/json",
-                "Authorization": "Bearer --TOKEN--",
+                "username": "test_user",
+                "password": "very_secret",
+                "access_token": "abcd1234",
+                "token_expiration": datetime(2099, 12, 31, 23, 59, 59),
             },
         )
-
-        self.mock_account_ids = lambda: mock.patch(
-            _provider_class + "._ponto_get_account_ids",
-            return_value={"FR0214508000302245362775K46": "id"},
-        )
-        self.mock_synchronisation = lambda: mock.patch(
-            _provider_class + "._ponto_synchronisation",
+        self.mock_set_access_account = lambda: mock.patch(
+            _interface_class + "._set_access_account",
             return_value=None,
         )
-
-        self.mock_transaction = lambda: mock.patch(
-            _provider_class + "._ponto_get_transaction",
+        self.mock_synchronisation = lambda: mock.patch(
+            _interface_class + "._ponto_synchronisation",
+            return_value=None,
+        )
+        self.mock_get_transactions = lambda: mock.patch(
+            _interface_class + "._get_transactions",
             return_value=[
                 {
                     "type": "transaction",
@@ -149,15 +152,15 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         st_form.date = date(2019, 11, 1)
         st_form.balance_end_real = 100
         with st_form.line_ids.new() as line_form:
-            line_form.payment_ref = "test move"
+            line_form.name = "test move"
             line_form.amount = 100
         initial_statement = st_form.save()
-        initial_statement.button_post()
+        initial_statement.button_confirm_bank()  # button_post in 14.0.
         with (
-            self.mock_transaction(),
-            self.mock_header(),
+            self.mock_login(),
             self.mock_synchronisation(),
-            self.mock_account_ids()
+            self.mock_set_access_account(),
+            self.mock_get_transactions()
         ):  # noqa: B950
             vals = {
                 "provider_ids": self.provider.ids,
@@ -179,10 +182,10 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
 
     def test_ponto(self):
         with (
-            self.mock_transaction(),
-            self.mock_header(),
+            self.mock_login(),
             self.mock_synchronisation(),
-            self.mock_account_ids()
+            self.mock_set_access_account(),
+            self.mock_get_transactions()
         ):  # noqa: B950
             vals = {
                 "provider_ids": self.provider.ids,
