@@ -1,7 +1,8 @@
 # Copyright 2020 Florent de Labarre
 # Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from datetime import datetime
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
 import json
 import pytz
 
@@ -16,10 +17,12 @@ _logger = logging.getLogger(__name__)
 class OnlineBankStatementProviderPonto(models.Model):
     _inherit = "online.bank.statement.provider"
 
-    ponto_last_identifier = fields.Char(readonly=True)
-
-    def ponto_reset_last_identifier(self):
-        self.write({"ponto_last_identifier": False})
+    ponto_buffer_retain_days = fields.Integer(
+        string="Number of days to keep Ponto Buffers",
+        default=61,
+        help="By default buffers will be kept for 61 days.\n"
+        "Set this to 0 to keep buffers indefinitely.",
+    )
 
     @api.model
     def _get_available_services(self):
@@ -31,17 +34,21 @@ class OnlineBankStatementProviderPonto(models.Model):
     def _pull(self, date_since, date_until):
         """Override pull to first retrieve data from Ponto."""
         if self.service == "ponto":
-            self._ponto_retrieve_data()
+            self._ponto_retrieve_data(date_since)
         super()._pull(date_since, date_until)
 
-    def _ponto_retrieve_data(self):
-        """Fill buffer with data from Ponto."""
+    def _ponto_retrieve_data(self, date_since):
+        """Fill buffer with data from Ponto.
+
+        We will retrieve data from the latest transactions present in Ponto
+        backwards, until we find data that has an execution date before date_since.
+        """
         interface_model = self.env["ponto.interface"]
         buffer_model = self.env["ponto.buffer"]
         access_data = interface_model._login(self.username, self.password)
         interface_model._set_access_account(access_data, self.account_number)
         interface_model._ponto_synchronisation(access_data)
-        latest_identifier = self.ponto_last_identifier
+        latest_identifier = False
         transactions = interface_model._get_transactions(
             access_data,
             latest_identifier
@@ -49,6 +56,9 @@ class OnlineBankStatementProviderPonto(models.Model):
         while transactions:
             buffer_model.sudo()._store_transactions(self, transactions)
             latest_identifier = transactions[-1].get("id")
+            earliest_datetime = self._ponto_get_execution_datetime(transactions[-1])
+            if earliest_datetime < date_since:
+                break
             transactions = interface_model._get_transactions(
                 access_data,
                 latest_identifier
@@ -107,7 +117,7 @@ class OnlineBankStatementProviderPonto(models.Model):
             if attributes.get(x)
         ]
         ref = " ".join(ref_list)
-        date = self._ponto_date_from_string(attributes.get("executionDate"))
+        date = self._ponto_get_execution_datetime(transaction)
         vals_line = {
             "sequence": sequence,
             "date": date,
@@ -122,10 +132,41 @@ class OnlineBankStatementProviderPonto(models.Model):
             vals_line["partner_name"] = attributes["counterpartName"]
         return vals_line
 
-    def _ponto_date_from_string(self, date_str):
+    def _ponto_get_execution_datetime(self, transaction):
+        """Get execution datetime for a transaction.
+
+        Odoo often names variables containing date and time just xxx_date or
+        date_xxx. We try to avoid this misleading naming by using datetime as
+        much for variables and fields of type datetime.
+        """
+        attributes = transaction.get("attributes", {})
+        return self._ponto_datetime_from_string(attributes.get("executionDate"))
+
+    def _ponto_datetime_from_string(self, date_str):
         """Dates in Ponto are expressed in UTC, so we need to convert them
         to supplied tz for proper classification.
         """
         dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
         dt = dt.replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.tz or "utc"))
         return dt.replace(tzinfo=None)
+
+    def _ponto_buffer_purge(self):
+        """Remove buffers from Ponto no longer needed to import statements."""
+        _logger.info("Scheduled purge of old ponto buffers...")
+        today = date.today()
+        buffer_model = self.env["ponto.buffer"]
+        providers = self.search([
+            ("active", "=", True),
+        ])
+        for provider in providers:
+            if not provider.ponto_buffer_retain_days:
+                continue
+            cutoff_date = today - relativedelta(days=provider.ponto_buffer_retain_days)
+            old_buffers = buffer_model.search(
+                [
+                    ("provider_id", "=", provider.id),
+                    ("effective_date", "<", cutoff_date),
+                ]
+            )
+            old_buffers.unlink()
+        _logger.info("Scheduled purge of old ponto buffers complete.")

@@ -137,7 +137,13 @@ class PontoInterface(models.AbstractModel):
             time.sleep(40)
 
     def _get_transactions(self, access_data, last_identifier):
-        """Get transactions from ponto, using last_identifier as pointer."""
+        """Get transactions from ponto, using last_identifier as pointer.
+
+        Note that Ponto has the transactions in descending order. The first
+        transaction, retrieved by not passing an identifier, is the latest
+        present in Ponto. If you read transactions 'after' a certain identifier
+        (Ponto id), you will get transactions with an earlier date.
+        """
         url = (
             PONTO_ENDPOINT
             + "/accounts/"

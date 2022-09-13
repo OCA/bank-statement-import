@@ -13,6 +13,7 @@ class PontoBuffer(models.Model):
         comodel_name="ponto.buffer",
         required=True,
         readonly=True,
+        ondelete="cascade",
     )
     ponto_id = fields.Char(
         required=True,

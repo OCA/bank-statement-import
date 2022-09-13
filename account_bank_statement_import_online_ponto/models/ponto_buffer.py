@@ -24,7 +24,6 @@ class PontoBuffer(models.Model):
         comodel_name="ponto.buffer.line",
         inverse_name="buffer_id",
         readonly=True,
-        ondelete="cascade",
     )
 
     def _store_transactions(self, provider, transactions):
@@ -32,10 +31,7 @@ class PontoBuffer(models.Model):
         # Start by sorting all transactions per date.
         transactions_per_date = {}
         for transaction in transactions:
-            ponto_execution_date = transaction.get(
-                "attributes", {}
-            ).get("executionDate")
-            effective_date_time = provider._ponto_date_from_string(ponto_execution_date)
+            effective_date_time = provider._ponto_get_execution_datetime(transaction)
             transaction["effective_date_time"] = effective_date_time.isoformat()
             key = effective_date_time.isoformat()[0:10]
             if key not in transactions_per_date:

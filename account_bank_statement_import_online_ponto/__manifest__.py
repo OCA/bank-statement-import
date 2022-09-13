@@ -1,4 +1,4 @@
-# Copyright 2020 Florent de Labarre
+# Copyright 2020 Florent de Labarre.
 # Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
@@ -14,7 +14,8 @@
     "installable": True,
     "depends": ["account_bank_statement_import_online"],
     "data": [
+        "data/ir_cron.xml",
         "security/ir.model.access.csv",
-        "view/online_bank_statement_provider.xml",
+        "views/online_bank_statement_provider.xml",
     ],
 }
