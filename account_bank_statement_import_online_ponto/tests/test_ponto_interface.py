@@ -92,6 +92,32 @@ class TestPontoInterface(common.TransactionCase):
         interface_model._ponto_synchronisation(access_data)
 
     @patch("requests.get")
+    def test_synchronization_done(self, requests_get):
+        """Test getting account data for Ponto access."""
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.text = json.dumps({"status": "success"})
+        requests_get.return_value = mock_response
+        # Succesfull sync.
+        self._check_synchronization_done(True)
+        # Error in sync.
+        mock_response.text = json.dumps({"status": "error"})
+        self._check_synchronization_done(True)
+        # Unexpected error in sync.
+        mock_response.status_code = 404
+        self._check_synchronization_done(False)
+
+    def _check_synchronization_done(self, expected_result):
+        """Check result for synchronization with current mock."""
+        interface_model = self.env["ponto.interface"]
+        access_data = self._get_access_dict()
+        synchronization_done = interface_model._synchronization_done(
+            access_data,
+            "https//does.not.matter.com/synchronization"
+        )
+        self.assertEqual(synchronization_done, expected_result)
+
+    @patch("requests.get")
     def test_get_transactions(self, requests_get):
         """Test getting transactions from Ponto."""
         mock_response = MagicMock()

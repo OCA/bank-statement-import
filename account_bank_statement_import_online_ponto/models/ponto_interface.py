@@ -105,36 +105,44 @@ class PontoInterface(models.AbstractModel):
         if response.status_code == 400:
             # Probably synchronization recently done already.
             _logger.debug(
-                _("Syncronization request rejected: %s"),
+                _("Synchronization request rejected: %s"),
                 response.text
             )
             return
         data = self._get_response_data(response)
         sync_id = data.get("attributes", {}).get("resourceId", False)
-        # Check synchronisation
         if not sync_id:
-            return
+            raise UserError(
+                _("Ponto : no resourceId in synchronization data %s") % data
+            )
         # Poll synchronization during 400 seconds for completion.
         url = PONTO_ENDPOINT + "/synchronizations/" + sync_id
         number = 0
-        while number <= 10:
+        while number < 10:
             number += 1
-            response = requests.get(url, headers=self._get_request_headers(access_data))
-            if response.status_code == 200:
-                data = json.loads(response.text)
-                status = data.get("status", {})
-                if status in ("success", "error"):
-                    if status == "error":
-                        _logger.debug(
-                            _("Syncronization was succesfully completed")
-                        )
-                    else:
-                        _logger.debug(
-                            _("Syncronization had an error: %s"),
-                            response.text
-                        )
-                    return
+            if self._synchronization_done(access_data, url):
+                break
             time.sleep(40)
+
+    def _synchronization_done(self, access_data, url):
+        """Check wether requested synchronization done."""
+        response = requests.get(url, headers=self._get_request_headers(access_data))
+        if response.status_code != 200:
+            return False
+        data = json.loads(response.text)
+        status = data.get("status", {})
+        if status not in ("success", "error"):
+            return False
+        if status == "error":
+            _logger.debug(
+                _("Synchronization was succesfully completed")
+            )
+        else:
+            _logger.debug(
+                _("Synchronization had an error: %s"),
+                response.text
+            )
+        return True
 
     def _get_transactions(self, access_data, last_identifier):
         """Get transactions from ponto, using last_identifier as pointer.

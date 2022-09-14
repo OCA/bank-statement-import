@@ -99,9 +99,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 sequence
             )
             new_transactions.append(vals_line)
-        if new_transactions:
-            return new_transactions, {}
-        return
+        return new_transactions, {}
 
     def _ponto_get_transaction_vals(self, transaction, sequence):
         """Translate information from Ponto to statement line vals."""
