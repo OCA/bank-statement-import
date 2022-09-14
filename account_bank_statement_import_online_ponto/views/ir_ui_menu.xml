@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_ponto_buffer"
+        name="Show Ponto Buffer"
+        parent="account.account_reports_management_menu"
+        sequence="90"
+        action="action_ponto_buffer"
+        groups="account.group_account_user"
+    />
+
+</odoo>

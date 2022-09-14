@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_ponto_buffer" model="ir.actions.act_window">
+        <field name="name">Ponto Buffer</field>
+        <field name="res_model">ponto.buffer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field eval="False" name="view_id"/>
+    </record>
+</odoo>
+

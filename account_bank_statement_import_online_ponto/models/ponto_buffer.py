@@ -13,6 +13,8 @@ class PontoBuffer(models.Model):
     """Define model to hold data retrieved from Ponto."""
     _name = "ponto.buffer"
     _description = "Group transactions retrieved from Ponto."
+    _order = "effective_date desc"
+    _rec_name = "effective_date"
 
     provider_id = fields.Many2one(
         comodel_name="online.bank.statement.provider",

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="ponto_buffer_tree">
+        <field name="name">ponto.buffer.tree</field>
+        <field name="model">ponto.buffer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="provider_id" />
+                <field name="effective_date" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ponto_buffer_form">
+        <field name="name">ponto.buffer.form</field>
+        <field name="model">ponto.buffer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="ponto_buffer_main">
+                    <field name="provider_id" />
+                    <field name="effective_date" />
+                </group>
+                <group name="ponto_buffer_lines" string="Buffer Lines">
+                    <field name="buffer_line_ids" mode="tree">
+                        <tree>
+                            <field name="effective_date_time" />
+                            <field name="ponto_id" />
+                            <field name="transaction_data" />
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

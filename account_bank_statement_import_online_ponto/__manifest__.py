@@ -17,5 +17,8 @@
         "data/ir_cron.xml",
         "security/ir.model.access.csv",
         "views/online_bank_statement_provider.xml",
+        "views/ponto_buffer.xml",
+        "views/ir_actions_act_window.xml",
+        "views/ir_ui_menu.xml",
     ],
 }

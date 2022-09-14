@@ -8,6 +8,8 @@ class PontoBuffer(models.Model):
     """Define model to hold transactions retrieved from Ponto."""
     _name = "ponto.buffer.line"
     _description = "Hold transactions retrieved from Ponto."
+    _order = "effective_date_time desc"
+    _rec_name = "effective_date_time"
 
     buffer_id = fields.Many2one(
         comodel_name="ponto.buffer",
