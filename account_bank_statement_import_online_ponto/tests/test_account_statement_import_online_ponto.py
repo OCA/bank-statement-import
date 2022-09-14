@@ -15,6 +15,83 @@ _interface_class = (
     + ".PontoInterface"
 )
 
+THREE_TRANSACTIONS = [
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "701ab965-21c4-46ca-b157-306c0646e0e2",
+        "attributes": {
+            "valueDate": "2019-11-18T00:00:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Minima vitae totam!",
+            "executionDate": "2019-11-20T00:00:00.000Z",
+            "description": "Wire transfer",
+            "currency": "EUR",
+            "counterpartReference": "BE26089479973169",
+            "counterpartName": "Osinski Group",
+            "amount": 6.08,
+        },
+    },
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "9ac50483-16dc-4a82-aa60-df56077405cd",
+        "attributes": {
+            "valueDate": "2019-11-04T00:00:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Quia voluptatem blanditiis.",
+            "executionDate": "2019-11-06T00:00:00.000Z",
+            "description": "Wire transfer",
+            "currency": "EUR",
+            "counterpartReference": "BE97201830401438",
+            "counterpartName": "Stokes-Miller",
+            "amount": 5.48,
+        },
+    },
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "b21a6c65-1c52-4ba6-8cbc-127d2b2d85ff",
+        "attributes": {
+            "valueDate": "2019-11-04T00:00:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Laboriosam repelo?",
+            "executionDate": "2019-11-04T00:00:00.000Z",
+            "description": "Wire transfer",
+            "currency": "EUR",
+            "counterpartReference": "BE10325927501996",
+            "counterpartName": "Strosin-Veum",
+            "amount": 5.83,
+        },
+    },
+]
+
+EMPTY_TRANSACTIONS = []
+
 
 class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
     post_install = True
@@ -80,80 +157,7 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
         # return list of transactions on first call, empty list on second call.
         self.mock_get_transactions = lambda: mock.patch(
             _interface_class + "._get_transactions",
-            side_effect=[[
-                {
-                    "type": "transaction",
-                    "relationships": {
-                        "account": {
-                            "links": {"related": "https://api.myponto.com/accounts/"},
-                            "data": {
-                                "type": "account",
-                                "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
-                            },
-                        }
-                    },
-                    "id": "701ab965-21c4-46ca-b157-306c0646e0e2",
-                    "attributes": {
-                        "valueDate": "2019-11-18T00:00:00.000Z",
-                        "remittanceInformationType": "unstructured",
-                        "remittanceInformation": "Minima vitae totam!",
-                        "executionDate": "2019-11-20T00:00:00.000Z",
-                        "description": "Wire transfer",
-                        "currency": "EUR",
-                        "counterpartReference": "BE26089479973169",
-                        "counterpartName": "Osinski Group",
-                        "amount": 6.08,
-                    },
-                },
-                {
-                    "type": "transaction",
-                    "relationships": {
-                        "account": {
-                            "links": {"related": "https://api.myponto.com/accounts/"},
-                            "data": {
-                                "type": "account",
-                                "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
-                            },
-                        }
-                    },
-                    "id": "9ac50483-16dc-4a82-aa60-df56077405cd",
-                    "attributes": {
-                        "valueDate": "2019-11-04T00:00:00.000Z",
-                        "remittanceInformationType": "unstructured",
-                        "remittanceInformation": "Quia voluptatem blanditiis.",
-                        "executionDate": "2019-11-06T00:00:00.000Z",
-                        "description": "Wire transfer",
-                        "currency": "EUR",
-                        "counterpartReference": "BE97201830401438",
-                        "counterpartName": "Stokes-Miller",
-                        "amount": 5.48,
-                    },
-                },
-                {
-                    "type": "transaction",
-                    "relationships": {
-                        "account": {
-                            "links": {"related": "https://api.myponto.com/accounts/"},
-                            "data": {
-                                "type": "account",
-                                "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
-                            },
-                        }
-                    },
-                    "id": "b21a6c65-1c52-4ba6-8cbc-127d2b2d85ff",
-                    "attributes": {
-                        "valueDate": "2019-11-04T00:00:00.000Z",
-                        "remittanceInformationType": "unstructured",
-                        "remittanceInformation": "Laboriosam repelo?",
-                        "executionDate": "2019-11-04T00:00:00.000Z",
-                        "description": "Wire transfer",
-                        "currency": "EUR",
-                        "counterpartReference": "BE10325927501996",
-                        "counterpartName": "Strosin-Veum",
-                        "amount": 5.83,
-                    },
-                },
-            ], [], ]
+            side_effect=[THREE_TRANSACTIONS, EMPTY_TRANSACTIONS, ]
         )
 
     def test_balance_start(self):
@@ -222,3 +226,20 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
             self.assertEqual(statement.balance_end, 17.39)
             # Ponto does not give balance info in transactions.
             # self.assertEqual(statement.balance_end_real, 17.39)
+
+    def test_ponto_buffer_purge(self):
+        """Create some old buffer records and test purging them."""
+        self.provider.write(
+            {
+                "ponto_buffer_retain_days": 31,
+                "active": True,
+            }
+        )
+        buffer_model = self.env["ponto.buffer"]
+        buffer_model.sudo()._store_transactions(self.provider, THREE_TRANSACTIONS)
+        buffers = buffer_model.search([("provider_id", "=", self.provider.id)])
+        # As all transactions have a different date, they will be in separate buffers.
+        self.assertEqual(len(buffers), 3)
+        self.provider._ponto_buffer_purge()
+        buffers = buffer_model.search([("provider_id", "=", self.provider.id)])
+        self.assertFalse(bool(buffers))

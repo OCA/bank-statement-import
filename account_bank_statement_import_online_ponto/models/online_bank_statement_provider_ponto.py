@@ -63,11 +63,10 @@ class OnlineBankStatementProviderPonto(models.Model):
                 access_data,
                 latest_identifier
             )
-        self.ponto_last_identifier = latest_identifier
 
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
-        if self.service != "ponto":
+        if self.service != "ponto":  # pragma: no cover
             return super()._obtain_statement_data(
                 date_since,
                 date_until,
@@ -159,6 +158,8 @@ class OnlineBankStatementProviderPonto(models.Model):
             ("active", "=", True),
         ])
         for provider in providers:
+            if provider.service != "ponto":
+                continue
             if not provider.ponto_buffer_retain_days:
                 continue
             cutoff_date = today - relativedelta(days=provider.ponto_buffer_retain_days)
