@@ -110,10 +110,12 @@ class PontoInterface(models.AbstractModel):
             )
             return
         data = self._get_response_data(response)
-        sync_id = data.get("attributes", {}).get("resourceId", False)
+        # The resourceId in data["attributes"] is the account,
+        # we need the synchronization.
+        sync_id = data.get("data", {}).get("id", False)
         if not sync_id:
             raise UserError(
-                _("Ponto : no resourceId in synchronization data %s") % data
+                _("Ponto : no synchronization id in data %s") % data
             )
         # Poll synchronization during 400 seconds for completion.
         url = PONTO_ENDPOINT + "/synchronizations/" + sync_id
