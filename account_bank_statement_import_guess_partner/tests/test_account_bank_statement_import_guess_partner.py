@@ -65,6 +65,20 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
         transaction = self._get_completed_transaction()
         self.assertNotIn("partner_id", transaction)
 
+    def test_sale_order_name(self):
+        """Test sale_order.name = transaction["ref"]."""
+        self._create_sale_order("name", REF)
+        transaction = self._get_completed_transaction()
+        self.assertIn("partner_id", transaction)
+        self.assertEqual(transaction["partner_id"], self.partner.id)
+
+    def test_sale_order_client_order_ref(self):
+        """Test sale_order.client_order_ref = transaction["ref"]."""
+        self._create_sale_order("client_order_ref", REF)
+        transaction = self._get_completed_transaction()
+        self.assertIn("partner_id", transaction)
+        self.assertEqual(transaction["partner_id"], self.partner.id)
+
     def _get_completed_transaction(self):
         """Complete statements and return first transaction in first statement."""
         # pylint: disable=protected-access
@@ -96,5 +110,11 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
                 ],
             }
         )
+        invoice.partner_id = self.partner
         invoice[ref_field] = ref_value  # Might also override name.
         invoice.post()
+
+    def _create_sale_order(self, ref_field, ref_value):
+        """Create a sale order with some reference information."""
+        sale_order = self.env["sale.order"].create({"partner_id": self.partner.id})
+        sale_order[ref_field] = ref_value  # Might also override name.
