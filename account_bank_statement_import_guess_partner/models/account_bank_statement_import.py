@@ -24,9 +24,11 @@ class AccountBankStatementImport(models.TransientModel):
         if transaction.get("partner_id", False):
             return
         invoice_model = self.env["account.move"]
+        sale_order_model = self.env["sale.order"]
         invoice = None
         transaction_keys = ["ref", "name"]
         invoice_fields = ["ref", "name"]
+        sale_order_fields = ["client_order_ref", "name"]
         for key in transaction_keys:
             value = transaction.get(key, False)
             if not value:
@@ -34,17 +36,24 @@ class AccountBankStatementImport(models.TransientModel):
             for fieldname in invoice_fields:
                 invoice = invoice_model.search([(fieldname, "=", value)], limit=1)
                 if invoice:
-                    # We need parent here because of reconciliation.
+                    # We need a partner of type contact here because of reconciliation.
                     # Lines cannot be reconciled if partner is an address
-                    transaction["partner_id"] = invoice.partner_id.parent_id.id
+                    partner = self._get_effective_partner(invoice.partner_id)
+                    transaction["partner_id"] = partner.id
                     return
-        # In case there is not an invoice, check sale order
-        sale_order_name = transaction.get("name")
-        if sale_order_name:
-            sale_order = self.env["sale.order"].search(
-                [("name", "=", sale_order_name)], limit=1
-            )
-            if not sale_order:
-                return
-            # Same as above
-            transaction["partner_id"] = sale_order.partner_id.id
+            for fieldname in sale_order_fields:
+                sale_order = sale_order_model.search([(fieldname, "=", value)], limit=1)
+                if sale_order:
+                    partner = self._get_effective_partner(sale_order.partner_id)
+                    transaction["partner_id"] = partner.id
+                    return
+
+    def _get_effective_partner(self, partner):
+        """Find contact partner for invoice, sale order"""
+        if partner.type == "contact":
+            return partner
+        if partner.parent_id.type == "contact":
+            return partner.parent_id
+        # If there's no contact,
+        # return original partner
+        return partner
