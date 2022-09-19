@@ -26,7 +26,7 @@ class AccountBankStatementImport(models.TransientModel):
         invoice_model = self.env["account.move"]
         invoice = None
         transaction_keys = ["ref", "name"]
-        invoice_fields = ["invoice_origin", "ref", "name"]
+        invoice_fields = ["ref", "name"]
         for key in transaction_keys:
             value = transaction.get(key, False)
             if not value:

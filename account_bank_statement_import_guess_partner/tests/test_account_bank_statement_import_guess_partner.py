@@ -45,13 +45,6 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
             {"name": "Test Journal", "type": "sale", "code": "TJS0"}
         )
 
-    def test_invoice_invoice_origin(self):
-        """Test invoice.invoice_origin = transaction["ref"]."""
-        self._create_invoice("invoice_origin", REF)
-        transaction = self._get_completed_transaction()
-        self.assertIn("partner_id", transaction)
-        self.assertEqual(transaction["partner_id"], self.partner.id)
-
     def test_invoice_ref(self):
         """Test invoice.ref = transaction["ref"]."""
         self._create_invoice("ref", REF)
@@ -68,7 +61,7 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
 
     def test_invoice_unknown_ref(self):
         """Test no value in invoice for transaction["ref"]."""
-        self._create_invoice("invoice_origin", "DoesAbsolutelyNotExist")
+        self._create_invoice("ref", "DoesAbsolutelyNotExist")
         transaction = self._get_completed_transaction()
         self.assertNotIn("partner_id", transaction)
 
@@ -89,9 +82,8 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
             {
                 "name": "Test Invoice 3",
                 "partner_id": self.partner.id,
-                "type": "out_invoice",
                 "journal_id": self.journal.id,
-                "invoice_line_ids": [
+                "line_ids": [
                     (
                         0,
                         0,
@@ -99,7 +91,6 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
                             "account_id": self.a_receivable.id,
                             "name": "Test line",
                             "quantity": 1.0,
-                            "price_unit": 100.00,
                         },
                     )
                 ],
