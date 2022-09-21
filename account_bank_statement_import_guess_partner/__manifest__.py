@@ -7,5 +7,5 @@
     "website": "https://github.com/OCA/bank-statement-import",
     "author": "Therp BV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "depends": ["account_bank_statement_import"],
+    "depends": ["account_bank_statement_import", "sale"],
 }
