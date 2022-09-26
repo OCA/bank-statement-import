@@ -17,42 +17,42 @@ _logger = logging.getLogger(__name__)
 
 
 class OnlineBankStatementProvider(models.Model):
-    _name = 'online.bank.statement.provider'
-    _inherit = ['mail.thread']
-    _description = 'Online Bank Statement Provider'
+    _name = "online.bank.statement.provider"
+    _inherit = ["mail.thread"]
+    _description = "Online Bank Statement Provider"
 
     company_id = fields.Many2one(
-        related='journal_id.company_id',
+        related="journal_id.company_id",
         store=True,
     )
     active = fields.Boolean()
     name = fields.Char(
-        string='Name',
-        compute='_compute_name',
+        string="Name",
+        compute="_compute_name",
         store=True,
     )
     journal_id = fields.Many2one(
-        comodel_name='account.journal',
+        comodel_name="account.journal",
         required=True,
         readonly=True,
-        ondelete='cascade',
+        ondelete="cascade",
         domain=[
-            ('type', '=', 'bank'),
+            ("type", "=", "bank"),
         ],
     )
     currency_id = fields.Many2one(
-        related='journal_id.currency_id',
+        related="journal_id.currency_id",
     )
     account_number = fields.Char(
-        related='journal_id.bank_account_id.sanitized_acc_number'
+        related="journal_id.bank_account_id.sanitized_acc_number"
     )
     tz = fields.Selection(
         selection=_tz_get,
-        string='Timezone',
-        default=lambda self: self.env.context.get('tz'),
+        string="Timezone",
+        default=lambda self: self.env.context.get("tz"),
         help=(
-            'Timezone to convert transaction timestamps to prior being'
-            ' saved into a statement.'
+            "Timezone to convert transaction timestamps to prior being"
+            " saved into a statement."
         ),
     )
     service = fields.Selection(
@@ -62,38 +62,38 @@ class OnlineBankStatementProvider(models.Model):
     )
     interval_type = fields.Selection(
         selection=[
-            ('minutes', 'Minute(s)'),
-            ('hours', 'Hour(s)'),
-            ('days', 'Day(s)'),
-            ('weeks', 'Week(s)'),
+            ("minutes", "Minute(s)"),
+            ("hours", "Hour(s)"),
+            ("days", "Day(s)"),
+            ("weeks", "Week(s)"),
         ],
-        default='hours',
+        default="hours",
         required=True,
     )
     interval_number = fields.Integer(
-        string='Scheduled update interval',
+        string="Scheduled update interval",
         default=1,
         required=True,
     )
     update_schedule = fields.Char(
-        string='Update Schedule',
-        compute='_compute_update_schedule',
+        string="Update Schedule",
+        compute="_compute_update_schedule",
     )
     last_successful_run = fields.Datetime(
-        string='Last successful pull',
+        string="Last successful pull",
     )
     next_run = fields.Datetime(
-        string='Next scheduled pull',
+        string="Next scheduled pull",
         default=fields.Datetime.now,
         required=True,
     )
     statement_creation_mode = fields.Selection(
         selection=[
-            ('daily', 'Daily statements'),
-            ('weekly', 'Weekly statements'),
-            ('monthly', 'Monthly statements'),
+            ("daily", "Daily statements"),
+            ("weekly", "Weekly statements"),
+            ("monthly", "Monthly statements"),
         ],
-        default='daily',
+        default="daily",
         required=True,
     )
     api_base = fields.Char()
@@ -110,15 +110,15 @@ class OnlineBankStatementProvider(models.Model):
 
     _sql_constraints = [
         (
-            'journal_id_uniq',
-            'UNIQUE(journal_id)',
-            'Only one online banking statement provider per journal!'
+            "journal_id_uniq",
+            "UNIQUE(journal_id)",
+            "Only one online banking statement provider per journal!",
         ),
         (
-            'valid_interval_number',
-            'CHECK(interval_number > 0)',
-            'Scheduled update interval must be greater than zero!'
-        )
+            "valid_interval_number",
+            "CHECK(interval_number > 0)",
+            "Scheduled update interval must be greater than zero!",
+        ),
     ]
 
     @api.model
@@ -128,65 +128,64 @@ class OnlineBankStatementProvider(models.Model):
 
     @api.model
     def _selection_service(self):
-        return self._get_available_services() + [('dummy', 'Dummy')]
+        return self._get_available_services() + [("dummy", "Dummy")]
 
     @api.model
     def values_service(self):
         return self._get_available_services()
 
     @api.multi
-    @api.depends('service')
+    @api.depends("service")
     def _compute_name(self):
         for provider in self:
-            provider.name = list(filter(
-                lambda x: x[0] == provider.service,
-                self._selection_service()
-            ))[0][1]
+            provider.name = list(
+                filter(lambda x: x[0] == provider.service, self._selection_service())
+            )[0][1]
 
     @api.multi
-    @api.depends('active', 'interval_type', 'interval_number')
+    @api.depends("active", "interval_type", "interval_number")
     def _compute_update_schedule(self):
         for provider in self:
             if not provider.active:
-                provider.update_schedule = _('Inactive')
+                provider.update_schedule = _("Inactive")
                 continue
 
-            provider.update_schedule = _('%(number)s %(type)s') % {
-                'number': provider.interval_number,
-                'type': list(filter(
-                    lambda x: x[0] == provider.interval_type,
-                    self._fields['interval_type'].selection
-                ))[0][1],
+            provider.update_schedule = _("%(number)s %(type)s") % {
+                "number": provider.interval_number,
+                "type": list(
+                    filter(
+                        lambda x: x[0] == provider.interval_type,
+                        self._fields["interval_type"].selection,
+                    )
+                )[0][1],
             }
 
     @api.multi
     def _pull(self, date_since, date_until):
-        AccountBankStatement = self.env['account.bank.statement']
-        is_scheduled = self.env.context.get('scheduled')
+        AccountBankStatement = self.env["account.bank.statement"]
+        is_scheduled = self.env.context.get("scheduled")
         if is_scheduled:
             AccountBankStatement = AccountBankStatement.with_context(
                 tracking_disable=True,
             )
-        AccountBankStatementLine = self.env['account.bank.statement.line']
+        AccountBankStatementLine = self.env["account.bank.statement.line"]
         for provider in self:
             provider_tz = timezone(provider.tz) if provider.tz else utc
-            statement_date_since = provider._get_statement_date_since(
-                date_since
-            )
+            statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
                 statement_date_until = (
                     statement_date_since + provider._get_statement_date_step()
                 )
                 try:
                     data = provider._obtain_statement_data(
-                        statement_date_since,
-                        statement_date_until
+                        statement_date_since, statement_date_until
                     )
                 except:
                     if is_scheduled:
                         _logger.warning(
                             'Online Bank Statement Provider "%s" failed to'
-                            ' obtain statement data since %s until %s' % (
+                            " obtain statement data since %s until %s"
+                            % (
                                 provider.name,
                                 statement_date_since,
                                 statement_date_until,
@@ -195,17 +194,16 @@ class OnlineBankStatementProvider(models.Model):
                         )
                         provider.message_post(
                             body=_(
-                                'Failed to obtain statement data for period '
-                                'since %s until %s: %s. See server logs for '
-                                'more details.'
-                            ) % (
+                                "Failed to obtain statement data for period "
+                                "since %s until %s: %s. See server logs for "
+                                "more details."
+                            )
+                            % (
                                 statement_date_since,
                                 statement_date_until,
-                                escape(str(exc_info()[1])) or _('N/A')
+                                escape(str(exc_info()[1])) or _("N/A"),
                             ),
-                            subject=_(
-                                'Issue with Online Bank Statement Provider'
-                            ),
+                            subject=_("Issue with Online Bank Statement Provider"),
                         )
                         break
                     raise
@@ -228,19 +226,24 @@ class OnlineBankStatementProvider(models.Model):
                     # Continue with next possible statement.
                     statement_date_since = statement_date_until
                     continue
-                statement = AccountBankStatement.search([
-                    ('journal_id', '=', provider.journal_id.id),
-                    ('state', '=', 'open'),
-                    ('date', '=', statement_date),
-                ], limit=1)
+                statement = AccountBankStatement.search(
+                    [
+                        ('journal_id', '=', provider.journal_id.id),
+                        ('state', '=', 'open'),
+                        ('date', '=', statement_date),
+                    ],
+                    limit=1
+                )
                 if not statement:
-                    statement_values.update({
-                        'name': provider.journal_id.sequence_id.with_context(
-                            ir_sequence_date=statement_date,
-                        ).next_by_id(),
-                        'journal_id': provider.journal_id.id,
-                        'date': statement_date,
-                    })
+                    statement_values.update(
+                        {
+                            "name": provider.journal_id.sequence_id.with_context(
+                                ir_sequence_date=statement_date,
+                            ).next_by_id(),
+                            "journal_id": provider.journal_id.id,
+                            "date": statement_date,
+                        }
+                    )
                     statement = AccountBankStatement.with_context(
                         journal_id=provider.journal_id.id,
                     ).create(
@@ -249,7 +252,7 @@ class OnlineBankStatementProvider(models.Model):
                     )
                 filtered_lines = []
                 for line_values in lines_data:
-                    date = line_values['date']
+                    date = line_values["date"]
                     if not isinstance(date, datetime):
                         date = fields.Datetime.from_string(date)
 
@@ -258,64 +261,62 @@ class OnlineBankStatementProvider(models.Model):
                     date = date.astimezone(utc).replace(tzinfo=None)
 
                     if date < statement_date_since:
-                        if 'balance_start' in statement_values:
-                            statement_values['balance_start'] = (
-                                Decimal(
-                                    statement_values['balance_start']
-                                ) + Decimal(
-                                    line_values['amount']
-                                )
-                            )
+                        if "balance_start" in statement_values:
+                            statement_values["balance_start"] = Decimal(
+                                statement_values["balance_start"]
+                            ) + Decimal(line_values["amount"])
                         continue
                     elif date >= statement_date_until:
-                        if 'balance_end_real' in statement_values:
-                            statement_values['balance_end_real'] = (
-                                Decimal(
-                                    statement_values['balance_end_real']
-                                ) - Decimal(
-                                    line_values['amount']
-                                )
-                            )
+                        if "balance_end_real" in statement_values:
+                            statement_values["balance_end_real"] = Decimal(
+                                statement_values["balance_end_real"]
+                            ) - Decimal(line_values["amount"])
                         continue
 
                     date = date.replace(tzinfo=utc)
                     date = date.astimezone(provider_tz).replace(tzinfo=None)
-                    line_values['date'] = date
+                    line_values["date"] = date
 
-                    unique_import_id = line_values.get('unique_import_id')
+                    unique_import_id = line_values.get("unique_import_id")
                     if unique_import_id:
                         unique_import_id = provider._generate_unique_import_id(
                             unique_import_id
                         )
-                        line_values.update({
-                            'unique_import_id': unique_import_id,
-                        })
+                        line_values.update(
+                            {
+                                "unique_import_id": unique_import_id,
+                            }
+                        )
                         if AccountBankStatementLine.sudo().search(
-                                [('unique_import_id', '=', unique_import_id)],
-                                limit=1):
+                            [("unique_import_id", "=", unique_import_id)], limit=1
+                        ):
                             continue
 
-                    bank_account_number = line_values.get('account_number')
+                    bank_account_number = line_values.get("account_number")
                     if bank_account_number:
-                        line_values.update({
-                            'account_number': (
-                                self._sanitize_bank_account_number(
-                                    bank_account_number
-                                )
-                            ),
-                        })
+                        line_values.update(
+                            {
+                                "account_number": (
+                                    self._sanitize_bank_account_number(
+                                        bank_account_number
+                                    )
+                                ),
+                            }
+                        )
 
                     filtered_lines.append(line_values)
-                statement_values.update({
-                    'line_ids': [[0, False, line] for line in filtered_lines],
-                })
-                if 'balance_start' in statement_values:
-                    statement_values['balance_start'] = float(
-                        statement_values['balance_start']
+                statement_values.update(
+                    {
+                        "line_ids": [[0, False, line] for line in filtered_lines],
+                    }
+                )
+                if "balance_start" in statement_values:
+                    statement_values["balance_start"] = float(
+                        statement_values["balance_start"]
                     )
-                if 'balance_end_real' in statement_values:
-                    statement_values['balance_end_real'] = float(
-                        statement_values['balance_end_real']
+                if "balance_end_real" in statement_values:
+                    statement_values["balance_end_real"] = float(
+                        statement_values["balance_end_real"]
                     )
                 statement.write(statement_values)
                 statement_date_since = statement_date_until
@@ -337,11 +338,11 @@ class OnlineBankStatementProvider(models.Model):
             second=0,
             microsecond=0,
         )
-        if self.statement_creation_mode == 'daily':
+        if self.statement_creation_mode == "daily":
             return date
-        elif self.statement_creation_mode == 'weekly':
+        elif self.statement_creation_mode == "weekly":
             return date + relativedelta(weekday=MO(-1))
-        elif self.statement_creation_mode == 'monthly':
+        elif self.statement_creation_mode == "monthly":
             return date.replace(
                 day=1,
             )
@@ -349,7 +350,7 @@ class OnlineBankStatementProvider(models.Model):
     @api.multi
     def _get_statement_date_step(self):
         self.ensure_one()
-        if self.statement_creation_mode == 'daily':
+        if self.statement_creation_mode == "daily":
             return relativedelta(
                 days=1,
                 hour=0,
@@ -357,7 +358,7 @@ class OnlineBankStatementProvider(models.Model):
                 second=0,
                 microsecond=0,
             )
-        elif self.statement_creation_mode == 'weekly':
+        elif self.statement_creation_mode == "weekly":
             return relativedelta(
                 weeks=1,
                 weekday=MO,
@@ -366,7 +367,7 @@ class OnlineBankStatementProvider(models.Model):
                 second=0,
                 microsecond=0,
             )
-        elif self.statement_creation_mode == 'monthly':
+        elif self.statement_creation_mode == "monthly":
             return relativedelta(
                 months=1,
                 day=1,
@@ -390,8 +391,11 @@ class OnlineBankStatementProvider(models.Model):
     def _generate_unique_import_id(self, unique_import_id):
         self.ensure_one()
         return (
-            self.account_number and self.account_number + '-' or ''
-        ) + str(self.journal_id.id) + '-' + unique_import_id
+            (self.account_number and self.account_number + "-" or "")
+            + str(self.journal_id.id)
+            + "-"
+            + unique_import_id
+        )
 
     @api.multi
     def _sanitize_bank_account_number(self, bank_account_number):
@@ -402,42 +406,43 @@ class OnlineBankStatementProvider(models.Model):
     @api.multi
     def _get_next_run_period(self):
         self.ensure_one()
-        if self.interval_type == 'minutes':
+        if self.interval_type == "minutes":
             return relativedelta(minutes=self.interval_number)
-        elif self.interval_type == 'hours':
+        elif self.interval_type == "hours":
             return relativedelta(hours=self.interval_number)
-        elif self.interval_type == 'days':
+        elif self.interval_type == "days":
             return relativedelta(days=self.interval_number)
-        elif self.interval_type == 'weeks':
+        elif self.interval_type == "weeks":
             return relativedelta(weeks=self.interval_number)
 
     @api.model
     def _scheduled_pull(self):
-        _logger.info('Scheduled pull of online bank statements...')
+        _logger.info("Scheduled pull of online bank statements...")
 
-        providers = self.search([
-            ('active', '=', True),
-            ('next_run', '<=', fields.Datetime.now()),
-        ])
+        providers = self.search(
+            [
+                ("active", "=", True),
+                ("next_run", "<=", fields.Datetime.now()),
+            ]
+        )
         if providers:
-            _logger.info('Pulling online bank statements of: %s' % ', '.join(
-                providers.mapped('journal_id.name')
-            ))
-            for provider in providers.with_context({'scheduled': True}):
+            _logger.info(
+                "Pulling online bank statements of: %s"
+                % ", ".join(providers.mapped("journal_id.name"))
+            )
+            for provider in providers.with_context({"scheduled": True}):
                 date_since = (
-                    provider.last_successful_run
-                ) if provider.last_successful_run else (
-                    provider.next_run - provider._get_next_run_period()
+                    (provider.last_successful_run)
+                    if provider.last_successful_run
+                    else (provider.next_run - provider._get_next_run_period())
                 )
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
 
-        _logger.info('Scheduled pull of online bank statements complete.')
+        _logger.info("Scheduled pull of online bank statements complete.")
 
     @api.multi
-    def _obtain_statement_data(
-        self, date_since, date_until
-    ):
+    def _obtain_statement_data(self, date_since, date_until):
         """Hook for extension"""
         # Check tests/online_bank_statement_provider_dummy.py for reference
         self.ensure_one()
