@@ -62,7 +62,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         self.assertTrue(journal.online_bank_statement_provider_id)
         journal.unlink()
-        self.assertFalse(self.OnlineBankStatementProvider.search([]))
+        self.assertFalse(
+            self.OnlineBankStatementProvider.search(
+                [("service", "=", "dummy")]
+            )
+        )
 
     def test_source_change_cleanup(self):
         journal = self.AccountJournal.create(
@@ -84,7 +88,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         journal_form.save()
 
         self.assertFalse(journal.online_bank_statement_provider_id)
-        self.assertFalse(self.OnlineBankStatementProvider.search([]))
+        self.assertFalse(
+            self.OnlineBankStatementProvider.search(
+                [("service", "=", "dummy")]
+            )
+        )
 
     def test_pull_mode_daily(self):
         journal = self.AccountJournal.create(
@@ -322,7 +330,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.active = True
         provider.statement_creation_mode = "weekly"
 
-        provider.with_context(crash=True, scheduled=True,)._pull(
+        provider.with_context(crash=True, scheduled=True)._pull(
             self.now - relativedelta(hours=1),
             self.now,
         )

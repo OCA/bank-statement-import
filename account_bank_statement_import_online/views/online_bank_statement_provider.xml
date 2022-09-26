@@ -79,6 +79,7 @@
                             <group>
                                 <group>
                                     <field name="statement_creation_mode"/>
+                                    <field name="create_empty_statements"/>
                                     <field name="tz"/>
                                     <field name="allow_empty_statements" />
                                 </group>
