@@ -9,8 +9,10 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-account_statement_import',
+        'odoo14-addon-account_statement_import_base',
         'odoo14-addon-account_statement_import_camt',
         'odoo14-addon-account_statement_import_camt54',
+        'odoo14-addon-account_statement_import_file_reconciliation_widget',
         'odoo14-addon-account_statement_import_move_line',
         'odoo14-addon-account_statement_import_ofx',
         'odoo14-addon-account_statement_import_online',
