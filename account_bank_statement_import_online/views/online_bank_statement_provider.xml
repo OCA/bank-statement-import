@@ -24,8 +24,7 @@
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="service"/>
                 <field name="currency_id"/>
-                <field name="update_schedule"/>
-                <field name="next_run"/>
+                <field name="last_successful_run"/>
             </tree>
         </field>
     </record>
@@ -59,19 +58,8 @@
                                         values="values_service"
                                     />
                                 </group>
-                            </group>
-                        </page>
-                        <page name="pull" string="Scheduled Pull">
-                            <group>
                                 <group>
-                                    <label for="interval_number"/>
-                                    <div class="o_row">
-                                        <field name="interval_number" class="ml8"/>
-                                        <field name="interval_type"/>
-                                    </div>
-                                </group>
-                                <group>
-                                    <field name="next_run"/>
+                                    <field name="last_successful_run"/>
                                 </group>
                             </group>
                         </page>
@@ -79,7 +67,6 @@
                             <group>
                                 <group>
                                     <field name="statement_creation_mode"/>
-                                    <field name="create_empty_statements"/>
                                     <field name="tz"/>
                                     <field name="allow_empty_statements" />
                                 </group>

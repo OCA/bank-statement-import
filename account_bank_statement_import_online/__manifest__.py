@@ -1,11 +1,14 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2022 Therp BV (https://therp.nl).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     "name": "Online Bank Statements",
     "version": "12.0.2.1.0",
-    "author": "CorporateHub, Odoo Community Association (OCA)",
+    "author": "CorporateHub"
+              ", Therp BV"
+              ", Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import",
     "license": "AGPL-3",

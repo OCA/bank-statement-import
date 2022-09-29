@@ -61,32 +61,8 @@ class OnlineBankStatementProvider(models.Model):
         required=True,
         readonly=True,
     )
-    interval_type = fields.Selection(
-        selection=[
-            ("minutes", "Minute(s)"),
-            ("hours", "Hour(s)"),
-            ("days", "Day(s)"),
-            ("weeks", "Week(s)"),
-        ],
-        default="hours",
-        required=True,
-    )
-    interval_number = fields.Integer(
-        string="Scheduled update interval",
-        default=1,
-        required=True,
-    )
-    update_schedule = fields.Char(
-        string="Update Schedule",
-        compute="_compute_update_schedule",
-    )
     last_successful_run = fields.Datetime(
         string="Last successful pull",
-    )
-    next_run = fields.Datetime(
-        string="Next scheduled pull",
-        default=fields.Datetime.now,
-        required=True,
     )
     statement_creation_mode = fields.Selection(
         selection=[
@@ -115,11 +91,6 @@ class OnlineBankStatementProvider(models.Model):
             "UNIQUE(journal_id)",
             "Only one online banking statement provider per journal!",
         ),
-        (
-            "valid_interval_number",
-            "CHECK(interval_number > 0)",
-            "Scheduled update interval must be greater than zero!",
-        ),
     ]
 
     @api.model
@@ -144,26 +115,7 @@ class OnlineBankStatementProvider(models.Model):
             )[0][1]
 
     @api.multi
-    @api.depends("active", "interval_type", "interval_number")
-    def _compute_update_schedule(self):
-        for provider in self:
-            if not provider.active:
-                provider.update_schedule = _("Inactive")
-                continue
-
-            provider.update_schedule = _("%(number)s %(type)s") % {
-                "number": provider.interval_number,
-                "type": list(
-                    filter(
-                        lambda x: x[0] == provider.interval_type,
-                        self._fields["interval_type"].selection,
-                    )
-                )[0][1],
-            }
-
-    @api.multi
     def _pull(self, date_since, date_until):
-        is_scheduled = self.env.context.get("scheduled")
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
@@ -173,19 +125,11 @@ class OnlineBankStatementProvider(models.Model):
                 statement_date_until = (
                     statement_date_since + provider._get_statement_date_step()
                 )
-                try:
-                    data = provider._retrieve_data(
-                        statement_date_since, statement_date_until
-                    )
-                except:
-                    # For scheduled pull, continue with next provider.
-                    if is_scheduled:
-                        break
-                    raise
+                data = provider._retrieve_data(
+                    statement_date_since, statement_date_until
+                )
                 provider._process_data(data, statement_date_since, statement_date_until)
                 statement_date_since = statement_date_until
-            if is_scheduled:
-                provider._schedule_next_run()
 
     @api.multi
     def _retrieve_data(self, statement_date_since, statement_date_until):
@@ -198,27 +142,11 @@ class OnlineBankStatementProvider(models.Model):
             return data
         except:
             _logger.warning(
-                'Online Bank Statement self "%s" failed to'
-                " obtain statement data since %s until %s"
-                % (
-                    self.name,
-                    statement_date_since,
-                    statement_date_until,
-                ),
+                _("Provider %s failed to obtain statement data since %s until %s"),
+                self.name,
+                statement_date_since,
+                statement_date_until,
                 exc_info=True,
-            )
-            self.message_post(
-                body=_(
-                    "Failed to obtain statement data for period "
-                    "since %s until %s: %s. See server logs for "
-                    "more details."
-                )
-                % (
-                    statement_date_since,
-                    statement_date_until,
-                    escape(str(exc_info()[1])) or _("N/A"),
-                ),
-                subject=_("Issue with Online Bank Statement self"),
             )
             raise
 
@@ -243,7 +171,6 @@ class OnlineBankStatementProvider(models.Model):
         ):
             # Continue with next possible statement.
             return
-        statement = self._get_statement(statement_values, statement_date)
         self._update_statement_balance_values(
             statement_values,
             lines_data,
@@ -387,10 +314,10 @@ class OnlineBankStatementProvider(models.Model):
     def _update_line_values(self, lines_data):
         """Enhance data in lines."""
         self.ensure_one()
-        povider_tz = timezone(self.tz) if self.tz else utc
+        provider_tz = timezone(self.tz) if self.tz else utc
         for line_values in lines_data:
             date = self._get_utc_line_date(line_values)
-            date = date.astimezone(povider_tz).replace(tzinfo=None)
+            date = date.astimezone(provider_tz).replace(tzinfo=None)
             line_values["date"] = date
             bank_account_number = line_values.get("account_number")
             if bank_account_number:
@@ -410,12 +337,6 @@ class OnlineBankStatementProvider(models.Model):
         if date.tzinfo is None:
             date = date.replace(tzinfo=utc)
         return date
-
-    @api.multi
-    def _schedule_next_run(self):
-        self.ensure_one()
-        self.last_successful_run = self.next_run
-        self.next_run += self._get_next_run_period()
 
     @api.multi
     def _get_statement_date_since(self, date):
@@ -491,48 +412,51 @@ class OnlineBankStatementProvider(models.Model):
         self.ensure_one()
         return sanitize_account_number(bank_account_number)
 
-    @api.multi
-    def _get_next_run_period(self):
-        self.ensure_one()
-        if self.interval_type == "minutes":
-            return relativedelta(minutes=self.interval_number)
-        elif self.interval_type == "hours":
-            return relativedelta(hours=self.interval_number)
-        elif self.interval_type == "days":
-            return relativedelta(days=self.interval_number)
-        elif self.interval_type == "weeks":
-            return relativedelta(weeks=self.interval_number)
-
     @api.model
     def _scheduled_pull(self):
-        _logger.info("Scheduled pull of online bank statements...")
-
-        providers = self.search(
-            [
-                ("active", "=", True),
-                ("next_run", "<=", fields.Datetime.now()),
-            ]
+        _logger.info(_("Scheduled pull of online bank statements..."))
+        today = datetime.today()
+        daystart = datetime(
+            year=today.year,
+            month=today.month,
+            day=today.day,
+            hour=0,
+            second=0
         )
+        providers = self.search([])
         if providers:
             _logger.info(
-                "Pulling online bank statements of: %s"
-                % ", ".join(providers.mapped("journal_id.name"))
+                _("Pulling online bank statements of: %s"),
+                ", ".join(providers.mapped("journal_id.name"))
             )
-            for provider in providers.with_context(
-                {
-                    "scheduled": True,
-                    "tracking_disable": True,
-                }
-            ):
-                date_since = (
-                    (provider.last_successful_run)
-                    if provider.last_successful_run
-                    else (provider.next_run - provider._get_next_run_period())
-                )
-                date_until = provider.next_run
-                provider._pull(date_since, date_until)
-
-        _logger.info("Scheduled pull of online bank statements complete.")
+            date_until = datetime.now()
+            for provider in providers:
+                date_since = provider.last_successful_run or daystart
+                try:
+                    provider.with_context(
+                        {"tracking_disable": True}
+                    )._pull(date_since, date_until)
+                    provider.last_successful_run = date_until
+                except:
+                    # Continue with next provider.
+                    _logger.warn(
+                        _("Failed to retrieve data for journal %s."),
+                        provider.journal_id.name
+                    )
+                    self.message_post(
+                        body=_(
+                            "Failed to obtain statement data for period "
+                            "since %s until %s: %s. See server logs for "
+                            "more details."
+                        )
+                        % (
+                            date_since,
+                            date_until,
+                            escape(str(exc_info()[1])) or _("N/A"),
+                        ),
+                        subject=_("Issue with Online Bank Statement self"),
+                    )
+        _logger.info(_("Scheduled pull of online bank statements complete."))
 
     @api.multi
     def _obtain_statement_data(self, date_since, date_until):

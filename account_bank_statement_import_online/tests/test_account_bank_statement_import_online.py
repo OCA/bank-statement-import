@@ -173,19 +173,15 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 "online_bank_statement_provider": "dummy",
             }
         )
-
         provider = journal.online_bank_statement_provider_id
         provider.active = True
-        provider.next_run = self.now - relativedelta(days=15)
-
+        provider.last_successful_run = False  # Run from start of this day.
         self.assertFalse(
             self.AccountBankStatement.search(
                 [("journal_id", "=", journal.id)],
             )
         )
-
         provider.with_context(step={"hours": 8})._scheduled_pull()
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
@@ -251,95 +247,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             21 * (24 / 8),
         )
 
-    def test_interval_type_minutes(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "minutes"
-        provider._compute_update_schedule()
-
-    def test_interval_type_hours(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "hours"
-        provider._compute_update_schedule()
-
-    def test_interval_type_days(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "days"
-        provider._compute_update_schedule()
-
-    def test_interval_type_weeks(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "weeks"
-        provider._compute_update_schedule()
-
-    def test_pull_no_crash(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.statement_creation_mode = "weekly"
-
-        provider.with_context(crash=True, scheduled=True)._pull(
-            self.now - relativedelta(hours=1),
-            self.now,
-        )
-        self.assertFalse(
-            self.AccountBankStatement.search(
-                [("journal_id", "=", journal.id)],
-            )
-        )
-
     def test_pull_crash(self):
         journal = self.AccountJournal.create(
             {
@@ -360,6 +267,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 self.now - relativedelta(hours=1),
                 self.now,
             )
+        self.assertFalse(
+            self.AccountBankStatement.search(
+                [("journal_id", "=", journal.id)],
+            )
+        )
 
     def test_pull_httperror(self):
         journal = self.AccountJournal.create(
