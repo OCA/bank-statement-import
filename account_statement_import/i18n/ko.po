@@ -37,21 +37,10 @@ msgid "1 transaction had already been imported and was ignored."
 msgstr "1개 거래를 가져왔고 해당 거래가 무시되었습니다."
 
 #. module: account_statement_import
-#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
-msgid "A bank account transaction can be imported only once!"
-msgstr "은행 계좌 거래는 1회만 가져올 수 있습니다!"
-
-#. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Already imported items"
 msgstr "이미 가져온 항목"
-
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "예금거래 명세서 라인"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -78,7 +67,6 @@ msgid "Created on"
 msgstr "작성일"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
@@ -92,7 +80,6 @@ msgid ""
 msgstr "은행에서 예금거래 명세서를 전자 형식으로 가져오고 여기서 선택합니다."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
@@ -100,7 +87,6 @@ msgstr "ID"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 #, python-format
 msgid "Import"
@@ -119,14 +105,14 @@ msgid "Import Bank Statement Files"
 msgstr "예금거래 명세서 가져오기"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
-msgid "Import ID"
-msgstr "ID 가져오기"
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import Statement"
 msgstr "명세서 가져오기"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Import and View"
+msgstr ""
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_journal
@@ -134,7 +120,6 @@ msgid "Journal"
 msgstr "분개장"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
@@ -259,6 +244,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "또는"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "은행 계좌 거래는 1회만 가져올 수 있습니다!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "예금거래 명세서 라인"
+
+#~ msgid "Import ID"
+#~ msgstr "ID 가져오기"
 
 #, fuzzy
 #~ msgid "Partner Bank Account"

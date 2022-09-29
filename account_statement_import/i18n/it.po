@@ -48,21 +48,10 @@ msgid "1 transaction had already been imported and was ignored."
 msgstr "1 operazione è stata ignorata perché già importata."
 
 #. module: account_statement_import
-#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-msgid "A bank account transaction can be imported only once!"
-msgstr ""
-"Un'operazione di un conto bancario può essere importata una sola volta."
-
-#. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
 msgid "Already imported items"
 msgstr "Voci già importate"
-
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Riga estratto conto bancario"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -92,7 +81,6 @@ msgid "Created on"
 msgstr "Data creazione"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
 msgid "Display Name"
@@ -107,7 +95,6 @@ msgstr ""
 "Selezionare gli estratti conto in formato elettronico ottenuti dalla banca."
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
 msgid "ID"
@@ -115,7 +102,6 @@ msgstr "ID"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 #, python-format
 msgid "Import"
@@ -132,14 +118,14 @@ msgid "Import Bank Statement Files"
 msgstr "Importazione file estratto conto bancario"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
-msgid "Import ID"
-msgstr "ID Importazione"
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import Statement"
 msgstr "Importa estratto conto"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Import and View"
+msgstr ""
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_journal
@@ -147,7 +133,6 @@ msgid "Journal"
 msgstr "Registro"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
 msgid "Last Modified on"
@@ -280,6 +265,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "/"
+
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr ""
+#~ "Un'operazione di un conto bancario può essere importata una sola volta."
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Riga estratto conto bancario"
+
+#~ msgid "Import ID"
+#~ msgstr "ID Importazione"
 
 #~ msgid "Partner Bank Account"
 #~ msgstr "Conto bancario partner"
