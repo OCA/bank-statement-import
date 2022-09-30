@@ -6,6 +6,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
@@ -51,6 +52,11 @@ class AccountStatementImport(models.TransientModel):
         action = self.env["ir.actions.actions"]._for_xml_id(
             "account.action_bank_statement_tree"
         )
+        action["context"] = safe_eval(action.get("context", "{}"))
+        lines = self.env["account.bank.statement.line"].search(
+            [("statement_id", "in", result["statement_ids"])]
+        )
+        action["context"].update({"statement_line_ids": lines.ids})
         if len(result["statement_ids"]) == 1:
             action.update(
                 {
