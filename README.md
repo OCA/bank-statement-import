@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_bank_statement_clear_partner](account_bank_statement_clear_partner/) | 13.0.1.0.0 |  | Clear all partners in bank statement lines
 [account_bank_statement_import_camt_oca](account_bank_statement_import_camt_oca/) | 13.0.1.1.2 |  | CAMT Format Bank Statements Import
+[account_bank_statement_import_guess_partner](account_bank_statement_import_guess_partner/) | 13.0.1.0.0 |  | Guess partner on import of statement lines
 [account_bank_statement_import_move_line](account_bank_statement_import_move_line/) | 13.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Import journal items into bank statement
 [account_bank_statement_import_oca_camt54](account_bank_statement_import_oca_camt54/) | 13.0.1.0.0 |  | Bank Account Camt54 Import
 [account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 13.0.1.0.0 |  | Import OFX Bank Statement
