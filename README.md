@@ -28,7 +28,7 @@ addon | version | maintainers | summary
 [account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 12.0.1.1.0 |  | Import OFX Bank Statement
 [account_bank_statement_import_online](account_bank_statement_import_online/) | 12.0.1.5.2 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
 [account_bank_statement_import_online_paypal](account_bank_statement_import_online_paypal/) | 12.0.1.1.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
-[account_bank_statement_import_online_ponto](account_bank_statement_import_online_ponto/) | 12.0.1.2.0 |  | Online Bank Statements: MyPonto.com
+[account_bank_statement_import_online_ponto](account_bank_statement_import_online_ponto/) | 12.0.1.3.0 |  | Online Bank Statements: MyPonto.com
 [account_bank_statement_import_online_qonto](account_bank_statement_import_online_qonto/) | 12.0.1.0.0 |  | Online Bank Statements: Qonto.eu
 [account_bank_statement_import_online_transferwise](account_bank_statement_import_online_transferwise/) | 12.0.1.1.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for Wise.com (TransferWise.com)
 [account_bank_statement_import_paypal](account_bank_statement_import_paypal/) | 12.0.2.2.4 |  | Import PayPal CSV files as Bank Statements in Odoo
