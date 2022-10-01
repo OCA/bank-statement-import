@@ -94,6 +94,7 @@ Authors
 ~~~~~~~
 
 * Florent de Labarre
+* Therp BV
 
 Contributors
 ~~~~~~~~~~~~
