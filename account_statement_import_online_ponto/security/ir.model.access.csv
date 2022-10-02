@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ponto_buffer,access_ponto_buffer,model_ponto_buffer,base.group_user,1,0,0,0
+access_ponto_buffer_line,access_ponto_buffer_line,model_ponto_buffer_line,base.group_user,1,0,0,0
