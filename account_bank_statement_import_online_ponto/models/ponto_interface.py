@@ -84,7 +84,7 @@ class PontoInterface(models.AbstractModel):
             % (account_number, data)
         )
 
-    def _ponto_synchronisation(self, access_data):
+    def _ponto_synchronisation(self, access_data):  # pragma: no cover
         """Make sure Ponto has retrieved latest data from financial institution."""
         url = PONTO_ENDPOINT + "/synchronizations"
         # TODO: According to spec we should provide an IP number in the data.
@@ -117,14 +117,19 @@ class PontoInterface(models.AbstractModel):
             raise UserError(
                 _("Ponto : no synchronization id in data %s") % data
             )
-        # Poll synchronization during 400 seconds for completion.
+        # Poll synchronization during max. 400 seconds for completion.
         url = PONTO_ENDPOINT + "/synchronizations/" + sync_id
         number = 0
-        while number < 10:
+        retries = 10 if self.env.context.get("scheduled", False) else 2
+        while number < retries:
             number += 1
             if self._synchronization_done(access_data, url):
                 break
             time.sleep(40)
+            if number == retries:
+                _logger.debug(
+                    _("No longer waiting for synchronization")
+                )
 
     def _synchronization_done(self, access_data, url):
         """Check wether requested synchronization done."""
@@ -135,7 +140,7 @@ class PontoInterface(models.AbstractModel):
         status = data.get("status", {})
         if status not in ("success", "error"):
             return False
-        if status == "error":
+        if status != "error":
             _logger.debug(
                 _("Synchronization was succesfully completed")
             )
