@@ -12,13 +12,6 @@
                 <group name="ponto" attrs="{'invisible':[('service','!=','ponto')]}">
                     <field name="username" string="Login" />
                     <field name="password" string="Secret Key" />
-                    <field name="ponto_last_identifier" />
-                    <button
-                        name="ponto_reset_last_identifier"
-                        string="Reset Last identifier."
-                        type="object"
-                        attrs="{'invisible':[('ponto_last_identifier','=',False)]}"
-                    />
                 </group>
             </xpath>
         </field>
