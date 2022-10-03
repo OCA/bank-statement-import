@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-04-10 17:46+0000\n"
+"PO-Revision-Date: 2022-10-03 10:35+0000\n"
 "Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
 "Language-Team: none\n"
 "Language: fr_FR\n"
@@ -108,7 +108,7 @@ msgstr "Importation d'un relevé"
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "Importer"
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_journal
