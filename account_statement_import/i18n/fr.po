@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 09:10+0000\n"
-"PO-Revision-Date: 2021-03-22 15:46+0000\n"
+"PO-Revision-Date: 2022-10-03 10:35+0000\n"
 "Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "Language: fr\n"
@@ -104,13 +104,11 @@ msgstr "Importer"
 
 #. module: account_statement_import
 #: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
 msgstr "Import d'un relevé bancaire"
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
 msgstr "Import d'un relevé bancaire"
 
@@ -122,7 +120,7 @@ msgstr "Importation d'un relevé"
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "Importer"
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_journal
