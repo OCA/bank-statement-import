@@ -1,8 +1,10 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
+# Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
+import sys
 from datetime import datetime
 from decimal import Decimal
 from html import escape
@@ -50,31 +52,7 @@ class OnlineBankStatementProvider(models.Model):
         required=True,
         readonly=True,
     )
-    interval_type = fields.Selection(
-        selection=[
-            ("minutes", "Minute(s)"),
-            ("hours", "Hour(s)"),
-            ("days", "Day(s)"),
-            ("weeks", "Week(s)"),
-        ],
-        default="hours",
-        required=True,
-    )
-    interval_number = fields.Integer(
-        string="Scheduled update interval",
-        default=1,
-        required=True,
-    )
-    update_schedule = fields.Char(
-        string="Update Schedule",
-        compute="_compute_update_schedule",
-    )
     last_successful_run = fields.Datetime(string="Last successful pull")
-    next_run = fields.Datetime(
-        string="Next scheduled pull",
-        default=fields.Datetime.now,
-        required=True,
-    )
     statement_creation_mode = fields.Selection(
         selection=[
             ("daily", "Daily statements"),
@@ -102,11 +80,6 @@ class OnlineBankStatementProvider(models.Model):
             "UNIQUE(journal_id)",
             "Only one online banking statement provider per journal!",
         ),
-        (
-            "valid_interval_number",
-            "CHECK(interval_number > 0)",
-            "Scheduled update interval must be greater than zero!",
-        ),
     ]
 
     @api.model
@@ -128,25 +101,7 @@ class OnlineBankStatementProvider(models.Model):
         for provider in self:
             provider.name = " ".join([provider.journal_id.name, provider.service])
 
-    @api.depends("active", "interval_type", "interval_number")
-    def _compute_update_schedule(self):
-        for provider in self:
-            if not provider.active:
-                provider.update_schedule = _("Inactive")
-                continue
-
-            provider.update_schedule = _("%(number)s %(type)s") % {
-                "number": provider.interval_number,
-                "type": list(
-                    filter(
-                        lambda x: x[0] == provider.interval_type,
-                        self._fields["interval_type"].selection,
-                    )
-                )[0][1],
-            }
-
     def _pull(self, date_since, date_until):
-        is_scheduled = self.env.context.get("scheduled")
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
@@ -157,39 +112,22 @@ class OnlineBankStatementProvider(models.Model):
                     data = provider._obtain_statement_data(
                         statement_date_since, statement_date_until
                     )
-                except BaseException as e:
-                    if is_scheduled:
-                        _logger.warning(
-                            'Online Bank Statement Provider "%s" failed to'
-                            " obtain statement data since %s until %s"
-                            % (
-                                provider.name,
-                                statement_date_since,
-                                statement_date_until,
-                            ),
-                            exc_info=True,
-                        )
-                        provider.message_post(
-                            body=_(
-                                "Failed to obtain statement data for period "
-                                "since %s until %s: %s. See server logs for "
-                                "more details."
-                            )
-                            % (
-                                statement_date_since,
-                                statement_date_until,
-                                escape(str(e)) or _("N/A"),
-                            ),
-                            subject=_("Issue with Online Bank Statement Provider"),
-                        )
-                        break
+                except BaseException:
+                    _logger.warning(
+                        'Online Bank Statement Provider "%s" failed to'
+                        " obtain statement data since %s until %s"
+                        % (
+                            provider.name,
+                            statement_date_since,
+                            statement_date_until,
+                        ),
+                        exc_info=True,
+                    )
                     raise
                 provider._create_or_update_statement(
                     data, statement_date_since, statement_date_until
                 )
                 statement_date_since = statement_date_until
-            if is_scheduled:
-                provider._schedule_next_run()
 
     def _create_or_update_statement(
         self, data, statement_date_since, statement_date_until
@@ -298,11 +236,6 @@ class OnlineBankStatementProvider(models.Model):
             filtered_lines.append(line_values)
         return filtered_lines
 
-    def _schedule_next_run(self):
-        self.ensure_one()
-        self.last_successful_run = self.next_run
-        self.next_run += self._get_next_run_period()
-
     def _get_statement_date_since(self, date):
         self.ensure_one()
         date = date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -345,38 +278,44 @@ class OnlineBankStatementProvider(models.Model):
         date_since = date_since.replace(tzinfo=utc).astimezone(tz)
         return date_since.date()
 
-    def _get_next_run_period(self):
-        self.ensure_one()
-        if self.interval_type == "minutes":
-            return relativedelta(minutes=self.interval_number)
-        elif self.interval_type == "hours":
-            return relativedelta(hours=self.interval_number)
-        elif self.interval_type == "days":
-            return relativedelta(days=self.interval_number)
-        elif self.interval_type == "weeks":
-            return relativedelta(weeks=self.interval_number)
-
     @api.model
     def _scheduled_pull(self):
         _logger.info("Scheduled pull of online bank statements...")
-
-        providers = self.search(
-            [("active", "=", True), ("next_run", "<=", fields.Datetime.now())]
+        today = datetime.today()
+        daystart = datetime(
+            year=today.year, month=today.month, day=today.day, hour=0, second=0
         )
+        providers = self.search([])
         if providers:
             _logger.info(
                 "Pulling online bank statements of: %s"
                 % ", ".join(providers.mapped("journal_id.name"))
             )
-            for provider in providers.with_context({"scheduled": True}):
-                date_since = (
-                    (provider.last_successful_run)
-                    if provider.last_successful_run
-                    else (provider.next_run - provider._get_next_run_period())
-                )
-                date_until = provider.next_run
-                provider._pull(date_since, date_until)
-
+            date_until = datetime.now()
+            for provider in providers:
+                date_since = provider.last_successful_run or daystart
+                try:
+                    provider.with_context(scheduled=True)._pull(date_since, date_until)
+                    provider.last_successful_run = date_until
+                except BaseException:
+                    # Continue with next provider.
+                    _logger.warning(
+                        _("Failed to retrieve data for journal %s."),
+                        provider.journal_id.name,
+                    )
+                    self.message_post(
+                        body=_(
+                            "Failed to obtain statement data for period "
+                            "since %s until %s: %s. See server logs for "
+                            "more details."
+                        )
+                        % (
+                            date_since,
+                            date_until,
+                            escape(str(sys.exc_info()[1])) or _("N/A"),
+                        ),
+                        subject=_("Issue with Online Bank Statement self"),
+                    )
         _logger.info("Scheduled pull of online bank statements complete.")
 
     def _obtain_statement_data(self, date_since, date_until):

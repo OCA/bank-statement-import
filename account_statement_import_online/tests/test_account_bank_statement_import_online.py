@@ -184,17 +184,13 @@ class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
                 "online_bank_statement_provider": "dummy",
             }
         )
-
         provider = journal.online_bank_statement_provider_id
         provider.active = True
-        provider.next_run = self.now - relativedelta(days=15)
-
+        provider.last_successful_run = False
         self.assertFalse(
             self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         )
-
-        provider.with_context(step={"hours": 8})._scheduled_pull()
-
+        provider._scheduled_pull()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
 
@@ -258,70 +254,6 @@ class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
             21 * (24 / 8),
         )
 
-    def test_interval_type_minutes(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "minutes"
-        provider._compute_update_schedule()
-
-    def test_interval_type_hours(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "hours"
-        provider._compute_update_schedule()
-
-    def test_interval_type_days(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "days"
-        provider._compute_update_schedule()
-
-    def test_interval_type_weeks(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.interval_type = "weeks"
-        provider._compute_update_schedule()
-
     def test_pull_no_crash(self):
         journal = self.AccountJournal.create(
             {
@@ -332,15 +264,15 @@ class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
                 "online_bank_statement_provider": "dummy",
             }
         )
-
         provider = journal.online_bank_statement_provider_id
         provider.active = True
         provider.statement_creation_mode = "weekly"
-
-        provider.with_context(crash=True, scheduled=True)._pull(
-            self.now - relativedelta(hours=1),
-            self.now,
+        provider.last_successful_run = self.now - relativedelta(hours=1)
+        # we should have no statement before or after run.
+        self.assertFalse(
+            self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         )
+        provider.with_context(crash=True)._scheduled_pull()
         self.assertFalse(
             self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         )
