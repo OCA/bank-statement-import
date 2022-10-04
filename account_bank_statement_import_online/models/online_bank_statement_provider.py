@@ -106,6 +106,7 @@ class OnlineBankStatementProvider(models.Model):
     certificate_public_key = fields.Text()
     certificate_private_key = fields.Text()
     certificate_chain = fields.Text()
+    allow_empty_statements = fields.Boolean()
 
     _sql_constraints = [
         (
@@ -219,6 +220,14 @@ class OnlineBankStatementProvider(models.Model):
                     lines_data = []
                 if not statement_values:
                     statement_values = {}
+                if (
+                    not lines_data
+                    and not statement_values
+                    and not self.allow_empty_statements
+                ):
+                    # Continue with next possible statement.
+                    statement_date_since = statement_date_until
+                    continue
                 statement = AccountBankStatement.search([
                     ('journal_id', '=', provider.journal_id.id),
                     ('state', '=', 'open'),
