@@ -4,7 +4,7 @@
 
 {
     'name': 'Online Bank Statements',
-    'version': '12.0.1.5.2',
+    'version': '12.0.2.0.0',
     'author':
         'CorporateHub, '
         'Odoo Community Association (OCA)',
