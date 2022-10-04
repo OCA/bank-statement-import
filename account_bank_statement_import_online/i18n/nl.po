@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import_online
+# 	* account_bank_statement_import_online
 #
 msgid ""
 msgstr ""
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:153
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:154
 #, python-format
 msgid "%(number)s %(type)s"
 msgstr "%(number)s %(type)s"
@@ -31,6 +31,11 @@ msgstr "Actie vereist"
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__active
 msgid "Active"
 msgstr "Actief"
+
+#. module: account_bank_statement_import_online
+#: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__allow_empty_statements
+msgid "Allow Empty Statements"
+msgstr ""
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__api_base
@@ -122,9 +127,11 @@ msgid "Display Name"
 msgstr "Weergavenaam"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:196
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:197
 #, python-format
-msgid "Failed to obtain statement data for period since %s until %s: %s. See server logs for more details."
+msgid ""
+"Failed to obtain statement data for period since %s until %s: %s. See server "
+"logs for more details."
 msgstr ""
 "Kon de afschriften niet verkrijgen voor de periode van %s tot %s:%s. Bekijk "
 "de error log van de server voor details."
@@ -171,7 +178,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Indien aangevinkt, sommige berichten hebben een foutmelding."
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:150
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:151
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
@@ -188,7 +195,7 @@ msgid "Is Follower"
 msgstr "Is volger"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:205
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:206
 #, python-format
 msgid "Issue with Online Bank Statement Provider"
 msgstr "Probleem met Online Bank afschrift leverancier"
@@ -253,7 +260,7 @@ msgid "Monthly statements"
 msgstr "Maandelijkse afschriften"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:203
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:204
 #, python-format
 msgid "N/A"
 msgstr "N.V.T."
@@ -432,7 +439,9 @@ msgstr "Tijdzone"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__tz
-msgid "Timezone to convert transaction timestamps to prior being saved into a statement."
+msgid ""
+"Timezone to convert transaction timestamps to prior being saved into a "
+"statement."
 msgstr ""
 
 #. module: account_bank_statement_import_online
