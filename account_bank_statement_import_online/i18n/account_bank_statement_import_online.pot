@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:153
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:154
 #, python-format
 msgid "%(number)s %(type)s"
 msgstr ""
@@ -27,6 +27,11 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__active
 msgid "Active"
+msgstr ""
+
+#. module: account_bank_statement_import_online
+#: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__allow_empty_statements
+msgid "Allow Empty Statements"
 msgstr ""
 
 #. module: account_bank_statement_import_online
@@ -118,7 +123,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:196
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:197
 #, python-format
 msgid "Failed to obtain statement data for period since %s until %s: %s. See server logs for more details."
 msgstr ""
@@ -165,7 +170,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:150
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:151
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
@@ -182,7 +187,7 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:205
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:206
 #, python-format
 msgid "Issue with Online Bank Statement Provider"
 msgstr ""
@@ -247,7 +252,7 @@ msgid "Monthly statements"
 msgstr ""
 
 #. module: account_bank_statement_import_online
-#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:203
+#: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:204
 #, python-format
 msgid "N/A"
 msgstr ""
