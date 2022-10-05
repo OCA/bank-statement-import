@@ -17,6 +17,8 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.now = fields.Datetime.now()
         self.currency_eur = self.env.ref("base.EUR")
         self.currency_usd = self.env.ref("base.USD")
+        # Activate EUR for unit test, by default is not active
+        self.currency_eur.active = True
         self.sample_statement_map = self.env.ref(
             "account_statement_import_txt_xlsx.sample_statement_map"
         )
