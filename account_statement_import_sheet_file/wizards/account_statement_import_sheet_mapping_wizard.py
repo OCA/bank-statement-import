@@ -26,33 +26,26 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         selection=lambda self: self._selection_file_encoding(),
     )
     delimiter = fields.Selection(
-        string="Delimiter",
         selection=lambda self: self._selection_delimiter(),
     )
     quotechar = fields.Char(
         string="Text qualifier",
         size=1,
     )
-    timestamp_column = fields.Char(
-        string="Timestamp column",
-    )
+    timestamp_column = fields.Char()
     currency_column = fields.Char(
-        string="Currency column",
         help=(
             "In case statement is multi-currency, column to get currency of "
             "transaction from"
         ),
     )
     amount_column = fields.Char(
-        string="Amount column",
         help="Amount of transaction in journal's currency",
     )
     balance_column = fields.Char(
-        string="Balance column",
         help="Balance after transaction in journal's currency",
     )
     original_currency_column = fields.Char(
-        string="Original currency column",
         help=(
             "In case statement provides original currency for transactions "
             "with automatic currency conversion, column to get original "
@@ -60,7 +53,6 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         ),
     )
     original_amount_column = fields.Char(
-        string="Original amount column",
         help=(
             "In case statement provides original currency for transactions "
             "with automatic currency conversion, column to get original "
@@ -75,36 +67,24 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         ),
     )
     debit_value = fields.Char(
-        string="Debit value",
         help="Value of debit/credit column that indicates if it's a debit",
         default="D",
     )
     credit_value = fields.Char(
-        string="Credit value",
         help="Value of debit/credit column that indicates if it's a credit",
         default="C",
     )
     transaction_id_column = fields.Char(
         string="Unique transaction ID column",
     )
-    description_column = fields.Char(
-        string="Description column",
-    )
-    notes_column = fields.Char(
-        string="Notes column",
-    )
-    reference_column = fields.Char(
-        string="Reference column",
-    )
-    partner_name_column = fields.Char(
-        string="Partner Name column",
-    )
+    description_column = fields.Char()
+    notes_column = fields.Char()
+    reference_column = fields.Char()
+    partner_name_column = fields.Char()
     bank_name_column = fields.Char(
-        string="Bank Name column",
         help="Partner's bank",
     )
     bank_account_column = fields.Char(
-        string="Bank Account column",
         help="Partner's bank account",
     )
 
