@@ -81,6 +81,7 @@ class OnlineBankStatementProvider(models.Model):
     )
     last_successful_run = fields.Datetime(
         string='Last successful pull',
+        readonly=True,
     )
     next_run = fields.Datetime(
         string='Next scheduled pull',
@@ -423,7 +424,8 @@ class OnlineBankStatementProvider(models.Model):
             _logger.info('Pulling online bank statements of: %s' % ', '.join(
                 providers.mapped('journal_id.name')
             ))
-            for provider in providers.with_context({'scheduled': True}):
+            for provider in providers.with_context(scheduled=True):
+                provider._adjust_schedule()
                 date_since = (
                     provider.last_successful_run
                 ) if provider.last_successful_run else (
@@ -433,6 +435,23 @@ class OnlineBankStatementProvider(models.Model):
                 provider._pull(date_since, date_until)
 
         _logger.info('Scheduled pull of online bank statements complete.')
+
+    @api.multi
+    def _adjust_schedule(self):
+        """Make sure next_run is current.
+
+        Current means adding one more period would put if after the
+        current moment. This will be done at the end of the run.
+        The net effect of this method and the adjustment after the run
+        will be for the next_run to be in the future.
+        """
+        self.ensure_one()
+        delta = self._get_next_run_period()
+        now = datetime.now()
+        next_run = self.next_run + delta
+        while next_run < now:
+            self.next_run = next_run
+            next_run = self.next_run + delta
 
     @api.multi
     def _obtain_statement_data(
