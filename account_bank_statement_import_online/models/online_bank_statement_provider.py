@@ -1,5 +1,5 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com).
-# Copyright 2022 Therp BV (https://therp.nl).
+# Copyright 2022-2023 Therp BV (https://therp.nl).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from datetime import datetime
@@ -80,6 +80,7 @@ class OnlineBankStatementProvider(models.Model):
     )
     last_successful_run = fields.Datetime(
         string="Last successful pull",
+        readonly=True,
     )
     next_run = fields.Datetime(
         string="Next scheduled pull",
@@ -549,6 +550,7 @@ class OnlineBankStatementProvider(models.Model):
                 scheduled=True,
                 tracking_disable=True
             ):
+                provider._adjust_schedule()
                 date_since = (
                     (provider.last_successful_run)
                     if provider.last_successful_run
@@ -557,6 +559,23 @@ class OnlineBankStatementProvider(models.Model):
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
         _logger.info("Scheduled pull of online bank statements complete.")
+
+    @api.multi
+    def _adjust_schedule(self):
+        """Make sure next_run is current.
+
+        Current means adding one more period would put if after the
+        current moment. This will be done at the end of the run.
+        The net effect of this method and the adjustment after the run
+        will be for the next_run to be in the future.
+        """
+        self.ensure_one()
+        delta = self._get_next_run_period()
+        now = datetime.now()
+        next_run = self.next_run + delta
+        while next_run < now:
+            self.next_run = next_run
+            next_run = self.next_run + delta
 
     @api.multi
     def _obtain_statement_data(self, date_since, date_until):
