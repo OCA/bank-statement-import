@@ -89,10 +89,14 @@ msgstr "ID"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 #, python-format
 msgid "Import"
 msgstr "Importer"
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+msgid "Import (OCA)"
+msgstr ""
 
 #. module: account_statement_import
 #: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
@@ -108,8 +112,8 @@ msgstr "Importer kontoudtog"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
-msgid "Import Statement"
-msgstr "Importer kontoudtog"
+msgid "Import Statement (OCA)"
+msgstr ""
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -247,6 +251,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "eller"
+
+#~ msgid "Import Statement"
+#~ msgstr "Importer kontoudtog"
 
 #, fuzzy
 #~ msgid "A bank account transaction can be imported only once!"
