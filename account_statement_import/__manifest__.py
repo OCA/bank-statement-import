@@ -6,7 +6,7 @@
 {
     "name": "Import Statement Files",
     "category": "Accounting",
-    "version": "14.0.3.0.0",
+    "version": "14.0.3.1.0",
     "license": "LGPL-3",
     "depends": ["account_statement_import_base"],
     "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
