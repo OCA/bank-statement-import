@@ -5,19 +5,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Import QIF Bank Statements',
-    'category': 'Accounting',
-    'version': '11.0.1.0.1',
-    'author': 'OpenERP SA,'
-              'Tecnativa,'
-              'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/bank-statement-import',
-    'depends': [
-        'account_bank_statement_import',
-    ],
-    'data': [
-        'wizards/account_bank_statement_import_qif_view.xml',
-    ],
-    'installable': True,
-    'license': 'AGPL-3',
+    "name": "Import QIF Bank Statements",
+    "category": "Accounting",
+    "version": "11.0.1.0.1",
+    "author": "OpenERP SA," "Tecnativa," "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/bank-statement-import",
+    "depends": ["account_bank_statement_import",],
+    "data": ["wizards/account_bank_statement_import_qif_view.xml",],
+    "installable": True,
+    "license": "AGPL-3",
 }
