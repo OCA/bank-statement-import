@@ -350,9 +350,11 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
         if transaction_id:
             note += _("Transaction ID: %s; ") % (transaction_id,)
         if note and notes:
-            note = "{}\n{}".format(note, note.strip())
+            note = "{}\n{}".format(notes, note.strip())
         elif note:
             note = note.strip()
+        elif notes:
+            note = notes
         if note:
             transaction["note"] = note
 
