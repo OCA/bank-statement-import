@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo13-addon-account_bank_statement_import_online_qonto',
         'odoo13-addon-account_bank_statement_import_online_transferwise',
         'odoo13-addon-account_bank_statement_import_paypal',
+        'odoo13-addon-account_bank_statement_import_qif',
         'odoo13-addon-account_bank_statement_import_split',
         'odoo13-addon-account_bank_statement_import_transfer_move',
         'odoo13-addon-account_bank_statement_import_txt_xlsx',
