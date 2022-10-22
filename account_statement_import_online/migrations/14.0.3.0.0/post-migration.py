@@ -7,9 +7,11 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.logged_query(
-        env.cr,
-        "UPDATE account_bank_statement_line SET raw_data={online_raw_data}".format(
-            online_raw_data=openupgrade.get_legacy_name("online_raw_data")
-        ),
-    )
+    column = openupgrade.get_legacy_name("online_raw_data")
+    if openupgrade.column_exists(env.cr, "account_bank_statement_line", column):
+        openupgrade.logged_query(
+            env.cr,
+            "UPDATE account_bank_statement_line SET raw_data={online_raw_data}".format(
+                online_raw_data=column,
+            ),
+        )

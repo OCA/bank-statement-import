@@ -13,6 +13,7 @@ _column_renames = {
 
 @openupgrade.migrate()
 def migrate(env, version):
-    if not version:
-        return
-    openupgrade.rename_columns(env.cr, _column_renames)
+    if openupgrade.column_exists(
+        env.cr, "account_bank_statement_line", "online_raw_data"
+    ):
+        openupgrade.rename_columns(env.cr, _column_renames)
