@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_column
-msgid "Amount column"
+msgid "Amount Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -37,15 +37,15 @@ msgid "Amount of transaction in journal's currency"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
-#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
-msgid "Balance after transaction in journal's currency"
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
+msgid "Balance Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
-msgid "Balance column"
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
+msgid "Balance after transaction in journal's currency"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -56,13 +56,13 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_account_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__bank_account_column
-msgid "Bank Account column"
+msgid "Bank Account Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_name_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__bank_name_column
-msgid "Bank Name column"
+msgid "Bank Name Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -113,13 +113,13 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__credit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__credit_value
-msgid "Credit value"
+msgid "Credit Value"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__currency_column
-msgid "Currency column"
+msgid "Currency Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -140,7 +140,7 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__debit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__debit_value
-msgid "Debit value"
+msgid "Debit Value"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -173,12 +173,10 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__description_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__description_column
-msgid "Description column"
+msgid "Description Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__display_name
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__display_name
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_parser__display_name
@@ -202,8 +200,6 @@ msgid "Header"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal__id
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_parser__id
@@ -267,8 +263,6 @@ msgid "Journal"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import____last_update
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping____last_update
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard____last_update
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_parser____last_update
@@ -310,7 +304,7 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__notes_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__notes_column
-msgid "Notes column"
+msgid "Notes Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -321,19 +315,19 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_amount_column
-msgid "Original amount column"
+msgid "Original Amount Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_currency_column
-msgid "Original currency column"
+msgid "Original Currency Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__partner_name_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__partner_name_column
-msgid "Partner Name column"
+msgid "Partner Name Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -351,7 +345,7 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__reference_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__reference_column
-msgid "Reference column"
+msgid "Reference Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -405,14 +399,14 @@ msgid "Thousands Separator"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_format
-msgid "Timestamp Format"
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__timestamp_column
+msgid "Timestamp Column"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_column
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__timestamp_column
-msgid "Timestamp column"
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_format
+msgid "Timestamp Format"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
