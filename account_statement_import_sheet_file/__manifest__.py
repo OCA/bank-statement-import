@@ -13,9 +13,7 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": [
-        "account_statement_import",
-        "multi_step_wizard",
-        "web_widget_dropdown_dynamic",
+        "account_statement_import_file",
     ],
     "external_dependencies": {"python": ["xlrd", "chardet"]},
     "data": [
@@ -24,6 +22,5 @@
         "views/account_statement_import_sheet_mapping.xml",
         "views/account_statement_import.xml",
         "views/account_journal_views.xml",
-        "wizards/account_statement_import_sheet_mapping_wizard.xml",
     ],
 }
