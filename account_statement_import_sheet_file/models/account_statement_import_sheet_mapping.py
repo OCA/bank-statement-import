@@ -2,7 +2,8 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AccountStatementImportSheetMapping(models.Model):
@@ -95,10 +96,35 @@ class AccountStatementImportSheetMapping(models.Model):
             "transaction amount in original transaction currency from"
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ("simple_value", "Simple value"),
+            ("absolute_value", "Absolute value"),
+            ("distinct_credit_debit", "Distinct Credit/debit Column"),
+        ],
+        string="Amount type",
+        required=True,
+        default="simple_value",
+        help=(
+            "Simple value: use igned amount in amount column\n"
+            "Absolute Value: use a same column for debit and credit\n"
+            "(absolute value + indicate sign)\n"
+            "Distinct Credit/debit Column: use a distinct column for debit and credit"
+        ),
+    )
+    amount_column = fields.Char(
+        string="Amount column",
+        help=(
+            'Used if amount type is "Simple value" or "Absolute value"\n'
+            "Amount of transaction in journal's currency\n"
+            "Some statement formats use credit/debit columns"
+        ),
+    )
     debit_credit_column = fields.Char(
         string="Debit/credit column",
         help=(
-            "Some statement formats use absolute amount value and indicate sign"
+            'Used if amount type is "Absolute value"\n'
+            "Some statement formats use absolute amount value and indicate sign\n"
             "of the transaction by specifying if it was a debit or a credit one"
         ),
     )
@@ -123,19 +149,47 @@ class AccountStatementImportSheetMapping(models.Model):
     bank_account_column = fields.Char(
         help="Partner's bank account",
     )
+    footer_lines_skip_count = fields.Integer(
+        string="Footer lines skip count",
+        help="Set the Footer lines number."
+        "Used in some csv/xlsx file that integrate meta data in"
+        "last lines.",
+        default="0",
+    )
+    header_lines_skip_count = fields.Integer(
+        string="Header lines skip count",
+        help="Set the Header lines number.",
+        default="0",
+    )
 
-    _sql_constraints = [
-        (
-            "check_amount_columns",
-            (
-                "CHECK("
-                "amount_column IS NULL "
-                "OR (amount_debit_column IS NULL AND amount_credit_column IS NULL)"
-                ")"
-            ),
-            "Use amount_column OR (amount_debit_column AND amount_credit_column).",
-        ),
-    ]
+    @api.constrains(
+        "amount_type",
+        "amount_column",
+        "debit_credit_column",
+        "amount_debit_column",
+        "amount_credit_column",
+    )
+    def _check_amount_type(self):
+        for item in self:
+            if item.amount_type == "simple_value" and not item.amount_column:
+                raise ValidationError(
+                    _("Use amount_column if you have set Amount type = 'Single value'")
+                )
+            elif item.amount_type == "absolute_value" and not item.debit_credit_column:
+                raise ValidationError(
+                    _(
+                        "Use debit_credit_column if you have set Amount type = 'Absolute value'"
+                    )
+                )
+            elif item.amount_type == "distinct_credit_debit" and (
+                not item.amount_debit_column or not item.amount_credit_column
+            ):
+                raise ValidationError(
+                    _(
+                        "Use amount_debit_column and amount_credit_column if you "
+                        "have set Amount type = 'Distinct Credit/debit Column'"
+                    )
+                )
 
     @api.onchange("float_thousands_sep")
     def onchange_thousands_separator(self):

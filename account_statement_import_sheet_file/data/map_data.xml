@@ -7,12 +7,15 @@
 <odoo noupdate="1">
     <record id="sample_statement_map" model="account.statement.import.sheet.mapping">
         <field name="name">Sample Statement</field>
+        <field name="footer_lines_skip_count">0</field>
+        <field name="header_lines_skip_count">1</field>
         <field name="float_thousands_sep">comma</field>
         <field name="float_decimal_sep">dot</field>
         <field name="delimiter">comma</field>
         <field name="quotechar">"</field>
         <field name="timestamp_format">%m/%d/%Y</field>
         <field name="timestamp_column">Date</field>
+        <field name="amount_type">simple_value</field>
         <field name="amount_column">Amount</field>
         <field name="original_currency_column">Currency</field>
         <field name="original_amount_column">Amount Currency</field>

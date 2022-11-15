@@ -63,10 +63,14 @@
                                 attrs="{'required': [('debit_credit_column', '!=', False)]}"
                             />
                         </group>
+                        <group>
+                            <field name="header_lines_skip_count" />
+                            <field name="footer_lines_skip_count" />
+                        </group>
                     </group>
                     <group string="Columns">
-                        <group colspan="4" col="2">
-                            <div class="alert alert-info" role="alert">
+                        <group colspan="2" col="2">
+                            <div class="alert alert-info" role="alert" colspan="2">
                                 <span
                                     class="fa fa-info-circle"
                                 /> Add the column names or column number (when the file has no header).
@@ -77,13 +81,38 @@
                         <group>
                             <field name="timestamp_column" />
                             <field name="currency_column" />
-                            <field name="amount_column" />
-                            <field name="amount_debit_column" />
-                            <field name="amount_credit_column" />
+                            <field name="amount_type" />
+                            <field
+                                name="amount_column"
+                                attrs="{
+                                'required': [('amount_type', '!=', 'distinct_credit_debit'),],
+                                'invisible': [('amount_type', '=', 'distinct_credit_debit')],
+                                }"
+                            />
+                            <field
+                                name="amount_debit_column"
+                                attrs="{
+                                'required': [('amount_type', '=', 'distinct_credit_debit')],
+                                'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
+                                }"
+                            />
+                            <field
+                                name="amount_credit_column"
+                                attrs="{
+                                    'required': [('amount_type', '=', 'distinct_credit_debit')],
+                                    'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
+                                    }"
+                            />
                             <field name="balance_column" />
                             <field name="original_currency_column" />
                             <field name="original_amount_column" />
-                            <field name="debit_credit_column" />
+                            <field
+                                name="debit_credit_column"
+                                attrs="{
+                                    'required': [('amount_type', '=', 'absolute_value')],
+                                    'invisible': [('amount_type', '!=', 'absolute_value')],
+                                    }"
+                            />
                             <field name="transaction_id_column" />
                             <field name="description_column" />
                             <field name="notes_column" />
