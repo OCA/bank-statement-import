@@ -20,6 +20,13 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         required=True,
         relation="account_statement_import_sheet_mapping_wiz_attachment_rel",
     )
+    column_labels_row = fields.Integer(
+        string="Header line",
+        help="The number of line that contan column names.\n"
+        "Used if csv/xls files contain\n"
+        "meta data in first lines\n ",
+        default="1",
+    )
     header = fields.Char()
     file_encoding = fields.Selection(
         string="Encoding",
@@ -39,16 +46,40 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
             "transaction from"
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ("simple_value", "Simple value"),
+            ("absolute_value", "Absolute value"),
+            ("distinct_credit_debit", "Distinct Credit/debit Column"),
+        ],
+        string="Amount type",
+        required=True,
+        default="simple_value",
+        help=(
+            "Simple value: use igned amount in ammount comlumn\n"
+            "Absolute Value: use a same comlumn for debit and credit\n"
+            "(absolute value + indicate sign)\n"
+            "Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
+        ),
+    )
     amount_column = fields.Char(
         help="Amount of transaction in journal's currency",
     )
     amount_debit_column = fields.Char(
-        string="Debit amount column",
-        help="Debit amount of transaction in journal's currency",
+        related="debit_column", store=True, string="OCA Debit colum"
     )
     amount_credit_column = fields.Boolean(
-        string="Credit amount column",
-        help="Credit amount of transaction in journal's currency",
+        related="credit_column", store=True, string="OCA Credit colum"
+    )
+    debit_column = fields.Char(
+        string="Debit amount column",
+        help="Debit amount of transaction in journal's currency"
+        "Used if amount type is 'Distinct Credit/debit Column'",
+    )
+    credit_column = fields.Boolean(
+        string="Credit column",
+        help="Credit amount of transaction in journal's currency"
+        "Used if amount type is 'Distinct Credit/debit Column'",
     )
     balance_column = fields.Char(
         help="Balance after transaction in journal's currency",
@@ -128,7 +159,10 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         header = []
         for data_file in self.attachment_ids:
             header += Parser.parse_header(
-                b64decode(data_file.datas), self.file_encoding, csv_options
+                b64decode(data_file.datas),
+                self.file_encoding,
+                csv_options,
+                self.column_labels_row,
             )
         header = list(set(header))
         self.header = json.dumps(header)
@@ -154,6 +188,9 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
             "timestamp_format": "%d/%m/%Y",
             "timestamp_column": self.timestamp_column,
             "currency_column": self.currency_column,
+            "amount_type": self.amount_type,
+            "debit_column": self.debit_column,
+            "credit_column": self.credit_column,
             "amount_column": self.amount_column,
             "balance_column": self.balance_column,
             "original_currency_column": self.original_currency_column,
