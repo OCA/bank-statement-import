@@ -39,7 +39,6 @@
             <field name="target">new</field>
         </record>
 
-
         <record id="account_statement_import_menu" model="ir.ui.menu">
             <field name="name">Import Statement</field>
             <field name="parent_id" ref="account.menu_finance_entries_actions" />
