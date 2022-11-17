@@ -91,9 +91,13 @@ msgstr "ID"
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
-#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 #, python-format
 msgid "Import"
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+msgid "Import (OCA)"
 msgstr ""
 
 #. module: account_statement_import
@@ -113,7 +117,7 @@ msgstr ""
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
-msgid "Import Statement"
+msgid "Import Statement (OCA)"
 msgstr ""
 
 #. module: account_statement_import
