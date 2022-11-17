@@ -230,6 +230,15 @@ class AccountStatementImport(models.TransientModel):
                 ],
                 limit=1,
             )
+            journal_id = self.env.context.get("journal_id")
+            if journal_id and journal.id != journal_id:
+                raise UserError(
+                    _(
+                        "The journal found for the file is not consistent with the "
+                        "selected journal. You should use the proper journal or "
+                        "use the generic button on the top of the Accounting Dashboard"
+                    )
+                )
 
             if not journal:
                 bank_accounts = self.env["res.partner.bank"].search(
