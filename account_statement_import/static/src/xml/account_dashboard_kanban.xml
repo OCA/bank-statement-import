@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t t-name="AccountDashboardView.buttons">
+        <div>
+            <button
+                type="button"
+                t-attf-class="btn #{btnClass} o-kanban-button-new"
+                accesskey="c"
+            >
+                <t t-esc="_t('Import Statement (OCA)')" />
+            </button>
+        </div>
+    </t>
+</template>
