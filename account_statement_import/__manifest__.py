@@ -18,9 +18,11 @@
         "wizard/account_statement_import_view.xml",
         "views/account_journal.xml",
         "views/account_bank_statement_line.xml",
+        "templates/assets.xml",
     ],
     "demo": [
         "demo/partner_bank.xml",
     ],
     "installable": True,
+    "qweb": ["static/src/xml/account_dashboard_kanban.xml"],
 }
