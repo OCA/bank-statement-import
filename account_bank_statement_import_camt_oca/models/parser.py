@@ -55,7 +55,7 @@ class CamtParser(models.AbstractModel):
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse TxDtls node."""
-        # message
+        # name
         self.add_value_from_node(
             ns,
             node,
@@ -67,10 +67,6 @@ class CamtParser(models.AbstractModel):
             transaction,
             "name",
             join_str="\n",
-        )
-        # name
-        self.add_value_from_node(
-            ns, node, ["./ns:AddtlTxInf"], transaction, "AddtlTxInf", join_str="\n"
         )
         # eref
         self.add_value_from_node(
