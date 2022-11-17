@@ -39,4 +39,12 @@
             <field name="target">new</field>
         </record>
 
+
+        <record id="account_statement_import_menu" model="ir.ui.menu">
+            <field name="name">Import Statement</field>
+            <field name="parent_id" ref="account.menu_finance_entries_actions" />
+            <field name="action" ref="account_statement_import_action" />
+            <field name="sequence" eval="70" />
+        </record>
+
 </odoo>
