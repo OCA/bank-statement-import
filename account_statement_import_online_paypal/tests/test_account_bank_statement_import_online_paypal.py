@@ -549,9 +549,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "narration": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1659312000",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )
         self.assertEqual(
@@ -560,9 +561,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "-100.00",
                 "name": "Fee for Invoice 1",
-                "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
+                "narration": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
                 "unique_import_id": "1234567890-1659312000-FEE",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )
         self.assertEqual(data[1], {"balance_start": 0.0, "balance_end_real": 900.0})
@@ -620,9 +622,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "narration": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1659312000",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )
 
@@ -679,9 +682,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "narration": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1659312000",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )
 
@@ -738,9 +742,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "narration": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1659312000",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )
         self.assertEqual(
@@ -749,9 +754,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "-100.00",
                 "name": "Fee for Invoice 1",
-                "note": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
+                "narration": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
                 "unique_import_id": "1234567890-1659312000-FEE",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )
 
@@ -804,8 +810,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": datetime(2022, 8, 1),
                 "amount": "1000.00",
                 "name": "Invoice 1",
-                "note": "1234567890: Payment for Invoice(s) 1",
+                "narration": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": "1234567890-1659312000",
+                "payment_ref": "Transaction ID 1234567890",
             },
         )

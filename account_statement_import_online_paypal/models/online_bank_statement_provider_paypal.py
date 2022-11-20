@@ -303,8 +303,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "name": name,
             "amount": str(total_amount),
             "date": date,
-            "note": note,
+            "narration": note,
             "unique_import_id": unique_import_id,
+            "payment_ref": _("Transaction ID %s") % transaction_id,
         }
         payer_full_name = payer_name.get("full_name") or payer_name.get(
             "alternate_full_name"
@@ -320,7 +321,8 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     "date": date,
                     "partner_name": "PayPal",
                     "unique_import_id": "%s-FEE" % unique_import_id,
-                    "note": _("Transaction fee for %s") % note,
+                    "narration": _("Transaction fee for %s") % note,
+                    "payment_ref": _("Transaction ID %s") % transaction_id,
                 }
             ]
         return lines
