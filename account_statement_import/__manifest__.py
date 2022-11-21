@@ -17,9 +17,11 @@
         "security/ir.model.access.csv",
         "wizard/account_statement_import_view.xml",
         "views/account_journal.xml",
+        "templates/assets.xml",
     ],
     "demo": [
         "demo/partner_bank.xml",
     ],
     "installable": True,
+    "qweb": ["static/src/xml/account_dashboard_kanban.xml"],
 }
