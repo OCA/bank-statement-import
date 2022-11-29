@@ -11,6 +11,13 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
         <field name="arch" type="xml">
+            <!--
+                We need to add the create tag in order to show buttons.
+                However, we will change them using the JS definition.
+            -->
+            <kanban position="attributes">
+                <attribute name="create">1</attribute>
+            </kanban>
             <xpath expr='//span[@name="button_import_placeholder"]' position='inside'>
                 <span>or <a
                         type="object"
