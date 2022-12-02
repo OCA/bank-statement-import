@@ -4,3 +4,6 @@
 * Andrea Stirpe <a.stirpe@onestein.nl>
 * Maxence Groine <mgroine@fiefmanage.ch>
 * Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
+* `Trobz <https://trobz.com>`_:
+
+    * Son Ho <sonhd@trobz.com>
