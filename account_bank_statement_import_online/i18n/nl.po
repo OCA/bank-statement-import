@@ -38,6 +38,11 @@ msgid "Api Base"
 msgstr "Api Base"
 
 #. module: account_bank_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
+msgid "Archived"
+msgstr ""
+
+#. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_attachment_count
 msgid "Attachment Count"
 msgstr "Aantal Bijlagen"
@@ -124,8 +129,8 @@ msgstr "Weergavenaam"
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid ""
-"Failed to obtain statement data for period since %s until %s: %s. See server"
-" logs for more details."
+"Failed to obtain statement data for period since %s until %s: %s. See server "
+"logs for more details."
 msgstr ""
 "Kon de afschriften niet verkrijgen voor de periode van %s tot %s:%s. Bekijk "
 "de error log van de server voor details."
