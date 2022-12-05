@@ -35,6 +35,11 @@ msgid "Api Base"
 msgstr ""
 
 #. module: account_bank_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
+msgid "Archived"
+msgstr ""
+
+#. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
