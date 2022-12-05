@@ -27,7 +27,7 @@ addon | version | maintainers | summary
 [account_bank_statement_import_move_line](account_bank_statement_import_move_line/) | 13.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Import journal items into bank statement
 [account_bank_statement_import_oca_camt54](account_bank_statement_import_oca_camt54/) | 13.0.1.0.0 |  | Bank Account Camt54 Import
 [account_bank_statement_import_ofx](account_bank_statement_import_ofx/) | 13.0.1.0.0 |  | Import OFX Bank Statement
-[account_bank_statement_import_online](account_bank_statement_import_online/) | 13.0.1.0.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
+[account_bank_statement_import_online](account_bank_statement_import_online/) | 13.0.1.1.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
 [account_bank_statement_import_online_paypal](account_bank_statement_import_online_paypal/) | 13.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
 [account_bank_statement_import_online_ponto](account_bank_statement_import_online_ponto/) | 13.0.1.0.1 |  | Online Bank Statements: MyPonto.com
 [account_bank_statement_import_online_qonto](account_bank_statement_import_online_qonto/) | 13.0.1.0.0 |  | Online Bank Statements: Qonto
