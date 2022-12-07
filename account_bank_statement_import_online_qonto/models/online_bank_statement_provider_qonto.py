@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 import requests
 
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -62,7 +62,12 @@ class OnlineBankStatementProviderQonto(models.Model):
         self.ensure_one()
         url = QONTO_ENDPOINT + "/transactions"
         params = {"slug": slug, "iban": self.account_number}
-
+        # settled_at_to param isn't well formatted (ISO 8601) or year is out of range".
+        # We set the last day of the year in such case.
+        if date_since and date_until and date_since.year != date_until.year:
+            date_until = fields.Datetime.from_string(
+                "%s-12-31 23:59:59" % date_since.year
+            )
         if date_since:
             params["settled_at_from"] = (
                 date_since.replace(microsecond=0).isoformat() + "Z"
