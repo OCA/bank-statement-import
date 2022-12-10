@@ -74,10 +74,13 @@ class AccountStatementImport(models.TransientModel):
         return action
 
     def _prepare_create_attachment(self, result):
+        # Attach to first bank statement
+        res_id = result["statement_ids"][0]
+        st = self.env["account.bank.statement"].browse(res_id)
         vals = {
             "name": self.statement_filename,
-            # Attach to first bank statement
-            "res_id": result["statement_ids"][0],
+            "res_id": res_id,
+            "company_id": st.company_id.id,
             "res_model": "account.bank.statement",
             "datas": self.statement_file,
         }
