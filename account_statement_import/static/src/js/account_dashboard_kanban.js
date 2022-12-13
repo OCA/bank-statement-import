@@ -1,6 +1,8 @@
 odoo.define("account_statement_import.dashboard.kanban", function (require) {
     "use strict";
+
     var viewRegistry = require("web.view_registry");
+    var KanbanView = require("web.KanbanView");
 
     var AccountDashboardView = viewRegistry.get("account_dashboard_kanban");
     // Value can be undefined on some test scenarios. Avoid an error by checking if it is defined
@@ -16,6 +18,11 @@ odoo.define("account_statement_import.dashboard.kanban", function (require) {
                     action: "account_statement_import.account_statement_import_action",
                 });
             },
+        });
+        AccountDashboardView = KanbanView.extend({
+            config: _.extend({}, KanbanView.prototype.config, {
+                Controller: AccountDashboardController,
+            }),
         });
         return {
             AccountDashboardView: AccountDashboardView,
