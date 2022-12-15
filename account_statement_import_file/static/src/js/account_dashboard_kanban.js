@@ -1,32 +1,24 @@
 odoo.define("account_statement_import_file.dashboard.kanban", function (require) {
     "use strict";
 
-    var viewRegistry = require("web.view_registry");
-    var KanbanView = require("web.KanbanView");
+    var KanbanView = require("@web/views/kanban/kanban_view");
+    var viewRegistry = require("@web/core/registry");
 
-    var AccountDashboardView = viewRegistry.get("account_dashboard_kanban");
-    // Value can be undefined on some test scenarios. Avoid an error by checking if it is defined
+    var AccountDashboardView = viewRegistry.registry
+        .category("views")
+        .get("account_dashboard_kanban");
     if (AccountDashboardView !== undefined) {
-        var AccountDashboardController =
-            AccountDashboardView.prototype.config.Controller;
-        AccountDashboardController.include({
-            buttons_template: "AccountDashboardView.buttons",
-            // We are reusing the create button
-            _onButtonNew: function (ev) {
+        AccountDashboardView.buttonTemplate = "AccountDashboardView.buttons";
+        Object.assign(KanbanView.kanbanView.Controller.prototype, {
+            importOcaStatement: async function (ev) {
                 ev.stopPropagation();
-                return this.trigger_up("do_action", {
-                    action: "account_statement_import_file.account_statement_import_action",
+                return this.actionService.doAction({
+                    type: "ir.actions.act_window",
+                    res_model: "account.statement.import",
+                    views: [[false, "form"]],
+                    target: "new",
                 });
             },
         });
-        AccountDashboardView = KanbanView.extend({
-            config: _.extend({}, KanbanView.prototype.config, {
-                Controller: AccountDashboardController,
-            }),
-        });
-        return {
-            AccountDashboardView: AccountDashboardView,
-            AccountDashboardController: AccountDashboardController,
-        };
     }
 });

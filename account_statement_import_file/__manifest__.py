@@ -24,10 +24,7 @@
     "installable": True,
     "assets": {
         "web.assets_backend": [
-            "account_statement_import_file/static/src/js/account_dashboard_kanban.js",
-        ],
-        "web.assets_qweb": [
-            "account_statement_import_file/static/src/xml/account_dashboard_kanban.xml"
+            "account_statement_import_file/static/src/**/*",
         ],
     },
 }

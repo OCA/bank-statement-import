@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<template>
-    <t t-name="AccountDashboardView.buttons">
+<template xml:space="preserve">
+    <t t-name="AccountDashboardView.buttons" owl='1'>
         <div>
             <button
                 type="button"
-                t-attf-class="btn #{btnClass} o-kanban-button-new"
+                class="btn btn-primary o-kanban-button-new"
                 accesskey="c"
+                t-on-click="(ev) => this.importOcaStatement(ev)"
             >
-                <t t-esc="_t('Import Statement (OCA)')" />
+                Import Statement (OCA)
             </button>
         </div>
     </t>
