@@ -7,8 +7,10 @@ import logging
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
+from os import path
 
 from odoo import _, api, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -19,6 +21,14 @@ try:
     from xlrd.xldate import xldate_as_datetime
 except (ImportError, IOError) as err:  # pragma: no cover
     _logger.error(err)
+
+try:
+    import chardet
+except ImportError:
+    _logger.warning(
+        "chardet library not found, please install it "
+        "from http://pypi.python.org/pypi/chardet"
+    )
 
 
 class AccountStatementImportSheetParser(models.TransientModel):
@@ -43,7 +53,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         return list(next(csv_data))
 
     @api.model
-    def parse(self, data_file, mapping):
+    def parse(self, data_file, mapping, filename):
         journal = self.env["account.journal"].browse(self.env.context.get("journal_id"))
         currency_code = (journal.currency_id or journal.company_id.currency_id).name
         account_number = journal.bank_account_id.acc_number
@@ -67,6 +77,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 {
                     "balance_start": float(balance_start),
                     "balance_end_real": float(balance_end),
+                    "name": _("%s: %s")
+                    % (
+                        journal.code,
+                        path.basename(filename),
+                    ),
                 }
             )
 
@@ -78,6 +93,45 @@ class AccountStatementImportSheetParser(models.TransientModel):
         data.update({"transactions": transactions})
 
         return currency_code, account_number, [data]
+
+    def _get_column_indexes(self, header, column_name, mapping):
+        column_indexes = []
+        if mapping[column_name] and "," in mapping[column_name]:
+            # We have to concatenate the values
+            column_names_or_indexes = mapping[column_name].split(",")
+        else:
+            column_names_or_indexes = [mapping[column_name]]
+        for column_name_or_index in column_names_or_indexes:
+            if mapping.no_header:
+                column_index = (
+                    column_name_or_index and int(column_name_or_index) or None
+                )
+                if column_index:
+                    column_indexes.append(column_index)
+            else:
+                if column_name_or_index:
+                    column_indexes.append(header.index(column_name_or_index))
+        return column_indexes
+
+    def _get_column_names(self):
+        return [
+            "timestamp_column",
+            "currency_column",
+            "amount_column",
+            "amount_debit_column",
+            "amount_credit_column",
+            "balance_column",
+            "original_currency_column",
+            "original_amount_column",
+            "debit_credit_column",
+            "transaction_id_column",
+            "description_column",
+            "notes_column",
+            "reference_column",
+            "partner_name_column",
+            "bank_name_column",
+            "bank_account_column",
+        ]
 
     def _parse_lines(self, mapping, data_file, currency_code):
         columns = dict()
@@ -99,80 +153,39 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 csv_options["delimiter"] = csv_delimiter
             if mapping.quotechar:
                 csv_options["quotechar"] = mapping.quotechar
-            csv_or_xlsx = reader(
-                StringIO(data_file.decode(mapping.file_encoding or "utf-8")),
-                **csv_options
-            )
-
+            try:
+                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
+            except UnicodeDecodeError:
+                # Try auto guessing the format
+                detected_encoding = chardet.detect(data_file).get("encoding", False)
+                if not detected_encoding:
+                    raise UserError(
+                        _("No valid encoding was found for the attached file")
+                    ) from None
+                decoded_file = data_file.decode(detected_encoding)
+            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
         if isinstance(csv_or_xlsx, tuple):
             header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
         else:
             header = [value.strip() for value in next(csv_or_xlsx)]
-        columns["timestamp_column"] = header.index(mapping.timestamp_column)
-        columns["currency_column"] = (
-            header.index(mapping.currency_column) if mapping.currency_column else None
-        )
-        columns["amount_column"] = (
-            header.index(mapping.amount_column) if mapping.amount_column else None
-        )
-        columns["amount_debit_column"] = (
-            header.index(mapping.amount_debit_column)
-            if mapping.amount_debit_column
-            else None
-        )
-        columns["amount_credit_column"] = (
-            header.index(mapping.amount_credit_column)
-            if mapping.amount_credit_column
-            else None
-        )
-        columns["balance_column"] = (
-            header.index(mapping.balance_column) if mapping.balance_column else None
-        )
-        columns["original_currency_column"] = (
-            header.index(mapping.original_currency_column)
-            if mapping.original_currency_column
-            else None
-        )
-        columns["original_amount_column"] = (
-            header.index(mapping.original_amount_column)
-            if mapping.original_amount_column
-            else None
-        )
-        columns["debit_credit_column"] = (
-            header.index(mapping.debit_credit_column)
-            if mapping.debit_credit_column
-            else None
-        )
-        columns["transaction_id_column"] = (
-            header.index(mapping.transaction_id_column)
-            if mapping.transaction_id_column
-            else None
-        )
-        columns["description_column"] = (
-            header.index(mapping.description_column)
-            if mapping.description_column
-            else None
-        )
-        columns["notes_column"] = (
-            header.index(mapping.notes_column) if mapping.notes_column else None
-        )
-        columns["reference_column"] = (
-            header.index(mapping.reference_column) if mapping.reference_column else None
-        )
-        columns["partner_name_column"] = (
-            header.index(mapping.partner_name_column)
-            if mapping.partner_name_column
-            else None
-        )
-        columns["bank_name_column"] = (
-            header.index(mapping.bank_name_column) if mapping.bank_name_column else None
-        )
-        columns["bank_account_column"] = (
-            header.index(mapping.bank_account_column)
-            if mapping.bank_account_column
-            else None
-        )
+        for column_name in self._get_column_names():
+            columns[column_name] = self._get_column_indexes(
+                header, column_name, mapping
+            )
         return self._parse_rows(mapping, currency_code, csv_or_xlsx, columns)
+
+    def _get_values_from_column(self, values, columns, column_name):
+        indexes = columns[column_name]
+        content_l = []
+        max_index = len(values) - 1
+        for index in indexes:
+            if isinstance(index, int) and index <= max_index:
+                content_l.append(values[index])
+            else:
+                content_l.append(values[index])
+        if all(isinstance(content, str) for content in content_l):
+            return " ".join(content_l)
+        return content_l[0]
 
     def _parse_rows(self, mapping, currency_code, csv_or_xlsx, columns):  # noqa: C901
         if isinstance(csv_or_xlsx, tuple):
@@ -195,16 +208,21 @@ class AccountStatementImportSheetParser(models.TransientModel):
             else:
                 values = list(row)
 
-            timestamp = values[columns["timestamp_column"]]
+            timestamp = self._get_values_from_column(
+                values, columns, "timestamp_column"
+            )
             currency = (
-                values[columns["currency_column"]]
-                if columns["currency_column"] is not None
+                self._get_values_from_column(values, columns, "currency_column")
+                if columns["currency_column"]
                 else currency_code
             )
 
             def _decimal(column_name):
                 if columns[column_name]:
-                    return self._parse_decimal(values[columns[column_name]], mapping)
+                    return self._parse_decimal(
+                        self._get_values_from_column(values, columns, column_name),
+                        mapping,
+                    )
 
             amount = _decimal("amount_column")
             if not amount:
@@ -213,58 +231,60 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 amount = -abs(_decimal("amount_credit_column") or 0)
 
             balance = (
-                values[columns["balance_column"]]
-                if columns["balance_column"] is not None
+                self._get_values_from_column(values, columns, "balance_column")
+                if columns["balance_column"]
                 else None
             )
             original_currency = (
-                values[columns["original_currency_column"]]
-                if columns["original_currency_column"] is not None
+                self._get_values_from_column(
+                    values, columns, "original_currency_column"
+                )
+                if columns["original_currency_column"]
                 else None
             )
             original_amount = (
-                values[columns["original_amount_column"]]
-                if columns["original_amount_column"] is not None
+                self._get_values_from_column(values, columns, "original_amount_column")
+                if columns["original_amount_column"]
                 else None
             )
             debit_credit = (
-                values[columns["debit_credit_column"]]
-                if columns["debit_credit_column"] is not None
+                self._get_values_from_column(values, columns, "debit_credit_column")
+                if columns["debit_credit_column"]
                 else None
             )
             transaction_id = (
-                values[columns["transaction_id_column"]]
-                if columns["transaction_id_column"] is not None
+                self._get_values_from_column(values, columns, "transaction_id_column")
+                if columns["transaction_id_column"]
                 else None
             )
             description = (
-                values[columns["description_column"]]
-                if columns["description_column"] is not None
+                self._get_values_from_column(values, columns, "description_column")
+                if columns["description_column"]
                 else None
             )
             notes = (
-                values[columns["notes_column"]]
-                if columns["notes_column"] is not None
+                self._get_values_from_column(values, columns, "notes_column")
+                if columns["notes_column"]
                 else None
             )
             reference = (
-                values[columns["reference_column"]]
-                if columns["reference_column"] is not None
+                self._get_values_from_column(values, columns, "reference_column")
+                if columns["reference_column"]
                 else None
             )
             partner_name = (
-                values[columns["partner_name_column"]]
-                if columns["partner_name_column"] is not None
+                self._get_values_from_column(values, columns, "partner_name_column")
+                if columns["partner_name_column"]
                 else None
             )
             bank_name = (
-                values[columns["bank_name_column"]]
-                if columns["bank_name_column"] is not None
+                self._get_values_from_column(values, columns, "bank_name_column")
+                if columns["bank_name_column"]
                 else None
             )
             bank_account = (
-                values[columns["bank_account_column"]]
-                if columns["bank_account_column"] is not None
+                self._get_values_from_column(values, columns, "bank_account_column")
+                if columns["bank_account_column"]
                 else None
             )
 
