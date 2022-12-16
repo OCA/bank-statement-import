@@ -28,7 +28,9 @@ class AccountBankStatementImport(models.TransientModel):
         self.ensure_one()
         try:
             Parser = self.env["account.bank.statement.import.sheet.parser"]
-            return Parser.parse(data_file, self.sheet_mapping_id)
+            return Parser.parse(
+                data_file, self.sheet_mapping_id, self.attachment_ids[:1].name
+            )
         except BaseException:
             if self.env.context.get("account_bank_statement_import_txt_xlsx_test"):
                 raise
