@@ -55,6 +55,11 @@ class AccountStatementImportSheetMapping(models.Model):
     )
     quotechar = fields.Char(string="Text qualifier", size=1, default='"')
     timestamp_format = fields.Char(required=True)
+    no_header = fields.Boolean(
+        string="File does not contain header line",
+        help="When this occurs please indicate the column number in the Columns section "
+        "instead of the column name, considering that the first column is 0",
+    )
     timestamp_column = fields.Char(required=True)
     currency_column = fields.Char(
         help=(
