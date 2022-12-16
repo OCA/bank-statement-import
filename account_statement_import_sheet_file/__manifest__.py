@@ -17,7 +17,7 @@
         "multi_step_wizard",
         "web_widget_dropdown_dynamic",
     ],
-    "external_dependencies": {"python": ["xlrd"]},
+    "external_dependencies": {"python": ["xlrd", "chardet"]},
     "data": [
         "security/ir.model.access.csv",
         "data/map_data.xml",
