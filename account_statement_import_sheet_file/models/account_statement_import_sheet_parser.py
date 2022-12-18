@@ -102,11 +102,16 @@ class AccountStatementImportSheetParser(models.TransientModel):
         else:
             column_names_or_indexes = [mapping[column_name]]
         for column_name_or_index in column_names_or_indexes:
+            if not column_name_or_index:
+                continue
+            column_index = None
             if mapping.no_header:
-                column_index = (
-                    column_name_or_index and int(column_name_or_index) or None
-                )
-                if column_index:
+                try:
+                    column_index = int(column_name_or_index)
+                # pylint: disable=except-pass
+                except Exception:
+                    pass
+                if column_index is not None:
                     column_indexes.append(column_index)
             else:
                 if column_name_or_index:
@@ -164,10 +169,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     ) from None
                 decoded_file = data_file.decode(detected_encoding)
             csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
-        if isinstance(csv_or_xlsx, tuple):
-            header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
-        else:
-            header = [value.strip() for value in next(csv_or_xlsx)]
+        header = False
+        if not mapping.no_header:
+            if isinstance(csv_or_xlsx, tuple):
+                header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
+            else:
+                header = [value.strip() for value in next(csv_or_xlsx)]
         for column_name in self._get_column_names():
             columns[column_name] = self._get_column_indexes(
                 header, column_name, mapping
@@ -179,10 +186,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
         content_l = []
         max_index = len(values) - 1
         for index in indexes:
-            if isinstance(index, int) and index <= max_index:
-                content_l.append(values[index])
+            if isinstance(index, int):
+                if index <= max_index:
+                    content_l.append(values[index])
             else:
-                content_l.append(values[index])
+                if index in values:
+                    content_l.append(values[index])
         if all(isinstance(content, str) for content in content_l):
             return " ".join(content_l)
         return content_l[0]
