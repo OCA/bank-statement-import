@@ -50,10 +50,15 @@
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
                         />
                         <field
-                            name="amount2_column"
+                            name="amount_debit_column"
+                            widget="dynamic_dropdown"
+                            values="statement_columns"
+                            context="{'header': header}"
+                        />
+                        <field
+                            name="amount_credit_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
