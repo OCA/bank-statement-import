@@ -38,10 +38,6 @@
                         </group>
                         <group>
                             <field name="timestamp_format" />
-                            <field
-                                name="amount2_reverse"
-                                attrs="{'invisible': [('amount2_column', '=', False)]}"
-                            />
                         </group>
                         <group
                             attrs="{'invisible': [('debit_credit_column', '=', False)]}"
@@ -60,7 +56,8 @@
                         <field name="timestamp_column" />
                         <field name="currency_column" />
                         <field name="amount_column" />
-                        <field name="amount2_column" />
+                        <field name="amount_debit_column" />
+                        <field name="amount_credit_column" />
                         <field name="balance_column" />
                         <field name="original_currency_column" />
                         <field name="original_amount_column" />
