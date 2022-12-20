@@ -63,16 +63,15 @@ class AccountStatementImportSheetMapping(models.Model):
         ),
     )
     amount_column = fields.Char(
-        required=True,
         help="Amount of transaction in journal's currency",
     )
-    amount2_column = fields.Char(
-        string="Amount2 column",
-        help="Some statements have two amount columns, for IN and OUT",
+    amount_debit_column = fields.Char(
+        string="Debit amount column",
+        help="Debit amount of transaction in journal's currency",
     )
-    amount2_reverse = fields.Boolean(
-        string="Amount2 reverse +/-",
-        help="If there are positive numbers for money going OUT, reverse +/-",
+    amount_credit_column = fields.Char(
+        string="Credit amount column",
+        help="Credit amount of transaction in journal's currency",
     )
     balance_column = fields.Char(
         help="Balance after transaction in journal's currency",
@@ -119,6 +118,19 @@ class AccountStatementImportSheetMapping(models.Model):
     bank_account_column = fields.Char(
         help="Partner's bank account",
     )
+
+    _sql_constraints = [
+        (
+            "check_amount_columns",
+            (
+                "CHECK("
+                "amount_column IS NULL "
+                "OR (amount_debit_column IS NULL AND amount_credit_column IS NULL)"
+                ")"
+            ),
+            "Use amount_column OR (amount_debit_column AND amount_credit_column).",
+        ),
+    ]
 
     @api.onchange("float_thousands_sep")
     def onchange_thousands_separator(self):
