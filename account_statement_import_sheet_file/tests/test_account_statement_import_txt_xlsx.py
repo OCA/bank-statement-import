@@ -364,7 +364,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(statement.balance_end_real, 1510.0)
         self.assertEqual(statement.balance_end, 1510.0)
 
-    def test_amount2(self):
+    def test_debit_credit_amount(self):
         journal = self.AccountJournal.create(
             {
                 "name": "Bank",
@@ -376,17 +376,18 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         )
         statement_map = self.sample_statement_map.copy(
             {
-                "amount2_column": "Amount2",
-                "amount2_reverse": True,
+                "amount_debit_column": "Debit",
+                "amount_credit_column": "Credit",
                 "balance_column": "Balance",
+                "amount_column": None,
                 "original_currency_column": None,
                 "original_amount_column": None,
             }
         )
-        data = self._data_file("fixtures/amount2.csv", "utf-8")
+        data = self._data_file("fixtures/debit_credit_amount.csv", "utf-8")
         wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
-                "statement_filename": "fixtures/amount2.csv",
+                "statement_filename": "fixtures/debit_credit_amount.csv",
                 "statement_file": data,
                 "sheet_mapping_id": statement_map.id,
             }
@@ -396,7 +397,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
-        self.assertEqual(len(statement.line_ids), 2)
+        self.assertEqual(len(statement.line_ids), 4)
         self.assertEqual(statement.balance_start, 10.0)
         self.assertEqual(statement.balance_end_real, 1510.0)
         self.assertEqual(statement.balance_end, 1510.0)
