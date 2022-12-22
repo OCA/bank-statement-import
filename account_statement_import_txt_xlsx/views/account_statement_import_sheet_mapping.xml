@@ -56,6 +56,8 @@
                         <field name="timestamp_column" />
                         <field name="currency_column" />
                         <field name="amount_column" />
+                        <field name="amount_debit_column" />
+                        <field name="amount_credit_column" />
                         <field name="balance_column" />
                         <field name="original_currency_column" />
                         <field name="original_amount_column" />
