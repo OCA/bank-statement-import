@@ -114,6 +114,18 @@ msgid "Created on"
 msgstr "Data creazione"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_credit_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_credit_column
+msgid "Credit amount column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_credit_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_credit_column
+msgid "Credit amount of transaction in journal's currency"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__credit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__credit_value
 msgid "Credit value"
@@ -139,6 +151,18 @@ msgstr "Cirillico (KOI8-U)"
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__windows-1251
 msgid "Cyrillic (Windows-1251)"
 msgstr "Cirillico (Windows-1251)"
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
+msgid "Debit amount column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
+msgid "Debit amount of transaction in journal's currency"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__debit_value
@@ -248,8 +272,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_currency_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original currency of transaction from"
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "Nel caso in cui l'estratto conto fornisca la valuta originaria per "
 "operazioni con conversione automatica, colonna dalla quale ottenere tale "
@@ -259,8 +283,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_amount_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original transaction amount in original "
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
 "transaction currency from"
 msgstr ""
 "Nel caso in cui l'estratto conto fornisca la valuta originaria per "
@@ -474,6 +498,11 @@ msgstr "Colonna ID operazione univoca"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
 msgid "Upload Files"
 msgstr "Carica file"
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.constraint,message:account_statement_import_txt_xlsx.constraint_account_statement_import_sheet_mapping_check_amount_columns
+msgid "Use amount_column OR (amount_debit_column AND amount_credit_column)."
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__credit_value
