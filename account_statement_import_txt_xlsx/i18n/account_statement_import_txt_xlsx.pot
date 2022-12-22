@@ -111,6 +111,18 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_credit_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_credit_column
+msgid "Credit amount column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_credit_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_credit_column
+msgid "Credit amount of transaction in journal's currency"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__credit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__credit_value
 msgid "Credit value"
@@ -135,6 +147,18 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__windows-1251
 msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
+msgid "Debit amount column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
+msgid "Debit amount of transaction in journal's currency"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -460,6 +484,11 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
 msgid "Upload Files"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.constraint,message:account_statement_import_txt_xlsx.constraint_account_statement_import_sheet_mapping_check_amount_columns
+msgid "Use amount_column OR (amount_debit_column AND amount_credit_column)."
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
