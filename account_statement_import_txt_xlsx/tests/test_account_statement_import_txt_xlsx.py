@@ -156,14 +156,14 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 }
             )
             form.attachment_ids.add(attachment)
-            self.assertEqual(len(form.header), 90)
+            self.assertEqual(len(form.header), 125)
             self.assertEqual(
                 len(
                     self.AccountStatementImportSheetMappingWizard.with_context(
                         header=form.header,
                     ).statement_columns()
                 ),
-                7,
+                10,
             )
             form.timestamp_column = "Date"
             form.amount_column = "Amount"
@@ -179,14 +179,14 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 }
             )
             form.attachment_ids.add(attachment)
-            self.assertEqual(len(form.header), 90)
+            self.assertEqual(len(form.header), 125)
             self.assertEqual(
                 len(
                     self.AccountStatementImportSheetMappingWizard.with_context(
                         header=form.header,
                     ).statement_columns()
                 ),
-                7,
+                10,
             )
             form.timestamp_column = "Date"
             form.amount_column = "Amount"

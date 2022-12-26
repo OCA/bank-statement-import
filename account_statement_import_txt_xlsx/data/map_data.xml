@@ -19,5 +19,8 @@
         <field name="description_column">Label</field>
         <field name="partner_name_column">Partner Name</field>
         <field name="bank_account_column">Bank Account</field>
+        <field name="bank_name_column">Bank Name</field>
+        <field name="reference_column">Reference</field>
+        <field name="notes_column">Notes</field>
     </record>
 </odoo>
