@@ -13,7 +13,6 @@ class AccountStatementImport(models.TransientModel):
         and jump directly to the reconcilition widget"""
         result = self._import_file()
         statements = self.env["account.bank.statement"].browse(result["statement_ids"])
-        statements.button_post()
         action = {
             "type": "ir.actions.client",
             "tag": "bank_statement_reconciliation_view",
