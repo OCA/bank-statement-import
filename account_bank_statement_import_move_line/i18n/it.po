@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-08 02:55+0000\n"
-"PO-Revision-Date: 2022-12-29 16:46+0000\n"
+"PO-Revision-Date: 2023-01-03 12:47+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -87,7 +87,7 @@ msgstr "Creato il"
 #. module: account_bank_statement_import_move_line
 #: model:ir.model.fields,field_description:account_bank_statement_import_move_line.field_account_statement_line_create_display_name
 msgid "Display Name"
-msgstr "Display Name"
+msgstr "Nome visualizzato"
 
 #. module: account_bank_statement_import_move_line
 #: selection:account.statement.line.create,date_type:0
