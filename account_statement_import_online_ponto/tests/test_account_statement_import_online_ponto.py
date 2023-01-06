@@ -137,10 +137,6 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             _interface_class + "._set_access_account",
             return_value=None,
         )
-        self.mock_synchronisation = lambda: mock.patch(
-            _interface_class + "._ponto_synchronisation",
-            return_value=None,
-        )
         # return list of transactions on first call, empty list on second call.
         self.mock_get_transactions = lambda: mock.patch(
             _interface_class + "._get_transactions",
@@ -160,7 +156,7 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             line_form.amount = 100
         initial_statement = st_form.save()
         initial_statement.button_post()
-        with self.mock_login(), self.mock_synchronisation(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             vals = {
                 "provider_ids": [(4, self.provider.id)],
                 "date_since": datetime(2019, 11, 4),
@@ -184,7 +180,7 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             # self.assertEqual(new_statement.balance_end_real, 105.83)
 
     def test_ponto(self):
-        with self.mock_login(), self.mock_synchronisation(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             vals = {
                 "provider_ids": [(4, self.provider.id)],
                 "date_since": datetime(2019, 11, 3),
