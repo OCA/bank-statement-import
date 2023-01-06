@@ -5,7 +5,6 @@
 import base64
 import json
 import logging
-import time
 
 import requests
 from dateutil.relativedelta import relativedelta
@@ -83,68 +82,6 @@ class PontoInterface(models.AbstractModel):
             _("Ponto : wrong configuration, account %s not found in %s")
             % (account_number, data)
         )
-
-    def _ponto_synchronisation(self, access_data):
-        """Make sure Ponto has retrieved latest data from financial institution."""
-        url = PONTO_ENDPOINT + "/synchronizations"
-        # TODO: According to spec we should provide an IP number in the data.
-        # See: https://documentation.myponto.com/1/api/curl#create-synchronization
-        payload = {
-            "data": {
-                "type": "synchronization",
-                "attributes": {
-                    "resourceType": "account",
-                    "resourceId": access_data["ponto_account"],
-                    "subtype": "accountTransactions",
-                },
-            }
-        }
-        response = requests.post(
-            url, headers=self._get_request_headers(access_data), json=payload
-        )
-        if response.status_code == 400:
-            # Probably synchronization recently done already.
-            _logger.debug(
-                _("Synchronization request rejected: %s"),
-                response.text
-            )
-            return
-        data = self._get_response_data(response)
-        # The resourceId in data["attributes"] is the account,
-        # we need the synchronization.
-        sync_id = data.get("data", {}).get("id", False)
-        if not sync_id:
-            raise UserError(
-                _("Ponto : no synchronization id in data %s") % data
-            )
-        # Poll synchronization during 400 seconds for completion.
-        url = PONTO_ENDPOINT + "/synchronizations/" + sync_id
-        number = 0
-        while number < 10:
-            number += 1
-            if self._synchronization_done(access_data, url):
-                break
-            time.sleep(40)
-
-    def _synchronization_done(self, access_data, url):
-        """Check wether requested synchronization done."""
-        response = requests.get(url, headers=self._get_request_headers(access_data))
-        if response.status_code != 200:
-            return False
-        data = json.loads(response.text)
-        status = data.get("status", {})
-        if status not in ("success", "error"):
-            return False
-        if status == "error":
-            _logger.debug(
-                _("Synchronization was succesfully completed")
-            )
-        else:
-            _logger.debug(
-                _("Synchronization had an error: %s"),
-                response.text
-            )
-        return True
 
     def _get_transactions(self, access_data, last_identifier):
         """Get transactions from ponto, using last_identifier as pointer.

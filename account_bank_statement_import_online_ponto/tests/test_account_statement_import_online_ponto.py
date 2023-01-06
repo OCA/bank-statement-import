@@ -150,10 +150,6 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
             _interface_class + "._set_access_account",
             return_value=None,
         )
-        self.mock_synchronisation = lambda: mock.patch(
-            _interface_class + "._ponto_synchronisation",
-            return_value=None,
-        )
         # return list of transactions on first call, empty list on second call.
         self.mock_get_transactions = lambda: mock.patch(
             _interface_class + "._get_transactions",
@@ -172,7 +168,6 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
         initial_statement.line_ids[0].account_id = self.receivable_account
         initial_statement.button_confirm_bank()
         with self.mock_login(), \
-            self.mock_synchronisation(), \
             self.mock_set_access_account(),  \
             self.mock_get_transactions():  # noqa: B950
             vals = {
@@ -199,7 +194,6 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
 
     def test_ponto(self):
         with self.mock_login(), \
-            self.mock_synchronisation(), \
             self.mock_set_access_account(), \
             self.mock_get_transactions():  # noqa: B950
             vals = {

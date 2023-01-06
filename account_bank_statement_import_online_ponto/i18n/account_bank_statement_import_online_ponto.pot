@@ -155,12 +155,6 @@ msgid "Ponto"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:118
-#, python-format
-msgid "Ponto : no synchronization id in data %s"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
 #: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:46
 #, python-format
 msgid "Ponto : no token"
@@ -209,18 +203,6 @@ msgstr ""
 #. module: account_bank_statement_import_online_ponto
 #: model:ir.ui.menu,name:account_bank_statement_import_online_ponto.menu_ponto_buffer
 msgid "Show Ponto Buffer"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:144
-#, python-format
-msgid "Synchronization had an error: %s"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:108
-#, python-format
-msgid "Synchronization request rejected: %s"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto

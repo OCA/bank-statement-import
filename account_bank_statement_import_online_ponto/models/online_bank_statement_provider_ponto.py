@@ -47,7 +47,6 @@ class OnlineBankStatementProviderPonto(models.Model):
         buffer_model = self.env["ponto.buffer"]
         access_data = interface_model._login(self.username, self.password)
         interface_model._set_access_account(access_data, self.account_number)
-        interface_model._ponto_synchronisation(access_data)
         latest_identifier = False
         transactions = interface_model._get_transactions(
             access_data,
