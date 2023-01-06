@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class PontoBuffer(models.Model):
+class PontoBufferLine(models.Model):
     """Define model to hold transactions retrieved from Ponto."""
 
     _name = "ponto.buffer.line"
