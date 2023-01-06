@@ -159,12 +159,6 @@ msgid "Ponto"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:118
-#, python-format
-msgid "Ponto : no synchronization id in data %s"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
 #: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:46
 #, python-format
 msgid "Ponto : no token"
@@ -216,24 +210,6 @@ msgid "Show Ponto Buffer"
 msgstr ""
 
 #. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:144
-#, python-format
-msgid "Synchronization had an error: %s"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:108
-#, python-format
-msgid "Synchronization request rejected: %s"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
-#: code:addons/account_bank_statement_import_online_ponto/models/ponto_interface.py:140
-#, python-format
-msgid "Synchronization was succesfully completed"
-msgstr ""
-
-#. module: account_bank_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_bank_statement_import_online_ponto.field_ponto_buffer_line__transaction_data
 msgid "Transaction Data"
 msgstr ""
@@ -246,15 +222,6 @@ msgstr ""
 #~ "%s \n"
 #~ "\n"
 #~ " %s"
-
-#~ msgid ""
-#~ "Error during Create Synchronisation %s \n"
-#~ "\n"
-#~ " %s"
-#~ msgstr ""
-#~ "Erreur lors de la synchronisation de %s \n"
-#~ "\n"
-#~ "%s"
 
 #~ msgid ""
 #~ "Error during get transaction.\n"
