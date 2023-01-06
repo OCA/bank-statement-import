@@ -21,7 +21,7 @@ mock_obtain_statement_data = (
 )
 
 
-class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
+class TestAccountAccountStatementImportOnline(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -765,3 +765,25 @@ class TestAccountBankAccountStatementImportOnline(common.SavepointCase):
         self.assertEqual(statements[0].balance_start, 100)
         self.assertEqual(statements[0].balance_end_real, 200)
         self.assertEqual(len(statements[0].line_ids), 1)
+
+    def test_schedule_adjustment(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "dummy",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        provider.active = True
+        provider.interval_type = "hours"
+        five_minutes_ago = self.now - relativedelta(minutes=5)
+        three_hours_earlier = five_minutes_ago - relativedelta(hours=3)
+        fiftyfive_minutes_later = five_minutes_ago + relativedelta(hours=1)
+        provider.next_run = three_hours_earlier
+        provider.last_successful_run = three_hours_earlier - relativedelta(hours=1)
+        provider._scheduled_pull()
+        self.assertEqual(provider.last_successful_run, five_minutes_ago)
+        self.assertEqual(provider.next_run, fiftyfive_minutes_later)
