@@ -75,6 +75,7 @@
                                 <field name="interval_type" />
                             </div>
                             <field name="next_run" />
+                            <field name="last_successful_run" />
                         </group>
                         <group name="configuration" string="Configuration">
                             <field name="statement_creation_mode" />
