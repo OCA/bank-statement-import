@@ -55,6 +55,7 @@ class AccountStatementImportSheetMapping(models.Model):
         default="comma",
     )
     quotechar = fields.Char(string="Text qualifier", size=1, default='"')
+    starting_line = fields.Integer(string="Starting Line", default=0)
     timestamp_format = fields.Char(string="Timestamp Format", required=True)
     timestamp_column = fields.Char(string="Timestamp column", required=True)
     currency_column = fields.Char(

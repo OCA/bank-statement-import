@@ -35,6 +35,7 @@
                             <field name="file_encoding" />
                             <field name="delimiter" />
                             <field name="quotechar" />
+                            <field name="starting_line" />
                         </group>
                         <group>
                             <field name="timestamp_format" />

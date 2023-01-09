@@ -26,20 +26,26 @@ class AccountStatementImportSheetParser(models.TransientModel):
     _description = "Bank Statement Import Sheet Parser"
 
     @api.model
-    def parse_header(self, data_file, encoding, csv_options):
+    def parse_header(self, data_file, encoding, csv_options, start_line):
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
                 encoding_override=encoding if encoding else None,
             )
             sheet = workbook.sheet_by_index(0)
-            values = sheet.row_values(0)
+            values = sheet.row_values(start_line)
             return [str(value) for value in values]
         except xlrd.XLRDError:
             pass
 
         data = StringIO(data_file.decode(encoding or "utf-8"))
         csv_data = reader(data, **csv_options)
+        try:
+            for idx, row in enumerate(csv_data):
+                if idx == start_line:
+                    return row
+        except ValueError:
+            pass
         return list(next(csv_data))
 
     @api.model
@@ -105,8 +111,13 @@ class AccountStatementImportSheetParser(models.TransientModel):
             )
 
         if isinstance(csv_or_xlsx, tuple):
-            header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
+            header = [
+                str(value) for value in csv_or_xlsx[1].row_values(mapping.starting_line)
+            ]
         else:
+            if mapping.starting_line:
+                for _sl in range(mapping.starting_line):
+                    next(csv_or_xlsx)
             header = [value.strip() for value in next(csv_or_xlsx)]
         columns["timestamp_column"] = header.index(mapping.timestamp_column)
         columns["currency_column"] = (
@@ -176,7 +187,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _parse_rows(self, mapping, currency_code, csv_or_xlsx, columns):  # noqa: C901
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(1, csv_or_xlsx[1].nrows)
+            rows = range(mapping.starting_line + 1, csv_or_xlsx[1].nrows)
         else:
             rows = csv_or_xlsx
 

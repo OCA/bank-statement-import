@@ -27,6 +27,7 @@
                         <field name="file_encoding" />
                         <field name="delimiter" />
                         <field name="quotechar" />
+                        <field name="starting_line" />
                     </group>
                 </group>
                 <group name="final" attrs="{'invisible': [('state', '!=', 'final')]}">

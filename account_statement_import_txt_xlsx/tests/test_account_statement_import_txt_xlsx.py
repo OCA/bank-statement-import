@@ -97,6 +97,33 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
 
+    def test_import_csv_file_with_header(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+            }
+        )
+        data = self._data_file("fixtures/sample_statement_en_with_header.csv", "utf-8")
+        sample_statement_map_header = self.sample_statement_map.copy(
+            default={"starting_line": 12}
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/sample_statement_en_with_header.csv",
+                "statement_file": data,
+                "sheet_mapping_id": sample_statement_map_header.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+
     def test_import_xlsx_file(self):
         journal = self.AccountJournal.create(
             {
@@ -113,6 +140,33 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "statement_filename": "fixtures/sample_statement_en.xlsx",
                 "statement_file": data,
                 "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+
+    def test_import_xlsx_file_with_header(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+            }
+        )
+        data = self._data_file("fixtures/sample_statement_en_with_header.xlsx")
+        sample_statement_map_header = self.sample_statement_map.copy(
+            default={"starting_line": 12}
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/sample_statement_en_with_header.xlsx",
+                "statement_file": data,
+                "sheet_mapping_id": sample_statement_map_header.id,
             }
         )
         wizard.with_context(

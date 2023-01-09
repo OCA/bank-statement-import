@@ -33,6 +33,7 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         string="Text qualifier",
         size=1,
     )
+    starting_line = fields.Integer(string="Starting Line", default=0)
     timestamp_column = fields.Char(
         string="Timestamp column",
     )
@@ -148,7 +149,10 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
         header = []
         for data_file in self.attachment_ids:
             header += Parser.parse_header(
-                b64decode(data_file.datas), self.file_encoding, csv_options
+                b64decode(data_file.datas),
+                self.file_encoding,
+                csv_options,
+                self.starting_line,
             )
         header = list(set(header))
         self.header = json.dumps(header)
@@ -171,6 +175,7 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
             "file_encoding": self.file_encoding,
             "delimiter": self.delimiter,
             "quotechar": self.quotechar,
+            "starting_line": self.starting_line,
             "timestamp_format": "%d/%m/%Y",
             "timestamp_column": self.timestamp_column,
             "currency_column": self.currency_column,
