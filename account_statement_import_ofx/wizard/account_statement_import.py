@@ -45,6 +45,7 @@ class AccountStatementImport(models.TransientModel):
             "payment_ref": payment_ref,
             "amount": float(transaction.amount),
             "unique_import_id": transaction.id,
+            "check_number": transaction.checknum,
         }
         return vals
 
