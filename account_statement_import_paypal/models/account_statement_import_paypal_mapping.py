@@ -26,11 +26,9 @@ class AccountBankStatementImportPayPalMapping(models.Model):
         required=True,
     )
     date_format = fields.Char(
-        string="Date Format",
         required=True,
     )
     time_format = fields.Char(
-        string="Time Format",
         required=True,
     )
     date_column = fields.Char(

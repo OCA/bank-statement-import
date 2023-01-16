@@ -36,6 +36,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         self.AccountStatementImportPayPalMappingWizard = self.env[
             "account.statement.import.paypal.mapping.wizard"
         ]
+        self.env.ref("base.EUR").write({"active": True})
 
     def _data_file(self, filename):
         with open(path.join(path.dirname(__file__), filename)) as file:
@@ -50,9 +51,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
-        wizard = self.AccountStatementImport.with_context(
-            {"journal_id": journal.id}
-        ).create(
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": "fixtures/statement_en.csv",
                 "statement_file": self._data_file("fixtures/statement_en.csv"),
@@ -60,10 +59,8 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_statement_import_paypal_test": True,
-            }
+            journal_id=journal.id,
+            account_statement_import_paypal_test=True,
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
@@ -78,9 +75,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
                 "currency_id": self.currency_eur.id,
             }
         )
-        wizard = self.AccountStatementImport.with_context(
-            {"journal_id": journal.id}
-        ).create(
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": "fixtures/statement_en.csv",
                 "statement_file": self._data_file("fixtures/statement_en.csv"),
@@ -88,10 +83,8 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_statement_import_paypal_test": True,
-            }
+            journal_id=journal.id,
+            account_statement_import_paypal_test=True,
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
@@ -106,9 +99,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
                 "currency_id": self.currency_eur.id,
             }
         )
-        wizard = self.AccountStatementImport.with_context(
-            {"journal_id": journal.id}
-        ).create(
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": "fixtures/statement_es.csv",
                 "statement_file": self._data_file("fixtures/statement_es.csv"),
@@ -116,10 +107,8 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_statement_import_paypal_test": True,
-            }
+            journal_id=journal.id,
+            account_statement_import_paypal_test=True,
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
@@ -134,9 +123,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
-        wizard = self.AccountStatementImport.with_context(
-            {"journal_id": journal.id}
-        ).create(
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": "fixtures/activity_en.csv",
                 "statement_file": self._data_file("fixtures/activity_en.csv"),
@@ -144,10 +131,8 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
             }
         )
         wizard.with_context(
-            {
-                "journal_id": journal.id,
-                "account_statement_import_paypal_test": True,
-            }
+            journal_id=journal.id,
+            account_statement_import_paypal_test=True,
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
@@ -162,9 +147,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
                 "currency_id": self.currency_usd.id,
             }
         )
-        wizard = self.AccountStatementImport.with_context(
-            {"journal_id": journal.id}
-        ).create(
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": "fixtures/empty_activity.csv",
                 "statement_file": self._data_file("fixtures/empty_activity.csv"),
@@ -173,10 +156,8 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                {
-                    "journal_id": journal.id,
-                    "account_statement_import_paypal_test": True,
-                }
+                journal_id=journal.id,
+                account_statement_import_paypal_test=True,
             ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
