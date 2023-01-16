@@ -7,3 +7,4 @@
   * Carlos Roca
 
 * Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
+* Manuel Regidor <manuel.regidor@sygel.es>
