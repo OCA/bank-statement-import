@@ -428,6 +428,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
             return value
         elif isinstance(value, float):
             return Decimal(value)
+        elif not value:
+            return
         thousands, decimal = mapping._get_float_separators()
         value = value.replace(thousands, "")
         value = value.replace(decimal, ".")
