@@ -23,6 +23,9 @@ class AccountStatementImport(models.TransientModel):
         self.ensure_one()
         try:
             Parser = self.env["account.statement.import.paypal.parser"]
+            logging.warning(
+                Parser.parse(self.paypal_mapping_id, data_file, self.statement_filename)
+            )
             return Parser.parse(
                 self.paypal_mapping_id, data_file, self.statement_filename
             )
