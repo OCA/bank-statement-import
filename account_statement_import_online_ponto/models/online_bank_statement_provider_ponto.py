@@ -69,6 +69,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 url,
                 params={"grant_type": "client_credentials"},
                 headers=self._ponto_header_token(),
+                timeout=60,
             )
             if response.status_code == 200:
                 data = json.loads(response.text)
@@ -93,7 +94,10 @@ class OnlineBankStatementProviderPonto(models.Model):
     def _ponto_get_account_ids(self):
         url = PONTO_ENDPOINT + "/accounts"
         response = requests.get(
-            url, params={"limit": 100}, headers=self._ponto_header()
+            url,
+            params={"limit": 100},
+            headers=self._ponto_header(),
+            timeout=60,
         )
         if response.status_code == 200:
             data = json.loads(response.text)
@@ -118,7 +122,10 @@ class OnlineBankStatementProviderPonto(models.Model):
         latest_identifier = False
         while page_url:
             response = requests.get(
-                page_url, params=params, headers=self._ponto_header()
+                page_url,
+                params=params,
+                headers=self._ponto_header(),
+                timeout=(60, 300),  # 60 seconds for connect, 300 to retrieve data.
             )
             if response.status_code != 200:
                 raise UserError(
