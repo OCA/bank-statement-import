@@ -62,10 +62,6 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
             _provider_class + "._ponto_get_account_ids",
             return_value={"FR0214508000302245362775K46": "id"},
         )
-        self.mock_synchronisation = lambda: mock.patch(
-            _provider_class + "._ponto_synchronisation",
-            return_value=None,
-        )
 
         self.mock_transaction = lambda: mock.patch(
             _provider_class + "._ponto_get_transaction",
@@ -155,7 +151,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
             line_form.amount = 100
         initial_statement = st_form.save()
         initial_statement.button_post()
-        with self.mock_transaction(), self.mock_header(), self.mock_synchronisation(), self.mock_account_ids():  # noqa: B950
+        with self.mock_transaction(), self.mock_header(), self.mock_account_ids():  # noqa: B950
             vals = {
                 "provider_ids": self.provider.ids,
                 "date_since": datetime(2019, 11, 4),
@@ -175,7 +171,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
             self.assertEqual(new_statement.balance_end_real, 105.83)
 
     def test_ponto(self):
-        with self.mock_transaction(), self.mock_header(), self.mock_synchronisation(), self.mock_account_ids():  # noqa: B950
+        with self.mock_transaction(), self.mock_header(), self.mock_account_ids():  # noqa: B950
             vals = {
                 "provider_ids": self.provider.ids,
                 "date_since": datetime(2019, 11, 3),

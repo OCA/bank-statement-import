@@ -4,7 +4,6 @@
 import base64
 import json
 import re
-import time
 from datetime import datetime
 
 import pytz
@@ -107,44 +106,6 @@ class OnlineBankStatementProviderPonto(models.Model):
             return res
         raise UserError(_("{} \n\n {}").format(response.status_code, response.text))
 
-    def _ponto_synchronisation(self, account_id):
-        url = PONTO_ENDPOINT + "/synchronizations"
-        data = {
-            "data": {
-                "type": "synchronization",
-                "attributes": {
-                    "resourceType": "account",
-                    "resourceId": account_id,
-                    "subtype": "accountTransactions",
-                },
-            }
-        }
-        response = requests.post(url, headers=self._ponto_header(), json=data)
-        if response.status_code in (200, 201, 400):
-            data = json.loads(response.text)
-            sync_id = data.get("attributes", {}).get("resourceId", False)
-        else:
-            raise UserError(
-                _("Error during Create Synchronisation {} \n\n {}").format(
-                    response.status_code, response.text
-                )
-            )
-
-        # Check synchronisation
-        if not sync_id:
-            return
-        url = PONTO_ENDPOINT + "/synchronizations/" + sync_id
-        number = 0
-        while number == 100:
-            number += 1
-            response = requests.get(url, headers=self._ponto_header())
-            if response.status_code == 200:
-                data = json.loads(response.text)
-                status = data.get("status", {})
-                if status in ("success", "error"):
-                    return
-            time.sleep(4)
-
     def _ponto_get_transaction(self, account_id, date_since, date_until):
         page_url = PONTO_ENDPOINT + "/accounts/" + account_id + "/transactions"
         params = {"limit": 100}
@@ -210,7 +171,6 @@ class OnlineBankStatementProviderPonto(models.Model):
                 _("Ponto : wrong configuration, unknow account %s")
                 % journal.bank_account_id.acc_number
             )
-        self._ponto_synchronisation(account_id)
         transaction_lines = self._ponto_get_transaction(
             account_id, date_since, date_until
         )
