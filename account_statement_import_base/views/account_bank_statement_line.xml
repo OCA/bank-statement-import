@@ -6,45 +6,21 @@
 -->
 <odoo>
 
-<record id="view_bank_statement_line_form" model="ir.ui.view">
+<record id="account_bank_statement_line_form" model="ir.ui.view">
     <field name="model">account.bank.statement.line</field>
-    <field name="inherit_id" ref="account.view_bank_statement_line_form" />
+    <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_form"
+        />
     <field name="arch" type="xml">
-        <field name="statement_id" position="attributes">
-            <attribute
-                    name="invisible"
-                >not context.get('statement_line_main_view')</attribute>
-        </field>
-        <xpath expr="//field[@name='company_id']/.." position="attributes">
-            <attribute name="col">2</attribute>
-        </xpath>
-        <field name="sequence" position="attributes">
-            <attribute name="invisible">1</attribute>
-        </field>
-        <field name="narration" position="attributes">
-            <attribute name="invisible">1</attribute>
-        </field>
-        <field name="transaction_type" position="after">
-            <field name="partner_bank_id" />
-        </field>
-        <sheet position="inside">
-            <notebook>
-                <page name="narration" string="Notes">
-                    <field name="narration" nolabel="1" />
-                </page>
-                <page name="technical" string="Technical Information">
-                    <group name="tech-fields">
-                        <field name="unique_import_id" />
-                        <field name="partner_name" />
-                        <field name="account_number" />
-                        <field name="is_reconciled" />
-                    </group>
-                    <group name="raw_data" string="Raw Data">
-                        <field name="raw_data" nolabel="1" />
-                    </group>
-                </page>
-            </notebook>
-        </sheet>
+        <group name="tech-fields" position="inside">
+            <field name="unique_import_id" />
+        </group>
+        <group name="tech-fields" position="after">
+            <group name="raw_data" string="Raw Data">
+                <field name="raw_data" nolabel="1" colspan="2" />
+            </group>
+        </group>
     </field>
 </record>
 
