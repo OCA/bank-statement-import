@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-account_statement_import_file_reconciliation_widget',
         'odoo14-addon-account_statement_import_move_line',
         'odoo14-addon-account_statement_import_ofx',
+        'odoo14-addon-account_statement_import_ofx_by_acctid',
         'odoo14-addon-account_statement_import_online',
         'odoo14-addon-account_statement_import_online_paypal',
         'odoo14-addon-account_statement_import_online_ponto',
