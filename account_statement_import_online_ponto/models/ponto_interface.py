@@ -35,6 +35,7 @@ class PontoInterface(models.AbstractModel):
             "Accept": "application/json",
             "Authorization": "Basic %s" % login,
         }
+        _logger.debug(_("POST request on %s"), url)
         response = requests.post(
             url,
             params={"grant_type": "client_credentials"},
@@ -67,6 +68,7 @@ class PontoInterface(models.AbstractModel):
     def _set_access_account(self, access_data, account_number):
         """Set ponto account for bank account in access_data."""
         url = PONTO_ENDPOINT + "/accounts"
+        _logger.debug(_("GET request on %s"), url)
         response = requests.get(
             url, params={"limit": 100}, headers=self._get_request_headers(access_data)
         )
@@ -124,13 +126,14 @@ class PontoInterface(models.AbstractModel):
         """Interact with Ponto to get next page of data."""
         headers = self._get_request_headers(access_data)
         _logger.debug(
-            _("Get request to %s, with headers %s and params %s"), url, params, headers
+            _("GET request to %s with headers %s and params %s"), url, params, headers
         )
         response = requests.get(url, params=params, headers=headers)
         return self._get_response_data(response)
 
     def _get_response_data(self, response):
         """Get response data for GET or POST request."""
+        _logger.debug(_("HTTP answer code %s from Ponto"), response.status_code)
         if response.status_code not in (200, 201):
             raise UserError(
                 _("Server returned status code %s: %s")

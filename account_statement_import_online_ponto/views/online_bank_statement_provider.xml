@@ -9,9 +9,14 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main']" position="inside">
-                <group name="ponto" attrs="{'invisible':[('service','!=','ponto')]}">
+                <group
+                    name="ponto"
+                    string="Ponto Config"
+                    attrs="{'invisible':[('service','!=','ponto')]}"
+                >
                     <field name="username" string="Login" />
                     <field name="password" string="Secret Key" />
+                    <field name="ponto_date_field" />
                 </group>
             </xpath>
         </field>
