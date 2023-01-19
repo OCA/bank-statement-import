@@ -4,7 +4,8 @@
 import json
 import logging
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
+from operator import itemgetter
 
 import pytz
 
@@ -13,9 +14,10 @@ from odoo import _, api, fields, models
 _logger = logging.getLogger(__name__)
 
 
-class OnlineBankStatementProviderPonto(models.Model):
+class OnlineBankStatementProvider(models.Model):
     _inherit = "online.bank.statement.provider"
 
+    ponto_last_identifier = fields.Char(readonly=True)
     ponto_date_field = fields.Selection(
         [
             ("execution_date", "Execution Date"),
@@ -36,43 +38,63 @@ class OnlineBankStatementProviderPonto(models.Model):
             ("ponto", "MyPonto.com"),
         ]
 
-    def _obtain_statement_data(self, date_since, date_until):
-        """Check wether called for ponto servide, otherwise pass the buck."""
+    def _pull(self, date_since, date_until):
+        """For Ponto the pulling of data will not be grouped by statement.
+
+        Instead we will pull data from the last available backwards.
+
+        For a scheduled pull we will continue until we get to data
+        already retrieved or there is no more data available.
+
+        For a wizard pull we will discard data after date_until and
+        stop retrieving when either we get before date_since or there is
+        no more data available.
+        """
+        ponto_providers = self.filtered(lambda provider: provider.service == "ponto")
+        super(OnlineBankStatementProvider, self - ponto_providers)._pull(
+            date_since, date_until
+        )
+        for provider in ponto_providers:
+            provider._ponto_pull(date_since, date_until)
+
+    def _ponto_pull(self, date_since, date_until):
+        """Translate information from Ponto to Odoo bank statement lines."""
         self.ensure_one()
-        if self.service != "ponto":  # pragma: no cover
-            return super()._obtain_statement_data(
+        is_scheduled = self.env.context.get("scheduled")
+        if is_scheduled:
+            _logger.debug(
+                _("Ponto obtain statement data for journal %s from %s to %s"),
+                self.journal_id.name,
                 date_since,
                 date_until,
             )
-        return self._ponto_obtain_statement_data(date_since, date_until)
+        else:
+            _logger.debug(
+                _("Ponto obtain all new statement data for journal %s"),
+                self.journal_id.name,
+            )
+        lines = self._ponto_retrieve_data(date_since, date_until)
+        # For scheduled runs, store latest identifier.
+        if is_scheduled and lines:
+            self.ponto_last_identifier = lines[0].get("id")
+        self._ponto_store_lines(lines)
 
-    def _ponto_obtain_statement_data(self, date_since, date_until):
-        """Translate information from Ponto to Odoo bank statement lines."""
-        self.ensure_one()
-        _logger.debug(
-            _("Ponto obtain statement data for journal %s from %s to %s"),
-            self.journal_id.name,
-            date_since,
-            date_until,
-        )
-        lines = self._ponto_retrieve_data(date_since)
-        new_transactions = []
-        sequence = 0
-        for transaction in lines:
-            date = self._ponto_get_transaction_datetime(transaction)
-            if date < date_since or date > date_until:
-                continue
-            sequence += 1
-            vals_line = self._ponto_get_transaction_vals(transaction, sequence)
-            new_transactions.append(vals_line)
-        return new_transactions, {}
-
-    def _ponto_retrieve_data(self, date_since):
+    def _ponto_retrieve_data(self, date_since, date_until):
         """Fill buffer with data from Ponto.
 
         We will retrieve data from the latest transactions present in Ponto
-        backwards, until we find data that has an execution date before date_since.
+        backwards, until we find data that has an execution date before date_since,
+        or until we get to a transaction that we already have.
+
+        Note: when reading data they are likely to be in descending order of
+        execution_date (not seen a guarantee for this in Ponto API). When using
+        value date, they may well be out of order. So we cannot simply stop
+        when we have foundd a transaction date before the date_since.
+
+        We will not read transactions more then a week before before date_since.
         """
+        date_stop = date_since - timedelta(days=7)
+        is_scheduled = self.env.context.get("scheduled")
         lines = []
         interface_model = self.env["ponto.interface"]
         access_data = interface_model._login(self.username, self.password)
@@ -80,17 +102,71 @@ class OnlineBankStatementProviderPonto(models.Model):
         latest_identifier = False
         transactions = interface_model._get_transactions(access_data, latest_identifier)
         while transactions:
-            lines.extend(transactions)
+            for line in transactions:
+                identifier = line.get("id")
+                transaction_datetime = self._ponto_get_transaction_datetime(line)
+                if (is_scheduled and identifier == self.ponto_last_identifier) or (
+                    transaction_datetime < date_stop
+                    and (not self.ponto_last_identifier or not is_scheduled)
+                ):
+                    return lines
+                if not is_scheduled:
+                    if transaction_datetime < date_since:
+                        return lines
+                    if transaction_datetime > date_until:
+                        continue
+                line["transaction_datetime"] = transaction_datetime
+                lines.append(line)
             latest_identifier = transactions[-1].get("id")
-            earliest_datetime = self._ponto_get_transaction_datetime(transactions[-1])
-            if earliest_datetime < date_since:
-                break
             transactions = interface_model._get_transactions(
                 access_data, latest_identifier
             )
+        # We get here if we found no transactions before date_since,
+        # or not equal to stored last identifier.
         return lines
 
-    def _ponto_get_transaction_vals(self, transaction, sequence):
+    def _ponto_store_lines(self, lines):
+        """Store transactions retrieved from Ponto in statements.
+
+        The data retrieved has the most recent first. However we need to create
+        the bank statements in ascending date order. as the balance_end of
+        one statement will be the balanxe_start of the next statement.
+        """
+
+        def reset_transactions(date_since):
+            """Reset values for new statement."""
+            statement_date_since = self._get_statement_date_since(date_since)
+            statement_date_until = (
+                statement_date_since + self._get_statement_date_step()
+            )
+            statement_lines = []
+            return statement_date_since, statement_date_until, statement_lines
+
+        lines = sorted(lines, key=itemgetter("transaction_datetime"))
+        (
+            statement_date_since,
+            statement_date_until,
+            statement_lines,
+        ) = reset_transactions(lines[0]["transaction_datetime"])
+        for line in lines:
+            line.pop("transaction_datetime")
+            vals_line = self._ponto_get_transaction_vals(line)
+            if vals_line["date"] >= statement_date_until:
+                self._create_or_update_statement(
+                    (statement_lines, {}), statement_date_since, statement_date_until
+                )
+                (
+                    statement_date_since,
+                    statement_date_until,
+                    statement_lines,
+                ) = reset_transactions(statement_date_until)
+            statement_lines.append(vals_line)
+        # Handle lines in last statement.
+        self._create_or_update_statement(
+            (statement_lines, {}), statement_date_since, statement_date_until
+        )
+
+    def _ponto_get_transaction_vals(self, transaction):
         """Translate information from Ponto to statement line vals."""
         attributes = transaction.get("attributes", {})
         ref_list = [
@@ -105,7 +181,7 @@ class OnlineBankStatementProviderPonto(models.Model):
         ref = " ".join(ref_list)
         date = self._ponto_get_transaction_datetime(transaction)
         vals_line = {
-            "sequence": sequence,
+            "sequence": 1,  # Sequence is not meaningfull for Ponto.
             "date": date,
             "ref": re.sub(" +", " ", ref) or "/",
             "payment_ref": attributes.get("remittanceInformation", ref),

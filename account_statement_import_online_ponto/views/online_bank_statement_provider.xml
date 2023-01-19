@@ -17,6 +17,7 @@
                     <field name="username" string="Login" />
                     <field name="password" string="Secret Key" />
                     <field name="ponto_date_field" />
+                    <field name="ponto_last_identifier" />
                 </group>
             </xpath>
         </field>
