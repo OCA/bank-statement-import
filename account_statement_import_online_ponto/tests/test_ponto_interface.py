@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import fields
 from odoo.tests import common
 
-from .test_account_statement_import_online_ponto import THREE_TRANSACTIONS
+from .test_account_statement_import_online_ponto import FOUR_TRANSACTIONS
 
 
 class TestPontoInterface(common.TransactionCase):
@@ -72,16 +72,16 @@ class TestPontoInterface(common.TransactionCase):
         mock_response = MagicMock()
         mock_response.status_code = 200
         # Key "data" will contain a list of transactions.
-        mock_response.text = json.dumps({"data": THREE_TRANSACTIONS})
+        mock_response.text = json.dumps({"data": FOUR_TRANSACTIONS})
         requests_get.return_value = mock_response
         # Start of actual test.
         access_data = self._get_access_dict()
         interface_model = self.env["ponto.interface"]
         transactions = interface_model._get_transactions(access_data, False)
-        self.assertEqual(len(transactions), 3)
-        self.assertEqual(transactions[2]["id"], "b21a6c65-1c52-4ba6-8cbc-127d2b2d85ff")
+        self.assertEqual(len(transactions), 4)
+        self.assertEqual(transactions[3]["id"], "b21a6c65-1c52-4ba6-8cbc-127d2b2d85ff")
         self.assertEqual(
-            transactions[2]["attributes"]["counterpartReference"], "BE10325927501996"
+            transactions[3]["attributes"]["counterpartReference"], "BE10325927501996"
         )
 
     def _get_access_dict(self, include_account=True):
