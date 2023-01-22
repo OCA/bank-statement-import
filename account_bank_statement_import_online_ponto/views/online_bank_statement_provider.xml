@@ -8,14 +8,12 @@
             <xpath expr="//page[@name='configuration']" position="inside">
                 <group
                     name="ponto_configuration"
+                    string="Ponto Config"
                     attrs="{'invisible':[('service','!=','ponto')]}"
-                    colspan="6"
-                    col="3"
                 >
-                    <group colspan="2" col="2" name="ponto_login">
-                        <field name="username" string="Login"/>
-                        <field name="password" string="Secret Key"/>
-                    </group>
+                    <field name="username" string="Login"/>
+                    <field name="password" string="Secret Key"/>
+                    <field name="ponto_date_field" />
                 </group>
             </xpath>
         </field>
