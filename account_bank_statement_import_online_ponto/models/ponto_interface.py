@@ -39,6 +39,7 @@ class PontoInterface(models.AbstractModel):
             url,
             params={"grant_type": "client_credentials"},
             headers=login_headers,
+            timeout=60,
         )
         data = self._get_response_data(response)
         access_token = data.get("access_token", False)
@@ -69,7 +70,10 @@ class PontoInterface(models.AbstractModel):
         url = PONTO_ENDPOINT + "/accounts"
         _logger.debug(_("GET request on %s"), url)
         response = requests.get(
-            url, params={"limit": 100}, headers=self._get_request_headers(access_data)
+            url,
+            params={"limit": 100},
+            headers=self._get_request_headers(access_data),
+            timeout=60,
         )
         data = self._get_response_data(response)
         for ponto_account in data.get("data", []):
@@ -131,7 +135,10 @@ class PontoInterface(models.AbstractModel):
             headers
         )
         response = requests.get(
-            url, params=params, headers=headers
+            url,
+            params=params,
+            headers=headers,
+            timeout=(60, 300),
         )
         return self._get_response_data(response)
 
