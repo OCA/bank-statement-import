@@ -220,31 +220,3 @@ class TestBankAccountStatementImportOnlinePonto(common.TransactionCase):
             self.assertEqual(statement.balance_end, 17.39)
             # Ponto does not give balance info in transactions.
             # self.assertEqual(statement.balance_end_real, 17.39)
-
-    def test_ponto_buffer_purge(self):
-        """Create some old buffer records and test purging them."""
-        buffer_model = self.env["ponto.buffer"]
-        buffer_model.sudo()._store_transactions(self.provider, THREE_TRANSACTIONS)
-        # As all transactions have a different date, they will be in separate buffers.
-        buffers = buffer_model.search([("provider_id", "=", self.provider.id)])
-        self.assertEqual(len(buffers), 3)
-        # Non ponto providers should not affect buffers.
-        self._expect_purge_result(service="dummy", retain_days=15, expected_length=3)
-        # If retain date not filled, buffers should not be purged.
-        self._expect_purge_result(expected_length=3)
-        # If retain date filled, buffers should be purged.
-        self._expect_purge_result(retain_days=15)
-
-    def _expect_purge_result(self, service="ponto", retain_days=0, expected_length=0):
-        """Check result for purge in different scenario's."""
-        buffer_model = self.env["ponto.buffer"]
-        self.provider.write(
-            {
-                "active": True,
-                "ponto_buffer_retain_days": retain_days,
-                "service": service,
-            }
-        )
-        self.provider._ponto_buffer_purge()
-        buffers = buffer_model.search([("provider_id", "=", self.provider.id)])
-        self.assertEqual(len(buffers), expected_length)

@@ -15,7 +15,6 @@
                     <group colspan="2" col="2" name="ponto_login">
                         <field name="username" string="Login"/>
                         <field name="password" string="Secret Key"/>
-                        <field name="ponto_buffer_retain_days"/>
                     </group>
                 </group>
             </xpath>
