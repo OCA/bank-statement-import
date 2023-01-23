@@ -1,0 +1,350 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_paypal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-01-09 05:40+0000\n"
+"Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__balance_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__balance_column
+msgid "\"Balance\" column"
+msgstr "Columna \"Saldo\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__bank_account_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__bank_account_column
+msgid "\"Bank Account\" column"
+msgstr "Columna \"Cuenta Bancaria\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__bank_name_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__bank_name_column
+msgid "\"Bank Name\" column"
+msgstr "Columna \"Nombre del Banco\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__currency_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__currency_column
+msgid "\"Currency\" column"
+msgstr "Columna \"Moneda\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__date_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__date_column
+msgid "\"Date\" column"
+msgstr "Columna \"Fecha\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__description_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__description_column
+msgid "\"Description\" column"
+msgstr "Columna \"Descripción\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__fee_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__fee_column
+msgid "\"Fee\" column"
+msgstr "Columna \"Tarifa\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__from_email_address_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__from_email_address_column
+msgid "\"From Email Address\" column"
+msgstr "Columna \"De la Dirección de Email\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__gross_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__gross_column
+msgid "\"Gross\" column"
+msgstr "Columna \"Bruto\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__invoice_id_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__invoice_id_column
+msgid "\"Invoice ID\" column"
+msgstr "Columna \"ID de Factura\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__name_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__name_column
+msgid "\"Name\" column"
+msgstr "Columna \"Nombre\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__note_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__note_column
+msgid "\"Note\" column"
+msgstr "Columna \"Nota\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__subject_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__subject_column
+msgid "\"Subject\" column"
+msgstr "Columna \"Asunto\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__time_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__time_column
+msgid "\"Time\" column"
+msgstr "Columna \"Tiempo\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__tz_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__tz_column
+msgid "\"Timezone\" column"
+msgstr "Columna \"Zona Horaria\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__to_email_address_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__to_email_address_column
+msgid "\"To Email Address\" column"
+msgstr "Columna \"A la dirección de Email\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__transaction_id_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__transaction_id_column
+msgid "\"Transaction ID\" column"
+msgstr "Columna \"ID de la Transacción\""
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__type_column
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__type_column
+msgid "\"Type\" column"
+msgstr "Columna \"Tipo\""
+
+#. module: account_statement_import_paypal
+#: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
+#, python-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#. module: account_statement_import_paypal
+#: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_mapping
+msgid "Account Statement Import PayPal Mapping"
+msgstr "Importación del estado de cuenta Mapeo de PayPal"
+
+#. module: account_statement_import_paypal
+#: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_mapping_wizard
+msgid "Account Statement Import PayPal Mapping Wizard"
+msgstr "Asistente para la Importación de estado de cuenta Mapeo de PayPal"
+
+#. module: account_statement_import_paypal
+#: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_parser
+msgid "Account Statement Import PayPal Parser"
+msgstr "Analizador de Importación de estado de cuenta de PayPal"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__allow_back
+msgid "Allow Back"
+msgstr "Permitir Volver"
+
+#. module: account_statement_import_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_wizard_form
+msgid "Choose a file to import..."
+msgstr "Elija un archivo para importar..."
+
+#. module: account_statement_import_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_tree
+msgid "Columns"
+msgstr "Columnas"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__create_uid
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__create_uid
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__create_date
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__create_date
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__date_format
+msgid "Date Format"
+msgstr "Formato de Fecha"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__float_decimal_sep
+msgid "Decimals Separator"
+msgstr "Separador de Decimales"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import__display_name
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__display_name
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__display_name
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: account_statement_import_paypal
+#: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
+#, python-format
+msgid "Fee for %s"
+msgstr "Tarifa para %s"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__filename
+msgid "Filename"
+msgstr "Nombre de Archivo"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__header
+msgid "Header"
+msgstr "Cabecera"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import__id
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__id
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__id
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_wizard_form
+msgid "Import"
+msgstr "Importar"
+
+#. module: account_statement_import_paypal
+#: model:ir.model,name:account_statement_import_paypal.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Importar Archivos de Extractos Bancarios"
+
+#. module: account_statement_import_paypal
+#: model:ir.actions.act_window,name:account_statement_import_paypal.action_account_statement_import_paypal_mapping_wizard
+msgid "Import Mapping"
+msgstr "Importar Mapeo"
+
+#. module: account_statement_import_paypal
+#: code:addons/account_statement_import_paypal/wizards/account_statement_import_paypal_mapping_wizard.py:0
+#, python-format
+msgid "Imported Mapping"
+msgstr "Mapeo Importado"
+
+#. module: account_statement_import_paypal
+#: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
+#, python-format
+msgid "Invoice %s"
+msgstr "Factura %s"
+
+#. module: account_statement_import_paypal
+#: model:ir.model,name:account_statement_import_paypal.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import____last_update
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping____last_update
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard____last_update
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__write_uid
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__write_uid
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización realizada por"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__write_date
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__write_date
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: account_statement_import_paypal
+#: code:addons/account_statement_import_paypal/wizards/account_statement_import_paypal_mapping_wizard.py:0
+#, python-format
+msgid "Mapping from %s"
+msgstr "Mapeo desde %s"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__data_file
+msgid "PayPal Report File"
+msgstr "Archivo de Reporte de PayPal"
+
+#. module: account_statement_import_paypal
+#: model:ir.actions.act_window,name:account_statement_import_paypal.action_statement_import_paypal_report_mappings
+#: model:ir.ui.menu,name:account_statement_import_paypal.menu_statement_import_paypal_mapping
+msgid "PayPal Report Mappings"
+msgstr "Reporte de Mapeos de PayPal"
+
+#. module: account_statement_import_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_form
+msgid "PayPal Report mapping:"
+msgstr "Reporte de mapeo de PayPal:"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import__paypal_mapping_id
+msgid "PayPal mapping"
+msgstr "Mapeo de PayPal"
+
+#. module: account_statement_import_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_wizard_form
+msgid "Select a PayPal report file to import mapping."
+msgstr "Seleccione un archio de reporte de PayPal para importar un mapeo."
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__state
+msgid "State"
+msgstr "Estado"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__float_thousands_sep
+msgid "Thousands Separator"
+msgstr "Separador de miles"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__time_format
+msgid "Time Format"
+msgstr "Formato de Tiempo"
+
+#. module: account_statement_import_paypal
+#: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
+#, python-format
+msgid "Transaction fee for %s"
+msgstr "Tarifa de transacción para %s"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_decimal_sep__comma
+#: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_thousands_sep__comma
+msgid "comma (,)"
+msgstr "coma (,)"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_decimal_sep__dot
+#: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_thousands_sep__dot
+msgid "dot (.)"
+msgstr "punto (.)"
+
+#. module: account_statement_import_paypal
+#: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_decimal_sep__none
+#: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_thousands_sep__none
+msgid "none"
+msgstr "ninguno"
