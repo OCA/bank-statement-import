@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ofx_institution_manager,ofx_institution,model_ofx_institution,account.group_account_user,1,1,1,1
+access_ofx_institution_user,ofx_institution,model_ofx_institution,base.group_user,1,0,0,0
+access_ofx_institution_line_user,access_ofx_institution_line,model_ofx_institution_line,base.group_user,1,0,0,0
+access_ofx_institution_line_manager,access_ofx_institution_line,model_ofx_institution_line,account.group_account_user,1,1,1,1
