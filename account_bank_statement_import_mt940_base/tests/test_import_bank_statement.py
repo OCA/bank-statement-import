@@ -238,3 +238,49 @@ class TestImport(TransactionCase):
                     self.assertTrue(line.date == statement.date)
                     self.assertTrue(line.name == transact['name'])
                     self.assertTrue(line.ref == transact['ref'])
+    
+    def test_statement_import_utf8(self):
+        """Test correct creation of multiple statements SNS."""
+
+        def _prepare_statement_lines(statements):
+            transact = self.transactions[0]
+            for st_vals in statements[2]:
+                for line_vals in st_vals['transactions']:
+                    line_vals['amount'] = transact['amount']
+                    line_vals['name'] = transact['name']
+                    line_vals['account_number'] = transact['account_number']
+                    line_vals['ref'] = transact['ref']
+
+        testfile = get_module_resource(
+            'account_bank_statement_import_mt940_base',
+            'test_files',
+            'test-sns-utf8.940',
+        )
+        parser = MT940()
+        datafile = open(testfile, 'rb').read()
+        statements = parser.parse(datafile, header_lines=1)
+
+        _prepare_statement_lines(statements)
+
+        path_addon = 'odoo.addons.account_bank_statement_import.'
+        path_file = 'account_bank_statement_import.'
+        path_class = 'AccountBankStatementImport.'
+        method = path_addon + path_file + path_class + '_parse_file'
+        with patch(method) as my_mock:
+            my_mock.return_value = statements
+
+            action = self.env['account.bank.statement.import'].create({
+                'data_file': base64.b64encode(datafile),
+            }).import_file()
+            self.assertTrue(len(action['context']['statement_ids']) == 3)
+            transact = self.transactions[-1]
+            for statement in self.env['account.bank.statement'].browse(
+                    action['context']['statement_ids'][-1]):
+                for line in statement.line_ids:
+                    self.assertTrue(
+                        line.bank_account_id.acc_number ==
+                        transact['account_number'])
+                    self.assertTrue(line.amount == transact['amount'])
+                    self.assertTrue(line.date == statement.date)
+                    self.assertTrue(line.name == transact['name'])
+                    self.assertTrue(line.ref == transact['ref'])

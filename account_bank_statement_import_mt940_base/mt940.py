@@ -150,7 +150,7 @@ class MT940(object):
 
     def parse(self, data, header_lines=None):
         """Parse mt940 bank statement file contents."""
-        data = data.decode()
+        data = data.decode("utf-8")
         matches = self.pre_process_data(data)
         for match in matches:
             self.is_mt940_statement(line=match)
