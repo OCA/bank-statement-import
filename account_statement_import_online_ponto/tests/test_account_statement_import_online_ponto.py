@@ -152,13 +152,18 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 "code": "BANK",
                 "currency_id": self.currency_eur.id,
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "ponto",
                 "bank_account_id": self.bank_account.id,
             }
         )
-        self.provider = self.journal.online_bank_statement_provider_id
-        # To get all the moves in a month at once
-        self.provider.statement_creation_mode = "monthly"
+        self.provider = self.OnlineBankStatementProvider.create(
+            {
+                "name": "Ponto Provider",
+                "service": "ponto",
+                "journal_id": self.journal.id,
+                # To get all the moves in a month at once
+                "statement_creation_mode": "monthly",
+            }
+        )
 
         self.mock_login = lambda: mock.patch(
             _interface_class + "._login",

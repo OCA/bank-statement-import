@@ -23,7 +23,6 @@ class OnlineBankStatementProvider(models.Model):
             ("execution_date", "Execution Date"),
             ("value_date", "Value Date"),
         ],
-        string="Ponto Date Field",
         default="execution_date",
         help="Select the Ponto date field that will be used for "
         "the Odoo bank statement line date. If you change this parameter "
@@ -50,6 +49,7 @@ class OnlineBankStatementProvider(models.Model):
         stop retrieving when either we get before date_since or there is
         no more data available.
         """
+        # pylint: disable=missing-return
         ponto_providers = self.filtered(lambda provider: provider.service == "ponto")
         super(OnlineBankStatementProvider, self - ponto_providers)._pull(
             date_since, date_until
@@ -63,10 +63,13 @@ class OnlineBankStatementProvider(models.Model):
         is_scheduled = self.env.context.get("scheduled")
         if is_scheduled:
             _logger.debug(
-                _("Ponto obtain statement data for journal %s from %s to %s"),
-                self.journal_id.name,
-                date_since,
-                date_until,
+                _(
+                    "Ponto obtain statement data for journal {journal}"
+                    " from {date_since} to {date_until}"
+                ),
+                journal=self.journal_id.name,
+                date_since=date_since,
+                date_until=date_until,
             )
         else:
             _logger.debug(
@@ -74,10 +77,13 @@ class OnlineBankStatementProvider(models.Model):
                 self.journal_id.name,
             )
         lines = self._ponto_retrieve_data(date_since, date_until)
-        # For scheduled runs, store latest identifier.
-        if is_scheduled and lines:
-            self.ponto_last_identifier = lines[0].get("id")
-        self._ponto_store_lines(lines)
+        if not lines:
+            _logger.info(_("No lines were retrieved from Ponto"))
+        else:
+            # For scheduled runs, store latest identifier.
+            if is_scheduled:
+                self.ponto_last_identifier = lines[0].get("id")
+            self._ponto_store_lines(lines)
 
     def _ponto_retrieve_data(self, date_since, date_until):
         """Fill buffer with data from Ponto.
