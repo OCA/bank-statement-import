@@ -216,7 +216,6 @@ class OnlineBankStatementProvider(models.Model):
         statement = AccountBankStatement.search(
             [
                 ("journal_id", "=", self.journal_id.id),
-                ("state", "=", "open"),
                 ("date", "=", statement_date),
             ],
             limit=1,
@@ -249,6 +248,16 @@ class OnlineBankStatementProvider(models.Model):
                 statement_values["balance_end_real"]
             )
         statement.write(statement_values)
+        self._journal_set_statement_source()
+
+    def _journal_set_statement_source(self):
+        """On succesful import set "online" as the statements source of the journal."""
+        self.ensure_one()
+        if self.journal_id.bank_statements_source != "online":
+            # Use sudo() because only 'account.group_account_manager'
+            # has write access on 'account.journal', but 'account.group_account_user'
+            # must be able to import bank statement files
+            self.journal_id.sudo().write({"bank_statements_source": "online"})
 
     def _get_statement_filtered_lines(
         self, lines_data, statement_values, statement_date_since, statement_date_until
