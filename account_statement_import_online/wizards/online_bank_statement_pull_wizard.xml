@@ -11,12 +11,6 @@
         <field name="arch" type="xml">
             <form>
                 <group name="main">
-                    <field
-                        name="provider_ids"
-                        widget="many2many_tags"
-                        required="1"
-                        options="{'create': false, 'create_edit': false}"
-                    />
                     <field name="date_since" />
                     <field name="date_until" />
                 </group>
