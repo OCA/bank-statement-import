@@ -2,11 +2,11 @@
 # Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
-from datetime import date, datetime
+from datetime import datetime
 from unittest import mock
 
 from odoo import _, fields
-from odoo.tests import Form, common
+from odoo.tests import common
 
 _logger = logging.getLogger(__name__)
 
@@ -118,6 +118,59 @@ FOUR_TRANSACTIONS = [
 
 EMPTY_TRANSACTIONS = []
 
+EARLY_TRANSACTIONS = [
+    # First transaction in october 2019, month before other transactions.
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "1552c32f-e63f-4ce6-a974-f270e6cd5301",
+        "attributes": {
+            "valueDate": "2019-10-04T12:29:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Arresto Momentum",
+            "executionDate": "2019-10-04T10:24:00.000Z",
+            "description": "Wire transfer after execution",
+            "currency": "EUR",
+            "counterpartReference": "BE10325927501996",
+            "counterpartName": "Some other customer",
+            "amount": 4.25,
+        },
+    },
+    # Second transaction in september 2019.
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "701ab965-21c4-46ca-b157-306c0646e002",
+        "attributes": {
+            "valueDate": "2019-09-18T01:00:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Minima vitae totam!",
+            "executionDate": "2019-09-20T01:00:00.000Z",
+            "description": "Wire transfer",
+            "currency": "EUR",
+            "counterpartReference": "BE26089479973169",
+            "counterpartName": "Osinski Group",
+            "amount": 4.08,
+        },
+    },
+]
+
 transaction_amounts = [5.48, 5.83, 6.08, 8.95]
 
 
@@ -152,13 +205,18 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 "code": "BANK",
                 "currency_id": self.currency_eur.id,
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "ponto",
                 "bank_account_id": self.bank_account.id,
             }
         )
-        self.provider = self.journal.online_bank_statement_provider_id
-        # To get all the moves in a month at once
-        self.provider.statement_creation_mode = "monthly"
+        self.provider = self.OnlineBankStatementProvider.create(
+            {
+                "name": "Ponto Provider",
+                "service": "ponto",
+                "journal_id": self.journal.id,
+                # To get all the moves in a month at once
+                "statement_creation_mode": "monthly",
+            }
+        )
 
         self.mock_login = lambda: mock.patch(
             _interface_class + "._login",
@@ -181,34 +239,39 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 EMPTY_TRANSACTIONS,
             ],
         )
+        # return two times list of transactions, empty list on third call.
+        self.mock_get_transactions_multi = lambda: mock.patch(
+            _interface_class + "._get_transactions",
+            side_effect=[
+                FOUR_TRANSACTIONS,
+                EARLY_TRANSACTIONS,
+                EMPTY_TRANSACTIONS,
+            ],
+        )
 
     def test_balance_start(self):
-        st_form = Form(self.AccountBankStatement)
-        st_form.journal_id = self.journal
-        st_form.date = date(2019, 11, 1)
-        st_form.balance_end_real = 100
-        with st_form.line_ids.new() as line_form:
-            line_form.payment_ref = "test move"
-            line_form.amount = 100
-        initial_statement = st_form.save()
-        initial_statement.button_post()
+        """Test wether end balance of last statement, taken as start balance of new."""
+        statement_date = datetime(2019, 11, 1)
+        data = self._get_statement_line_data(statement_date)
+        self.provider.statement_creation_mode = "daily"
+        self.provider._create_or_update_statement(
+            data, statement_date, datetime(2019, 11, 2)
+        )
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             vals = {
-                "provider_ids": [(4, self.provider.id)],
                 "date_since": datetime(2019, 11, 4),
                 "date_until": datetime(2019, 11, 5),
             }
             wizard = self.AccountStatementPull.with_context(
-                active_model="account.journal",
-                active_id=self.journal.id,
+                active_model=self.provider._name,
+                active_id=self.provider.id,
             ).create(vals)
-            # For some reason the provider is not set in the create.
-            wizard.provider_ids = self.provider
             wizard.action_pull()
             statements = self.AccountBankStatement.search(
-                [("journal_id", "=", self.journal.id)]
+                [("journal_id", "=", self.journal.id)], order="name"
             )
-            new_statement = statements - initial_statement
+            self.assertEqual(len(statements), 2)
+            new_statement = statements[1]
             self.assertEqual(len(new_statement.line_ids), 1)
             self.assertEqual(new_statement.balance_start, 100)
             self.assertEqual(new_statement.balance_end, 105.83)
@@ -217,7 +280,7 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "execution_date"
-            statement = self._get_statement_from_wizard()
+            statement = self._get_statements_from_wizard()  # Will get 1 statement
             self._check_line_count(statement.line_ids, expected_count=2)
             self._check_statement_amounts(statement, transaction_amounts[:2])
 
@@ -225,9 +288,26 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "value_date"
-            statement = self._get_statement_from_wizard()
+            statement = self._get_statements_from_wizard()  # Will get 1 statement
             self._check_line_count(statement.line_ids, expected_count=3)
             self._check_statement_amounts(statement, transaction_amounts[:3])
+
+    def test_ponto_get_transactions_multi(self):
+        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions_multi():  # noqa: B950
+            # First base selection on execution date.
+            self.provider.ponto_date_field = "execution_date"
+            # Expect statements for october and november.
+            statements = self._get_statements_from_wizard(
+                expected_statement_count=2, date_since=datetime(2019, 9, 25)
+            )
+            self._check_line_count(statements[0].line_ids, expected_count=1)  # october
+            self._check_line_count(statements[1].line_ids, expected_count=2)  # november
+            self._check_statement_amounts(statements[0], [4.25])
+            self._check_statement_amounts(
+                statements[1],
+                transaction_amounts[:2],
+                expected_balance_end=15.56,  # Includes 4.25 from statement before.
+            )
 
     def test_ponto_scheduled(self):
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
@@ -262,21 +342,21 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 statements[1], transaction_amounts[3:], expected_balance_end=15.03
             )
 
-    def _get_statement_from_wizard(self):
+    def _get_statements_from_wizard(self, expected_statement_count=1, date_since=None):
         """Run wizard to pull data and return statement."""
+        date_since = date_since if date_since else datetime(2019, 11, 3)
         vals = {
-            "provider_ids": [(4, self.provider.id)],
-            "date_since": datetime(2019, 11, 3),
+            "date_since": date_since,
             "date_until": datetime(2019, 11, 18),
         }
         wizard = self.AccountStatementPull.with_context(
-            active_model="account.journal",
-            active_id=self.journal.id,
+            active_model=self.provider._name,
+            active_id=self.provider.id,
         ).create(vals)
-        # For some reason the provider is not set in the create.
-        wizard.provider_ids = self.provider
         wizard.action_pull()
-        return self._get_statements_from_journal(expected_count=1)
+        return self._get_statements_from_journal(
+            expected_count=expected_statement_count
+        )
 
     def _get_statements_from_journal(self, expected_count=0):
         """We only expect statements created by our tests."""
@@ -306,7 +386,24 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
     ):
         """Check wether amount in lines and end_balance as expected."""
         sorted_amounts = sorted([round(line.amount, 2) for line in statement.line_ids])
-        self.assertEqual(sorted_amounts, expected_amounts)
+        sorted_expected_amounts = sorted(
+            [round(amount, 2) for amount in expected_amounts]
+        )
+        self.assertEqual(sorted_amounts, sorted_expected_amounts)
         if not expected_balance_end:
             expected_balance_end = sum(expected_amounts)
-        self.assertEqual(statement.balance_end, expected_balance_end)
+        self.assertEqual(
+            round(statement.balance_end, 2), round(expected_balance_end, 2)
+        )
+
+    def _get_statement_line_data(self, statement_date):
+        return [
+            {
+                "payment_ref": "payment",
+                "amount": 100,
+                "date": statement_date,
+                "unique_import_id": str(statement_date),
+                "partner_name": "John Doe",
+                "account_number": "XX00 0000 0000 0000",
+            }
+        ], {}
