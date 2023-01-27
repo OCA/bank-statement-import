@@ -23,12 +23,9 @@ class OnlineBankStatementProvider(models.Model):
             ("execution_date", "Execution Date"),
             ("value_date", "Value Date"),
         ],
-        string="Ponto Date Field",
         default="execution_date",
         help="Select the Ponto date field that will be used for "
-        "the Odoo bank statement line date. If you change this parameter "
-        "on a provider that already has transactions, you will have to "
-        "purge the Ponto buffers.",
+        "the Odoo bank statement line date.",
     )
 
     @api.model
@@ -50,6 +47,7 @@ class OnlineBankStatementProvider(models.Model):
         stop retrieving when either we get before date_since or there is
         no more data available.
         """
+        # pylint: disable=missing-return
         ponto_providers = self.filtered(lambda provider: provider.service == "ponto")
         super(OnlineBankStatementProvider, self - ponto_providers)._pull(
             date_since, date_until
@@ -60,13 +58,18 @@ class OnlineBankStatementProvider(models.Model):
     def _ponto_pull(self, date_since, date_until):
         """Translate information from Ponto to Odoo bank statement lines."""
         self.ensure_one()
-        is_scheduled = self.env.context.get("scheduled")
+        is_scheduled = self.env.context.get("scheduled", False)
         if is_scheduled:
             _logger.debug(
-                _("Ponto obtain statement data for journal %s from %s to %s"),
-                self.journal_id.name,
-                date_since,
-                date_until,
+                _(
+                    "Ponto obtain statement data for journal %(journal)s"
+                    " from %(date_since)s to %(date_until)s"
+                ),
+                dict(
+                    journal=self.journal_id.name,
+                    date_since=date_since,
+                    date_until=date_until,
+                ),
             )
         else:
             _logger.debug(
@@ -74,10 +77,13 @@ class OnlineBankStatementProvider(models.Model):
                 self.journal_id.name,
             )
         lines = self._ponto_retrieve_data(date_since, date_until)
-        # For scheduled runs, store latest identifier.
-        if is_scheduled and lines:
-            self.ponto_last_identifier = lines[0].get("id")
-        self._ponto_store_lines(lines)
+        if not lines:
+            _logger.info(_("No lines were retrieved from Ponto"))
+        else:
+            # For scheduled runs, store latest identifier.
+            if is_scheduled:
+                self.ponto_last_identifier = lines[0].get("id")
+            self._ponto_store_lines(lines)
 
     def _ponto_retrieve_data(self, date_since, date_until):
         """Fill buffer with data from Ponto.
@@ -89,12 +95,12 @@ class OnlineBankStatementProvider(models.Model):
         Note: when reading data they are likely to be in descending order of
         execution_date (not seen a guarantee for this in Ponto API). When using
         value date, they may well be out of order. So we cannot simply stop
-        when we have foundd a transaction date before the date_since.
+        when we have found a transaction date before the date_since.
 
         We will not read transactions more then a week before before date_since.
         """
         date_stop = date_since - timedelta(days=7)
-        is_scheduled = self.env.context.get("scheduled")
+        is_scheduled = self.env.context.get("scheduled", False)
         lines = []
         interface_model = self.env["ponto.interface"]
         access_data = interface_model._login(self.username, self.password)
@@ -105,15 +111,21 @@ class OnlineBankStatementProvider(models.Model):
             for line in transactions:
                 identifier = line.get("id")
                 transaction_datetime = self._ponto_get_transaction_datetime(line)
-                if (is_scheduled and identifier == self.ponto_last_identifier) or (
-                    transaction_datetime < date_stop
-                    and (not self.ponto_last_identifier or not is_scheduled)
-                ):
-                    return lines
-                if not is_scheduled:
-                    if transaction_datetime < date_since:
+                if is_scheduled:
+                    # Handle all stop conditions for scheduled runs.
+                    if identifier == self.ponto_last_identifier or (
+                        not self.ponto_last_identifier
+                        and transaction_datetime < date_stop
+                    ):
                         return lines
-                    if transaction_datetime > date_until:
+                else:
+                    # Handle stop conditions for non scheduled runs.
+                    if transaction_datetime < date_stop:
+                        return lines
+                    if (
+                        transaction_datetime < date_since
+                        or transaction_datetime > date_until
+                    ):
                         continue
                 line["transaction_datetime"] = transaction_datetime
                 lines.append(line)
