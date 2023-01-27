@@ -1,7 +1,7 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
+# Copyright 2023 Therp BV (https://therp.nl)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
 import logging
 
 from odoo import _, api, fields, models
@@ -12,20 +12,21 @@ _logger = logging.getLogger(__name__)
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
+    @api.model
+    def _selection_service(self):
+        OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
+        return OnlineBankStatementProvider._get_available_services() + [
+            ("dummy", "Dummy")
+        ]
+
+    # Keep provider fields for compatibility with other modules.
     online_bank_statement_provider = fields.Selection(
-        selection=lambda self: self.env[
-            "account.journal"
-        ]._selection_online_bank_statement_provider(),
-        help="Select the type of service provider (a model)",
+        selection=lambda self: self._selection_service(),
     )
     online_bank_statement_provider_id = fields.Many2one(
         string="Statement Provider",
         comodel_name="online.bank.statement.provider",
-        ondelete="restrict",
         copy=False,
-        help="Select the actual instance of a configured provider (a record).\n"
-        "Selecting a type of provider will automatically create a provider"
-        " record linked to this journal.",
     )
 
     def __get_bank_statements_available_sources(self):
@@ -33,52 +34,65 @@ class AccountJournal(models.Model):
         result.append(("online", _("Online (OCA)")))
         return result
 
-    @api.model
-    def _selection_online_bank_statement_provider(self):
-        return self.env["online.bank.statement.provider"]._get_available_services() + [
-            ("dummy", "Dummy")
-        ]
+    def _update_providers(self):
+        """Automatically create service.
 
-    @api.model
-    def values_online_bank_statement_provider(self):
-        """Return values for provider type selection in the form view."""
-        res = self.env["online.bank.statement.provider"]._get_available_services()
-        if self.user_has_groups("base.group_no_one"):
-            res += [("dummy", "Dummy")]
-        return res
-
-    def _update_online_bank_statement_provider_id(self):
-        """Keep provider synchronized with journal."""
+        This method exists for compatibility reasons. The preferred method
+        to create an online provider is directly through the menu,
+        """
         OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
-        for journal in self.filtered("id"):
-            provider_id = journal.online_bank_statement_provider_id
-            if journal.bank_statements_source != "online":
-                journal.online_bank_statement_provider_id = False
-                if provider_id:
-                    provider_id.unlink()
+        for journal in self.filtered("online_bank_statement_provider"):
+            service = journal.online_bank_statement_provider
+            if (
+                journal.online_bank_statement_provider_id
+                and service == journal.online_bank_statement_provider_id.service
+            ):
+                _logger.info(
+                    "Journal %s already linked to service %s", journal.name, service
+                )
+                # Provider already exists.
                 continue
-            if provider_id.service == journal.online_bank_statement_provider:
-                continue
-            journal.online_bank_statement_provider_id = False
-            if provider_id:
-                provider_id.unlink()
-            # fmt: off
-            journal.online_bank_statement_provider_id = \
-                OnlineBankStatementProvider.create({
+            # Use existing or create new provider for service.
+            provider = OnlineBankStatementProvider.search(
+                [
+                    ("journal_id", "=", journal.id),
+                    ("service", "=", service),
+                ],
+                limit=1,
+            ) or OnlineBankStatementProvider.create(
+                {
                     "journal_id": journal.id,
-                    "service": journal.online_bank_statement_provider,
-                })
-            # fmt: on
+                    "service": service,
+                }
+            )
+            journal.online_bank_statement_provider_id = provider
+            _logger.info("Journal %s now linked to service %s", journal.name, service)
 
-    @api.model
-    def create(self, vals):
-        rec = super().create(vals)
-        if "bank_statements_source" in vals or "online_bank_statement_provider" in vals:
-            rec._update_online_bank_statement_provider_id()
-        return rec
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            self._update_vals(vals)
+        journals = super().create(vals_list)
+        journals._update_providers()
+        return journals
 
     def write(self, vals):
+        self._update_vals(vals)
         res = super().write(vals)
-        if "bank_statements_source" in vals or "online_bank_statement_provider" in vals:
-            self._update_online_bank_statement_provider_id()
+        self._update_providers()
         return res
+
+    def _update_vals(self, vals):
+        """Ensure consistent values."""
+        if (
+            "bank_statements_source" in vals
+            and vals.get("bank_statements_source") != "online"
+        ):
+            vals["online_bank_statement_provider"] = False
+            vals["online_bank_statement_provider_id"] = False
+
+    def action_online_bank_statements_pull_wizard(self):
+        """This method is also kept for compatibility reasons."""
+        self.ensure_one()
+        provider = self.online_bank_statement_provider_id
+        return provider.action_online_bank_statements_pull_wizard()
