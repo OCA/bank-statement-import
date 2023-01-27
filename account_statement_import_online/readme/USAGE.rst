@@ -1,8 +1,8 @@
 To pull historical bank statements:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Select specific bank accounts
-#. Launch *Actions > Online Bank Statements Pull Wizard*
+#. Go to *Invoicing > Configuration > Online Bank Statement Providers*
+#. Select a specific provider
+#. Click on *PULL ONLINE BANK STATEMENT*
 #. Configure date interval and click *Pull*
 
 **NOTE**: To access these features, user needs to belong to
