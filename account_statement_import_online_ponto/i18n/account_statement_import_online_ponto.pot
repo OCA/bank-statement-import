@@ -14,47 +14,54 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid ""
-"%s \n"
-"\n"
-" %s"
+msgid "%d transactions present in response data"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__display_name
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_ponto_interface__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#, python-format
-msgid ""
-"Error during Create Synchronisation %s \n"
-"\n"
-" %s"
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
+msgid "Execution Date"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid ""
-"Error during get transaction.\n"
-"\n"
-"%s \n"
-"\n"
-" %s"
+msgid "GET request on %s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "GET request to %s with headers %s and params %s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "HTTP answer code %s from Ponto"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__id
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_ponto_interface__id
 msgid "ID"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
+#: model:ir.model,name:account_statement_import_online_ponto.model_ponto_interface
+msgid "Interface to all interactions with Ponto API"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider____last_update
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_ponto_interface____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -64,49 +71,76 @@ msgid "Login"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "No transactions where found in data %s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
 #: model:ir.model,name:account_statement_import_online_ponto.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "POST request on %s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "Please fill login and key."
 msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "Ponto : no token"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid "Ponto : wrong configuration, unknow account %s"
-msgstr ""
-
-#. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_last_identifier
-msgid "Ponto Last Identifier"
-msgstr ""
-
-#. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_token
-msgid "Ponto Token"
-msgstr ""
-
-#. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_token_expiration
-msgid "Ponto Token Expiration"
+msgid "Ponto : wrong configuration, account %s not found in %s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
-msgid "Reset Last identifier."
+msgid "Ponto Config"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid "Ponto Date Field"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid "Ponto obtain statement data for journal %s from %s to %s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Secret Key"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,help:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid ""
+"Select the Ponto date field that will be used for the Odoo bank statement "
+"line date. If you change this parameter on a provider that already has "
+"transactions, you will have to purge the Ponto buffers."
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "Server returned status code %s: %s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__value_date
+msgid "Value Date"
 msgstr ""
