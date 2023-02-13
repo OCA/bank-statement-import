@@ -193,12 +193,13 @@ class CamtParser(models.AbstractModel):
         )
         if party_node:
             name_node = node.xpath(
-                "./ns:RltdPties/ns:%s/ns:Nm" % party_type, namespaces={"ns": ns}
+                "./ns:RltdPties/ns:{pt}/ns:Nm | ./ns:RltdPties/ns:{pt}/ns:Pty/ns:Nm".format(
+                    pt=party_type
+                ),
+                namespaces={"ns": ns},
             )
             if name_node:
-                self.add_value_from_node(
-                    ns, party_node[0], "./ns:Nm", transaction, "partner_name"
-                )
+                transaction["partner_name"] = name_node[0].text
             else:
                 self.add_value_from_node(
                     ns,
@@ -248,7 +249,7 @@ class CamtParser(models.AbstractModel):
             "%s (RltdPties/Nm)"
             % _("Partner Name"): transaction.get("partner_name", ""),
             "%s (RltdPties/Acct)"
-            % _("Partner Account Number"): transaction.get("partner_name", ""),
+            % _("Partner Account Number"): transaction.get("account_number", ""),
             "%s (BookgDt)" % _("Transaction Date"): transaction.get("date", ""),
             _("Reference"): transaction.get("ref", ""),
             _("Communication"): transaction.get("name", ""),
