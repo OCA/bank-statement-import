@@ -8,7 +8,7 @@
                      'amount': 2187.0,
                      'date': '2017-03-22',
                      'narration': 'Partner Name (RltdPties/Nm): Banque Cantonale Vaudoise\n'
-                                  'Partner Account Number (RltdPties/Acct): Banque Cantonale Vaudoise\n'
+                                  'Partner Account Number (RltdPties/Acct): CH2222000000123456789\n'
                                   'Transaction Date (BookgDt): 2017-03-22\n'
                                   'Reference: 302388292000011111111111111\n'
                                   'Communication: \n'
@@ -27,7 +27,7 @@
                      'amount': 1296.0,
                      'date': '2017-03-22',
                      'narration': 'Partner Name (RltdPties/Nm): Banque Cantonale Vaudoise\n'
-                                  'Partner Account Number (RltdPties/Acct): Banque Cantonale Vaudoise\n'
+                                  'Partner Account Number (RltdPties/Acct): CH3333000000123456789\n'
                                   'Transaction Date (BookgDt): 2017-03-22\n'
                                   'Reference: 302388292000022222222222222\n'
                                   'Communication: \n'

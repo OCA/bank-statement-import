@@ -8,7 +8,7 @@
                      'amount': -754.25,
                      'date': '2014-01-05',
                      'narration': 'Partner Name (RltdPties/Nm): INSURANCE COMPANY TESTX\n'
-                                  'Partner Account Number (RltdPties/Acct): INSURANCE COMPANY TESTX\n'
+                                  'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
                                   'Transaction Date (BookgDt): 2014-01-05\n'
                                   'Reference: 435005714488-ABNO33052620\n'
                                   'Communication: \n'
@@ -26,7 +26,7 @@
                      'amount': -564.05,
                      'date': '2014-01-05',
                      'narration': 'Partner Name (RltdPties/Nm): Test Customer\n'
-                                  'Partner Account Number (RltdPties/Acct): Test Customer\n'
+                                  'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
                                   'Transaction Date (BookgDt): 2014-01-05\n'
                                   'Reference: TESTBANK/NL/20141229/01206408\n'
                                   'Communication: \n'
@@ -48,7 +48,7 @@
                      'amount': -100.0,
                      'date': '2014-01-05',
                      'narration': 'Partner Name (RltdPties/Nm): Test Customer\n'
-                                  'Partner Account Number (RltdPties/Acct): Test Customer\n'
+                                  'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
                                   'Transaction Date (BookgDt): 2014-01-05\n'
                                   'Reference: TESTBANK/NL/20141229/01206407\n'
                                   'Communication: \n'
@@ -70,7 +70,7 @@
                      'amount': 1405.31,
                      'date': '2014-01-05',
                      'narration': 'Partner Name (RltdPties/Nm): 3rd party Media\n'
-                                  'Partner Account Number (RltdPties/Acct): 3rd party Media\n'
+                                  'Partner Account Number (RltdPties/Acct): NL69ABNA0522123643\n'
                                   'Transaction Date (BookgDt): 2014-01-05\n'
                                   'Reference: 115\n'
                                   'Communication: \n'
