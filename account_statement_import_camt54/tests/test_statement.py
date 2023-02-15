@@ -41,7 +41,7 @@ class TestGenerateBankStatement(TransactionCase):
 
     def _load_statement(self):
         testfile = get_module_resource(
-            "account_statement_import_camt", "test_files", "test-camt053"
+            "account_statement_import_camt", "test_files", "test-camt054"
         )
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
@@ -52,7 +52,7 @@ class TestGenerateBankStatement(TransactionCase):
                 }
             ).import_file_button()
             bank_st_record = self.env["account.bank.statement"].search(
-                [("name", "=", "1234Test/1")], limit=1
+                [("name", "=", "20220120000000000000000")], limit=1
             )
             statement_lines = bank_st_record.line_ids
             return statement_lines
@@ -60,9 +60,9 @@ class TestGenerateBankStatement(TransactionCase):
     def test_statement_import(self):
         self.journal.transfer_line = True
         lines = self._load_statement()
-        self.assertEqual(len(lines), 5)
+        self.assertEqual(len(lines), 2)
         self.assertAlmostEqual(sum(lines.mapped("amount")), 0)
         self.journal.transfer_line = False
         lines = self._load_statement()
-        self.assertEqual(len(lines), 4)
-        self.assertAlmostEqual(sum(lines.mapped("amount")), -12.99)
+        self.assertEqual(len(lines), 1)
+        self.assertAlmostEqual(sum(lines.mapped("amount")), 5.0)
