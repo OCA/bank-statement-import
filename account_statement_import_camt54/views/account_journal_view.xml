@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record
+        id="account_journal_form_inherited_bank_statement_import"
+        model="ir.ui.view"
+    >
+        <field name="name">account.journal.form.inherited.bank.statement.import</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="account_control_ids"]' position='after'>
+                <field name="transfer_line" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
