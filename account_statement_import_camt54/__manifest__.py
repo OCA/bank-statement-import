@@ -9,4 +9,5 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["account_statement_import_camt"],
+    "data": ["views/account_journal_view.xml"],
 }
