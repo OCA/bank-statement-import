@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,6 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_statement_import_online
+#. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "%(number)s %(type)s"
@@ -30,11 +31,19 @@ msgid "Active"
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
+#, python-format
+msgid "All lines passed filtering"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__api_base
 msgid "Api Base"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_filter
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 msgid "Archived"
 msgstr ""
@@ -112,28 +121,23 @@ msgid "Day(s)"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid ""
-"Failed to obtain statement data for period since %s until %s: %s. See server"
-" logs for more details."
+"Failed to obtain statement data for period since {since} until {until}: "
+"{exception}. See server logs for more details."
 msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_follower_ids
 msgid "Followers"
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_channel_ids
-msgid "Followers (Channels)"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -147,12 +151,16 @@ msgid "From"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__hours
 msgid "Hour(s)"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__id
 msgid "ID"
@@ -160,7 +168,6 @@ msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_needaction
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 
@@ -171,8 +178,8 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
 msgstr ""
@@ -188,9 +195,10 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
-msgid "Issue with Online Bank Statement Provider"
+msgid "Issue with Online Bank Statement self"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -205,7 +213,6 @@ msgid "Key"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard____last_update
 msgid "Last Modified on"
@@ -254,6 +261,7 @@ msgid "Monthly statements"
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "N/A"
@@ -265,8 +273,22 @@ msgid "Name"
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
+#, python-format
+msgid "Names and dates for statements found: %(statements)s"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__next_run
 msgid "Next scheduled pull"
+msgstr ""
+
+#. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
+#, python-format
+msgid "No statements found in journal"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -281,7 +303,7 @@ msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -290,11 +312,16 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_unread_counter
-msgid "Number of unread messages"
+#. odoo-python
+#: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
+#, python-format
+msgid ""
+"Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
+"%(after)s where on or after %(until)sand %(duplicate)s where not unique."
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
 #, python-format
 msgid "Online (OCA)"
@@ -317,6 +344,15 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_wizard
 msgid "Online Bank Statement Pull Wizard"
+msgstr ""
+
+#. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
+#, python-format
+msgid ""
+"Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
+"since %(since)s until %(until)s"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -360,6 +396,7 @@ msgid "Pull"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Pull Online Bank Statement"
 msgstr ""
@@ -367,8 +404,14 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.actions.server,name:account_statement_import_online.ir_cron_account_pull_online_bank_statements_ir_actions_server
 #: model:ir.cron,cron_name:account_statement_import_online.ir_cron_account_pull_online_bank_statements
-#: model:ir.cron,name:account_statement_import_online.ir_cron_account_pull_online_bank_statements
 msgid "Pull Online Bank Statements"
+msgstr ""
+
+#. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
+#, python-format
+msgid "Pulling online bank statements of: %(provider_names)s"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -387,6 +430,20 @@ msgid "Scheduled Pull"
 msgstr ""
 
 #. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
+#, python-format
+msgid "Scheduled pull of online bank statements complete."
+msgstr ""
+
+#. module: account_statement_import_online
+#. odoo-python
+#: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
+#, python-format
+msgid "Scheduled pull of online bank statements..."
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__interval_number
 msgid "Scheduled update interval"
 msgstr ""
@@ -394,18 +451,6 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.model.constraint,message:account_statement_import_online.constraint_online_bank_statement_provider_valid_interval_number
 msgid "Scheduled update interval must be greater than zero!"
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,help:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
-msgid ""
-"Select the actual instance of a configured provider (a record).\n"
-"Selecting a type of provider will automatically create a provider record linked to this journal."
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,help:account_statement_import_online.field_account_journal__online_bank_statement_provider
-msgid "Select the type of service provider (a model)"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -444,16 +489,6 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__date_until
 msgid "To"
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_unread
-msgid "Unread Messages"
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_unread_counter
-msgid "Unread Messages Counter"
 msgstr ""
 
 #. module: account_statement_import_online
