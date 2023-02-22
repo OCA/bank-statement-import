@@ -19,6 +19,29 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
 #, python-format
+msgid "%(code)s: %(filename)s"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree
+msgid ""
+"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+"(when the file has no header).\n"
+"                                You can concatenate multiple columns in the "
+"file into the same field, indicating the\n"
+"                                column names or numbers separated by comma."
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree
+msgid ""
+"<span class=\"fa fa-info-circle\"/> indicate the column number in the "
+"Columns section. The first column is 0."
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
+#, python-format
 msgid "Account: %s; "
 msgstr "账户： %s; "
 
@@ -30,8 +53,8 @@ msgstr "允许返回"
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_column
-msgid "Amount column"
-msgstr "交易金额列"
+msgid "Amount Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_column
@@ -40,16 +63,16 @@ msgid "Amount of transaction in journal's currency"
 msgstr "原币的交易金额"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
+msgid "Balance Column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
 msgid "Balance after transaction in journal's currency"
 msgstr "交易后的原币余额"
-
-#. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
-msgid "Balance column"
-msgstr "余额列名"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__iso-8859-4
@@ -59,14 +82,14 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_account_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__bank_account_column
-msgid "Bank Account column"
-msgstr "对方银行账号列名"
+msgid "Bank Account Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_name_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__bank_name_column
-msgid "Bank Name column"
-msgstr "对方开户行列名"
+msgid "Bank Name Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model,name:account_statement_import_txt_xlsx.model_account_statement_import_sheet_mapping
@@ -119,14 +142,26 @@ msgstr "创建时间"
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__credit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__credit_value
-msgid "Credit value"
-msgstr "贷方标志值"
+msgid "Credit Value"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_credit_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_credit_column
+msgid "Credit amount column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_credit_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_credit_column
+msgid "Credit amount of transaction in journal's currency"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__currency_column
-msgid "Currency column"
-msgstr "币别列名"
+msgid "Currency Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__koi8_r
@@ -146,8 +181,20 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__debit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__debit_value
-msgid "Debit value"
-msgstr "借方标志值"
+msgid "Debit Value"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
+msgid "Debit amount column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
+msgid "Debit amount of transaction in journal's currency"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
@@ -179,12 +226,10 @@ msgstr "分隔符"
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__description_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__description_column
-msgid "Description column"
-msgstr "摘要列名"
+msgid "Description Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__display_name
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__display_name
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_parser__display_name
@@ -198,6 +243,11 @@ msgid "Encoding"
 msgstr "表格编码格式"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__no_header
+msgid "File does not contain header line"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__attachment_ids
 msgid "Files"
 msgstr "文件"
@@ -208,8 +258,6 @@ msgid "Header"
 msgstr "头部"
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal__id
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_parser__id
@@ -274,8 +322,6 @@ msgid "Journal"
 msgstr "资金账户"
 
 #. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import____last_update
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping____last_update
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard____last_update
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_parser____last_update
@@ -315,10 +361,16 @@ msgid "Name"
 msgstr "名称"
 
 #. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
+#, python-format
+msgid "No valid encoding was found for the attached file"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__notes_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__notes_column
-msgid "Notes column"
-msgstr "备注列名"
+msgid "Notes Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
@@ -328,20 +380,20 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_amount_column
-msgid "Original amount column"
-msgstr "原币金额列名"
+msgid "Original Amount Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_currency_column
-msgid "Original currency column"
-msgstr "币别列名"
+msgid "Original Currency Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__partner_name_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__partner_name_column
-msgid "Partner Name column"
-msgstr "对方账户名列名"
+msgid "Partner Name Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_name_column
@@ -358,8 +410,8 @@ msgstr "对方银行账号"
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__reference_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__reference_column
-msgid "Reference column"
-msgstr "编号列名"
+msgid "Reference Column"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
@@ -412,15 +464,15 @@ msgid "Thousands Separator"
 msgstr "千位符"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_column
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__timestamp_column
+msgid "Timestamp Column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_format
 msgid "Timestamp Format"
 msgstr "日期格式"
-
-#. module: account_statement_import_txt_xlsx
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_column
-#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__timestamp_column
-msgid "Timestamp column"
-msgstr "日期列名"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__big5
@@ -470,6 +522,11 @@ msgid "Upload Files"
 msgstr "上传文件"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.constraint,message:account_statement_import_txt_xlsx.constraint_account_statement_import_sheet_mapping_check_amount_columns
+msgid "Use amount_column OR (amount_debit_column AND amount_credit_column)."
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__credit_value
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__credit_value
 msgid "Value of debit/credit column that indicates if it's a credit"
@@ -489,6 +546,13 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__no_header
+msgid ""
+"When this occurs please indicate the column number in the Columns section "
+"instead of the column name, considering that the first column is 0"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -525,3 +589,45 @@ msgstr ""
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr ""
+
+#~ msgid "Amount column"
+#~ msgstr "交易金额列"
+
+#~ msgid "Balance column"
+#~ msgstr "余额列名"
+
+#~ msgid "Bank Account column"
+#~ msgstr "对方银行账号列名"
+
+#~ msgid "Bank Name column"
+#~ msgstr "对方开户行列名"
+
+#~ msgid "Credit value"
+#~ msgstr "贷方标志值"
+
+#~ msgid "Currency column"
+#~ msgstr "币别列名"
+
+#~ msgid "Debit value"
+#~ msgstr "借方标志值"
+
+#~ msgid "Description column"
+#~ msgstr "摘要列名"
+
+#~ msgid "Notes column"
+#~ msgstr "备注列名"
+
+#~ msgid "Original amount column"
+#~ msgstr "原币金额列名"
+
+#~ msgid "Original currency column"
+#~ msgstr "币别列名"
+
+#~ msgid "Partner Name column"
+#~ msgstr "对方账户名列名"
+
+#~ msgid "Reference column"
+#~ msgstr "编号列名"
+
+#~ msgid "Timestamp column"
+#~ msgstr "日期列名"
