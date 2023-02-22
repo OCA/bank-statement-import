@@ -17,6 +17,29 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:0
+#, python-format
+msgid "%s: %s"
+msgstr ""
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_tree
+msgid ""
+"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+"(when the file has no header).\n"
+"                                You can concatenate multiple columns in the "
+"file into the same field, indicating the\n"
+"                                column names or numbers separated by comma."
+msgstr ""
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_txt_xlsx.account_bank_statement_import_sheet_mapping_tree
+msgid ""
+"<span class=\"fa fa-info-circle\"/> indicate the column number in the "
+"Columns section. The first column is 0."
+msgstr ""
+
+#. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model,name:account_bank_statement_import_txt_xlsx.model_account_bank_statement_import_sheet_mapping
 msgid "Account Bank Statement Import Sheet Mapping"
 msgstr "Configuration du fichier d'import des relevés bancaires"
@@ -194,6 +217,11 @@ msgid "Encoding"
 msgstr "Encodage"
 
 #. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__no_header
+msgid "File does not contain header line"
+msgstr ""
+
+#. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__attachment_ids
 msgid "Files"
 msgstr "Fichiers"
@@ -245,8 +273,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_currency_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original currency of transaction from"
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "Si le relevé fournit la devise d'origine pour les transactions avec "
 "conversion automatique de devise, colonne pour obtenir la devise d'origine "
@@ -256,8 +284,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_amount_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original transaction amount in original "
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
 "transaction currency from"
 msgstr ""
 "Dans le cas où le relevé fournit la devise d'origine pour les transactions "
@@ -312,6 +340,12 @@ msgstr "N/A"
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__name
 msgid "Name"
 msgstr "Nom"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: code:addons/account_bank_statement_import_txt_xlsx/models/account_bank_statement_import_sheet_parser.py:0
+#, python-format
+msgid "No valid encoding was found for the attached file"
+msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__notes_column
@@ -492,6 +526,13 @@ msgstr "Western (Latin-1 / ISO 8859-1)"
 #: model:ir.model.fields.selection,name:account_bank_statement_import_txt_xlsx.selection__account_bank_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
 msgstr "Western (Windows-1252)"
+
+#. module: account_bank_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__no_header
+msgid ""
+"When this occurs please indicate the column number in the Columns section "
+"instead of the column name, considering that the first column is 0"
+msgstr ""
 
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_bank_statement_import_txt_xlsx.selection__account_bank_statement_import_sheet_mapping__delimiter__comma
