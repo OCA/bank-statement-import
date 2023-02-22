@@ -223,6 +223,56 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(line.currency_id, self.currency_eur)
         self.assertEqual(line.amount_currency, 1000.0)
 
+    def test_original_currency_no_header(self):
+        no_header_statement_map = self.AccountBankStatementImportSheetMapping.create(
+            {
+                "name": "Sample Statement",
+                "float_thousands_sep": "comma",
+                "float_decimal_sep": "dot",
+                "delimiter": "comma",
+                "quotechar": '"',
+                "timestamp_format": "%m/%d/%Y",
+                "no_header": True,
+                "timestamp_column": "0",
+                "amount_column": "3",
+                "original_currency_column": "2",
+                "original_amount_column": "4",
+                "description_column": "1,7",
+                "partner_name_column": "5",
+                "bank_account_column": "6",
+            }
+        )
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+            }
+        )
+        data = self._data_file("fixtures/original_currency_no_header.csv", "utf-8")
+        wizard = self.AccountBankStatementImport.with_context(
+            journal_id=journal.id
+        ).create(
+            {
+                "attachment_ids": [
+                    (0, 0, {"name": "fixtures/original_currency.csv", "datas": data})
+                ],
+                "sheet_mapping_id": no_header_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_bank_statement_import_txt_xlsx_test=True
+        ).import_file()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 1)
+
+        line = statement.line_ids
+        self.assertEqual(line.currency_id, self.currency_eur)
+        self.assertEqual(line.amount_currency, 1000.0)
+        self.assertEqual(line.name, "Your payment INV0001")
+
     def test_original_currency_empty(self):
         journal = self.AccountJournal.create(
             {
