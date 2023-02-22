@@ -10,7 +10,7 @@ class AccountStatementImport(models.TransientModel):
 
     def import_file_and_reconcile_button(self):
         """Process the file chosen in the wizard, create bank statement(s)
-        and jump directly to the reconcilition widget"""
+        and jump directly to the reconciliation widget"""
         result = self._import_file()
         statements = self.env["account.bank.statement"].browse(result["statement_ids"])
         statements.button_post()
