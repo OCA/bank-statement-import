@@ -67,6 +67,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
         last_line = lines[-1]
         data = {
             "date": first_line["timestamp"].date(),
+            "name": _("%(code)s: %(filename)s")
+            % {
+                "code": journal.code,
+                "filename": path.basename(filename),
+            },
         }
 
         if mapping.balance_column:
@@ -77,14 +82,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 {
                     "balance_start": float(balance_start),
                     "balance_end_real": float(balance_end),
-                    "name": _("%s: %s")
-                    % (
-                        journal.code,
-                        path.basename(filename),
-                    ),
                 }
             )
-
         transactions = list(
             itertools.chain.from_iterable(
                 map(lambda line: self._convert_line_to_transactions(line), lines)

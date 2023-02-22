@@ -36,3 +36,13 @@ class AccountStatementImport(models.TransientModel):
                 raise
             _logger.warning("Sheet parser error", exc_info=True)
         return super()._parse_file(data_file)
+
+    def _create_bank_statements(self, stmts_vals, result):
+        """Set balance_end_real if not already provided by the file."""
+        res = super()._create_bank_statements(stmts_vals, result)
+        statements = self.env["account.bank.statement"].browse(result["statement_ids"])
+        for statement in statements:
+            if not statement.balance_end_real:
+                amount = sum(statement.line_ids.mapped("amount"))
+                statement.balance_end_real = statement.balance_start + amount
+        return res
