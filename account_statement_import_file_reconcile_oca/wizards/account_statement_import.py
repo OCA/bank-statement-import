@@ -13,14 +13,8 @@ class AccountStatementImport(models.TransientModel):
         and jump directly to the reconciliation widget"""
         result = self._import_file()
         statements = self.env["account.bank.statement"].browse(result["statement_ids"])
-        statements.button_post()
-        action = {
-            "type": "ir.actions.client",
-            "tag": "bank_statement_reconciliation_view",
-            "context": {
-                "statement_line_ids": statements.line_ids.ids,
-                "company_ids": statements.company_id.ids,
-                "notifications": result["notifications"],
-            },
-        }
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account_reconcile_oca.action_bank_statement_line_reconcile"
+        )
+        action["domain"] = [("id", "in", statements.line_ids.ids)]
         return action

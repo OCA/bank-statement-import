@@ -10,10 +10,13 @@
         <field name="model">account.statement.import</field>
         <field
             name="inherit_id"
-            ref="account_statement_import.account_statement_import_form"
+            ref="account_statement_import_file.account_statement_import_form"
         />
         <field name="arch" type="xml">
-            <button name="import_file_button" position="before">
+            <button name="import_file_button" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+            <button name="import_file_button" position="after">
                 <button
                     name="import_file_and_reconcile_button"
                     string="Import and Start to Reconcile"
