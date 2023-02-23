@@ -11,7 +11,6 @@
     "license": "AGPL-3",
     "category": "Accounting",
     "summary": "Online bank statements update",
-    "external_dependencies": {"python": ["odoo_test_helper"]},
     "depends": [
         "account",
         "account_statement_import",

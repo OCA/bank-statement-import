@@ -28,9 +28,21 @@ class AccountStatementImport(models.TransientModel):
         self.ensure_one()
         try:
             Parser = self.env["account.statement.import.sheet.parser"]
-            return Parser.parse(data_file, self.sheet_mapping_id)
+            return Parser.parse(
+                data_file, self.sheet_mapping_id, self.statement_filename
+            )
         except BaseException:
             if self.env.context.get("account_statement_import_txt_xlsx_test"):
                 raise
             _logger.warning("Sheet parser error", exc_info=True)
         return super()._parse_file(data_file)
+
+    def _create_bank_statements(self, stmts_vals, result):
+        """Set balance_end_real if not already provided by the file."""
+        res = super()._create_bank_statements(stmts_vals, result)
+        statements = self.env["account.bank.statement"].browse(result["statement_ids"])
+        for statement in statements:
+            if not statement.balance_end_real:
+                amount = sum(statement.line_ids.mapped("amount"))
+                statement.balance_end_real = statement.balance_start + amount
+        return res

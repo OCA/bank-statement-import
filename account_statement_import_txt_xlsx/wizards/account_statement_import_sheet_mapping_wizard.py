@@ -42,6 +42,14 @@ class AccountStatementImportSheetMappingWizard(models.TransientModel):
     amount_column = fields.Char(
         help="Amount of transaction in journal's currency",
     )
+    amount_debit_column = fields.Char(
+        string="Debit amount column",
+        help="Debit amount of transaction in journal's currency",
+    )
+    amount_credit_column = fields.Boolean(
+        string="Credit amount column",
+        help="Credit amount of transaction in journal's currency",
+    )
     balance_column = fields.Char(
         help="Balance after transaction in journal's currency",
     )
