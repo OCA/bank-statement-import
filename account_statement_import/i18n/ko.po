@@ -108,6 +108,11 @@ msgid "Import Bank Statement Files"
 msgstr "예금거래 명세서 가져오기"
 
 #. module: account_statement_import
+#: model:ir.ui.menu,name:account_statement_import.account_statement_import_menu
+msgid "Import Statement"
+msgstr "명세서 가져오기"
+
+#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
 msgstr ""
@@ -209,6 +214,15 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
+msgid ""
+"The journal found for the file is not consistent with the selected journal. "
+"You should use the proper journal or use the generic button on the top of "
+"the Accounting Dashboard"
+msgstr ""
+
+#. module: account_statement_import
+#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr ""
 
@@ -256,9 +270,6 @@ msgstr "또는"
 
 #~ msgid "Import ID"
 #~ msgstr "ID 가져오기"
-
-#~ msgid "Import Statement"
-#~ msgstr "명세서 가져오기"
 
 #, fuzzy
 #~ msgid "Partner Bank Account"
