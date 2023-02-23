@@ -47,21 +47,10 @@ msgid "1 transaction had already been imported and was ignored."
 msgstr "تم تجاهل 1 معاملة سبق استيرادها بالفعل."
 
 #. module: account_statement_import
-#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
-msgid "A bank account transaction can be imported only once!"
-msgstr "يمكن استيراد معاملات الحساب البنكي مرة واحدة فقط!"
-
-#. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Already imported items"
 msgstr "عناصر تم استيرادها بالفعل"
-
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "بند كشف الحساب البنكي"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -107,7 +96,6 @@ msgstr "المُعرف"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, python-format
 msgid "Import"
 msgstr "استيراد"
@@ -130,13 +118,13 @@ msgid "Import Bank Statement Files"
 msgstr "استيراد كشف حساب بنكي"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
-msgid "Import ID"
-msgstr "معرف الاستيراد"
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Import and View"
 msgstr ""
 
 #. module: account_statement_import
@@ -267,6 +255,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "أو"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "يمكن استيراد معاملات الحساب البنكي مرة واحدة فقط!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "بند كشف الحساب البنكي"
+
+#~ msgid "Import ID"
+#~ msgstr "معرف الاستيراد"
 
 #~ msgid "Import Statement"
 #~ msgstr "استيراد كشف حساب"
