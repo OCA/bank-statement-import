@@ -16,6 +16,27 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
 #, python-format
+msgid "%s: %s"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree
+msgid ""
+"<span class=\"fa fa-info-circle\"/> Add the column names or column number (when the file has no header).\n"
+"                                You can concatenate multiple columns in the file into the same field, indicating the\n"
+"                                column names or numbers separated by comma."
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree
+msgid ""
+"<span class=\"fa fa-info-circle\"/> indicate the column number in the "
+"Columns section. The first column is 0."
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
+#, python-format
 msgid "Account: %s; "
 msgstr ""
 
@@ -216,6 +237,11 @@ msgid "Encoding"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__no_header
+msgid "File does not contain header line"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__attachment_ids
 msgid "Files"
 msgstr ""
@@ -329,6 +355,12 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__name
 msgid "Name"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
+#, python-format
+msgid "No valid encoding was found for the attached file"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -511,6 +543,13 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__no_header
+msgid ""
+"When this occurs please indicate the column number in the Columns section "
+"instead of the column name, considering that the first column is 0"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
