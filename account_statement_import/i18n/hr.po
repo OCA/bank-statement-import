@@ -45,21 +45,10 @@ msgid "1 transaction had already been imported and was ignored."
 msgstr "1 transakcija je već uvežena i sad je preskočena."
 
 #. module: account_statement_import
-#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
-msgid "A bank account transaction can be imported only once!"
-msgstr "Bankovne transakcije mogu biti uvežene samo jednom!"
-
-#. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Already imported items"
 msgstr "Već uvežene stavke"
-
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Redak bankovnog izvoda"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -106,7 +95,6 @@ msgstr "ID"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, python-format
 msgid "Import"
 msgstr "Uvoz"
@@ -129,13 +117,13 @@ msgid "Import Bank Statement Files"
 msgstr "Uvoz bankovnog izvoda"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
-msgid "Import ID"
-msgstr "ID uvoza"
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Import and View"
 msgstr ""
 
 #. module: account_statement_import
@@ -266,6 +254,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "ili"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "Bankovne transakcije mogu biti uvežene samo jednom!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Redak bankovnog izvoda"
+
+#~ msgid "Import ID"
+#~ msgstr "ID uvoza"
 
 #~ msgid "Import Statement"
 #~ msgstr "Uvoz izvoda"

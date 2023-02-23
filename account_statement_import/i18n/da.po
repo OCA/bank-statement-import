@@ -39,21 +39,10 @@ msgid "1 transaction had already been imported and was ignored."
 msgstr "1 transaktion var allerede blevet importeret og blev ignoreret."
 
 #. module: account_statement_import
-#: model:ir.model.constraint,message:account_statement_import.constraint_account_bank_statement_line_unique_import_id
-#, fuzzy
-msgid "A bank account transaction can be imported only once!"
-msgstr "En bankkonto transaktion kan kun importeres én gang !"
-
-#. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "Already imported items"
 msgstr "Allerede importerede posteringer"
-
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Kontoudtogslinje"
 
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
@@ -99,7 +88,6 @@ msgstr "ID"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/models/account_journal.py:0
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 #, python-format
 msgid "Import"
 msgstr "Importer"
@@ -122,13 +110,13 @@ msgid "Import Bank Statement Files"
 msgstr "Importer kontoudtog"
 
 #. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_bank_statement_line__unique_import_id
-msgid "Import ID"
-msgstr "Import ID"
-
-#. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import
+#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+msgid "Import and View"
 msgstr ""
 
 #. module: account_statement_import
@@ -260,6 +248,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "or"
 msgstr "eller"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "En bankkonto transaktion kan kun importeres én gang !"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Kontoudtogslinje"
+
+#~ msgid "Import ID"
+#~ msgstr "Import ID"
 
 #~ msgid "Import Statement"
 #~ msgstr "Importer kontoudtog"
