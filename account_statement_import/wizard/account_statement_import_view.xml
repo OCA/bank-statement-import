@@ -21,11 +21,11 @@
                     <footer>
                         <button
                         name="import_file_button"
-                        string="Import"
+                        string="Import and View"
                         type="object"
                         class="btn-primary"
-                        context="{'return_regular_interface_action': True}"
-                    />  <!-- The context may be temporary... waiting for the port of the reconcile interface -->
+                    />
+
                         <button string="Cancel" class="btn-default" special="cancel" />
                     </footer>
                 </form>
