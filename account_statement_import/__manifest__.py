@@ -22,4 +22,12 @@
         "demo/partner_bank.xml",
     ],
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "account_statement_import/static/src/js/account_dashboard_kanban.js",
+        ],
+        "web.assets_qweb": [
+            "account_statement_import/static/src/xml/account_dashboard_kanban.xml"
+        ],
+    },
 }
