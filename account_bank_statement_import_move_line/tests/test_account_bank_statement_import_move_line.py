@@ -2,10 +2,10 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0
 
 from odoo import fields
-from odoo.tests import common
+from odoo.tests import TransactionCase
 
 
-class TestAccountBankStatementImportMoveLine(common.SavepointCase):
+class TestAccountBankStatementImportMoveLine(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestAccountBankStatementImportMoveLine, cls).setUpClass()
@@ -28,12 +28,16 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test Journal", "type": "sale", "code": "TJS0"}
         )
+        cls.journal_bank = cls.env["account.journal"].create(
+            {"name": "Test Journal Bank", "type": "bank", "code": "TJB0"}
+        )
         cls.invoice = cls.env["account.move"].create(
             {
                 "name": "Test Invoice 3",
                 "partner_id": cls.partner.id,
-                "type": "out_invoice",
+                "move_type": "out_invoice",
                 "journal_id": cls.journal.id,
+                "ref": "Test",
                 "invoice_line_ids": [
                     (
                         0,
@@ -49,18 +53,18 @@ class TestAccountBankStatementImportMoveLine(common.SavepointCase):
             }
         )
         cls.statement = cls.env["account.bank.statement"].create(
-            {"journal_id": cls.journal.id}
+            {"journal_id": cls.journal_bank.id}
         )
 
     def test_global(self):
-        self.invoice.post()
+        self.invoice.action_post()
         self.assertTrue(self.invoice.id)
         wizard_o = self.env["account.statement.line.create"]
         context = wizard_o._context.copy()
         context.update(
             {"active_model": "account.bank.statement", "active_id": self.statement.id}
         )
-        wizard = wizard_o.with_context(context).create(
+        wizard = wizard_o.with_context(**context).create(
             {
                 "statement_id": self.statement.id,
                 "partner_id": self.partner.id,

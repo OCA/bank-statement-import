@@ -26,8 +26,8 @@ class AccountStatementLineCreate(models.TransientModel):
         string="Type of Date Filter",
         required=True,
     )
-    due_date = fields.Date(string="Due Date", default=fields.Date.context_today)
-    move_date = fields.Date(string="Move Date", default=fields.Date.context_today)
+    due_date = fields.Date(default=fields.Date.context_today)
+    move_date = fields.Date(default=fields.Date.context_today)
     move_line_ids = fields.Many2many("account.move.line", string="Move Lines")
 
     @api.model
@@ -56,7 +56,7 @@ class AccountStatementLineCreate(models.TransientModel):
         domain = [
             ("reconciled", "=", False),
             ("account_id.internal_type", "in", ("payable", "receivable")),
-            ("company_id", "=", self.env.user.company_id.id),
+            ("company_id", "=", self.env.company.id),
         ]
         if self.journal_ids:
             domain += [("journal_id", "in", self.journal_ids.ids)]
@@ -82,11 +82,11 @@ class AccountStatementLineCreate(models.TransientModel):
         paylines = self.env["account.payment"].search(
             [
                 ("state", "in", ("draft", "posted", "sent")),
-                ("move_line_ids", "!=", False),
+                ("line_ids", "!=", False),
             ]
         )
         if paylines:
-            move_in_payment_ids = paylines.mapped("move_line_ids.id")
+            move_in_payment_ids = paylines.mapped("line_ids.id")
             domain += [("id", "not in", move_in_payment_ids)]
         return domain
 
