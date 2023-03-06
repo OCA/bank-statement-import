@@ -84,5 +84,5 @@ class AccountStatementImport(models.TransientModel):
                     "The file might not be valid.\n\n %s"
                 )
                 % str(e)
-            )
+            ) from e
         return result
