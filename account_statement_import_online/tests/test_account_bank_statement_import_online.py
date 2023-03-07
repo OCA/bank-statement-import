@@ -216,14 +216,14 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
     def test_wizard(self):
         journal = self._make_journal()
-        self._make_provider(journal)
-        vals = self.OnlineBankStatementPullWizard.with_context(
-            active_model="account.journal", active_id=journal.id
-        ).default_get(fields_list=["provider_ids"])
-        vals["date_since"] = self.now - relativedelta(hours=1)
-        vals["date_until"] = self.now
-        wizard = self.OnlineBankStatementPullWizard.create(vals)
-        self.assertTrue(wizard.provider_ids)
+        provider = self._make_provider(journal)
+        vals = {
+            "date_since": self.now - relativedelta(hours=1),
+            "date_until": self.now,
+        }
+        wizard = self.OnlineBankStatementPullWizard.with_context(
+            active_model=provider._name, active_id=journal.id
+        ).create(vals)
         wizard.action_pull()
         self.assertTrue(
             self.AccountBankStatement.search([("journal_id", "=", journal.id)])

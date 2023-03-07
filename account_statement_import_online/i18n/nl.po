@@ -366,11 +366,6 @@ msgid "Provider"
 msgstr "Leverancier"
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__provider_ids
-msgid "Providers"
-msgstr "Leveranciers"
-
-#. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Pull"
 msgstr "Opvragen"
