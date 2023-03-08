@@ -29,10 +29,11 @@ class OnlineBankStatementProviderDummy(models.Model):
         line_step_options = self.env.context.get("step", {"minutes": 5})
         line_step = relativedelta(**line_step_options)
         expand_by = self.env.context.get("expand_by", 0)
-        data_since = self.env.context.get("data_since", date_since)
-        data_until = self.env.context.get("data_until", date_until)
-        data_since -= expand_by * line_step
-        data_until += expand_by * line_step
+        # Override date_since and date_until from context.
+        override_date_since = self.env.context.get("override_date_since", date_since)
+        override_date_until = self.env.context.get("override_date_until", date_until)
+        override_date_since -= expand_by * line_step
+        override_date_until += expand_by * line_step
 
         balance_start = self.env.context.get(
             "balance_start", randrange(-10000, 10000, 1) * 0.1
@@ -46,8 +47,8 @@ class OnlineBankStatementProviderDummy(models.Model):
         timestamp_mode = self.env.context.get("timestamp_mode")
 
         lines = []
-        date = data_since
-        while date < data_until:
+        date = override_date_since
+        while date < override_date_until:
             amount = self.env.context.get("amount", randrange(-100, 100, 1) * 0.1)
             transaction_date = date.replace(tzinfo=tz)
             if timestamp_mode == "date":

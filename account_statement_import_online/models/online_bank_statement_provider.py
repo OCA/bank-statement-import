@@ -192,7 +192,15 @@ class OnlineBankStatementProvider(models.Model):
     def _create_or_update_statement(
         self, data, statement_date_since, statement_date_until
     ):
-        """Create or update bank statement with the data retrieved from provider."""
+        """Create or update bank statement with the data retrieved from provider.
+
+        We can not use statement.date as a unique key within a the statements
+        of a journal, because this is now a computed field based on the last date in
+        the statement lines.
+
+        However we can still ensure unique and predictable names, so we wil use that
+        to find existing statements.
+        """
         self.ensure_one()
         AccountBankStatement = self.env["account.bank.statement"]
         is_scheduled = self.env.context.get("scheduled")
@@ -209,45 +217,53 @@ class OnlineBankStatementProvider(models.Model):
             lines_data = []
         if not statement_values:
             statement_values = {}
-        statement_date = self._get_statement_date(
-            statement_date_since,
-            statement_date_until,
+        statement_name = "%s/%s" % (
+            self.journal_id.code,
+            statement_date_since.strftime("%Y-%m-%d"),
         )
         statement = AccountBankStatement.search(
             [
                 ("journal_id", "=", self.journal_id.id),
-                ("date", "=", statement_date),
+                ("name", "=", statement_name),
             ],
             limit=1,
         )
         if not statement:
             statement_values.update(
                 {
-                    "name": "%s/%s"
-                    % (self.journal_id.code, statement_date.strftime("%Y-%m-%d")),
                     "journal_id": self.journal_id.id,
-                    "date": statement_date,
+                    "name": statement_name,
                 }
             )
             statement = AccountBankStatement.with_context(
                 journal_id=self.journal_id.id,
-            ).create(
-                # NOTE: This is needed since create() alters values
-                statement_values.copy()
-            )
+            ).create(statement_values)
         filtered_lines = self._get_statement_filtered_lines(
             lines_data, statement_values, statement_date_since, statement_date_until
         )
-        statement_values.update(
-            {"line_ids": [[0, False, line] for line in filtered_lines]}
-        )
+        if filtered_lines:
+            statement_values.update(
+                {"line_ids": [[0, False, line] for line in filtered_lines]}
+            )
         if "balance_start" in statement_values:
             statement_values["balance_start"] = float(statement_values["balance_start"])
+        else:
+            # Take balance_end of previous statement as start of this one.
+            previous_statement = AccountBankStatement.search(
+                [
+                    ("journal_id", "=", self.journal_id.id),
+                    ("name", "<", statement_name),
+                ],
+                limit=1,
+            )
+            if previous_statement and previous_statement.balance_end:
+                statement_values["balance_start"] = previous_statement.balance_end
         if "balance_end_real" in statement_values:
             statement_values["balance_end_real"] = float(
                 statement_values["balance_end_real"]
             )
-        statement.write(statement_values)
+        if statement_values:
+            statement.write(statement_values)
         self._journal_set_statement_source()
 
     def _journal_set_statement_source(self):
@@ -342,15 +358,6 @@ class OnlineBankStatementProvider(models.Model):
                 second=0,
                 microsecond=0,
             )
-
-    def _get_statement_date(self, date_since, date_until):
-        self.ensure_one()
-        # NOTE: Statement date is treated by Odoo as start of period. Details
-        #  - addons/account/models/account_journal_dashboard.py
-        #  - def get_line_graph_datas()
-        tz = timezone(self.tz) if self.tz else utc
-        date_since = date_since.replace(tzinfo=utc).astimezone(tz)
-        return date_since.date()
 
     def _get_next_run_period(self):
         self.ensure_one()

@@ -94,8 +94,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.statement_creation_mode = "weekly"
         provider.with_context(
             step={"hours": 8},
-            data_since=self.now - relativedelta(weeks=2),
-            data_until=self.now,
+            override_date_since=self.now - relativedelta(weeks=2),
+            override_date_until=self.now,
         )._pull(
             self.now - relativedelta(weeks=2),
             self.now,
@@ -108,8 +108,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
         provider.with_context(
             step={"hours": 8},
-            data_since=self.now - relativedelta(weeks=3),
-            data_until=self.now - relativedelta(weeks=1),
+            override_date_since=self.now - relativedelta(weeks=3),
+            override_date_until=self.now - relativedelta(weeks=1),
         )._pull(
             self.now - relativedelta(weeks=3),
             self.now - relativedelta(weeks=1),
@@ -122,8 +122,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
         provider.with_context(
             step={"hours": 8},
-            data_since=self.now - relativedelta(weeks=1),
-            data_until=self.now,
+            override_date_since=self.now - relativedelta(weeks=1),
+            override_date_until=self.now,
         )._pull(
             self.now - relativedelta(weeks=1),
             self.now,
@@ -222,7 +222,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             "date_until": self.now,
         }
         wizard = self.OnlineBankStatementPullWizard.with_context(
-            active_model=provider._name, active_id=journal.id
+            active_model=provider._name, active_id=provider.id
         ).create(vals)
         wizard.action_pull()
         self.assertTrue(
@@ -236,14 +236,14 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         provider_context = {
             "step": {"hours": 24},
-            "data_since": datetime(2020, 1, 1),
+            "override_date_since": datetime(2020, 1, 1),
             "amount": 1.0,
             "balance_start": 0,
         }
-
+        # Should create statement for first 30 days of january.
         provider.with_context(
             **provider_context,
-            data_until=datetime(2020, 1, 31),
+            override_date_until=datetime(2020, 1, 31),
         )._pull(
             datetime(2020, 1, 1),
             datetime(2020, 1, 31),
@@ -255,10 +255,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(len(statements), 1)
         self.assertEqual(statements[0].balance_start, 0.0)
         self.assertEqual(statements[0].balance_end_real, 30.0)
-
+        # Should create statement for first 14 days of february,
+        # and add one line to statement for january.
         provider.with_context(
             **provider_context,
-            data_until=datetime(2020, 2, 15),
+            override_date_until=datetime(2020, 2, 15),
         )._pull(
             datetime(2020, 1, 1),
             datetime(2020, 2, 29),
@@ -275,7 +276,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         provider.with_context(
             **provider_context,
-            data_until=datetime(2020, 2, 29),
+            override_date_until=datetime(2020, 2, 29),
         )._pull(
             datetime(2020, 1, 1),
             datetime(2020, 2, 29),
@@ -296,8 +297,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider.tz = "UTC"
         provider.with_context(
             step={"hours": 1},
-            data_since=datetime(2020, 4, 17, 22, 0),
-            data_until=datetime(2020, 4, 18, 2, 0),
+            override_date_since=datetime(2020, 4, 17, 22, 0),
+            override_date_until=datetime(2020, 4, 18, 2, 0),
             tz="UTC",
         )._pull(
             datetime(2020, 4, 17, 22, 0),
@@ -305,7 +306,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 2)
-        lines = statement.mapped("line_ids").sorted()
+        lines = statement.mapped("line_ids").sorted(key=lambda r: r.id)
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 17))
         self.assertEqual(lines[1].date, date(2020, 4, 17))
@@ -313,23 +314,26 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
     def test_tz_non_utc(self):
+        """Test situation where the provider is west of Greenwich.
+
+        In this case, when it is 22:00 according to the provider, it is
+        00:00 the next day according to GMT/UTZ.
+        """
         journal = self._make_journal()
         provider = self._make_provider(journal)
         provider.tz = "Etc/GMT-2"
         provider.with_context(
             step={"hours": 1},
-            data_since=datetime(2020, 4, 17, 22, 0),
-            data_until=datetime(2020, 4, 18, 2, 0),
+            override_date_since=datetime(2020, 4, 17, 22, 0),
+            override_date_until=datetime(2020, 4, 18, 2, 0),
             tz="UTC",
         )._pull(
             datetime(2020, 4, 17, 22, 0),
             datetime(2020, 4, 18, 2, 0),
         )
-
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 2)
-
-        lines = statement.mapped("line_ids").sorted()
+        lines = statement.mapped("line_ids").sorted(key=lambda r: r.id)
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 18))
         self.assertEqual(lines[1].date, date(2020, 4, 18))
@@ -337,13 +341,21 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
     def test_other_tz_to_utc(self):
+        """Test the situation where we are tot the west of the provider.
+
+        Provider will be GMT/UTC, we will be two hours to the west.
+        When we pull data from 22:00 on the 17th of april, for
+        the provider this will be from 00:00 on the 18th.
+
+        We will translate the provider times back to our time.
+        """
         journal = self._make_journal()
         provider = self._make_provider(journal)
         provider.with_context(
             step={"hours": 1},
             tz="Etc/GMT-2",
-            data_since=datetime(2020, 4, 18, 0, 0),
-            data_until=datetime(2020, 4, 18, 4, 0),
+            override_date_since=datetime(2020, 4, 18, 0, 0),
+            override_date_until=datetime(2020, 4, 18, 4, 0),
         )._pull(
             datetime(2020, 4, 17, 22, 0),
             datetime(2020, 4, 18, 2, 0),
@@ -352,7 +364,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 2)
 
-        lines = statement.mapped("line_ids").sorted()
+        lines = statement.mapped("line_ids").sorted(key=lambda r: r.id)
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 17))
         self.assertEqual(lines[1].date, date(2020, 4, 17))
@@ -378,8 +390,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         provider = self._make_provider(journal)
         provider.with_context(
             step={"hours": 1},
-            data_since=datetime(2020, 4, 18, 0, 0),
-            data_until=datetime(2020, 4, 18, 4, 0),
+            override_date_since=datetime(2020, 4, 18, 0, 0),
+            override_date_until=datetime(2020, 4, 18, 4, 0),
             timestamp_mode="str",
         )._pull(
             datetime(2020, 4, 18, 0, 0),
@@ -423,14 +435,16 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 self._get_statement_line_data(date(2021, 8, 13)),
             ]
             provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
-        statements = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        statements = self.AccountBankStatement.search(
+            [("journal_id", "=", journal.id)], order="name"
+        )
         self.assertEqual(len(statements), 2)
-        self.assertEqual(statements[1].balance_start, 0)
-        self.assertEqual(statements[1].balance_end_real, 100)
-        self.assertEqual(len(statements[1].line_ids), 1)
-        self.assertEqual(statements[0].balance_start, 100)
-        self.assertEqual(statements[0].balance_end_real, 200)
+        self.assertEqual(statements[0].balance_start, 0)
+        self.assertEqual(statements[0].balance_end, 100)
         self.assertEqual(len(statements[0].line_ids), 1)
+        self.assertEqual(statements[1].balance_start, 100)
+        self.assertEqual(statements[1].balance_end, 200)
+        self.assertEqual(len(statements[1].line_ids), 1)
 
     def test_create_empty_statements(self):
         """Test creating empty bank statements
@@ -447,25 +461,27 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 self._get_statement_line_data(date(2021, 8, 13)),
             ]
             provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
-        statements = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        statements = self.AccountBankStatement.search(
+            [("journal_id", "=", journal.id)], order="name"
+        )
         # 4 Statements: 2 with movements and 2 empty
         self.assertEqual(len(statements), 4)
         # With movement
-        self.assertEqual(statements[3].balance_start, 0)
-        self.assertEqual(statements[3].balance_end_real, 100)
-        self.assertEqual(len(statements[3].line_ids), 1)
-        # Empty
-        self.assertEqual(statements[2].balance_start, 100)
-        self.assertEqual(statements[2].balance_end_real, 100)
-        self.assertEqual(len(statements[2].line_ids), 0)
+        self.assertEqual(statements[0].balance_start, 0)
+        self.assertEqual(statements[0].balance_end, 100)
+        self.assertEqual(len(statements[0].line_ids), 1)
         # Empty
         self.assertEqual(statements[1].balance_start, 100)
-        self.assertEqual(statements[1].balance_end_real, 100)
+        self.assertEqual(statements[1].balance_end, 100)
         self.assertEqual(len(statements[1].line_ids), 0)
+        # Empty
+        self.assertEqual(statements[2].balance_start, 100)
+        self.assertEqual(statements[2].balance_end, 100)
+        self.assertEqual(len(statements[2].line_ids), 0)
         # With movement
-        self.assertEqual(statements[0].balance_start, 100)
-        self.assertEqual(statements[0].balance_end_real, 200)
-        self.assertEqual(len(statements[0].line_ids), 1)
+        self.assertEqual(statements[3].balance_start, 100)
+        self.assertEqual(statements[3].balance_end, 200)
+        self.assertEqual(len(statements[3].line_ids), 1)
 
     def _make_journal(self):
         """Create a journal for testing."""
