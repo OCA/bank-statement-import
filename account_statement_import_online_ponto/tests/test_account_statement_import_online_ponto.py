@@ -2,11 +2,11 @@
 # Copyright 2022 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
-from datetime import date, datetime
+from datetime import datetime
 from unittest import mock
 
 from odoo import _, fields
-from odoo.tests import Form, common
+from odoo.tests import common
 
 _logger = logging.getLogger(__name__)
 
@@ -188,32 +188,28 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         )
 
     def test_balance_start(self):
-        st_form = Form(self.AccountBankStatement)
-        st_form.journal_id = self.journal
-        st_form.date = date(2019, 11, 1)
-        st_form.balance_end_real = 100
-        with st_form.line_ids.new() as line_form:
-            line_form.payment_ref = "test move"
-            line_form.amount = 100
-        initial_statement = st_form.save()
-        initial_statement.button_post()
+        """Test wether end balance of last statement, taken as start balance of new."""
+        statement_date = datetime(2019, 11, 1)
+        data = self._get_statement_line_data(statement_date)
+        self.provider.statement_creation_mode = "daily"
+        self.provider._create_or_update_statement(
+            data, statement_date, datetime(2019, 11, 2)
+        )
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             vals = {
-                "provider_ids": [(4, self.provider.id)],
                 "date_since": datetime(2019, 11, 4),
                 "date_until": datetime(2019, 11, 5),
             }
             wizard = self.AccountStatementPull.with_context(
-                active_model="account.journal",
-                active_id=self.journal.id,
+                active_model=self.provider._name,
+                active_id=self.provider.id,
             ).create(vals)
-            # For some reason the provider is not set in the create.
-            wizard.provider_ids = self.provider
             wizard.action_pull()
             statements = self.AccountBankStatement.search(
-                [("journal_id", "=", self.journal.id)]
+                [("journal_id", "=", self.journal.id)], order="name"
             )
-            new_statement = statements - initial_statement
+            self.assertEqual(len(statements), 2)
+            new_statement = statements[1]
             self.assertEqual(len(new_statement.line_ids), 1)
             self.assertEqual(new_statement.balance_start, 100)
             self.assertEqual(new_statement.balance_end, 105.83)
@@ -270,16 +266,13 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
     def _get_statement_from_wizard(self):
         """Run wizard to pull data and return statement."""
         vals = {
-            "provider_ids": [(4, self.provider.id)],
             "date_since": datetime(2019, 11, 3),
             "date_until": datetime(2019, 11, 18),
         }
         wizard = self.AccountStatementPull.with_context(
-            active_model="account.journal",
-            active_id=self.journal.id,
+            active_model=self.provider._name,
+            active_id=self.provider.id,
         ).create(vals)
-        # For some reason the provider is not set in the create.
-        wizard.provider_ids = self.provider
         wizard.action_pull()
         return self._get_statements_from_journal(expected_count=1)
 
@@ -311,7 +304,24 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
     ):
         """Check wether amount in lines and end_balance as expected."""
         sorted_amounts = sorted([round(line.amount, 2) for line in statement.line_ids])
-        self.assertEqual(sorted_amounts, expected_amounts)
+        sorted_expected_amounts = sorted(
+            [round(amount, 2) for amount in expected_amounts]
+        )
+        self.assertEqual(sorted_amounts, sorted_expected_amounts)
         if not expected_balance_end:
             expected_balance_end = sum(expected_amounts)
-        self.assertEqual(statement.balance_end, expected_balance_end)
+        self.assertEqual(
+            round(statement.balance_end, 2), round(expected_balance_end, 2)
+        )
+
+    def _get_statement_line_data(self, statement_date):
+        return [
+            {
+                "payment_ref": "payment",
+                "amount": 100,
+                "date": statement_date,
+                "unique_import_id": str(statement_date),
+                "partner_name": "John Doe",
+                "account_number": "XX00 0000 0000 0000",
+            }
+        ], {}
