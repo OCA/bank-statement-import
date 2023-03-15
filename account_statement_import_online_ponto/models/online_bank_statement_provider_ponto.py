@@ -64,12 +64,14 @@ class OnlineBankStatementProvider(models.Model):
         if is_scheduled:
             _logger.debug(
                 _(
-                    "Ponto obtain statement data for journal {journal}"
-                    " from {date_since} to {date_until}"
+                    "Ponto obtain statement data for journal %(journal)s"
+                    " from %(date_since)s to %(date_until)s"
                 ),
-                journal=self.journal_id.name,
-                date_since=date_since,
-                date_until=date_until,
+                dict(
+                    journal=self.journal_id.name,
+                    date_since=date_since,
+                    date_until=date_until,
+                ),
             )
         else:
             _logger.debug(
