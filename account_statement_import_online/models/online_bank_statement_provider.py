@@ -145,6 +145,7 @@ class OnlineBankStatementProvider(models.Model):
             }
 
     def _pull(self, date_since, date_until):
+        """Pull data for all providers within requested period."""
         is_scheduled = self.env.context.get("scheduled")
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
@@ -156,38 +157,47 @@ class OnlineBankStatementProvider(models.Model):
                     data = provider._obtain_statement_data(
                         statement_date_since, statement_date_until
                     )
-                except BaseException as e:
-                    if is_scheduled:
-                        _logger.warning(
-                            'Online Bank Statement Provider "%s" failed to'
-                            " obtain statement data since %s until %s"
-                            % (
-                                provider.name,
-                                statement_date_since,
-                                statement_date_until,
-                            ),
-                            exc_info=True,
-                        )
-                        provider.message_post(
-                            body=_(
-                                "Failed to obtain statement data for period "
-                                "since {since} until {until}: {exception}. See server logs for "
-                                "more details."
-                            ).format(
-                                since=statement_date_since,
-                                until=statement_date_until,
-                                exception=escape(str(e)) or _("N/A"),
-                            ),
-                            subject=_("Issue with Online Bank Statement Provider"),
-                        )
-                        break
-                    raise
+                except BaseException as exception:
+                    if not is_scheduled:
+                        raise
+                    provider._log_provider_exception(
+                        exception, statement_date_since, statement_date_until
+                    )
+                    break  # Continue with next provider.
                 provider._create_or_update_statement(
                     data, statement_date_since, statement_date_until
                 )
                 statement_date_since = statement_date_until
             if is_scheduled:
                 provider._schedule_next_run()
+
+    def _log_provider_exception(
+        self, exception, statement_date_since, statement_date_until
+    ):
+        """Both log error, and post a message on the provider record."""
+        self.ensure_one()
+        _logger.warning(
+            'Online Bank Statement provider "%s" failed to'
+            " obtain statement data since %s until %s"
+            % (
+                self.name,
+                statement_date_since,
+                statement_date_until,
+            ),
+            exc_info=True,
+        )
+        self.message_post(
+            body=_(
+                "Failed to obtain statement data for period "
+                "since {since} until {until}: {exception}. See server logs for "
+                "more details."
+            ).format(
+                since=statement_date_since,
+                until=statement_date_until,
+                exception=escape(str(exception)) or _("N/A"),
+            ),
+            subject=_("Issue with Online Bank Statement self"),
+        )
 
     def _create_or_update_statement(
         self, data, statement_date_since, statement_date_until
