@@ -30,11 +30,6 @@ msgid "Active"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__allow_empty_statements
-msgid "Allow empty statements"
-msgstr ""
-
-#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__api_base
 msgid "Api Base"
 msgstr ""

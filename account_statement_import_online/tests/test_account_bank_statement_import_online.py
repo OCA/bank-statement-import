@@ -447,43 +447,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[1].balance_end, 200)
         self.assertEqual(len(statements[1].line_ids), 1)
 
-    def test_create_empty_statements(self):
-        """Test creating empty bank statements
-        ('Allow empty statements' field is check at the provider level).
-        """
-        journal = self._make_journal()
-        provider = self._make_provider(journal)
-        provider.allow_empty_statements = True
-        with mock.patch(mock_obtain_statement_data) as mock_data:
-            mock_data.side_effect = [
-                self._get_statement_line_data(date(2021, 8, 10)),
-                ([], {}),  # August 8th, doesn't have statement
-                ([], {}),  # August 9th, doesn't have statement
-                self._get_statement_line_data(date(2021, 8, 13)),
-            ]
-            provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
-        statements = self.AccountBankStatement.search(
-            [("journal_id", "=", journal.id)], order="name"
-        )
-        # 4 Statements: 2 with movements and 2 empty
-        self.assertEqual(len(statements), 4)
-        # With movement
-        self.assertEqual(statements[0].balance_start, 0)
-        self.assertEqual(statements[0].balance_end, 100)
-        self.assertEqual(len(statements[0].line_ids), 1)
-        # Empty
-        self.assertEqual(statements[1].balance_start, 100)
-        self.assertEqual(statements[1].balance_end, 100)
-        self.assertEqual(len(statements[1].line_ids), 0)
-        # Empty
-        self.assertEqual(statements[2].balance_start, 100)
-        self.assertEqual(statements[2].balance_end, 100)
-        self.assertEqual(len(statements[2].line_ids), 0)
-        # With movement
-        self.assertEqual(statements[3].balance_start, 100)
-        self.assertEqual(statements[3].balance_end, 200)
-        self.assertEqual(len(statements[3].line_ids), 1)
-
     def _make_journal(self):
         """Create a journal for testing."""
         journal = self.AccountJournal.create(

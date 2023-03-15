@@ -94,7 +94,6 @@ class OnlineBankStatementProvider(models.Model):
     certificate_public_key = fields.Text()
     certificate_private_key = fields.Text()
     certificate_chain = fields.Text()
-    allow_empty_statements = fields.Boolean()
 
     _sql_constraints = [
         (
@@ -227,7 +226,7 @@ class OnlineBankStatementProvider(models.Model):
             statement_date_since,
             statement_date_until,
         )
-        if not filtered_lines and not self.allow_empty_statements:
+        if not filtered_lines:
             return
         if filtered_lines:
             statement_values.update(
