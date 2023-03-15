@@ -35,6 +35,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         cls.loader.update_registry((OnlineBankStatementProviderDummy,))
 
         cls.now = fields.Datetime.now()
+        cls.AccountAccount = cls.env["account.account"]
         cls.AccountJournal = cls.env["account.journal"]
         cls.OnlineBankStatementProvider = cls.env["online.bank.statement.provider"]
         cls.OnlineBankStatementPullWizard = cls.env["online.bank.statement.pull.wizard"]
@@ -493,6 +494,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 "bank_statements_source": "online",
             }
         )
+        self.assertTrue(journal.suspense_account_id)
         return journal
 
     def _make_provider(self, journal):

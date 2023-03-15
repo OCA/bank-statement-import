@@ -1,5 +1,6 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
+# Copyright 2022-2023 Therp BV (https://therp.nl)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -204,7 +205,7 @@ class OnlineBankStatementProvider(models.Model):
     ):
         """Create or update bank statement with the data retrieved from provider.
 
-        We can not use statement.date as a unique key within a the statements
+        We can not use statement.date as a unique key within the statements
         of a journal, because this is now a computed field based on the last date in
         the statement lines.
 
@@ -212,25 +213,48 @@ class OnlineBankStatementProvider(models.Model):
         to find existing statements.
         """
         self.ensure_one()
+        if not data:
+            data = ([], {})
+        unfiltered_lines, statement_values = data
+        if not unfiltered_lines:
+            unfiltered_lines = []
+        if not statement_values:
+            statement_values = {}
+        statement_values["name"] = self.make_statement_name(statement_date_since)
+        filtered_lines = self._get_statement_filtered_lines(
+            unfiltered_lines,
+            statement_values,
+            statement_date_since,
+            statement_date_until,
+        )
+        if not filtered_lines and not self.allow_empty_statements:
+            return
+        if filtered_lines:
+            statement_values.update(
+                {"line_ids": [[0, False, line] for line in filtered_lines]}
+            )
+        self._update_statement_balances(statement_values)
+        statement = self._statement_create_or_write(statement_values)
+        self._journal_set_statement_source()
+        return statement
+
+    def make_statement_name(self, statement_date_since):
+        """Make name for statement using date and journal name."""
+        self.ensure_one()
+        return "%s/%s" % (
+            self.journal_id.code,
+            statement_date_since.strftime("%Y-%m-%d"),
+        )
+
+    def _statement_create_or_write(self, statement_values):
+        """Final creation of statement if new, else write."""
         AccountBankStatement = self.env["account.bank.statement"]
         is_scheduled = self.env.context.get("scheduled")
         if is_scheduled:
             AccountBankStatement = AccountBankStatement.with_context(
                 tracking_disable=True,
             )
-        if not data:
-            data = ([], {})
-        if not data[0] and not data[1] and not self.allow_empty_statements:
-            return
-        lines_data, statement_values = data
-        if not lines_data:
-            lines_data = []
-        if not statement_values:
-            statement_values = {}
-        statement_name = "%s/%s" % (
-            self.journal_id.code,
-            statement_date_since.strftime("%Y-%m-%d"),
-        )
+        statement_name = statement_values["name"]
         statement = AccountBankStatement.search(
             [
                 ("journal_id", "=", self.journal_id.id),
@@ -239,54 +263,20 @@ class OnlineBankStatementProvider(models.Model):
             limit=1,
         )
         if not statement:
-            statement_values.update(
-                {
-                    "journal_id": self.journal_id.id,
-                    "name": statement_name,
-                }
-            )
+            statement_values["journal_id"] = self.journal_id.id
             statement = AccountBankStatement.with_context(
                 journal_id=self.journal_id.id,
             ).create(statement_values)
-        filtered_lines = self._get_statement_filtered_lines(
-            lines_data, statement_values, statement_date_since, statement_date_until
-        )
-        if filtered_lines:
-            statement_values.update(
-                {"line_ids": [[0, False, line] for line in filtered_lines]}
-            )
-        if "balance_start" in statement_values:
-            statement_values["balance_start"] = float(statement_values["balance_start"])
         else:
-            # Take balance_end of previous statement as start of this one.
-            previous_statement = AccountBankStatement.search(
-                [
-                    ("journal_id", "=", self.journal_id.id),
-                    ("name", "<", statement_name),
-                ],
-                limit=1,
-            )
-            if previous_statement and previous_statement.balance_end:
-                statement_values["balance_start"] = previous_statement.balance_end
-        if "balance_end_real" in statement_values:
-            statement_values["balance_end_real"] = float(
-                statement_values["balance_end_real"]
-            )
-        if statement_values:
             statement.write(statement_values)
-        self._journal_set_statement_source()
-
-    def _journal_set_statement_source(self):
-        """On succesful import set "online" as the statements source of the journal."""
-        self.ensure_one()
-        if self.journal_id.bank_statements_source != "online":
-            # Use sudo() because only 'account.group_account_manager'
-            # has write access on 'account.journal', but 'account.group_account_user'
-            # must be able to import bank statement files
-            self.journal_id.sudo().write({"bank_statements_source": "online"})
+        return statement
 
     def _get_statement_filtered_lines(
-        self, lines_data, statement_values, statement_date_since, statement_date_until
+        self,
+        unfiltered_lines,
+        statement_values,
+        statement_date_since,
+        statement_date_until,
     ):
         """Get lines from line data, but only for the right date."""
         AccountBankStatementLine = self.env["account.bank.statement.line"]
@@ -294,7 +284,10 @@ class OnlineBankStatementProvider(models.Model):
         journal = self.journal_id
         speeddict = journal._statement_line_import_speeddict()
         filtered_lines = []
-        for line_values in lines_data:
+        lines_before_since = 0
+        lines_after_until = 0
+        lines_not_unique = 0
+        for line_values in unfiltered_lines:
             date = line_values["date"]
             if not isinstance(date, datetime):
                 date = fields.Datetime.from_string(date)
@@ -306,12 +299,14 @@ class OnlineBankStatementProvider(models.Model):
                     statement_values["balance_start"] = Decimal(
                         statement_values["balance_start"]
                     ) + Decimal(line_values["amount"])
+                lines_before_since += 1
                 continue
             elif date >= statement_date_until:
                 if "balance_end_real" in statement_values:
                     statement_values["balance_end_real"] = Decimal(
                         statement_values["balance_end_real"]
                     ) - Decimal(line_values["amount"])
+                lines_after_until += 1
                 continue
             date = date.replace(tzinfo=utc)
             date = date.astimezone(provider_tz).replace(tzinfo=None)
@@ -324,12 +319,64 @@ class OnlineBankStatementProvider(models.Model):
                 if AccountBankStatementLine.sudo().search(
                     [("unique_import_id", "=", unique_import_id)], limit=1
                 ):
+                    lines_not_unique += 1
                     continue
             if not line_values.get("payment_ref"):
                 line_values["payment_ref"] = line_values.get("ref")
+            line_values["journal_id"] = self.journal_id.id
             journal._statement_line_import_update_hook(line_values, speeddict)
             filtered_lines.append(line_values)
+        if unfiltered_lines:
+            if len(unfiltered_lines) == len(filtered_lines):
+                _logger.debug(_("All lines passed filtering"))
+            else:
+                _logger.debug(
+                    _(
+                        "Of {lines_provided}"
+                        ", {before} where before {since}"
+                        ", {after} where on or after {until}"
+                        "and {duplicate} where not unique."
+                    ),
+                    dict(
+                        lines_provided=len(unfiltered_lines),
+                        before=lines_before_since,
+                        since=statement_date_since,
+                        after=lines_after_until,
+                        until=statement_date_until,
+                        duplicate=lines_not_unique,
+                    ),
+                )
         return filtered_lines
+
+    def _update_statement_balances(self, statement_values):
+        """Update statement balance_ start/end/end_real."""
+        AccountBankStatement = self.env["account.bank.statement"]
+        if "balance_start" in statement_values:
+            statement_values["balance_start"] = float(statement_values["balance_start"])
+        else:
+            # Take balance_end of previous statement as start of this one.
+            previous_statement = AccountBankStatement.search(
+                [
+                    ("journal_id", "=", self.journal_id.id),
+                    ("name", "<", statement_values["name"]),
+                ],
+                limit=1,
+            )
+            if previous_statement and previous_statement.balance_end:
+                statement_values["balance_start"] = previous_statement.balance_end
+        if "balance_end_real" in statement_values:
+            statement_values["balance_end_real"] = float(
+                statement_values["balance_end_real"]
+            )
+
+    def _journal_set_statement_source(self):
+        """On succesful import set "online" as the statements source of the journal."""
+        self.ensure_one()
+        if self.journal_id.bank_statements_source != "online":
+            # Use sudo() because only 'account.group_account_manager'
+            # has write access on 'account.journal', but 'account.group_account_user'
+            # must be able to import bank statement files
+            self.journal_id.sudo().write({"bank_statements_source": "online"})
 
     def _schedule_next_run(self):
         self.ensure_one()
@@ -383,7 +430,6 @@ class OnlineBankStatementProvider(models.Model):
     @api.model
     def _scheduled_pull(self):
         _logger.info("Scheduled pull of online bank statements...")
-
         providers = self.search(
             [("active", "=", True), ("next_run", "<=", fields.Datetime.now())]
         )
