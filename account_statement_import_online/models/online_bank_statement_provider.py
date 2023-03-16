@@ -177,12 +177,14 @@ class OnlineBankStatementProvider(models.Model):
         """Both log error, and post a message on the provider record."""
         self.ensure_one()
         _logger.warning(
-            'Online Bank Statement provider "%s" failed to'
-            " obtain statement data since %s until %s"
-            % (
-                self.name,
-                statement_date_since,
-                statement_date_until,
+            _(
+                'Online Bank Statement provider "%(name)s" failed to'
+                " obtain statement data since %(since)s until %(until)s"
+            ),
+            dict(
+                name=self.name,
+                since=statement_date_since,
+                until=statement_date_until,
             ),
             exc_info=True,
         )
@@ -331,10 +333,10 @@ class OnlineBankStatementProvider(models.Model):
             else:
                 _logger.debug(
                     _(
-                        "Of {lines_provided}"
-                        ", {before} where before {since}"
-                        ", {after} where on or after {until}"
-                        "and {duplicate} where not unique."
+                        "Of %(lines_provided)s lines provided"
+                        ", %(before)s where before %(since)s"
+                        ", %(after)s where on or after %(until)s"
+                        "and %(duplicate)s where not unique."
                     ),
                     dict(
                         lines_provided=len(unfiltered_lines),
@@ -428,14 +430,14 @@ class OnlineBankStatementProvider(models.Model):
 
     @api.model
     def _scheduled_pull(self):
-        _logger.info("Scheduled pull of online bank statements...")
+        _logger.info(_("Scheduled pull of online bank statements..."))
         providers = self.search(
             [("active", "=", True), ("next_run", "<=", fields.Datetime.now())]
         )
         if providers:
             _logger.info(
-                "Pulling online bank statements of: %s"
-                % ", ".join(providers.mapped("journal_id.name"))
+                _("Pulling online bank statements of: %(provider_names)s"),
+                dict(provider_names=", ".join(providers.mapped("journal_id.name"))),
             )
             for provider in providers.with_context(**{"scheduled": True}):
                 date_since = (
@@ -446,7 +448,7 @@ class OnlineBankStatementProvider(models.Model):
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
 
-        _logger.info("Scheduled pull of online bank statements complete.")
+        _logger.info(_("Scheduled pull of online bank statements complete."))
 
     def _obtain_statement_data(self, date_since, date_until):
         """Hook for extension"""
