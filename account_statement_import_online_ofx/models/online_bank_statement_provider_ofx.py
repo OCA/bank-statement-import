@@ -3,8 +3,10 @@
 
 import io
 import time
+import xml.etree.ElementTree as ET
 from datetime import datetime
 
+import requests
 from ofxparse import OfxParser
 from ofxtools import ofxhome, utils
 from ofxtools.Client import OFXClient, StmtRq
@@ -115,7 +117,16 @@ class OnlineBankStatementProviderOFX(models.Model):
 
     def import_ofx_institutions(self):
         OfxInstitution = self.env["ofx.institution"]
-        for ofxhome_id, name in ofxhome.list_institutions().items():
+        try:
+            with requests.get("http://www.ofxhome.com/api.php?all=yes") as f:
+                response = f.text
+            institute_list = {
+                fi.get("id").strip(): fi.get("name").strip()
+                for fi in ET.fromstring(response)
+            }
+        except Exception as e:
+            raise UserError(_(e))
+        for ofxhome_id, name in institute_list.items():
             institute = OfxInstitution.search([("ofxhome_id", "=", ofxhome_id)])
             vals = {
                 "name": name,
