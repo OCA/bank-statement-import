@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-account_statement_import_base>=16.0dev,<16.1dev',
+        'odoo-addon-account_statement_import_file>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
