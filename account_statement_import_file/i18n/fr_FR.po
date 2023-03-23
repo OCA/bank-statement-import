@@ -17,31 +17,33 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.3.2\n"
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d transactions ont déjà été importées et ont été ignorées."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1 transaction a déjà été importée et a été ignorée."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, python-format
-msgid "Already imported items"
-msgstr "Eléments déjà importés"
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr ""
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Cancel"
 msgstr "Annuler"
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "Could not find any bank account with number '%(account_number)s' linked to "
@@ -50,23 +52,23 @@ msgid ""
 "should create a new one."
 msgstr ""
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
 msgid "Created by"
 msgstr "Créé par"
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_date
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
 msgid "Created on"
 msgstr "Créé le"
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__display_name
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
 msgid "Display Name"
 msgstr "Afficher Nom"
 
-#. module: account_statement_import
-#: model:ir.model.fields,help:account_statement_import.field_account_statement_import__statement_file
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid ""
 "Get you bank statements in electronic format from your bank and select them "
 "here."
@@ -74,103 +76,103 @@ msgstr ""
 "Obtenez les relevés bancaires en version électronique depuis votre banque et "
 "sélectionnez-les ici."
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__id
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/models/account_journal.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
 #, python-format
 msgid "Import"
 msgstr "Importer"
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
-msgid "Import (OCA)"
-msgstr ""
-
-#. module: account_statement_import
-#: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
 msgid "Import Bank Statement File"
 msgstr "Import d'un relevé bancaire"
 
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_statement_import
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
 msgid "Import Bank Statement Files"
 msgstr "Import de relevés bancaires"
 
-#. module: account_statement_import
-#: model:ir.ui.menu,name:account_statement_import.account_statement_import_menu
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
 msgid "Import Statement"
 msgstr "Importation d'un relevé"
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
 msgstr ""
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
 msgstr ""
 
-#. module: account_statement_import
-#: model:ir.model,name:account_statement_import.model_account_journal
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
 msgid "Journal"
 msgstr "Journal"
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import____last_update
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_uid
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__write_date
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing currency code in the bank statement file."
 msgstr "Code de devise manquant dans le fichier de relevé bancaire."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr "Référence de paiement manquante sur la transaction."
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_file
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Fichier de relevé bancaire"
 
-#. module: account_statement_import
-#: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__statement_filename
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
 msgid "Statement Filename"
 msgstr "Nom du fichier de relevé bancaire"
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Supported formats:"
 msgstr "Formats acceptés :"
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, fuzzy, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
 "Le compte comptable de la banque n'est pas spécifié sur le journal (%s)."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "The bank account with number '%(account_number)s' exists in Odoo but it is "
@@ -178,8 +180,9 @@ msgid ""
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
@@ -188,16 +191,18 @@ msgstr ""
 "Le fichier de relevé bancaire utilise la devise '%s' mais il n'y a pas de "
 "telle devise dans Odoo."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "The format of this bank statement file doesn't contain the bank account "
@@ -208,23 +213,25 @@ msgstr ""
 "compte bancaire, vous devez donc démarrer l'assistant à partir du journal de "
 "la banque de droite dans le tableau de bord."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"The journal found for the file is not consistent with the selected journal. "
-"You should use the proper journal or use the generic button on the top of "
-"the Accounting Dashboard"
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
 msgstr ""
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr "L'analyse du fichier de relevé a renvoyé un résultat non valide."
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
@@ -233,18 +240,19 @@ msgstr ""
 "Ce format de fichier de relevé n'est pas reconnu.\n"
 "Avez-vous installé le module qui supporte ce type de fichier ?"
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Upload Bank Statements"
 msgstr "Télécharger les relevés bancaires"
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Upload a bank statement file"
 msgstr "Télécharger un fichier de relevé bancaire"
 
-#. module: account_statement_import
-#: code:addons/account_statement_import/wizard/account_statement_import.py:0
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
 "You have already imported this file, or this file only contains already "
@@ -253,10 +261,12 @@ msgstr ""
 "Vous avez déjà importé ce fichier ou ce fichier ne contient que des "
 "transactions déjà importées."
 
-#. module: account_statement_import
-#: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
-msgid "or"
-msgstr "ou"
+#, python-format
+#~ msgid "Already imported items"
+#~ msgstr "Eléments déjà importés"
+
+#~ msgid "or"
+#~ msgstr "ou"
 
 #~ msgid "A bank account transaction can be imported only once!"
 #~ msgstr ""
