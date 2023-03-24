@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_ofx
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-04-10 17:46+0000\n"
+"Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
+"Language-Team: none\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: account_statement_import_ofx
+#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_statement_import_ofx
+#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import__id
+msgid "ID"
+msgstr ""
+
+#. module: account_statement_import_ofx
+#: model:ir.model,name:account_statement_import_ofx.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Importer des Relevés Bancaires"
+
+#. module: account_statement_import_ofx
+#: model:ir.model,name:account_statement_import_ofx.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_statement_import_ofx
+#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification"
+
+#. module: account_statement_import_ofx
+#: model_terms:ir.ui.view,arch_db:account_statement_import_ofx.account_statement_import_form
+msgid "Open Financial Exchange (.OFX Money)"
+msgstr "Open Financial Exchange (.OFX Money)"
+
+#. module: account_statement_import_ofx
+#: code:addons/account_statement_import_ofx/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The following problem occurred during import. The file might not be valid.\n"
+"\n"
+" %s"
+msgstr ""
+"Le problème suivant est survenu lors de l'importation. Le fichier n'est pas "
+"valide.\n"
+"\n"
+"%s"
