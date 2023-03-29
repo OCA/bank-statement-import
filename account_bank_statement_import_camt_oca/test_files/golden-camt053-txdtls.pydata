@@ -3,6 +3,7 @@
  [{'balance_end_real': 79443.15,
    'balance_start': 75960.15,
    'date': '2017-03-22',
+   'is_camt054': False,
    'name': '20170323123456789012345',
    'transactions': [{'account_number': 'CH2222000000123456789',
                      'amount': 2187.0,
@@ -14,7 +15,8 @@
                              'Reference: 302388292000011111111111111\n'
                              'Communication: CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
                      'partner_name': 'Banque Cantonale Vaudoise',
-                     'ref': '302388292000011111111111111'},
+                     'ref': '302388292000011111111111111',
+                     'unique_import_id': '20170323001234567891234567891234'},
                     {'account_number': 'CH3333000000123456789',
                      'amount': 1296.0,
                      'date': '2017-03-22',
@@ -25,4 +27,5 @@
                              'Reference: 302388292000022222222222222\n'
                              'Communication: CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE',
                      'partner_name': 'Banque Cantonale Vaudoise',
-                     'ref': '302388292000022222222222222'}]}])
+                     'ref': '302388292000022222222222222',
+                     'unique_import_id': '20170323001234567891234567891234'}]}])

@@ -1,11 +1,13 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import models
+from odoo import fields, models
 
 
 class AccountBankStatementLine(models.Model):
 
     _inherit = "account.bank.statement.line"
+
+    unique_import_id = fields.Char(index=True)
 
     def write(self, vals):
         """

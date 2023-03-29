@@ -4,3 +4,4 @@
 * Andrea Stirpe <a.stirpe@onestein.nl>
 * Maxence Groine <mgroine@fiefmanage.ch>
 * Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
+* Jordi Ballester <jordi.ballester@forgeflow.com>

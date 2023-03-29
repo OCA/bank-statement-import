@@ -150,6 +150,9 @@ class CamtParser(models.AbstractModel):
             transaction["amount"] = amount
         self.add_value_from_node(ns, node, "./ns:AddtlNtryInf", transaction, "name")
         self.add_value_from_node(
+            ns, node, ["./ns:AcctSvcrRef"], transaction, "unique_import_id",
+        )
+        self.add_value_from_node(
             ns,
             node,
             [
@@ -160,7 +163,6 @@ class CamtParser(models.AbstractModel):
             transaction,
             "ref",
         )
-
         details_nodes = node.xpath("./ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
         if len(details_nodes) == 0:
             yield transaction
@@ -230,6 +232,10 @@ class CamtParser(models.AbstractModel):
             result["date"] = sorted(
                 transactions, key=lambda x: x["date"], reverse=True
             )[0]["date"]
+        if self.check_camt054(ns):
+            result["is_camt054"] = True
+        else:
+            result["is_camt054"] = False
         return result
 
     def _add_line_note(self, transaction):
@@ -251,6 +257,17 @@ class CamtParser(models.AbstractModel):
             transaction["note"] += (
                 _("\nAdditional Transaction Information: %s") % AddtlTxInf.strip()
             )
+
+    def check_camt054(self, ns):
+        """Check if the file is camt054."""
+        # Check whether it is camt at all:
+        # Check whether version 052 ,053 or 054:
+        re_camt_version = re.compile(
+            r"(^urn:iso:std:iso:20022:tech:xsd:camt.054." r"|^ISO:camt.054.)"
+        )
+        if re_camt_version.search(ns):
+            return True
+        return False
 
     def check_version(self, ns, root):
         """Validate validity of camt file."""

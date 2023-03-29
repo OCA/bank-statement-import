@@ -3,6 +3,7 @@
  [{'balance_end_real': 15121.12,
    'balance_start': 15568.27,
    'date': '2014-01-05',
+   'is_camt054': False,
    'name': '1234Test/1',
    'transactions': [{'account_number': 'NL46ABNA0499998748',
                      'amount': -754.25,
