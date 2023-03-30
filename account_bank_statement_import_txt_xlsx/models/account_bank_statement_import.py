@@ -26,15 +26,16 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _parse_file(self, data_file):
         self.ensure_one()
-        try:
-            Parser = self.env["account.bank.statement.import.sheet.parser"]
-            return Parser.parse(
-                data_file, self.sheet_mapping_id, self.attachment_ids[:1].name
-            )
-        except BaseException:
-            if self.env.context.get("account_bank_statement_import_txt_xlsx_test"):
-                raise
-            _logger.warning("Sheet parser error", exc_info=True)
+        if self.sheet_mapping_id:
+            try:
+                Parser = self.env["account.bank.statement.import.sheet.parser"]
+                return Parser.parse(
+                    data_file, self.sheet_mapping_id, self.attachment_ids[:1].name
+                )
+            except BaseException:
+                if self.env.context.get("account_bank_statement_import_txt_xlsx_test"):
+                    raise
+                _logger.warning("Sheet parser error", exc_info=True)
         return super()._parse_file(data_file)
 
     def _create_bank_statements(self, stmts_vals):
