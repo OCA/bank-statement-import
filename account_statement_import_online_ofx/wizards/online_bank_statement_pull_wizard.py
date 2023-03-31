@@ -13,6 +13,7 @@ class OnlineBankStatementPullWizard(models.TransientModel):
         column1="wizard_id",
         column2="institution_line_id",
         relation="ofx_institution_line_pull_wizard_rel",
+        domain="[('provider_id','in',provider_ids)]",
     )
     is_ofx_provider = fields.Boolean()
 
