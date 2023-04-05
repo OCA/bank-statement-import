@@ -29,7 +29,6 @@ class OnlineBankStatementProvider(models.Model):
     journal_id = fields.Many2one(
         comodel_name="account.journal",
         required=True,
-        readonly=True,
         ondelete="cascade",
         domain=[("type", "=", "bank")],
     )
@@ -49,7 +48,6 @@ class OnlineBankStatementProvider(models.Model):
     service = fields.Selection(
         selection=lambda self: self._selection_service(),
         required=True,
-        readonly=True,
     )
     interval_type = fields.Selection(
         selection=[
