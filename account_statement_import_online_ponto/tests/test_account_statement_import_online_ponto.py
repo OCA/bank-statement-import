@@ -118,6 +118,59 @@ FOUR_TRANSACTIONS = [
 
 EMPTY_TRANSACTIONS = []
 
+EARLY_TRANSACTIONS = [
+    # First transaction in october 2019, month before other transactions.
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "1552c32f-e63f-4ce6-a974-f270e6cd5301",
+        "attributes": {
+            "valueDate": "2019-10-04T12:29:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Arresto Momentum",
+            "executionDate": "2019-10-04T10:24:00.000Z",
+            "description": "Wire transfer after execution",
+            "currency": "EUR",
+            "counterpartReference": "BE10325927501996",
+            "counterpartName": "Some other customer",
+            "amount": 4.25,
+        },
+    },
+    # Second transaction in september 2019.
+    {
+        "type": "transaction",
+        "relationships": {
+            "account": {
+                "links": {"related": "https://api.myponto.com/accounts/"},
+                "data": {
+                    "type": "account",
+                    "id": "fd3d5b1d-fca9-4310-a5c8-76f2a9dc7c75",
+                },
+            }
+        },
+        "id": "701ab965-21c4-46ca-b157-306c0646e002",
+        "attributes": {
+            "valueDate": "2019-09-18T01:00:00.000Z",
+            "remittanceInformationType": "unstructured",
+            "remittanceInformation": "Minima vitae totam!",
+            "executionDate": "2019-09-20T01:00:00.000Z",
+            "description": "Wire transfer",
+            "currency": "EUR",
+            "counterpartReference": "BE26089479973169",
+            "counterpartName": "Osinski Group",
+            "amount": 4.08,
+        },
+    },
+]
+
 transaction_amounts = [5.48, 5.83, 6.08, 8.95]
 
 
@@ -186,6 +239,15 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 EMPTY_TRANSACTIONS,
             ],
         )
+        # return two times list of transactions, empty list on third call.
+        self.mock_get_transactions_multi = lambda: mock.patch(
+            _interface_class + "._get_transactions",
+            side_effect=[
+                FOUR_TRANSACTIONS,
+                EARLY_TRANSACTIONS,
+                EMPTY_TRANSACTIONS,
+            ],
+        )
 
     def test_balance_start(self):
         """Test wether end balance of last statement, taken as start balance of new."""
@@ -218,7 +280,7 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "execution_date"
-            statement = self._get_statement_from_wizard()
+            statement = self._get_statements_from_wizard()  # Will get 1 statement
             self._check_line_count(statement.line_ids, expected_count=2)
             self._check_statement_amounts(statement, transaction_amounts[:2])
 
@@ -226,9 +288,26 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "value_date"
-            statement = self._get_statement_from_wizard()
+            statement = self._get_statements_from_wizard()  # Will get 1 statement
             self._check_line_count(statement.line_ids, expected_count=3)
             self._check_statement_amounts(statement, transaction_amounts[:3])
+
+    def test_ponto_get_transactions_multi(self):
+        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions_multi():  # noqa: B950
+            # First base selection on execution date.
+            self.provider.ponto_date_field = "execution_date"
+            # Expect statements for october and november.
+            statements = self._get_statements_from_wizard(
+                expected_statement_count=2, date_since=datetime(2019, 9, 25)
+            )
+            self._check_line_count(statements[0].line_ids, expected_count=1)  # october
+            self._check_line_count(statements[1].line_ids, expected_count=2)  # november
+            self._check_statement_amounts(statements[0], [4.25])
+            self._check_statement_amounts(
+                statements[1],
+                transaction_amounts[:2],
+                expected_balance_end=15.56,  # Includes 4.25 from statement before.
+            )
 
     def test_ponto_scheduled(self):
         with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
@@ -263,10 +342,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 statements[1], transaction_amounts[3:], expected_balance_end=15.03
             )
 
-    def _get_statement_from_wizard(self):
+    def _get_statements_from_wizard(self, expected_statement_count=1, date_since=None):
         """Run wizard to pull data and return statement."""
+        date_since = date_since if date_since else datetime(2019, 11, 3)
         vals = {
-            "date_since": datetime(2019, 11, 3),
+            "date_since": date_since,
             "date_until": datetime(2019, 11, 18),
         }
         wizard = self.AccountStatementPull.with_context(
@@ -274,7 +354,9 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             active_id=self.provider.id,
         ).create(vals)
         wizard.action_pull()
-        return self._get_statements_from_journal(expected_count=1)
+        return self._get_statements_from_journal(
+            expected_count=expected_statement_count
+        )
 
     def _get_statements_from_journal(self, expected_count=0):
         """We only expect statements created by our tests."""
