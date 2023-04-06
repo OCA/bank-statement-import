@@ -137,6 +137,31 @@ class OnlineBankStatementProviderOFX(models.Model):
             else:
                 OfxInstitution.create(vals)
 
+    def _create_or_update_statement(
+        self, data, statement_date_since, statement_date_until
+    ):
+        # deleting blank statement for OFX online import
+        res = super()._create_or_update_statement(
+            data, statement_date_since, statement_date_until
+        )
+        if self.service == "OFX":
+            AccountBankStatement = self.env["account.bank.statement"]
+            statement_date = self._get_statement_date(
+                statement_date_since,
+                statement_date_until,
+            )
+            statement = AccountBankStatement.search(
+                [
+                    ("journal_id", "=", self.journal_id.id),
+                    ("state", "=", "open"),
+                    ("date", "=", statement_date),
+                ],
+                limit=1,
+            )
+            if not statement.line_ids:
+                statement.unlink()
+        return res
+
 
 class OFXInstitutionLine(models.Model):
     _name = "ofx.institution.line"
