@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [account_bank_statement_import_qif](account_bank_statement_import_qif/) | 13.0.1.0.0 |  | Import QIF Bank Statements
 [account_bank_statement_import_split](account_bank_statement_import_split/) | 13.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Split statements by date during import
 [account_bank_statement_import_transfer_move](account_bank_statement_import_transfer_move/) | 13.0.1.0.0 |  | Bank Account Transfer Line
-[account_bank_statement_import_txt_xlsx](account_bank_statement_import_txt_xlsx/) | 13.0.2.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Import TXT/CSV or XLSX files as Bank Statements in Odoo
+[account_bank_statement_import_txt_xlsx](account_bank_statement_import_txt_xlsx/) | 13.0.2.0.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Import TXT/CSV or XLSX files as Bank Statements in Odoo
 
 [//]: # (end addons)
 
