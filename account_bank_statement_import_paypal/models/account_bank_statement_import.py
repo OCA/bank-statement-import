@@ -21,13 +21,14 @@ class AccountBankStatementImport(models.TransientModel):
 
     def _parse_file(self, data_file):
         self.ensure_one()
-        try:
-            Parser = self.env["account.bank.statement.import.paypal.parser"]
-            return Parser.parse(
-                self.paypal_mapping_id, data_file, self.attachment_ids[:1].name
-            )
-        except Exception:
-            if self.env.context.get("account_bank_statement_import_paypal_test"):
-                raise
-            _logger.warning("PayPal parser error", exc_info=True)
+        if self.paypal_mapping_id:
+            try:
+                Parser = self.env["account.bank.statement.import.paypal.parser"]
+                return Parser.parse(
+                    self.paypal_mapping_id, data_file, self.attachment_ids[:1].name
+                )
+            except Exception:
+                if self.env.context.get("account_bank_statement_import_paypal_test"):
+                    raise
+                _logger.warning("PayPal parser error", exc_info=True)
         return super()._parse_file(data_file)
