@@ -23,7 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_statement_import](account_statement_import/) | 14.0.3.3.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files
 [account_statement_import_base](account_statement_import_base/) | 14.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Base module for Bank Statement Import
-[account_statement_import_camt](account_statement_import_camt/) | 14.0.1.2.0 |  | CAMT Format Bank Statements Import
+[account_statement_import_camt](account_statement_import_camt/) | 14.0.1.2.1 |  | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 14.0.1.1.0 |  | Bank Account Camt54 Import
 [account_statement_import_file_reconciliation_widget](account_statement_import_file_reconciliation_widget/) | 14.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files and Go Direct to Reconciliation
 [account_statement_import_move_line](account_statement_import_move_line/) | 14.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Import journal items into bank statement
