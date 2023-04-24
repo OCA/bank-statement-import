@@ -53,12 +53,13 @@
                         <field name="original_amount_column"/>
                         <field name="debit_credit_column"/>
                         <field name="transaction_id_column"/>
-                        <field name="description_column"/>
+                        <field name="description_column" attrs="{'required': [('get_iban_from_description', '!=', False)]}" />
                         <field name="notes_column"/>
                         <field name="reference_column"/>
                         <field name="partner_name_column"/>
                         <field name="bank_name_column"/>
-                        <field name="bank_account_column"/>
+                        <field name="get_iban_from_description" />
+                        <field name="bank_account_column" attrs="{'invisible': [('get_iban_from_description', '!=', False)]}" />
                     </group>
                 </sheet>
             </form>

@@ -147,6 +147,7 @@ class AccountBankStatementImportSheetMapping(models.Model):
         string='Bank Account column',
         help='Partner\'s bank account',
     )
+    get_iban_from_description = fields.Boolean(string="Get IBAN from Description")
 
     @api.onchange('float_thousands_sep')
     def onchange_thousands_separator(self):
@@ -161,6 +162,11 @@ class AccountBankStatementImportSheetMapping(models.Model):
             self.float_thousands_sep = 'comma'
         elif 'comma' == self.float_thousands_sep == self.float_decimal_sep:
             self.float_thousands_sep = 'dot'
+
+    @api.onchange("get_iban_from_description")
+    def onchange_get_iban_from_description(self):
+        if self.get_iban_from_description:
+            self.bank_account_column = ""
 
     @api.multi
     def _get_float_separators(self):

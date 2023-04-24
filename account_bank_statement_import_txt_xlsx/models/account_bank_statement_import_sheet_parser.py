@@ -9,6 +9,7 @@ from decimal import Decimal
 from io import StringIO
 from os import path
 import itertools
+import re
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -195,6 +196,13 @@ class AccountBankStatementImportSheetParser(models.TransientModel):
                 if bank_name_column is not None else None
             bank_account = values[bank_account_column] \
                 if bank_account_column is not None else None
+
+            if mapping.get_iban_from_description:
+                iban_codes = re.findall(
+                    r"\b(DE(?:\s*[0-9]){20}|AT(?:\s*[0-9]){18})\b(?!\s*[0-9])",
+                    description,
+                )
+                bank_account = iban_codes[0] if iban_codes else bank_account
 
             if currency != currency_code:
                 continue
