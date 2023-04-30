@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo-addon-account_statement_import_camt>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_ofx>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online>=15.0dev,<15.1dev',
+        'odoo-addon-account_statement_import_online_paypal>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online_ponto>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_paypal>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_txt_xlsx>=15.0dev,<15.1dev',
