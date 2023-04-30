@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="paypal"
+                    attrs="{'invisible': [('service', '!=', 'paypal')]}"
+                >
+                    <group>
+                        <field
+                            name="api_base"
+                            string="API base"
+                            groups="base.group_no_one"
+                        />
+                        <field
+                            name="username"
+                            string="Client ID"
+                            password="True"
+                            attrs="{'required': [('service', '=', 'paypal')]}"
+                        />
+                        <field
+                            name="password"
+                            string="Secret"
+                            password="True"
+                            attrs="{'required': [('service', '=', 'paypal')]}"
+                        />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
