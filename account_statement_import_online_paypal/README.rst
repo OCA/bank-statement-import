@@ -36,45 +36,54 @@ This module provides online bank statements from
 Configuration
 =============
 
-To configure online bank statements provider:
+You will need a *Client ID* and *Secret* from PayPal to communicate with the PayPal API. To obtain your PayPal API
+*Client ID* and *Secret*:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Open bank account to configure and edit it
-#. Set *Bank Feeds* to *Online*
-#. Select *PayPal.com* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+#. Open `PayPal Developer <https://developer.paypal.com/dashboard/>`_.
+#. Login with your *PayPal for Business* account (upgrade your personal account to
+   a Business Account, if required).
+#. Go to *Apps & Credentials* and switch to *Live*.
+#. Under *REST API apps*, click *Create App* to begin creating a new application.
+#. Enter a descriptive name for your app (e.g. *Odoo-Statements*) and click *Create App*.
+#. Copy the *Client ID* and *Secret* to use during provider configuration (instructions below).
+#. Under *Features*, uncheck all optional features except *Transaction Search*.
+#. Click *Save Changes*.
 
-or, alternatively:
+To configure PayPal as an online bank statement provider, you will need to create a Bank Account & Journal that
+corresponds to your *PayPal for Business* account, and then configure the *PayPal.com* provider with the *Client ID*
+and *Secret* obtained above:
 
-#. Go to *Invoicing > Overview*
-#. Open settings of the corresponding journal account
-#. Switch to *Bank Account* tab
-#. Set *Bank Feeds* to *Online*
-#. Select *PayPal.com* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+#. Go to *Invoicing > Configuration > Banks > Add a Bank Account*.
+#. In the *Account Number* field, enter some descriptive text for the account, such as the email address or *PayPal
+   Merchant ID* of your *PayPal for Business* account. NOTE: This *Account Number* is not used in the authentication
+   with PayPal's API, and is only used to distinguish this PayPal Bank Account/Journal from others you may have
+   configured.
+#. Fill in the other fields for the Bank Account if desired, and then click *Create*.
+#. Go to *Invoicing > Configuration > Accounting > Journals*.
+#. Open and *Edit* the Journal corresponding to the PayPal bank account (this Journal was created automatically
+   when you created the Bank Account above.
+#. Set *Bank Feeds* to *Online (OCA)*.
+#. Select *PayPal.com* as the provider in the *Online Bank Statements (OCA)* section.
+#. *Save* the Journal.
+#. To configure provider-specific settings, click on the provider to open it and click *Edit*.
+#. Fill in your desired *Configuration* and *Scheduled Pull* settings.
+#. Leave the *API base* field empty, and fill in the *Client ID* and *Secret* from your PayPal
+   Developer account.
+#. Click *Save*.
 
-To obtain *Client ID* and *Secret*:
-
-#. Open `PayPal Developer <https://developer.paypal.com/developer/applications/>`_
-#. Go to *My Apps & Credentials* and switch to *Live*
-#. Under *REST API apps*, click *Create App* to create new application (e.g. *Odoo*)
-#. Copy *Client ID* and *Secret* to use during provider configuration
-#. Under *Live App Settings*, uncheck all features except *Transaction Search*
-#. Click Save
+NOTE: For development and testing purposes, you can create Sandbox credentials associated with your *PayPal
+for Business* account. When configuring the provider-specific settings, enter the following in the *API base* field:
+https://api.sandbox.paypal.com
 
 Usage
 =====
 
 To pull historical bank statements:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Select specific bank accounts
-#. Launch *Actions > Online Bank Statements Pull Wizard*
-#. Configure date interval and click *Pull*
+#. Go to *Invoicing > Configuration > Accounting > Journals*.
+#. Open the Journal corresponding to the PayPal bank account.
+#. Click the *Pull Online Bank Statement* button.
+#. Configure a date interval and click *Pull*.
 
 Known issues / Roadmap
 ======================
@@ -83,7 +92,7 @@ Known issues / Roadmap
   can be imported manually, see ``account_bank_statement_import_paypal``. See
   `PayPal Help Center article <https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241>`_
   for details.
-* `PayPal Transaction Info <https://developer.paypal.com/docs/api/sync/v1/#definition-transaction_info>`_
+* `PayPal Transaction Info <https://developer.paypal.com/docs/api/transaction-search/v1/#definition-transaction_info>`_
   defines extra fields like ``tip_amount``, ``shipping_amount``, etc. that
   could be useful to be decomposed from a single transaction.
 * There's a known issue with PayPal API that on every Monday for couple of
