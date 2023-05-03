@@ -206,8 +206,11 @@ class OnlineBankStatementProviderPayPal(models.Model):
             token, currency, date_since, date_until
         )
         if not transactions:
-            balance = self._paypal_get_balance(token, currency, date_since)
-            return [], {"balance_start": balance, "balance_end_real": balance}
+            if self.allow_empty_statements:
+                balance = self._paypal_get_balance(token, currency, date_since)
+                return [], {"balance_start": balance, "balance_end_real": balance}
+            else:
+                return None
 
         # Normalize transactions, sort by date, and get lines
         transactions = list(
