@@ -275,7 +275,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 self.now,
             )
 
-        self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
+        self.assertEqual(data, None)
 
     def test_error_handling_1(self):
         journal = self.AccountJournal.create(
@@ -331,7 +331,10 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             with self.assertRaises(UserError):
                 provider._paypal_retrieve("https://url", "")
 
-    def test_empty_pull(self):
+    def test_dont_create_empty_paypal_statements(self):
+        """Test the default behavior of not creating empty PayPal
+        statements ('Allow empty statements' field is unchecked).
+        """
         journal = self.AccountJournal.create(
             {
                 "name": "Bank",
@@ -344,6 +347,82 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         )
 
         provider = journal.online_bank_statement_provider_id
+        mocked_response_1 = json.loads(
+            """{
+    "transaction_details": [],
+    "account_number": "1234567890",
+    "start_date": "%s",
+    "end_date": "%s",
+    "last_refreshed_datetime": "%s",
+    "page": 1,
+    "total_items": 0,
+    "total_pages": 0
+}"""
+            % (
+                self.now_isoformat,
+                self.now_isoformat,
+                self.now_isoformat,
+            ),
+            parse_float=Decimal,
+        )
+        mocked_response_2 = json.loads(
+            """{
+    "balances": [
+        {
+            "currency": "EUR",
+            "primary": true,
+            "total_balance": {
+                "currency_code": "EUR",
+                "value": "0.75"
+            },
+            "available_balance": {
+                "currency_code": "EUR",
+                "value": "0.75"
+            },
+            "withheld_balance": {
+                "currency_code": "EUR",
+                "value": "0.00"
+            }
+        }
+    ],
+    "account_id": "1234567890",
+    "as_of_time": "%s",
+    "last_refresh_time": "%s"
+}"""
+            % (
+                self.now_isoformat,
+                self.now_isoformat,
+            ),
+            parse_float=Decimal,
+        )
+        with mock.patch(
+            _provider_class + "._paypal_retrieve",
+            side_effect=[mocked_response_1, mocked_response_2],
+        ), self.mock_token():
+            data = provider._obtain_statement_data(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
+
+        self.assertEqual(data, None)
+
+    def test_create_empty_paypal_statements(self):
+        """Test creating empty PayPal statements
+        ('Allow empty statements' field is checked).
+        """
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+
+        provider = journal.online_bank_statement_provider_id
+        provider.allow_empty_statements = True
         mocked_response_1 = json.loads(
             """{
     "transaction_details": [],
