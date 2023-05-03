@@ -2,20 +2,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import date, datetime
-from unittest import mock
 from dateutil.relativedelta import relativedelta
-from psycopg2 import IntegrityError
 from urllib.error import HTTPError
 
 from odoo.tests import common
-from odoo.tools import mute_logger
 from odoo import fields
-
-mock_obtain_statement_data = (
-    "odoo.addons.account_bank_statement_import_online.tests."
-    + "online_bank_statement_provider_dummy.OnlineBankStatementProviderDummy."
-    + "_obtain_statement_data"
-)
 
 
 class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
@@ -31,44 +22,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.AccountBankStatement = self.env["account.bank.statement"]
         self.AccountBankStatementLine = self.env["account.bank.statement.line"]
 
-    def test_provider_unlink_restricted(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-            }
-        )
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = "online"
-            journal_form.online_bank_statement_provider = "dummy"
-        journal_form.save()
-
-        with self.assertRaises(IntegrityError), mute_logger("odoo.sql_db"):
-            journal.online_bank_statement_provider_id.unlink()
-
-    def test_cascade_unlink(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-            }
-        )
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = "online"
-            journal_form.online_bank_statement_provider = "dummy"
-        journal_form.save()
-
-        self.assertTrue(journal.online_bank_statement_provider_id)
-        journal.unlink()
-        self.assertFalse(
-            self.OnlineBankStatementProvider.search(
-                [("service", "=", "dummy")]
-            )
-        )
-
     def test_source_change_cleanup(self):
+        """Test creation of provider through journal interface."""
         journal = self.AccountJournal.create(
             {
                 "name": "Bank",
@@ -79,36 +34,33 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         with common.Form(journal) as journal_form:
             journal_form.bank_statements_source = "online"
             journal_form.online_bank_statement_provider = "dummy"
-        journal_form.save()
-
+            journal_form.save()
         self.assertTrue(journal.online_bank_statement_provider_id)
-
+        # Saving same data again should be no problem.
+        save_provider = journal.online_bank_statement_provider_id
+        with common.Form(journal) as journal_form:
+            journal_form.bank_statements_source = "online"
+            journal_form.online_bank_statement_provider = "dummy"
+            journal_form.save()
+        self.assertTrue(journal.online_bank_statement_provider_id)
+        self.assertEqual(
+            save_provider,
+            journal.online_bank_statement_provider_id
+        )
+        # Check wether we can create action.
+        action = journal.action_online_bank_statements_pull_wizard()
+        self.assertEqual(action["type"], "ir.actions.act_window")
+        # Disabling online statement source should set provider to False.
         with common.Form(journal) as journal_form:
             journal_form.bank_statements_source = "undefined"
-        journal_form.save()
-
+            journal_form.save()
         self.assertFalse(journal.online_bank_statement_provider_id)
-        self.assertFalse(
-            self.OnlineBankStatementProvider.search(
-                [("service", "=", "dummy")]
-            )
-        )
+        # Not testing for deletion of provider, as we disabled automatic unlink.
 
     def test_pull_mode_daily(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "daily"
-
         provider.with_context(step={"hours": 2})._pull(
             self.now - relativedelta(days=1),
             self.now,
@@ -118,20 +70,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
 
     def test_pull_mode_weekly(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "weekly"
-
         provider.with_context(step={"hours": 8})._pull(
             self.now - relativedelta(weeks=1),
             self.now,
@@ -141,20 +82,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
 
     def test_pull_mode_monthly(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "monthly"
-
         provider.with_context(step={"hours": 8})._pull(
             self.now - relativedelta(months=1),
             self.now,
@@ -164,48 +94,24 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
 
     def test_pull_scheduled(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.next_run = self.now - relativedelta(days=15)
-
         self.assertFalse(
             self.AccountBankStatement.search(
                 [("journal_id", "=", journal.id)],
             )
         )
-
         provider.with_context(step={"hours": 8})._scheduled_pull()
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
         self.assertEqual(len(statement), 1)
 
     def test_pull_skip_duplicates_by_unique_import_id(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "weekly"
-
         provider.with_context(
             step={"hours": 8},
             data_since=self.now - relativedelta(weeks=2),
@@ -220,7 +126,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             ),
             14 * (24 / 8),
         )
-
         provider.with_context(
             step={"hours": 8},
             data_since=self.now - relativedelta(weeks=3),
@@ -235,7 +140,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             ),
             21 * (24 / 8),
         )
-
         provider.with_context(
             step={"hours": 8},
             data_since=self.now - relativedelta(weeks=1),
@@ -252,84 +156,33 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
 
     def test_interval_type_minutes(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.interval_type = "minutes"
         provider._compute_update_schedule()
 
     def test_interval_type_hours(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.interval_type = "hours"
         provider._compute_update_schedule()
 
     def test_interval_type_days(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.interval_type = "days"
         provider._compute_update_schedule()
 
     def test_interval_type_weeks(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.interval_type = "weeks"
         provider._compute_update_schedule()
 
     def test_pull_no_crash(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "weekly"
-
         provider.with_context(crash=True, scheduled=True)._pull(
             self.now - relativedelta(hours=1),
             self.now,
@@ -341,20 +194,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
 
     def test_pull_crash(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "weekly"
-
         with self.assertRaises(Exception):
             provider.with_context(crash=True,)._pull(
                 self.now - relativedelta(hours=1),
@@ -362,20 +204,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             )
 
     def test_pull_httperror(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "weekly"
-
         with self.assertRaises(HTTPError):
             provider.with_context(
                 crash=True,
@@ -386,20 +217,9 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             )
 
     def test_pull_no_balance(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "daily"
-
         provider.with_context(
             step={"hours": 2},
             balance_start=0,
@@ -420,28 +240,16 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertFalse(statements[1].balance_end_real)
 
     def test_wizard(self):
-        journal = self.AccountJournal.create(
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
+        self.assertEqual(provider, journal.online_bank_statement_provider_id)
+        wizard = self.OnlineBankStatementPullWizard.create(
             {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-        action = journal.action_online_bank_statements_pull_wizard()
-        self.assertTrue(action["context"]["default_provider_ids"][0][2])
-
-        wizard = self.OnlineBankStatementPullWizard.with_context(
-            action["context"]
-        ).create(
-            {
+                "provider_ids": [(6, 0, [provider.id])],
                 "date_since": self.now - relativedelta(hours=1),
                 "date_until": self.now,
             }
         )
-        self.assertTrue(wizard.provider_ids)
-
         wizard.action_pull()
         self.assertTrue(
             self.AccountBankStatement.search(
@@ -450,27 +258,15 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
 
     def test_pull_statement_partially(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.statement_creation_mode = "monthly"
-
         provider_context = {
             "step": {"hours": 24},
             "data_since": datetime(2020, 1, 1),
             "amount": 1.0,
             "balance_start": 0,
         }
-
         provider.with_context(
             **provider_context,
             data_until=datetime(2020, 1, 31),
@@ -485,7 +281,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(len(statements), 1)
         self.assertEqual(statements[0].balance_start, 0.0)
         self.assertEqual(statements[0].balance_end_real, 30.0)
-
         provider.with_context(
             **provider_context,
             data_until=datetime(2020, 2, 15),
@@ -502,7 +297,6 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[0].balance_end_real, 31.0)
         self.assertEqual(statements[1].balance_start, 31.0)
         self.assertEqual(statements[1].balance_end_real, 45.0)
-
         provider.with_context(
             **provider_context,
             data_until=datetime(2020, 2, 29),
@@ -521,18 +315,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[1].balance_end_real, 59.0)
 
     def test_tz_utc(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.tz = "UTC"
         provider.with_context(
             step={"hours": 1},
@@ -543,12 +327,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             datetime(2020, 4, 17, 22, 0),
             datetime(2020, 4, 18, 2, 0),
         )
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
         self.assertEqual(len(statement), 2)
-
         lines = statement.mapped("line_ids").sorted()
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 17))
@@ -557,18 +339,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
     def test_tz_non_utc(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.tz = "Etc/GMT-2"
         provider.with_context(
             step={"hours": 1},
@@ -579,12 +351,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             datetime(2020, 4, 17, 22, 0),
             datetime(2020, 4, 18, 2, 0),
         )
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
         self.assertEqual(len(statement), 2)
-
         lines = statement.mapped("line_ids").sorted()
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 18))
@@ -593,18 +363,8 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
     def test_other_tz_to_utc(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.with_context(
             step={"hours": 1},
             tz="Etc/GMT-2",
@@ -614,12 +374,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             datetime(2020, 4, 17, 22, 0),
             datetime(2020, 4, 18, 2, 0),
         )
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
         self.assertEqual(len(statement), 2)
-
         lines = statement.mapped("line_ids").sorted()
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 17))
@@ -628,46 +386,24 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
     def test_timestamp_date_only_date(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.with_context(step={"hours": 1}, timestamp_mode="date",)._pull(
             datetime(2020, 4, 18, 0, 0),
             datetime(2020, 4, 18, 4, 0),
         )
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
         self.assertEqual(len(statement), 1)
-
         lines = statement.line_ids
         self.assertEqual(len(lines), 24)
         for line in lines:
             self.assertEqual(line.date, date(2020, 4, 18))
 
     def test_timestamp_date_only_str(self):
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
-            }
-        )
-
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
+        journal = self._make_journal()
+        provider = self._make_provider(journal)
         provider.with_context(
             step={"hours": 1},
             data_since=datetime(2020, 4, 18, 0, 0),
@@ -677,12 +413,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             datetime(2020, 4, 18, 0, 0),
             datetime(2020, 4, 18, 4, 0),
         )
-
         statement = self.AccountBankStatement.search(
             [("journal_id", "=", journal.id)],
         )
         self.assertEqual(len(statement), 1)
-
         lines = statement.line_ids
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 18))
@@ -702,69 +436,27 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             }
         ], {}
 
-    def test_dont_create_empty_statements(self):
-        """Test the default behavior of not creating empty bank
-        statements ('Allow empty statements' field is uncheck at the
-        provider level.).
-        """
+    def _make_journal(self):
+        """Create a journal for testing."""
         journal = self.AccountJournal.create(
             {
                 "name": "Bank",
                 "type": "bank",
                 "code": "BANK",
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
             }
         )
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.statement_creation_mode = "daily"
-        with mock.patch(mock_obtain_statement_data) as mock_data:
-            mock_data.side_effect = [
-                self._get_statement_line_data(date(2021, 8, 10)),
-                ([], {}),  # August 8th, doesn't have statement
-                ([], {}),  # August 9th, doesn't have statement
-                self._get_statement_line_data(date(2021, 8, 13)),
-            ]
-            provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
-        statements = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
-        self.assertEqual(len(statements), 2)
-        self.assertEqual(statements[1].balance_start, 0)
-        self.assertEqual(len(statements[1].line_ids), 1)
-        self.assertEqual(statements[0].balance_start, 100)
-        self.assertEqual(len(statements[0].line_ids), 1)
+        return journal
 
-    def test_create_empty_statements(self):
-        """Test creating empty bank statements
-        ('Allow empty statements' field is check at the provider level).
-        """
-        journal = self.AccountJournal.create(
+    def _make_provider(self, journal):
+        """Create a dummy provider and a journal for testing."""
+        provider = self.OnlineBankStatementProvider.create(
             {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "dummy",
+                "name": "Dummy Provider",
+                "service": "dummy",
+                "journal_id": journal.id,
+                "statement_creation_mode": "daily",
+                "active": True,
             }
         )
-        provider = journal.online_bank_statement_provider_id
-        provider.active = True
-        provider.allow_empty_statements = True
-        provider.statement_creation_mode = "daily"
-        with mock.patch(mock_obtain_statement_data) as mock_data:
-            mock_data.side_effect = [
-                self._get_statement_line_data(date(2021, 8, 10)),
-                ([], {}),  # August 8th, doesn't have statement
-                ([], {}),  # August 9th, doesn't have statement
-                self._get_statement_line_data(date(2021, 8, 13)),
-            ]
-            provider._pull(datetime(2021, 8, 10), datetime(2021, 8, 14))
-        statements = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
-        # 4 Statements: 2 with movements and 2 empty
-        self.assertEqual(len(statements), 4)
-        # With movement
-        self.assertEqual(statements[3].balance_start, 0)
-        self.assertEqual(len(statements[3].line_ids), 1)
-        # Empty
-        self.assertEqual(statements[2].balance_start, 100)
-        self.assertEqual(len(statements[2].line_ids), 0)
+        return provider

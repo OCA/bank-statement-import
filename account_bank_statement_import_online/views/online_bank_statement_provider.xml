@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2021-2023 Therp BV (https://therp.nl)
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
@@ -10,7 +11,11 @@
         <field name="model">online.bank.statement.provider</field>
         <field name="arch" type="xml">
             <search string="Online Bank Statement Providers">
-                <filter name="active" string="Inactive" domain="[('active', '=', False)]"/>
+                <filter
+                    name="archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
             </search>
         </field>
     </record>
@@ -35,6 +40,16 @@
         <field name="model">online.bank.statement.provider</field>
         <field name="arch" type="xml">
             <form string="Online Bank Statement Provider">
+                <field name="active" invisible="1" />
+                <header>
+                    <button
+                        type="object"
+                        name="action_online_bank_statements_pull_wizard"
+                        attrs="{'invisible': [('active', '=', False)]}"
+                        string="Pull Online Bank Statement"
+                        groups_id="account.group_account_user"
+                    />
+                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
@@ -53,11 +68,7 @@
                                     <field name="account_number"/>
                                 </group>
                                 <group>
-                                    <field
-                                        name="service"
-                                        widget="dynamic_dropdown"
-                                        values="values_service"
-                                    />
+                                    <field name="service" />
                                 </group>
                             </group>
                         </page>
@@ -79,7 +90,6 @@
                             <group>
                                 <group>
                                     <field name="statement_creation_mode"/>
-                                    <field name="create_empty_statements"/>
                                     <field name="tz"/>
                                     <field name="allow_empty_statements" />
                                 </group>

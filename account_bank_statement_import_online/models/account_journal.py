@@ -1,9 +1,9 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+# Copyright 2023 Therp BV (https://therp.nl).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
 import logging
 
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -11,15 +11,14 @@ _logger = logging.getLogger(__name__)
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
+    # Keep provider fields for compatibility with other modules.
     online_bank_statement_provider = fields.Selection(
-        selection=lambda self: self.env[
-            "account.journal"
-        ]._selection_online_bank_statement_provider(),
+        related="online_bank_statement_provider_id.service",
+        readonly=False,
     )
     online_bank_statement_provider_id = fields.Many2one(
         string="Statement Provider",
         comodel_name="online.bank.statement.provider",
-        ondelete="restrict",
         copy=False,
     )
 
@@ -28,68 +27,83 @@ class AccountJournal(models.Model):
         result.append(("online", _("Online (OCA)")))
         return result
 
-    @api.model
-    def _selection_online_bank_statement_provider(self):
-        return self.env["online.bank.statement.provider"]._get_available_services() + [
-            ("dummy", "Dummy")
-        ]
-
-    @api.model
-    def values_online_bank_statement_provider(self):
-        res = self.env["online.bank.statement.provider"]._get_available_services()
-        if self.user_has_groups("base.group_no_one"):
-            res += [("dummy", "Dummy")]
-        return res
-
     @api.multi
-    def _update_online_bank_statement_provider_id(self):
+    def _update_online_bank_statement_provider_id(self, service):
+        """Automatically create service.
+
+        This method exists for compatibility reasons. The preferred method
+        to create an online provider is directly through the menu,
+        """
         OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
-        for journal in self.filtered("id"):
-            provider_id = journal.online_bank_statement_provider_id
-            if journal.bank_statements_source != "online":
-                journal.online_bank_statement_provider_id = False
-                if provider_id:
-                    provider_id.unlink()
-                continue
-            if provider_id.service == journal.online_bank_statement_provider:
-                continue
-            journal.online_bank_statement_provider_id = False
-            if provider_id:
-                provider_id.unlink()
-            journal.online_bank_statement_provider_id = (
-                OnlineBankStatementProvider.create(
-                    {
-                        "journal_id": journal.id,
-                        "service": journal.online_bank_statement_provider,
-                    }
+        for journal in self:
+            if (
+                journal.online_bank_statement_provider_id
+                and journal.online_bank_statement_provider == service
+            ):
+                _logger.info(
+                    "Journal %s already linked to service %s",
+                    journal.name,
+                    service
                 )
+                # Provider already exists.
+                continue
+            # Use existing or create new provider for service.
+            provider = OnlineBankStatementProvider.search(
+                [
+                    ("journal_id", "=", journal.id),
+                    ("service", "=", service),
+                ],
+                limit=1,
+            ) or OnlineBankStatementProvider.create(
+                {
+                    "journal_id": journal.id,
+                    "service": service,
+                }
+            )
+            journal.online_bank_statement_provider_id = provider
+            _logger.info(
+                "Journal %s now linked to service %s",
+                journal.name,
+                service
             )
 
     @api.model
     def create(self, vals):
+        self._update_vals(vals)
+        service = self._get_service(vals)
         rec = super().create(vals)
-        if "bank_statements_source" in vals or "online_bank_statement_provider" in vals:
-            rec._update_online_bank_statement_provider_id()
+        if service:
+            rec._update_online_bank_statement_provider_id(service)
         return rec
 
     @api.multi
     def write(self, vals):
+        self._update_vals(vals)
+        service = self._get_service(vals)
         res = super().write(vals)
-        if "bank_statements_source" in vals or "online_bank_statement_provider" in vals:
-            self._update_online_bank_statement_provider_id()
+        if service:
+            self._update_online_bank_statement_provider_id(service)
         return res
+
+    def _update_vals(self, vals):
+        """Ensure consistent values."""
+        if (
+            "bank_statements_source" in vals
+            and vals.get("bank_statements_source") != "online"
+        ):
+            vals["online_bank_statement_provider_id"] = False
+
+    def _get_service(self, vals):
+        """Check wether user wants to create service."""
+        return (
+            vals.pop("online_bank_statement_provider")
+            if "online_bank_statement_provider" in vals
+            else False
+        )
 
     @api.multi
     def action_online_bank_statements_pull_wizard(self):
-        provider_ids = self.mapped("online_bank_statement_provider_id").ids
-        return {
-            "name": _("Online Bank Statement Pull Wizard"),
-            "type": "ir.actions.act_window",
-            "res_model": "online.bank.statement.pull.wizard",
-            "views": [[False, "form"]],
-            "target": "new",
-            "context": {
-                "default_provider_ids": [(6, False, provider_ids)],
-                "active_test": False,
-            },
-        }
+        """This method is also kept for compatibility reasons."""
+        self.ensure_one()
+        provider = self.online_bank_statement_provider_id
+        return provider.action_online_bank_statements_pull_wizard()

@@ -35,7 +35,6 @@ class OnlineBankStatementProvider(models.Model):
     journal_id = fields.Many2one(
         comodel_name="account.journal",
         required=True,
-        readonly=True,
         ondelete="cascade",
         domain=[
             ("type", "=", "bank"),
@@ -59,7 +58,6 @@ class OnlineBankStatementProvider(models.Model):
     service = fields.Selection(
         selection=lambda self: self._selection_service(),
         required=True,
-        readonly=True,
     )
     interval_type = fields.Selection(
         selection=[
@@ -121,6 +119,33 @@ class OnlineBankStatementProvider(models.Model):
             "Scheduled update interval must be greater than zero!",
         ),
     ]
+
+    @api.model
+    def create(self, vals):
+        """Set provider_id on journal after creation."""
+        records = super().create(vals)
+        records._update_journals()
+        return records
+
+    @api.multi
+    def write(self, vals):
+        """Set provider_id on journal after creation."""
+        result = super().write(vals)
+        self._update_journals()
+        return result
+
+    def _update_journals(self):
+        """Update journal with this provider.
+
+        This is for compatibility reasons.
+        """
+        for this in self:
+            this.journal_id.write(
+                {
+                    "online_bank_statement_provider_id": this.id,
+                    "bank_statements_source": "online",
+                }
+            )
 
     @api.model
     def _get_available_services(self):
@@ -247,7 +272,6 @@ class OnlineBankStatementProvider(models.Model):
         ):
             # Continue with next possible statement.
             return
-        statement = self._get_statement(statement_values, statement_date)
         self._update_statement_balance_values(
             statement_values,
             lines_data,
@@ -510,7 +534,6 @@ class OnlineBankStatementProvider(models.Model):
     @api.model
     def _scheduled_pull(self):
         _logger.info("Scheduled pull of online bank statements...")
-
         providers = self.search(
             [
                 ("active", "=", True),
@@ -523,10 +546,8 @@ class OnlineBankStatementProvider(models.Model):
                 % ", ".join(providers.mapped("journal_id.name"))
             )
             for provider in providers.with_context(
-                {
-                    "scheduled": True,
-                    "tracking_disable": True,
-                }
+                scheduled=True,
+                tracking_disable=True
             ):
                 date_since = (
                     (provider.last_successful_run)
@@ -535,7 +556,6 @@ class OnlineBankStatementProvider(models.Model):
                 )
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
-
         _logger.info("Scheduled pull of online bank statements complete.")
 
     @api.multi
@@ -544,3 +564,15 @@ class OnlineBankStatementProvider(models.Model):
         # Check tests/online_bank_statement_provider_dummy.py for reference
         self.ensure_one()
         return []
+
+    def action_online_bank_statements_pull_wizard(self):
+        self.ensure_one()
+        WIZARD_MODEL = "online.bank.statement.pull.wizard"
+        wizard = self.env[WIZARD_MODEL].create([{"provider_ids": [(6, 0, [self.id])]}])
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": WIZARD_MODEL,
+            "res_id": wizard.id,
+            "view_mode": "form",
+            "target": "new",
+        }
