@@ -106,4 +106,18 @@
         </field>
     </record>
 
+
+    <record id="online_bank_statement_provider_action" model="ir.actions.act_window">
+        <field name="name">Online Bank Statement Providers</field>
+        <field name="res_model">online.bank.statement.provider</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="online_bank_statement_provider_menu"
+        action="online_bank_statement_provider_action"
+        parent="account.menu_account_config"
+        sequence="100"
+    />
+
 </odoo>
