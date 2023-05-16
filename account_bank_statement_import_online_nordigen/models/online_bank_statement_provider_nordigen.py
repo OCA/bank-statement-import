@@ -251,13 +251,15 @@ class OnlineBankStatementProviderNordigen(models.Model):
             )
             self.sudo().message_post(
                 body=_(
-                    "Your account number %s it not in iban "
-                    "accounts numbers founded %s, please check"
+                    "Your account number %(iban)s it not in iban \n"
+                    "accounts numbers found %(discovered_iban)s, please check",
+                    iban=self.journal_id.bank_account_id.display_name,
+                    discovered_iban=accounts_iban,
                 )
-                % (
-                    self.journal_id.bank_account_id.display_name,
-                    " / ".join(accounts_iban),
-                )
+                # % (
+                #     self.journal_id.bank_account_id.display_name,
+                #     " / ".join(accounts_iban),
+                # )
             )
             return False
         return True
@@ -424,8 +426,10 @@ class OnlineBankStatementProviderNordigen(models.Model):
             return res
         except Exception as e:
             _logger.debug(
-                _("Error getting requisition with %s: %s")
-                % (self.nordigen_last_requisition_id, str(e))
+                _(
+                    "Error getting requisition with %(reqid)s: %(reqid)s",
+                    reqid=(self.nordigen_last_requisition_id, str(e)),
+                )
             )
         return []
 
