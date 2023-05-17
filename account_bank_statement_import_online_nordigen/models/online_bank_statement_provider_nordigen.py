@@ -17,7 +17,6 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 _logger = logging.getLogger(__name__)
 
 NORDIGEN_ENDPOINT = "https://ob.nordigen.com/api/v2"
-SANDBOX_INSTITUTION_ID = "SANDBOXFINANCE_SFIN0000"
 
 
 class OnlineBankStatementProviderNordigen(models.Model):
@@ -148,19 +147,7 @@ class OnlineBankStatementProviderNordigen(models.Model):
     def action_check_agreement(self):
         self._update_token_nordigen()
         institution_id = self.nordigen_institution_id
-        if (
-            self.env["ir.module.module"]
-            .sudo()
-            .search(
-                [("name", "=", "account_bank_statement_import_online_nordigen")],
-                limit=1,
-            )
-            .demo
-        ):
-            institution_id = SANDBOX_INSTITUTION_ID
         self.nordigen_last_requisition_ref = str(uuid4())
-        # TO DELETE
-        institution_id = "SANDBOXFINANCE_SFIN0000"
         url = NORDIGEN_ENDPOINT + "/requisitions/"
         response = requests.post(
             url,
@@ -253,8 +240,8 @@ class OnlineBankStatementProviderNordigen(models.Model):
             )
             self.sudo().message_post(
                 body=_(
-                    "Your account number %s it not in iban "
-                    "accounts numbers founded %s, please check"
+                    "Your account number %(iban_number)s it not in iban "
+                    "accounts numbers founded %(accounts_iban)s, please check"
                 )
                 % (
                     self.journal_id.bank_account_id.display_name,
@@ -426,7 +413,9 @@ class OnlineBankStatementProviderNordigen(models.Model):
             return res
         except Exception as e:
             _logger.debug(
-                _("Error getting requisition with %s: %s")
+                _(
+                    "Error getting requisition with %(last_requisition_id)s: %(error_message)s"
+                )
                 % (self.nordigen_last_requisition_id, str(e))
             )
         return []
