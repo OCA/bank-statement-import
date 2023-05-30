@@ -33,7 +33,10 @@ class OnlineBankStatementProviderTransferwise(models.Model):
     # NOTE: This is needed to workaround possible multiple 'origin' fields
     # present in the same view, resulting in wrong field view configuraion
     # if more than one is widget="dynamic_dropdown"
-    transferwise_profile = fields.Char(related="origin", readonly=False,)
+    transferwise_profile = fields.Char(
+        related="origin",
+        readonly=False,
+    )
 
     @api.model
     def values_transferwise_profile(self):
@@ -52,7 +55,10 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                 lambda entry: (
                     str(entry["id"]),
                     "%s %s (personal)"
-                    % (entry["details"]["firstName"], entry["details"]["lastName"],)
+                    % (
+                        entry["details"]["firstName"],
+                        entry["details"]["lastName"],
+                    )
                     if entry["type"] == "personal"
                     else entry["details"]["name"],
                 ),
@@ -70,7 +76,8 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         self.ensure_one()
         if self.service != "transferwise":
             return super()._obtain_statement_data(
-                date_since, date_until,
+                date_since,
+                date_until,
             )  # pragma: no cover
 
         api_base = self.api_base or TRANSFERWISE_API_BASE
@@ -78,7 +85,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         private_key = self.certificate_private_key
         if private_key:
             private_key = serialization.load_pem_private_key(
-                private_key.encode(), password=None, backend=default_backend(),
+                private_key.encode(),
+                password=None,
+                backend=default_backend(),
             )
         currency = (self.currency_id or self.company_id.currency_id).name
 
@@ -187,7 +196,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             fees_value = fees_value.copy_sign(amount_value)
         amount_value -= fees_value
         unique_import_id = "{}-{}-{}".format(
-            transaction_type, reference_number, int(date.timestamp()),
+            transaction_type,
+            reference_number,
+            int(date.timestamp()),
         )
         line = {
             "name": payment_reference or description or "",
@@ -275,11 +286,16 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                 raise UserError(_("Strong Customer Authentication is not configured"))
             one_time_token = e.headers["X-2FA-Approval"]
             signature = private_key.sign(
-                one_time_token.encode(), padding.PKCS1v15(), hashes.SHA256(),
+                one_time_token.encode(),
+                padding.PKCS1v15(),
+                hashes.SHA256(),
             )
 
             with self._transferwise_urlopen(
-                url, api_key, one_time_token, b64encode(signature).decode(),
+                url,
+                api_key,
+                one_time_token,
+                b64encode(signature).decode(),
             ) as response:
                 content = response.read().decode(
                     response.headers.get_content_charset() or "utf-8"
@@ -316,7 +332,8 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             self.certificate_public_key = (
                 private_key.public_key()
                 .public_bytes(
-                    serialization.Encoding.PEM, serialization.PublicFormat.PKCS1,
+                    serialization.Encoding.PEM,
+                    serialization.PublicFormat.PKCS1,
                 )
                 .decode()
             )
@@ -328,7 +345,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         self.ensure_one()
 
         private_key = rsa.generate_private_key(
-            public_exponent=65537, key_size=2048, backend=default_backend(),
+            public_exponent=65537,
+            key_size=2048,
+            backend=default_backend(),
         )
         self.certificate_private_key = private_key.private_bytes(
             serialization.Encoding.PEM,
@@ -338,7 +357,10 @@ class OnlineBankStatementProviderTransferwise(models.Model):
 
         self.certificate_public_key = (
             private_key.public_key()
-            .public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.PKCS1,)
+            .public_bytes(
+                serialization.Encoding.PEM,
+                serialization.PublicFormat.PKCS1,
+            )
             .decode()
         )
 

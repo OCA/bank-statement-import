@@ -60,7 +60,10 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
         self.transferwise_parse_transaction = lambda payload: (
             Provider._transferwise_transaction_to_lines(
                 Provider._transferwise_preparse_transaction(
-                    json.loads(payload, parse_float=Decimal,)
+                    json.loads(
+                        payload,
+                        parse_float=Decimal,
+                    )
                 )
             )
         )
@@ -118,7 +121,8 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
         )
         values_transferwise_profile = []
         with mock.patch(
-            _provider_class + "._transferwise_retrieve", return_value=mocked_response,
+            _provider_class + "._transferwise_retrieve",
+            return_value=mocked_response,
         ):
             values_transferwise_profile = self.OnlineBankStatementProvider.with_context(
                 {"api_base": "https://example.com", "api_key": "dummy"}
@@ -186,10 +190,12 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
             return json.loads(payload, parse_float=Decimal)
 
         with mock.patch(
-            _provider_class + "._transferwise_retrieve", side_effect=mock_response,
+            _provider_class + "._transferwise_retrieve",
+            side_effect=mock_response,
         ):
             data = provider._obtain_statement_data(
-                self.now - relativedelta(hours=1), self.now,
+                self.now - relativedelta(hours=1),
+                self.now,
             )
 
         self.assertEqual(len(data[0]), 0)
@@ -213,10 +219,12 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
         provider.password = "API_KEY"
 
         with mock.patch(
-            _provider_class + "._transferwise_retrieve", return_value=[],
+            _provider_class + "._transferwise_retrieve",
+            return_value=[],
         ):
             data = provider._obtain_statement_data(
-                self.now - relativedelta(hours=1), self.now,
+                self.now - relativedelta(hours=1),
+                self.now,
             )
 
         self.assertFalse(data)
@@ -298,7 +306,8 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
             ],
         ):
             data = provider._obtain_statement_data(
-                self.now - relativedelta(hours=1), self.now,
+                self.now - relativedelta(hours=1),
+                self.now,
             )
 
         self.assertEqual(len(data[0]), 0)
