@@ -1,7 +1,7 @@
 odoo.define("account_statement_import.dashboard.kanban", function (require) {
     "use strict";
     var viewRegistry = require("web.view_registry");
-
+    require("account.dashboard.kanban");
     var AccountDashboardView = viewRegistry.get("account_dashboard_kanban");
     // Value can be undefined on some test scenarios. Avoid an error by checking if it is defined
     if (AccountDashboardView !== undefined) {
