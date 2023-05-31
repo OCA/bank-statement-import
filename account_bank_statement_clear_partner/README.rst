@@ -48,9 +48,9 @@ To use this module, you need to:
 
 #. Go to **Invoicing**.
 #. Click on the name of a bank journal (**Bank** in demo data, for example).
-#. Select a bank statement.
-#. Press "Clear partners" button located on the header.
-#. All partners in non-reconciled lines will be cleared.
+#. Select a bank statements from list.
+#. Press "Clear partners" button located in the "Action".
+#. All partners in non-reconciled lines will be cleared for selected statements.
 
 Bug Tracker
 ===========
@@ -58,7 +58,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_bank_statement_clear_partner%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_bank_statement_clear_partner%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -80,6 +80,7 @@ Contributors
   * Pedro M. Baeza
   * Carlos Roca
   * César A. Sánchez
+* Dhara Solanki <dhara.solanki@initos.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -94,6 +95,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/15.0/account_bank_statement_clear_partner>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/16.0/account_bank_statement_clear_partner>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

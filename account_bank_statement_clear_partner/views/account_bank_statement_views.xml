@@ -2,19 +2,15 @@
 <!-- Copyright 2020 Tecnativa - João Marques
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record id="view_bank_statement_form" model="ir.ui.view">
-        <field name="model">account.bank.statement</field>
-        <field name="inherit_id" ref="account.view_bank_statement_form" />
-        <field name="arch" type="xml">
-            <button name="button_validate_or_action" position="after">
-                <button
-                    name="clear_partners"
-                    string="Clear partners"
-                    type="object"
-                    class="oe_highlight"
-                    attrs="{'invisible':['|','|',('all_lines_reconciled','=',True),('line_ids','=',[]),('state', '!=', 'open')]}"
-                />
-            </button>
-        </field>
+    <record
+        id="model_account_bank_statement_action_clear_partner"
+        model="ir.actions.server"
+    >
+        <field name="name">Clear partners</field>
+        <field name="model_id" ref="account.model_account_bank_statement" />
+        <field name="binding_model_id" ref="account.model_account_bank_statement" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.clear_partners()</field>
     </record>
 </odoo>

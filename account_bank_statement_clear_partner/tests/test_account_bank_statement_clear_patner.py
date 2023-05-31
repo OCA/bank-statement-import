@@ -4,13 +4,14 @@
 from odoo.tests import common
 
 
-class TestAccountBankStatementClearPartner(common.SavepointCase):
+class TestAccountBankStatementClearPartner(common.TransactionCase):
     @classmethod
     def setup_multi_currency_data(cls, default_values=None, rate2016=3.0, rate2017=2.0):
         default_values = default_values or {}
         foreign_currency = cls.env["res.currency"].search(
             [("active", "=", False)], limit=1
         )
+        foreign_currency.active = True
         rate1 = cls.env["res.currency.rate"].create(
             {
                 "name": "2016-01-01",
@@ -38,14 +39,11 @@ class TestAccountBankStatementClearPartner(common.SavepointCase):
         cls.partner_1 = cls.env["res.partner"].create({"name": "Partner 1"})
         cls.partner_2 = cls.env["res.partner"].create({"name": "Partner 2"})
         cls.currency_data = cls.setup_multi_currency_data()
-        cls.account_type_1 = cls.env["account.account.type"].create(
-            {"name": "Test Account Type 1", "type": "other", "internal_group": "income"}
-        )
         cls.account_1 = cls.env["account.account"].create(
             {
                 "name": "Test Account 1",
                 "code": "AAAAAAAAAAAAAAAA",
-                "user_type_id": cls.account_type_1.id,
+                "account_type": "income_other",
             }
         )
         cls.sequence_1 = cls.env["ir.sequence"].create({"name": "Test Sequence 1"})
@@ -66,6 +64,7 @@ class TestAccountBankStatementClearPartner(common.SavepointCase):
             {
                 "name": "Test Account Bank Statement 1",
                 "statement_id": cls.statement_1.id,
+                "journal_id": cls.journal_1.id,
                 "partner_id": cls.partner_1.id,
                 "payment_ref": "REF-TEST-1",
                 "foreign_currency_id": cls.currency_2.id,
@@ -77,6 +76,7 @@ class TestAccountBankStatementClearPartner(common.SavepointCase):
             {
                 "name": "Test Account Bank Statement 2",
                 "statement_id": cls.statement_1.id,
+                "journal_id": cls.journal_1.id,
                 "partner_id": False,
                 "payment_ref": "REF-TEST-2",
             }
@@ -85,6 +85,7 @@ class TestAccountBankStatementClearPartner(common.SavepointCase):
             {
                 "name": "Test Account Bank Statement 3",
                 "statement_id": cls.statement_1.id,
+                "journal_id": cls.journal_1.id,
                 "partner_id": cls.partner_2.id,
                 "payment_ref": "REF-TEST-3",
             }

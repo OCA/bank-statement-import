@@ -5,3 +5,4 @@
   * Pedro M. Baeza
   * Carlos Roca
   * César A. Sánchez
+* Dhara Solanki <dhara.solanki@initos.com>

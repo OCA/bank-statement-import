@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Clear all partners in bank statement lines",
-    "version": "15.0.1.0.1",
+    "version": "16.0.1.0.0",
     # see https://odoo-community.org/page/development-status
     "development_status": "Production/Stable",
     "category": "Invoicing Management",

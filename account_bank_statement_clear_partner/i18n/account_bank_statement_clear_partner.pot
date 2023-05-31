@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-31 12:18+0000\n"
+"PO-Revision-Date: 2023-05-31 12:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +21,6 @@ msgid "Bank Statement"
 msgstr ""
 
 #. module: account_bank_statement_clear_partner
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_clear_partner.view_bank_statement_form
+#: model:ir.actions.server,name:account_bank_statement_clear_partner.model_account_bank_statement_action_clear_partner
 msgid "Clear partners"
 msgstr ""
