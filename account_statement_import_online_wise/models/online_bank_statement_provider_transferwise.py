@@ -184,9 +184,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         date = transaction["date"]
         payment_reference = details.get("paymentReference")
         description = details.get("description")
-        note = reference_number
+        pay_ref = reference_number
         if description:
-            note = "{}: {}".format(note, description)
+            pay_ref = "{}: {}".format(pay_ref, description)
         amount = transaction["amount"]
         amount_value = amount.get("value", 0)
         fees_value = total_fees.get("value", Decimal())
@@ -204,7 +204,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             "name": payment_reference or description or "",
             "amount": str(amount_value),
             "date": date,
-            "note": note,
+            "payment_ref": pay_ref,
             "unique_import_id": unique_import_id,
         }
         if recipient:
@@ -256,7 +256,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                     "date": date,
                     "partner_name": "Wise (former TransferWise)",
                     "unique_import_id": "%s-FEE" % unique_import_id,
-                    "note": _("Transaction fee for %s") % reference_number,
+                    "payment_ref": _("Transaction fee for %s") % reference_number,
                 }
             ]
         return lines
