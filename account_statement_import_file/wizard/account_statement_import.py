@@ -18,8 +18,7 @@ class AccountStatementImport(models.TransientModel):
 
     statement_file = fields.Binary(
         required=True,
-        help="Get you bank statements in electronic format from your bank "
-        "and select them here.",
+        help="Download bank statement files from your bank and upload them here.",
     )
     statement_filename = fields.Char()
 
