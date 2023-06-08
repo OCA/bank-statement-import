@@ -72,12 +72,8 @@ msgstr "Afficher le nom"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
+msgid "Download bank statement files from your bank and upload them here."
 msgstr ""
-"Obtenez vos relevés bancaires au format électronique auprès de votre banque "
-"et sélectionnez-les ici."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -263,6 +259,13 @@ msgid ""
 msgstr ""
 "Vous avez déjà importé ce fichier ou ce fichier ne contient que des "
 "transactions déjà importées."
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "Obtenez vos relevés bancaires au format électronique auprès de votre "
+#~ "banque et sélectionnez-les ici."
 
 #, python-format
 #~ msgid "Already imported items"
