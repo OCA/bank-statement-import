@@ -65,10 +65,10 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
-"No se pudo encontrar ninguna cuenta bancaria con el número '%(account_number)"
-"s' vinculada al partner '%(partner_name)s'. Debe crear la cuenta bancaria y "
-"establecerla en el diario bancario relacionado. Si el diario bancario "
-"relacionado aún no existe, debe crear uno nuevo."
+"No se pudo encontrar ninguna cuenta bancaria con el número "
+"'%(account_number)s' vinculada al partner '%(partner_name)s'. Debe crear la "
+"cuenta bancaria y establecerla en el diario bancario relacionado. Si el "
+"diario bancario relacionado aún no existe, debe crear uno nuevo."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -87,12 +87,8 @@ msgstr "Nombre mostrado"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
+msgid "Download bank statement files from your bank and upload them here."
 msgstr ""
-"Obtenga sus extractos bancarios en formato electrónico de su banco y "
-"selecciónelos aquí."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -285,6 +281,13 @@ msgid ""
 msgstr ""
 "Ya ha importado este archivo, o este archivo solo contiene transacciones ya "
 "importadas."
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "Obtenga sus extractos bancarios en formato electrónico de su banco y "
+#~ "selecciónelos aquí."
 
 #, python-format
 #~ msgid "Already imported items"
