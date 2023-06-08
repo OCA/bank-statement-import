@@ -75,9 +75,7 @@ msgstr "પ્રદર્શન નામ"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
+msgid "Download bank statement files from your bank and upload them here."
 msgstr ""
 
 #. module: account_statement_import_file

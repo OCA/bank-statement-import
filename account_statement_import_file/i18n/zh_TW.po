@@ -75,10 +75,8 @@ msgstr "顯示名稱"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
-msgstr "從銀行拿到電子格式的銀行對帳單並且在這裡選擇他們"
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -261,6 +259,11 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr "從銀行拿到電子格式的銀行對帳單並且在這裡選擇他們"
 
 #, python-format
 #~ msgid "Already imported items"

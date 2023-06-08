@@ -76,10 +76,8 @@ msgstr "이름 표시"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
-msgstr "은행에서 예금거래 명세서를 전자 형식으로 가져오고 여기서 선택합니다."
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -263,6 +261,12 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "은행에서 예금거래 명세서를 전자 형식으로 가져오고 여기서 선택합니다."
 
 #, python-format
 #~ msgid "Already imported items"

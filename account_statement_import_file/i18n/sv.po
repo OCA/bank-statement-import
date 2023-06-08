@@ -75,11 +75,8 @@ msgstr "Visningsnamn"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
+msgid "Download bank statement files from your bank and upload them here."
 msgstr ""
-"Hämta dina kontoutdrag i elektroniskt format från din bank och välj dem här."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -267,6 +264,13 @@ msgid ""
 msgstr ""
 "Du har redan importerat den här filen eller så innehåller den här filen "
 "endast transaktioner som redan har importerats."
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "Hämta dina kontoutdrag i elektroniskt format från din bank och välj dem "
+#~ "här."
 
 #, python-format
 #~ msgid "Already imported items"

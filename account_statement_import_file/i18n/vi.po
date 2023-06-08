@@ -78,12 +78,8 @@ msgstr "Tên hiển thị"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
-msgid ""
-"Get you bank statements in electronic format from your bank and select them "
-"here."
+msgid "Download bank statement files from your bank and upload them here."
 msgstr ""
-"Nhận sao kê ngân hàng định dạng điện tử từ ngân hàng của bạn và chọn chúng ở "
-"đây."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -267,6 +263,13 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "Nhận sao kê ngân hàng định dạng điện tử từ ngân hàng của bạn và chọn "
+#~ "chúng ở đây."
 
 #, python-format
 #~ msgid "Already imported items"
