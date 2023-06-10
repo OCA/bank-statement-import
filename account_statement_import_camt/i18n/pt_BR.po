@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-16 08:08+0000\n"
-"PO-Revision-Date: 2015-10-09 00:26+0000\n"
-"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-"
-"statement-import-8-0/language/pt_BR/)\n"
+"PO-Revision-Date: 2023-06-10 20:08+0000\n"
+"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/"
+"OCA-bank-statement-import-8-0/language/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
@@ -33,25 +34,23 @@ msgstr ""
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Entry Information"
-msgstr ""
+msgstr "Informações Adicionais da Entrada"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Transaction Information"
-msgstr ""
+msgstr "Informação Adicional da Transação"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
-#, fuzzy
 msgid "Bank Statement"
-msgstr "Importar Extrato Bancário"
+msgstr "Extrato Bancário"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
-#, fuzzy
 msgid "Bank Statement Line"
-msgstr "Importar Extrato Bancário"
+msgstr "Linha Extrato Bancário"
 
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
@@ -62,13 +61,13 @@ msgstr ""
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Cheque Number"
-msgstr ""
+msgstr "Número Cheque"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Communication"
-msgstr ""
+msgstr "Comunicação"
 
 #. module: account_statement_import_camt
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement__display_name
@@ -77,7 +76,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome exibido"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
@@ -102,14 +101,14 @@ msgstr "Importar Extrato Bancário"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
-#, python-format
+#, fuzzy, python-format
 msgid "Instructed Id"
-msgstr ""
+msgstr "Id instruído"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diário"
 
 #. module: account_statement_import_camt
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_bank_statement____last_update
@@ -118,7 +117,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import____last_update
 #: model:ir.model.fields,field_description:account_statement_import_camt.field_account_statement_import_camt_parser____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificação"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
@@ -136,43 +135,43 @@ msgstr ""
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Partner Account Number"
-msgstr ""
+msgstr "Número Conta do Parceiro"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Partner Name"
-msgstr ""
+msgstr "Nome Parceiro"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Postal Address"
-msgstr ""
+msgstr "Endereço Postal"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Additional Information"
-msgstr ""
+msgstr "Informações Adicionais Motivo da Devolução"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Code"
-msgstr ""
+msgstr "Código do motivo da devolução"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Code (Proprietary)"
-msgstr ""
+msgstr "Código do motivo da devolução (proprietário)"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
@@ -184,31 +183,31 @@ msgstr ""
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Structured Reference"
-msgstr ""
+msgstr "Referencia Estruturada"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Date"
-msgstr ""
+msgstr "Data Transação"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Identification"
-msgstr ""
+msgstr "Identificação de Transação"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Type"
-msgstr ""
+msgstr "Tipo de Transação"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Unstructured Reference"
-msgstr ""
+msgstr "Referencia não Estruturada"
 
 #. module: account_statement_import_camt
 #: code:addons/account_statement_import_camt/models/account_journal.py:0
