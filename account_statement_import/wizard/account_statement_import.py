@@ -306,6 +306,7 @@ class AccountStatementImport(models.TransientModel):
         existing_st_line_ids = {}
         for st_vals in stmts_vals:
             st_lines_to_create = []
+            journal_id = st_vals.get("journal_id")
             for lvals in st_vals["transactions"]:
                 existing_line = False
                 if lvals.get("unique_import_id"):
@@ -321,6 +322,8 @@ class AccountStatementImport(models.TransientModel):
                     if "balance_start" in st_vals:
                         st_vals["balance_start"] += float(lvals["amount"])
                 else:
+                    if journal_id and not lvals.get("journal_id"):
+                        lvals["journal_id"] = journal_id
                     st_lines_to_create.append(lvals)
 
             if len(st_lines_to_create) > 0:
