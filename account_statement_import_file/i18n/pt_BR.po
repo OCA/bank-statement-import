@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2023-06-10 20:08+0000\n"
+"PO-Revision-Date: 2023-06-12 16:10+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/"
 "41243/pt_BR/)\n"
@@ -164,33 +164,31 @@ msgstr "Falta o código da moeda no arquivo do extrato bancário."
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Missing payment_ref on a transaction."
-msgstr "Este arquivo não contém qualquer transação."
+msgstr "Payment_ref ausente em uma transação."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
-#, fuzzy
 msgid "Statement File"
-msgstr "Linha de Extrato Bancário"
+msgstr "Arquivo de Extrato Bancário"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
-msgstr "Linha de Extrato Bancário"
+msgstr "Arquivo de Extrato Bancário"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "Formatos suportados:"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
-msgstr "A conta deste extrato não é a mesma que o diário (%s)."
+msgstr "A Conta Bancária não está definida no diário '%s'."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -201,6 +199,10 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"A conta bancária com o número '%(account_number)s' existe no Odoo, mas não "
+"está definida em nenhum diário do banco. Você deve defini-la no diário do "
+"banco relacionado. Se o diário do banco relacionado ainda não existir, você "
+"deverá criar um novo."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -210,6 +212,8 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
+"O arquivo de extrato bancário usa a moeda '%s', mas não existe essa moeda no "
+"Odoo."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -219,6 +223,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"A moeda do extrato bancário (%(currency_name)s) não é a mesma moeda do "
+"diário '%(journal_name)s' (%(journal_currency_name)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -229,6 +235,9 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"O formato desse arquivo de extrato bancário não contém o número da conta "
+"bancária, portanto, você deve iniciar o assistente para o diário do banco no "
+"painel."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -238,35 +247,36 @@ msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
 msgstr ""
+"O diário encontrado para o arquivo (%(journal_match)s) é diferente do diário "
+"selecionada (%(journal_selected)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "A análise do arquivo de extrato retornou um resultado inválido."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
 msgstr ""
-"Não foi possível entender arquivo enviado.\n"
-"Você instalou o módulo de apoio a este tipo de arquivo?"
+"Este formato de arquivo de extrato bancário não é suportado.\n"
+"Você instalou o módulo Odoo para suportar este formato?"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Upload Bank Statements"
-msgstr ""
+msgstr "Carregar extratos bancários"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
-msgstr "Linha de Extrato Bancário"
+msgstr "Carregar arquivo extratos bancários"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -276,6 +286,8 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+"Você já importou este arquivo ou este arquivo contém apenas transações já "
+"importadas."
 
 #~ msgid ""
 #~ "Get you bank statements in electronic format from your bank and select "
