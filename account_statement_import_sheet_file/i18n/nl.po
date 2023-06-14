@@ -596,21 +596,3 @@ msgstr "spatie"
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "tab"
-
-#~ msgid "Amount column"
-#~ msgstr "Bedrag kolom"
-
-#~ msgid "Bank Account column"
-#~ msgstr "Bankrekening Kolom"
-
-#~ msgid "Bank Name column"
-#~ msgstr "Bank naam kolom"
-
-#~ msgid "Currency column"
-#~ msgstr "Valuta Kolom"
-
-#~ msgid "Description column"
-#~ msgstr "Kolom omschrijving"
-
-#~ msgid "Notes column"
-#~ msgstr "Notitie Kolom"
