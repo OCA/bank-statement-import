@@ -6,34 +6,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-06-14 15:09+0000\n"
+"Last-Translator: Hans Henrik Gabelgaard <hhg@gabelgaard.org>\n"
 "Language-Team: none\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:154
 #, python-format
 msgid "%(number)s %(type)s"
-msgstr ""
+msgstr "%(number)s %(type)s"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Handling påkrævet"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__allow_empty_statements
 msgid "Allow Empty Statements"
-msgstr ""
+msgstr "Tillad tomt kontoudtog"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__api_base
@@ -43,17 +45,17 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Antal vedhæftede filer"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annuller"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__certificate
 msgid "Certificate"
-msgstr ""
+msgstr "Certificat"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__certificate_chain
@@ -73,55 +75,55 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "Virksomhed"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__company_id
 msgid "Company related to this journal"
-msgstr ""
+msgstr "Virksomhed relateret til denne journal"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__create_uid
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oprettet af"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__create_date
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oprettet den"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,statement_creation_mode:0
 msgid "Daily statements"
-msgstr ""
+msgstr "Daglige kontoudtog"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,interval_type:0
 msgid "Day(s)"
-msgstr ""
+msgstr "Dag(e)"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vist navn"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:197
@@ -132,22 +134,22 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Følgere"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Følgere (Kanaler)"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Følgere (Partnere)"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,interval_type:0
 msgid "Hour(s)"
-msgstr ""
+msgstr "Time(r)"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__id
@@ -158,99 +160,99 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__message_unread
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Hvis afmærket, kræver nye beskeder din attention."
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Hvis markeret, kræver nye beskeder din opmærksomhed."
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Hvis markeret, er der beskeder med leveringsfejl."
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:151
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 #, python-format
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktiv"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__interval_type
 msgid "Interval Type"
-msgstr ""
+msgstr "Interval type"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Er følger"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:206
 #, python-format
 msgid "Issue with Online Bank Statement Provider"
-msgstr ""
+msgstr "Problem med online kotonoplyningstjeneste"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model,name:account_bank_statement_import_online.model_account_journal
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__key
 msgid "Key"
-msgstr ""
+msgstr "Nøgle"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider____last_update
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Senest rettet den"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__write_uid
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Senest rettet af"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__write_date
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Senest opdateret den"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__last_successful_run
 msgid "Last successful pull"
-msgstr ""
+msgstr "Seneste succesfulde data import"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Primært vedhæftning"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Fejl ved levering af besked"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Meddelelser"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,interval_type:0
 msgid "Minute(s)"
-msgstr ""
+msgstr "Minute(r)"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,statement_creation_mode:0
 msgid "Monthly statements"
-msgstr ""
+msgstr "Månedlig kontoudtog"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:204
@@ -261,43 +263,43 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__next_run
 msgid "Next scheduled pull"
-msgstr ""
+msgstr "Næste schedulerede import"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Antal aktioner"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_has_error_counter
 msgid "Number of error"
-msgstr ""
+msgstr "Antal fejl"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Antal meddelelser, som kræver en handling"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Antal meddelelser med leveringsfejl"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Antal ulæste beskeder"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/account_journal.py:28
 #, python-format
 msgid "Online (OCA)"
-msgstr ""
+msgstr "Online (OCA)"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model,name:account_bank_statement_import_online.model_online_bank_statement_provider
@@ -305,40 +307,40 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_journal__online_bank_statement_provider
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
 msgid "Online Bank Statement Provider"
-msgstr ""
+msgstr "Online kontoudtogs leverandør"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_filter
 msgid "Online Bank Statement Providers"
-msgstr ""
+msgstr "Online kontoudtogs leverandører"
 
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/account_journal.py:90
 #: model:ir.model,name:account_bank_statement_import_online.model_online_bank_statement_pull_wizard
 #, python-format
 msgid "Online Bank Statement Pull Wizard"
-msgstr ""
+msgstr "Online kontoudtogs import guide"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.view_account_bank_journal_form
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.view_account_journal_form
 msgid "Online Bank Statements (OCA)"
-msgstr ""
+msgstr "Online kontoudtog (OCA)"
 
 #. module: account_bank_statement_import_online
 #: model:ir.actions.server,name:account_bank_statement_import_online.action_online_bank_statements_pull_wizard
 msgid "Online Bank Statements Pull Wizard"
-msgstr ""
+msgstr "Online kontoudtogs import guide"
 
 #. module: account_bank_statement_import_online
 #: sql_constraint:online.bank.statement.provider:0
 msgid "Only one online banking statement provider per journal!"
-msgstr ""
+msgstr "Kun en online kontoudtogsleverandør pr journal!"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__origin
 msgid "Origin"
-msgstr ""
+msgstr "Oprindelse"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__passphrase
@@ -354,24 +356,24 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.view_account_bank_journal_form
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.view_account_journal_form
 msgid "Provider"
-msgstr ""
+msgstr "Leverandør"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__provider_ids
 msgid "Providers"
-msgstr ""
+msgstr "Leverandører"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Pull"
-msgstr ""
+msgstr "Hent"
 
 #. module: account_bank_statement_import_online
 #: model:ir.actions.server,name:account_bank_statement_import_online.ir_cron_account_pull_online_bank_statements_ir_actions_server
 #: model:ir.cron,cron_name:account_bank_statement_import_online.ir_cron_account_pull_online_bank_statements
 #: model:ir.cron,name:account_bank_statement_import_online.ir_cron_account_pull_online_bank_statements
 msgid "Pull Online Bank Statements"
-msgstr ""
+msgstr "Hent online kontoudtog"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__account_number
@@ -381,17 +383,17 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_provider_form
 msgid "Scheduled Pull"
-msgstr ""
+msgstr "Scheduleret import"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__interval_number
 msgid "Scheduled update interval"
-msgstr ""
+msgstr "Scheduleret import interval"
 
 #. module: account_bank_statement_import_online
 #: sql_constraint:online.bank.statement.provider:0
 msgid "Scheduled update interval must be greater than zero!"
-msgstr ""
+msgstr "Scheduleret import interval skal være større end 0!"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__service
@@ -401,23 +403,23 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__date_since
 msgid "Since"
-msgstr ""
+msgstr "Siden"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Since (at least)"
-msgstr ""
+msgstr "Siden (mindst)"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
 msgid "Statement Creation Mode"
-msgstr ""
+msgstr "Kontoudtogs oprettelse metode"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_bank_statement_import_journal_creation__online_bank_statement_provider_id
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_account_journal__online_bank_statement_provider_id
 msgid "Statement Provider"
-msgstr ""
+msgstr "Kontoudtogs leverandør"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__currency_id
@@ -437,49 +439,49 @@ msgstr ""
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Ulæste beskeder"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Antal ulæste beskeder"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_pull_wizard__date_until
 msgid "Until"
-msgstr ""
+msgstr "Indtil"
 
 #. module: account_bank_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Until (at least)"
-msgstr ""
+msgstr "Indtil (mindst)"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__update_schedule
 msgid "Update Schedule"
-msgstr ""
+msgstr "Update Schedule"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__username
 msgid "Username"
-msgstr ""
+msgstr "Brugernavn"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,field_description:account_bank_statement_import_online.field_online_bank_statement_provider__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Website beskeder"
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Website kommunikations historik"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,interval_type:0
 msgid "Week(s)"
-msgstr ""
+msgstr "Uge(r)"
 
 #. module: account_bank_statement_import_online
 #: selection:online.bank.statement.provider,statement_creation_mode:0
 msgid "Weekly statements"
-msgstr ""
+msgstr "Ugentlige kontoudtog"
