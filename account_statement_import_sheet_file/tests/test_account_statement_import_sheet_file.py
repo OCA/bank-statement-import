@@ -678,3 +678,94 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             self.parser._parse_decimal(Decimal("1234.56"), self.mock_mapping_comma_dot),
             1234.56,
         )
+
+    def test_offsets(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        file_name = "fixtures/sample_statement_offsets.xlsx"
+        data = self._data_file(file_name)
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        with self.assertRaises(UserError):
+            wizard.with_context(
+                account_statement_import_txt_xlsx_test=True
+            ).import_file_button()
+        statement_map_offsets = self.sample_statement_map.copy(
+            {
+                "offset_column": 1,
+                "header_lines_skip_count": 3,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": statement_map_offsets.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+        self.assertEqual(statement.balance_start, 0.0)
+        self.assertEqual(statement.balance_end_real, 1491.5)
+        self.assertEqual(statement.balance_end, 1491.5)
+
+    def test_skip_empty_lines(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        file_name = "fixtures/empty_lines_statement.csv"
+        data = self._data_file(file_name, "utf-8")
+        statement_map_empty_line = self.sample_statement_map.copy(
+            {
+                "skip_empty_lines": False,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": statement_map_empty_line.id,
+            }
+        )
+        with self.assertRaises(UserError):
+            wizard.with_context(
+                account_statement_import_txt_xlsx_test=True
+            ).import_file_button()
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 3)
+        self.assertEqual(statement.balance_start, 0.0)
+        self.assertEqual(statement.balance_end_real, 2291.5)
+        self.assertEqual(statement.balance_end, 2291.5)
