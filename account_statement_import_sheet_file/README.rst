@@ -106,6 +106,8 @@ Contributors
 
    -  Alexey Pelykh <alexey.pelykh@corphub.eu>
 
+-  Sebastiano Picchi sebastiano.picchi@pytech.it
+
 Maintainers
 -----------
 

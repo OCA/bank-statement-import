@@ -10,3 +10,4 @@
   - Miquel Raïch Regué \<<miquel.raich@forgeflow.com>\>
 - [CorporateHub](https://corporatehub.eu/)
   - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
+- Sebastiano Picchi <sebastiano.picchi@pytech.it>

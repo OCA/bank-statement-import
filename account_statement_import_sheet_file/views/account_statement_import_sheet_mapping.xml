@@ -56,8 +56,10 @@
                             <field name="credit_value" required="debit_credit_column" />
                         </group>
                         <group>
+                            <field name="skip_empty_lines" />
                             <field name="header_lines_skip_count" />
                             <field name="footer_lines_skip_count" />
+                            <field name="offset_column" invisible="no_header" />
                         </group>
                     </group>
                     <group string="Columns">
