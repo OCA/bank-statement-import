@@ -188,6 +188,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
             else:
                 [next(csv_or_xlsx) for _i in range(header_line)]
                 header = [value.strip() for value in next(csv_or_xlsx)]
+            if mapping.offset_column:
+                header = header[mapping.offset_column :]
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
         # respectivos campos related
@@ -226,7 +228,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         footer_line = numrows - mapping.footer_lines_skip_count
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(mapping.header_lines_skip_count, footer_line)
+            rows = range(label_line, footer_line)
         else:
             rows = csv_or_xlsx
 
@@ -236,7 +238,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
                 values = []
-                for col_index in range(0, sheet.row_len(row)):
+                for col_index in range(mapping.offset_column, sheet.row_len(row)):
                     cell_type = sheet.cell_type(row, col_index)
                     cell_value = sheet.cell_value(row, col_index)
                     if cell_type == xlrd.XL_CELL_DATE:
@@ -246,6 +248,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 if index >= footer_line:
                     continue
                 values = list(row)
+            if mapping.skip_empty_lines and not any(values):
+                continue
 
             timestamp = self._get_values_from_column(
                 values, columns, "timestamp_column"
@@ -395,7 +399,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 line["bank_name"] = bank_name
             if bank_account is not None:
                 line["bank_account"] = bank_account
-            lines.append(line)
+
+            if line:
+                lines.append(line)
         return lines
 
     @api.model

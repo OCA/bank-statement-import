@@ -56,6 +56,11 @@ msgid "Account: %s; "
 msgstr "科目： %s; "
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__skip_empty_lines
+msgid "Allows to skip empty lines"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_column
 msgid "Amount column"
 msgstr "金额列"
@@ -123,6 +128,11 @@ msgstr "中欧 (Latin-2 / ISO 8859-2)"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid "Columns"
 msgstr "列名"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__offset_column
+msgid "Columns to ignore before starting to parse"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__create_uid
@@ -273,7 +283,8 @@ msgid ""
 "In case statement provides original currency for transactions with automatic "
 "currency conversion, column to get original transaction amount in original "
 "transaction currency from"
-msgstr "如果对账单提供了带有自动货币转换的交易的原货币，从该列获取原交易货币中的原交"
+msgstr ""
+"如果对账单提供了带有自动货币转换的交易的原货币，从该列获取原交易货币中的原交"
 "易金额"
 
 #. module: account_statement_import_sheet_file
@@ -282,7 +293,8 @@ msgid ""
 "In some cases such as in credit card statements the amounts are expressed in "
 "the inverse sign. By setting this flag during the upload the amounts will be "
 "inverted in sign."
-msgstr "在某些情况下，例如在信用卡对账单中，金额的表达方式是符号相反的。在上传时设置"
+msgstr ""
+"在某些情况下，例如在信用卡对账单中，金额的表达方式是符号相反的。在上传时设置"
 "此标志，金额的符号将被反转。"
 
 #. module: account_statement_import_sheet_file
@@ -336,6 +348,18 @@ msgstr "未找到文件的合法编码"
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__notes_column
 msgid "Notes Column"
 msgstr "备注列"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__offset_column
+msgid "Offset Column"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
+#, python-format
+msgid "Offsets cannot be negative"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_amount_column
@@ -400,6 +424,11 @@ msgstr ""
 "简单值：在金额列中使用有符号的金额\n"
 "绝对值：在借方和贷方使用同一列 （绝对值 + 指示符号）\n"
 "不同的贷方/借方列：为借方和贷方使用不同的列"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__skip_empty_lines
+msgid "Skip Empty Lines"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
