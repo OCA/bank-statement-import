@@ -194,6 +194,131 @@ class AccountStatementImportSheetParser(models.TransientModel):
             return " ".join(content_l)
         return content_l[0]
 
+    def _parse_row(self, mapping, currency_code, values, columns):  # noqa: C901
+        timestamp = self._get_values_from_column(values, columns, "timestamp_column")
+        currency = (
+            self._get_values_from_column(values, columns, "currency_column")
+            if columns["currency_column"]
+            else currency_code
+        )
+
+        def _decimal(column_name):
+            if columns[column_name]:
+                return self._parse_decimal(
+                    self._get_values_from_column(values, columns, column_name),
+                    mapping,
+                )
+
+        amount = _decimal("amount_column")
+        if not amount:
+            amount = abs(_decimal("amount_debit_column") or 0)
+        if not amount:
+            amount = -abs(_decimal("amount_credit_column") or 0)
+
+        balance = (
+            self._get_values_from_column(values, columns, "balance_column")
+            if columns["balance_column"]
+            else None
+        )
+        original_currency = (
+            self._get_values_from_column(values, columns, "original_currency_column")
+            if columns["original_currency_column"]
+            else None
+        )
+        original_amount = (
+            self._get_values_from_column(values, columns, "original_amount_column")
+            if columns["original_amount_column"]
+            else None
+        )
+        debit_credit = (
+            self._get_values_from_column(values, columns, "debit_credit_column")
+            if columns["debit_credit_column"]
+            else None
+        )
+        transaction_id = (
+            self._get_values_from_column(values, columns, "transaction_id_column")
+            if columns["transaction_id_column"]
+            else None
+        )
+        description = (
+            self._get_values_from_column(values, columns, "description_column")
+            if columns["description_column"]
+            else None
+        )
+        notes = (
+            self._get_values_from_column(values, columns, "notes_column")
+            if columns["notes_column"]
+            else None
+        )
+        reference = (
+            self._get_values_from_column(values, columns, "reference_column")
+            if columns["reference_column"]
+            else None
+        )
+        partner_name = (
+            self._get_values_from_column(values, columns, "partner_name_column")
+            if columns["partner_name_column"]
+            else None
+        )
+        bank_name = (
+            self._get_values_from_column(values, columns, "bank_name_column")
+            if columns["bank_name_column"]
+            else None
+        )
+        bank_account = (
+            self._get_values_from_column(values, columns, "bank_account_column")
+            if columns["bank_account_column"]
+            else None
+        )
+
+        if currency != currency_code:
+            return {}
+
+        if isinstance(timestamp, str):
+            timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
+
+        if balance:
+            balance = self._parse_decimal(balance, mapping)
+        else:
+            balance = None
+
+        if debit_credit:
+            amount = amount.copy_abs()
+            if debit_credit == mapping.debit_value:
+                amount = -amount
+
+        if original_amount:
+            original_amount = self._parse_decimal(original_amount, mapping).copy_sign(
+                amount
+            )
+        else:
+            original_amount = 0.0
+
+        line = {
+            "timestamp": timestamp,
+            "amount": amount,
+            "currency": currency,
+            "original_amount": original_amount,
+            "original_currency": original_currency,
+        }
+        if balance is not None:
+            line["balance"] = balance
+        if transaction_id is not None:
+            line["transaction_id"] = transaction_id
+        if description is not None:
+            line["description"] = description
+        if notes is not None:
+            line["notes"] = notes
+        if reference is not None:
+            line["reference"] = reference
+        if partner_name is not None:
+            line["partner_name"] = partner_name
+        if bank_name is not None:
+            line["bank_name"] = bank_name
+        if bank_account is not None:
+            line["bank_account"] = bank_account
+        return line
+
     def _parse_rows(self, mapping, currency_code, csv_or_xlsx, columns):  # noqa: C901
         if isinstance(csv_or_xlsx, tuple):
             rows = range(1, csv_or_xlsx[1].nrows)
@@ -214,134 +339,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     values.append(cell_value)
             else:
                 values = list(row)
-
-            timestamp = self._get_values_from_column(
-                values, columns, "timestamp_column"
-            )
-            currency = (
-                self._get_values_from_column(values, columns, "currency_column")
-                if columns["currency_column"]
-                else currency_code
-            )
-
-            def _decimal(column_name):
-                if columns[column_name]:
-                    return self._parse_decimal(
-                        self._get_values_from_column(values, columns, column_name),
-                        mapping,
-                    )
-
-            amount = _decimal("amount_column")
-            if not amount:
-                amount = abs(_decimal("amount_debit_column") or 0)
-            if not amount:
-                amount = -abs(_decimal("amount_credit_column") or 0)
-
-            balance = (
-                self._get_values_from_column(values, columns, "balance_column")
-                if columns["balance_column"]
-                else None
-            )
-            original_currency = (
-                self._get_values_from_column(
-                    values, columns, "original_currency_column"
-                )
-                if columns["original_currency_column"]
-                else None
-            )
-            original_amount = (
-                self._get_values_from_column(values, columns, "original_amount_column")
-                if columns["original_amount_column"]
-                else None
-            )
-            debit_credit = (
-                self._get_values_from_column(values, columns, "debit_credit_column")
-                if columns["debit_credit_column"]
-                else None
-            )
-            transaction_id = (
-                self._get_values_from_column(values, columns, "transaction_id_column")
-                if columns["transaction_id_column"]
-                else None
-            )
-            description = (
-                self._get_values_from_column(values, columns, "description_column")
-                if columns["description_column"]
-                else None
-            )
-            notes = (
-                self._get_values_from_column(values, columns, "notes_column")
-                if columns["notes_column"]
-                else None
-            )
-            reference = (
-                self._get_values_from_column(values, columns, "reference_column")
-                if columns["reference_column"]
-                else None
-            )
-            partner_name = (
-                self._get_values_from_column(values, columns, "partner_name_column")
-                if columns["partner_name_column"]
-                else None
-            )
-            bank_name = (
-                self._get_values_from_column(values, columns, "bank_name_column")
-                if columns["bank_name_column"]
-                else None
-            )
-            bank_account = (
-                self._get_values_from_column(values, columns, "bank_account_column")
-                if columns["bank_account_column"]
-                else None
-            )
-
-            if currency != currency_code:
-                continue
-
-            if isinstance(timestamp, str):
-                timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
-
-            if balance:
-                balance = self._parse_decimal(balance, mapping)
-            else:
-                balance = None
-
-            if debit_credit:
-                amount = amount.copy_abs()
-                if debit_credit == mapping.debit_value:
-                    amount = -amount
-
-            if original_amount:
-                original_amount = self._parse_decimal(
-                    original_amount, mapping
-                ).copy_sign(amount)
-            else:
-                original_amount = 0.0
-
-            line = {
-                "timestamp": timestamp,
-                "amount": amount,
-                "currency": currency,
-                "original_amount": original_amount,
-                "original_currency": original_currency,
-            }
-            if balance is not None:
-                line["balance"] = balance
-            if transaction_id is not None:
-                line["transaction_id"] = transaction_id
-            if description is not None:
-                line["description"] = description
-            if notes is not None:
-                line["notes"] = notes
-            if reference is not None:
-                line["reference"] = reference
-            if partner_name is not None:
-                line["partner_name"] = partner_name
-            if bank_name is not None:
-                line["bank_name"] = bank_name
-            if bank_account is not None:
-                line["bank_account"] = bank_account
-            lines.append(line)
+            line = self._parse_row(mapping, currency_code, values, columns)
+            if line:
+                lines.append(line)
         return lines
 
     @api.model
