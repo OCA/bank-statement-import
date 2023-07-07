@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_camt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
+msgid "Account Bank Statement Import CAMT parser"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
+msgid "Bank Statement"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
+msgid "CAMT"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: code:addons/account_statement_import_camt/models/account_journal.py:0
+#, python-format
+msgid "camt.053.001.02"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: code:addons/account_statement_import_camt/models/account_journal.py:0
+#, python-format
+msgid "camt.054.001.02"
+msgstr ""
+
+#. module: account_statement_import_camt
+#: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
+msgid "zipped CAMT"
+msgstr ""
