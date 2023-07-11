@@ -8,3 +8,5 @@
 
 * Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
 * Manuel Regidor <manuel.regidor@sygel.es>
+
+* Dhara Solanki <dhara.solanki@initos.com>

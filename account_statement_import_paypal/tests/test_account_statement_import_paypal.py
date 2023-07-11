@@ -164,6 +164,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
 
     def test_import_activity_mapping_en(self):
         with common.Form(self.AccountStatementImportPayPalMappingWizard) as form:
+            form._view["modifiers"]["filename"]["invisible"] = False
             form.filename = "fixtures/activity_en.csv"
             form.data_file = self._data_file("fixtures/activity_en.csv")
             self.assertEqual(
@@ -179,6 +180,7 @@ class TestAccountBankStatementImportPayPal(common.TransactionCase):
 
     def test_import_statement_mapping_en(self):
         with common.Form(self.AccountStatementImportPayPalMappingWizard) as form:
+            form._view["modifiers"]["filename"]["invisible"] = False
             form.filename = "fixtures/statement_en.csv"
             form.data_file = self._data_file("fixtures/statement_en.csv")
             self.assertEqual(

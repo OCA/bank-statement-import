@@ -1,20 +1,20 @@
-"Date","Time","Time Zone","Description","Currency","Gross","Fee","Net","Balance","Transaction ID","From Email Address","Name","Bank Name","Bank Account","Shipping and Handling Amount","Sales Tax","Invoice ID","Reference Txn ID"
-"9/4/2018","21:15:11","America/Los_Angeles","General Withdrawal - Bank Account","EUR","-1,058.09","0.00","-1,058.09","-1,057.34","TID1","","","Bank A","6491","0.00","0.00","",""
-"9/4/2018","21:15:11","America/Los_Angeles","General Currency Conversion","EUR","1,058.09","0.00","1,058.09","0.75","TID2","","","","","0.00","0.00","","TID1"
-"9/11/2018","00:01:50","America/Los_Angeles","General Withdrawal - Bank Account","EUR","-3,105.58","0.00","-3,105.58","-3,104.83","TID3","","","Bank B","9169","0.00","0.00","",""
-"9/11/2018","00:01:50","America/Los_Angeles","General Currency Conversion","EUR","3,105.58","0.00","3,105.58","0.75","TID4","","","","","0.00","0.00","","TID3"
-"9/25/2018","04:22:39","America/Los_Angeles","General Withdrawal - Bank Account","EUR","-3,534.51","0.00","-3,534.51","-3,533.76","TID5","","","Bank B","9169","0.00","0.00","",""
-"9/25/2018","04:22:39","America/Los_Angeles","General Currency Conversion","EUR","3,534.51","0.00","3,534.51","0.75","TID6","","","","","0.00","0.00","","TID5"
-"9/27/2018","21:33:27","America/Los_Angeles","General Withdrawal - Bank Account","EUR","-9,648.13","0.00","-9,648.13","-9,647.38","TID7","","","Bank B","9169","0.00","0.00","",""
-"9/27/2018","21:33:27","America/Los_Angeles","General Currency Conversion","EUR","9,648.13","0.00","9,648.13","0.75","TID8","","","","","0.00","0.00","","TID7"
-"9/4/2018","20:44:10","America/Los_Angeles","Express Checkout Payment","USD","1,309.80","-48.76","1,261.04","1,261.93","TID9","paypal@partner1.com","Partner 1","","","0.00","0.00","361",""
-"9/4/2018","21:15:11","America/Los_Angeles","General Currency Conversion","USD","-1,261.00","0.00","-1,261.00","0.93","TID10","","","","","0.00","0.00","","TID1"
-"9/10/2018","17:48:19","America/Los_Angeles","Express Checkout Payment","USD","3,840.60","-142.40","3,698.20","3,699.13","TID11","paypal@partner2.com","Partner 2","","","0.00","0.00","362",""
-"9/11/2018","00:01:50","America/Los_Angeles","General Currency Conversion","USD","-3,699.00","0.00","-3,699.00","0.13","TID12","","","","","0.00","0.00","","TID3"
-"9/24/2018","16:41:01","America/Los_Angeles","Express Checkout Payment","USD","4,447.40","-164.85","4,282.55","4,282.68","TID13","paypal@partner2.com","Partner 2","","","0.00","0.00","363",""
-"9/25/2018","04:22:39","America/Los_Angeles","General Currency Conversion","USD","-4,282.00","0.00","-4,282.00","0.68","TID14","","","","","0.00","0.00","","TID5"
-"9/27/2018","18:15:34","America/Los_Angeles","Express Checkout Payment","USD","5,600.00","-207.50","5,392.50","5,393.18","TID15","paypal@partner3.com","Partner 3","","","0.00","0.00","366",""
-"9/27/2018","18:16:12","CET","Express Checkout Payment","USD","920.70","-34.37","886.33","6,279.51","TID16","paypal@partner3.com","Partner 3","","","0.00","0.00","367",""
-"9/27/2018","18:17:59","America/Los_Angeles","Express Checkout Payment","USD","5,600.00","-207.50","5,392.50","11,672.01","TID17","paypal@partner3.com","Partner 3","","","0.00","0.00","371",""
-"9/27/2018","21:33:27","America/Los_Angeles","General Currency Conversion","USD","-11,672.00","0.00","-11,672.00","0.01","TID18","","","","","0.00","0.00","","TID7"
-"9/30/2018","21:22:33","America/Los_Angeles","Express Checkout Payment","USD","292.30","-11.12","281.18","281.19","TID19","paypal@partner1.com","Partner 1","","","0.00","0.00","380",""
+Date,Time,Time Zone,Description,Currency,Gross,Fee,Net,Balance,Transaction ID,From Email Address,Name,Bank Name,Bank Account,Shipping and Handling Amount,Sales Tax,Invoice ID,Reference Txn ID
+9/4/2018,21:15:11,America/Los_Angeles,General Withdrawal - Bank Account,EUR,-1058.09,0,-1058.09,-1057.34,TID1,,,Bank A,6491,0,0,,
+9/4/2018,21:15:11,America/Los_Angeles,General Currency Conversion 1,EUR,1058.09,0,1058.09,0.75,TID2,,,,,0,0,,TID1
+9/11/2018,00:01:50,America/Los_Angeles,General Withdrawal - Bank Account,EUR,-3105.58,0,-3105.58,-3104.83,TID3,,,Bank B 1,9169,0,0,,
+9/11/2018,00:01:50,America/Los_Angeles,General Currency Conversion 2,EUR,3105.58,0,3105.58,0.75,TID4,,,,,0,0,,TID3
+9/25/2018,04:22:39,America/Los_Angeles,General Withdrawal - Bank Account,EUR,-3534.51,0,-3534.51,-3533.76,TID5,,,Bank B 2,9169,0,0,,
+9/25/2018,04:22:39,America/Los_Angeles,General Currency Conversion 3,EUR,3534.51,0,3534.51,0.75,TID6,,,,,0,0,,TID5
+9/27/2018,21:33:27,America/Los_Angeles,General Withdrawal - Bank Account,EUR,-9648.13,0,-9648.13,-9647.38,TID7,,,Bank B 3,9169,0,0,,
+9/27/2018,21:33:27,America/Los_Angeles,General Currency Conversion 4,EUR,9648.13,0,9648.13,0.75,TID8,,,,,0,0,,TID7
+9/4/2018,20:44:10,America/Los_Angeles,Express Checkout Payment,USD,1309.8,-48.76,1261.04,1261.93,TID9,paypal@partner1.com,Partner 1,,,0,0,361,
+9/4/2018,21:15:11,America/Los_Angeles,General Currency Conversion 5,USD,-1261,0,-1261,0.93,TID10,,,,,0,0,,TID1
+9/10/2018,17:48:19,America/Los_Angeles,Express Checkout Payment,USD,3840.6,-142.4,3698.2,3699.13,TID11,paypal@partner2.com,Partner 2,,,0,0,362,
+9/11/2018,00:01:50,America/Los_Angeles,General Currency Conversion 6,USD,-3699,0,-3699,0.13,TID12,,,,,0,0,,TID3
+9/24/2018,16:41:01,America/Los_Angeles,Express Checkout Payment,USD,4447.4,-164.85,4282.55,4282.68,TID13,paypal@partner2.com,Partner 2,,,0,0,363,
+9/25/2018,04:22:39,America/Los_Angeles,General Currency Conversion 7,USD,-4282,0,-4282,0.68,TID14,,,,,0,0,,TID5
+9/27/2018,18:15:34,America/Los_Angeles,Express Checkout Payment,USD,5600,-207.5,5392.5,5393.18,TID15,paypal@partner3.com,Partner 3,,,0,0,366,
+9/27/2018,18:16:12,CET,Express Checkout Payment,USD,920.7,-34.37,886.33,6279.51,TID16,paypal@partner3.com,Partner 3,,,0,0,367,
+9/27/2018,18:17:59,America/Los_Angeles,Express Checkout Payment,USD,5600,-207.5,5392.5,11672.01,TID17,paypal@partner3.com,Partner 3,,,0,0,371,
+9/27/2018,21:33:27,America/Los_Angeles,General Currency Conversion 8,USD,-11672,0,-11672,0.01,TID18,,,,,0,0,,TID7
+9/30/2018,21:22:33,America/Los_Angeles,Express Checkout Payment,USD,292.3,-11.12,281.18,281.19,TID19,paypal@partner1.com,Partner 1,,,0,0,380,
