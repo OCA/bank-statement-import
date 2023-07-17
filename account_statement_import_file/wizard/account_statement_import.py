@@ -120,11 +120,11 @@ class AccountStatementImport(models.TransientModel):
         self._create_bank_statements(stmts_vals, result)
         # Now that the import worked out, set it as the bank_statements_source
         # of the journal
-        if journal.bank_statements_source != "file_import":
+        if journal.bank_statements_source != "file_import_oca":
             # Use sudo() because only 'account.group_account_manager'
             # has write access on 'account.journal', but 'account.group_account_user'
             # must be able to import bank statement files
-            journal.sudo().write({"bank_statements_source": "file_import"})
+            journal.sudo().write({"bank_statements_source": "file_import_oca"})
 
     def _parse_file(self, data_file):
         """Each module adding a file support must extends this method.
