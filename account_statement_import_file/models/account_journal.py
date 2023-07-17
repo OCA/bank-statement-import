@@ -27,9 +27,12 @@ class AccountJournal(models.Model):
         if formats_list:
             formats_list.sort()
             import_formats_str = ", ".join(formats_list)
-            rslt.insert(
-                0, ("file_import_oca", _("Import") + "(" + import_formats_str + ")")
-            )
+            # Avoid error "Got duplicate key in t-foreach: 'file_import'".
+            # compatibility between this module and account_bank_statement_import from enterprise
+            if not any(item[0] == 'file_import' for item in rslt):
+                rslt.insert(
+                    0, ("file_import", _("Import") + "(" + import_formats_str + ")")
+                )
         return rslt
 
     def import_account_statement(self):
