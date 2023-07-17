@@ -14,7 +14,7 @@ class AccountJournal(models.Model):
         res = super().default_get(fields_list)
         formats_list = self._get_bank_statements_available_import_formats()
         if formats_list:
-            res["bank_statements_source"] = "file_import"
+            res["bank_statements_source"] = "file_import_oca"
         return res
 
     def _get_bank_statements_available_import_formats(self):
@@ -28,7 +28,7 @@ class AccountJournal(models.Model):
             formats_list.sort()
             import_formats_str = ", ".join(formats_list)
             rslt.insert(
-                0, ("file_import", _("Import") + "(" + import_formats_str + ")")
+                0, ("file_import_oca", _("Import") + "(" + import_formats_str + ")")
             )
         return rslt
 
