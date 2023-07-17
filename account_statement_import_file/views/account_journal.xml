@@ -15,7 +15,7 @@
                 expr='//a[@name="action_configure_bank_journal"]/..'
                 position='before'
             >
-                <t t-if="dashboard.bank_statements_source == 'file_import'">
+                <t t-if="dashboard.bank_statements_source == 'file_import_oca'">
                     <button
                         name="import_account_statement"
                         type="object"
