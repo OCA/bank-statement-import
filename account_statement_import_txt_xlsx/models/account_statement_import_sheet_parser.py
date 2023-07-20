@@ -431,4 +431,4 @@ class AccountStatementImportSheetParser(models.TransientModel):
         thousands, decimal = mapping._get_float_separators()
         value = value.replace(thousands, "")
         value = value.replace(decimal, ".")
-        return Decimal(value)
+        return Decimal(value or 0)
