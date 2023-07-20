@@ -37,12 +37,12 @@ class AccountStatementImport(models.TransientModel):
                 e_str = f"Could not find value for {e.args[0]!r}"
                 raise UserError(_(f"Failed to parse uploaded file!\n{e_str}"))
             except ValueError as e:
-                e_str = f"Problem with a value in file\n{e}"
+                e_str = f"Problem with the following value in file:\n{e}"
                 raise UserError(_(f"Failed to parse uploaded file!\n{e_str}"))
-            except BaseException:
-                if self.env.context.get("account_statement_import_txt_xlsx_test"):
-                    raise UserError(_("Failed to parse uploaded file!"))
-                _logger.warning("Sheet parser error", exc_info=True)
+            except BaseException as e:
+                _logger.error("Sheet parser error", exc_info=True)
+                raise UserError(_(f"Failed to parse uploaded file!\n{e}"))
+
         return super()._parse_file(data_file)
 
     def _create_bank_statements(self, stmts_vals, result):

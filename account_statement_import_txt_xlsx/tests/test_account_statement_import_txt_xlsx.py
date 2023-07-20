@@ -72,6 +72,63 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
+    def test_import_csv_file_missing_key(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
+            {
+                "balance_column": "Balance",
+                "original_currency_column": None,
+                "original_amount_column": None,
+            }
+        )
+        data = self._data_file("fixtures/error_key_statement.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/error_key_statement.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        with self.assertRaises(UserError):
+            wizard.with_context(
+                account_statement_import_txt_xlsx_test=True
+            ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 0)
+
+    def test_import_csv_file_value_error(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/error_value_statement.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/error_value_statement.csv",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        with self.assertRaises(UserError):
+            wizard.with_context(
+                account_statement_import_txt_xlsx_test=True
+            ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 0)
+
     def test_import_empty_csv_file(self):
         journal = self.AccountJournal.create(
             {

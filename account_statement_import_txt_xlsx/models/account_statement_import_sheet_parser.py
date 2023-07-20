@@ -424,11 +424,15 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     @api.model
     def _parse_decimal(self, value, mapping):
-        if isinstance(value, Decimal):
-            return value
-        elif isinstance(value, float):
-            return Decimal(value)
-        thousands, decimal = mapping._get_float_separators()
-        value = value.replace(thousands, "")
-        value = value.replace(decimal, ".")
-        return Decimal(value or 0)
+        try:
+            if isinstance(value, Decimal):
+                return value
+            elif isinstance(value, float):
+                return Decimal(value)
+            thousands, decimal = mapping._get_float_separators()
+            value = value.replace(thousands, "")
+            value = value.replace(decimal, ".")
+            value_decimal = Decimal(value or 0)
+        except Exception:
+            raise ValueError(_("Could not convert value %r to decimal") % (value,))
+        return value_decimal
