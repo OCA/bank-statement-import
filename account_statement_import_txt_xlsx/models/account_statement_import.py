@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import fields, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -35,13 +35,13 @@ class AccountStatementImport(models.TransientModel):
                 )
             except KeyError as e:
                 e_str = f"Could not find value for {e.args[0]!r}"
-                raise UserError(f"Failed to parse uploaded file!\n{e_str}")
+                raise UserError(_(f"Failed to parse uploaded file!\n{e_str}"))
             except ValueError as e:
                 e_str = f"Problem with a value in file\n{e}"
-                raise UserError(f"Failed to parse uploaded file!\n{e_str}")
-            except BaseException as e:
+                raise UserError(_(f"Failed to parse uploaded file!\n{e_str}"))
+            except BaseException:
                 if self.env.context.get("account_statement_import_txt_xlsx_test"):
-                    raise UserError("Failed to parse uploaded file!")
+                    raise UserError(_("Failed to parse uploaded file!"))
                 _logger.warning("Sheet parser error", exc_info=True)
         return super()._parse_file(data_file)
 
