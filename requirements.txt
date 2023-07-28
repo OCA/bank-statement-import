@@ -2,3 +2,4 @@
 chardet
 ofxparse
 xlrd
+ofxtools
