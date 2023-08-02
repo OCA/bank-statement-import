@@ -34,17 +34,11 @@ class TestAccountBankAccountStatementImportOnlineOFX(common.TransactionCase):
         )
 
     def test_import_online_ofx(self):
-        # Create bank journal
-        journal = self.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "bank_statements_source": "online",
-                "online_bank_statement_provider": "OFX",
-            }
-        )
-        provider = journal.online_bank_statement_provider_id
+
+        provider_model = self.env["online.bank.statement.provider"]
+        active_id = self.env.context.get("active_id")
+        provider = provider_model.browse(active_id)
+
         # Create OFX institution line in OFX provider
         self.OfxInstitutionLine.create(
             {
