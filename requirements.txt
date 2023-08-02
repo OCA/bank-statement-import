@@ -1,5 +1,5 @@
 # generated from manifests external_dependencies
 chardet
 ofxparse
-xlrd
 ofxtools
+xlrd
