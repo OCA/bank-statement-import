@@ -1,9 +1,11 @@
 To configure online bank statements provider:
 
-#. Go to *Invoicing > Configuration > Journals*
-#. Open bank journal to configure and edit it
-#. Set *Bank Feeds* to *Online*
-#. Select *OFX* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank journal
-#. Click on provider and configure provider-specific settings.
+#. Go to *Invoicing > Configuration > Online Bank Statement Providers*
+#. Create a provider and configure provider-specific settings.
+
+If you want to allow empty bank statements to be created every time the
+information is pulled, you can check the option "Allow empty statements"
+at the provider configuration level.
+
+**NOTE**: To access these features, user needs to belong to
+*Show Full Accounting Features* group.

@@ -97,7 +97,7 @@ class OnlineBankStatementProviderOFX(models.Model):
             except Exception as e:
                 raise UserError(
                     _("The following problem occurred during import.\n\n %s") % str(e)
-                )
+                ) from e
         return lines, {}
 
     @api.model
@@ -118,14 +118,17 @@ class OnlineBankStatementProviderOFX(models.Model):
     def import_ofx_institutions(self):
         OfxInstitution = self.env["ofx.institution"]
         try:
-            with requests.get("http://www.ofxhome.com/api.php?all=yes") as f:
+            with requests.get(
+                "http://www.ofxhome.com/api.php?all=yes", timeout=30
+            ) as f:
                 response = f.text
             institute_list = {
                 fi.get("id").strip(): fi.get("name").strip()
                 for fi in ET.fromstring(response)
             }
         except Exception as e:
-            raise UserError(_(e))
+            raise UserError(_(e)) from e
+
         for ofxhome_id, name in institute_list.items():
             institute = OfxInstitution.search([("ofxhome_id", "=", ofxhome_id)])
             vals = {
@@ -145,19 +148,27 @@ class OnlineBankStatementProviderOFX(models.Model):
             data, statement_date_since, statement_date_until
         )
         if self.service == "OFX":
-            AccountBankStatement = self.env["account.bank.statement"]
-            statement_date = self._get_statement_date(
+            unfiltered_lines, statement_values = data
+            if not unfiltered_lines:
+                unfiltered_lines = []
+            if not statement_values:
+                statement_values = {}
+            statement_values["name"] = self.make_statement_name(statement_date_since)
+            filtered_lines = self._get_statement_filtered_lines(
+                unfiltered_lines,
+                statement_values,
                 statement_date_since,
                 statement_date_until,
             )
-            statement = AccountBankStatement.search(
-                [
-                    ("journal_id", "=", self.journal_id.id),
-                    ("state", "=", "open"),
-                    ("date", "=", statement_date),
-                ],
-                limit=1,
-            )
+            if not filtered_lines:
+                return
+            if filtered_lines:
+                statement_values.update(
+                    {"line_ids": [[0, False, line] for line in filtered_lines]}
+                )
+            self._update_statement_balances(statement_values)
+            statement = self._statement_create_or_write(statement_values)
+            self._journal_set_statement_source()
             if not statement.line_ids:
                 statement.unlink()
         return res

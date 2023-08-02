@@ -3,13 +3,13 @@
 
 {
     "name": "Online Bank Statements: OFX",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/bank-statement-import",
     "license": "AGPL-3",
     "category": "Accounting",
     "summary": "Online bank statements for OFX",
-    "depends": ["account_statement_import_online"],
+    "depends": ["account_statement_import_online", "hr"],
     "external_dependencies": {"python": ["ofxtools", "ofxparse"]},
     "data": [
         "security/ir.model.access.csv",

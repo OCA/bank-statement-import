@@ -13,18 +13,16 @@ class OnlineBankStatementPullWizard(models.TransientModel):
         column1="wizard_id",
         column2="institution_line_id",
         relation="ofx_institution_line_pull_wizard_rel",
-        domain="[('provider_id','in',provider_ids)]",
     )
+
     is_ofx_provider = fields.Boolean()
 
-    @api.onchange("provider_ids")
-    def onchange_provider_ids(self):
-        for rec in self:
-            rec.is_ofx_provider = False
-            for provider in rec.provider_ids:
-                if provider.service == "OFX":
-                    rec.is_ofx_provider = True
-                    break
+    @api.onchange("date_since")
+    def _compute_is_ofx_provider(self):
+        provider_model = self.env["online.bank.statement.provider"]
+        active_id = self.env.context.get("active_id")
+        provider = provider_model.browse(active_id)
+        self.is_ofx_provider = provider.service == "OFX"
 
     def action_pull(self):
         return super(
