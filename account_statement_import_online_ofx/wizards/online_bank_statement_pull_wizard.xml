@@ -8,7 +8,7 @@
             ref="account_statement_import_online.online_bank_statement_pull_wizard_form"
         />
         <field name="arch" type="xml">
-            <field name="provider_ids" position="after">
+            <field name="date_since" position="before">
                 <field name="is_ofx_provider" invisible="1" />
                 <field
                     name="ofx_institution_ids"
