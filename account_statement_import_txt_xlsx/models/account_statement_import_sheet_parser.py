@@ -425,7 +425,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     @api.model
     def _parse_decimal(self, value, mapping):
-        if isinstance(value, Decimal):
+        if not value:
+            return Decimal(0.0)
+        elif isinstance(value, Decimal):
             return value
         elif isinstance(value, float):
             return Decimal(value)
