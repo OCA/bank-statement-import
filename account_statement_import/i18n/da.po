@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2023-07-01 13:09+0000\n"
+"PO-Revision-Date: 2023-08-16 16:09+0000\n"
 "Last-Translator: Hans Henrik Gabelgaard <hhg@gabelgaard.org>\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "Language: da\n"
@@ -59,6 +59,10 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Kunne ikke finde nogen bankkonto med nummer '%(account_number)s' knyttet til "
+"partneren '%(partner_name)s'. Du skal oprette bankkontoen og angive den i "
+"den tilhørende bankkladde. Hvis den relaterede bankkladde ikke eksisterer "
+"endnu, bør du oprette en ny."
 
 #. module: account_statement_import
 #: model:ir.model.fields,field_description:account_statement_import.field_account_statement_import__create_uid
@@ -96,19 +100,17 @@ msgstr "Importer"
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.journal_dashboard_view_inherit
 msgid "Import (OCA)"
-msgstr ""
+msgstr "Import (OCA)"
 
 #. module: account_statement_import
 #: model:ir.actions.act_window,name:account_statement_import.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "Importer kontoudtog"
+msgstr "Importér bank kontoudtogs fil"
 
 #. module: account_statement_import
 #: model:ir.model,name:account_statement_import.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Importer kontoudtog"
+msgstr "Importér bank kontoudtogs filer"
 
 #. module: account_statement_import
 #: model:ir.ui.menu,name:account_statement_import.account_statement_import_menu
@@ -186,6 +188,10 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Bankkontoen med nummer '%(account_number)s' findes i Odoo, men den er ikke "
+"angivet i nogen bankkladde. Du bør indstille det på den tilhørende "
+"bankkladde. Hvis den relaterede bankkladde ikke eksisterer endnu, bør du "
+"oprette en ny."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -194,6 +200,7 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
+"Bankudtogsfilen bruger valutaen '%s', men der er ingen sådan valuta i Odoo."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -202,6 +209,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"Valutaen på kontoudtoget (%(currency_name)s) er ikke den samme som valutaen "
+"i kladden '%(journal_name)s' (%(journal_currency_name)s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -211,6 +220,8 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"Formatet på denne kontoudtogsfil indeholder ikke bankkontonummeret, så du "
+"skal starte guiden fra den højre bankkladde i dashboardet."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -220,16 +231,19 @@ msgid ""
 "You should use the proper journal or use the generic button on the top of "
 "the Accounting Dashboard"
 msgstr ""
+"Den journal, der blev fundet for filen, stemmer ikke overens med den valgte "
+"journal. Du bør bruge den korrekte journal eller bruge den generiske knap "
+"øverst på regnskabsoversigten"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "Parsingen af kontoudtogsfilen returnerede et ugyldigt resultat."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
@@ -245,7 +259,7 @@ msgstr "Upload bank kontoudtog"
 #. module: account_statement_import
 #: model_terms:ir.ui.view,arch_db:account_statement_import.account_statement_import_form
 msgid "Upload a bank statement file"
-msgstr "Upload en bank kontoudtogd fil"
+msgstr "Upload en bank kontoudtogs fil"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
