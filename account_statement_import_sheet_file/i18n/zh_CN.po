@@ -63,6 +63,12 @@ msgid "Amount of transaction in journal's currency"
 msgstr "原币的交易金额"
 
 #. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import.py:0
+#, python-format
+msgid "Bad file/mapping: "
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
 msgid "Balance Column"

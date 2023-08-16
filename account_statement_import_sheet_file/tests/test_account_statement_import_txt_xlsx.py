@@ -17,6 +17,14 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.now = fields.Datetime.now()
         self.currency_eur = self.env.ref("base.EUR")
         self.currency_usd = self.env.ref("base.USD")
+        self.currency_usd.active = True
+        # Make sure the currency of the company is USD, as this not always happens
+        # To be removed in V17: https://github.com/odoo/odoo/pull/107113
+        self.company = self.env.company
+        self.env.cr.execute(
+            "UPDATE res_company SET currency_id = %s WHERE id = %s",
+            (self.env.ref("base.USD").id, self.company.id),
+        )
         # Activate EUR for unit test, by default is not active
         self.currency_eur.active = True
         self.sample_statement_map = self.env.ref(

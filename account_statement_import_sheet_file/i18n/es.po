@@ -25,8 +25,10 @@ msgstr "%(code)s: %(filename)s"
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> Add the column names or column number (when the file has no header).\n"
-"                                You can concatenate multiple columns in the file into the same field, indicating the\n"
+"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+"(when the file has no header).\n"
+"                                You can concatenate multiple columns in the "
+"file into the same field, indicating the\n"
 "                                column names or numbers separated by comma."
 msgstr ""
 "<span class=\"fa fa-info-circle\"/> Agregue los nombres de columna o el "
@@ -67,6 +69,12 @@ msgstr "Columna de importe"
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount of transaction in journal's currency"
 msgstr "Monto de la transacción en la moneda del diario"
+
+#. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import.py:0
+#, python-format
+msgid "Bad file/mapping: "
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
@@ -302,8 +310,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_currency_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original currency of transaction from"
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "En caso de que el extracto proporcione la moneda original para transacciones "
 "con conversión automática de moneda, columna para obtener la moneda original "
@@ -313,8 +321,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_amount_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original transaction amount in original "
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
 "transaction currency from"
 msgstr ""
 "En caso de que el extracto proporcione la moneda original para transacciones "
