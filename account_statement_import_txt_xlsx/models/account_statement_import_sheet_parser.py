@@ -4,7 +4,7 @@
 
 import itertools
 import logging
-from datetime import datetime
+import dateparser
 from decimal import Decimal
 from io import StringIO
 from os import path
@@ -300,7 +300,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 continue
 
             if isinstance(timestamp, str):
-                timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
+                timestamp = dateparser.parse(
+                    timestamp,
+                    date_formats=[mapping.timestamp_format]
+                )
 
             if balance:
                 balance = self._parse_decimal(balance, mapping)
