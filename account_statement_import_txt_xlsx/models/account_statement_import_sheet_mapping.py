@@ -55,6 +55,11 @@ class AccountStatementImportSheetMapping(models.Model):
     )
     quotechar = fields.Char(string="Text qualifier", size=1, default='"')
     timestamp_format = fields.Char(required=True)
+    currency_ids = fields.Many2many(
+        comodel_name="res.currency",
+        string="Currencies",
+        help="Currencies used in the statement file",
+    )
     no_header = fields.Boolean(
         string="File does not contain header line",
         help="When this occurs please indicate the column number in the Columns section "

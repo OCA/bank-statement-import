@@ -429,6 +429,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
             return value
         elif isinstance(value, float):
             return Decimal(value)
+
+        # strip currency symbol
+        for currency in mapping.currency_ids:
+            if currency.symbol and currency.symbol in value:
+                value = value.replace(currency.symbol, "")
+
         thousands, decimal = mapping._get_float_separators()
         value = value.replace(thousands, "")
         value = value.replace(decimal, ".")

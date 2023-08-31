@@ -38,6 +38,7 @@
                         </group>
                         <group>
                             <field name="timestamp_format" />
+                            <field name="currency_ids" widget="many2many_tags" />
                         </group>
                         <group>
                             <field name="no_header" />
