@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-09-11 06:58+0000\n"
+"PO-Revision-Date: 2023-09-11 07:07+0000\n"
 "Last-Translator: Claude R Perrin <claude@alpis.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -379,7 +379,7 @@ msgstr "Importer"
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Pull Online Bank Statement"
-msgstr "Import un relevé bancaire en ligne"
+msgstr "Import le relevé bancaire en ligne"
 
 #. module: account_statement_import_online
 #: model:ir.actions.server,name:account_statement_import_online.ir_cron_account_pull_online_bank_statements_ir_actions_server
