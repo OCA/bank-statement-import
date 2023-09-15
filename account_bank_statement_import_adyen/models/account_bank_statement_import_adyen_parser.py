@@ -216,7 +216,12 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
         """Sum the amounts in the fees columns."""
         return self._sum_amount_values(
             row,
-            ("Commission (NC)", "Markup (NC)", "Scheme Fees (NC)", "Interchange (NC)",),
+            (
+                "Commission (NC)",
+                "Markup (NC)",
+                "Scheme Fees (NC)",
+                "Interchange (NC)",
+            ),
         )
 
     def _sum_amount_values(self, row, columns):
