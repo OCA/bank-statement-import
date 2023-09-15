@@ -28,11 +28,12 @@ class TestImportAdyen(SavepointCase):
         )
 
     def test_01_import_adyen(self):
-        """ Test that the Adyen statement can be imported and that the
+        """Test that the Adyen statement can be imported and that the
         lines on the default journal (clearing) account are fully reconciled
-        with each other """
+        with each other"""
         self._test_statement_import(
-            "adyen_test.xlsx", "YOURCOMPANY_ACCOUNT 2016/48",
+            "adyen_test.xlsx",
+            "YOURCOMPANY_ACCOUNT 2016/48",
         )
         statement = self.env["account.bank.statement"].search(
             [], order="create_date desc", limit=1
@@ -46,22 +47,25 @@ class TestImportAdyen(SavepointCase):
         )
 
     def test_02_import_adyen_credit_fees(self):
-        """ Import an Adyen statement with credit fees """
+        """Import an Adyen statement with credit fees"""
         self._test_statement_import(
-            "adyen_test_credit_fees.xlsx", "YOURCOMPANY_ACCOUNT 2016/8",
+            "adyen_test_credit_fees.xlsx",
+            "YOURCOMPANY_ACCOUNT 2016/8",
         )
 
     def test_03_import_adyen_invalid(self):
-        """ Trying to hit that coverall target """
+        """Trying to hit that coverall target"""
         with self.assertRaisesRegex(UserError, "not a Adyen settlement details file"):
             self._test_statement_import(
-                "adyen_test_invalid.xls", "invalid",
+                "adyen_test_invalid.xls",
+                "invalid",
             )
 
     def test_04_import_adyen_csv(self):
-        """ Test that the Adyen statement can be imported in csv format."""
+        """Test that the Adyen statement can be imported in csv format."""
         self._test_statement_import(
-            "settlement_detail_report_batch_380.csv", "YOURCOMPANY_ACCOUNT 2021/380",
+            "settlement_detail_report_batch_380.csv",
+            "YOURCOMPANY_ACCOUNT 2021/380",
         )
         statement = self.env["account.bank.statement"].search(
             [], order="create_date desc", limit=1
@@ -76,9 +80,10 @@ class TestImportAdyen(SavepointCase):
         )
 
     def test_05_import_adyen_csv(self):
-        """ Test that the Adyen statement without Merchant Payoutcan be imported."""
+        """Test that the Adyen statement without Merchant Payoutcan be imported."""
         self._test_statement_import(
-            "settlement_detail_report_batch_238.csv", "YOURCOMPANY_ACCOUNT 2022/238",
+            "settlement_detail_report_batch_238.csv",
+            "YOURCOMPANY_ACCOUNT 2022/238",
         )
         statement = self.env["account.bank.statement"].search(
             [], order="create_date desc", limit=1
