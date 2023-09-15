@@ -31,7 +31,8 @@ class TestImportOnline(TestImportAdyen):
         """Override super test: online module test will return without statements."""
         with self.assertRaisesRegex(AssertionError, "account.bank.statement()"):
             self._test_statement_import(
-                "adyen_test_invalid.xls", "invalid",
+                "adyen_test_invalid.xls",
+                "invalid",
             )
 
     def _test_statement_import(self, file_name, statement_name):

@@ -106,7 +106,7 @@ class OnlineBankStatementProvider(models.Model):
         URL = "/".join(
             [self.api_base, self.journal_id.adyen_merchant_account, filename]
         )
-        response = requests.get(URL, auth=(self.username, self.password))
+        response = requests.get(URL, auth=(self.username, self.password), timeout=30)
         if response.status_code != 200:
             raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
         _logger.debug(_("Headers returned by Adyen %s"), response.headers)
