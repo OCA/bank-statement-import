@@ -107,6 +107,32 @@ class OnlineBankStatementProvider(models.Model):
     ]
 
     @api.model
+    def create(self, vals):
+        """Set provider_id on journal after creation."""
+        records = super().create(vals)
+        records._update_journals()
+        return records
+
+    def write(self, vals):
+        """Set provider_id on journal after creation."""
+        result = super().write(vals)
+        self._update_journals()
+        return result
+
+    def _update_journals(self):
+        """Update journal with this provider.
+
+        This is for compatibility reasons.
+        """
+        for this in self:
+            this.journal_id.write(
+                {
+                    "online_bank_statement_provider_id": this.id,
+                    "bank_statements_source": "online",
+                }
+            )
+
+    @api.model
     def _get_available_services(self):
         """Hook for extension"""
         return []
@@ -148,6 +174,9 @@ class OnlineBankStatementProvider(models.Model):
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
+                # Note that statement_date_until is exclusive, while date_until is
+                # inclusive. So if we have daily statements date_until might
+                # be 2020-01-31, while statement_date_until is 2020-02-01.
                 statement_date_until = (
                     statement_date_since + provider._get_statement_date_step()
                 )
@@ -234,7 +263,6 @@ class OnlineBankStatementProvider(models.Model):
             )
         self._update_statement_balances(statement_values)
         statement = self._statement_create_or_write(statement_values)
-        self._journal_set_statement_source()
         return statement
 
     def make_statement_name(self, statement_date_since):
@@ -368,15 +396,6 @@ class OnlineBankStatementProvider(models.Model):
                 statement_values["balance_end_real"]
             )
 
-    def _journal_set_statement_source(self):
-        """On succesful import set "online" as the statements source of the journal."""
-        self.ensure_one()
-        if self.journal_id.bank_statements_source != "online":
-            # Use sudo() because only 'account.group_account_manager'
-            # has write access on 'account.journal', but 'account.group_account_user'
-            # must be able to import bank statement files
-            self.journal_id.sudo().write({"bank_statements_source": "online"})
-
     def _schedule_next_run(self):
         self.ensure_one()
         self.last_successful_run = self.next_run
@@ -437,7 +456,10 @@ class OnlineBankStatementProvider(models.Model):
                 _("Pulling online bank statements of: %(provider_names)s"),
                 dict(provider_names=", ".join(providers.mapped("journal_id.name"))),
             )
-            for provider in providers.with_context(**{"scheduled": True}):
+            for provider in providers.with_context(
+                scheduled=True, tracking_disable=True
+            ):
+                provider._adjust_schedule()
                 date_since = (
                     (provider.last_successful_run)
                     if provider.last_successful_run
@@ -445,11 +467,38 @@ class OnlineBankStatementProvider(models.Model):
                 )
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
-
         _logger.info(_("Scheduled pull of online bank statements complete."))
+
+    def _adjust_schedule(self):
+        """Make sure next_run is current.
+
+        Current means adding one more period would put if after the
+        current moment. This will be done at the end of the run.
+        The net effect of this method and the adjustment after the run
+        will be for the next_run to be in the future.
+        """
+        self.ensure_one()
+        delta = self._get_next_run_period()
+        now = datetime.now()
+        next_run = self.next_run + delta
+        while next_run < now:
+            self.next_run = next_run
+            next_run = self.next_run + delta
 
     def _obtain_statement_data(self, date_since, date_until):
         """Hook for extension"""
         # Check tests/online_bank_statement_provider_dummy.py for reference
         self.ensure_one()
         return []
+
+    def action_online_bank_statements_pull_wizard(self):
+        self.ensure_one()
+        WIZARD_MODEL = "online.bank.statement.pull.wizard"
+        wizard = self.env[WIZARD_MODEL].create([{"provider_ids": [(6, 0, [self.id])]}])
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": WIZARD_MODEL,
+            "res_id": wizard.id,
+            "view_mode": "form",
+            "target": "new",
+        }
