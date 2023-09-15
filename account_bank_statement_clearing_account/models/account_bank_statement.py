@@ -8,7 +8,7 @@ class BankStatement(models.Model):
     _inherit = "account.bank.statement"
 
     def get_reconcile_clearing_account_lines(self):
-        """ If this statement qualifies for clearing account reconciliation,
+        """If this statement qualifies for clearing account reconciliation,
         return the relevant lines to (un)reconcile. This is the case if the
         default journal account is reconcilable, each statement line has a
         counterpart line on this account for the full amount and the sum of
@@ -45,8 +45,8 @@ class BankStatement(models.Model):
         return move_lines
 
     def reconcile_clearing_account(self):
-        """ If applicable, reconcile the clearing account lines in case
-        all lines are still unreconciled. """
+        """If applicable, reconcile the clearing account lines in case
+        all lines are still unreconciled."""
         self.ensure_one()
         lines = self.get_reconcile_clearing_account_lines()
         if not lines or any(
@@ -57,8 +57,8 @@ class BankStatement(models.Model):
         return True
 
     def unreconcile_clearing_account(self):
-        """ If applicable, unreconcile the clearing account lines
-        if still fully reconciled with each other. """
+        """If applicable, unreconcile the clearing account lines
+        if still fully reconciled with each other."""
         self.ensure_one()
         lines = self.get_reconcile_clearing_account_lines()
         if not lines:
@@ -70,16 +70,16 @@ class BankStatement(models.Model):
         return False
 
     def button_reopen(self):
-        """ When setting the statement back to draft, unreconcile the
-        reconciliation on the clearing account """
+        """When setting the statement back to draft, unreconcile the
+        reconciliation on the clearing account"""
         res = super(BankStatement, self).button_reopen()
         for statement in self:
             statement.unreconcile_clearing_account()
         return res
 
     def button_confirm_bank(self):
-        """ When confirming the statement, trigger the reconciliation of
-        the lines on the clearing account (if applicable) """
+        """When confirming the statement, trigger the reconciliation of
+        the lines on the clearing account (if applicable)"""
         res = super(BankStatement, self).button_confirm_bank()
         for statement in self:
             statement.reconcile_clearing_account()
