@@ -6,7 +6,7 @@
     "version": "13.0.1.0.0",
     "author": "Opener B.V., Vanmoof BV, Odoo Community Association (OCA)",
     "category": "Banking addons",
-    "website": "https://github.com/oca/bank-statement-import",
+    "website": "https://github.com/OCA/bank-statement-import",
     "license": "AGPL-3",
     "depends": ["account"],
     "installable": True,
