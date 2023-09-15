@@ -44,7 +44,7 @@ Known issues
 ============
 This module does not come with its own tests because it depends on a
 statement filter being installed. Instead, it is tested in
-`account_bank_statement_import_adyen`
+`account_statement_import_adyen`
 
 **Table of contents**
 
