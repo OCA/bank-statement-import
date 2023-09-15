@@ -72,7 +72,7 @@ class BankStatement(models.Model):
     def button_reopen(self):
         """When setting the statement back to draft, unreconcile the
         reconciliation on the clearing account"""
-        res = super(BankStatement, self).button_reopen()
+        res = super().button_reopen()
         for statement in self:
             statement.unreconcile_clearing_account()
         return res
@@ -80,7 +80,7 @@ class BankStatement(models.Model):
     def button_confirm_bank(self):
         """When confirming the statement, trigger the reconciliation of
         the lines on the clearing account (if applicable)"""
-        res = super(BankStatement, self).button_confirm_bank()
+        res = super().button_confirm_bank()
         for statement in self:
             statement.reconcile_clearing_account()
         return res

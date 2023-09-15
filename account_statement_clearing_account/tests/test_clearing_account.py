@@ -1,6 +1,6 @@
 # Copyright 2017 Opener BV <https://opener.amsterdam>
 # Copyright 2020 Vanmoof BV <https://www.vanmoof.com>
-# Copyright 2015-2021 Therp BV <https://therp.nl>)
+# Copyright 2015-2023 Therp BV <https://therp.nl>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo.tests.common import SavepointCase
 
@@ -18,7 +18,7 @@ class TestClearingAccount(SavepointCase):
                 "currency_id": cls.env.ref("base.USD").id,
             }
         )
-        cls.partner_customer = cls.env["res.partner"].create({"name": "cutomer"})
+        cls.partner_customer = cls.env["res.partner"].create({"name": "customer"})
         cls.partner_provider = cls.env["res.partner"].create({"name": "provider"})
         # Enable reconcilation on the default journal account to trigger
         # the functionality from account_bank_statement_clearing_account
