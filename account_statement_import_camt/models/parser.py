@@ -393,6 +393,10 @@ class CamtParser(models.AbstractModel):
             result,
             "currency",
         )
+        # COMMERZBANK adds the currency as the last 3 digits of the bank account number
+        # hence we need to remove this since otherwise the journal matching logic fails
+        if result["account_number"][-3:] == result["currency"]:
+            result["account_number"] = result["account_number"][:-3]
         result["balance_start"], result["balance_end_real"] = self.get_balance_amounts(
             ns, node
         )
