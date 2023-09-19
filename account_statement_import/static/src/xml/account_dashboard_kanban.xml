@@ -6,9 +6,7 @@
                 type="button"
                 t-attf-class="btn #{btnClass} o-kanban-button-new"
                 accesskey="c"
-            >
-                <t t-esc="_t('Import Statement (OCA)')" />
-            </button>
+            >Import Statement (OCA)</button>
         </div>
     </t>
 </template>
