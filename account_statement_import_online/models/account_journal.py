@@ -15,9 +15,7 @@ class AccountJournal(models.Model):
     @api.model
     def _selection_service(self):
         OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
-        return OnlineBankStatementProvider._get_available_services() + [
-            ("dummy", "Dummy")
-        ]
+        return OnlineBankStatementProvider._selection_service()
 
     # Keep provider fields for compatibility with other modules.
     online_bank_statement_provider = fields.Selection(
