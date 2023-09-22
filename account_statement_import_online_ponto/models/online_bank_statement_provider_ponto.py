@@ -138,45 +138,32 @@ class OnlineBankStatementProvider(models.Model):
         return lines
 
     def _ponto_store_lines(self, lines):
-        """Store transactions retrieved from Ponto in statements.
+        """Store transactions retrieved from Ponto in statements."""
+        lines = sorted(lines, key=itemgetter("transaction_datetime"))
 
-        The data retrieved has the most recent first. However we need to create
-        the bank statements in ascending date order. as the balance_end of
-        one statement will be the balanxe_start of the next statement.
-        """
-
-        def reset_transactions(date_since):
-            """Reset values for new statement."""
+        # Group statement lines by date per period (date range)
+        grouped_periods = {}
+        for line in lines:
+            date_since = line["transaction_datetime"]
             statement_date_since = self._get_statement_date_since(date_since)
             statement_date_until = (
                 statement_date_since + self._get_statement_date_step()
             )
-            statement_lines = []
-            return statement_date_since, statement_date_until, statement_lines
+            if (statement_date_since, statement_date_until) not in grouped_periods:
+                grouped_periods[(statement_date_since, statement_date_until)] = []
 
-        lines = sorted(lines, key=itemgetter("transaction_datetime"))
-        (
-            statement_date_since,
-            statement_date_until,
-            statement_lines,
-        ) = reset_transactions(lines[0]["transaction_datetime"])
-        for line in lines:
             line.pop("transaction_datetime")
             vals_line = self._ponto_get_transaction_vals(line)
-            if vals_line["date"] >= statement_date_until:
-                self._create_or_update_statement(
-                    (statement_lines, {}), statement_date_since, statement_date_until
-                )
-                (
-                    statement_date_since,
-                    statement_date_until,
-                    statement_lines,
-                ) = reset_transactions(statement_date_until)
-            statement_lines.append(vals_line)
-        # Handle lines in last statement.
-        self._create_or_update_statement(
-            (statement_lines, {}), statement_date_since, statement_date_until
-        )
+            grouped_periods[(statement_date_since, statement_date_until)].append(
+                vals_line
+            )
+
+        # For each period, create or update statement lines
+        for period, statement_lines in grouped_periods.items():
+            (date_since, date_until) = period
+            self._create_or_update_statement(
+                (statement_lines, {}), date_since, date_until
+            )
 
     def _ponto_get_transaction_vals(self, transaction):
         """Translate information from Ponto to statement line vals."""
