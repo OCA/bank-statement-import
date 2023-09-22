@@ -173,7 +173,6 @@ msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -412,11 +411,6 @@ msgstr ""
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
-msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: account_statement_import_online
