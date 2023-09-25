@@ -1,4 +1,4 @@
-# Copyright 2022 Therp BV <https://therp.nl>.
+# Copyright 2022-2023 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 """Try to determine partner from ref in transaction and from invoice."""
 from odoo import models
@@ -27,13 +27,18 @@ class AccountBankStatementImport(models.TransientModel):
         sale_order_model = self.env["sale.order"]
         invoice = None
         transaction_keys = ["ref", "name"]
-        invoice_fields = ["invoice_origin", "ref", "name"]
+        # transaction_id is introduced in base_transaction_id module.
+        invoice_fields = ["transaction_id", "invoice_origin", "ref", "name"]
         sale_order_fields = ["client_order_ref", "name"]
         for key in transaction_keys:
             value = transaction.get(key, False)
             if not value:
                 continue
             for fieldname in invoice_fields:
+                # Do not depend on any other module,
+                # just ensure here that searchable fields exist.
+                if not hasattr(invoice_model, fieldname):
+                    continue
                 invoice = invoice_model.search([(fieldname, "=", value)], limit=1)
                 if invoice:
                     # We need a partner of type contact here because of reconciliation.
@@ -42,6 +47,8 @@ class AccountBankStatementImport(models.TransientModel):
                     transaction["partner_id"] = partner.id
                     return
             for fieldname in sale_order_fields:
+                if not hasattr(sale_order_model, fieldname):
+                    continue
                 sale_order = sale_order_model.search([(fieldname, "=", value)], limit=1)
                 if sale_order:
                     partner = self._get_effective_partner(sale_order.partner_id)
