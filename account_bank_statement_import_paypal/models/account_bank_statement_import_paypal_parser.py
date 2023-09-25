@@ -5,6 +5,7 @@
 
 import itertools
 import logging
+from csv import reader
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
@@ -15,11 +16,6 @@ from pytz import timezone, utc
 from odoo import _, api, models
 
 _logger = logging.getLogger(__name__)
-
-try:
-    from csv import reader
-except (ImportError, IOError) as err:
-    _logger.error(err)
 
 
 class AccountBankStatementImportPayPalParser(models.TransientModel):
@@ -110,6 +106,8 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
 
         header = list(next(csv_data))
         data_dict = self._data_dict_constructor(mapping, header)
+        if data_dict.get("currency_column") is None:
+            raise ValueError(_("No currency column, not a valid Paypal file"))
 
         return self._calculate_lines(csv_data, data_dict, mapping, currency_code)
 
