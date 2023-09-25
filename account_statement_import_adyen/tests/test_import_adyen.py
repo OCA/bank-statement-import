@@ -1,16 +1,15 @@
 # Copyright 2017 Opener BV <https://opener.amsterdam>
 # Copyright 2020 Vanmoof BV <https://www.vanmoof.com>
-# Copyright 2015-2022 Therp BV <https://therp.nl>)
+# Copyright 2015-2023 Therp BV <https://therp.nl>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 """Run test imports of Adyen files."""
 import base64
 
-from odoo.exceptions import UserError
 from odoo.modules.module import get_module_resource
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestImportAdyen(SavepointCase):
+class TestImportAdyen(TransactionCase):
     """Run test imports of Adyen files."""
 
     @classmethod
@@ -22,6 +21,7 @@ class TestImportAdyen(SavepointCase):
                 "name": "Adyen test",
                 "code": "ADY",
                 "type": "bank",
+                "bank_acc_number": "YOURCOMPANY_ACCOUNT",
                 "adyen_merchant_account": "YOURCOMPANY_ACCOUNT",
                 "currency_id": cls.env.ref("base.USD").id,
             }
@@ -55,7 +55,7 @@ class TestImportAdyen(SavepointCase):
 
     def test_03_import_adyen_invalid(self):
         """Trying to hit that coverall target"""
-        with self.assertRaisesRegex(UserError, "not a Adyen settlement details file"):
+        with self.assertRaisesRegex(ValueError, "not a Adyen settlement details file"):
             self._test_statement_import(
                 "adyen_test_invalid.xls",
                 "invalid",
@@ -99,20 +99,22 @@ class TestImportAdyen(SavepointCase):
 
     def _test_statement_import(self, file_name, statement_name):
         """Test correct creation of single statement."""
+        wizard_model = self.env["account.statement.import"]
         testfile = get_module_resource(
-            "account_bank_statement_import_adyen", "test_files", file_name
+            "account_statement_import_adyen", "test_files", file_name
         )
         with open(testfile, "rb") as datafile:
             data_file = base64.b64encode(datafile.read())
-            import_wizard = self.env["account.bank.statement.import"].create(
-                {"attachment_ids": [(0, 0, {"name": file_name, "datas": data_file})]}
+            import_wizard = wizard_model.create(
+                {
+                    "statement_file": data_file,
+                    "statement_filename": file_name,
+                }
             )
             import_wizard.with_context(
-                {
-                    "account_bank_statement_import_adyen": True,
-                    "journal_id": self.journal.id,
-                }
-            ).import_file()
+                account_statement_import_adyen=True,
+                journal_id=self.journal.id,
+            )._import_file()
             # statement name is account number + '-' + date of last line.
             statements = self.env["account.bank.statement"].search(
                 [("name", "=", statement_name)]

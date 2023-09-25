@@ -44,11 +44,11 @@ COLUMNS = {
 }
 
 
-class AccountBankStatementImportAdyenParser(models.TransientModel):
+class AccountStatementImportAdyenParser(models.TransientModel):
     """Parse Adyen statement files for bank import."""
 
-    _name = "account.bank.statement.import.adyen.parser"
-    _description = "Account Bank Statement Import Adyen Parser"
+    _name = "account.statement.import.adyen.parser"
+    _description = "Account Statement Import Adyen Parser"
 
     def parse_rows(self, rows):
         """Parse rows generated from an Adyen file.
@@ -60,7 +60,7 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
         balance = 0.0
         payout = 0.0
         num_rows = self._process_headers(rows)
-        for row in rows:
+        for row in rows[num_rows:]:
             num_rows += 1
             if not self._is_transaction_row(row):
                 continue
@@ -82,7 +82,7 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             )
         self._validate_statement(statement, payout, balance)
         _logger.info(
-            _("Processed %d rows from Adyen statement file with %d transactions"),
+            "Processed %d rows from Adyen statement file with %d transactions",
             num_rows,
             len(statement["transactions"]),
         )
@@ -182,8 +182,11 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             _logger.info(_("No payout detected in Adyen statement."))
         if self.env.user.company_id.currency_id.compare_amounts(balance, payout) != 0:
             raise UserError(
-                _("Parse error. Balance %s not equal to merchant " "payout %s")
-                % (balance, payout)
+                _(
+                    "Parse error."
+                    " Balance %(balance)s not equal to merchant payout %(payout)s"
+                )
+                % {"balance": balance, "payout": payout}
             )
 
     def _get_value(self, row, column):
@@ -238,32 +241,21 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
 
         This can easily be overwritten in custom modules to add extra information.
         """
-        merchant_account = self._get_value(row, "Merchant Account")
+        self._get_value(row, "Merchant Account")
         psp_reference = self._get_value(row, "Psp Reference")
         merchant_reference = self._get_value(row, "Merchant Reference")
-        payment_method = self._get_value(row, "Payment Method Variant")
+        self._get_value(row, "Payment Method Variant")
         modification_reference = self._get_value(row, "Modification Reference")
         transaction = {
             "date": self._get_transaction_date(row),
             "amount": self._balance(row),
+            "raw_data": str(row),
         }
-        transaction["note"] = " ".join(
-            [
-                part
-                for part in [
-                    merchant_account,
-                    psp_reference,
-                    merchant_reference,
-                    payment_method,
-                ]
-                if part
-            ]
-        )
-        transaction["name"] = (
-            merchant_reference or psp_reference or modification_reference
-        )
         transaction["ref"] = (
             psp_reference or modification_reference or merchant_reference
+        )
+        transaction["payment_ref"] = (
+            merchant_reference or modification_reference or psp_reference or "unknown"
         )
         transaction["transaction_type"] = self._get_value(row, "Type")
         return transaction
@@ -274,7 +266,7 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
         transaction = {
             "date": max_date,
             "amount": -fees,
-            "name": "Commission, markup etc. batch %s" % batch_number,
+            "payment_ref": "Commission, markup etc. batch %s" % batch_number,
         }
         self._append_transaction(statement, transaction)
 

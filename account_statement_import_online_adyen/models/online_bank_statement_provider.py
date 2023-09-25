@@ -1,7 +1,6 @@
 # Copyright 2021 Therp BV <https://therp.nl>.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 # pylint: disable=missing-docstring,invalid-name,protected-access
-import base64
 import logging
 from html import escape
 
@@ -9,6 +8,7 @@ import requests
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.modules.module import get_module_resource
 
 _logger = logging.getLogger(__name__)
 
@@ -31,12 +31,13 @@ class OnlineBankStatementProvider(models.Model):
 
     def _pull(self, date_since, date_until):  # noqa: C901
         """Split between adyen providers and others."""
+        result = None  # Need because of super() call.
         adyen_providers = self.filtered(lambda r: r.service in ("adyen", "dummy_adyen"))
         other_providers = self.filtered(
             lambda r: r.service not in ("adyen", "dummy_adyen")
         )
         if other_providers:
-            super(OnlineBankStatementProvider, other_providers)._pull(
+            result = super(OnlineBankStatementProvider, other_providers)._pull(
                 date_since, date_until
             )
         for provider in adyen_providers:
@@ -63,32 +64,35 @@ class OnlineBankStatementProvider(models.Model):
                 raise
             if is_scheduled:
                 provider._schedule_next_run()
+        return result
 
     def _import_adyen_file(self):
         """Import Adyen file using functionality from manual Adyen import module."""
         self.ensure_one()
-        content, attachment_vals = self._get_attachment_vals()
-        wizard = (
-            self.env["account.bank.statement.import"]
-            .with_context({"journal_id": self.journal_id.id})
-            .create({"attachment_ids": [(0, 0, attachment_vals)]})
+        if self.service == "dummy_adyen":
+            data_file, file_name = self._adyen_dummy_get_settlement_details_file()
+        else:
+            data_file, file_name = self._adyen_get_settlement_details_file()
+        wizard_model = self.env["account.statement.import"]
+        wizard = wizard_model.create(
+            {
+                "statement_filename": file_name,  # Only need the name in the wizard
+            }
         )
-        currency_code, account_number, stmts_vals = wizard._parse_adyen_file(content)
-        wizard._check_parsed_data(stmts_vals, account_number)
-        _currency, journal = wizard._find_additional_data(currency_code, account_number)
-        stmts_vals = wizard._complete_stmts_vals(stmts_vals, journal, account_number)
-        wizard._create_bank_statements(stmts_vals)
-
-    def _get_attachment_vals(self):
-        """Retrieve settlement details and convert to attachment vals."""
-        content, filename = self._adyen_get_settlement_details_file()
-        encoded_content = base64.encodebytes(content)
-        # Make sure base64 encoded content contains multiple of 4 bytes.
-        byte_count = len(encoded_content)
-        byte_padding = b"=" * (byte_count % 4)
-        data_file = encoded_content + byte_padding
-        attachment_vals = {"name": filename, "datas": data_file}
-        return content, attachment_vals
+        currency_code, account_number, stmts_vals = wizard._parse_adyen_file(data_file)
+        success = wizard._check_parsed_data(stmts_vals)
+        if not success:
+            _logger.debug("Parser did not return valid statement data", stmts_vals)
+        else:
+            # Result is used in file import to collect result of several statements.
+            result = {
+                "statement_ids": [],
+                "notifications": [],  # list of text messages
+            }
+            stmts_vals = wizard._complete_stmts_vals(
+                stmts_vals, self.journal_id, account_number
+            )
+            wizard._create_bank_statements(stmts_vals, result)
 
     def _adyen_get_settlement_details_file(self):
         """Retrieve daily generated settlement details file.
@@ -108,17 +112,31 @@ class OnlineBankStatementProvider(models.Model):
         )
         response = requests.get(URL, auth=(self.username, self.password), timeout=30)
         if response.status_code != 200:
-            raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
-        _logger.debug(_("Headers returned by Adyen %s"), response.headers)
+            raise UserError(
+                _("%(status_code)s \n\n %(text)s")
+                % {"status_code": response.status_code, "text": response.text}
+            )
+        _logger.debug("Headers returned by Adyen %s", response.headers)
         byte_count = len(response.content)
         _logger.debug(
-            _("Retrieved %d bytes from Adyen, starting with %s"),
+            "Retrieved %d bytes from Adyen, starting with %s",
             byte_count,
             response.content[:64],
         )
         return response.content, filename
 
+    def _adyen_dummy_get_settlement_details_file(self):
+        """Get file from disk, instead of from url."""
+        filename = self.download_file_name
+        testfile = get_module_resource(
+            "account_statement_import_adyen", "test_files", filename
+        )
+        with open(testfile, "rb") as datafile:
+            data_file = datafile.read()
+        return data_file, filename
+
     def _schedule_next_run(self):
         """Set next run date and autoincrement batch number."""
-        super()._schedule_next_run()
+        result = super()._schedule_next_run()
         self.next_batch_number += 1
+        return result

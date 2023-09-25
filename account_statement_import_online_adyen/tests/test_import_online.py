@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import fields
 
 # pylint: disable=import-error
-from odoo.addons.account_bank_statement_import_adyen.tests.test_import_adyen import (
+from odoo.addons.account_statement_import_adyen.tests.test_import_adyen import (
     TestImportAdyen,
 )
 
@@ -60,7 +60,6 @@ class TestImportOnline(TestImportAdyen):
         yesterday = self.now - relativedelta(days=1)
         # pylint: disable=protected-access
         provider.with_context(scheduled=True)._pull(yesterday, self.now)
-        # statement name is account number + '-' + date of last line.
         statements = self.env["account.bank.statement"].search(
             [("name", "=", statement_name)]
         )
