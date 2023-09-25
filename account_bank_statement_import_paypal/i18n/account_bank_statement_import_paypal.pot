@@ -276,6 +276,12 @@ msgid "Name"
 msgstr ""
 
 #. module: account_bank_statement_import_paypal
+#: code:addons/account_bank_statement_import_paypal/models/account_bank_statement_import_paypal_parser.py:0
+#, python-format
+msgid "No currency column, not a valid Paypal file"
+msgstr ""
+
+#. module: account_bank_statement_import_paypal
 #: model:ir.model.fields,field_description:account_bank_statement_import_paypal.field_account_bank_statement_import_paypal_mapping_wizard__data_file
 msgid "PayPal Report File"
 msgstr ""
