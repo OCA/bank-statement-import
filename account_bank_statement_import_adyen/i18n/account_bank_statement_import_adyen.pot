@@ -1,0 +1,134 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import_adyen
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model,name:account_bank_statement_import_adyen.model_account_bank_statement_import_adyen_parser
+msgid "Account Bank Statement Import Adyen Parser"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_journal_creation__adyen_merchant_account
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_journal__adyen_merchant_account
+msgid "Adyen Merchant Account"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,help:account_bank_statement_import_adyen.field_account_bank_statement_import_journal_creation__adyen_merchant_account
+#: model:ir.model.fields,help:account_bank_statement_import_adyen.field_account_journal__adyen_merchant_account
+msgid ""
+"Fill in the exact merchant account string to select this journal when "
+"importing Adyen statements"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser__id
+msgid "ID"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model,name:account_bank_statement_import_adyen.model_account_bank_statement_import
+msgid "Import Bank Statement"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model,name:account_bank_statement_import_adyen.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: model:ir.model.fields,field_description:account_bank_statement_import_adyen.field_account_bank_statement_import_adyen_parser__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid "No journal refers to Merchant Account %s"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid "No payout detected in Adyen statement."
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid "Not an Adyen statement. Headers %s do not contain 'Company Account'"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid "Parse error. Balance %s not equal to merchant payout %s"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid "Processed %d rows from Adyen statement file with %d transactions"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid ""
+"Selected journal Merchant Account does not match the import file Merchant "
+"Account column: %s"
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import.py:0
+#, python-format
+msgid "Statement file was not a Adyen settlement details file."
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import.py:0
+#, python-format
+msgid "Try parsing as Adyen settlement details."
+msgstr ""
+
+#. module: account_bank_statement_import_adyen
+#: code:addons/account_bank_statement_import_adyen/models/account_bank_statement_import_adyen_parser.py:0
+#, python-format
+msgid "Unknown header %s in Adyen statement headers"
+msgstr ""
