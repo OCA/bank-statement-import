@@ -44,11 +44,11 @@ COLUMNS = {
 }
 
 
-class AccountBankStatementImportAdyenParser(models.TransientModel):
+class AccountStatementImportAdyenParser(models.TransientModel):
     """Parse Adyen statement files for bank import."""
 
-    _name = "account.bank.statement.import.adyen.parser"
-    _description = "Account Bank Statement Import Adyen Parser"
+    _name = "account.statement.import.adyen.parser"
+    _description = "Account Statement Import Adyen Parser"
 
     def parse_rows(self, rows):
         """Parse rows generated from an Adyen file.
@@ -59,22 +59,23 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
         fees = 0.0
         balance = 0.0
         payout = 0.0
-        num_rows = self._process_headers(rows)
-        for row in rows:
+        num_rows, column_dict = self._process_headers(rows)
+        for row in rows[num_rows:]:
             num_rows += 1
             if not self._is_transaction_row(row):
                 continue
+            row_dict = self._make_row_dict(column_dict, row)
             if not statement:
-                statement = self._make_statement(row)
-                statement_info = self._get_statement_info(row)
-            row_type = self._get_value(row, "Type").strip()
-            if row_type == "MerchantPayout":
-                payout -= self._balance(row)
+                statement = self._make_statement(row_dict)
+                statement_info = self._get_statement_info(row_dict)
+            if row_dict["Type"].strip() == "MerchantPayout":
+                payout -= self._balance(row_dict)
             else:
-                balance += self._balance(row)
-            transaction = self._get_transaction(row)
+                balance += self._balance(row_dict)
+            transaction = self._get_transaction(row_dict)
+            transaction["raw_data"] = str(row)
             self._append_transaction(statement, transaction)
-            fees += self._sum_fees(row)
+            fees += self._sum_fees(row_dict)
         if fees:
             balance -= fees
             self._append_fees_transaction(
@@ -82,7 +83,7 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             )
         self._validate_statement(statement, payout, balance)
         _logger.info(
-            _("Processed %d rows from Adyen statement file with %d transactions"),
+            "Processed %d rows from Adyen statement file with %d transactions",
             num_rows,
             len(statement["transactions"]),
         )
@@ -102,8 +103,8 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             on_header_row = self._check_header_row(row)
             if not on_header_row:
                 continue
-            self._set_columns(row)
-            return num_rows
+            column_dict = self._set_columns(row)
+            return num_rows, column_dict
         raise ValueError(
             "Not an Adyen statement. Did not encounter header row in %d rows."
             % (num_rows,)
@@ -120,12 +121,12 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             )
         return True
 
-    def _get_statement_info(self, row):
+    def _get_statement_info(self, row_dict):
         """Get general information for statement."""
-        merchant_account = self._get_value(row, "Merchant Account")
+        merchant_account = row_dict["Merchant Account"]
         self._validate_merchant_account(merchant_account)
-        batch_number = self._get_value(row, "Batch Number")
-        currency_code = self._get_value(row, "Net Currency")
+        batch_number = row_dict["Batch Number"]
+        currency_code = row_dict["Net Currency"]
         return {
             "merchant_account": merchant_account,
             "batch_number": batch_number,
@@ -161,20 +162,31 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
     def _set_columns(self, row):
         """Set columns from headers. There MUST be a 'Company Account' header."""
         seen_company_account = False
+        column_dict = {}  # column_dict has column number as key, header as value.
         for num, header in enumerate(row):
             if not header.strip():
                 continue  # Ignore empty columns.
             if header == "Company Account":
                 seen_company_account = True
             if header not in COLUMNS:
-                _logger.debug(_("Unknown header %s in Adyen statement headers"), header)
+                _logger.info(_("Unknown header %s in Adyen statement headers"), header)
             else:
-                COLUMNS[header] = num  # Set the right number for the column.
+                column_dict[num] = header  # Set the right number for the column.
         if not seen_company_account:
             raise ValueError(
                 _("Not an Adyen statement. Headers %s do not contain 'Company Account'")
                 % ", ".join(row)
             )
+        return column_dict
+
+    def _make_row_dict(self, column_dict, row):
+        """Translate row in to dictionary with original headers as key."""
+        row_dict = {}
+        for num, value in enumerate(row):
+            header = column_dict.get(num, False)  # Might be unknown column/header
+            if header:
+                row_dict[header] = value
+        return row_dict
 
     def _validate_statement(self, statement, payout, balance):
         """Check wether statement valid: balanced. Log when no payout."""
@@ -182,40 +194,39 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             _logger.info(_("No payout detected in Adyen statement."))
         if self.env.user.company_id.currency_id.compare_amounts(balance, payout) != 0:
             raise UserError(
-                _("Parse error. Balance %s not equal to merchant " "payout %s")
-                % (balance, payout)
+                _(
+                    "Parse error."
+                    " Balance %(balance)s not equal to merchant payout %(payout)s"
+                )
+                % {"balance": balance, "payout": payout}
             )
 
-    def _get_value(self, row, column):
-        """Get the value from the righ column in the row."""
-        return row[COLUMNS[column]]
-
-    def _make_statement(self, row):
+    def _make_statement(self, row_dict):
         """Make statement on first transaction in file."""
         statement = {"transactions": []}
         statement["name"] = "{merchant} {year}/{batch}".format(
-            merchant=self._get_value(row, "Merchant Account"),
-            year=self._get_value(row, "Creation Date")[:4],
-            batch=self._get_value(row, "Batch Number"),
+            merchant=row_dict["Merchant Account"],
+            year=row_dict["Creation Date"][:4],
+            batch=row_dict["Batch Number"],
         )
-        statement["date"] = self._get_transaction_date(row)
+        statement["date"] = self._get_transaction_date(row_dict)
         return statement
 
-    def _get_transaction_date(self, row):
+    def _get_transaction_date(self, row_dict):
         """Get transaction date in right format."""
-        return fields.Date.from_string(self._get_value(row, "Creation Date"))
+        return fields.Date.from_string(row_dict["Creation Date"])
 
-    def _balance(self, row):
+    def _balance(self, row_dict):
         return (
-            -self._sum_amount_values(row, ("Net Debit (NC)",))
-            + self._sum_amount_values(row, ("Net Credit (NC)",))
-            + self._sum_fees(row)
+            -self._sum_amount_values(row_dict, ("Net Debit (NC)",))
+            + self._sum_amount_values(row_dict, ("Net Credit (NC)",))
+            + self._sum_fees(row_dict)
         )
 
-    def _sum_fees(self, row):
+    def _sum_fees(self, row_dict):
         """Sum the amounts in the fees columns."""
         return self._sum_amount_values(
-            row,
+            row_dict,
             (
                 "Commission (NC)",
                 "Markup (NC)",
@@ -224,49 +235,30 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
             ),
         )
 
-    def _sum_amount_values(self, row, columns):
+    def _sum_amount_values(self, row_dict, columns):
         """Sum the amounts from the columns passed."""
         amount = 0.0
         for column in columns:
-            value = self._get_value(row, column)
+            value = row_dict[column]
             if value:
                 amount += float(value)
         return amount
 
-    def _get_transaction(self, row):
-        """Get transaction from row.
+    def _get_transaction(self, row_dict):
+        """Get transaction from row dictionary.
 
         This can easily be overwritten in custom modules to add extra information.
         """
-        merchant_account = self._get_value(row, "Merchant Account")
-        psp_reference = self._get_value(row, "Psp Reference")
-        merchant_reference = self._get_value(row, "Merchant Reference")
-        payment_method = self._get_value(row, "Payment Method Variant")
-        modification_reference = self._get_value(row, "Modification Reference")
-        transaction = {
-            "date": self._get_transaction_date(row),
-            "amount": self._balance(row),
+        psp_ref = row_dict["Psp Reference"]
+        merchant_ref = row_dict["Merchant Reference"]
+        modification_ref = row_dict["Modification Reference"]
+        return {
+            "date": self._get_transaction_date(row_dict),
+            "amount": self._balance(row_dict),
+            "transaction_type": row_dict["Type"],
+            "ref": psp_ref or modification_ref or merchant_ref,
+            "payment_ref": merchant_ref or modification_ref or psp_ref or "unknown",
         }
-        transaction["note"] = " ".join(
-            [
-                part
-                for part in [
-                    merchant_account,
-                    psp_reference,
-                    merchant_reference,
-                    payment_method,
-                ]
-                if part
-            ]
-        )
-        transaction["name"] = (
-            merchant_reference or psp_reference or modification_reference
-        )
-        transaction["ref"] = (
-            psp_reference or modification_reference or merchant_reference
-        )
-        transaction["transaction_type"] = self._get_value(row, "Type")
-        return transaction
 
     def _append_fees_transaction(self, statement, fees, batch_number):
         """Single transaction for all fees in statement."""
@@ -274,7 +266,7 @@ class AccountBankStatementImportAdyenParser(models.TransientModel):
         transaction = {
             "date": max_date,
             "amount": -fees,
-            "name": "Commission, markup etc. batch %s" % batch_number,
+            "payment_ref": "Commission, markup etc. batch %s" % batch_number,
         }
         self._append_transaction(statement, transaction)
 

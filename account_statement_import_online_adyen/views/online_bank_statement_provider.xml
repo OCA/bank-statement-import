@@ -5,10 +5,10 @@
         <field name="model">online.bank.statement.provider</field>
         <field
             name="inherit_id"
-            ref="account_bank_statement_import_online.online_bank_statement_provider_form"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
         />
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='configuration']" position="inside">
+            <xpath expr="//group[@name='configuration']" position="after">
                 <group name="adyen" attrs="{'invisible':[('service','!=','adyen')]}">
                     <field
                         name="api_base"
