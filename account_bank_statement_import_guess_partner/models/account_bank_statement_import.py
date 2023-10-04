@@ -47,8 +47,6 @@ class AccountBankStatementImport(models.TransientModel):
                     transaction["partner_id"] = partner.id
                     return
             for fieldname in sale_order_fields:
-                if not hasattr(sale_order_model, fieldname):
-                    continue
                 sale_order = sale_order_model.search([(fieldname, "=", value)], limit=1)
                 if sale_order:
                     partner = self._get_effective_partner(sale_order.partner_id)
