@@ -41,6 +41,16 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
         cls.partner = cls.env["res.partner"].create(
             {"name": "Test Partner 2", "parent_id": False}
         )
+        cls.partner_address = cls.env["res.partner"].create(
+            {
+                "name": "Test Partner Address",
+                "parent_id": cls.partner.id,
+                "type": "delivery",
+            }
+        )
+        cls.partner_invoice = cls.env["res.partner"].create(
+            {"name": "Test Partner Invoice", "parent_id": False, "type": "invoice"}
+        )
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test Journal", "type": "sale", "code": "TJS0"}
         )
@@ -86,6 +96,28 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
         self.assertIn("partner_id", transaction)
         self.assertEqual(transaction["partner_id"], self.partner.id)
 
+    def test_bank_statement_partner_address(self):
+        """Test transaction when partner is not a contact."""
+        # Invoice with an address as partner_id
+        invoice = self._create_invoice("name", REF)
+        # Change invoice partner to be an address
+        # with parent as contact. Therefore,
+        # we should find  parent  in transaction
+        invoice.partner_id = self.partner_address
+        transaction = self._get_completed_transaction()
+        self.assertEqual(
+            self.env["res.partner"].browse(transaction.get("partner_id")), self.partner
+        )
+        invoice = self._create_invoice("ref", REF)
+        # Change invoice partner to be an address with no parent
+        # We should find  invoice partner  in transaction
+        invoice.partner_id = self.partner_invoice
+        transaction = self._get_completed_transaction()
+        self.assertEqual(
+            self.env["res.partner"].browse(transaction.get("partner_id")),
+            self.partner_invoice,
+        )
+
     def _get_completed_transaction(self):
         """Complete statements and return first transaction in first statement."""
         # pylint: disable=protected-access
@@ -121,6 +153,7 @@ class TestAccountBankStatementImportGuessPartner(common.SavepointCase):
         )
         invoice[ref_field] = ref_value  # Might also override name.
         invoice.post()
+        return invoice
 
     def _create_sale_order(self, ref_field, ref_value):
         """Create a sale order with some reference information."""
