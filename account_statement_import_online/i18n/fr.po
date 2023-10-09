@@ -130,8 +130,8 @@ msgstr "Nom affiché"
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid ""
-"Failed to obtain statement data for period since %s until %s: %s. See server"
-" logs for more details."
+"Failed to obtain statement data for period since %s until %s: %s. See server "
+"logs for more details."
 msgstr ""
 "N’a pas obtenu les données des relevés pendant la période du %s au %s : %s. "
 "Consultez les journaux du serveur pour plus de détails."
@@ -417,7 +417,8 @@ msgstr "La fréquence de mise à jour planifiée doit être supérieure à zéro
 #: model:ir.model.fields,help:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
 msgid ""
 "Select the actual instance of a configured provider (a record).\n"
-"Selecting a type of provider will automatically create a provider record linked to this journal."
+"Selecting a type of provider will automatically create a provider record "
+"linked to this journal."
 msgstr ""
 "Sélectionnez l’instance réelle d’un fournisseur configuré (un "
 "enregistrement).\n"
