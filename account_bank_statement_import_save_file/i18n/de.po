@@ -25,31 +25,43 @@ msgid "Bank Statement"
 msgstr "Kontoauszug"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_date
-msgid "Date Created"
-msgstr "Erstellungsdatum"
-
-#. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_log
-msgid "Description"
-msgstr "Beschreibung"
-
-#. module: account_bank_statement_import_save_file
 #: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Kontoauszug importieren"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_log
+msgid "Import Warnings"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_file
 msgid "Import file"
 msgstr "Datei importieren"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
-msgid "Imported file"
-msgstr "Importierte Datei"
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported File"
+msgstr ""
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_user
-msgid "Owner"
-msgstr "Besitzer"
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_user
+msgid "Imported by"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_date
+msgid "Imported on"
+msgstr ""
+
+#~ msgid "Date Created"
+#~ msgstr "Erstellungsdatum"
+
+#~ msgid "Description"
+#~ msgstr "Beschreibung"
+
+#~ msgid "Imported file"
+#~ msgstr "Importierte Datei"
+
+#~ msgid "Owner"
+#~ msgstr "Besitzer"

@@ -25,31 +25,31 @@ msgid "Bank Statement"
 msgstr ""
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_date
-msgid "Date Created"
-msgstr ""
-
-#. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_log
-msgid "Description"
-msgstr ""
-
-#. module: account_bank_statement_import_save_file
 #: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Importer Relevé"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_log
+msgid "Import Warnings"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_file
 msgid "Import file"
 msgstr ""
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
-msgid "Imported file"
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported File"
 msgstr ""
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_user
-msgid "Owner"
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_user
+msgid "Imported by"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_date
+msgid "Imported on"
 msgstr ""

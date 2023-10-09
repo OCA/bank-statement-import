@@ -25,31 +25,43 @@ msgid "Bank Statement"
 msgstr "Bankovni izvod"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_date
-msgid "Date Created"
-msgstr "Datum kreiranja"
-
-#. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_log
-msgid "Description"
-msgstr "Opis"
-
-#. module: account_bank_statement_import_save_file
 #: model:ir.model,name:account_bank_statement_import_save_file.model_account_bank_statement_import
 msgid "Import Bank Statement"
 msgstr "Uvoz bankovnog izvoda"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_log
+msgid "Import Warnings"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_file
 msgid "Import file"
 msgstr "Uvoz datoteke"
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
-msgid "Imported file"
-msgstr "Uvežena datoteka"
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_save_file.view_bank_statement_form
+msgid "Imported File"
+msgstr ""
 
 #. module: account_bank_statement_import_save_file
-#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement_import_user
-msgid "Owner"
-msgstr "Vlasnik"
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_user
+msgid "Imported by"
+msgstr ""
+
+#. module: account_bank_statement_import_save_file
+#: model:ir.model.fields,field_description:account_bank_statement_import_save_file.field_account_bank_statement__import_date
+msgid "Imported on"
+msgstr ""
+
+#~ msgid "Date Created"
+#~ msgstr "Datum kreiranja"
+
+#~ msgid "Description"
+#~ msgstr "Opis"
+
+#~ msgid "Imported file"
+#~ msgstr "Uvežena datoteka"
+
+#~ msgid "Owner"
+#~ msgstr "Vlasnik"
