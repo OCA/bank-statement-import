@@ -18,33 +18,12 @@ msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 #, python-format
 msgid ""
-"%s \n"
+"Error during Create Synchronisation {} \n"
 "\n"
-" %s"
+" {}"
 msgstr ""
-"%s \n"
-"\n"
-" %s"
-
-#. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__display_name
-msgid "Display Name"
-msgstr "Nom"
-
-#. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#, python-format
-msgid ""
-"Error during Create Synchronisation %s \n"
-"\n"
-" %s"
-msgstr ""
-"Error al crear sincronització %s \n"
-"\n"
-" %s"
 
 #. module: account_statement_import_online_ponto
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
@@ -52,25 +31,10 @@ msgstr ""
 msgid ""
 "Error during get transaction.\n"
 "\n"
-"%s \n"
+"{} \n"
 "\n"
-" %s"
+" {}"
 msgstr ""
-"Error durant la transacció GET.\n"
-"\n"
-"%s \n"
-"\n"
-" %s"
-
-#. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__id
-msgid "ID"
-msgstr "ID"
-
-#. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
@@ -124,3 +88,46 @@ msgstr "Restabliment últim identificador."
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Secret Key"
 msgstr "Clau secreta"
+
+#, python-format
+#~ msgid ""
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+#~ msgstr ""
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+
+#~ msgid "Display Name"
+#~ msgstr "Nom"
+
+#, python-format
+#~ msgid ""
+#~ "Error during Create Synchronisation %s \n"
+#~ "\n"
+#~ " %s"
+#~ msgstr ""
+#~ "Error al crear sincronització %s \n"
+#~ "\n"
+#~ " %s"
+
+#, python-format
+#~ msgid ""
+#~ "Error during get transaction.\n"
+#~ "\n"
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+#~ msgstr ""
+#~ "Error durant la transacció GET.\n"
+#~ "\n"
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
