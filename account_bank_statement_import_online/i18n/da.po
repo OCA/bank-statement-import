@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import_online
+# 	* account_bank_statement_import_online
 #
 msgid ""
 msgstr ""
@@ -128,7 +128,9 @@ msgstr "Vist navn"
 #. module: account_bank_statement_import_online
 #: code:addons/account_bank_statement_import_online/models/online_bank_statement_provider.py:197
 #, python-format
-msgid "Failed to obtain statement data for period since %s until %s: %s. See server logs for more details."
+msgid ""
+"Failed to obtain statement data for period since %s until %s: %s. See server "
+"logs for more details."
 msgstr ""
 
 #. module: account_bank_statement_import_online
@@ -433,7 +435,9 @@ msgstr ""
 
 #. module: account_bank_statement_import_online
 #: model:ir.model.fields,help:account_bank_statement_import_online.field_online_bank_statement_provider__tz
-msgid "Timezone to convert transaction timestamps to prior being saved into a statement."
+msgid ""
+"Timezone to convert transaction timestamps to prior being saved into a "
+"statement."
 msgstr ""
 
 #. module: account_bank_statement_import_online
