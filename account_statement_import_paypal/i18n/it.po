@@ -127,8 +127,8 @@ msgstr ""
 #. module: account_statement_import_paypal
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
-msgid "%s: %s"
-msgstr "%s: %s"
+msgid "%(code)s: %(path)s"
+msgstr ""
 
 #. module: account_statement_import_paypal
 #: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_mapping
@@ -185,8 +185,6 @@ msgid "Decimals Separator"
 msgstr "Separatore decimali"
 
 #. module: account_statement_import_paypal
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__display_name
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__display_name
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__display_name
@@ -210,8 +208,6 @@ msgid "Header"
 msgstr "Intestazione"
 
 #. module: account_statement_import_paypal
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_journal__id
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__id
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__id
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__id
@@ -251,8 +247,6 @@ msgid "Journal"
 msgstr "Registro"
 
 #. module: account_statement_import_paypal
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import____last_update
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping____last_update
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard____last_update
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser____last_update
@@ -348,3 +342,7 @@ msgstr "punto (.)"
 #: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_thousands_sep__none
 msgid "none"
 msgstr "nessuno"
+
+#, python-format
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
