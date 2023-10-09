@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_bank_statement_import_txt_xlsx
+# 	* account_bank_statement_import_txt_xlsx
 #
 msgid ""
 msgstr ""
@@ -250,7 +250,9 @@ msgstr "Importované mapovanie"
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__currency_column
-msgid "In case statement is multi-currency, column to get currency of transaction from"
+msgid ""
+"In case statement is multi-currency, column to get currency of transaction "
+"from"
 msgstr ""
 "Ak je výpis s viacerými menami, stĺpec udávajúci zdroj informácii o mene "
 "transakcie"
@@ -258,7 +260,9 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_currency_column
-msgid "In case statement provides original currency for transactions with automatic currency conversion, column to get original currency of transaction from"
+msgid ""
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "V prípade že výpis poskytuje pôvodnú menu s automatickou konverziou, stĺpec "
 "udávajúci zdroj informácii o mene transakcie"
@@ -266,7 +270,10 @@ msgstr ""
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__original_amount_column
-msgid "In case statement provides original currency for transactions with automatic currency conversion, column to get original transaction amount in original transaction currency from"
+msgid ""
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
+"transaction currency from"
 msgstr ""
 "V prípade že výpis poskytuje pôvodnú menu s automatickou konverziou, stĺpec "
 "udávajúci sumu pôvodnej transakcie v pôvodnej mene"
@@ -380,7 +387,9 @@ msgstr "Mapovanie hárku"
 #. module: account_bank_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping__debit_credit_column
 #: model:ir.model.fields,help:account_bank_statement_import_txt_xlsx.field_account_bank_statement_import_sheet_mapping_wizard__debit_credit_column
-msgid "Some statement formats use absolute amount value and indicate signof the transaction by specifying if it was a debit or a credit one"
+msgid ""
+"Some statement formats use absolute amount value and indicate signof the "
+"transaction by specifying if it was a debit or a credit one"
 msgstr ""
 "Niektoré formáty výpisov používajú absolútnu hodnotu transakcie a znamienko "
 "určuje, či ide o debet alebo kredit"
