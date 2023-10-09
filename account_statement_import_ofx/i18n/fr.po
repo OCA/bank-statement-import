@@ -20,18 +20,6 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: account_statement_import_ofx
-#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: account_statement_import_ofx
-#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal__id
-#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import__id
-msgid "ID"
-msgstr ""
-
-#. module: account_statement_import_ofx
 #: model:ir.model,name:account_statement_import_ofx.model_account_statement_import
 msgid "Import Bank Statement Files"
 msgstr "Importer des Relevés Bancaires"
@@ -40,12 +28,6 @@ msgstr "Importer des Relevés Bancaires"
 #: model:ir.model,name:account_statement_import_ofx.model_account_journal
 msgid "Journal"
 msgstr ""
-
-#. module: account_statement_import_ofx
-#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification"
 
 #. module: account_statement_import_ofx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_ofx.account_statement_import_form
@@ -64,3 +46,6 @@ msgstr ""
 "valide.\n"
 "\n"
 "%s"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification"
