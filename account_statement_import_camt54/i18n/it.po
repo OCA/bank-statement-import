@@ -27,6 +27,7 @@ msgid "Add balance Line"
 msgstr ""
 
 #. module: account_statement_import_camt54
+#. odoo-python
 #: code:addons/account_statement_import_camt54/models/parser.py:0
 #, python-format
 msgid ""
@@ -37,6 +38,7 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_import_camt54
+#. odoo-python
 #: code:addons/account_statement_import_camt54/models/parser.py:0
 #, python-format
 msgid ""
@@ -48,23 +50,9 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_import_camt54
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import__display_name
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import_camt_parser__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
-
-#. module: account_statement_import_camt54
 #: model:ir.model.fields,help:account_statement_import_camt54.field_account_journal__transfer_line
 msgid "Generate balance line on total of bank statement import"
 msgstr ""
-
-#. module: account_statement_import_camt54
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__id
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import__id
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import_camt_parser__id
-msgid "ID"
-msgstr "ID"
 
 #. module: account_statement_import_camt54
 #: model:ir.model,name:account_statement_import_camt54.model_account_statement_import
@@ -76,9 +64,11 @@ msgstr "Importazione file estratto conto bancario"
 msgid "Journal"
 msgstr "Registro"
 
-#. module: account_statement_import_camt54
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import____last_update
-#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import_camt_parser____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
