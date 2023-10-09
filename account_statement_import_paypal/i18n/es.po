@@ -227,7 +227,6 @@ msgstr "Importar"
 #. module: account_statement_import_paypal
 #: model:ir.model,name:account_statement_import_paypal.model_account_statement_import
 #, fuzzy
-#| msgid "Import Bank Statement"
 msgid "Import Bank Statement Files"
 msgstr "Importar Extracto Bancario"
 
