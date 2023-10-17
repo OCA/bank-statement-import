@@ -206,11 +206,8 @@ class OnlineBankStatementProviderPayPal(models.Model):
             token, currency, date_since, date_until
         )
         if not transactions:
-            if self.allow_empty_statements:
-                balance = self._paypal_get_balance(token, currency, date_since)
-                return [], {"balance_start": balance, "balance_end_real": balance}
-            else:
-                return None
+            balance = self._paypal_get_balance(token, currency, date_since)
+            return [], {"balance_start": balance, "balance_end_real": balance}
 
         # Normalize transactions, sort by date, and get lines
         transactions = list(
@@ -416,7 +413,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     interval_start.weekday() == 0
                     and (datetime.utcnow() - interval_start).total_seconds() < 28800,
                 )
-
                 data = self.with_context(
                     invalid_data_workaround=invalid_data_workaround,
                 )._paypal_retrieve(url, token)
