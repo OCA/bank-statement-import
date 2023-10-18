@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019 Dataplug (https://dataplug.io)
+    Copyright 2021-2023 Therp BV (https://therp.nl)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_filter">
+        <field name="name">online.bank.statement.provider.filter</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field name="arch" type="xml">
+            <search string="Online Bank Statement Providers">
+                <field name="journal_id" />
+                <filter
+                    name="archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                <group name="groupby">
+                    <filter
+                        name="service_groupby"
+                        string="Service"
+                        context="{'group_by': 'service'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="online_bank_statement_provider_tree">
+        <field name="name">online.bank.statement.provider.tree</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="journal_id" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="service" />
+                <field name="currency_id" />
+                <field name="update_schedule" />
+                <field name="next_run" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field name="arch" type="xml">
+            <form string="Online Bank Statement Provider">
+                <field name="active" invisible="1" />
+                <header>
+                    <button
+                        type="action"
+                        name="%(action_online_bank_statements_pull_wizard)d"
+                        attrs="{'invisible': [('active', '=', False)]}"
+                        string="Pull Online Bank Statement"
+                    />
+                </header>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <group name="main" col="2">
+                        <group name="params">
+                            <field name="journal_id" />
+                            <field name="currency_id" />
+                            <field name="account_number" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="service" />
+                        </group>
+                        <group name="pull" string="Scheduled Pull">
+                            <label for="interval_number" />
+                            <div class="o_row" id="interval_number">
+                                <field name="interval_number" class="ml8" />
+                                <field name="interval_type" />
+                            </div>
+                            <field name="next_run" />
+                        </group>
+                        <group name="configuration" string="Configuration">
+                            <field name="statement_creation_mode" />
+                            <field name="tz" />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="online_bank_statement_provider_action" model="ir.actions.act_window">
+        <field name="name">Online Bank Statement Providers</field>
+        <field name="res_model">online.bank.statement.provider</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="online_bank_statement_provider_menu"
+        action="online_bank_statement_provider_action"
+        parent="account.account_banks_menu"
+        sequence="100"
+    />
+
+</odoo>
