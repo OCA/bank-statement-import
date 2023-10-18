@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019-2020 Dataplug (https://dataplug.io)
+    Copyright 2021 Therp BV (https://therp.nl).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="view_account_journal_form">
+        <field name="name">account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//notebook//field[@name='bank_statements_source']/.."
+                position="after"
+            >
+                <group
+                    name="online_bank_statements"
+                    string="Online Bank Statements (OCA)"
+                    groups="account.group_account_user"
+                    attrs="{'invisible': [('bank_statements_source', '!=', 'online')]}"
+                >
+                    <label
+                        for="online_bank_statement_provider"
+                        string="Provider"
+                        attrs="{'required': [('bank_statements_source', '=', 'online')]}"
+                        class="oe_edit_only"
+                        groups="account.group_account_user"
+                    />
+                    <field
+                        name="online_bank_statement_provider"
+                        nolabel="1"
+                        attrs="{'required': [('bank_statements_source', '=', 'online')]}"
+                        class="oe_edit_only"
+                        groups="account.group_account_user"
+                    />
+                    <label
+                        for="online_bank_statement_provider_id"
+                        string="Provider"
+                        attrs="{'invisible': [('online_bank_statement_provider_id', '=', False)]}"
+                        class="oe_read_only"
+                    />
+                    <field
+                        name="online_bank_statement_provider_id"
+                        nolabel="1"
+                        attrs="{'invisible': [('online_bank_statement_provider_id', '=', False)]}"
+                        class="oe_read_only"
+                    />
+                </group>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    type="action"
+                    name="%(action_online_bank_statements_pull_wizard)d"
+                    attrs="{'invisible': [('online_bank_statement_provider', '=', False)]}"
+                    string="Pull Online Bank Statement"
+                    groups="account.group_account_user"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
