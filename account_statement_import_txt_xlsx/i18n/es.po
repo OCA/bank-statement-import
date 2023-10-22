@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-23 19:09+0000\n"
-"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
+"PO-Revision-Date: 2023-10-28 18:41+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "Monto de la transacción en la moneda del diario"
 #: code:addons/account_statement_import_txt_xlsx/models/account_statement_import.py:0
 #, python-format
 msgid "Bad file/mapping: "
-msgstr ""
+msgstr "Archivo/mapeo defectuoso: "
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
@@ -332,7 +332,7 @@ msgstr ""
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__shift_jis
 msgid "Japanese (Shift JIS)"
-msgstr "Japanese (Shift JIS)"
+msgstr "Japonés (Shift JIS)"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model,name:account_statement_import_txt_xlsx.model_account_journal
@@ -497,9 +497,8 @@ msgstr "Formato de marca de tiempo"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__big5
-#, fuzzy
 msgid "Traditional Chinese (big5)"
-msgstr "Traditional Chinese (big5)"
+msgstr "Chino tradicional (big5)"
 
 #. module: account_statement_import_txt_xlsx
 #: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_parser.py:0
@@ -563,12 +562,12 @@ msgstr "Valor de la columna de débito/crédito que indica si es un débito"
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__iso-8859-1
 msgid "Western (Latin-1 / ISO 8859-1)"
-msgstr "Western (Latin-1 / ISO 8859-1)"
+msgstr "Occidental (Latín-1 / ISO 8859-1)"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
-msgstr "Western (Windows-1252)"
+msgstr "Occidental (Windows-1252)"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__no_header
