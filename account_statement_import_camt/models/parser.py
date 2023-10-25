@@ -88,6 +88,14 @@ class CamtParser(models.AbstractModel):
         self.add_value_from_node(
             ns,
             node,
+            ["./ns:BkTxCd/ns:Prtry/ns:Cd"],
+            transaction["narration"],
+            "%s (BkTxCd/Prtry/Cd)" % _("Additional Information"),
+            join_str=" ",
+        )
+        self.add_value_from_node(
+            ns,
+            node,
             ["./ns:AddtlTxInf"],
             transaction["narration"],
             "%s (AddtlTxInf)" % _("Additional Transaction Information"),
