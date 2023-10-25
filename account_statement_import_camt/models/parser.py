@@ -90,7 +90,7 @@ class CamtParser(models.AbstractModel):
             node,
             ["./ns:BkTxCd/ns:Prtry/ns:Cd"],
             transaction["narration"],
-            "%s (AddtlTxInf)" % _("Additional Transaction Information"),
+            "%s (BkTxCd/Prtry/Cd)" % _("Additional Information"),
             join_str=" ",
         )
         self.add_value_from_node(
