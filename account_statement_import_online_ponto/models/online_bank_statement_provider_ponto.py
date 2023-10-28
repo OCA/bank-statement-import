@@ -83,9 +83,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                     )
                     self.sudo().ponto_token_expiration = expiration_date
             else:
-                raise UserError(
-                    _("{} \n\n {}").format(response.status_code, response.text)
-                )
+                raise UserError(f"{response.status_code}\n\n {response.text}")
         return {
             "Accept": "application/json",
             "Authorization": "Bearer %s" % self.ponto_token,
@@ -105,7 +103,7 @@ class OnlineBankStatementProviderPonto(models.Model):
                 )
                 res[iban] = account.get("id")
             return res
-        raise UserError(_("{} \n\n {}").format(response.status_code, response.text))
+        raise UserError(f"{response.status_code}\n\n {response.text}")
 
     def _ponto_synchronisation(self, account_id):
         url = PONTO_ENDPOINT + "/synchronizations"
@@ -125,9 +123,11 @@ class OnlineBankStatementProviderPonto(models.Model):
             sync_id = data.get("attributes", {}).get("resourceId", False)
         else:
             raise UserError(
-                _("Error during Create Synchronisation {} \n\n {}").format(
-                    response.status_code, response.text
-                )
+                _("Error during Create Synchronization %(code)s \n\n %(text)s")
+                % {
+                    "code": response.status_code,
+                    "text": response.text,
+                }
             )
 
         # Check synchronisation
@@ -161,9 +161,11 @@ class OnlineBankStatementProviderPonto(models.Model):
             )
             if response.status_code != 200:
                 raise UserError(
-                    _("Error during get transaction.\n\n{} \n\n {}").format(
-                        response.status_code, response.text
-                    )
+                    _("Error during get transaction.\n\n%(code)s\n\n%(text)s")
+                    % {
+                        "code": response.status_code,
+                        "text": response.text,
+                    }
                 )
             if params.get("before"):
                 params.pop("before")
