@@ -175,7 +175,6 @@ msgstr "Si está marcado, nuevos mensajes requieren su atención."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -385,11 +384,6 @@ msgid "Pull Online Bank Statements"
 msgstr "Extraer Extractos Bancarios En Línea"
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de Entrega SMS"
-
-#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__account_number
 msgid "Sanitized Account Number"
 msgstr "Número de Cuenta Saneado"
@@ -413,7 +407,8 @@ msgstr "¡El intervalo de actualización debe ser superior a cero !"
 #: model:ir.model.fields,help:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
 msgid ""
 "Select the actual instance of a configured provider (a record).\n"
-"Selecting a type of provider will automatically create a provider record linked to this journal."
+"Selecting a type of provider will automatically create a provider record "
+"linked to this journal."
 msgstr ""
 "Seleccione la instancia real de un proveedor configurado (un registro).\n"
 "Al seleccionar un tipo de proveedor, se creará automáticamente un registro "
@@ -503,3 +498,6 @@ msgstr "Semana(s)"
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__weekly
 msgid "Weekly statements"
 msgstr "Extractos semanales"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de Entrega SMS"
