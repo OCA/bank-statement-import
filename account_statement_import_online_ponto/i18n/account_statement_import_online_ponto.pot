@@ -17,9 +17,9 @@ msgstr ""
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 #, python-format
 msgid ""
-"Error during Create Synchronisation {} \n"
+"Error during Create Synchronization %(code)s \n"
 "\n"
-" {}"
+" %(text)s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
@@ -28,9 +28,9 @@ msgstr ""
 msgid ""
 "Error during get transaction.\n"
 "\n"
-"{} \n"
+"%(code)s\n"
 "\n"
-" {}"
+"%(text)s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
