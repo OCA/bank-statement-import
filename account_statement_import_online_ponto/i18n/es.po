@@ -20,13 +20,10 @@ msgstr ""
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 #, python-format
 msgid ""
-"Error during Create Synchronisation {} \n"
+"Error during Create Synchronization %(code)s \n"
 "\n"
-" {}"
+" %(text)s"
 msgstr ""
-"Error durante la Sincronización de Creación {} \n"
-"\n"
-" {}"
 
 #. module: account_statement_import_online_ponto
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
@@ -34,15 +31,10 @@ msgstr ""
 msgid ""
 "Error during get transaction.\n"
 "\n"
-"{} \n"
+"%(code)s\n"
 "\n"
-" {}"
+"%(text)s"
 msgstr ""
-"Error durante la obtención de la transacción.\n"
-"\n"
-"{}\n"
-"\n"
-" {}"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
@@ -96,3 +88,27 @@ msgstr "Restablecer Último identificador."
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Secret Key"
 msgstr "Clave Secreta"
+
+#, python-format
+#~ msgid ""
+#~ "Error during Create Synchronisation {} \n"
+#~ "\n"
+#~ " {}"
+#~ msgstr ""
+#~ "Error durante la Sincronización de Creación {} \n"
+#~ "\n"
+#~ " {}"
+
+#, python-format
+#~ msgid ""
+#~ "Error during get transaction.\n"
+#~ "\n"
+#~ "{} \n"
+#~ "\n"
+#~ " {}"
+#~ msgstr ""
+#~ "Error durante la obtención de la transacción.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ " {}"
