@@ -50,6 +50,11 @@ msgid ""
 "`n` the number of digit in the reference, by default 6.\n"
 "e.g. \"13,6\""
 msgstr ""
+"El parámetro de configuración `isr_partner_ref` es incorrecto.\n"
+"Debe tener el formato `i[,n]`. \n"
+"donde `i` es la posición del primer dígito y\n"
+"`n` el número de dígitos de la referencia, por defecto 6.\n"
+"Por ejemplo, \"13,6\""
 
 #. module: account_statement_import_camt54
 #: model:ir.model.fields,help:account_statement_import_camt54.field_account_journal__transfer_line
