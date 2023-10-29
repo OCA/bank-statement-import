@@ -35,6 +35,10 @@ msgid ""
 "`i` and `n` must be integers.\n"
 "e.g. \"13,6\""
 msgstr ""
+"El parámetro de configuración `isr_partner_ref` es incorrecto.\n"
+"Debe tener el formato `i[,n]`. \n"
+"`i` y `n` deben ser enteros.\n"
+"Por ejemplo, \"13,6\""
 
 #. module: account_statement_import_camt54
 #: code:addons/account_statement_import_camt54/models/parser.py:0
