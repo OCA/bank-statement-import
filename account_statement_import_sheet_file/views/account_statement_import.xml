@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 ForgeFlow, S.L.
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="account_statement_import_form" model="ir.ui.view">
+        <field name="name">account.statement.import</field>
+        <field name="model">account.statement.import</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_file.account_statement_import_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//ul[@id='statement_format']" position="inside">
+                <li>
+                    TXT/CSV/XLSX mapping: <field name="sheet_mapping_id" nolabel="1" />
+                </li>
+            </xpath>
+        </field>
+    </record>
+</odoo>
