@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-18 06:13+0000\n"
-"PO-Revision-Date: 2023-10-18 08:13+0200\n"
-"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
+"PO-Revision-Date: 2023-11-01 21:38+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -52,7 +52,7 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__absolute_value
 msgid "Absolute value"
-msgstr ""
+msgstr "Valor absoluto"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -63,22 +63,20 @@ msgstr "Cuenta: %s; "
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_column
-#, fuzzy
-#| msgid "Amount Column"
 msgid "Amount column"
-msgstr "Columna de importe"
+msgstr "Columna Importe"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_type
 msgid "Amount type"
-msgstr ""
+msgstr "Tipo de importe"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import.py:0
 #, python-format
 msgid "Bad file/mapping: "
-msgstr ""
+msgstr "Archivo/mapeo defectuoso: "
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__balance_column
@@ -227,10 +225,8 @@ msgstr "Nombre mostrado"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__distinct_credit_debit
-#, fuzzy
-#| msgid "Debit/Credit column"
 msgid "Distinct Credit/debit Column"
-msgstr "Columna de débito/crédito"
+msgstr "Distinta Columna de Crédito/débito"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__file_encoding
@@ -245,12 +241,12 @@ msgstr "El fichero no contiene una línea de cabecera"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__footer_lines_skip_count
 msgid "Footer lines skip count"
-msgstr ""
+msgstr "Recuento de líneas omitidas a pie de página"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__header_lines_skip_count
 msgid "Header lines skip count"
-msgstr ""
+msgstr "Recuento de líneas de cabecera omitidas"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__id
@@ -296,7 +292,7 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__shift_jis
 msgid "Japanese (Shift JIS)"
-msgstr "Japanese (Shift JIS)"
+msgstr "Japonés (Shift JIS)"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model,name:account_statement_import_sheet_file.model_account_journal
@@ -382,11 +378,13 @@ msgid ""
 "Set the Footer lines number.Used in some csv/xlsx file that integrate meta "
 "data inlast lines."
 msgstr ""
+"Establezca el número de líneas del pie de página. Se utiliza en algunos "
+"archivos csv/xlsx que integran metadatos en las últimas líneas."
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__header_lines_skip_count
 msgid "Set the Header lines number."
-msgstr ""
+msgstr "Establezca el número de líneas de Cabecera."
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import__sheet_mapping_id
@@ -396,7 +394,7 @@ msgstr "Hoja mapeo"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__simple_value
 msgid "Simple value"
-msgstr ""
+msgstr "Valor simple"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_type
@@ -406,6 +404,11 @@ msgid ""
 "(absolute value + indicate sign)\n"
 "Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
 msgstr ""
+"Valor simple: utilizar un importe ignorado en la columna importe\n"
+"Valor absoluto: utilizar una misma columna para el Debe y el Haber\n"
+"(valor absoluto + signo indicativo)\n"
+"Columna distinta para débito y crédito: utilice una columna distinta para "
+"débito y crédito"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
@@ -445,9 +448,8 @@ msgstr "Formato de marca de tiempo"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__big5
-#, fuzzy
 msgid "Traditional Chinese (big5)"
-msgstr "Traditional Chinese (big5)"
+msgstr "Chino tradicional (big5)"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -493,18 +495,15 @@ msgstr "Usar amount_column OR (amount_debit_column AND amount_credit_column)."
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__debit_credit_column
-#, fuzzy
-#| msgid ""
-#| "Some statement formats use absolute amount value and indicate signof the "
-#| "transaction by specifying if it was a debit or a credit one"
 msgid ""
 "Used if amount type is \"Absolute value\"\n"
 "Some statement formats use absolute amount value and indicate sign\n"
 "of the transaction by specifying if it was a debit or a credit one"
 msgstr ""
-"Algunos formatos de extracto bancario utilizan el valor de la cantidad "
-"absoluta e indican el signo de la transacción especificando si fue de débito "
-"o de crédito"
+"Se utiliza si el tipo de importe es \"Valor absoluto\".\n"
+"Algunos formatos de extracto utilizan el valor de importe absoluto e indican "
+"el signo\n"
+"de la transacción especificando si fue de débito o de crédito"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_column
@@ -513,6 +512,9 @@ msgid ""
 "Amount of transaction in journal's currency\n"
 "Some statement formats use credit/debit columns"
 msgstr ""
+"Se utiliza si el tipo de importe es \"Valor simple\" o \"Valor absoluto\".\n"
+"Importe de la transacción en la divisa del diario\n"
+"Algunos formatos de extracto utilizan columnas de crédito/débito"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__credit_value
@@ -527,12 +529,12 @@ msgstr "Valor de la columna de débito/crédito que indica si es un débito"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__iso-8859-1
 msgid "Western (Latin-1 / ISO 8859-1)"
-msgstr "Western (Latin-1 / ISO 8859-1)"
+msgstr "Occidental (Latín-1 / ISO 8859-1)"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
-msgstr "Western (Windows-1252)"
+msgstr "Occidental (Windows-1252)"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header
