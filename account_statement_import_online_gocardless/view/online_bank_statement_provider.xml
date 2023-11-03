@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="gocardless"
+                    string="GoCardless"
+                    attrs="{'invisible':[('service','!=','gocardless')]}"
+                >
+                    <field name="username" string="Secret ID" />
+                    <field name="password" string="Secret Key" />
+                    <field
+                        name="gocardless_requisition_id"
+                        attrs="{'invisible': [('gocardless_requisition_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="gocardless_requisition_expiration"
+                        attrs="{'invisible': [('gocardless_requisition_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="gocardless_institution_id"
+                        attrs="{'invisible': [('gocardless_institution_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="gocardless_account_id"
+                        attrs="{'invisible': [('gocardless_account_id', '=', False)]}"
+                        groups="base.group_no_one"
+                    />
+                    <button
+                        name="action_select_gocardless_bank"
+                        string="Select Bank Account Identifier"
+                        type="object"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
