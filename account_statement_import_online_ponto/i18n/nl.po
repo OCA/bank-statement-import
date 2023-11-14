@@ -1,0 +1,175 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_ponto
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-14 15:13+0000\n"
+"Last-Translator: Thijs van Oers <thijsvanoers@yahoo.com>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "%d transactions present in response data"
+msgstr "%d transacties aanwezig in response data"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
+msgid "Execution Date"
+msgstr "datum uitvoering"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "GET request on %(url)s"
+msgstr "Vraag request aan %(url)s"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "GET request to %(url)s with headers %(headers)s and params %(params)s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "HTTP answer code %(response_code)s from Ponto"
+msgstr "HTTP antwoord code %(response_code)s vanuit Ponto"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model,name:account_statement_import_online_ponto.model_ponto_interface
+msgid "Interface to all interactions with Ponto API"
+msgstr "Interface naar alle interacties met de Ponto API"
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Login"
+msgstr "Inlog"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid "No lines were retrieved from Ponto"
+msgstr "Er zijn geen regels opgehaald vanuit Ponto"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "No transactions where found in data %(data)s"
+msgstr "Geen transacties gevonden voor dagen %(data)s"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model,name:account_statement_import_online_ponto.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Online aanbieder bankafschriften"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "POST request on %(url)s"
+msgstr "POST request op %(url)s"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "Please fill login and key."
+msgstr "Vul uw login en key in."
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "Ponto : no token"
+msgstr "Ponto: geen token"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "Ponto : wrong configuration, account {account} not found in {data}"
+msgstr ""
+"Ponto : verkeerde configuratie, rekening {account} niet gevonden in {data}"
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Ponto Config"
+msgstr "Ponto configuratie"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid "Ponto Date Field"
+msgstr "Ponto datumveld"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_last_identifier
+msgid "Ponto Last Identifier"
+msgstr "Laatste identifier Ponto"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid "Ponto obtain all new statement data for journal %s"
+msgstr "Ponto verkrijgt alle nieuwe afschrift informatie voor dagboek %s"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid ""
+"Ponto obtain statement data for journal %(journal)s from %(date_since)s to "
+"%(date_until)s"
+msgstr ""
+"Ponto verkrijgt afschrift informatie voor dagboek %(journal)s vanaf "
+"%(date_since)s tot %(date_until)s"
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Secret Key"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,help:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid ""
+"Select the Ponto date field that will be used for the Odoo bank statement "
+"line date."
+msgstr ""
+"Selecteer het Ponto datumveld dat zal worden gebruikt voor de Odoo "
+"bankafschriftregel datum."
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "Server returned status code {response_code}: {response_text}"
+msgstr ""
+"De server gaf de volgende status code terug {response_code}: {response_text}"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/tests/test_account_statement_import_online_ponto.py:0
+#, python-format
+msgid "Statement contains transactions: %s"
+msgstr "Afschrift bevat transacties: %s"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__value_date
+msgid "Value Date"
+msgstr "Datum waarde"
