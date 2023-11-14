@@ -21,10 +21,10 @@ class AccountJournal(models.Model):
         speeddict = {"account_number": {}}
         partner_banks = self.env["res.partner.bank"].search_read(
             [("company_id", "in", (False, self.company_id.id))],
-            ["acc_number", "partner_id"],
+            ["sanitized_acc_number", "partner_id"],
         )
         for partner_bank in partner_banks:
-            speeddict["account_number"][partner_bank["acc_number"]] = {
+            speeddict["account_number"][partner_bank["sanitized_acc_number"]] = {
                 "partner_id": partner_bank["partner_id"][0],
                 "partner_bank_id": partner_bank["id"],
             }
