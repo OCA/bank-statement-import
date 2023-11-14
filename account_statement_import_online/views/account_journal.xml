@@ -53,7 +53,7 @@
                 <button
                     type="action"
                     name="%(action_online_bank_statements_pull_wizard)d"
-                    attrs="{'invisible': [('online_bank_statement_provider', '=', False)]}"
+                    attrs="{'invisible': [('bank_statements_source', '!=', 'online')]}"
                     string="Pull Online Bank Statement"
                     groups="account.group_account_user"
                 />
