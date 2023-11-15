@@ -138,7 +138,7 @@ msgid ""
 "{exception}. See server logs for more details."
 msgstr ""
 "Error al obtener los datos del extracto para el periodo desde {since} hasta "
-"{until}: {excepction}. Consulte los registros del servidor para obtener más "
+"{until}: {exception}. Consulte los registros del servidor para obtener más "
 "detalles."
 
 #. module: account_statement_import_online
