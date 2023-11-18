@@ -13,14 +13,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2018-08-24 09:15+0000\n"
-"Last-Translator: Manel Fernandez <manelfera@outlook.com>, 2018\n"
+"PO-Revision-Date: 2023-11-18 18:35+0000\n"
+"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
 "Language-Team: Catalan (https://www.transifex.com/odoo/teams/41243/ca/)\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -39,7 +40,7 @@ msgstr "1 transacció ha estat ja importada i serà ignorada."
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "<span>Import (OCA)</span>"
-msgstr ""
+msgstr "<span>Importar extracte (OCA)</span>"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
@@ -56,6 +57,10 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"No s'ha pogut trobar cap compte bancari amb número '%(account_number)s' "
+"associat al contacte '%(partner_name)s'. Heu de crear el compte bancari i "
+"configurar-lo al diari bancari relacionat. Si el diari bancari relacionat "
+"encara no existeix, n'heu de crear un de nou."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -76,6 +81,7 @@ msgstr "Mostrar Nom"
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Download bank statement files from your bank and upload them here."
 msgstr ""
+"Baixeu els fitxers d'extractes bancaris del vostre banc i pengeu-los aquí."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -91,13 +97,11 @@ msgstr "Importa"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "Import de l'extracte bancari"
+msgstr "Importar extracte bancari"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
 msgstr "Importar extractes bancaris"
 
@@ -109,12 +113,12 @@ msgstr "Importar extracte"
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
-msgstr ""
+msgstr "Importar extracte bancari (OCA)"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "Importar i visualitzar"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_journal
@@ -124,7 +128,7 @@ msgstr "Diari"
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
 msgid "Last Modified on"
-msgstr "Última modificació el "
+msgstr "Darrera modificació el"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
@@ -141,39 +145,36 @@ msgstr "Última actualització el"
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing currency code in the bank statement file."
-msgstr ""
+msgstr "Falta el codi de moneda al fitxer de l'extracte bancari."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Missing payment_ref on a transaction."
-msgstr "Aquest fitxer no conte cap transacció."
+msgstr "Falta payment_ref a la transacció."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
-#, fuzzy
 msgid "Statement File"
 msgstr "Arxiu d'extracte bancari"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
-msgstr "Arxiu d'extracte bancari"
+msgstr "Nom del fitxer d'extracte"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "Formats suportats:"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
-msgstr ""
-"El compte bancari d'aquest extracte no és la mateixa que la del diari (%s)"
+msgstr "El compte comptable del compte bancari no està establert al diari '%s'."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -184,6 +185,10 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"El banc amb número de compte '%(account_number)s' existeix a Odoo, però no "
+"està establert a cap diari bancari. Hauríeu de configurar-lo al diari "
+"bancari relacionat. Si el diari bancari relacionat encara no existeix, n'heu "
+"de crear un de nou."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -193,6 +198,8 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
+"El fitxer d'extractes bancaris utilitza moneda '%s' però aquesta moneda no "
+"existeix a Odoo."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -202,6 +209,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"La moneda de l'extracte bancari (%(currency_name)s) no és el mateix que la "
+"moneda del diari '%(journal_name)s' (%(journal_currency_name)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -212,6 +221,9 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"El format d'aquest fitxer d'extracte bancari no conté el número de compte "
+"bancari, de manera que heu d'iniciar l'assistent des del diari del banc dret "
+"al tauler."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -221,34 +233,34 @@ msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
 msgstr ""
+"El diari trobat per al fitxer (%(journal_match)s) és diferent al del diari "
+"seleccionat (%(journal_selected)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "L'anàlisi del fitxer d'extracte ha retornat un resultat no vàlid."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
 msgstr ""
-"No es pot interpretar l'arxiu donat. ¿Ha instal·lat el mòdul que suporta "
-"aquest tipus d'arxiu?"
+"No es pot interpretar l'arxiu donat. \n"
+"Ha instal·lat el mòdul que suporta aquest tipus d'arxiu?"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload Bank Statements"
-msgstr "Importar extractes bancaris"
+msgstr "Pujar extractes bancaris"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
 msgstr "Seleccioni un arxiu d'extracte bancari per importar"
 
@@ -260,6 +272,8 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+"Ja heu importat aquest fitxer, o aquest fitxer només conté transaccions ja "
+"importades."
 
 #~ msgid ""
 #~ "Get you bank statements in electronic format from your bank and select "
