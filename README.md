@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [account_statement_import_file_reconciliation_widget](account_statement_import_file_reconciliation_widget/) | 15.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files and Go Direct to Reconciliation
 [account_statement_import_ofx](account_statement_import_ofx/) | 15.0.1.0.0 |  | Import OFX Bank Statement
 [account_statement_import_online](account_statement_import_online/) | 15.0.3.1.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
+[account_statement_import_online_gocardless](account_statement_import_online_gocardless/) | 15.0.1.0.0 |  | Online Bank Statements: GoCardless
 [account_statement_import_online_paypal](account_statement_import_online_paypal/) | 15.0.1.1.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
 [account_statement_import_online_ponto](account_statement_import_online_ponto/) | 15.0.1.0.1 |  | Online Bank Statements: MyPonto.com
 [account_statement_import_paypal](account_statement_import_paypal/) | 15.0.1.0.1 |  | Import PayPal CSV files as Bank Statements in Odoo

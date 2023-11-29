@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo-addon-account_statement_import_file_reconciliation_widget>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_ofx>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online>=15.0dev,<15.1dev',
+        'odoo-addon-account_statement_import_online_gocardless>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online_paypal>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online_ponto>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_paypal>=15.0dev,<15.1dev',
