@@ -289,6 +289,7 @@ class AccountStatementImport(models.TransientModel):
     def _complete_stmts_vals(self, stmts_vals, journal, account_number):
         speeddict = journal._statement_line_import_speeddict()
         for st_vals in stmts_vals:
+            st_vals["journal_id"] = journal.id
             for lvals in st_vals["transactions"]:
                 lvals["journal_id"] = journal.id
                 journal._statement_line_import_update_unique_import_id(
