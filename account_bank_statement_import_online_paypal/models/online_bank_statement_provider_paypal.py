@@ -64,6 +64,9 @@ EVENT_DESCRIPTIONS = {
     "T0303": _("Electronic funds transfer (EFT)"),
     "T0400": _("General withdrawal from PayPal account"),
     "T0401": _("AutoSweep"),
+    "T0403": _(
+        "Withdrawals initiated by user manually. Not related to automated scheduled withdrawals"
+    ),
     "T0500": _("General PayPal debit card transaction"),
     "T0501": _("Virtual PayPal debit card transaction"),
     "T0502": _("PayPal debit card withdrawal to ATM"),
