@@ -915,6 +915,14 @@ msgstr ""
 #. module: account_bank_statement_import_online_paypal
 #: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
+msgid ""
+"Withdrawals initiated by user manually. Not related to automated scheduled "
+"withdrawals"
+msgstr ""
+
+#. module: account_bank_statement_import_online_paypal
+#: code:addons/account_bank_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
 msgid "WorldLink check withdrawal fee"
 msgstr ""
 
