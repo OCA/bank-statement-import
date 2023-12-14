@@ -14,6 +14,7 @@ from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 GOCARDLESS_ENDPOINT = "https://bankaccountdata.gocardless.com/api/v2"
+REQUESTS_TIMEOUT = 5
 
 
 class OnlineBankStatementProvider(models.Model):
@@ -67,6 +68,7 @@ class OnlineBankStatementProvider(models.Model):
                     {"secret_id": self.username, "secret_key": self.password}
                 ),
                 headers=self._gocardless_get_headers(basic=True),
+                timeout=REQUESTS_TIMEOUT,
             )
             data = {}
             if response.status_code == 200:
@@ -108,6 +110,7 @@ class OnlineBankStatementProvider(models.Model):
             f"{GOCARDLESS_ENDPOINT}/institutions/",
             params={"country": country.code},
             headers=self._gocardless_get_headers(),
+            timeout=REQUESTS_TIMEOUT,
         )
         if response.status_code == 400:
             raise UserError(_("Incorrect country code or country not supported."))
@@ -148,6 +151,7 @@ class OnlineBankStatementProvider(models.Model):
                 }
             ),
             headers=self._gocardless_get_headers(),
+            timeout=REQUESTS_TIMEOUT,
         )
         if response.status_code == 201:
             requisition_data = json.loads(response.text)
@@ -167,6 +171,7 @@ class OnlineBankStatementProvider(models.Model):
         requisition_response = requests.get(
             f"{GOCARDLESS_ENDPOINT}/requisitions/{self.gocardless_requisition_id}/",
             headers=self._gocardless_get_headers(),
+            timeout=REQUESTS_TIMEOUT,
         )
         requisition_data = json.loads(requisition_response.text)
         accounts = requisition_data.get("accounts", [])
@@ -176,6 +181,7 @@ class OnlineBankStatementProvider(models.Model):
             account_response = requests.get(
                 f"{GOCARDLESS_ENDPOINT}/accounts/{account_id}/",
                 headers=self._gocardless_get_headers(),
+                timeout=REQUESTS_TIMEOUT,
             )
             if account_response.status_code == 200:
                 account_data = json.loads(account_response.text)
@@ -192,6 +198,7 @@ class OnlineBankStatementProvider(models.Model):
                 f"{GOCARDLESS_ENDPOINT}/agreements/enduser/"
                 f"{requisition_data['agreement']}/",
                 headers=self._gocardless_get_headers(),
+                timeout=REQUESTS_TIMEOUT,
             )
             agreement_data = json.loads(agreement_response.text)
             self.gocardless_requisition_expiration = datetime.strptime(
@@ -243,6 +250,7 @@ class OnlineBankStatementProvider(models.Model):
                 "date_to": date_until.strftime(DF),
             },
             headers=self._gocardless_get_headers(),
+            timeout=REQUESTS_TIMEOUT,
         )
         if transaction_response.status_code == 200:
             return json.loads(transaction_response.text)
