@@ -80,7 +80,6 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
 
     def test_mocked_gocardless(self):
         vals = {
-            "provider_ids": self.provider.ids,
             "date_since": "2020-10-30",
             "date_until": "2020-11-11",
         }
