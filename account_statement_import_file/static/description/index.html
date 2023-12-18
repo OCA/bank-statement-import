@@ -369,15 +369,28 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:05b01603d319c8d76bf854f4c741c8439547285d1db7cfddfdd65d8c75a06e54
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Mature" src="https://img.shields.io/badge/maturity-Mature-brightgreen.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_file"><img alt="OCA/bank-statement-import" src="https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/bank-statement-import-16-0/bank-statement-import-16-0-account_statement_import_file"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module is the successor of the module <strong>account_bank_statement_import</strong> that was part of Odoo Community until Odoo v13 and was moved to Odoo Enterprise for Odoo v14 (cf <a class="reference external" href="https://github.com/odoo/odoo/commit/9ba8734f15e1a292ca27b1a026e8366a91b2a8c9">this commit</a>). We decided to change its name and the name of the wizard object it provides in order to avoid a conflict with the Enterprise module.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Mature" src="https://img.shields.io/badge/maturity-Mature-brightgreen.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/bank-statement-import/tree/17.0/account_statement_import_file"><img alt="OCA/bank-statement-import" src="https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/bank-statement-import-17-0/bank-statement-import-17-0-account_statement_import_file"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module is the successor of the module
+<strong>account_bank_statement_import</strong> that was part of Odoo Community until
+Odoo v13 and was moved to Odoo Enterprise for Odoo v14 (cf <a class="reference external" href="https://github.com/odoo/odoo/commit/9ba8734f15e1a292ca27b1a026e8366a91b2a8c9">this
+commit</a>).
+We decided to change its name and the name of the wizard object it
+provides in order to avoid a conflict with the Enterprise module.</p>
 <p>This module has several additionnal feature:</p>
 <ul class="simple">
 <li>support multi-account bank statement files,</li>
-<li>attach the file to the bank statement (to facilitate the diagnostic in case of problem),</li>
+<li>attach the file to the bank statement (to facilitate the diagnostic
+in case of problem),</li>
 <li>improved error messages.</li>
 </ul>
-<p>This module only provides the technical framework for the import of statement files. You must also install the format-specific modules to add support for the statement file formats that your banks/provide use. For example, the OCA module <strong>account_statement_import_ofx</strong> will add support for the OFX (Open Financial Exchange) file format. You will find those modules in the OCA project <a class="reference external" href="https://github.com/OCA/bank-statement-import">bank-statement-import</a> or, for the country-specific formats, in the OCA localization projects.</p>
+<p>This module only provides the technical framework for the import of
+statement files. You must also install the format-specific modules to
+add support for the statement file formats that your banks/provide use.
+For example, the OCA module <strong>account_statement_import_ofx</strong> will add
+support for the OFX (Open Financial Exchange) file format. You will find
+those modules in the OCA project
+<a class="reference external" href="https://github.com/OCA/bank-statement-import">bank-statement-import</a>
+or, for the country-specific formats, in the OCA localization projects.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -393,16 +406,26 @@ ul.auto-toc {
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>To import a statement file, go to the Invoicing dashboard: on a bank journal, you will see a button to import a statement. When you click on that button, a wizard will start and it will show the list of the supported file formats. Select the statement file that you want to import and click on the <strong>Import</strong> button. Odoo will create a new bank statement (or several if your statement file is a multi-account file).</p>
-<p>If your statement file contains transactions that were already imported in Odoo, they will not be created a second time.</p>
-<p>If the statement file contains information about the bank account number of the counter-part for some transactions (only a few statement file formats support that, in some countries) and that these bank account numbers exists on partners in Odoo, the partners will be set on the related statement lines.</p>
+<p>To import a statement file, go to the Invoicing dashboard: on a bank
+journal, you will see a button to import a statement. When you click on
+that button, a wizard will start and it will show the list of the
+supported file formats. Select the statement file that you want to
+import and click on the <strong>Import</strong> button. Odoo will create a new bank
+statement (or several if your statement file is a multi-account file).</p>
+<p>If your statement file contains transactions that were already imported
+in Odoo, they will not be created a second time.</p>
+<p>If the statement file contains information about the bank account number
+of the counter-part for some transactions (only a few statement file
+formats support that, in some countries) and that these bank account
+numbers exists on partners in Odoo, the partners will be set on the
+related statement lines.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/bank-statement-import/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_file%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_file%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -431,7 +454,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/alexis-via"><img alt="alexis-via" src="https://github.com/alexis-via.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_file">OCA/bank-statement-import</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/bank-statement-import/tree/17.0/account_statement_import_file">OCA/bank-statement-import</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
