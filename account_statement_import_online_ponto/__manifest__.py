@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Online Bank Statements: MyPonto.com",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "category": "Account",
     "website": "https://github.com/OCA/bank-statement-import",
     "author": "Florent de Labarre, Therp BV, Odoo Community Association (OCA)",
