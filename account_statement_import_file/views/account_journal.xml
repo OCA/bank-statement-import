@@ -12,8 +12,8 @@
         <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
         <field name="arch" type="xml">
             <xpath
-                expr='//a[@name="action_configure_bank_journal"]/..'
-                position='before'
+                expr='//button[@name="action_configure_bank_journal"]/..'
+                position='after'
             >
                 <t t-if="dashboard.bank_statements_source == 'file_import_oca'">
                     <button
