@@ -312,8 +312,11 @@ class OnlineBankStatementProvider(models.Model):
                     "payment_ref": tr.get(
                         "remittanceInformationUnstructured", partner_name
                     ),
-                    "unique_import_id": tr.get("entryReference", False)
-                    or tr.get("transactionId", False),
+                    "unique_import_id": (
+                        tr.get("entryReference")
+                        or tr.get("transactionId")
+                        or tr.get("internalTransactionId")
+                    ),
                     "amount": amount_currency,
                     "account_number": account_number,
                     "partner_name": partner_name,
