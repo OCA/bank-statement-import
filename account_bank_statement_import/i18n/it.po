@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-11 22:49+0000\n"
-"PO-Revision-Date: 2023-10-13 12:43+0000\n"
+"PO-Revision-Date: 2023-12-22 14:39+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-import-8-0/language/it/)\n"
@@ -74,7 +74,7 @@ msgstr ""
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "Estratto conto"
+msgstr "Estratto conto bancario"
 
 #. module: account_bank_statement_import
 #: field:account.bank.statement.import,data_file:0
