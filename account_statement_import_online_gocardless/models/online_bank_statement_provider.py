@@ -101,7 +101,9 @@ class OnlineBankStatementProvider(models.Model):
                 _("To continue configure bank account on journal %s")
                 % (self.journal_id.display_name)
             )
-        country = self.journal_id.bank_account_id.company_id.country_id
+        country = (
+            self.journal_id.bank_account_id.company_id or self.journal_id.company_id
+        ).country_id
         response = requests.get(
             f"{GOCARDLESS_ENDPOINT}/institutions/",
             params={"country": country.code},
