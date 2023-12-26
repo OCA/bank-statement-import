@@ -869,6 +869,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
+msgid "Receivables financing - Applicable only in Brazil"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
 msgid "Reimbursement of chargeback"
 msgstr ""
 
@@ -945,6 +952,20 @@ msgstr ""
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Subscription payment"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Tax hold"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Tax withholding to IRS"
 msgstr ""
 
 #. module: account_statement_import_online_paypal
@@ -1065,6 +1086,22 @@ msgstr ""
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Website payments. Pro account monthly fee"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Withdrawal to Hyperwallet"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"Withdrawals initiated by user manually. Not related to automated scheduled "
+"withdrawals"
 msgstr ""
 
 #. module: account_statement_import_online_paypal
