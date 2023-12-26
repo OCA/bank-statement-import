@@ -558,7 +558,6 @@ msgstr "Compra de cheques regalo"
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
-#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Gift certificate redemption"
 msgstr "Canjeo de vales regalo"
@@ -728,15 +727,14 @@ msgstr "PayPal Pago aquí"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid ""
-"PayPal allows retrieving transactions only up to 3 years in the past. Please"
-" import older transactions manually. See "
-"https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-"
-"history-greater-than-3-years-ts2241"
+"PayPal allows retrieving transactions only up to 3 years in the past. Please "
+"import older transactions manually. See https://www.paypal.com/us/smarthelp/"
+"article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241"
 msgstr ""
 "PayPal permite recuperar transacciones sólo hasta hace 3 años. Importe "
 "transacciones anteriores manualmente. Consulte https://www.paypal.com/us/"
-"smarthelp/article/why-can't-i-access-transaction-history-greater-than-3"
-"-years-ts2241"
+"smarthelp/article/why-can't-i-access-transaction-history-greater-than-3-"
+"years-ts2241"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -785,8 +783,8 @@ msgstr "Retirada de tarjeta de débito de PayPal en cajero automático"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid ""
-"PayPal protection bonus, payout for PayPal buyer protection, payout for full"
-" protection with PayPal buyer credit."
+"PayPal protection bonus, payout for PayPal buyer protection, payout for full "
+"protection with PayPal buyer credit."
 msgstr ""
 "Bonificación por protección de PayPal, pago por protección de comprador de "
 "PayPal, pago por protección total con crédito de comprador de PayPal."
@@ -886,6 +884,13 @@ msgstr "Pagos de reembolsos"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
+msgid "Receivables financing - Applicable only in Brazil"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
 msgid "Reimbursement of chargeback"
 msgstr "Reembolso de contracargo"
 
@@ -968,6 +973,20 @@ msgstr "Pago de la suscripción"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
+msgid "Tax hold"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Tax withholding to IRS"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
 msgid "Temporary hold on available balance"
 msgstr "Retención temporal del saldo disponible"
 
@@ -1032,7 +1051,6 @@ msgstr "¡Autenticación desconocida especificada!"
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
-#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Unknown error"
 msgstr "Error desconocido"
@@ -1085,6 +1103,22 @@ msgstr "Pago estándar de pagos del sitio web"
 #, python-format
 msgid "Website payments. Pro account monthly fee"
 msgstr "Pagos del sitio web. Cuota mensual de la cuenta Pro"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Withdrawal to Hyperwallet"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"Withdrawals initiated by user manually. Not related to automated scheduled "
+"withdrawals"
+msgstr ""
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
