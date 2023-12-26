@@ -4,7 +4,7 @@
 
 {
     "name": "Online Bank Statements: PayPal.com",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import",
