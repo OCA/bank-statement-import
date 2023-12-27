@@ -44,24 +44,16 @@
                             <div
                                 class="alert alert-warning"
                                 role="alert"
-                                attrs="{'invisible': [('no_header', '=', False)]}"
+                                invisible="not no_header"
                             >
                                 <span
                                     class="fa fa-info-circle"
                                 /> indicate the column number in the Columns section. The first column is 0.
                             </div>
                         </group>
-                        <group
-                            attrs="{'invisible': [('debit_credit_column', '=', False)]}"
-                        >
-                            <field
-                                name="debit_value"
-                                attrs="{'required': [('debit_credit_column', '!=', False)]}"
-                            />
-                            <field
-                                name="credit_value"
-                                attrs="{'required': [('debit_credit_column', '!=', False)]}"
-                            />
+                        <group invisible="not debit_credit_column">
+                            <field name="debit_value" required="debit_credit_column" />
+                            <field name="credit_value" required="debit_credit_column" />
                         </group>
                         <group>
                             <field name="header_lines_skip_count" />
@@ -84,25 +76,19 @@
                             <field name="amount_type" />
                             <field
                                 name="amount_column"
-                                attrs="{
-                                'required': [('amount_type', '!=', 'distinct_credit_debit'),],
-                                'invisible': [('amount_type', '=', 'distinct_credit_debit')],
-                                }"
+                                invisible="amount_type == 'distinct_credit_debit'"
+                                required="amount_type != 'distinct_credit_debit'"
                             />
 
                             <field
                                 name="amount_debit_column"
-                                attrs="{
-                                'required': [('amount_type', '=', 'distinct_credit_debit')],
-                                'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
-                                }"
+                                invisible="amount_type != 'distinct_credit_debit'"
+                                required="amount_type == 'distinct_credit_debit'"
                             />
                             <field
                                 name="amount_credit_column"
-                                attrs="{
-                                    'required': [('amount_type', '=', 'distinct_credit_debit')],
-                                    'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
-                                    }"
+                                invisible="amount_type != 'distinct_credit_debit'"
+                                required="amount_type == 'distinct_credit_debit'"
                             />
                             <field name="amount_inverse_sign" />
                             <field name="balance_column" />
@@ -110,10 +96,8 @@
                             <field name="original_amount_column" />
                             <field
                                 name="debit_credit_column"
-                                attrs="{
-                                    'required': [('amount_type', '=', 'absolute_value')],
-                                    'invisible': [('amount_type', '!=', 'absolute_value')],
-                                    }"
+                                invisible="amount_type != 'absolute_value'"
+                                required="amount_type == 'absolute_value'"
                             />
                             <field name="transaction_id_column" />
                             <field name="description_column" />

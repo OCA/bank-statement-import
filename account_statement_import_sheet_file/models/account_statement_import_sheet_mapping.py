@@ -63,8 +63,9 @@ class AccountStatementImportSheetMapping(models.Model):
     timestamp_format = fields.Char(required=True)
     no_header = fields.Boolean(
         string="File does not contain header line",
-        help="When this occurs please indicate the column number in the Columns section "
-        "instead of the column name, considering that the first column is 0",
+        help="When this occurs please indicate the column number in "
+        "the Columns section instead of the column name, considering "
+        "that the first column is 0",
     )
     timestamp_column = fields.Char(required=True)
     currency_column = fields.Char(
@@ -190,7 +191,8 @@ class AccountStatementImportSheetMapping(models.Model):
             elif item.amount_type == "absolute_value" and not item.debit_credit_column:
                 raise ValidationError(
                     _(
-                        "Use debit_credit_column if you have set Amount type = 'Absolute value'"
+                        "Use debit_credit_column if you have set "
+                        "Amount type = 'Absolute value'"
                     )
                 )
             elif item.amount_type == "distinct_credit_debit" and (
