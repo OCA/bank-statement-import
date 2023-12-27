@@ -22,7 +22,7 @@ try:
 
     import xlrd
     from xlrd.xldate import xldate_as_datetime
-except (ImportError, IOError) as err:  # pragma: no cover
+except (OSError, ImportError) as err:  # pragma: no cover
     _logger.error(err)
 
 try:
@@ -454,7 +454,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if transaction_id:
             note += _("Transaction ID: %s; ") % (transaction_id,)
         if note and notes:
-            note = "{}\n{}".format(notes, note.strip())
+            note = f"{notes}\n{note.strip()}"
         elif note:
             note = note.strip()
         elif notes:
