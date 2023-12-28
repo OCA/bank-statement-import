@@ -2,8 +2,8 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
-
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 class AccountStatementImportSheetMapping(models.Model):
     _name = "account.statement.import.sheet.mapping"
@@ -197,6 +197,35 @@ class AccountStatementImportSheetMapping(models.Model):
             "Use amount_column OR (amount_debit_column AND amount_credit_column).",
         ),
     ]
+
+    @api.constrains(
+        "amount_type",
+        "amount_column",
+        "debit_credit_column",
+        "amount_debit_column",
+        "amount_credit_column",
+    )
+    def _check_amount_type(self):
+        for item in self:
+            if item.amount_type == "simple_value" and not item.amount_column:
+                raise ValidationError(
+                    _("Use amount_column if you have set Amount type = 'Single value'")
+                )
+            elif item.amount_type == "absolute_value" and not item.debit_credit_column:
+                raise ValidationError(
+                    _(
+                        "Use debit_credit_column if you have set Amount type = 'Absolute value'"
+                    )
+                )
+            elif item.amount_type == "distinct_credit_debit" and (
+                not item.amount_debit_column or not item.amount_credit_column
+            ):
+                raise ValidationError(
+                    _(
+                        "Use amount_debit_column and amount_credit_column if you "
+                        "have set Amount type = 'Distinct Credit/debit Column'"
+                    )
+                )
 
     @api.onchange("float_thousands_sep")
     def onchange_thousands_separator(self):

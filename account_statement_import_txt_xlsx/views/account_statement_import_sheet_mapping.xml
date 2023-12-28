@@ -69,8 +69,8 @@
                         </group>
                     </group>
                     <group string="Columns">
-                        <group colspan="4" col="1">
-                            <div class="alert alert-info" role="alert">
+                        <group colspan="2" col="2">
+                            <div class="alert alert-info" role="alert" colspan="2">
                                 <span
                                     class="fa fa-info-circle"
                                 /> Add the column names or column number (when the file has no header).
