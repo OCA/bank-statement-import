@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-01 21:38+0000\n"
+"PO-Revision-Date: 2023-12-28 11:36+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -885,7 +885,7 @@ msgstr "Pagos de reembolsos"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Receivables financing - Applicable only in Brazil"
-msgstr ""
+msgstr "Financiación de créditos - Aplicable sólo en Brasil"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -974,14 +974,14 @@ msgstr "Pago de la suscripción"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Tax hold"
-msgstr ""
+msgstr "Retención de Impuestos"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Tax withholding to IRS"
-msgstr ""
+msgstr "Retención de Impuestos a Hacienda"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -1109,7 +1109,7 @@ msgstr "Pagos del sitio web. Cuota mensual de la cuenta Pro"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Withdrawal to Hyperwallet"
-msgstr ""
+msgstr "Retirada de fondos a Hyperwallet"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -1119,6 +1119,8 @@ msgid ""
 "Withdrawals initiated by user manually. Not related to automated scheduled "
 "withdrawals"
 msgstr ""
+"Retiradas iniciadas manualmente por el usuario. No relacionado con retiradas "
+"programadas automatizadas"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
