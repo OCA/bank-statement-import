@@ -8,49 +8,49 @@ msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-24 21:51+0000\n"
-"PO-Revision-Date: 2015-05-29 00:50+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-"
-"import-8-0/language/es/)\n"
+"PO-Revision-Date: 2023-12-29 10:33+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/"
+"OCA-bank-statement-import-8-0/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_ofx
 #: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: account_statement_import_ofx
 #: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: account_statement_import_ofx
 #: model:ir.model,name:account_statement_import_ofx.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Importar extracto bancario"
+msgstr "Importar Archivos de Extracto Bancario"
 
 #. module: account_statement_import_ofx
 #: model:ir.model,name:account_statement_import_ofx.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: account_statement_import_ofx
 #: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import_ofx.field_account_statement_import____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
 
 #. module: account_statement_import_ofx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_ofx.account_statement_import_form
 msgid "Open Financial Exchange (.OFX Money)"
-msgstr ""
+msgstr "Abrir Intercambio Financiero (.OFX Money)"
 
 #. module: account_statement_import_ofx
 #: code:addons/account_statement_import_ofx/wizard/account_statement_import.py:0
@@ -60,3 +60,7 @@ msgid ""
 "\n"
 " %s"
 msgstr ""
+"Ha ocurrido el siguiente problema durante la importación. El archivo podría "
+"no ser válido.\n"
+"\n"
+"%s"
