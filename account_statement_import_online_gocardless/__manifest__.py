@@ -18,8 +18,6 @@
             "account_statement_import_online_gocardless/static/src/"
             "lib/gocardless-ui/selector.css",
             "account_statement_import_online_gocardless/static/src/"
-            "lib/gocardless-ui/selector.js",
-            "account_statement_import_online_gocardless/static/src/"
             "js/select_bank_widget.js",
         ],
         "web.assets_qweb": [
