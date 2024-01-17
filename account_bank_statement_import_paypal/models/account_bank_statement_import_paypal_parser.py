@@ -89,6 +89,7 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
         fee_column = header.index(mapping.fee_column)
         balance_column = header.index(mapping.balance_column)
         transaction_id_column = header.index(mapping.transaction_id_column)
+        ref_transaction_id_column = header.index(mapping.ref_transaction_id_column)
         try:
             description_column = header.index(mapping.description_column)
         except ValueError:
@@ -142,6 +143,8 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             fee_value = row[fee_column]
             balance_value = row[balance_column]
             transaction_id_value = row[transaction_id_column]
+            ref_transaction_id_value = row[ref_transaction_id_column] \
+                if ref_transaction_id_column is not None else None
             description_value = row[description_column] \
                 if description_column is not None else None
             type_value = row[type_column] \
@@ -186,6 +189,7 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
 
             lines.append({
                 'transaction_id': transaction_id_value,
+                'ref_transaction_id': ref_transaction_id_value,
                 'invoice': invoice_id_value,
                 'description': description_value or type_value,
                 'details': subject_value or note_value or bank,

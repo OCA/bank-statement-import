@@ -46,6 +46,7 @@
                         <field name="fee_column"/>
                         <field name="balance_column"/>
                         <field name="transaction_id_column"/>
+                        <field name="ref_transaction_id_column"/>
                         <field name="description_column"/>
                         <field name="type_column"/>
                         <field name="from_email_address_column"/>

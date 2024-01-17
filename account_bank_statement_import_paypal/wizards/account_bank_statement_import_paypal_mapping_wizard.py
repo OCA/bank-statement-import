@@ -47,6 +47,9 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
     transaction_id_column = fields.Char(
         string='"Transaction ID" column',
     )
+    ref_transaction_id_column = fields.Char(
+        string='"Reference Transaction ID" column',
+    )
     description_column = fields.Char(
         string='"Description" column',
     )
@@ -93,6 +96,7 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
             self.fee_column = header[8]
             self.balance_column = header[18]
             self.transaction_id_column = header[12]
+            self.ref_transaction_id_column = header[15]
             self.type_column = header[4]
             self.from_email_address_column = header[10]
             self.to_email_address_column = header[11]
@@ -109,6 +113,7 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
             self.fee_column = header[6]
             self.balance_column = header[8]
             self.transaction_id_column = header[9]
+            self.ref_transaction_id_column = header[17]
             self.description_column = header[3]
             self.from_email_address_column = header[10]
             self.invoice_id_column = header[16]
@@ -141,6 +146,7 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
             'fee_column': self.fee_column,
             'balance_column': self.balance_column,
             'transaction_id_column': self.transaction_id_column,
+            'ref_transaction_id_column': self.ref_transaction_id_column,
             'description_column': self.description_column,
             'type_column': self.type_column,
             'from_email_address_column': self.from_email_address_column,

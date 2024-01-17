@@ -76,6 +76,10 @@ class AccountBankStatementImportPayPalMapping(models.Model):
         string='"Transaction ID" column',
         required=True,
     )
+    ref_transaction_id_column = fields.Char(
+        string='"Reference Transaction ID" column',
+        required=True,
+    )
     description_column = fields.Char(
         string='"Description" column',
     )

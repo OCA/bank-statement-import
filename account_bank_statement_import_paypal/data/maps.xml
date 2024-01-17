@@ -21,6 +21,7 @@
         <field name="fee_column">Fee</field>
         <field name="balance_column">Balance</field>
         <field name="transaction_id_column">Transaction ID</field>
+        <field name="ref_transaction_id_column">Reference Txn ID</field>
         <field name="description_column">Description</field>
         <field name="from_email_address_column">From Email Address</field>
         <field name="invoice_id_column">Invoice ID</field>
@@ -43,6 +44,7 @@
         <field name="fee_column">Fee</field>
         <field name="balance_column">Balance</field>
         <field name="transaction_id_column">Transaction ID</field>
+        <field name="ref_transaction_id_column">Reference Txn ID</field>
         <field name="type_column">Type</field>
         <field name="from_email_address_column">From Email Address</field>
         <field name="to_email_address_column">To Email Address</field>
@@ -66,6 +68,7 @@
         <field name="fee_column">Comisión</field>
         <field name="balance_column">Saldo</field>
         <field name="transaction_id_column">Id. de transacción</field>
+        <field name="ref_transaction_id_column">Id. de referencia de trans.</field>
         <field name="description_column">Descripción</field>
         <field name="from_email_address_column">Correo electrónico del remitente</field>
         <field name="invoice_id_column">Id. de factura</field>
@@ -88,6 +91,7 @@
         <field name="fee_column">Tarifa</field>
         <field name="balance_column">Saldo</field>
         <field name="transaction_id_column">Id. de transacción</field>
+        <field name="ref_transaction_id_column">Id. de referencia de trans.</field>
         <field name="type_column">Tipo</field>
         <field name="from_email_address_column">Correo electrónico del remitente</field>
         <field name="to_email_address_column">Correo electrónico del destinatario</field>
@@ -111,6 +115,7 @@
         <field name="fee_column">Gebühr</field>
         <field name="balance_column">Guthaben</field>
         <field name="transaction_id_column">Transaktionscode</field>
+        <field name="ref_transaction_id_column">Ref Transaktionscode</field>
         <field name="description_column">Beschreibung</field>
         <field name="from_email_address_column">Absender E-Mail-Adresse</field>
         <field name="invoice_id_column">Rechnungsnummer</field>
@@ -133,6 +138,7 @@
         <field name="fee_column">Gebühr</field>
         <field name="balance_column">Guthaben</field>
         <field name="transaction_id_column">Transaktionscode</field>
+        <field name="ref_transaction_id_column">Ref Transaktionscode</field>
         <field name="type_column">Typ</field>
         <field name="from_email_address_column">Absender E-Mail-Adresse</field>
         <field name="to_email_address_column">Empfänger E-Mail-Adresse</field>
