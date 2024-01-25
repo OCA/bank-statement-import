@@ -16,27 +16,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.3.2\n"
 
-#. module: account_statement_import_file_reconciliation_widget
-#: model:ir.model.fields,field_description:account_statement_import_file_reconciliation_widget.field_account_statement_import__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: account_statement_import_file_reconciliation_widget
-#: model:ir.model.fields,field_description:account_statement_import_file_reconciliation_widget.field_account_statement_import__id
-msgid "ID"
-msgstr ""
-
-#. module: account_statement_import_file_reconciliation_widget
-#: model:ir.model,name:account_statement_import_file_reconciliation_widget.model_account_statement_import
+#. module: account_statement_import_file_reconcile_oca
+#: model:ir.model,name:account_statement_import_file_reconcile_oca.model_account_statement_import
 msgid "Import Bank Statement Files"
 msgstr "Importer des relevés bancaires"
 
-#. module: account_statement_import_file_reconciliation_widget
-#: model_terms:ir.ui.view,arch_db:account_statement_import_file_reconciliation_widget.account_statement_import_form
+#. module: account_statement_import_file_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file_reconcile_oca.account_statement_import_form
 msgid "Import and Start to Reconcile"
 msgstr "Importer et commencer le rapprochement"
 
-#. module: account_statement_import_file_reconciliation_widget
-#: model:ir.model.fields,field_description:account_statement_import_file_reconciliation_widget.field_account_statement_import____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
