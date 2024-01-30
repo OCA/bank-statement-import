@@ -22,6 +22,12 @@
                         default_focus="1"
                         class="btn-primary"
                     />
+                    <button
+                        name="action_debug"
+                        string="Debug"
+                        type="object"
+                        groups="base.group_no_one"
+                    />
                     <button string="Cancel" special="cancel" />
                 </footer>
             </form>

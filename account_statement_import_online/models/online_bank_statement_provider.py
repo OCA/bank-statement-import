@@ -1,6 +1,7 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # Copyright 2022-2023 Therp BV (https://therp.nl)
+# Copyright 2014 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -185,6 +186,8 @@ class OnlineBankStatementProvider(models.Model):
     def _pull(self, date_since, date_until):
         """Pull data for all providers within requested period."""
         is_scheduled = self.env.context.get("scheduled")
+        debug = self.env.context.get("account_statement_online_import_debug")
+        debug_data = []
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
@@ -205,12 +208,16 @@ class OnlineBankStatementProvider(models.Model):
                         exception, statement_date_since, statement_date_until
                     )
                     break  # Continue with next provider.
-                provider._create_or_update_statement(
-                    data, statement_date_since, statement_date_until
-                )
+                if debug:
+                    debug_data += data
+                else:
+                    provider._create_or_update_statement(
+                        data, statement_date_since, statement_date_until
+                    )
                 statement_date_since = statement_date_until
             if is_scheduled:
                 provider._schedule_next_run()
+        return debug_data
 
     def _log_provider_exception(
         self, exception, statement_date_since, statement_date_until
