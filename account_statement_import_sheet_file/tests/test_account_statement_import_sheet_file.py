@@ -506,3 +506,35 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         line4 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 4")
         self.assertEqual(line1.amount, 50)
         self.assertEqual(line4.amount, -1300)
+
+    def test_amount_inverse_sign(self):
+        self.sample_statement_map.amount_inverse_sign = True
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        filename = "fixtures/sample_statement_credit_card_inverse_sign_en.csv"
+        data = self._data_file(filename, "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": filename,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+        line1 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 1")
+        self.assertEqual(line1.amount, -33.50)
+        line2 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 2")
+        self.assertEqual(line2.amount, 1525.00)
+        self.assertEqual(line2.amount_currency, 1000.00)

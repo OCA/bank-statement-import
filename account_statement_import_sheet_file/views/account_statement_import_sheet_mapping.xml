@@ -89,6 +89,7 @@
                                 'invisible': [('amount_type', '=', 'distinct_credit_debit')],
                                 }"
                             />
+
                             <field
                                 name="amount_debit_column"
                                 attrs="{
@@ -103,6 +104,7 @@
                                     'invisible': [('amount_type', '!=', 'distinct_credit_debit')],
                                     }"
                             />
+                            <field name="amount_inverse_sign" />
                             <field name="balance_column" />
                             <field name="original_currency_column" />
                             <field name="original_amount_column" />

@@ -79,6 +79,13 @@ class AccountStatementImportSheetMapping(models.Model):
         string="Credit amount column",
         help="Credit amount of transaction in journal's currency",
     )
+    amount_inverse_sign = fields.Boolean(
+        string="Inverse sign of amount",
+        help="In some cases such as in credit card statements the "
+        "amounts are expressed in the inverse sign. "
+        "By setting this flag during the upload the amounts "
+        "will be inverted in sign.",
+    )
     balance_column = fields.Char(
         help="Balance after transaction in journal's currency",
     )
