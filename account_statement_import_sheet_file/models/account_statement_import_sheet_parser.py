@@ -4,6 +4,7 @@
 
 import itertools
 import logging
+from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
@@ -97,7 +98,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _get_column_indexes(self, header, column_name, mapping):
         column_indexes = []
-        if mapping[column_name] and "," in mapping[column_name]:
+        if (
+            mapping[column_name]
+            and isinstance(mapping[column_name], Iterable)
+            and "," in mapping[column_name]
+        ):
             # We have to concatenate the values
             column_names_or_indexes = mapping[column_name].split(",")
         else:
@@ -320,6 +325,18 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 else None
             )
 
+            debit_column = (
+                self._get_values_from_column(values, columns, "amount_debit_column")
+                if columns["amount_debit_column"]
+                else None
+            )
+
+            credit_column = (
+                self._get_values_from_column(values, columns, "amount_credit_column")
+                if columns["amount_credit_column"]
+                else None
+            )
+
             if currency != currency_code:
                 continue
 
@@ -342,7 +359,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 ).copy_sign(amount)
             else:
                 original_amount = 0.0
-
+            if mapping.amount_inverse_sign:
+                amount = -amount
+                original_amount = -original_amount
+                balance = -balance if balance is not None else balance
             line = {
                 "timestamp": timestamp,
                 "amount": amount,
