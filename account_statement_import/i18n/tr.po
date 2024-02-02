@@ -184,8 +184,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr "Bu kaydın (%s) hesabı, yevmiye (%s) aynı değil."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "Bu kaydın hesabı, yevmiye (%s) aynı değil."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -212,7 +212,7 @@ msgid ""
 "the journal '%s' (%s)."
 msgstr ""
 "Banka hesap özetinin para birimi (%s) yevmiye para birimi ile aynı değil "
-"(%s)."
+"'%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
