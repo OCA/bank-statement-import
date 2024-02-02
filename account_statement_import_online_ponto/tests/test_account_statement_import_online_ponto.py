@@ -407,3 +407,24 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
                 "account_number": "XX00 0000 0000 0000",
             }
         ], {}
+
+    def test_wizard_action_debug(self):
+        """Debug data is returned properly."""
+        statement_date = datetime(2019, 11, 1)
+        data = self._get_statement_line_data(statement_date)
+        self.provider.statement_creation_mode = "daily"
+        self.provider._create_or_update_statement(
+            data, statement_date, datetime(2019, 11, 2)
+        )
+        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+            vals = {
+                "date_since": datetime(2019, 11, 4),
+                "date_until": datetime(2019, 11, 5),
+            }
+            wizard = self.AccountStatementPull.with_context(
+                active_model=self.provider._name,
+                active_id=self.provider.id,
+            ).create(vals)
+            action = wizard.action_debug()
+        debug_wizard = self.env[action["res_model"]].browse(action["res_id"])
+        self.assertIn("Laboriosam repelo", debug_wizard.data)
