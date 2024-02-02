@@ -17,10 +17,17 @@
                 <footer>
                     <button
                         name="action_pull"
-                        string="Pull"
+                        string="Import Transactions"
                         type="object"
                         default_focus="1"
                         class="btn-primary"
+                    />
+                    <button
+                        name="action_debug"
+                        string="Show Transaction Data"
+                        help="Fetch and display transaction data (for debug purposes)"
+                        type="object"
+                        groups="base.group_no_one"
                     />
                     <button string="Cancel" special="cancel" />
                 </footer>
