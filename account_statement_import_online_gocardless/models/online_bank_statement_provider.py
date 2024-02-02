@@ -306,14 +306,18 @@ class OnlineBankStatementProvider(models.Model):
             ).get("iban", False)
             if account_number == own_acc_number:
                 account_number = False  # Discard own bank account number
+            if "remittanceInformationUnstructured" in tr:
+                payment_ref = tr["remittanceInformationUnstructured"]
+            elif "remittanceInformationUnstructuredArray" in tr:
+                payment_ref = " ".join(tr["remittanceInformationUnstructuredArray"])
+            else:
+                payment_ref = partner_name
             res.append(
                 {
                     "sequence": sequence,
                     "date": current_date,
                     "ref": partner_name or "/",
-                    "payment_ref": tr.get(
-                        "remittanceInformationUnstructured", partner_name
-                    ),
+                    "payment_ref": payment_ref,
                     "unique_import_id": (
                         tr.get("entryReference")
                         or tr.get("transactionId")
