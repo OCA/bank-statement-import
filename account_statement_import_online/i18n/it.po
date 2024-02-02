@@ -82,6 +82,11 @@ msgid "Certificate Public Key"
 msgstr "Chiave pubblica certificato"
 
 #. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_debug_form
+msgid "Close"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__company_id
 msgid "Company"
 msgstr "Azienda"
@@ -98,12 +103,14 @@ msgstr "Configurazione"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_uid
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_date
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__create_date
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__create_date
 msgid "Created on"
 msgstr "Creato il"
@@ -125,6 +132,7 @@ msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__display_name
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
@@ -136,6 +144,11 @@ msgstr "Nome visualizzato"
 msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
+msgstr ""
+
+#. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
+msgid "Fetch and display transaction data (for debug purposes)"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -165,6 +178,7 @@ msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__id
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__id
 msgid "ID"
 msgstr "ID"
@@ -177,6 +191,11 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
 msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
+msgid "Import Transactions"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -216,18 +235,21 @@ msgstr "Chiave"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider____last_update
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__write_uid
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__write_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__write_date
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__write_date
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
@@ -344,6 +366,11 @@ msgid "Online Bank Statement Providers"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_debug
+msgid "Online Bank Statement Pull Debug Wizard"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_wizard
 msgid "Online Bank Statement Pull Wizard"
 msgstr ""
@@ -365,6 +392,11 @@ msgstr ""
 #. module: account_statement_import_online
 #: model:ir.actions.act_window,name:account_statement_import_online.action_online_bank_statements_pull_wizard
 msgid "Online Bank Statements Pull Wizard"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model:ir.actions.act_window,name:account_statement_import_online.online_bank_statement_pull_debug_action
+msgid "Online bank statements - Debug"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -393,11 +425,6 @@ msgid "Provider"
 msgstr ""
 
 #. module: account_statement_import_online
-#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
-msgid "Pull"
-msgstr ""
-
-#. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Pull Online Bank Statement"
@@ -414,6 +441,11 @@ msgstr ""
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__data
+msgid "RAW data"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -454,6 +486,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__service
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_filter
 msgid "Service"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
+msgid "Show Transaction Data"
 msgstr ""
 
 #. module: account_statement_import_online
