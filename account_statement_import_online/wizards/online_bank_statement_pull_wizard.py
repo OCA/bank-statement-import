@@ -2,6 +2,8 @@
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import pprint
+
 from odoo import api, fields, models
 
 
@@ -59,4 +61,19 @@ class OnlineBankStatementPullWizard(models.TransientModel):
             action["domain"] = [
                 ("journal_id", "in", [o.journal_id.id for o in self.provider_ids])
             ]
+        return action
+
+    def action_debug(self):
+        """Pull statements in debug and show result."""
+        self.ensure_one()
+        data = self.with_context(
+            active_test=False, account_statement_online_import_debug=True
+        ).provider_ids._pull(self.date_since, self.date_until)
+        wizard = self.env["online.bank.statement.pull.debug"].create(
+            {"data": pprint.pformat(data)}
+        )
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "account_statement_import_online.online_bank_statement_pull_debug_action"
+        )
+        action["res_id"] = wizard.id
         return action
