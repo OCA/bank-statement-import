@@ -49,11 +49,18 @@ class OnlineBankStatementProvider(models.Model):
         """
         # pylint: disable=missing-return
         ponto_providers = self.filtered(lambda provider: provider.service == "ponto")
-        super(OnlineBankStatementProvider, self - ponto_providers)._pull(
+        debug = self.env.context.get("account_statement_online_import_debug")
+        debug_data = []
+        data = super(OnlineBankStatementProvider, self - ponto_providers)._pull(
             date_since, date_until
         )
+        if debug:
+            debug_data += data
         for provider in ponto_providers:
-            provider._ponto_pull(date_since, date_until)
+            data = provider._ponto_pull(date_since, date_until)
+            if debug:
+                debug_data += data
+        return debug_data
 
     def _ponto_pull(self, date_since, date_until):
         """Translate information from Ponto to Odoo bank statement lines."""
@@ -84,6 +91,7 @@ class OnlineBankStatementProvider(models.Model):
             if is_scheduled:
                 self.ponto_last_identifier = lines[0].get("id")
             self._ponto_store_lines(lines)
+        return lines
 
     def _ponto_retrieve_data(self, date_since, date_until):
         """Fill buffer with data from Ponto.
