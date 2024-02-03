@@ -106,7 +106,7 @@ class AccountStatementImport(models.TransientModel):
         journal = self._match_journal(account_number, currency)
         if not journal.default_account_id:
             raise UserError(
-                _("The Bank Accounting Account in not set on the " "journal '%s'.")
+                _("The Bank Accounting Account in not set on the journal '%s'.")
                 % journal.display_name
             )
         # Prepare statement data to be used for bank statements creation

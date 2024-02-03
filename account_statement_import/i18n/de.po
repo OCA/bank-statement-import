@@ -180,9 +180,9 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
-"Das Konto dieses Kontoauszugs (%s) ist nicht das Gleiche, wie das im Journal "
+"Das Konto dieses Kontoauszugs ist nicht das Gleiche, wie das im Journal "
 "(%s)."
 
 #. module: account_statement_import
@@ -210,7 +210,7 @@ msgid ""
 "the journal '%s' (%s)."
 msgstr ""
 "Die Währung des Kontoauszugs (%s) entspricht nicht der Währung des Journals "
-"(%s)."
+"'%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
