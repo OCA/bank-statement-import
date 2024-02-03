@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-01 21:38+0000\n"
+"PO-Revision-Date: 2024-02-03 10:33+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -84,7 +84,7 @@ msgstr "Clave Pública del Certificado"
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_debug_form
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__company_id
@@ -153,6 +153,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Fetch and display transaction data (for debug purposes)"
 msgstr ""
+"Obtención y visualización de datos de transacciones (con fines de depuración)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_follower_ids
@@ -199,7 +200,7 @@ msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Import Transactions"
-msgstr ""
+msgstr "Importar Transacciones"
 
 #. module: account_statement_import_online
 #. odoo-python
@@ -374,7 +375,7 @@ msgstr "Proveedores de Extractos Bancarios en Línea"
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_debug
 msgid "Online Bank Statement Pull Debug Wizard"
-msgstr ""
+msgstr "Asistente de Depuración de Extractos Bancarios Online"
 
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_wizard
@@ -405,7 +406,7 @@ msgstr "Asistente de Extracción de Extractos Bancarios Online"
 #. module: account_statement_import_online
 #: model:ir.actions.act_window,name:account_statement_import_online.online_bank_statement_pull_debug_action
 msgid "Online bank statements - Debug"
-msgstr ""
+msgstr "Extractos bancarios en línea - Depurar"
 
 #. module: account_statement_import_online
 #: model:ir.model.constraint,message:account_statement_import_online.constraint_online_bank_statement_provider_journal_id_uniq
@@ -454,7 +455,7 @@ msgstr "Obteniendo extractos bancarios en línea de: %(provider_names)s"
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__data
 msgid "RAW data"
-msgstr ""
+msgstr "RAW datos"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__account_number
@@ -499,7 +500,7 @@ msgstr "Servicio"
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Show Transaction Data"
-msgstr ""
+msgstr "Mostrar Datos de la Transacción"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
