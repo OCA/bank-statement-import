@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-bank-statement-import"
+version = "17.0.20240205.0"
+dependencies = [
+    "odoo-addon-account_statement_import_base>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
