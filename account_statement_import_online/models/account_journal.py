@@ -77,7 +77,8 @@ class AccountJournal(models.Model):
     def write(self, vals):
         self._update_vals(vals)
         res = super().write(vals)
-        self._update_providers()
+        if vals.get("online_bank_statement_provider"):
+            self._update_providers()
         return res
 
     def _update_vals(self, vals):
