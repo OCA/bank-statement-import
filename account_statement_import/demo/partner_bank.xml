@@ -5,7 +5,6 @@
   Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 -->
 <odoo>
-    <data>
 
         <record id="ofx_partner_bank_1" model="res.partner.bank">
             <field name="acc_number">BE02631118262640</field>
@@ -31,5 +30,4 @@
             <field name="bank_id" ref="base.res_bank_1" />
         </record>
 
-    </data>
 </odoo>

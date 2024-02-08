@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-23 13:08+0000\n"
-"Last-Translator: eccit-quim <quim@eccit.com>\n"
+"PO-Revision-Date: 2023-12-29 10:33+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
-"Language: ca\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,12 +19,12 @@ msgstr ""
 #. module: account_statement_import_camt54
 #: model:ir.model,name:account_statement_import_camt54.model_account_statement_import_camt_parser
 msgid "Account Bank Statement Import CAMT parser"
-msgstr "Importació de l'extracte bancari del compte analitzador CAMT"
+msgstr "Extracto Bancario de Cuenta Importar analizador CAMT"
 
 #. module: account_statement_import_camt54
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__transfer_line
 msgid "Add balance Line"
-msgstr "Afegeix una línia d'equilibri"
+msgstr "Añadir Línea de Balance"
 
 #. module: account_statement_import_camt54
 #: code:addons/account_statement_import_camt54/models/parser.py:0
@@ -35,10 +35,10 @@ msgid ""
 "`i` and `n` must be integers.\n"
 "e.g. \"13,6\""
 msgstr ""
-"El paràmetre de configuració `isr_partner_ref` és incorrecte.\n"
-"Ha de tenir el format `i[,n]` \n"
-"`i` i `n` han de ser nombres enters.\n"
-"per exemple. \"13,6\""
+"El parámetro de configuración `isr_partner_ref` es incorrecto.\n"
+"Debe tener el formato `i[,n]`. \n"
+"`i` y `n` deben ser enteros.\n"
+"Por ejemplo, \"13,6\""
 
 #. module: account_statement_import_camt54
 #: code:addons/account_statement_import_camt54/models/parser.py:0
@@ -50,46 +50,46 @@ msgid ""
 "`n` the number of digit in the reference, by default 6.\n"
 "e.g. \"13,6\""
 msgstr ""
-"El paràmetre de configuració `isr_partner_ref` és incorrecte.\n"
-"Ha de tenir el format `i[,n]`\n"
-"on \"i\" és la posició del primer dígit i\n"
-"`n` el nombre de dígits de la referència, per defecte 6.\n"
-"per exemple. \"13,6\""
+"El parámetro de configuración `isr_partner_ref` es incorrecto.\n"
+"Debe tener el formato `i[,n]`. \n"
+"donde `i` es la posición del primer dígito y\n"
+"`n` el número de dígitos de la referencia, por defecto 6.\n"
+"Por ejemplo, \"13,6\""
 
 #. module: account_statement_import_camt54
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import_camt_parser__display_name
 msgid "Display Name"
-msgstr "Nom de visualització"
+msgstr "Mostrar Nombre"
 
 #. module: account_statement_import_camt54
 #: model:ir.model.fields,help:account_statement_import_camt54.field_account_journal__transfer_line
 msgid "Generate balance line on total of bank statement import"
 msgstr ""
-"Genereu una línia de saldo sobre el total de la importació d'extractes "
-"bancaris"
+"Generar línea de saldo sobre el total de la importación de extractos "
+"bancarios"
 
 #. module: account_statement_import_camt54
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import_camt_parser__id
 msgid "ID"
-msgstr "ID"
+msgstr "ID (identificación)"
 
 #. module: account_statement_import_camt54
 #: model:ir.model,name:account_statement_import_camt54.model_account_statement_import
 msgid "Import Bank Statement Files"
-msgstr "Importa fitxers d'extractes bancaris"
+msgstr "Importar Archivos de Extracto Bancario"
 
 #. module: account_statement_import_camt54
 #: model:ir.model,name:account_statement_import_camt54.model_account_journal
 msgid "Journal"
-msgstr "Diari"
+msgstr "Diario"
 
 #. module: account_statement_import_camt54
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal____last_update
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import____last_update
 #: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_statement_import_camt_parser____last_update
 msgid "Last Modified on"
-msgstr "Última modificació el"
+msgstr "Última Modificación el"

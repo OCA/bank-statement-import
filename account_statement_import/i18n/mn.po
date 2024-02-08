@@ -175,8 +175,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr " (%s) хуулганы данс нь (%s) журналийн данстай ижил биш байна."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr " (%s) хуулганы данс нь журналийн данстай ижил биш байна."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -201,7 +201,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
-msgstr "Банкны хуулга валют (%s) нь журналын валют (%s)-тай ижил байх ёстой."
+msgstr "Банкны хуулга валют (%s) нь журналын валют '%s' (%s)-тай ижил байх ёстой."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0

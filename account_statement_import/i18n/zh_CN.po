@@ -187,8 +187,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr "对账单中的科目(%s)和日记账(%s)中的不一样"
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "对账单中的科目(%s)和日记账中的不一样"
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -213,7 +213,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
-msgstr "银行对账单 (%s) 的币种和日记账 (%s)的币种不一样."
+msgstr "银行对账单 (%s) 的币种和日记账 '%s' (%s)的币种不一样."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
