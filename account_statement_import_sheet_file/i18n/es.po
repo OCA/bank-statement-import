@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-18 06:13+0000\n"
-"PO-Revision-Date: 2023-11-01 21:38+0000\n"
+"PO-Revision-Date: 2024-02-08 20:34+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -296,11 +296,14 @@ msgid ""
 "the inverse sign. By setting this flag during the upload the amounts will be "
 "inverted in sign."
 msgstr ""
+"En algunos casos, como en los extractos de tarjetas de crédito, los importes "
+"se expresan con el signo invertido. Activando este indicador durante la "
+"carga, los importes tendrán el signo invertido."
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_inverse_sign
 msgid "Inverse sign of amount"
-msgstr ""
+msgstr "Signo inverso del importe"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__shift_jis
@@ -417,6 +420,11 @@ msgid ""
 "(absolute value + indicate sign)\n"
 "Distinct Credit/debit Column: use a distinct column for debit and credit"
 msgstr ""
+"Valor simple: utilizar un importe ignorado en la columna importe\n"
+"Valor absoluto: utilizar una misma columna para el debe y el haber\n"
+"(valor absoluto + signo indicativo)\n"
+"Columna distinta para débito/crédito: utilice una columna distinta para "
+"débito y crédito"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
@@ -501,7 +509,7 @@ msgstr "Columna de ID único de trasacción"
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 #, python-format
 msgid "Use amount_column if you have set Amount type = 'Single value'"
-msgstr ""
+msgstr "Utilice amount_column si ha establecido Amount type = 'Single value'"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -511,6 +519,8 @@ msgid ""
 "Use amount_debit_column and amount_credit_column if you have set Amount type "
 "= 'Distinct Credit/debit Column'"
 msgstr ""
+"Utilice amount_debit_column y amount_credit_column si ha establecido Amount "
+"type = 'Distinct Credit/debit Column'"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -518,6 +528,7 @@ msgstr ""
 #, python-format
 msgid "Use debit_credit_column if you have set Amount type = 'Absolute value'"
 msgstr ""
+"Utilice debit_credit_column si ha establecido Amount type = 'Absolute value'"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__debit_credit_column
