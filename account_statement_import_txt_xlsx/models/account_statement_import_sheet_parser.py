@@ -4,6 +4,7 @@
 
 import itertools
 import logging
+from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
@@ -64,12 +65,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
 
-        if lines[0]["timestamp"] > lines[-1]["timestamp"]:
-            first_line = lines[-1]
-            last_line = lines[0]
-        else:
-            first_line = lines[0]
-            last_line = lines[-1]
+        lines = list(sorted(lines, key=lambda line: line["timestamp"]))
+        first_line = lines[0]
+        last_line = lines[-1]
         data = {
             "date": first_line["timestamp"].date(),
             "name": _("%(code)s: %(filename)s")
@@ -100,7 +98,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _get_column_indexes(self, header, column_name, mapping):
         column_indexes = []
-        if mapping[column_name] and "," in mapping[column_name]:
+        if (
+            mapping[column_name]
+            and isinstance(mapping[column_name], Iterable)
+            and "," in mapping[column_name]
+        ):
             # We have to concatenate the values
             column_names_or_indexes = mapping[column_name].split(",")
         else:

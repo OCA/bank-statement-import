@@ -31,12 +31,25 @@ msgid ""
 "file into the same field, indicating the\n"
 "                                column names or numbers separated by comma."
 msgstr ""
+"<span class=\"fa fa-info-circle\"/> Agregue los nombres de columna o el "
+"número de columna (cuando el archivo no tiene encabezado).\n"
+"                                Puede concatenar varias columnas en el "
+"archivo en el mismo campo, indicando el\n"
+"                                nombres de columnas o números separados por "
+"comas."
 
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_tree
 msgid ""
 "<span class=\"fa fa-info-circle\"/> indicate the column number in the "
 "Columns section. The first column is 0."
+msgstr ""
+"<span class=\"fa fa-info-circle\"/> indique el número de columna en la "
+"sección Columnas. La primera columna es 0."
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__absolute_value
+msgid "Absolute value"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -54,7 +67,7 @@ msgstr "Permitir Volver"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount Column"
-msgstr ""
+msgstr "Monto de columna"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_column
@@ -66,7 +79,7 @@ msgstr "Monto de la transacción en la moneda del diario"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__balance_column
 msgid "Balance Column"
-msgstr ""
+msgstr "Columna de balance"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__balance_column
@@ -83,13 +96,13 @@ msgstr "Báltico (Latin-4 / ISO 8859-4)"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_account_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__bank_account_column
 msgid "Bank Account Column"
-msgstr ""
+msgstr "Columna Cuenta bancaria"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_name_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__bank_name_column
 msgid "Bank Name Column"
-msgstr ""
+msgstr "Columna Nombre del banco"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model,name:account_statement_import_txt_xlsx.model_account_statement_import_sheet_mapping
@@ -158,7 +171,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__currency_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__currency_column
 msgid "Currency Column"
-msgstr ""
+msgstr "Columna de moneda"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__koi8_r
@@ -179,20 +192,19 @@ msgstr "Cirílico (Windows-1251)"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__debit_value
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__debit_value
 msgid "Debit Value"
-msgstr ""
+msgstr "Valor de débito"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
 msgid "Debit amount column"
-msgstr ""
+msgstr "Columna de débito"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_debit_column
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_debit_column
 msgid "Debit amount of transaction in journal's currency"
-msgstr ""
-
+msgstr "Importe de débito de la transacción en la moneda del diario"
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
 msgid "Debit/Credit column"
@@ -224,7 +236,7 @@ msgstr "Delimitador"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__description_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__description_column
 msgid "Description Column"
-msgstr ""
+msgstr "Columna de descripción"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__display_name
@@ -242,6 +254,11 @@ msgstr "Codificación"
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__no_header
 msgid "File does not contain header line"
+msgstr "El fichero no contiene una línea de cabecera"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__footer_lines_skip_count
+msgid "Footer lines skip count"
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -374,8 +391,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__notes_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__notes_column
 msgid "Notes Column"
-msgstr ""
-
+msgstr "Columna de Notas"
 #. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
 msgid "Options"
@@ -385,19 +401,19 @@ msgstr "Opciones"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_amount_column
 msgid "Original Amount Column"
-msgstr ""
+msgstr "Columna de importe original"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__original_currency_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__original_currency_column
 msgid "Original Currency Column"
-msgstr ""
+msgstr "Columna de moneda original"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__partner_name_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__partner_name_column
 msgid "Partner Name Column"
-msgstr ""
+msgstr "Columna de contacto"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__bank_name_column
@@ -415,6 +431,13 @@ msgstr "Cuenta bancaria del contacto"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__reference_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__reference_column
 msgid "Reference Column"
+msgstr "Columna de referencia"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__footer_lines_skip_count
+msgid ""
+"Set the Footer lines number.Used in some csv/xlsx file that integrate meta "
+"data inlast lines."
 msgstr ""
 
 #. module: account_statement_import_txt_xlsx
@@ -474,7 +497,7 @@ msgstr "Separador de miles"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__timestamp_column
 msgid "Timestamp Column"
-msgstr ""
+msgstr "Columna de marca de tiempo"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__timestamp_format
@@ -561,6 +584,9 @@ msgid ""
 "When this occurs please indicate the column number in the Columns section "
 "instead of the column name, considering that the first column is 0"
 msgstr ""
+"Cuando esto ocurra, indique el número de columna en la sección Columnas en "
+"lugar del nombre de la columna, teniendo en cuenta que la primera columna es "
+"0"
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__delimiter__comma
@@ -600,8 +626,11 @@ msgstr "tabulación"
 #~ msgid "Amount column"
 #~ msgstr "Monto de columna"
 
+#~ msgid "Amount type"
+#~ msgstr "Tipo de importe"
+
 #~ msgid "Balance column"
-#~ msgstr "Columna de saldo"
+#~ msgstr "Columna de balance"
 
 #~ msgid "Bank Account column"
 #~ msgstr "Columna de la Cuenta Bancaria"
