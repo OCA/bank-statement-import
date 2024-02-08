@@ -176,7 +176,6 @@ msgstr "Si coché, des nouveaux messages requièrent votre attention."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si coché, certains messages ont une erreur d’envoi."
 
@@ -389,11 +388,6 @@ msgid "Pull Online Bank Statements"
 msgstr "Import les relevés bancaires en ligne"
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erreur d'envoi de SMS"
-
-#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__account_number
 msgid "Sanitized Account Number"
 msgstr "Numéro de compte nettoyé"
@@ -509,3 +503,6 @@ msgstr "Semaines(s)"
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__weekly
 msgid "Weekly statements"
 msgstr "Relevés hebdomadaires"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erreur d'envoi de SMS"

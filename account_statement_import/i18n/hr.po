@@ -185,8 +185,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr "Žiro račun ovog izvoda banke (%s) nije jednak dnevniku (%s)."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "Žiro račun ovog izvoda banke nije jednak dnevniku (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -211,7 +211,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
-msgstr "Žiro račun ovog izvoda banke (%s) nije jednak dnevniku (%s)."
+msgstr "Žiro račun ovog izvoda banke (%s) nije jednak dnevniku '%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0

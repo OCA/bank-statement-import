@@ -178,8 +178,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr "Ennek a bankkivonatnak (%s) a számlája nem egyezik a naplójéval (%s)."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "Ennek a bankkivonatnak a számlája nem egyezik a naplójéval (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -204,7 +204,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
-msgstr "Ennek a bankkivonatnak (%s) a számlája nem egyezik a naplójéval (%s)."
+msgstr "Ennek a bankkivonatnak (%s) a számlája nem egyezik a naplójéval '%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0

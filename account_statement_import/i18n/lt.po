@@ -183,8 +183,8 @@ msgstr ""
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
 #, fuzzy, python-format
-msgid "The Bank Accounting Account in not set on the journal '%s'."
-msgstr "Šio išrašo sąskaita (%s) nėra tokia pati, kaip žurnalo (%s)."
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "Šio išrašo sąskaita nėra tokia pati, kaip žurnalo (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
@@ -209,7 +209,7 @@ msgstr ""
 msgid ""
 "The currency of the bank statement (%s) is not the same as the currency of "
 "the journal '%s' (%s)."
-msgstr "Banko išrašo valiuta (%s) nėra tokia pati, kaip žurnalo valiuta (%s)."
+msgstr "Banko išrašo valiuta (%s) nėra tokia pati, kaip žurnalo valiuta '%s' (%s)."
 
 #. module: account_statement_import
 #: code:addons/account_statement_import/wizard/account_statement_import.py:0
