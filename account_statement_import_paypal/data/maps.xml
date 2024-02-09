@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 Tecnativa - Vicent Cubells
+    Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+    <record
+        id="paypal_statement_map_en"
+        model="account.statement.import.paypal.mapping"
+    >
+        <field name="name">PayPal Statement (EN)</field>
+        <field name="float_thousands_sep">comma</field>
+        <field name="float_decimal_sep">dot</field>
+        <field name="date_format">%m/%d/%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Date</field>
+        <field name="time_column">Time</field>
+        <field name="tz_column">Time Zone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Currency</field>
+        <field name="gross_column">Gross</field>
+        <field name="fee_column">Fee</field>
+        <field name="balance_column">Balance</field>
+        <field name="transaction_id_column">Transaction ID</field>
+        <field name="description_column">Description</field>
+        <field name="from_email_address_column">From Email Address</field>
+        <field name="invoice_id_column">Invoice ID</field>
+        <field name="bank_name_column">Bank Name</field>
+        <field name="bank_account_column">Bank Account</field>
+    </record>
+    <record id="paypal_activity_map_en" model="account.statement.import.paypal.mapping">
+        <field name="name">PayPal Activity (EN)</field>
+        <field name="float_thousands_sep">comma</field>
+        <field name="float_decimal_sep">dot</field>
+        <field name="date_format">%d/%m/%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Date</field>
+        <field name="time_column">Time</field>
+        <field name="tz_column">TimeZone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Currency</field>
+        <field name="gross_column">Gross</field>
+        <field name="fee_column">Fee</field>
+        <field name="balance_column">Balance</field>
+        <field name="transaction_id_column">Transaction ID</field>
+        <field name="type_column">Type</field>
+        <field name="from_email_address_column">From Email Address</field>
+        <field name="to_email_address_column">To Email Address</field>
+        <field name="invoice_id_column">Invoice ID</field>
+        <field name="subject_column">Subject</field>
+        <field name="note_column">Note</field>
+    </record>
+    <record
+        id="paypal_statement_map_es"
+        model="account.statement.import.paypal.mapping"
+    >
+        <field name="name">PayPal Statement (ES)</field>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="date_format">%d/%m/%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Fecha</field>
+        <field name="time_column">Hora</field>
+        <field name="tz_column">Zona horaria</field>
+        <field name="name_column">Nombre</field>
+        <field name="currency_column">Divisa</field>
+        <field name="gross_column">Bruto</field>
+        <field name="fee_column">Comisión</field>
+        <field name="balance_column">Saldo</field>
+        <field name="transaction_id_column">Id. de transacción</field>
+        <field name="description_column">Descripción</field>
+        <field name="from_email_address_column">Correo electrónico del remitente</field>
+        <field name="invoice_id_column">Id. de factura</field>
+        <field name="bank_name_column">Nombre del banco</field>
+        <field name="bank_account_column">Cuenta bancaria</field>
+    </record>
+    <record id="paypal_activity_map_es" model="account.statement.import.paypal.mapping">
+        <field name="name">PayPal Activity (ES)</field>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="date_format">%d/%m/%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Fecha</field>
+        <field name="time_column">Hora</field>
+        <field name="tz_column">Zona horaria</field>
+        <field name="name_column">Nombre</field>
+        <field name="currency_column">Divisa</field>
+        <field name="gross_column">Bruto</field>
+        <field name="fee_column">Tarifa</field>
+        <field name="balance_column">Saldo</field>
+        <field name="transaction_id_column">Id. de transacción</field>
+        <field name="type_column">Tipo</field>
+        <field name="from_email_address_column">Correo electrónico del remitente</field>
+        <field
+            name="to_email_address_column"
+        >Correo electrónico del destinatario</field>
+        <field name="invoice_id_column">Número de factura</field>
+        <field name="subject_column">Asunto</field>
+        <field name="note_column">Nota</field>
+    </record>
+    <record
+        id="paypal_statement_map_de"
+        model="account.statement.import.paypal.mapping"
+    >
+        <field name="name">PayPal Statement (DE)</field>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="date_format">%d.%m.%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Datum</field>
+        <field name="time_column">Uhrzeit</field>
+        <field name="tz_column">Zeitzone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Währung</field>
+        <field name="gross_column">Brutto</field>
+        <field name="fee_column">Gebühr</field>
+        <field name="balance_column">Guthaben</field>
+        <field name="transaction_id_column">Transaktionscode</field>
+        <field name="description_column">Beschreibung</field>
+        <field name="from_email_address_column">Absender E-Mail-Adresse</field>
+        <field name="invoice_id_column">Rechnungsnummer</field>
+        <field name="bank_name_column">Name der Bank</field>
+        <field name="bank_account_column">Bankkonto</field>
+    </record>
+    <record id="paypal_activity_map_de" model="account.statement.import.paypal.mapping">
+        <field name="name">PayPal Activity (DE)</field>
+        <field name="float_thousands_sep">dot</field>
+        <field name="float_decimal_sep">comma</field>
+        <field name="date_format">%d.%m.%Y</field>
+        <field name="time_format">%H:%M:%S</field>
+        <field name="date_column">Datum</field>
+        <field name="time_column">Uhrzeit</field>
+        <field name="tz_column">Zeitzone</field>
+        <field name="name_column">Name</field>
+        <field name="currency_column">Währung</field>
+        <field name="gross_column">Brutto</field>
+        <field name="fee_column">Gebühr</field>
+        <field name="balance_column">Guthaben</field>
+        <field name="transaction_id_column">Transaktionscode</field>
+        <field name="type_column">Typ</field>
+        <field name="from_email_address_column">Absender E-Mail-Adresse</field>
+        <field name="to_email_address_column">Empfänger E-Mail-Adresse</field>
+        <field name="invoice_id_column">Rechnungsnummer</field>
+        <field name="subject_column">Betreff</field>
+        <field name="note_column">Hinweis</field>
+    </record>
+</odoo>
