@@ -103,6 +103,32 @@ class OnlineBankStatementProvider(models.Model):
                 _("To continue configure bank account on journal %s")
                 % (self.journal_id.display_name)
             )
+        # Check if there's another existing provider for the same bank institution,
+        # and reuse it for this bank account, as some banks don't allow several
+        # requisitions from the same source (GoCardless).
+        other = self.search(
+            [
+                ("service", "=", "gocardless"),
+                ("gocardless_requisition_id", "!=", False),
+                ("journal_id.bank_id", "=", self.journal_id.bank_id.id),
+                ("id", "!=", self.id),
+            ],
+            limit=1,
+        )
+        if other:
+            self.write(
+                {
+                    "gocardless_requisition_ref": other.gocardless_requisition_ref,
+                    "gocardless_requisition_id": other.gocardless_requisition_id,
+                    "gocardless_requisition_expiration": (
+                        other.gocardless_requisition_expiration
+                    ),
+                    "gocardless_institution_id": other.gocardless_institution_id,
+                }
+            )
+            if self._gocardless_finish_requisition(dry=True):
+                return
+        # Ask for the institution and continue normal process otherwise
         country = (
             self.journal_id.bank_account_id.company_id or self.journal_id.company_id
         ).country_id
@@ -159,13 +185,17 @@ class OnlineBankStatementProvider(models.Model):
             # JS code expects here to return a plain link or nothing
             return requisition_data["link"]
 
-    def _gocardless_finish_requisition(self):
+    def _gocardless_finish_requisition(self, dry=False):
         """Once the requisiton to the bank institution has been made, and this is called
         from the controller assigned to the redirect URL, we check that the IBAN account
         of the linked journal is included in the accessible bank accounts, and if so,
         we set the rest of the needed data.
 
-        A message in the chatter is logged both for sucessful or failed operation.
+        A message in the chatter is logged both for sucessful or failed operation (this
+        last one only if not in dry mode).
+
+        :param: dry: If true, this is called as previous step before starting the whole
+          process, so no fail message is logged in chatter in this case.
         """
         self.ensure_one()
         requisition_response = requests.get(
@@ -208,7 +238,8 @@ class OnlineBankStatementProvider(models.Model):
                 body=_("Your account number %(iban_number)s is successfully attached.")
                 % {"iban_number": self.journal_id.bank_account_id.display_name}
             )
-        else:
+            return True
+        elif not dry:
             self.sudo().write(
                 {
                     "gocardless_requisition_expiration": False,
@@ -226,6 +257,7 @@ class OnlineBankStatementProvider(models.Model):
                     "accounts_iban": " / ".join(accounts_iban),
                 }
             )
+        return False
 
     def _obtain_statement_data(self, date_since, date_until):
         """Generic online cron overrided for acting when the sync is for GoCardless."""
