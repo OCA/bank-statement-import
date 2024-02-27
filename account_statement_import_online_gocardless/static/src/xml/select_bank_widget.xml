@@ -1,0 +1,58 @@
+<templates xml:space="preserve">
+
+  <t t-name="OnlineSyncSearchBankGoCardless">
+    <div class="institution-content-wrapper">
+      <div id="institution-modal-content">
+        <header class="institution-modal-header">
+            <div class="institution-search-container">
+                <img
+                            class="institution-search-icon"
+                            url="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgMzAgMzAiIHdpZHRoPSIzMHB4IiBoZWlnaHQ9IjMwcHgiPjxwYXRoIGQ9Ik0gMTMgMyBDIDcuNDg4OTk3MSAzIDMgNy40ODg5OTcxIDMgMTMgQyAzIDE4LjUxMTAwMyA3LjQ4ODk5NzEgMjMgMTMgMjMgQyAxNS4zOTY1MDggMjMgMTcuNTk3Mzg1IDIyLjE0ODk4NiAxOS4zMjIyNjYgMjAuNzM2MzI4IEwgMjUuMjkyOTY5IDI2LjcwNzAzMSBBIDEuMDAwMSAxLjAwMDEgMCAxIDAgMjYuNzA3MDMxIDI1LjI5Mjk2OSBMIDIwLjczNjMyOCAxOS4zMjIyNjYgQyAyMi4xNDg5ODYgMTcuNTk3Mzg1IDIzIDE1LjM5NjUwOCAyMyAxMyBDIDIzIDcuNDg4OTk3MSAxOC41MTEwMDMgMyAxMyAzIHogTSAxMyA1IEMgMTcuNDMwMTIzIDUgMjEgOC41Njk4Nzc0IDIxIDEzIEMgMjEgMTcuNDMwMTIzIDE3LjQzMDEyMyAyMSAxMyAyMSBDIDguNTY5ODc3NCAyMSA1IDE3LjQzMDEyMyA1IDEzIEMgNSA4LjU2OTg3NzQgOC41Njk4Nzc0IDUgMTMgNSB6Ii8+PC9zdmc+"
+                        />
+                <div class="row">
+                    <label
+                                for="country_select"
+                                class="font-weight-bold"
+                            >Available countries:</label>
+                    <select id="country_select" class="country_select o_input" />
+                </div>
+                <br />
+                <input
+                            placeholder="Search..."
+                            class="institution-search-input"
+                            id="bank_search_input"
+                            autofocus="true"
+                        />
+            </div>
+        </header>
+          <div class="institution-container institution-search-bx-body">
+          </div>
+      </div>
+    </div>
+  </t>
+
+    <t t-name="OnlineSyncSearchBankGoCardlessList">
+      <t t-if="institutions.length > 0">
+          <t t-foreach="institutions" t-as="institution">
+              <div class="list-institution">
+                  <a
+                        t-attf-class="#{'institution-' + institution.id}"
+                        t-attf-data-institution="#{institution.id}"
+                        style="cursor:pointer"
+                    >
+                      <img class="institution-logo" t-attf-src="#{institution.logo}" />
+                      <span t-esc="institution.name" />
+                  </a>
+              </div>
+          </t>
+      </t>
+  </t>
+    <t t-name="OnlineSyncSearchBankGoCardlessCountries">
+        <option>Select Country to Filter</option>
+        <t t-if="country_names.length > 0">
+            <t t-foreach="country_names" t-as="country">
+                <option t-attf-value="#{country.code}" t-esc="country.name" />
+            </t>
+        </t>
+    </t>
+</templates>
