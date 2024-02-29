@@ -385,7 +385,7 @@ class CamtParser(models.AbstractModel):
         self.add_value_from_node(
             ns,
             node,
-            ["./ns:Acct/ns:Id/ns:IBAN", "./ns:Acct/ns:Id/ns:Othr/ns:Id"],
+            ["./ns:Ntry[1]/ns:NtryRef","./ns:Acct/ns:Id/ns:IBAN", "./ns:Acct/ns:Id/ns:Othr/ns:Id"],
             result,
             "account_number",
         )
