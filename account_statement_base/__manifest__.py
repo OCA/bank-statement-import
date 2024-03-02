@@ -11,7 +11,7 @@
     "author": "Akretion,Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "development_status": "Mature",
-    "website": "https://github.com/OCA/account-reconcile",
+    "website": "https://github.com/OCA/bank-statement-import",
     "depends": ["account"],
     "data": [
         "views/account_bank_statement.xml",
