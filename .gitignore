@@ -76,3 +76,6 @@ docs/_build/
 
 # VS Code
 *.workspace
+
+# GIT
+.gitignore
