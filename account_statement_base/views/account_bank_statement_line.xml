@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
   Copyright 2022-2023 CreuBlanca
   Copyright 2023 Akretion France (http://www.akretion.com/)
@@ -11,33 +11,44 @@
         <field name="arch" type="xml">
             <form>
                 <group name="main">
-                    <field invisible="1" name="company_id"/>
-                    <field invisible="1" name="currency_id"/>
-                    <field invisible="1" name="country_code"/>
-                    <field invisible="1" name="state"/>
-                    <field invisible="1" name="suitable_journal_ids"/>
-                    <field name="date"/>
-                    <field name="payment_ref" required="1"/>
-                    <field name="partner_id"/>
-                    <field name="amount"/>
-                    <field domain="[('id', '!=', currency_id)]" groups="base.group_multi_currency" name="foreign_currency_id"/>
-                    <field groups="base.group_multi_currency" name="amount_currency"/>
-                    <field name="partner_bank_id"/>
-                    <field invisible="context.get('default_journal_id')" name="journal_id"/>
-                    <field name="move_id"/>
-                    <field domain="[('journal_id', '=', journal_id)]" invisible="not context.get('account_bank_statement_line_main_view')" name="statement_id"/>
+                    <field invisible="1" name="company_id" />
+                    <field invisible="1" name="currency_id" />
+                    <field invisible="1" name="country_code" />
+                    <field invisible="1" name="state" />
+                    <field invisible="1" name="suitable_journal_ids" />
+                    <field name="date" />
+                    <field name="payment_ref" required="1" />
+                    <field name="partner_id" />
+                    <field name="amount" />
+                    <field
+                        domain="[('id', '!=', currency_id)]"
+                        groups="base.group_multi_currency"
+                        name="foreign_currency_id"
+                    />
+                    <field groups="base.group_multi_currency" name="amount_currency" />
+                    <field name="partner_bank_id" />
+                    <field
+                        invisible="context.get('default_journal_id')"
+                        name="journal_id"
+                    />
+                    <field name="move_id" />
+                    <field
+                        domain="[('journal_id', '=', journal_id)]"
+                        invisible="not context.get('account_bank_statement_line_main_view')"
+                        name="statement_id"
+                    />
                 </group>
                 <notebook>
                     <page name="narration" string="Notes">
-                        <field colspan="2" name="narration" nolabel="1"/>
+                        <field colspan="2" name="narration" nolabel="1" />
                     </page>
                     <page name="technical" string="Technical Information">
                         <group name="tech-fields">
-                            <field name="transaction_type"/>
-                            <field name="partner_name"/>
-                            <field name="account_number"/>
-                            <field name="is_reconciled"/>
-                            <field name="payment_ids" widget="many2many_tags"/>
+                            <field name="transaction_type" />
+                            <field name="partner_name" />
+                            <field name="account_number" />
+                            <field name="is_reconciled" />
+                            <field name="payment_ids" widget="many2many_tags" />
                         </group>
                     </page>
                 </notebook>
@@ -48,23 +59,33 @@
         <field name="model">account.bank.statement.line</field>
         <field name="arch" type="xml">
             <tree decoration-muted="is_reconciled">
-                <field name="sequence" widget="handle"/>
-                <field name="date"/>
-                <field name="payment_ref"/>
-                <field name="ref" optional="hide"/>
-                <field name="partner_id"/>
-                <field name="amount"/>
-                <field groups="base.group_multi_currency" name="amount_currency" optional="hide"/>
-                <field name="narration" optional="hide" string="Notes"/>
-                <field name="journal_id" optional="hide"/>
-                <field name="partner_bank_id" optional="hide"/>
-                <button icon="fa-undo" invisible="is_reconciled == False" name="action_undo_reconciliation" string="Revert reconciliation" type="object"/>
-                <field invisible="1" name="company_id"/>
-                <field invisible="1" name="is_reconciled"/>
-                <field invisible="1" name="currency_id"/>
-                <field invisible="1" name="foreign_currency_id"/>
-                <field invisible="1" name="country_code"/>
-                <field invisible="1" name="state"/>
+                <field name="sequence" widget="handle" />
+                <field name="date" />
+                <field name="payment_ref" />
+                <field name="ref" optional="hide" />
+                <field name="partner_id" />
+                <field name="amount" />
+                <field
+                    groups="base.group_multi_currency"
+                    name="amount_currency"
+                    optional="hide"
+                />
+                <field name="narration" optional="hide" string="Notes" />
+                <field name="journal_id" optional="hide" />
+                <field name="partner_bank_id" optional="hide" />
+                <button
+                    icon="fa-undo"
+                    invisible="is_reconciled == False"
+                    name="action_undo_reconciliation"
+                    string="Revert reconciliation"
+                    type="object"
+                />
+                <field invisible="1" name="company_id" />
+                <field invisible="1" name="is_reconciled" />
+                <field invisible="1" name="currency_id" />
+                <field invisible="1" name="foreign_currency_id" />
+                <field invisible="1" name="country_code" />
+                <field invisible="1" name="state" />
             </tree>
         </field>
     </record>
@@ -72,22 +93,50 @@
         <field name="model">account.bank.statement.line</field>
         <field name="arch" type="xml">
             <search>
-                <field filter_domain="['|', '|', ('payment_ref', 'ilike', self), ('ref', 'ilike', self), ('narration', 'ilike', self)]" name="payment_ref" string="Label, Ref or Notes"/>
-                <field name="partner_id"/>
-                <field name="date"/>
-                <field domain="[('type', 'in', ('bank', 'cash'))]" name="journal_id"/>
-                <field name="amount"/>
-                <separator/>
-                <filter domain="[('is_reconciled', '=', True)]" name="reconciled" string="Reconciled"/>
-                <filter domain="[('is_reconciled', '=', False)]" name="not_reconciled" string="Not Reconciled"/>
-                <separator/>
-                <filter domain="[('to_check', '=', True)]" name="to_check" string="To check"/>
-                <separator/>
-                <filter date="date" name="date" string="Date"/>
+                <field
+                    filter_domain="['|', '|', ('payment_ref', 'ilike', self), ('ref', 'ilike', self), ('narration', 'ilike', self)]"
+                    name="payment_ref"
+                    string="Label, Ref or Notes"
+                />
+                <field name="partner_id" />
+                <field name="date" />
+                <field domain="[('type', 'in', ('bank', 'cash'))]" name="journal_id" />
+                <field name="amount" />
+                <separator />
+                <filter
+                    domain="[('is_reconciled', '=', True)]"
+                    name="reconciled"
+                    string="Reconciled"
+                />
+                <filter
+                    domain="[('is_reconciled', '=', False)]"
+                    name="not_reconciled"
+                    string="Not Reconciled"
+                />
+                <separator />
+                <filter
+                    domain="[('to_check', '=', True)]"
+                    name="to_check"
+                    string="To check"
+                />
+                <separator />
+                <filter date="date" name="date" string="Date" />
                 <group name="groupby">
-                    <filter context="{'group_by': 'partner_id'}" name="partner_groupby" string="Partner"/>
-                    <filter context="{'group_by': 'journal_id'}" name="journal_groupby" string="Journal"/>
-                    <filter context="{'group_by': 'transaction_type'}" name="transaction_type_groupby" string="Transaction Type"/>
+                    <filter
+                        context="{'group_by': 'partner_id'}"
+                        name="partner_groupby"
+                        string="Partner"
+                    />
+                    <filter
+                        context="{'group_by': 'journal_id'}"
+                        name="journal_groupby"
+                        string="Journal"
+                    />
+                    <filter
+                        context="{'group_by': 'transaction_type'}"
+                        name="transaction_type_groupby"
+                        string="Transaction Type"
+                    />
                 </group>
             </search>
         </field>
