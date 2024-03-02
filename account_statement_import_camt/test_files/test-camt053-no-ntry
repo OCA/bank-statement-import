@@ -1,0 +1,52 @@
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04">
+    <BkToCstmrStmt>
+        <GrpHdr>
+            <MsgId>TESTBANK/NL/1420561226673</MsgId>
+            <CreDtTm>2014-01-06T16:20:26.673Z</CreDtTm>
+        </GrpHdr>
+        <Stmt>
+            <Id>1234Test/1</Id>
+            <LglSeqNb>2</LglSeqNb>
+            <CreDtTm>2014-01-06T16:20:26.673Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2014-01-05T00:00:00.000Z</FrDtTm>
+                <ToDtTm>2014-01-05T23:59:59.999Z</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <IBAN>NL77ABNA0574908765</IBAN>
+                </Id>
+                <Nm>Example company</Nm>
+                <Svcr>
+                    <FinInstnId>
+                        <BIC>ABNANL2A</BIC>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>OPBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="CHF">1520.76</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <Dt>2014-01-05</Dt>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>CLBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="CHF">1520.76</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <Dt>2014-01-05</Dt>
+                </Dt>
+            </Bal>
+        </Stmt>
+    </BkToCstmrStmt>
+</Document>

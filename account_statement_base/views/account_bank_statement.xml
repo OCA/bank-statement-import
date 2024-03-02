@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright 2023 Therp BV
+  Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+-->
+<odoo>
+
+    <!-- Add form to view mode. -->
+    <record id="account.action_bank_statement_tree" model="ir.actions.act_window">
+         <field name="res_model">account.bank.statement</field>
+         <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
+
+</odoo>

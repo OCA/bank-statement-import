@@ -1,0 +1,640 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import
+#
+# Translators:
+# Martin Trigaux, 2019
+# Andy Cheng <andy.cheng@richsoda.com>, 2019
+# 敬雲 林 <chingyun@yuanchih-consult.com>, 2019
+# Michael Yeung, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~12.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
+"PO-Revision-Date: 2019-08-26 09:08+0000\n"
+"Last-Translator: Michael Yeung, 2019\n"
+"Language-Team: Chinese (Taiwan) (https://www.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d 已導入的交易將被忽略"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1個 已導入的交易將被忽略."
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "創立者"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "建立於"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "顯示名稱"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+#, python-format
+msgid "Import"
+msgstr "導入"
+
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "導入銀行對帳單"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "導入銀行對帳單"
+
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
+msgid "Import Statement"
+msgstr "導入對帳單"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Import and View"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
+msgid "Journal"
+msgstr "日記帳"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "最後修改於"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "最後更新者"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "最後更新於"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr "這個文件不包含任何交易"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "銀行對帳單明細"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "銀行對帳單明細"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "對帳單中的科目和日記帳(%s)中的不一樣"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+"提供的文件不對.\n"
+"您有安裝支援這文件的模組嗎?"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Upload Bank Statements"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "銀行對帳單明細"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr "從銀行拿到電子格式的銀行對帳單並且在這裡選擇他們"
+
+#, python-format
+#~ msgid "Already imported items"
+#~ msgstr "已導入的專案"
+
+#~ msgid "or"
+#~ msgstr "或"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "一個銀行帳戶交易只能導入一次."
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "銀行對帳單明細"
+
+#~ msgid "Import ID"
+#~ msgstr "導入ID"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "銀行帳戶"
+
+#, fuzzy
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr "銀行報表 (%s) 的貨幣與日誌 '%s' (%s) 的幣種不同。"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "這個文件不包含任何對帳單"
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "這個文件不包含任何交易"
+
+#~ msgid " Import Template for Bank Statements"
+#~ msgstr "導入銀行報表的範本"
+
+#~ msgid "Account Holder"
+#~ msgstr "帳戶持有人"
+
+#~ msgid "Account Number"
+#~ msgstr "帳戶號碼"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "允許的科目類型"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "允許的科目"
+
+#~ msgid "Action Needed"
+#~ msgstr "需採取行動"
+
+#~ msgid "Active"
+#~ msgstr "啟用"
+
+#~ msgid "Activities"
+#~ msgstr "活動"
+
+#~ msgid "Activity State"
+#~ msgstr "活動狀態"
+
+#~ msgid "Alias"
+#~ msgstr "別名"
+
+#~ msgid "Alias Name"
+#~ msgstr "別名"
+
+#~ msgid "Alias domain"
+#~ msgstr "別名網域"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "至少一個入站"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "至少一個出站"
+
+#~ msgid "Attachment Count"
+#~ msgstr "附件數"
+
+#~ msgid "Bank"
+#~ msgstr "銀行"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "銀行費用"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "銀行日記帳名稱"
+
+#~ msgid "Bank setup manual config"
+#~ msgstr "銀行設定通用配置"
+
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr "不能找到所需導入的資料. 請手動選擇資料檔案."
+
+#~ msgid ""
+#~ "Check this box if you don't want to share the same sequence for invoices "
+#~ "and credit notes made from this journal"
+#~ msgstr "勾選此框，則此日記帳下的會計憑單或折讓單不使用同一個序列。"
+
+#~ msgid "Color Index"
+#~ msgstr "顏色索引"
+
+#~ msgid "Communication Type"
+#~ msgstr "通訊類型"
+
+#~ msgid "Company"
+#~ msgstr "公司"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "日記帳相關的公司"
+
+#~ msgid "Credit Note Entry Sequence"
+#~ msgstr "折讓單分錄序列"
+
+#~ msgid "Credit Notes Next Number"
+#~ msgstr "退款單下一號碼"
+
+#~ msgid "Currency"
+#~ msgstr "幣別"
+
+#~ msgid "Dedicated Credit Note Sequence"
+#~ msgstr "專用的折讓單序列"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "預設貸方科目"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "預設借方科目"
+
+#~ msgid "Defines how the bank statements will be registered"
+#~ msgstr "定義銀行對帳單的註冊方式"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "分錄序列"
+
+#~ msgid "Filename"
+#~ msgstr "文件名"
+
+#~ msgid "Files"
+#~ msgstr "文件"
+
+#~ msgid "Followers"
+#~ msgstr "關注人"
+
+#~ msgid "Followers (Channels)"
+#~ msgstr "關注人（頻道）"
+
+#~ msgid "Followers (Partners)"
+#~ msgstr "關注人（業務夥伴）"
+
+#~ msgid "For Incoming Payments"
+#~ msgstr "為收款"
+
+#~ msgid "For Outgoing Payments"
+#~ msgstr "為付款"
+
+#~ msgid "Icon"
+#~ msgstr "圖示"
+
+#~ msgid "If checked, new messages require your attention."
+#~ msgstr "勾選代表有新訊息需要您留意。"
+
+#~ msgid "If checked, some messages have a delivery error."
+#~ msgstr "勾選代表有訊息發生傳送錯誤。"
+
+#~ msgid "Install Import Format"
+#~ msgstr "安裝導入格式"
+
+#~ msgid "Is Follower"
+#~ msgstr "是關注人"
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "它將充當貸方金額的預設科目"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "它將作為一個預設借方科目"
+
+#~ msgid "Journal Creation"
+#~ msgstr "日記帳創建"
+
+#~ msgid "Journal Creation on Bank Statement Import"
+#~ msgstr "透過銀行報表導入創建日記帳"
+
+#~ msgid "Journal Name"
+#~ msgstr "日記帳名稱"
+
+#~ msgid "Kanban Dashboard"
+#~ msgstr "看板儀表板"
+
+#~ msgid "Kanban Dashboard Graph"
+#~ msgstr "看板儀表板圖表"
+
+#~ msgid "Loss Account"
+#~ msgstr "損失科目"
+
+#~ msgid "Main Attachment"
+#~ msgstr "主要附件"
+
+#~ msgid ""
+#~ "Manual: Get paid by cash, check or any other method outside of Odoo.\n"
+#~ "Electronic: Get paid automatically through a payment acquirer by "
+#~ "requesting a transaction on a card saved by the customer when buying or "
+#~ "subscribing online (payment token).\n"
+#~ "Batch Deposit: Encase several customer checks at once by generating a "
+#~ "batch deposit to submit to your bank. When encoding the bank statement in "
+#~ "Odoo,you are suggested to reconcile the transaction with the batch "
+#~ "deposit. Enable this option from the settings."
+#~ msgstr ""
+#~ "手動：通過現金、支票或除 Odoo 以外的任何其他方法獲取報酬。\n"
+#~ "電子方式：線上購買或訂閱時（支付指示物），通過請求客戶保存的卡上的交易，通"
+#~ "過付款受讓人自動獲得付款。\n"
+#~ "批量存款：通過生成批量存款立即兌現幾個客戶的支票，以便提交給銀行。在 Odoo "
+#~ "中編碼銀行對帳單時，建議您將交易與批量存款進行核對。從設定中啟用此選項。 "
+
+#~ msgid ""
+#~ "Manual:Pay bill by cash or any other method outside of Odoo.\n"
+#~ "Check:Pay bill by check and print it from Odoo.\n"
+#~ "SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you "
+#~ "submit to your bank. Enable this option from the settings."
+#~ msgstr ""
+#~ "手動：現金支付或使用系統外的方式支付。\n"
+#~ "支票：使用支票支付並在系統列印。\n"
+#~ "SEPA轉帳：使用SEPA付款並提交文件到銀行，從設定中啟用此功能。"
+
+#~ msgid "Message Delivery error"
+#~ msgstr "訊息遞送錯誤"
+
+#~ msgid "Messages"
+#~ msgstr "訊息"
+
+#~ msgid "Next Activity Deadline"
+#~ msgstr "下一活動截止日期"
+
+#~ msgid "Next Activity Summary"
+#~ msgstr "下一活動摘要"
+
+#~ msgid "Next Activity Type"
+#~ msgstr "下一活動類型"
+
+#~ msgid "Next Number"
+#~ msgstr "下一號碼"
+
+#~ msgid "No currency found matching '%s'."
+#~ msgstr "找不到與'%s'匹配的幣別"
+
+#~ msgid "Number of Actions"
+#~ msgstr "動作數量"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "需要處理的消息數量"
+
+#~ msgid "Number of messages with delivery error"
+#~ msgstr "有發送錯誤的郵件數量"
+
+#~ msgid "Number of unread messages"
+#~ msgstr "未讀訊息的數量"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Profit Account"
+#~ msgstr "利潤科目"
+
+#~ msgid "Responsible User"
+#~ msgstr "責任使用者"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "給客戶應收憑單日記帳選擇 '銷售' .\n"
+#~ "給供應商應付憑單選 '採購' .\n"
+#~ "在客戶或者供應商付款的日記帳中選擇 '現金' 或者 '銀行' .\n"
+#~ "給其餘操作的日記帳選擇 '通用' ."
+
+#~ msgid "Sequence"
+#~ msgstr "序號"
+
+#~ msgid "Set active to false to hide the Journal without removing it."
+#~ msgstr "設定為無效，可以隱藏日記帳而不用刪除它。"
+
+#~ msgid "Short Code"
+#~ msgstr "簡碼"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "在儀表板顯示日記帳"
+
+#~ msgid ""
+#~ "Status based on activities\n"
+#~ "Overdue: Due date is already passed\n"
+#~ "Today: Activity date is today\n"
+#~ "Planned: Future activities."
+#~ msgstr ""
+#~ "根據活動的狀態 \n"
+#~ " 逾期：已經超過截止日期 \n"
+#~ " 現今：活動日期是當天 \n"
+#~ " 計劃：未來活動。"
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "用來輸入對帳單的幣別"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr "這個日記帳中的日記帳分錄會被用這個前綴命名."
+
+#~ msgid "The next sequence number will be used for the next credit note."
+#~ msgstr "下一號碼將用於下一張折讓單."
+
+#~ msgid "The next sequence number will be used for the next invoice."
+#~ msgstr "下一號碼將用於下一張憑單."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "credit note entries of this journal."
+#~ msgstr "該字段包含此日記帳中與信用清單目錄數量相關的信息。"
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr "這個字段包含和這個日記中日記帳分錄數量相關的信息."
+
+#~ msgid "Type"
+#~ msgstr "類型"
+
+#~ msgid "Unread Messages"
+#~ msgstr "未讀消息"
+
+#~ msgid "Unread Messages Counter"
+#~ msgstr "未讀消息計數器"
+
+#~ msgid "Upload"
+#~ msgstr "上傳"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr "用於儀表板視圖中的日記帳排序"
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr "現金登記的期末餘額與系統計算的有差異時候用來登記損失"
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr "當現金出納機的關帳餘額與系統計算的有差異時，用於登記利潤"
+
+#~ msgid "Website Messages"
+#~ msgstr "網站信息"
+
+#~ msgid "Website communication history"
+#~ msgstr "網站溝通記錄"
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "不管這個日記帳是否顯示在儀表板"
+
+#~ msgid "You already have imported that file."
+#~ msgstr "您已經導入了該檔案。"
+
+#~ msgid ""
+#~ "You can set here the default communication that will appear on customer "
+#~ "invoices, once validated, to help the customer to refer to that "
+#~ "particular invoice when making the payment."
+#~ msgstr ""
+#~ "您可以在這裡設定預設通信，該通信將顯示在客戶應收憑單上，一旦驗證，以幫助客"
+#~ "戶在付款時參考該特定憑單。"
+
+#~ msgid ""
+#~ "You have to set a Default Debit Account and a Default Credit Account for "
+#~ "the journal: %s"
+#~ msgstr "您必須為日記帳設定預設借記科目和預設信用帳戶：%s"
