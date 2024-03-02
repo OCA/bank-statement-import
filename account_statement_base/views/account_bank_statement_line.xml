@@ -41,7 +41,8 @@
                         </group>
                     </page>
                 </notebook>
-            </form></field>
+            </form>
+        </field>
     </record>
     <record id="account_bank_statement_line_tree" model="ir.ui.view">
         <field name="model">account.bank.statement.line</field>
@@ -64,7 +65,8 @@
                 <field invisible="1" name="foreign_currency_id"/>
                 <field invisible="1" name="country_code"/>
                 <field invisible="1" name="state"/>
-            </tree></field>
+            </tree>
+        </field>
     </record>
     <record id="account_bank_statement_line_search" model="ir.ui.view">
         <field name="model">account.bank.statement.line</field>
@@ -87,7 +89,8 @@
                     <filter context="{'group_by': 'journal_id'}" name="journal_groupby" string="Journal"/>
                     <filter context="{'group_by': 'transaction_type'}" name="transaction_type_groupby" string="Transaction Type"/>
                 </group>
-            </search></field>
+            </search>
+        </field>
     </record>
     <record id="account_bank_statement_line_action" model="ir.actions.act_window">
         <field name="name">Bank Statement Lines</field>
