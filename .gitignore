@@ -73,3 +73,12 @@ docs/_build/
 
 # OCA rules
 !static/lib/
+
+# VS Code
+*.code-workspace
+
+# GIT
+.gitignore
+
+# MacOS packages
+*.pkg

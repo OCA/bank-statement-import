@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04 camt.053.001.04.xsd">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>20170323312345678900000</MsgId>
+      <CreDtTm>2017-03-23T14:47:00</CreDtTm>
+      <MsgPgntn>
+        <PgNb>1</PgNb>
+        <LastPgInd>true</LastPgInd>
+      </MsgPgntn>
+      <AddtlInf>Test</AddtlInf>
+    </GrpHdr>
+    <Stmt>
+      <Id>20170323123456789012345</Id>
+      <ElctrncSeqNb>58</ElctrncSeqNb>
+      <CreDtTm>2017-03-23T14:47:00</CreDtTm>
+      <FrToDt>
+        <FrDtTm>2017-03-23T00:00:00</FrDtTm>
+        <ToDtTm>2017-03-23T23:59:59</ToDtTm>
+      </FrToDt>
+      <Acct>
+        <Id>
+          <IBAN>CH1111000000123456789</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>Open Net S. à r.l. Prilly</Nm>
+        </Ownr>
+      </Acct>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>OPBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="CHF">75960.15</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2017-03-22</Dt>
+        </Dt>
+      </Bal>
+      <Bal>
+        <Tp>
+          <CdOrPrtry>
+            <Cd>CLBD</Cd>
+          </CdOrPrtry>
+        </Tp>
+        <Amt Ccy="CHF">79443.15</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt>
+          <Dt>2017-03-23</Dt>
+        </Dt>
+      </Bal>
+      <Ntry>
+        <NtryRef>012345678</NtryRef>
+        <Amt Ccy="CHF">3483.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <RvslInd>false</RvslInd>
+        <Sts>BOOK</Sts>
+        <BookgDt>
+          <Dt>2017-03-22</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2017-03-23</Dt>
+        </ValDt>
+        <AcctSvcrRef>20170323001234567891234567891234</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>RCDT</Cd>
+              <SubFmlyCd>VCOM</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <NtryDtls>
+          <Btch>
+            <NbOfTxs>2</NbOfTxs>
+          </Btch>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>123456CHCAFEBABE</AcctSvcrRef>
+              <Prtry>
+                <Tp>01</Tp>
+                <Ref>123456CHCAFEBABE</Ref>
+              </Prtry>
+            </Refs>
+            <Amt Ccy="CHF">2187.00</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <BkTxCd>
+              <Domn>
+                <Cd>PMNT</Cd>
+                <Fmly>
+                  <Cd>RCDT</Cd>
+                  <SubFmlyCd>AUTT</SubFmlyCd>
+                </Fmly>
+              </Domn>
+            </BkTxCd>
+            <RltdPties>
+              <Dbtr>
+                <Nm>Banque Cantonale Vaudoise</Nm>
+                <PstlAdr>
+                  <StrtNm>Place Saint-François</StrtNm>
+                  <BldgNb>14</BldgNb>
+                  <PstCd>1003</PstCd>
+                  <TwnNm>Lausanne</TwnNm>
+                  <Ctry>CH1</Ctry>
+                </PstlAdr>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH2222000000123456789</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RltdAgts>
+              <DbtrAgt>
+                <FinInstnId>
+                  <BICFI>POFICHBEXXX</BICFI>
+                  <Nm>POSTFINANCE AG</Nm>
+                  <PstlAdr>
+                    <AdrLine>MINGERSTRASSE 20</AdrLine>
+                    <AdrLine>3030 BERNE</AdrLine>
+                  </PstlAdr>
+                </FinInstnId>
+              </DbtrAgt>
+            </RltdAgts>
+            <RmtInf>
+              <Strd>
+                <CdtrRefInf>
+                  <Tp>
+                    <CdOrPrtry>
+                      <Prtry>ISR Reference</Prtry>
+                    </CdOrPrtry>
+                  </Tp>
+                  <Ref>302388292000011111111111111</Ref>
+                </CdtrRefInf>
+                <AddtlRmtInf>?REJECT?0</AddtlRmtInf>
+              </Strd>
+            </RmtInf>
+            <RltdDts>
+              <AccptncDtTm>2017-03-22T20:00:00</AccptncDtTm>
+            </RltdDts>
+          </TxDtls>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>123456CHCAFEBABE</AcctSvcrRef>
+              <Prtry>
+                <Tp>01</Tp>
+                <Ref>123456CHCAFEBABE</Ref>
+              </Prtry>
+            </Refs>
+            <Amt Ccy="CHF">1296.00</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <BkTxCd>
+              <Domn>
+                <Cd>PMNT</Cd>
+                <Fmly>
+                  <Cd>RCDT</Cd>
+                  <SubFmlyCd>AUTT</SubFmlyCd>
+                </Fmly>
+              </Domn>
+            </BkTxCd>
+            <RltdPties>
+              <Dbtr>
+                <Nm>Banque Cantonale Vaudoise</Nm>
+                <PstlAdr>
+                  <StrtNm>Place Saint-François</StrtNm>
+                  <BldgNb>14</BldgNb>
+                  <PstCd>1003</PstCd>
+                  <TwnNm>Lausanne</TwnNm>
+                  <Ctry>CH2</Ctry>
+                </PstlAdr>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH3333000000123456789</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RltdAgts>
+              <DbtrAgt>
+                <FinInstnId>
+                  <BICFI>POFICHBEYYY</BICFI>
+                  <Nm>POSTFINANCE AG</Nm>
+                  <PstlAdr>
+                    <AdrLine>MINGERSTRASSE 20</AdrLine>
+                    <AdrLine>3030 BERNE</AdrLine>
+                  </PstlAdr>
+                </FinInstnId>
+              </DbtrAgt>
+            </RltdAgts>
+            <RmtInf>
+              <Strd>
+                <CdtrRefInf>
+                  <Tp>
+                    <CdOrPrtry>
+                      <Prtry>ISR Reference</Prtry>
+                    </CdOrPrtry>
+                  </Tp>
+                  <Ref>302388292000022222222222222</Ref>
+                </CdtrRefInf>
+                <AddtlRmtInf>?REJECT?0</AddtlRmtInf>
+              </Strd>
+            </RmtInf>
+            <RltdDts>
+              <AccptncDtTm>2017-03-22T20:00:00</AccptncDtTm>
+            </RltdDts>
+          </TxDtls>
+        </NtryDtls>
+        <AddtlNtryInf>CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE</AddtlNtryInf>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.04" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.054.001.04 camt.054.001.04.xsd">
+  <BkToCstmrDbtCdtNtfctn>
+    <GrpHdr>
+      <MsgId>20220126375204763458853</MsgId>
+      <CreDtTm>2022-01-26T23:40:40</CreDtTm>
+      <MsgPgntn>
+        <PgNb>1</PgNb>
+        <LastPgInd>true</LastPgInd>
+      </MsgPgntn>
+      <AddtlInf>SPS/1.7/PROD</AddtlInf>
+    </GrpHdr>
+    <Ntfctn>
+      <Id>20220120000000000000000</Id>
+      <CreDtTm>2022-01-26T23:40:40</CreDtTm>
+      <FrToDt>
+        <FrDtTm>2022-01-26T00:00:00</FrDtTm>
+        <ToDtTm>2022-01-26T23:59:59</ToDtTm>
+      </FrToDt>
+      <RptgSrc>
+        <Prtry>OTHR</Prtry>
+      </RptgSrc>
+      <Acct>
+        <Id>
+          <IBAN>NL77ABNA0574908765</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>Example company</Nm>
+        </Ownr>
+      </Acct>
+      <Ntry>
+        <NtryRef>NL0000000000000000000</NtryRef>
+        <Amt Ccy="EUR">5.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <RvslInd>false</RvslInd>
+        <Sts>BOOK</Sts>
+        <BookgDt>
+          <Dt>2022-01-26</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2022-01-26</Dt>
+        </ValDt>
+        <AcctSvcrRef>98888208N8</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>RCDT</Cd>
+              <SubFmlyCd>VCOM</SubFmlyCd>
+            </Fmly>
+          </Domn>
+        </BkTxCd>
+        <NtryDtls>
+          <Btch>
+            <NbOfTxs>1</NbOfTxs>
+          </Btch>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>15180015077602405</AcctSvcrRef>
+              <InstrId>MIB InstrId305-312MM20211231v1</InstrId>
+              <EndToEndId>ENDTOENDID-01</EndToEndId>
+              <Prtry>
+                <Tp>00</Tp>
+                <Ref>20220120000000000000001</Ref>
+              </Prtry>
+            </Refs>
+            <Amt Ccy="EUR">5.00</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <BkTxCd>
+              <Domn>
+                <Cd>PMNT</Cd>
+                <Fmly>
+                  <Cd>RCDT</Cd>
+                  <SubFmlyCd>ATXN</SubFmlyCd>
+                </Fmly>
+              </Domn>
+            </BkTxCd>
+            <RltdPties>
+              <Dbtr>
+                <Nm>Test Customer</Nm>
+                <PstlAdr>
+                  <AdrLine>Test street 1</AdrLine>
+                  <AdrLine>1234 AB  Test city</AdrLine>
+                </PstlAdr>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>NL46ABNA0499998748</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RltdAgts>
+              <DbtrAgt>
+                <FinInstnId>
+                  <ClrSysMmbId>
+                    <MmbId>NZNCC020368</MmbId>
+                  </ClrSysMmbId>
+                  <Nm>Test Bank</Nm>
+                  <PstlAdr>
+                    <AdrLine>Test street 5</AdrLine>
+                    <AdrLine>1234 AB  Test city</AdrLine>
+                  </PstlAdr>
+                </FinInstnId>
+              </DbtrAgt>
+            </RltdAgts>
+            <RmtInf>
+              <Strd>
+                <CdtrRefInf>
+                  <Tp>
+                    <CdOrPrtry>
+                      <Prtry>QRR</Prtry>
+                    </CdOrPrtry>
+                  </Tp>
+                  <Ref>000000000000000000000000003</Ref>
+                </CdtrRefInf>
+              </Strd>
+            </RmtInf>
+            <RltdDts>
+              <AccptncDtTm>2022-01-26T20:00:00</AccptncDtTm>
+            </RltdDts>
+          </TxDtls>
+        </NtryDtls>
+        <AddtlNtryInf>Additional entry info</AddtlNtryInf>
+      </Ntry>
+    </Ntfctn>
+  </BkToCstmrDbtCdtNtfctn>
+</Document>

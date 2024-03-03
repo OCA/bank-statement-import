@@ -1,0 +1,407 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import
+#
+# Translators:
+# Martin Trigaux, 2018
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2018
+# Manami Hashi <manami@roomsfor.hk>, 2018
+# NOKA Shigekazu <shigekazu.noka@gmail.com>, 2018
+# 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2018
+# Takahiro MURAKAMI <murakami@date-yakkyoku.com>, 2018
+# Tim Siu Lai <tl@roomsfor.hk>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~11.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
+"PO-Revision-Date: 2018-09-21 13:17+0000\n"
+"Last-Translator: Tim Siu Lai <tl@roomsfor.hk>, 2018\n"
+"Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "作成者"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "作成日"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+#, python-format
+msgid "Import"
+msgstr "インポート"
+
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "銀行取引明細のインポート"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "銀行取引明細のインポート"
+
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
+msgid "Import Statement"
+msgstr "取引明細書をインポート"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Import and View"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
+msgid "Journal"
+msgstr "仕訳帳"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "最終更新日"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "最終更新者"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "最終更新日"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "銀行取引明細書内容"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "銀行取引明細書内容"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload Bank Statements"
+msgstr "銀行取引明細のインポート"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "銀行取引明細書内容"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#~ msgid "or"
+#~ msgstr "または"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "銀行取引明細書内容"
+
+#~ msgid "Import ID"
+#~ msgstr "インポートID"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "銀行口座"
+
+#~ msgid "Account Holder"
+#~ msgstr "口座保持者"
+
+#~ msgid "Account Number"
+#~ msgstr "口座番号"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "許可する勘定タイプ"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "許可する勘定科目"
+
+#~ msgid "Active"
+#~ msgstr "有効"
+
+#~ msgid "Alias"
+#~ msgstr "エイリアス"
+
+#~ msgid "Alias domain"
+#~ msgstr "エイリアスドメイン"
+
+#~ msgid "Allow Cancelling Entries"
+#~ msgstr "エントリの取消許可"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "入金の支払方法あり"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "出金の支払方法あり"
+
+#~ msgid "Bank"
+#~ msgstr "銀行"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "銀行取引"
+
+#~ msgid "Belong to the user's current company"
+#~ msgstr "ユーザの現在の会社に属する"
+
+#~ msgid ""
+#~ "Check this box if you want to allow the cancellation the entries related "
+#~ "to this journal or of the invoice related to this journal"
+#~ msgstr ""
+#~ "この仕訳帳に関連するエントリー、またはこの仕訳帳に関連する請求書のキャンセ"
+#~ "ルを許す場合は、このボックスをチェックして下さい。"
+
+#~ msgid "Color Index"
+#~ msgstr "カラーインデクス"
+
+#~ msgid "Company"
+#~ msgstr "会社"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "この仕訳帳と関係する会社"
+
+#~ msgid "Credit Note Entry Sequence"
+#~ msgstr "クレジットノート付番規則"
+
+#~ msgid "Currency"
+#~ msgstr "通貨"
+
+#~ msgid "Dedicated Credit Note Sequence"
+#~ msgstr "固有のクレジットノート付番"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "デフォルト貸方勘定"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "デフォルト借方勘定"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "仕訳付番"
+
+#~ msgid "Filename"
+#~ msgstr "ファイル名"
+
+#~ msgid "Group Invoice Lines"
+#~ msgstr "請求書明細グループ化"
+
+#~ msgid ""
+#~ "If this box is checked, the system will try to group the accounting lines "
+#~ "when generating them from invoices."
+#~ msgstr ""
+#~ "このボックスがチェックされると、システムは請求書から会計行の生成を行う時に"
+#~ "会計行のグループ化を行います。"
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "それは貸方金額のデフォルトアカウントとして動作します。"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "これは借方金額のデフォルトアカウントとして動作します。"
+
+#~ msgid "Journal Name"
+#~ msgstr "仕訳帳名"
+
+#~ msgid "Kanban Dashboard"
+#~ msgstr "かんばんダッシュボード"
+
+#~ msgid "Loss Account"
+#~ msgstr "費用勘定"
+
+#~ msgid "Next Number"
+#~ msgstr "次の番号"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Profit Account"
+#~ msgstr "収益勘定"
+
+#~ msgid "Sequence"
+#~ msgstr "付番"
+
+#~ msgid "Short Code"
+#~ msgstr "短縮コード"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "仕訳帳をダッシュボードに表示"
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "明細入力に使用される通貨"
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr "このフィールドは仕訳帳の記帳番号に関連する情報を含みます。"
+
+#~ msgid "Type"
+#~ msgstr "タイプ"
+
+#~ msgid "_Import"
+#~ msgstr "_Import"

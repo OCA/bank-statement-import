@@ -1,0 +1,85 @@
+('EUR',
+ 'NL77ABNA0574908765',
+ [{'balance_end_real': 15121.12,
+   'balance_start': 15568.27,
+   'date': '2014-01-05',
+   'name': '1234Test/1',
+   'transactions': [{'account_number': 'NL46ABNA0499998748',
+                     'amount': -754.25,
+                     'date': '2014-01-05',
+                     'narration': 'Partner Name (RltdPties/Nm): INSURANCE COMPANY TESTX\n'
+                                  'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
+                                  'Transaction Date (BookgDt): 2014-01-05\n'
+                                  'Reference: 435005714488-ABNO33052620\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-RDDT-ESDD\n'
+                                  'Unstructured Reference (RmtInf/Ustrd): Insurance policy 857239PERIOD 01.01.2014 - 31.12.2014\n'
+                                  'Additional Transaction Information (AddtlTxInf): MKB Insurance 859239PERIOD 01.01.2014 - 31.12.2014\n'
+                                  'End To End Id (Refs/EndToEndId): 435005714488-ABNO33052620\n'
+                                  'Instructed Id (Refs/InstrId): INNDNL2U20141231000142300002844\n'
+                                  'Postal Address (PstlAdr): TEST STREET 20 | 1234 AB TESTCITY | NL',
+                     'partner_name': 'INSURANCE COMPANY TESTX',
+                     'payment_ref': 'MKB Insurance 859239PERIOD 01.01.2014 - 31.12.2014',
+                     'ref': '435005714488-ABNO33052620',
+                     'transaction_type': 'PMNT-RDDT-ESDD'},
+                    {'account_number': 'NL46ABNA0499998748',
+                     'amount': -564.05,
+                     'date': '2014-01-05',
+                     'narration': 'Partner Name (RltdPties/Nm): Test Customer\n'
+                                  'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
+                                  'Transaction Date (BookgDt): 2014-01-05\n'
+                                  'Reference: TESTBANK/NL/20141229/01206408\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-IDDT-UPDD\n'
+                                  'Reversal Indicator (RvslInd): true\n'
+                                  'Unstructured Reference (RmtInf/Ustrd): Direct Debit S14 0410\n'
+                                  'Additional Transaction Information (AddtlTxInf): Direct debit S14 0410 AC07 Rek.nummer blokkade '
+                                  'TESTBANK/NL/20141229/01206408\n'
+                                  'Return Reason Code (RtrInf/Rsn/Cd): AC06\n'
+                                  'Return Reason Code (Proprietary) (RtrInf/Rsn/Prtry): AC06\n'
+                                  'End To End Id (Refs/EndToEndId): TESTBANK/NL/20141229/01206408\n'
+                                  'Instructed Id (Refs/InstrId): TESTBANK/NL/20141229/01206408\n'
+                                  'Postal Address (PstlAdr): NL',
+                     'partner_name': 'Test Customer',
+                     'payment_ref': 'Direct debit S14 0410 AC07 Rek.nummer blokkade TESTBANK/NL/20141229/01206408',
+                     'ref': 'TESTBANK/NL/20141229/01206408',
+                     'transaction_type': 'PMNT-IDDT-UPDD'},
+                    {'account_number': 'NL46ABNA0499998748',
+                     'amount': -100.0,
+                     'date': '2014-01-05',
+                     'narration': 'Partner Name (RltdPties/Nm): Test Customer\n'
+                                  'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
+                                  'Transaction Date (BookgDt): 2014-01-05\n'
+                                  'Reference: TESTBANK/NL/20141229/01206407\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-IDDT-UPDD\n'
+                                  'Reversal Indicator (RvslInd): true\n'
+                                  'Unstructured Reference (RmtInf/Ustrd): Direct Debit S14 0410\n'
+                                  'Additional Transaction Information (AddtlTxInf): Direct debit S14 0410 AC07 Rek.nummer blokkade '
+                                  'TESTBANK/NL/20141229/01206408\n'
+                                  'Return Reason Code (RtrInf/Rsn/Cd): AC06\n'
+                                  'Return Reason Code (Proprietary) (RtrInf/Rsn/Prtry): AC06\n'
+                                  'End To End Id (Refs/EndToEndId): TESTBANK/NL/20141229/01206407\n'
+                                  'Instructed Id (Refs/InstrId): TESTBANK/NL/20141229/01206407\n'
+                                  'Postal Address (PstlAdr): NL',
+                     'partner_name': 'Test Customer',
+                     'payment_ref': 'Direct debit S14 0410 AC07 Rek.nummer blokkade TESTBANK/NL/20141229/01206408',
+                     'ref': 'TESTBANK/NL/20141229/01206407',
+                     'transaction_type': 'PMNT-IDDT-UPDD'},
+                    {'account_number': 'NL69ABNA0522123643',
+                     'amount': 1405.31,
+                     'date': '2014-01-05',
+                     'narration': 'Partner Name (RltdPties/Nm): 3rd party Media\n'
+                                  'Partner Account Number (RltdPties/Acct): NL69ABNA0522123643\n'
+                                  'Transaction Date (BookgDt): 2014-01-05\n'
+                                  'Reference: 115\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-RCDT-ESCT\n'
+                                  'Additional Transaction Information (AddtlTxInf): #RD PARTY MEDIA CUSNO 90782 4210773\n'
+                                  'End To End Id (Refs/EndToEndId): 115\n'
+                                  'Instructed Id (Refs/InstrId): INNDNL2U20140105000217200000708\n'
+                                  'Postal Address (PstlAdr): SOMESTREET 570-A | 1276 ML HOUSCITY | NL',
+                     'partner_name': '3rd party Media',
+                     'payment_ref': '#RD PARTY MEDIA CUSNO 90782 4210773',
+                     'ref': '115',
+                     'transaction_type': 'PMNT-RCDT-ESCT'}]}])

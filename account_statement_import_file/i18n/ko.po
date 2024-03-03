@@ -1,0 +1,571 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import
+#
+# Translators:
+# Martin Trigaux, 2018
+# 최재호 <hwangtog@gmail.com>, 2018
+# Linda Stockelova <stockeloval@btlnet.com>, 2018
+# Linkup <link-up@naver.com>, 2018
+# Seongseok Shin <shinss61@hotmail.com>, 2018
+# Mark Lee <odoos@soti.33mail.com>, 2018
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~11.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
+"PO-Revision-Date: 2018-08-24 09:15+0000\n"
+"Last-Translator: Mark Lee <odoos@soti.33mail.com>, 2018\n"
+"Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d개 거래를 가져왔고 해당 거래가 무시되었습니다."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1개 거래를 가져왔고 해당 거래가 무시되었습니다."
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Cancel"
+msgstr "취소"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "작성자"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "작성일"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "이름 표시"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+#, python-format
+msgid "Import"
+msgstr "가져오기"
+
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "예금거래 명세서 가져오기"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "예금거래 명세서 가져오기"
+
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
+msgid "Import Statement"
+msgstr "명세서 가져오기"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Import and View"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
+msgid "Journal"
+msgstr "분개장"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "최근 수정"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "최근 갱신한 사람"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "최근 갱신 날짜"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr "이 파일에 거래가 없습니다."
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "예금거래 명세서 파일"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "예금거래 명세서 파일"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "이 명세서의 계정이 분개장(%s)과 동일하지 않습니다."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+"해당 파일을 해석할 수 없습니다.\n"
+"이 유형의 파일을 지원할 모듈을 설치하셨습니까?"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload Bank Statements"
+msgstr "예금거래 명세서 가져오기"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "가져올 예금거래 명세서 파일 선택"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "은행에서 예금거래 명세서를 전자 형식으로 가져오고 여기서 선택합니다."
+
+#, python-format
+#~ msgid "Already imported items"
+#~ msgstr "이미 가져온 항목"
+
+#~ msgid "or"
+#~ msgstr "또는"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "은행 계좌 거래는 1회만 가져올 수 있습니다!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "예금거래 명세서 라인"
+
+#~ msgid "Import ID"
+#~ msgstr "ID 가져오기"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "은행 계좌"
+
+#, fuzzy
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr "이 명세서의 계정(%s)이 분개장 '%s' (%s)과 동일하지 않습니다."
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "이 파일에 명세서가 없습니다."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "이 파일에 거래가 없습니다."
+
+#~ msgid "Account Number"
+#~ msgstr "계정 번호"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "계정 유형 허용됨"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "허용 계정"
+
+#~ msgid "Active"
+#~ msgstr "활성"
+
+#~ msgid "Alias"
+#~ msgstr "별칭"
+
+#~ msgid "Alias domain"
+#~ msgstr "별칭 도메인"
+
+#~ msgid "Allow Cancelling Entries"
+#~ msgstr "항목 취소 허용"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "하나 이상 인바운드"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "하나 이상 아웃바운드"
+
+#~ msgid "Bank"
+#~ msgstr "은행"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "은행 피드"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "은행 분개장명"
+
+#~ msgid "Belong to the user's current company"
+#~ msgstr "사용자의 현재 회사에 속함"
+
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr ""
+#~ "이 명세서를 가져올 분개장을 확인할 수 없습니다. 직접 분개장을 선택해주십시"
+#~ "오."
+
+#~ msgid ""
+#~ "Check this box if you don't want to share the same sequence for invoices "
+#~ "and credit notes made from this journal"
+#~ msgstr ""
+#~ "이 분개장에서 작성한 청구서와 신용 전표에 동일한 순서를 공유하지 않으려면 "
+#~ "이 상자에 표시해 주십시오."
+
+#~ msgid ""
+#~ "Check this box if you want to allow the cancellation the entries related "
+#~ "to this journal or of the invoice related to this journal"
+#~ msgstr ""
+#~ "이 분개장과 관련된 항목 또는 이 분개장과 관련된 청구서를 취소하도록 허용하"
+#~ "려면 이 상자에 표시해 주십시오."
+
+#~ msgid "Choose a file to import..."
+#~ msgstr "가져올 파일을 선택하십시오..."
+
+#~ msgid "Color Index"
+#~ msgstr "색상표"
+
+#~ msgid "Company"
+#~ msgstr "회사"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "이 분개장과 관련된 회사"
+
+#~ msgid "Credit Note Entry Sequence"
+#~ msgstr "신용 전표 항목 순서"
+
+#~ msgid "Credit Notes: Next Number"
+#~ msgstr "신용 전표: 다음 번호"
+
+#~ msgid "Currency"
+#~ msgstr "환율"
+
+#~ msgid "Dedicated Credit Note Sequence"
+#~ msgstr "지정된 신용 전표 순서"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "기본 대변 계정"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "기본 차변 계정"
+
+#~ msgid ""
+#~ "Download a bank statement from your bank and import it here. Supported "
+#~ "formats:"
+#~ msgstr ""
+#~ "은행에서 예금거래 명세서를 다운로드하고 여기로 가져옵니다. 지원 형식:"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "항목 순서"
+
+#~ msgid "Filename"
+#~ msgstr "파일명"
+
+#~ msgid "Group Invoice Lines"
+#~ msgstr "그룹 청구서 라인"
+
+#~ msgid ""
+#~ "If this box is checked, the system will try to group the accounting lines "
+#~ "when generating them from invoices."
+#~ msgstr ""
+#~ "이 상자에 표시하면 청구서에서 회계 라인을 생성할 때 그룹화를 시도합니다."
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "대변 금액의 기본 계정 역할을 합니다."
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "차변 금액의 기본 계정 역할을 합니다."
+
+#~ msgid "Journal Creation"
+#~ msgstr "분개장 생성"
+
+#~ msgid "Journal Name"
+#~ msgstr "분개장 명칭"
+
+#~ msgid ""
+#~ "Just click OK to create the account/journal and finish the import. If "
+#~ "this was a mistake, hit cancel to abort the import."
+#~ msgstr ""
+#~ "확인(OK)을 클릭하여 계정/분개장을 생성하고 가져오기를 완료합니다. 오류가 "
+#~ "있으면 취소(Cancel)를 눌러 가져오기를 중단합니다."
+
+#~ msgid "Kanban Dashboard"
+#~ msgstr "칸반 대시보드"
+
+#~ msgid "Kanban Dashboard Graph"
+#~ msgstr "칸반 대시보드 그래프"
+
+#~ msgid "Loss Account"
+#~ msgstr "손실 계정"
+
+#~ msgid ""
+#~ "Manual: Get paid by cash, check or any other method outside of Odoo.\n"
+#~ "Electronic: Get paid automatically through a payment acquirer by "
+#~ "requesting a transaction on a card saved by the customer when buying or "
+#~ "subscribing online (payment token).\n"
+#~ "Batch Deposit: Encase several customer checks at once by generating a "
+#~ "batch deposit to submit to your bank. When encoding the bank statement in "
+#~ "Odoo,you are suggested to reconcile the transaction with the batch "
+#~ "deposit. Enable this option from the settings."
+#~ msgstr ""
+#~ "수동: Odoo 외에서 현금, 수표 또는 기타 다른 방식으로 지급받습니다.\n"
+#~ "자동: 온라인에서 매입/구독할 때 고객이 저장한 카드에 대해 거래를 요청한 "
+#~ "후 결제를 통해 자동으로 지급받습니다(결제 토큰).\n"
+#~ "일괄 예금: 은행에 예치할 일괄 예금을 생성하여 여러 고객의 전표를 한 번에 "
+#~ "묶습니다. Odoo에서 예금거래 명세서를 인코딩할 때는 일괄 예금으로 거래를 조"
+#~ "정하는 것이 좋습니다. 이 옵션은 설정에서 활성화합니다."
+
+#~ msgid ""
+#~ "Manual:Pay bill by cash or any other method outside of Odoo.\n"
+#~ "Check:Pay bill by check and print it from Odoo.\n"
+#~ "SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you "
+#~ "submit to your bank. Enable this option from the settings."
+#~ msgstr ""
+#~ "수동: Odoo 외에 현금이나 다른 방법으로 청구 금액을 지불합니다.\n"
+#~ "전표: 전표로 청구 금액을 지불하고 Odoo에서 인쇄합니다.\n"
+#~ "SEPA 신용 이전: 은행에 제출한 SEPA 신용 이전 파일에서 청구 금액을 지불합니"
+#~ "다. 이 옵션은 설정에서 활성화합니다."
+
+#~ msgid "Next Number"
+#~ msgstr "다음 번호"
+
+#~ msgid "No currency found matching '%s'."
+#~ msgstr "'%s'와(과) 일치하는 통화를 찾지 못했습니다."
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Profit Account"
+#~ msgstr "이익 계정"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "고객 청구서 분개장은 '매출'을 선택합니다.\n"
+#~ "공급업체 청구 분개장은 '매입'을 선택합니다.\n"
+#~ "고객 또는 공급업체 지급에 사용하는 분개장은 '현금' 또는 '은행'을 선택합니"
+#~ "다.\n"
+#~ "기타 운영 분개장은 '일반'을 선택합니다."
+
+#~ msgid "Sequence"
+#~ msgstr "순차적"
+
+#~ msgid "Set active to false to hide the Journal without removing it."
+#~ msgstr "분개장을 제거하지 않고 숨기려면 false로 설정합니다."
+
+#~ msgid "Short Code"
+#~ msgstr "단문 코드"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "대시보드에 분개장 표시"
+
+#~ msgid ""
+#~ "The account of the statement you are importing is not yet recorded in "
+#~ "Odoo. In order to proceed with the import, you need to create a bank "
+#~ "journal for this account."
+#~ msgstr ""
+#~ "가져오는 명세서의 계정이 아직 Odoo에 기록되지 않았습니다. 가져오기를 진행"
+#~ "하려면 이 계정에 대한 은행 분개장을 생성해야 합니다."
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "명세서 입력에 사용하는 통화"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr "이 분개장의 분개는 이 프리픽스를 사용하여 이름을 지정합니다."
+
+#~ msgid "The next sequence number will be used for the next credit note."
+#~ msgstr "다음 순번은 다음 신용 전표에 사용합니다."
+
+#~ msgid "The next sequence number will be used for the next invoice."
+#~ msgstr "다음 순번은 다음 청구서에 사용합니다."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "credit note entries of this journal."
+#~ msgstr ""
+#~ "이 필드는 이 분개장의 신용 전표 항목에 번호를 지정하는 작업과 관련된 정보"
+#~ "가 포함되어 있습니다."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr ""
+#~ "이 필드는 이 분개장의 분개에 번호를 지정하는 작업과 관련된 정보가 포함되"
+#~ "어 있습니다."
+
+#~ msgid "Type"
+#~ msgstr "유형"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr "대시보드 보기에서 분개장을 주문하는 데 사용합니다."
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "시스템이 계산한 값과 금전 등록기의 마감 잔액에 차이가 있을 경우 손실을 기"
+#~ "록하는 데 사용합니다."
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "시스템이 계산한 값과 금전 등록기의 마감 잔액에 차이가 있을 경우 이익을 기"
+#~ "록하는 데 사용합니다."
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "이 분개장을 대시보드에 표시할지 여부"
+
+#~ msgid ""
+#~ "You have to set a Default Debit Account and a Default Credit Account for "
+#~ "the journal: %s"
+#~ msgstr "분개장에 대해 기본 차변 계정과 기본 대변 계정을 설정해야 합니다: %s"
+
+#~ msgid "_Import"
+#~ msgstr "_가져오기"

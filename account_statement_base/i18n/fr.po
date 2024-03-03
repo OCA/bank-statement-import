@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-08-16 17:10+0000\n"
+"Last-Translator: Rémi <remi@le-filament.com>\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_base
+#: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
+msgid "Bank Statement Lines"
+msgstr "Lignes de relevé bancaire"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Date"
+msgstr "Date"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Label, Ref or Notes"
+msgstr "Libellé, Réf ou Notes"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Not Reconciled"
+msgstr "Non lettré"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Notes"
+msgstr "Notes"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Reconciled"
+msgstr "Lettré"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Revert reconciliation"
+msgstr "Dé-lettrer"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
+msgid "Technical Information"
+msgstr "Informations techniques"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "To check"
+msgstr "À vérifier"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Transaction Type"
+msgstr "Type de transaction"
