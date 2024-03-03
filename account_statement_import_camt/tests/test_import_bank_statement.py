@@ -31,7 +31,7 @@ class TestParser(TransactionCase):
                 goldenfile_res = get_module_resource(
                     "account_statement_import_camt", "test_files", goldenfile
                 )
-                with open(goldenfile_res, "r") as golden:
+                with open(goldenfile_res) as golden:
                     temp.seek(0)
                     diff = list(
                         difflib.unified_diff(

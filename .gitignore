@@ -79,3 +79,6 @@ docs/_build/
 
 # GIT
 .gitignore
+
+# MacOS packages
+*.pkg
