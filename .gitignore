@@ -75,7 +75,7 @@ docs/_build/
 !static/lib/
 
 # VS Code
-*.workspace
+*.code-workspace
 
 # GIT
 .gitignore
