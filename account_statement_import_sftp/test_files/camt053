@@ -1,0 +1,103 @@
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">
+    <BkToCstmrStmt>
+        <GrpHdr>
+            <MsgId>NEWBANK/NL/20240304120000</MsgId>
+            <CreDtTm>2024-03-04T12:00:00.000Z</CreDtTm>
+        </GrpHdr>
+        <Stmt>
+            <Id>5678ABC/1</Id>
+            <LglSeqNb>1</LglSeqNb>
+            <CreDtTm>2024-03-04T12:00:00.000Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2024-03-01T00:00:00.000Z</FrDtTm>
+                <ToDtTm>2024-03-03T23:59:59.999Z</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <IBAN>NL12ABCD3456789012</IBAN>
+                </Id>
+                <Nm>New Company Ltd</Nm>
+                <Svcr>
+                    <FinInstnId>
+                        <BIC>NEWBNL2X</BIC>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>OPBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">75000.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <Dt>2024-03-03</Dt>
+                </Dt>
+            </Bal>
+            <Ntry>
+                <Amt Ccy="EUR">1200.00</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <Dt>2024-03-02</Dt>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2024-03-02</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>DBIT</Cd>
+                            <SubFmlyCd>SALR</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>SLRY</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <InstrId>NEWBANK/NL/20240302/001</InstrId>
+                            <EndToEndId>1234567890-NEWBNL2X</EndToEndId>
+                            <MndtId>987654321</MndtId>
+                        </Refs>
+                        <AmtDtls>
+                            <TxAmt>
+                                <Amt Ccy="EUR">1200.00</Amt>
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Cdtr>
+                                <Nm>Employee X</Nm>
+                                <PstlAdr>
+                                    <StrtNm>Street 123</StrtNm>
+                                    <TwnNm>City ABC</TwnNm>
+                                    <Ctry>NL</Ctry>
+                                </PstlAdr>
+                            </Cdtr>
+                            <CdtrAcct>
+                                <Id>
+                                    <IBAN>NL34EFGH5678901234</IBAN>
+                                </Id>
+                            </CdtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <CdtrAgt>
+                                <FinInstnId>
+                                    <BIC>NEWBNL2X</BIC>
+                                </FinInstnId>
+                            </CdtrAgt>
+                        </RltdAgts>
+                        <RmtInf>
+                            <Ustrd>Salary payment for March</Ustrd>
+                        </RmtInf>
+                        <AddtlTxInf>Employee ID: 123456</AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+        </Stmt>
+    </BkToCstmrStmt>
+</Document>
