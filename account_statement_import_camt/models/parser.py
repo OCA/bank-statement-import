@@ -61,7 +61,6 @@ class CamtParser(models.AbstractModel):
             node,
             [
                 "./ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf",
-                "./ns:AddtlNtryInf",
                 "./ns:Refs/ns:InstrId",
             ],
             transaction,
@@ -293,6 +292,14 @@ class CamtParser(models.AbstractModel):
             "./ns:AddtlNtryInf",
             transaction["narration"],
             "%s (AddtlNtryInf)" % _("Additional Entry Information"),
+        )
+        self.add_value_from_node(
+            ns,
+            node,
+            "./ns:AddtlNtryInf",
+            transaction,
+            "payment_ref",
+            join_str="\n",
         )
         self.add_value_from_node(
             ns,
