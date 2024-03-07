@@ -98,3 +98,20 @@ class CamtParser(models.AbstractModel):
             "ref",
         )
         return True
+
+    def parse_statement(self, ns, node):
+        """In case of a camt54 file, the QR-IBAN to be used as the account_number
+        is found in another place than the IBAN."""
+        result = super().parse_statement(ns, node)
+        self.add_value_from_node(
+            ns,
+            node,
+            [
+                "./ns:Ntry[1]/ns:NtryRef",
+                "./ns:Acct/ns:Id/ns:IBAN",
+                "./ns:Acct/ns:Id/ns:Othr/ns:Id",
+            ],
+            result,
+            "account_number",
+        )
+        return result
