@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="sftp_bank_edi" model="edi.backend.type">
+        <field name="name">Bank SFTP Import</field>
+        <field name="code">bk_sftp_imp</field>
+    </record>
+</odoo>
