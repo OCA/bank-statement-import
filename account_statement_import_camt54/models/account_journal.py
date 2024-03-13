@@ -10,5 +10,6 @@ class AccountBankStatementImport(models.Model):
 
     transfer_line = fields.Boolean(
         string="Add balance Line",
-        help="Generate balance line on total of bank statement import",
+        help="For camt54 files, generate balance line on total of bank statement "
+        "import",
     )
