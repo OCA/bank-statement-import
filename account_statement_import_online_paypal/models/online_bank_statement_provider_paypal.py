@@ -64,6 +64,10 @@ EVENT_DESCRIPTIONS = {
     "T0303": _("Electronic funds transfer (EFT)"),
     "T0400": _("General withdrawal from PayPal account"),
     "T0401": _("AutoSweep"),
+    "T0402": _("Withdrawal to Hyperwallet"),
+    "T0403": _(
+        "Withdrawals initiated by user manually. Not related to automated scheduled withdrawals"
+    ),
     "T0500": _("General PayPal debit card transaction"),
     "T0501": _("Virtual PayPal debit card transaction"),
     "T0502": _("PayPal debit card withdrawal to ATM"),
@@ -141,6 +145,7 @@ EVENT_DESCRIPTIONS = {
     "T2001": _("Settlement consolidation"),
     "T2002": _("Transfer of funds from payable"),
     "T2003": _("Transfer to external GL entity"),
+    "T2004": _("Receivables financing - Applicable only in Brazil"),
     "T2101": _("General hold"),
     "T2102": _("General hold release"),
     "T2103": _("Reserve hold"),
@@ -154,7 +159,9 @@ EVENT_DESCRIPTIONS = {
     "T2111": _("Funds not yet available"),
     "T2112": _("Funds available"),
     "T2113": _("Blocked payments"),
+    "T2114": _("Tax hold"),
     "T2201": _("Transfer to and from a credit-card-funded restricted balance"),
+    "T2301": _("Tax withholding to IRS"),
     "T3000": _("Generic instrument/Open Wallet transaction"),
     "T5000": _("Deferred disbursement, funds collected for disbursement"),
     "T5001": _("Delayed disbursement, funds disbursed"),
