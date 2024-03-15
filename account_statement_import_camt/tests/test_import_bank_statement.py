@@ -7,42 +7,80 @@ import difflib
 import pprint
 import tempfile
 from datetime import date
+from pathlib import Path
 
 from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
 
 
-class TestParser(TransactionCase):
-    """Tests for the camt parser itself."""
-
+class TestParserCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.parser = cls.env["account.statement.import.camt.parser"]
 
-    def _do_parse_test(self, inputfile, goldenfile):
-        testfile = get_module_resource(
-            "account_statement_import_camt", "test_files", inputfile
+    def _do_parse_test(self, inputfile, goldenfile, max_diff_count=None):
+        """Imports ``inputfile`` and confronts its output against ``goldenfile`` data
+
+        An AssertionError is raised if max_diff_count < 0
+
+        :param inputfile: file to import and test
+        :type inputfile: Path or str
+        :param goldenfile: file to use for comparison (the expected values)
+        :type goldenfile: Path or str
+        :param max_diff_count: maximum nr of lines that can differ (default: 2)
+        :type max_diff_count: int
+        """
+        max_diff_count = max_diff_count or 2
+        assert max_diff_count >= 0
+        diff = self._get_files_diffs(*map(self._to_filepath, (inputfile, goldenfile)))
+        self.assertLessEqual(
+            len(diff),
+            max_diff_count,
+            f"Actual output doesn't match expected output:\n{''.join(diff)}",
         )
-        with open(testfile, "rb") as data:
-            res = self.parser.parse(data.read())
-            with tempfile.NamedTemporaryFile(mode="w+", suffix=".pydata") as temp:
-                pprint.pprint(res, temp, width=160)
-                goldenfile_res = get_module_resource(
-                    "account_statement_import_camt", "test_files", goldenfile
-                )
-                with open(goldenfile_res, "r") as golden:
-                    temp.seek(0)
-                    diff = list(
-                        difflib.unified_diff(
-                            golden.readlines(), temp.readlines(), golden.name, temp.name
-                        )
-                    )
-                    if len(diff) > 2:
-                        self.fail(
-                            "actual output doesn't match expected "
-                            + "output:\n%s" % "".join(diff)
-                        )
+
+    def _get_files_diffs(self, inputfile_path, goldenfile_path) -> list:
+        """Creates diffs between ``inputfile_path`` and ``goldenfile_path`` data
+
+        :param inputfile_path: path for file to import and test
+        :type inputfile_path: Path
+        :param goldenfile_path: path for file to use for comparison (the expected values)
+        :type goldenfile_path: Path
+        """
+
+        # Read the input file, store the actual imported values
+        with open(get_module_resource(*inputfile_path.parts), "rb") as inputf:
+            res = self.parser.parse(inputf.read())
+        # Read the output file, store the expected imported values
+        with open(get_module_resource(*goldenfile_path.parts), "r") as goldf:
+            gold_name, gold_lines = goldf.name, goldf.readlines()
+        # Save the imported values in a tmp file to compare them w/ the expected values
+        with tempfile.NamedTemporaryFile(mode="w+", suffix=".pydata") as tempf:
+            pprint.pprint(res, tempf, width=160)
+            tempf.seek(0)
+            out_name, out_lines = tempf.name, tempf.readlines()
+        # Return a list of diffs
+        return list(difflib.unified_diff(gold_lines, out_lines, gold_name, out_name))
+
+    def _to_filepath(self, file):
+        """Converts ``obj`` to a ``pathlib.Path`` object
+
+        For backward compatibility: allows ``obj`` to be just a string representing only
+        a filename, and this method will convert it to filepath for files inside the
+        ``test_files`` folder (this behavior was previously hardcoded in method
+        ``TestParser._do_parse_test()``)
+
+        :param obj: the object to convert
+        :type obj: Path or str
+        """
+        if isinstance(file, str) and len(Path(file).parts) == 1:
+            file = Path("account_statement_import_camt") / "test_files" / file
+        return Path(file)
+
+
+class TestParser(TestParserCommon):
+    """Tests for the camt parser itself."""
 
     def test_parse(self):
         self._do_parse_test("test-camt053", "golden-camt053.pydata")
