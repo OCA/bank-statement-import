@@ -14,7 +14,7 @@ from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 GOCARDLESS_ENDPOINT = "https://bankaccountdata.gocardless.com/api/v2"
-REQUESTS_TIMEOUT = 5
+REQUESTS_TIMEOUT = 60
 
 
 class OnlineBankStatementProvider(models.Model):
