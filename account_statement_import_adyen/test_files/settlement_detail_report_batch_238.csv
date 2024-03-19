@@ -1,0 +1,4 @@
+Company Account,Merchant Account,Psp Reference,Merchant Reference,Payment Method,Creation Date,TimeZone,Type,Modification Reference,Gross Currency,Gross Debit (GC),Gross Credit (GC),Exchange Rate,Net Currency,Net Debit (NC),Net Credit (NC),Commission (NC),Markup (NC),Scheme Fees (NC),Interchange (NC),Payment Method Variant,Modification Merchant Reference,Batch Number,Reserved4,Reserved5,Reserved6,Reserved7,Reserved8,Reserved9,Reserved10
+CompanyNL,YOURCOMPANY_ACCOUNT,,,,2022-02-22 00:24:23,CET,Balancetransfer,Balancetransfer,,,,,USD,,454331.99,,,,,,Balancetransfer from batch 237,238,,,,,,,
+CompanyNL,YOURCOMPANY_ACCOUNT,,,,2022-03-02 02:21:49,CET,Fee,Transaction Fees March     01 2022,,,,,USD,0.09,,,,,,,,238,,,,,,,
+CompanyNL,YOURCOMPANY_ACCOUNT,,,,2022-03-02 02:21:49,CET,Balancetransfer,Balancetransfer,,,,,USD,454331.90,,,,,,,Balancetransfer to batch 239,238,,,,,,,
