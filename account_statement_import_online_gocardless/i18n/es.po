@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-19 18:35+0000\n"
+"Last-Translator: MayteGLC <mayte.gonzalez@factorlibre.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-javascript
@@ -29,12 +31,12 @@ msgstr ""
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_account_id
 msgid "Gocardless Account"
-msgstr ""
+msgstr "Cuenta Gocardless"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_institution_id
 msgid "Gocardless Institution"
-msgstr ""
+msgstr "Banco conectado"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_refresh_expiration
@@ -44,7 +46,7 @@ msgstr ""
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_refresh_token
 msgid "Gocardless Refresh Token"
-msgstr ""
+msgstr "Actualizar Token"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_requisition_id
@@ -93,17 +95,17 @@ msgstr ""
 #. module: account_statement_import_online_gocardless
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_gocardless.online_bank_statement_provider_form
 msgid "Secret ID"
-msgstr ""
+msgstr "ID Secreto"
 
 #. module: account_statement_import_online_gocardless
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_gocardless.online_bank_statement_provider_form
 msgid "Secret Key"
-msgstr ""
+msgstr "Clave secreta"
 
 #. module: account_statement_import_online_gocardless
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_gocardless.online_bank_statement_provider_form
 msgid "Select Bank Account Identifier"
-msgstr ""
+msgstr "Validar identificador de banco"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-python
