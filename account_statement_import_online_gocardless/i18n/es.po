@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-19 18:35+0000\n"
-"Last-Translator: MayteGLC <mayte.gonzalez@factorlibre.com>\n"
+"PO-Revision-Date: 2024-03-20 18:20+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +21,12 @@ msgstr ""
 #: code:addons/account_statement_import_online_gocardless/static/src/xml/select_bank_widget.xml:0
 #, python-format
 msgid "Available countries:"
-msgstr ""
+msgstr "Países disponibles:"
 
 #. module: account_statement_import_online_gocardless
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_gocardless.online_bank_statement_provider_form
 msgid "GoCardless"
-msgstr ""
+msgstr "Sin GoCard"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_account_id
@@ -41,7 +41,7 @@ msgstr "Banco conectado"
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_refresh_expiration
 msgid "Gocardless Refresh Expiration"
-msgstr ""
+msgstr "Expiración de la Actualización de Gocardless"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_refresh_token
@@ -51,46 +51,46 @@ msgstr "Actualizar Token"
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_requisition_id
 msgid "Gocardless Requisition"
-msgstr ""
+msgstr "Requisición Gocardless"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_requisition_expiration
 msgid "Gocardless Requisition Expiration"
-msgstr ""
+msgstr "Gocardless Requisición Expiración"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_requisition_ref
 msgid "Gocardless Requisition Ref"
-msgstr ""
+msgstr "Gocardless Requisición Ref"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_token
 msgid "Gocardless Token"
-msgstr ""
+msgstr "Ficha Gocardless"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_token_expiration
 msgid "Gocardless Token Expiration"
-msgstr ""
+msgstr "Expiración de las ficha de Gocardless"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-python
 #: code:addons/account_statement_import_online_gocardless/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "Incorrect country code or country not supported."
-msgstr ""
+msgstr "Código de país incorrecto o país no admitido."
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model,name:account_statement_import_online_gocardless.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
-msgstr ""
+msgstr "Proveedor de Extractos Bancarios en Línea"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-javascript
 #: code:addons/account_statement_import_online_gocardless/static/src/xml/select_bank_widget.xml:0
 #, python-format
 msgid "Search..."
-msgstr ""
+msgstr "Búsqueda..."
 
 #. module: account_statement_import_online_gocardless
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_gocardless.online_bank_statement_provider_form
@@ -112,21 +112,21 @@ msgstr "Validar identificador de banco"
 #: code:addons/account_statement_import_online_gocardless/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "Select Bank of your Account"
-msgstr ""
+msgstr "Seleccione el Banco de su Cuenta"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-javascript
 #: code:addons/account_statement_import_online_gocardless/static/src/xml/select_bank_widget.xml:0
 #, python-format
 msgid "Select Country to Filter"
-msgstr ""
+msgstr "Seleccione el País a Filtrar"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-python
 #: code:addons/account_statement_import_online_gocardless/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "To continue configure bank account on journal %s"
-msgstr ""
+msgstr "Para seguir configurando la cuenta bancaria en el diario %s"
 
 #. module: account_statement_import_online_gocardless
 #. odoo-python
@@ -136,13 +136,15 @@ msgid ""
 "You should renew the authorization process with your bank institution for "
 "GoCardless."
 msgstr ""
+"Debe renovar el proceso de autorización con su entidad bancaria para "
+"GoCardless."
 
 #. module: account_statement_import_online_gocardless
 #. odoo-python
 #: code:addons/account_statement_import_online_gocardless/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "Your account number %(iban_number)s is successfully attached."
-msgstr ""
+msgstr "Su número de cuenta %(iban_number)s se ha adjuntado correctamente."
 
 #. module: account_statement_import_online_gocardless
 #. odoo-python
@@ -152,3 +154,5 @@ msgid ""
 "Your account number %(iban_number)s it's not in the IBAN account numbers "
 "found %(accounts_iban)s, please check"
 msgstr ""
+"Su número de cuenta %(iban_number)s no está en los números de cuenta IBAN "
+"encontrados %(accounts_iban)s, por favor compruébelo"
