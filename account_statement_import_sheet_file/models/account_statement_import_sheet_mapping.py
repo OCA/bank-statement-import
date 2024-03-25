@@ -15,7 +15,12 @@ class AccountStatementImportSheetMapping(models.Model):
     )
     float_thousands_sep = fields.Selection(
         string="Thousands Separator",
-        selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none")],
+        selection=[
+            ("dot", "dot (.)"),
+            ("comma", "comma (,)"),
+            ("quote", "quote (')"),
+            ("none", "none"),
+        ],
         default="dot",
     )
     float_decimal_sep = fields.Selection(
@@ -217,6 +222,7 @@ class AccountStatementImportSheetMapping(models.Model):
         separators = {
             "dot": ".",
             "comma": ",",
+            "quote": "'",
             "none": "",
         }
         return (
