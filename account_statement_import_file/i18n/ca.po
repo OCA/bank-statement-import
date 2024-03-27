@@ -1,0 +1,543 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_bank_statement_import
+#
+# Translators:
+# Martin Trigaux, 2018
+# RGB Consulting <odoo@rgbconsulting.com>, 2018
+# Quim - eccit <quim@eccit.com>, 2018
+# Manel Fernandez <manelfera@outlook.com>, 2018
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~11.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
+"PO-Revision-Date: 2023-11-18 18:35+0000\n"
+"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
+"Language-Team: Catalan (https://www.transifex.com/odoo/teams/41243/ca/)\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d de transaccions han estat ja importades i seran ignorades."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1 transacció ha estat ja importada i serà ignorada."
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr "<span>Importar extracte (OCA)</span>"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
+msgstr ""
+"No s'ha pogut trobar cap compte bancari amb número '%(account_number)s' "
+"associat al contacte '%(partner_name)s'. Heu de crear el compte bancari i "
+"configurar-lo al diari bancari relacionat. Si el diari bancari relacionat "
+"encara no existeix, n'heu de crear un de nou."
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "Creat per"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "Creat el"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "Mostrar Nom"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
+"Baixeu els fitxers d'extractes bancaris del vostre banc i pengeu-los aquí."
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+#, python-format
+msgid "Import"
+msgstr "Importa"
+
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
+msgid "Import Bank Statement File"
+msgstr "Importar extracte bancari"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Importar extractes bancaris"
+
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
+msgid "Import Statement"
+msgstr "Importar extracte"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "Import Statement (OCA)"
+msgstr "Importar extracte bancari (OCA)"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Import and View"
+msgstr "Importar i visualitzar"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
+msgid "Journal"
+msgstr "Diari"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "Darrera modificació el"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "Última actualització per"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "Última actualització el"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr "Falta el codi de moneda al fitxer de l'extracte bancari."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr "Falta payment_ref a la transacció."
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Statement File"
+msgstr "Arxiu d'extracte bancari"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
+msgid "Statement Filename"
+msgstr "Nom del fitxer d'extracte"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Supported formats:"
+msgstr "Formats suportats:"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "El compte comptable del compte bancari no està establert al diari '%s'."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+"El banc amb número de compte '%(account_number)s' existeix a Odoo, però no "
+"està establert a cap diari bancari. Hauríeu de configurar-lo al diari "
+"bancari relacionat. Si el diari bancari relacionat encara no existeix, n'heu "
+"de crear un de nou."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+"El fitxer d'extractes bancaris utilitza moneda '%s' però aquesta moneda no "
+"existeix a Odoo."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
+"La moneda de l'extracte bancari (%(currency_name)s) no és el mateix que la "
+"moneda del diari '%(journal_name)s' (%(journal_currency_name)s)."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+"El format d'aquest fitxer d'extracte bancari no conté el número de compte "
+"bancari, de manera que heu d'iniciar l'assistent des del diari del banc dret "
+"al tauler."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
+msgstr ""
+"El diari trobat per al fitxer (%(journal_match)s) és diferent al del diari "
+"seleccionat (%(journal_selected)s)."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr "L'anàlisi del fitxer d'extracte ha retornat un resultat no vàlid."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+"No es pot interpretar l'arxiu donat. \n"
+"Ha instal·lat el mòdul que suporta aquest tipus d'arxiu?"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Upload Bank Statements"
+msgstr "Pujar extractes bancaris"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Upload a bank statement file"
+msgstr "Seleccioni un arxiu d'extracte bancari per importar"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+"Ja heu importat aquest fitxer, o aquest fitxer només conté transaccions ja "
+"importades."
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "Obtingui els seus extractes bancaris en format electrònic del seu banc i "
+#~ "seleccioni'ls aquí."
+
+#, python-format
+#~ msgid "Already imported items"
+#~ msgstr "Elements ja importats"
+
+#~ msgid "or"
+#~ msgstr "o"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr ""
+#~ "Les transaccions d'un compte bancari poden importar-se només un cop!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Línia d'extracte bancari"
+
+#~ msgid "Import ID"
+#~ msgstr "Import ID"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "Compte bancari"
+
+#, fuzzy
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr ""
+#~ "El compte bancari d'aquest extracte (%s) no és la mateixa que la del "
+#~ "diari '%s' (%s)"
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Aquest fitxer no conte cap declaració."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Aquest fitxer no conte cap transacció."
+
+#~ msgid "Account Holder"
+#~ msgstr "Titular"
+
+#~ msgid "Account Number"
+#~ msgstr "Número de compte"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "Tipus de comptes permesos"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "Comptes permesos"
+
+#~ msgid "Active"
+#~ msgstr "Actiu"
+
+#~ msgid "Alias"
+#~ msgstr "Àlies"
+
+#~ msgid "Alias domain"
+#~ msgstr "Pseudònim del domini"
+
+#~ msgid "Allow Cancelling Entries"
+#~ msgstr "Permetre cancel·lar assentaments"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "Almenys un element entrant"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "Almenys un element sortint"
+
+#~ msgid "Bank"
+#~ msgstr "Banc"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "Canals de comunicacions bancaris"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "Nom del diari del banc"
+
+#~ msgid "Belong to the user's current company"
+#~ msgstr "Pertanyent a l'empresa de l'usuari actual"
+
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr ""
+#~ "No es pot trobar un diari en què importar aquest extracte. Si us plau, "
+#~ "seleccioni manualment un diari."
+
+#~ msgid ""
+#~ "Check this box if you don't want to share the same sequence for invoices "
+#~ "and credit notes made from this journal"
+#~ msgstr ""
+#~ "Marqui aquesta casella si no vol compatir la mateixa seqüència per "
+#~ "factures rectificatives fetes des d'aquest diari."
+
+#~ msgid ""
+#~ "Check this box if you want to allow the cancellation the entries related "
+#~ "to this journal or of the invoice related to this journal"
+#~ msgstr ""
+#~ "Marqueu aquesta casella si voleu permetre la cancel·lació dels "
+#~ "assentaments relacionats amb aquest diari o de la factura relacionada amb "
+#~ "aquest diari"
+
+#~ msgid "Choose a file to import..."
+#~ msgstr "Esculli un arxiu a importar..."
+
+#~ msgid "Color Index"
+#~ msgstr "Índex de color"
+
+#~ msgid "Company"
+#~ msgstr "Companyia"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "Empresa relacionada amb aquest diari"
+
+#~ msgid "Credit Notes: Next Number"
+#~ msgstr "Abonaments: Següent Nombre"
+
+#~ msgid "Currency"
+#~ msgstr "Moneda"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "Compte d'haver predeterminat"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "Compte deure per defecte"
+
+#~ msgid ""
+#~ "Download a bank statement from your bank and import it here. Supported "
+#~ "formats:"
+#~ msgstr ""
+#~ "Descarregui un extracte bancari des del seu banc i importi'l aquí. "
+#~ "Formats suportats:"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "Seqüència de l'assentament"
+
+#~ msgid "Filename"
+#~ msgstr "Nom de l'arxiu"
+
+#~ msgid "Group Invoice Lines"
+#~ msgstr "Agrupa línies de factura"
+
+#~ msgid ""
+#~ "If this box is checked, the system will try to group the accounting lines "
+#~ "when generating them from invoices."
+#~ msgstr ""
+#~ "Si aquesta opció està marcada, el sistema tractarà d'agrupar les línies "
+#~ "del assentament quan es generin des de factures."
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "Actua com un compte per defecte per als imports en l'haver"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "Actua com un compte per defecte per la quantitat del deure"
+
+#~ msgid "Journal Creation"
+#~ msgstr "Creació del diari"
+
+#~ msgid "Journal Name"
+#~ msgstr "Nom diari"
+
+#~ msgid ""
+#~ "Just click OK to create the account/journal and finish the import. If "
+#~ "this was a mistake, hit cancel to abort the import."
+#~ msgstr ""
+#~ "Premi acceptar per crear el compte/diari i acabi la importació. Si s'ha "
+#~ "arribat per error aquí, premi cancel·lar per avortar la importació."
+
+#~ msgid "Loss Account"
+#~ msgstr "Compta de pèrdues"
+
+#~ msgid "Next Number"
+#~ msgstr "Pròxim número"
+
+#~ msgid "No currency found matching '%s'."
+#~ msgstr "No s'ha trobat cap moneda casant '%s'."
+
+#~ msgid "OK"
+#~ msgstr "D'acord"
+
+#~ msgid "Profit Account"
+#~ msgstr "Compte de guanys"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "Seleccioni 'Vendes' per diaris de factures de client. Seleccioni "
+#~ "'Compres' per diaris de factures de proveïdor. \n"
+#~ "Seleccioni 'Caixa' o 'Banc' per diaris que s'utilitzen per pagaments de "
+#~ "clients i proveïdors. \n"
+#~ "Seleccioni 'General' per diaris que continguin operacions vaires."
+
+#~ msgid "Sequence"
+#~ msgstr "Seqüència"
+
+#~ msgid "Short Code"
+#~ msgstr "Codi curt"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "Mostrar diari al taulell"
+
+#~ msgid ""
+#~ "The account of the statement you are importing is not yet recorded in "
+#~ "Odoo. In order to proceed with the import, you need to create a bank "
+#~ "journal for this account."
+#~ msgstr ""
+#~ "El compte bancari de l'extracte que està important encara no està "
+#~ "registrat en Odoo. Per poder continuar amb la importació necessita crear "
+#~ "un diari de banc per aquest compte."
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "La divisa utilitzada per introduir assentaments"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr ""
+#~ "El tipus de càlcul de l'última línia hauria de ser \"Balanç\" per "
+#~ "assegurar que s'assignarà la quantitat per complet."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr ""
+#~ "Aquest camp conte la informació relacionada amb la numeració d'aquest "
+#~ "diari."
+
+#~ msgid "Type"
+#~ msgstr "Tipus"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr "Utilitzat per ordenar els diaris en la vista taulell"
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Utilitzat per registrar una pèrdua quan el saldo final d'un registre de "
+#~ "caixa difereix del que el sistema calcula"
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Utilitzat per registrar un guany quan el saldo final d'un registre de "
+#~ "caixa difereix del que el sistema calcula"
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "Ja sigui si aquest diari s'ha de mostrar-se al taulell o no"
+
+#~ msgid ""
+#~ "You have to set a Default Debit Account and a Default Credit Account for "
+#~ "the journal: %s"
+#~ msgstr ""
+#~ "Ha d'establir un compte de dèbit predeterminat i un compte de crèdit "
+#~ "predeterminat per a la publicació: %s"
+
+#~ msgid "_Import"
+#~ msgstr "_Importa"
