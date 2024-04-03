@@ -31,7 +31,9 @@ class TestQifFile(TransactionCase):
 
     def test_qif_file_import(self):
         qif_file_path = get_module_resource(
-            "account_bank_statement_import_qif", "tests", "test_qif.qif",
+            "account_bank_statement_import_qif",
+            "tests",
+            "test_qif.qif",
         )
         qif_file = base64.b64encode(open(qif_file_path, "rb").read())
         wizard = self.statement_import_model.with_context(
@@ -39,10 +41,12 @@ class TestQifFile(TransactionCase):
         ).create({"attachment_ids": [(0, 0, {"name": "test file", "datas": qif_file})]})
         wizard.import_file()
         statement = self.statement_line_model.search(
-            [("name", "=", "YOUR LOCAL SUPERMARKET")], limit=1,
+            [("name", "=", "YOUR LOCAL SUPERMARKET")],
+            limit=1,
         )[0].statement_id
         self.assertAlmostEqual(statement.balance_end_real, -1896.09, 2)
         line = self.statement_line_model.search(
-            [("name", "=", "Epic Technologies")], limit=1,
+            [("name", "=", "Epic Technologies")],
+            limit=1,
         )
         self.assertEqual(line.partner_id, self.partner)
