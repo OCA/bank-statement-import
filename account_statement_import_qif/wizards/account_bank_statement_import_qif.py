@@ -97,7 +97,8 @@ class AccountBankStatementImport(models.TransientModel):
             for line_vals in statement["transactions"]:
                 if not line_vals.get("partner_id") and line_vals.get("name"):
                     partner = partner_obj.search(
-                        [("name", "ilike", line_vals["name"])], limit=1,
+                        [("name", "ilike", line_vals["name"])],
+                        limit=1,
                     )
                     line_vals["partner_id"] = partner.id
         return res
