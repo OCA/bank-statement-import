@@ -2,6 +2,7 @@
 # Copyright 2015 Laurent Mignon <laurent.mignon@acsone.eu>
 # Copyright 2015 Ronald Portier <rportier@therp.nl>
 # Copyright 2016-2017 Tecnativa - Pedro M. Baeza
+# Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import base64
@@ -15,14 +16,20 @@ class TestQifFile(TransactionCase):
     (account.bank.statement.import)
     """
 
-    def setUp(self):
-        super().setUp()
-        self.statement_import_model = self.env["account.bank.statement.import"]
-        self.statement_line_model = self.env["account.bank.statement.line"]
-        self.journal = self.env["account.journal"].create(
-            {"name": "Test bank journal", "code": "TEST", "type": "bank"}
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.statement_import_model = cls.env["account.statement.import"]
+        cls.statement_line_model = cls.env["account.bank.statement.line"]
+        cls.journal = cls.env["account.journal"].create(
+            {
+                "name": "Test bank journal",
+                "code": "TEST",
+                "type": "bank",
+                "currency_id": cls.env.company.currency_id.id,
+            }
         )
-        self.partner = self.env["res.partner"].create(
+        cls.partner = cls.env["res.partner"].create(
             {
                 # Different case for trying insensitive case search
                 "name": "EPIC Technologies",
@@ -31,22 +38,22 @@ class TestQifFile(TransactionCase):
 
     def test_qif_file_import(self):
         qif_file_path = get_module_resource(
-            "account_bank_statement_import_qif",
+            "account_statement_import_qif",
             "tests",
             "test_qif.qif",
         )
         qif_file = base64.b64encode(open(qif_file_path, "rb").read())
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
-        ).create({"attachment_ids": [(0, 0, {"name": "test file", "datas": qif_file})]})
-        wizard.import_file()
+        ).create({"statement_file": qif_file, "statement_filename": "test_qif.qif"})
+        wizard.import_file_button()
         statement = self.statement_line_model.search(
-            [("name", "=", "YOUR LOCAL SUPERMARKET")],
+            [("payment_ref", "=", "YOUR LOCAL SUPERMARKET")],
             limit=1,
-        )[0].statement_id
+        ).statement_id
         self.assertAlmostEqual(statement.balance_end_real, -1896.09, 2)
         line = self.statement_line_model.search(
-            [("name", "=", "Epic Technologies")],
+            [("payment_ref", "=", "Epic Technologies")],
             limit=1,
         )
         self.assertEqual(line.partner_id, self.partner)
