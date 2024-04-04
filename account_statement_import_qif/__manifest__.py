@@ -7,11 +7,11 @@
 {
     "name": "Import QIF Bank Statements",
     "category": "Accounting",
-    "version": "13.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "OpenERP SA," "Tecnativa," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/bank-statement-import",
-    "depends": ["account_bank_statement_import"],
-    "data": ["wizards/account_bank_statement_import_qif_view.xml"],
+    "depends": ["account_statement_import_file"],
+    "data": ["wizards/account_statement_import_qif_view.xml"],
     "installable": True,
     "license": "AGPL-3",
 }

@@ -13,8 +13,8 @@ from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 
-class AccountBankStatementImport(models.TransientModel):
-    _inherit = "account.bank.statement.import"
+class AccountStatementImport(models.TransientModel):
+    _inherit = "account.statement.import"
 
     @api.model
     def _check_qif(self, data_file):
@@ -31,8 +31,8 @@ class AccountBankStatementImport(models.TransientModel):
                 data_list = file_data.split("\n")
             header = data_list[0].strip()
             header = header.split(":")[1]
-        except Exception:
-            raise UserError(_("Could not decipher the QIF file."))
+        except Exception as e:
+            raise UserError(_("Could not decipher the QIF file.")) from e
         transactions = []
         vals_line = {}
         total = 0
@@ -52,13 +52,13 @@ class AccountBankStatementImport(models.TransientModel):
                 elif line[0] == "N":  # Check number
                     vals_line["ref"] = line[1:]
                 elif line[0] == "P":  # Payee
-                    vals_line["name"] = (
+                    vals_line["payment_ref"] = (
                         "name" in vals_line
                         and line[1:] + ": " + vals_line["name"]
                         or line[1:]
                     )
                 elif line[0] == "M":  # Memo
-                    vals_line["name"] = (
+                    vals_line["payment_ref"] = (
                         "name" in vals_line
                         and vals_line["name"] + ": " + line[1:]
                         or line[1:]
@@ -80,7 +80,8 @@ class AccountBankStatementImport(models.TransientModel):
         vals_bank_statement.update(
             {"balance_end_real": total, "transactions": transactions}
         )
-        return None, None, [vals_bank_statement]
+        journal = self.env["account.journal"].browse(self.env.context.get("journal_id"))
+        return journal.currency_id.name, None, [vals_bank_statement]
 
     def _complete_stmts_vals(self, stmt_vals, journal_id, account_number):
         """Match partner_id if hasn't been deducted yet."""
@@ -88,16 +89,16 @@ class AccountBankStatementImport(models.TransientModel):
         # Since QIF doesn't provide account numbers (normal behaviour is to
         # provide 'account_number', which the generic module uses to find
         # the partner), we have to find res.partner through the name
-        if not self.attachment_ids or not self._check_qif(
-            base64.b64decode(self.attachment_ids[0].datas)
+        if not self.statement_file or not self._check_qif(
+            base64.b64decode(self.statement_file)
         ):
             return res
         partner_obj = self.env["res.partner"]
         for statement in res:
             for line_vals in statement["transactions"]:
-                if not line_vals.get("partner_id") and line_vals.get("name"):
+                if not line_vals.get("partner_id") and line_vals.get("payment_ref"):
                     partner = partner_obj.search(
-                        [("name", "ilike", line_vals["name"])],
+                        [("name", "ilike", line_vals["payment_ref"])],
                         limit=1,
                     )
                     line_vals["partner_id"] = partner.id
