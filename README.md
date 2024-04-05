@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [account_statement_import_camt](account_statement_import_camt/) | 15.0.1.0.1 |  | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 15.0.1.0.0 |  | Bank Account Camt54 Import
 [account_statement_import_file_reconciliation_widget](account_statement_import_file_reconciliation_widget/) | 15.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Import Statement Files and Go Direct to Reconciliation
+[account_statement_import_move_line](account_statement_import_move_line/) | 15.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Import journal items into bank statement
 [account_statement_import_ofx](account_statement_import_ofx/) | 15.0.1.0.0 |  | Import OFX Bank Statement
 [account_statement_import_online](account_statement_import_online/) | 15.0.3.2.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
 [account_statement_import_online_gocardless](account_statement_import_online_gocardless/) | 15.0.1.0.5 |  | Online Bank Statements: GoCardless
