@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo-addon-account_statement_import_camt54>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_camt>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_file_reconciliation_widget>=15.0dev,<15.1dev',
+        'odoo-addon-account_statement_import_move_line>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_ofx>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online>=15.0dev,<15.1dev',
         'odoo-addon-account_statement_import_online_gocardless>=15.0dev,<15.1dev',
