@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_online_qonto
+# 	* account_statement_import_online_qonto
 #
 msgid ""
 msgstr ""
@@ -13,9 +13,9 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: account_bank_statement_import_online_qonto
-#: code:addons/account_bank_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
-#: code:addons/account_bank_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
+#. module: account_statement_import_online_qonto
+#: code:addons/account_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
+#: code:addons/account_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
 #, python-format
 msgid ""
 "%s \n"
@@ -23,41 +23,41 @@ msgid ""
 " %s"
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: code:addons/account_bank_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
+#. module: account_statement_import_online_qonto
+#: code:addons/account_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
 #, python-format
 msgid "Currency %s used in transaction ID %s doesn't exist in Odoo."
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_qonto.online_bank_statement_provider_form
+#. module: account_statement_import_online_qonto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_qonto.online_bank_statement_provider_form
 msgid "Key"
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_online_qonto.online_bank_statement_provider_form
+#. module: account_statement_import_online_qonto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_qonto.online_bank_statement_provider_form
 msgid "Login"
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: model:ir.model,name:account_bank_statement_import_online_qonto.model_online_bank_statement_provider
+#. module: account_statement_import_online_qonto
+#: model:ir.model,name:account_statement_import_online_qonto.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: code:addons/account_bank_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
+#. module: account_statement_import_online_qonto
+#: code:addons/account_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
 #, python-format
 msgid "Please fill login and key"
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: code:addons/account_bank_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
+#. module: account_statement_import_online_qonto
+#: code:addons/account_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
 #, python-format
 msgid "Qonto : wrong configuration, unknow account %s"
 msgstr ""
 
-#. module: account_bank_statement_import_online_qonto
-#: code:addons/account_bank_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
+#. module: account_statement_import_online_qonto
+#: code:addons/account_statement_import_online_qonto/models/online_bank_statement_provider_qonto.py:0
 #, python-format
 msgid "Transaction ID %s has not local_currency. This should never happen."
 msgstr ""

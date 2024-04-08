@@ -54,7 +54,9 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_get_slug(self):
         self.ensure_one()
         url = QONTO_ENDPOINT + "/organizations/%7Bid%7D"
-        response = requests.get(url, verify=False, headers=self._qonto_header())
+        response = requests.get(
+            url, verify=False, headers=self._qonto_header(), timeout=10
+        )
         if response.status_code == 200:
             data = json.loads(response.text)
             res = {}
@@ -62,7 +64,10 @@ class OnlineBankStatementProviderQonto(models.Model):
                 iban = sanitize_account_number(account.get("iban", ""))
                 res[iban] = account.get("slug")
             return res
-        raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
+        raise UserError(
+            _("%(status_code)s \n\n %(response_text)s")
+            % {"status_code": response.status_code, "response_text": response.text}
+        )
 
     def _qonto_obtain_transactions(self, slug, date_since, date_until):
         self.ensure_one()
@@ -95,11 +100,18 @@ class OnlineBankStatementProviderQonto(models.Model):
 
     def _qonto_get_transactions(self, url, params):
         response = requests.get(
-            url, verify=False, params=params, headers=self._qonto_header()
+            url,
+            verify=False,
+            params=params,
+            headers=self._qonto_header(),
+            timeout=10,
         )
         if response.status_code == 200:
             return json.loads(response.text)
-        raise UserError(_("%s \n\n %s") % (response.status_code, response.text))
+        raise UserError(
+            _("%(status_code)s \n\n %(response_text)s")
+            % {"status_code": response.status_code, "response_text": response.text}
+        )
 
     def _qonto_prepare_statement_line(
         self, transaction, sequence, journal_currency, currencies_code2id
@@ -121,15 +133,21 @@ class OnlineBankStatementProviderQonto(models.Model):
         if not transaction["local_currency"]:
             raise UserError(
                 _(
-                    "Transaction ID %s has not local_currency. "
+                    "Transaction ID %(transaction_id)s has no local currency. "
                     "This should never happen."
                 )
-                % transaction["transaction_id"]
+                % {"transaction_id": transaction["transaction_id"]}
             )
         if transaction["local_currency"] not in currencies_code2id:
             raise UserError(
-                _("Currency %s used in transaction ID %s doesn't exist in Odoo.")
-                % (transaction["local_currency"], transaction["transaction_id"])
+                _(
+                    "Currency %(currency)s used in transaction ID "
+                    "%(transaction_id)s doesn't exist in Odoo."
+                )
+                % {
+                    "currency": transaction["local_currency"],
+                    "transaction_id": transaction["transaction_id"],
+                }
             )
         line_currency_id = currencies_code2id[transaction["local_currency"]]
         if journal_currency.id != line_currency_id:

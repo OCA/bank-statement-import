@@ -5,9 +5,9 @@ from datetime import datetime
 from unittest import mock
 
 from odoo import fields
-from odoo.tests import common
+from odoo.tests.common import TransactionCase
 
-_module_ns = "odoo.addons.account_bank_statement_import_online_qonto"
+_module_ns = "odoo.addons.account_statement_import_online_qonto"
 _provider_class = (
     _module_ns
     + ".models.online_bank_statement_provider_qonto"
@@ -15,43 +15,46 @@ _provider_class = (
 )
 
 
-class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+class TestAccountStatementImportOnlineQonto(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.now = fields.Datetime.now()
+        cls.currency_eur = cls.env.ref("base.EUR")
+        cls.currency_usd = cls.env.ref("base.USD")
+        cls.AccountJournal = cls.env["account.journal"]
+        cls.ResPartnerBank = cls.env["res.partner.bank"]
+        cls.OnlineBankStatementProvider = cls.env["online.bank.statement.provider"]
+        cls.AccountBankStatement = cls.env["account.bank.statement"]
+        cls.AccountBankStatementLine = cls.env["account.bank.statement.line"]
 
-        self.now = fields.Datetime.now()
-        self.currency_eur = self.env.ref("base.EUR")
-        self.currency_usd = self.env.ref("base.USD")
-        self.AccountJournal = self.env["account.journal"]
-        self.ResPartnerBank = self.env["res.partner.bank"]
-        self.OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
-        self.AccountBankStatement = self.env["account.bank.statement"]
-        self.AccountBankStatementLine = self.env["account.bank.statement.line"]
-
-        self.bank_account = self.ResPartnerBank.create(
+        cls.bank_account = cls.ResPartnerBank.create(
             {
                 "acc_number": "FR0214508000302245362775K46",
-                "partner_id": self.env.user.company_id.partner_id.id,
+                "partner_id": cls.env.user.company_id.partner_id.id,
             }
         )
-        self.journal = self.AccountJournal.create(
+        cls.journal = cls.AccountJournal.create(
             {
                 "name": "Bank",
                 "type": "bank",
                 "code": "BANK",
-                "currency_id": self.currency_eur.id,
+                "currency_id": cls.currency_eur.id,
                 "bank_statements_source": "online",
                 "online_bank_statement_provider": "qonto",
-                "bank_account_id": self.bank_account.id,
+                "bank_account_id": cls.bank_account.id,
             }
         )
-        self.provider = self.journal.online_bank_statement_provider_id
+        cls.provider = cls.journal.online_bank_statement_provider_id
 
-        self.mock_slug = lambda: mock.patch(
+    def mock_slug(self):
+        return mock.patch(
             _provider_class + "._qonto_get_slug",
             return_value={"FR0214508000302245362775K46": "qonto-1234-bank-account-1"},
         )
-        self.mock_transaction = lambda: mock.patch(
+
+    def mock_transaction(self):
+        return mock.patch(
             _provider_class + "._qonto_get_transactions",
             return_value={
                 "transactions": [
