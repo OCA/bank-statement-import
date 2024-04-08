@@ -122,7 +122,8 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
     def test_qonto(self):
         with self.mock_transaction(), self.mock_slug():
             lines, statement_values = self.provider._obtain_statement_data(
-                datetime(2020, 4, 15), datetime(2020, 4, 17),
+                datetime(2020, 4, 15),
+                datetime(2020, 4, 17),
             )
 
         self.assertEqual(len(lines), 2)

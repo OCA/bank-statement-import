@@ -26,13 +26,19 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "qonto":
-            return super()._obtain_statement_data(date_since, date_until,)
+            return super()._obtain_statement_data(
+                date_since,
+                date_until,
+            )
         return self._qonto_obtain_statement_data(date_since, date_until)
 
     def _get_statement_date(self, date_since, date_until):
         self.ensure_one()
         if self.service != "qonto":
-            return super()._get_statement_date(date_since, date_until,)
+            return super()._get_statement_date(
+                date_since,
+                date_until,
+            )
         return date_since.astimezone(pytz.timezone("Europe/Paris")).date()
 
     #########
