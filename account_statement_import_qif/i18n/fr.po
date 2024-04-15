@@ -19,29 +19,32 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:0
+#. module: account_statement_import_qif
+#. odoo-python
+#: code:addons/account_statement_import_qif/wizards/account_statement_import_qif.py:0
 #, python-format
 msgid "Could not decipher the QIF file."
 msgstr "Impossible de déchiffrer le fichier QIF."
 
-#. module: account_bank_statement_import_qif
-#: model:ir.model,name:account_bank_statement_import_qif.model_account_bank_statement_import
-msgid "Import Bank Statement"
+#. module: account_statement_import_qif
+#: model:ir.model,name:account_statement_import_qif.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
 msgstr "Importer un relevé bancaire"
 
-#. module: account_bank_statement_import_qif
-#: model:ir.model,name:account_bank_statement_import_qif.model_account_journal
+#. module: account_statement_import_qif
+#: model:ir.model,name:account_statement_import_qif.model_account_journal
 msgid "Journal"
 msgstr ""
 
-#. module: account_bank_statement_import_qif
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import_qif.account_bank_statement_import_view
+#. module: account_statement_import_qif
+#: model_terms:ir.ui.view,arch_db:account_statement_import_qif.account_statement_import_form
 msgid "Quicken Interchange Format (.qif)"
 msgstr "Format d'échange avec Quicken (.qif)"
 
-#. module: account_bank_statement_import_qif
-#: code:addons/account_bank_statement_import_qif/wizards/account_bank_statement_import_qif.py:0
+#. module: account_statement_import_qif
+#. odoo-python
+#: code:addons/account_statement_import_qif/wizards/account_statement_import_qif.py:0
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr ""
