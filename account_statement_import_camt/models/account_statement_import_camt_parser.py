@@ -9,7 +9,7 @@ from lxml import etree
 from odoo import _, models
 
 
-class CamtParser(models.AbstractModel):
+class AccountStatementImportCamtParser(models.AbstractModel):
     _name = "account.statement.import.camt.parser"
     _description = "Account Bank Statement Import CAMT parser"
 
@@ -193,9 +193,8 @@ class CamtParser(models.AbstractModel):
         )
         if party_node:
             name_node = node.xpath(
-                "./ns:RltdPties/ns:{pt}/ns:Nm | ./ns:RltdPties/ns:{pt}/ns:Pty/ns:Nm".format(
-                    pt=party_type
-                ),
+                f"./ns:RltdPties/ns:{party_type}/ns:Nm |"
+                f"./ns:RltdPties/ns:{party_type}/ns:Pty/ns:Nm",
                 namespaces={"ns": ns},
             )
             if name_node:
