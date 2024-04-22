@@ -9,7 +9,7 @@ from odoo import models
 _logger = logging.getLogger(__name__)
 
 
-class AccountBankStatementImport(models.TransientModel):
+class AccountStatementImport(models.TransientModel):
     _inherit = "account.statement.import"
 
     def _parse_file(self, data_file):
