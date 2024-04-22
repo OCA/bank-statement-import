@@ -1,5 +1,5 @@
 # Copyright 2022 ForgeFlow S.L.
-# Copyright 2023 Tecnativa - Pedro M. Baeza
+# Copyright 2023-2024 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import json
 from datetime import datetime
@@ -104,8 +104,8 @@ class OnlineBankStatementProvider(models.Model):
                 % (self.journal_id.display_name)
             )
         # Check if there's another existing provider for the same bank institution,
-        # and reuse it for this bank account, as some banks don't allow several
-        # requisitions from the same source (GoCardless).
+        # and ask for reusing it for this bank account, as some banks don't allow
+        # several requisitions from the same source (GoCardless).
         other = self.search(
             [
                 ("service", "=", "gocardless"),
@@ -116,19 +116,24 @@ class OnlineBankStatementProvider(models.Model):
             limit=1,
         )
         if other:
-            self.write(
+            wizard = self.env["online.bank.statement.provider.existing"].create(
                 {
-                    "gocardless_requisition_ref": other.gocardless_requisition_ref,
-                    "gocardless_requisition_id": other.gocardless_requisition_id,
-                    "gocardless_requisition_expiration": (
-                        other.gocardless_requisition_expiration
-                    ),
-                    "gocardless_institution_id": other.gocardless_institution_id,
+                    "provider_id": self.id,
+                    "other_provider_id": other.id,
                 }
             )
-            if self._gocardless_finish_requisition(dry=True):
-                return
-        # Ask for the institution and continue normal process otherwise
+            return {
+                "type": "ir.actions.act_window",
+                "res_model": wizard._name,
+                "res_id": wizard.id,
+                "name": _("Existing link"),
+                "view_mode": "form",
+                "target": "new",
+            }
+        return self._gocardless_select_bank_instituion()
+
+    def _gocardless_select_bank_instituion(self):
+        """Ask for the GoCardless bank instituion and continue full linkage."""
         country = (
             self.journal_id.bank_account_id.company_id or self.journal_id.company_id
         ).country_id
