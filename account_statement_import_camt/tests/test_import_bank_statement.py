@@ -9,8 +9,8 @@ import tempfile
 from datetime import date
 from pathlib import Path
 
-from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_path
 
 
 class TestParserCommon(TransactionCase):
@@ -45,15 +45,16 @@ class TestParserCommon(TransactionCase):
 
         :param inputfile_path: path for file to import and test
         :type inputfile_path: Path
-        :param goldenfile_path: path for file to use for comparison (the expected values)
+        :param goldenfile_path: path for file to use for comparison
+                                (the expected values)
         :type goldenfile_path: Path
         """
 
         # Read the input file, store the actual imported values
-        with open(get_module_resource(*inputfile_path.parts), "rb") as inputf:
+        with open(file_path(inputfile_path), "rb") as inputf:
             res = self.parser.parse(inputf.read())
         # Read the output file, store the expected imported values
-        with open(get_module_resource(*goldenfile_path.parts)) as goldf:
+        with open(file_path(goldenfile_path)) as goldf:
             gold_name, gold_lines = goldf.name, goldf.readlines()
         # Save the imported values in a tmp file to compare them w/ the expected values
         with tempfile.NamedTemporaryFile(mode="w+", suffix=".pydata") as tempf:
@@ -158,9 +159,7 @@ class TestImport(TransactionCase):
 
     def test_statement_import(self):
         """Test correct creation of single statement."""
-        testfile = get_module_resource(
-            "account_statement_import_camt", "test_files", "test-camt053"
-        )
+        testfile = file_path("account_statement_import_camt/test_files/test-camt053")
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
 
@@ -190,8 +189,8 @@ class TestImport(TransactionCase):
 
     def test_zip_import(self):
         """Test import of multiple statements from zip file."""
-        testfile = get_module_resource(
-            "account_statement_import_camt", "test_files", "test-camt053.zip"
+        testfile = file_path(
+            "account_statement_import_camt/test_files/test-camt053.zip"
         )
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
