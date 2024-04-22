@@ -39,7 +39,7 @@ class CamtParser(models.AbstractModel):
         If xpath_str is a list (or iterable), it will be seen as a series
         of search path's in order of preference. The first item that results
         in a found node will be used to set a value."""
-        if not isinstance(xpath_str, (list, tuple)):
+        if not isinstance(xpath_str, list | tuple):
             xpath_str = [xpath_str]
         for search_str in xpath_str:
             found_node = node.xpath(search_str, namespaces={"ns": ns})
@@ -246,20 +246,23 @@ class CamtParser(models.AbstractModel):
     def generate_narration(self, transaction):
         # this block ensure compatibility with v13
         transaction["narration"] = {
-            "%s (RltdPties/Nm)"
-            % _("Partner Name"): transaction.get("partner_name", ""),
-            "%s (RltdPties/Acct)"
-            % _("Partner Account Number"): transaction.get("account_number", ""),
-            "%s (BookgDt)" % _("Transaction Date"): transaction.get("date", ""),
+            "{} (RltdPties/Nm)".format(_("Partner Name")): transaction.get(
+                "partner_name", ""
+            ),
+            "{} (RltdPties/Acct)".format(_("Partner Account Number")): transaction.get(
+                "account_number", ""
+            ),
+            "{} (BookgDt)".format(_("Transaction Date")): transaction.get("date", ""),
             _("Reference"): transaction.get("ref", ""),
             _("Communication"): transaction.get("name", ""),
-            "%s (BkTxCd)"
-            % _("Transaction Type"): transaction.get("transaction_type", ""),
+            "{} (BkTxCd)".format(_("Transaction Type")): transaction.get(
+                "transaction_type", ""
+            ),
             **transaction["narration"],
         }
 
         transaction["narration"] = "\n".join(
-            ["%s: %s" % (key, val) for key, val in transaction["narration"].items()]
+            [f"{key}: {val}" for key, val in transaction["narration"].items()]
         )
 
     def parse_entry(self, ns, node):

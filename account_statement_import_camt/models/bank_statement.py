@@ -4,7 +4,6 @@ from odoo import models
 
 
 class AccountBankStatement(models.Model):
-
     _inherit = "account.bank.statement"
 
     def reconciliation_widget_preprocess(self):
