@@ -1,5 +1,5 @@
 # Copyright 2022 ForgeFlow S.L.
-# Copyright 2023 Tecnativa - Pedro M. Baeza
+# Copyright 2023-2024 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Online Bank Statements: GoCardless",
@@ -12,7 +12,11 @@
     "depends": [
         "account_statement_import_online",
     ],
-    "data": ["view/online_bank_statement_provider.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "view/online_bank_statement_provider.xml",
+        "wizards/online_bank_statement_provider_existing_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "account_statement_import_online_gocardless/static/src/"
