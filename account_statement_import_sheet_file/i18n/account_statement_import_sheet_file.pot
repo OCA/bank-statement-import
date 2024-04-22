@@ -559,6 +559,11 @@ msgid "none"
 msgstr ""
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__float_thousands_sep__quote
+msgid "quote (')"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__semicolon
 msgid "semicolon (;)"
 msgstr ""
