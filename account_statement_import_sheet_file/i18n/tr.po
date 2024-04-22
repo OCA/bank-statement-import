@@ -26,8 +26,10 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> Add the column names or column number (when the file has no header).\n"
-"                                You can concatenate multiple columns in the file into the same field, indicating the\n"
+"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+"(when the file has no header).\n"
+"                                You can concatenate multiple columns in the "
+"file into the same field, indicating the\n"
 "                                column names or numbers separated by comma."
 msgstr ""
 "<span class=\"fa fa-info-circle\"/> Sütun adı ya da no ekleyin (aktarım "
@@ -268,8 +270,8 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_currency_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original currency of transaction from"
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "Otomatik para birimi dönüştürmeli işlemler için orijinal para birimini "
 "sağlanması durumunda, işlemin orijinal para biriminin alınacağı sütun"
@@ -277,8 +279,8 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_amount_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original transaction amount in original "
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
 "transaction currency from"
 msgstr ""
 "Otomatik para birimi dönüştürmeli işlemler için orijinal para birimini "
@@ -288,9 +290,9 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_inverse_sign
 msgid ""
-"In some cases such as in credit card statements the amounts are expressed in"
-" the inverse sign. By setting this flag during the upload the amounts will "
-"be inverted in sign."
+"In some cases such as in credit card statements the amounts are expressed in "
+"the inverse sign. By setting this flag during the upload the amounts will be "
+"inverted in sign."
 msgstr ""
 "Kredi kartı ekstrelerinde olduğu gibi bazı durumlarda tutarlar ters işaretle "
 "ifade edilir. Yükleme sırasında bu işaretin ayarlanmasıyla miktarlar ters "
@@ -513,8 +515,8 @@ msgstr "Tutar türü 'Single value' olarak işaretliyse amount_column u kullan"
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 #, python-format
 msgid ""
-"Use amount_debit_column and amount_credit_column if you have set Amount type"
-" = 'Distinct Credit/debit Column'"
+"Use amount_debit_column and amount_credit_column if you have set Amount type "
+"= 'Distinct Credit/debit Column'"
 msgstr ""
 "Tutar türü= 'Alacak/Borç Farkı Sütunu' ise amount_credit_column ve "
 "amount_debit_column kullan"
@@ -596,6 +598,11 @@ msgstr "Nokta (.)"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__float_thousands_sep__none
 msgid "none"
 msgstr "Hiçbiri"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__float_thousands_sep__quote
+msgid "quote (')"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__semicolon
