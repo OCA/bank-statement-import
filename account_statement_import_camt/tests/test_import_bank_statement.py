@@ -53,7 +53,7 @@ class TestParserCommon(TransactionCase):
         with open(get_module_resource(*inputfile_path.parts), "rb") as inputf:
             res = self.parser.parse(inputf.read())
         # Read the output file, store the expected imported values
-        with open(get_module_resource(*goldenfile_path.parts), "r") as goldf:
+        with open(get_module_resource(*goldenfile_path.parts)) as goldf:
             gold_name, gold_lines = goldf.name, goldf.readlines()
         # Save the imported values in a tmp file to compare them w/ the expected values
         with tempfile.NamedTemporaryFile(mode="w+", suffix=".pydata") as tempf:
