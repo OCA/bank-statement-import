@@ -39,6 +39,7 @@
                     <button
                         name="action_select_gocardless_bank"
                         string="Select Bank Account Identifier"
+                        attrs="{'invisible': ['|', ('username', '=', False), ('password', '=', False)]}"
                         type="object"
                     />
                 </group>
