@@ -13,7 +13,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
-GOCARDLESS_ENDPOINT = "https://bankaccountdata.gocardless.com/api/v2"
+GOCARDLESS_API = "https://bankaccountdata.gocardless.com/api/v2"
 REQUESTS_TIMEOUT = 60
 
 
@@ -46,6 +46,31 @@ class OnlineBankStatementProvider(models.Model):
             ("gocardless", "GoCardless"),
         ]
 
+    def _gocardless_get_headers(self, basic=False):
+        """Generic method for providing the needed request headers."""
+        self.ensure_one()
+        headers = {
+            "accept": "application/json",
+            "Content-Type": "application/json",
+        }
+        if not basic:
+            headers["Authorization"] = f"Bearer {self._gocardless_get_token()}"
+        return headers
+
+    def _gocardless_request(self, endpoint, request_type="get", params=None, data=None):
+        content = {}
+        url = url_join(GOCARDLESS_API, endpoint)
+        response = getattr(requests, request_type)(
+            url,
+            data=data,
+            params=params,
+            headers=self._gocardless_get_headers(),
+            timeout=REQUESTS_TIMEOUT,
+        )
+        if response.status_code in [200, 201]:
+            content = json.loads(response.text)
+        return response, content
+
     def _gocardless_get_token(self):
         """Resolve and return the corresponding GoCardless token for doing the requests.
         If there's still no token, it's requested. If it exists, but it's expired and
@@ -59,20 +84,16 @@ class OnlineBankStatementProvider(models.Model):
                 self.gocardless_refresh_token
                 and now > self.gocardless_refresh_expiration
             ):
-                url = f"{GOCARDLESS_ENDPOINT}/token/refresh/"
+                endpoint = "token/refresh"
             else:
-                url = f"{GOCARDLESS_ENDPOINT}/token/new/"
-            response = requests.post(
-                url,
+                endpoint = "token/new"
+            _response, data = self._gocardless_request(
+                endpoint,
+                request_type="post",
                 data=json.dumps(
                     {"secret_id": self.username, "secret_key": self.password}
                 ),
-                headers=self._gocardless_get_headers(basic=True),
-                timeout=REQUESTS_TIMEOUT,
             )
-            data = {}
-            if response.status_code == 200:
-                data = json.loads(response.text)
             expiration_date = now + relativedelta(seconds=data.get("access_expires", 0))
             vals = {
                 "gocardless_token": data.get("access", False),
@@ -85,17 +106,6 @@ class OnlineBankStatementProvider(models.Model):
                 )
             self.sudo().write(vals)
         return self.gocardless_token
-
-    def _gocardless_get_headers(self, basic=False):
-        """Generic method for providing the needed request headers."""
-        self.ensure_one()
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-        }
-        if not basic:
-            headers["Authorization"] = f"Bearer {self._gocardless_get_token()}"
-        return headers
 
     def action_select_gocardless_bank(self):
         if not self.journal_id.bank_account_id:
@@ -137,15 +147,12 @@ class OnlineBankStatementProvider(models.Model):
         country = (
             self.journal_id.bank_account_id.company_id or self.journal_id.company_id
         ).country_id
-        response = requests.get(
-            f"{GOCARDLESS_ENDPOINT}/institutions/",
-            params={"country": country.code},
-            headers=self._gocardless_get_headers(),
-            timeout=REQUESTS_TIMEOUT,
+        response, data = self._gocardless_request(
+            "institutions", params={"country": country.code}
         )
         if response.status_code == 400:
             raise UserError(_("Incorrect country code or country not supported."))
-        institutions = json.loads(response.text)
+        institutions = data
         # Prepare data for being showed in the JS widget
         ctx = self.env.context.copy()
         ctx.update(
@@ -172,8 +179,9 @@ class OnlineBankStatementProvider(models.Model):
         self.gocardless_requisition_ref = str(uuid4())
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
         redirect_url = url_join(base_url, "gocardless/response")
-        response = requests.post(
-            f"{GOCARDLESS_ENDPOINT}/requisitions/",
+        _response, data = self._gocardless_request(
+            "requisitions",
+            request_type="post",
             data=json.dumps(
                 {
                     "redirect": redirect_url,
@@ -181,14 +189,26 @@ class OnlineBankStatementProvider(models.Model):
                     "reference": self.gocardless_requisition_ref,
                 }
             ),
-            headers=self._gocardless_get_headers(),
-            timeout=REQUESTS_TIMEOUT,
         )
-        if response.status_code == 201:
-            requisition_data = json.loads(response.text)
+        if data:
+            requisition_data = data
             self.gocardless_requisition_id = requisition_data["id"]
             # JS code expects here to return a plain link or nothing
             return requisition_data["link"]
+
+    def _gocardless_request_requisition(self):
+        _response, data = self._gocardless_request(
+            f"requisitions/{self.gocardless_requisition_id}"
+        )
+        return data
+
+    def _gocardless_request_account(self, account_id):
+        _response, data = self._gocardless_request(f"accounts/{account_id}")
+        return data
+
+    def _gocardless_request_agreement(self, agreement_id):
+        _response, data = self._gocardless_request(f"agreements/enduser/{agreement_id}")
+        return data
 
     def _gocardless_finish_requisition(self, dry=False):
         """Once the requisiton to the bank institution has been made, and this is called
@@ -203,39 +223,25 @@ class OnlineBankStatementProvider(models.Model):
           process, so no fail message is logged in chatter in this case.
         """
         self.ensure_one()
-        requisition_response = requests.get(
-            f"{GOCARDLESS_ENDPOINT}/requisitions/{self.gocardless_requisition_id}/",
-            headers=self._gocardless_get_headers(),
-            timeout=REQUESTS_TIMEOUT,
-        )
-        requisition_data = json.loads(requisition_response.text)
+        requisition_data = self._gocardless_request_requisition()
         accounts = requisition_data.get("accounts", [])
         found_account = False
         accounts_iban = []
         for account_id in accounts:
-            account_response = requests.get(
-                f"{GOCARDLESS_ENDPOINT}/accounts/{account_id}/",
-                headers=self._gocardless_get_headers(),
-                timeout=REQUESTS_TIMEOUT,
-            )
-            if account_response.status_code == 200:
-                account_data = json.loads(account_response.text)
+            account_data = self._gocardless_request_account(account_id)
+            if account_data:
                 accounts_iban.append(account_data["iban"])
                 if (
                     self.journal_id.bank_account_id.sanitized_acc_number
-                    == account_data["iban"]
+                    == account_data["iban"].upper()
                 ):
                     found_account = True
                     self.gocardless_account_id = account_data["id"]
                     break
         if found_account:
-            agreement_response = requests.get(
-                f"{GOCARDLESS_ENDPOINT}/agreements/enduser/"
-                f"{requisition_data['agreement']}/",
-                headers=self._gocardless_get_headers(),
-                timeout=REQUESTS_TIMEOUT,
+            agreement_data = self._gocardless_request_agreement(
+                requisition_data["agreement"]
             )
-            agreement_data = json.loads(agreement_response.text)
             self.gocardless_requisition_expiration = datetime.strptime(
                 agreement_data["accepted"], "%Y-%m-%dT%H:%M:%S.%fZ"
             ) + relativedelta(days=agreement_data["access_valid_for_days"])
@@ -279,19 +285,14 @@ class OnlineBankStatementProvider(models.Model):
         now = fields.Datetime.now()
         if now > date_since and now < date_until:
             date_until = now
-        transaction_response = requests.get(
-            f"{GOCARDLESS_ENDPOINT}/accounts/"
-            f"{self.gocardless_account_id}/transactions/",
+        _response, data = self._gocardless_request(
+            f"accounts/{self.gocardless_account_id}/transactions",
             params={
                 "date_from": date_since.strftime(DF),
                 "date_to": date_until.strftime(DF),
             },
-            headers=self._gocardless_get_headers(),
-            timeout=REQUESTS_TIMEOUT,
         )
-        if transaction_response.status_code == 200:
-            return json.loads(transaction_response.text)
-        return {}
+        return data
 
     def _gocardless_obtain_statement_data(self, date_since, date_until):
         """Called from the cron or the manual pull wizard to obtain transactions for
