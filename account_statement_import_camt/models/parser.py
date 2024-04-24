@@ -3,6 +3,7 @@
 # Copyright 2017 Open Net Sàrl
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import re
+from collections import defaultdict
 
 from lxml import etree
 
@@ -444,7 +445,7 @@ class CamtParser(models.AbstractModel):
             raise ValueError("Not a valid xml file, or not an xml file at all.")
         ns = root.tag[1 : root.tag.index("}")]
         self.check_version(ns, root)
-        statements = []
+        statements = defaultdict(list)
         currency = None
         account_number = None
         for node in root[0][1:]:
@@ -454,5 +455,8 @@ class CamtParser(models.AbstractModel):
                     currency = statement.pop("currency")
                 if "account_number" in statement:
                     account_number = statement.pop("account_number")
-                statements.append(statement)
-        return currency, account_number, statements
+                statements[(currency, account_number)].append(statement)
+        return [
+            (currency, account_number, statement_list)
+            for (currency, account_number), statement_list in statements.items()
+        ]
