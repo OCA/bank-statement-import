@@ -28,6 +28,7 @@ msgstr ""
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
+#: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Entry Information"
 msgstr ""
