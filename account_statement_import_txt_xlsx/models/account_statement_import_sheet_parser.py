@@ -365,7 +365,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 debit_amount = self._parse_decimal(debit_column, mapping)
                 debit_amount = debit_amount.copy_abs()
                 credit_amount = self._parse_decimal(credit_column, mapping)
-                amount = credit_amount - debit_amount
+                credit_amount = credit_amount.copy_abs() 
+                amount = - (credit_amount - debit_amount)
 
             if original_amount:
                 original_amount = self._parse_decimal(
