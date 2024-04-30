@@ -170,9 +170,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
         header = False
         if not mapping.no_header:
             if isinstance(csv_or_xlsx, tuple):
-                header = [str(value) for value in csv_or_xlsx[1].row_values(0)]
+                header = [
+                    str(value)
+                    for value in csv_or_xlsx[1].row_values(mapping.offset_row)
+                ]
             else:
                 header = [value.strip() for value in next(csv_or_xlsx)]
+        if mapping.offset_column:
+            header = header[mapping.offset_column :]
         for column_name in self._get_column_names():
             columns[column_name] = self._get_column_indexes(
                 header, column_name, mapping
@@ -321,7 +326,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _parse_rows(self, mapping, currency_code, csv_or_xlsx, columns):  # noqa: C901
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(1, csv_or_xlsx[1].nrows)
+            rows = range(mapping.offset_row + 1, csv_or_xlsx[1].nrows)
         else:
             rows = csv_or_xlsx
 
@@ -331,7 +336,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
                 values = []
-                for col_index in range(sheet.row_len(row)):
+                for col_index in range(mapping.offset_column, sheet.row_len(row)):
                     cell_type = sheet.cell_type(row, col_index)
                     cell_value = sheet.cell_value(row, col_index)
                     if cell_type == xlrd.XL_CELL_DATE:
@@ -339,6 +344,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     values.append(cell_value)
             else:
                 values = list(row)
+            if mapping.skip_empty_lines and not any(values):
+                continue
             line = self._parse_row(mapping, currency_code, values, columns)
             if line:
                 lines.append(line)

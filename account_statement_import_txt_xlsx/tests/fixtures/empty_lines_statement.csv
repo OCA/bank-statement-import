@@ -1,0 +1,5 @@
+"Date","Label","Currency","Amount","Amount Currency","Partner Name","Bank Account"
+"02/25/2018","AAAOOO 1","EUR","-33.50","0.0","John Doe","123456789"
+"02/26/2018","AAAOOO 2","EUR","1,525.00","1,000.00","Azure Interior",""
+,,,,,,
+"02/27/2018","AAAOOO 3","EUR","800.00","800.00","Azure Interior","123456789"
