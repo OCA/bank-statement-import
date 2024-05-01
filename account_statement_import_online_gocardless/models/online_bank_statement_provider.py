@@ -332,7 +332,7 @@ class OnlineBankStatementProvider(models.Model):
         currencies_cache = {}
         for tr in transactions.get("transactions", {}).get("booked", []):
             # Reference: https://developer.gocardless.com/bank-account-data/transactions
-            string_date = tr.get("bookingDate") or tr.get("valueDate")
+            string_date = tr.get("valueDate") or tr.get("bookingDate")
             # CHECK ME: if there's not date string, is transaction still valid?
             if not string_date:
                 continue
