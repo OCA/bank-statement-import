@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2023-12-24 19:43+0000\n"
+"PO-Revision-Date: 2024-05-03 16:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "Language: it\n"
@@ -52,7 +52,7 @@ msgstr "1 operazione è stata ignorata perché già importata."
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "<span>Import (OCA)</span>"
-msgstr ""
+msgstr "<span>Importa (OCA)</span>"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
@@ -69,6 +69,9 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Impossibile trovare conti bancari con numero '%(account_number)s' collegati "
+"al partner '%(partner_name)s'. Creare il conto e impostarlo nel relativo "
+"registro banca. Se il registro ancora non esiste crearne uno nuovo."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -88,7 +91,7 @@ msgstr "Nome visualizzato"
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Download bank statement files from your bank and upload them here."
-msgstr ""
+msgstr "Scaricare il file l'estratto conto dalla propria banca e caricarlo qui."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -120,12 +123,12 @@ msgstr "Importa estratto conto"
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
-msgstr ""
+msgstr "Imposta estratto conto (OCA)"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "Importa e visualizza"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_journal
@@ -179,9 +182,9 @@ msgstr "Formati supportati:"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
-msgstr "Conto banca non impostato nel registro \"%s\"."
+msgstr "Il conto banca della contabilità non è impostato nel registro \"%s\"."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -192,6 +195,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Il conto bancario con numero '%(account_number)s' esiste in Odoo ma non è "
+"impostato in alcun registro banca. Assegnarlo nel relativo registro banca. "
+"Se tale registro ancora non esiste, crearne uno nuovo."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -212,6 +218,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"La valuta dell'estratto conto (%(currency_name)s) non è la stessa valuta del "
+"registro '%(journal_name)s' (%(journal_currency_name)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -234,6 +242,8 @@ msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
 msgstr ""
+"Il registro trovato per il file (%(journal_match)s) è diverso dal registro "
+"selezionato (%(journal_selected)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -257,7 +267,7 @@ msgstr ""
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Upload Bank Statements"
-msgstr ""
+msgstr "Carica estratto conto"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
