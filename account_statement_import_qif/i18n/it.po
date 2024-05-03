@@ -6,30 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-05-03 16:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_qif
 #. odoo-python
 #: code:addons/account_statement_import_qif/wizards/account_statement_import_qif.py:0
 #, python-format
 msgid "Could not decipher the QIF file."
-msgstr ""
+msgstr "Impossibile decifrare il file QIF."
 
 #. module: account_statement_import_qif
 #: model:ir.model,name:account_statement_import_qif.model_account_statement_import
 msgid "Import Bank Statement Files"
-msgstr ""
+msgstr "Importazione file estratto conto bancario"
 
 #. module: account_statement_import_qif
 #: model:ir.model,name:account_statement_import_qif.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Registro"
 
 #. module: account_statement_import_qif
 #: model_terms:ir.ui.view,arch_db:account_statement_import_qif.account_statement_import_form
@@ -42,3 +44,4 @@ msgstr ""
 #, python-format
 msgid "This file is either not a bank statement or is not correctly formed."
 msgstr ""
+"Questo file non è un estratto conto bancario o non è nel formato corretto."
