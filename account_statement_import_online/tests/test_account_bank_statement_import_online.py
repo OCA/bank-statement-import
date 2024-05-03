@@ -56,14 +56,17 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             journal.online_bank_statement_provider_id.unlink()
 
     def test_cascade_unlink(self):
+        # Put high sequence for being the last one avoiding side effects
         journal = self.AccountJournal.create(
-            {"name": "Bank", "type": "bank", "code": "BANK"}
+            {"name": "Bank", "type": "bank", "code": "BANK", "sequence": 99999}
         )
         with common.Form(journal) as journal_form:
             journal_form.bank_statements_source = "online"
             journal_form.online_bank_statement_provider = "dummy"
         journal_form.save()
-
+        # Avoid problems with acquirers linked to this journal
+        journal.inbound_payment_method_line_ids.unlink()
+        journal.outbound_payment_method_line_ids.unlink()
         self.assertTrue(journal.online_bank_statement_provider_id)
         save_provider_id = journal.online_bank_statement_provider_id.id
         journal.unlink()
