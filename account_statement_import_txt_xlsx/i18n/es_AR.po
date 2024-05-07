@@ -51,6 +51,11 @@ msgid "Allow Back"
 msgstr "Permitir Volver"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__skip_empty_lines
+msgid "Allows to skip empty lines"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__amount_column
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__amount_column
 msgid "Amount column"
@@ -257,6 +262,11 @@ msgid "Header"
 msgstr "Cabecera"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__offset_column
+msgid "Horizontal spaces to ignore before starting to parse"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__id
@@ -383,6 +393,22 @@ msgid "Notes column"
 msgstr "Columna de notas"
 
 #. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__offset_column
+msgid "Offset Column"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__offset_row
+msgid "Offset Row"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
+#: code:addons/account_statement_import_txt_xlsx/models/account_statement_import_sheet_mapping.py:0
+#, python-format
+msgid "Offsets cannot be negative"
+msgstr ""
+
+#. module: account_statement_import_txt_xlsx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_txt_xlsx.account_statement_import_sheet_mapping_wizard_form
 msgid "Options"
 msgstr "Opciones"
@@ -432,6 +458,11 @@ msgstr "Seleccione un archivo de estado para importar mapeo"
 #: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import__sheet_mapping_id
 msgid "Sheet mapping"
 msgstr "Hoja de mapeo"
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,field_description:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__skip_empty_lines
+msgid "Skip Empty Lines"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__debit_credit_column
@@ -550,6 +581,11 @@ msgstr "Valor de la columna de débito/crédito que indica si es un crédito"
 #: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping_wizard__debit_value
 msgid "Value of debit/credit column that indicates if it's a debit"
 msgstr "Valor de la columna de débito/crédito que indica si es un débito"
+
+#. module: account_statement_import_txt_xlsx
+#: model:ir.model.fields,help:account_statement_import_txt_xlsx.field_account_statement_import_sheet_mapping__offset_row
+msgid "Vertical spaces to ignore before starting to parse"
+msgstr ""
 
 #. module: account_statement_import_txt_xlsx
 #: model:ir.model.fields.selection,name:account_statement_import_txt_xlsx.selection__account_statement_import_sheet_mapping__file_encoding__iso-8859-1
