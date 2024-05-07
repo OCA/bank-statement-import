@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [account_statement_import_online_wise](account_statement_import_online_wise/) | 14.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for Wise.com (TransferWise.com)
 [account_statement_import_paypal](account_statement_import_paypal/) | 14.0.1.0.1 |  | Import PayPal CSV files as Bank Statements in Odoo
 [account_statement_import_sftp](account_statement_import_sftp/) | 14.0.1.0.0 | [![OCA](https://github.com/OCA.png?size=30px)](https://github.com/OCA) | Import bank statement from an SFTP server
-[account_statement_import_txt_xlsx](account_statement_import_txt_xlsx/) | 14.0.3.1.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Import TXT/CSV or XLSX files as Bank Statements in Odoo
+[account_statement_import_txt_xlsx](account_statement_import_txt_xlsx/) | 14.0.3.2.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Import TXT/CSV or XLSX files as Bank Statements in Odoo
 
 [//]: # (end addons)
 
