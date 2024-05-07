@@ -50,6 +50,15 @@
                                     class="fa fa-info-circle"
                                 /> indicate the column number in the Columns section. The first column is 0.
                             </div>
+                            <field name="skip_empty_lines" />
+                            <field
+                                name="offset_column"
+                                attrs="{'invisible': [('no_header', '=', True)]}"
+                            />
+                            <field
+                                name="offset_row"
+                                attrs="{'invisible': [('no_header', '=', True)]}"
+                            />
                         </group>
                         <group
                             attrs="{'invisible': [('debit_credit_column', '=', False)]}"
