@@ -13,3 +13,5 @@
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
+
+* Sebastiano Picchi <sebastiano.picchi@pytech.it>

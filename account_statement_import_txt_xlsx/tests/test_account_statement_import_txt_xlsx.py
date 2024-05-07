@@ -1,7 +1,7 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
+import decimal
 from base64 import b64encode
 from os import path
 
@@ -448,3 +448,96 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
         self.assertEqual(statement.balance_start, 10.0)
         self.assertEqual(statement.balance_end_real, 1510.0)
         self.assertEqual(statement.balance_end, 1510.0)
+
+    def test_offsets(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        file_name = "fixtures/sample_statement_offsets.xlsx"
+        data = self._data_file(file_name)
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        with self.assertRaises(ValueError):
+            wizard.with_context(
+                account_statement_import_txt_xlsx_test=True
+            ).import_file_button()
+        statement_map_offsets = self.sample_statement_map.copy(
+            {
+                "offset_column": 1,
+                "offset_row": 2,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": statement_map_offsets.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        # import wdb; wdb.set_trace()
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+        self.assertEqual(statement.balance_start, 0.0)
+        self.assertEqual(statement.balance_end_real, 1491.5)
+        self.assertEqual(statement.balance_end, 1491.5)
+
+    def test_skip_empty_lines(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        file_name = "fixtures/empty_lines_statement.csv"
+        data = self._data_file(file_name, "utf-8")
+
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        with self.assertRaises(decimal.InvalidOperation):
+            wizard.with_context(
+                account_statement_import_txt_xlsx_test=True
+            ).import_file_button()
+        statement_map_empty_line = self.sample_statement_map.copy(
+            {
+                "skip_empty_lines": True,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": statement_map_empty_line.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_txt_xlsx_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 3)
+        self.assertEqual(statement.balance_start, 0.0)
+        self.assertEqual(statement.balance_end_real, 2291.5)
+        self.assertEqual(statement.balance_end, 2291.5)

@@ -2,7 +2,8 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AccountStatementImportSheetMapping(models.Model):
@@ -60,6 +61,21 @@ class AccountStatementImportSheetMapping(models.Model):
         "File does not contain header line",
         help="When this occurs please indicate the column number in the Columns section "
         "instead of the column name, considering that the first column is 0",
+    )
+    skip_empty_lines = fields.Boolean(
+        "Skip Empty Lines",
+        default=False,
+        help="Allows to skip empty lines",
+    )
+    offset_column = fields.Integer(
+        "Offset Column",
+        default=0,
+        help="Horizontal spaces to ignore before starting to parse",
+    )
+    offset_row = fields.Integer(
+        "Offset Row",
+        default=0,
+        help="Vertical spaces to ignore before starting to parse",
     )
     timestamp_column = fields.Char(string="Timestamp column", required=True)
     currency_column = fields.Char(
@@ -168,6 +184,12 @@ class AccountStatementImportSheetMapping(models.Model):
             self.float_thousands_sep = "comma"
         elif "comma" == self.float_thousands_sep == self.float_decimal_sep:
             self.float_thousands_sep = "dot"
+
+    @api.constrains("offset_column", "offset_row")
+    def _check_columns(self):
+        for mapping in self:
+            if mapping.offset_column < 0 or mapping.offset_row < 0:
+                raise ValidationError(_("Offsets cannot be negative"))
 
     def _get_float_separators(self):
         self.ensure_one()
