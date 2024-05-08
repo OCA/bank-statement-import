@@ -4,7 +4,7 @@
   Copyright 2022 Moduon Team <edu@moduon.team>
   Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 -->
-<odoo>
+<odoo noupdate="1">
 
         <record id="ofx_partner_bank_1" model="res.partner.bank">
             <field name="acc_number">BE02631118262640</field>
