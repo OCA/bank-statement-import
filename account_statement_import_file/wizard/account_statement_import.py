@@ -230,13 +230,13 @@ class AccountStatementImport(models.TransientModel):
                 ctx_journal = journal_obj.browse(ctx_journal_id)
                 raise UserError(
                     _(
-                        "The journal found for the file (%(journal_match)s) is "
-                        "different from the selected journal (%(journal_selected)s).",
+                        "The journal found for the file (%(journal_match)s) is"
+                        " different from the selected journal "
+                        "(%(journal_selected)s).",
                         journal_match=journal.display_name,
                         journal_selected=ctx_journal.display_name,
                     )
                 )
-
             if not journal:
                 bank_accounts = self.env["res.partner.bank"].search(
                     [
@@ -248,22 +248,23 @@ class AccountStatementImport(models.TransientModel):
                 if bank_accounts:
                     raise UserError(
                         _(
-                            "The bank account with number '%(account_number)s' exists in Odoo "
-                            "but it is not set on any bank journal. You should "
-                            "set it on the related bank journal. If the related "
-                            "bank journal doesn't exist yet, you should create "
-                            "a new one.",
+                            "The bank account with number '%(account_number)s'"
+                            " exists in Odoo but it is not set on any bank "
+                            "journal. You should set it on the related bank "
+                            "journal. If the related bank journal doesn't "
+                            " exist yet, you should create a new one.",
                             account_number=account_number,
                         )
                     )
                 else:
                     raise UserError(
                         _(
-                            "Could not find any bank account with number '%(account_number)s' "
-                            "linked to partner '%(partner_name)s'. You should create the bank "
+                            "Could not find any bank account with number "
+                            "'%(account_number)s'  linked to partner '"
+                            "%(partner_name)s'. You should create the bank "
                             "account and set it on the related bank journal. "
-                            "If the related bank journal doesn't exist yet, you "
-                            "should create a new one.",
+                            "If the related bank journal doesn't exist yet, "
+                            "you should create a new one.",
                             account_number=account_number,
                             partner_name=company.partner_id.display_name,
                         )
