@@ -4,6 +4,7 @@
 
 import itertools
 import logging
+import re
 from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
@@ -472,9 +473,16 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if isinstance(value, Decimal):
             return value
         elif isinstance(value, float):
-            return Decimal(value)
-        value = value or "0"
+            return Decimal(str(value))
         thousands, decimal = mapping._get_float_separators()
+        # Remove all characters except digits, thousands separator,
+        # decimal separator, and signs
+        value = (
+            re.sub(
+                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+", "", value
+            )
+            or "0"
+        )
         value = value.replace(thousands, "")
         value = value.replace(decimal, ".")
         return Decimal(value)
