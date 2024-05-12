@@ -600,55 +600,55 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         test_cases = [
             (
                 "1,234.56",
-                Decimal("1234.56"),
+                1234.56,
                 self.mock_mapping_comma_dot,
             ),  # standard case with thousands separator
             (
                 "1,234,567.89",
-                Decimal("1234567.89"),
+                1234567.89,
                 self.mock_mapping_comma_dot,
             ),  # multiple thousands separators
             (
                 "-1,234.56",
-                Decimal("-1234.56"),
+                -1234.56,
                 self.mock_mapping_comma_dot,
             ),  # negative value
             (
                 "$1,234.56",
-                Decimal("1234.56"),
+                1234.56,
                 self.mock_mapping_comma_dot,
             ),  # prefixed with currency symbol
             (
                 "1,234.56 USD",
-                Decimal("1234.56"),
+                1234.56,
                 self.mock_mapping_comma_dot,
             ),  # suffixed with currency code
             (
                 "   1,234.56   ",
-                Decimal("1234.56"),
+                1234.56,
                 self.mock_mapping_comma_dot,
             ),  # leading and trailing spaces
             (
                 "not a number",
-                Decimal("0"),
+                0,
                 self.mock_mapping_comma_dot,
             ),  # non-numeric input
-            (" ", Decimal("0"), self.mock_mapping_comma_dot),  # empty string
-            ("", Decimal("0"), self.mock_mapping_comma_dot),  # empty space
-            ("USD", Decimal("0"), self.mock_mapping_comma_dot),  # empty dolar
+            (" ", 0, self.mock_mapping_comma_dot),  # empty string
+            ("", 0, self.mock_mapping_comma_dot),  # empty space
+            ("USD", 0, self.mock_mapping_comma_dot),  # empty dolar
             (
                 "12,34.56",
-                Decimal("1234.56"),
+                1234.56,
                 self.mock_mapping_comma_dot,
             ),  # unusual thousand separator placement
             (
                 "1234,567.89",
-                Decimal("1234567.89"),
+                1234567.89,
                 self.mock_mapping_comma_dot,
             ),  # missing one separator
             (
                 "1234.567,89",
-                Decimal("1234567.89"),
+                1234567.89,
                 self.mock_mapping_dot_comma,
             ),  # inverted separators
         ]
@@ -661,20 +661,20 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
     def test_decimal_and_float_inputs(self):
         # Test direct Decimal and float inputs
         self.assertEqual(
-            self.parser._parse_decimal(
-                Decimal("-1234.56"), self.mock_mapping_comma_dot
-            ),
-            Decimal("-1234.56"),
-        )
-        self.assertEqual(
-            self.parser._parse_decimal(Decimal("1234.56"), self.mock_mapping_comma_dot),
-            Decimal("1234.56"),
-        )
-        self.assertEqual(
             self.parser._parse_decimal(-1234.56, self.mock_mapping_comma_dot),
-            Decimal("-1234.56"),
+            -1234.56,
         )
         self.assertEqual(
             self.parser._parse_decimal(1234.56, self.mock_mapping_comma_dot),
-            Decimal("1234.56"),
+            1234.56,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(
+                Decimal("-1234.56"), self.mock_mapping_comma_dot
+            ),
+            -1234.56,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(Decimal("1234.56"), self.mock_mapping_comma_dot),
+            1234.56,
         )
