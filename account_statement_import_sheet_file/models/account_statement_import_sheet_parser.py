@@ -4,6 +4,7 @@
 
 import itertools
 import logging
+import math
 import re
 from collections.abc import Iterable
 from datetime import datetime
@@ -84,8 +85,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
             balance_end = last_line["balance"]
             data.update(
                 {
-                    "balance_start": float(balance_start),
-                    "balance_end_real": float(balance_end),
+                    "balance_start": balance_start,
+                    "balance_end_real": balance_end,
                 }
             )
         transactions = list(
@@ -350,14 +351,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 balance = None
 
             if debit_credit is not None:
-                amount = amount.copy_abs()
+                amount = abs(amount)
                 if debit_credit == mapping.debit_value:
                     amount = -amount
 
             if original_amount:
-                original_amount = self._parse_decimal(
-                    original_amount, mapping
-                ).copy_sign(amount)
+                original_amount = math.copysign(
+                    self._parse_decimal(original_amount, mapping), amount
+                )
             else:
                 original_amount = 0.0
             if mapping.amount_inverse_sign:
@@ -471,9 +472,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
     @api.model
     def _parse_decimal(self, value, mapping):
         if isinstance(value, Decimal):
-            return value
+            return float(value)
         elif isinstance(value, float):
-            return Decimal(str(value))
+            return value
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
@@ -485,4 +486,4 @@ class AccountStatementImportSheetParser(models.TransientModel):
         )
         value = value.replace(thousands, "")
         value = value.replace(decimal, ".")
-        return Decimal(value)
+        return float(value)
