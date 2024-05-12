@@ -10,14 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-17 03:38+0000\n"
-"PO-Revision-Date: 2017-12-17 03:38+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
+"PO-Revision-Date: 2024-05-12 21:35+0000\n"
+"Last-Translator: Sergio Ariel Ameghino <ariel.ameghino@gmail.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_qif
 #. odoo-python
@@ -28,19 +29,18 @@ msgstr "No se puede descifrar el archivo QIF."
 
 #. module: account_statement_import_qif
 #: model:ir.model,name:account_statement_import_qif.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
 msgstr "Importar extracto bancario"
 
 #. module: account_statement_import_qif
 #: model:ir.model,name:account_statement_import_qif.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: account_statement_import_qif
 #: model_terms:ir.ui.view,arch_db:account_statement_import_qif.account_statement_import_form
 msgid "Quicken Interchange Format (.qif)"
-msgstr "Quicken Interchange Format (.qif)"
+msgstr "Formato de intercambio QIF"
 
 #. module: account_statement_import_qif
 #. odoo-python
