@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,7 +42,7 @@ msgstr ""
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid ""
-"Could not find any bank account with number '%(account_number)s' linked to "
+"Could not find any bank account with number '%(account_number)s'  linked to "
 "partner '%(partner_name)s'. You should create the bank account and set it on"
 " the related bank journal. If the related bank journal doesn't exist yet, "
 "you should create a new one."
@@ -111,11 +111,6 @@ msgid "Journal"
 msgstr ""
 
 #. module: account_statement_import_file
-#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -168,7 +163,7 @@ msgstr ""
 msgid ""
 "The bank account with number '%(account_number)s' exists in Odoo but it is "
 "not set on any bank journal. You should set it on the related bank journal. "
-"If the related bank journal doesn't exist yet, you should create a new one."
+"If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
 
 #. module: account_statement_import_file
