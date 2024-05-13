@@ -3,7 +3,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from base64 import b64encode
+from decimal import Decimal
 from os import path
+from unittest.mock import Mock
 
 from odoo import fields
 from odoo.exceptions import UserError
@@ -45,6 +47,12 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "account_type": "asset_current",
             }
         )
+        self.parser = self.env["account.statement.import.sheet.parser"]
+        # Mock the mapping object to return predefined separators
+        self.mock_mapping_comma_dot = Mock()
+        self.mock_mapping_comma_dot._get_float_separators.return_value = (",", ".")
+        self.mock_mapping_dot_comma = Mock()
+        self.mock_mapping_dot_comma._get_float_separators.return_value = (".", ",")
 
     def _data_file(self, filename, encoding=None):
         mode = "rt" if encoding else "rb"
@@ -538,3 +546,135 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         line2 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 2")
         self.assertEqual(line2.amount, 1525.00)
         self.assertEqual(line2.amount_currency, 1000.00)
+
+    def test_import_xlsx_empty_values(self):
+        sample_statement_map_empty_values = (
+            self.AccountStatementImportSheetMapping.create(
+                {
+                    "name": "Sample Statement with empty values",
+                    "amount_type": "distinct_credit_debit",
+                    "float_decimal_sep": "comma",
+                    "delimiter": "n/a",
+                    "no_header": 0,
+                    "footer_lines_skip_count": 1,
+                    "amount_inverse_sign": 0,
+                    "header_lines_skip_count": 1,
+                    "quotechar": '"',
+                    "float_thousands_sep": "dot",
+                    "reference_column": "REF",
+                    "description_column": "DESCRIPTION",
+                    "amount_credit_column": "DEBIT",
+                    "amount_debit_column": "CREDIT",
+                    "balance_column": "BALANCE",
+                    "timestamp_format": "%d/%m/%Y",
+                    "timestamp_column": "DATE",
+                }
+            )
+        )
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank 2",
+                "type": "bank",
+                "code": "BAN2",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/sample_statement_en_empty_values.xlsx")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/sample_statement_en_empty_values.xlsx",
+                "statement_file": data,
+                "sheet_mapping_id": sample_statement_map_empty_values.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 3)
+
+    def test_parse_decimal(self):
+        # Define a series of test cases
+        test_cases = [
+            (
+                "1,234.56",
+                1234.56,
+                self.mock_mapping_comma_dot,
+            ),  # standard case with thousands separator
+            (
+                "1,234,567.89",
+                1234567.89,
+                self.mock_mapping_comma_dot,
+            ),  # multiple thousands separators
+            (
+                "-1,234.56",
+                -1234.56,
+                self.mock_mapping_comma_dot,
+            ),  # negative value
+            (
+                "$1,234.56",
+                1234.56,
+                self.mock_mapping_comma_dot,
+            ),  # prefixed with currency symbol
+            (
+                "1,234.56 USD",
+                1234.56,
+                self.mock_mapping_comma_dot,
+            ),  # suffixed with currency code
+            (
+                "   1,234.56   ",
+                1234.56,
+                self.mock_mapping_comma_dot,
+            ),  # leading and trailing spaces
+            (
+                "not a number",
+                0,
+                self.mock_mapping_comma_dot,
+            ),  # non-numeric input
+            (" ", 0, self.mock_mapping_comma_dot),  # empty string
+            ("", 0, self.mock_mapping_comma_dot),  # empty space
+            ("USD", 0, self.mock_mapping_comma_dot),  # empty dolar
+            (
+                "12,34.56",
+                1234.56,
+                self.mock_mapping_comma_dot,
+            ),  # unusual thousand separator placement
+            (
+                "1234,567.89",
+                1234567.89,
+                self.mock_mapping_comma_dot,
+            ),  # missing one separator
+            (
+                "1234.567,89",
+                1234567.89,
+                self.mock_mapping_dot_comma,
+            ),  # inverted separators
+        ]
+
+        for value, expected, mock_mapping in test_cases:
+            with self.subTest(value=value):
+                result = self.parser._parse_decimal(value, mock_mapping)
+                self.assertEqual(result, expected, f"Failed for value: {value}")
+
+    def test_decimal_and_float_inputs(self):
+        # Test direct Decimal and float inputs
+        self.assertEqual(
+            self.parser._parse_decimal(-1234.56, self.mock_mapping_comma_dot),
+            -1234.56,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(1234.56, self.mock_mapping_comma_dot),
+            1234.56,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(
+                Decimal("-1234.56"), self.mock_mapping_comma_dot
+            ),
+            -1234.56,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(Decimal("1234.56"), self.mock_mapping_comma_dot),
+            1234.56,
+        )
