@@ -1,0 +1,670 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import
+#
+# Translators:
+# Martin Trigaux, 2019
+# Arminas Grigonis <arminas@versada.lt>, 2019
+# UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2019
+# Silvija Butko <silvija.butko@gmail.com>, 2019
+# Audrius Palenskis <audrius.palenskis@gmail.com>, 2019
+# Rolandas <info@paninfo.lt>, 2019
+# Paulius Sladkevičius <paulius@versada.eu>, 2019
+# digitouch UAB <digitouchagencyeur@gmail.com>, 2019
+# Linas Versada <linaskrisiukenas@gmail.com>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~12.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
+"PO-Revision-Date: 2019-08-26 09:08+0000\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2019\n"
+"Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "%d operacijos jau buvo importuotos, todėl ignoruojamos."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "1 operacija jau buvo importuota, todėl ignoruojama."
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Cancel"
+msgstr "Atšaukti"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "Sukūrė"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "Sukurta"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "Rodomas pavadinimas"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+#, python-format
+msgid "Import"
+msgstr "Importuoti"
+
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "Importuoti banko išrašą"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "Importuoti banko išrašą"
+
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
+msgid "Import Statement"
+msgstr "Importuoti išrašą"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Import and View"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
+msgid "Journal"
+msgstr "Žurnalas"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "Paskutinį kartą keista"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "Paskutinį kartą atnaujino"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "Paskutinį kartą atnaujinta"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr "Šiame faile nėra jokių operacijų."
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "Banko išrašo eilutė"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "Banko išrašo eilutė"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "Šio išrašo sąskaita nėra tokia pati, kaip žurnalo (%s)."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+"Nepavyko apdoroti pateikto failo.\n"
+"Ar įdiegėte modulį, kuris palaikytų tokio tipo failus?"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Upload Bank Statements"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "Banko išrašo eilutė"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr ""
+#~ "Gaukite banko išrašus iš savo banko elektroniniu formatu ir pasirinkite "
+#~ "juos čia."
+
+#, python-format
+#~ msgid "Already imported items"
+#~ msgstr "Jau importuoti įrašai"
+
+#~ msgid "or"
+#~ msgstr "arba"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "Banko sąskaitos operacijos gali būti importuojamos tik vieną kartą!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Banko išrašo eilutė"
+
+#~ msgid "Import ID"
+#~ msgstr "Importuoti ID"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "Banko sąskaita"
+
+#, fuzzy
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr ""
+#~ "Banko išrašo valiuta (%s) nėra tokia pati, kaip žurnalo valiuta '%s' (%s)."
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "Šiame faile nėra jokių išrašų."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "Šiame faile nėra jokių operacijų."
+
+#~ msgid " Import Template for Bank Statements"
+#~ msgstr "Importuoti šabloną banko išrašams"
+
+#~ msgid "Account Holder"
+#~ msgstr "Sąskaitos turėtojas"
+
+#~ msgid "Account Number"
+#~ msgstr "Sąskaitos numeris"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "Leistini sąskaitų tipai "
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "Leistinos sąskaitos"
+
+#~ msgid "Action Needed"
+#~ msgstr "Reikia veiksmo"
+
+#~ msgid "Active"
+#~ msgstr "Aktyvus"
+
+#~ msgid "Activities"
+#~ msgstr "Veiklos"
+
+#~ msgid "Activity State"
+#~ msgstr "Veiklos būsena"
+
+#~ msgid "Alias"
+#~ msgstr "Pseudonimas"
+
+#~ msgid "Alias Name"
+#~ msgstr "Pseudonimo vardas"
+
+#~ msgid "Alias domain"
+#~ msgstr "Pseudonimo domenas"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "Bent vienas įeinantis"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "Bent vienas išeinantis"
+
+#~ msgid "Attachment Count"
+#~ msgstr "Prisegtukų skaičius"
+
+#~ msgid "Bank"
+#~ msgstr "Bankas"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "Banko srautai"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "Banko žurnalo pavadinimas"
+
+#~ msgid "Bank setup manual config"
+#~ msgstr "Banko nustatymų rankinis konfigūravimas"
+
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr ""
+#~ "Nepavyko rasti, kuriam žurnalui importuoti šį išrašą. Prašome pasirinkti "
+#~ "žurnalą rankiniu būdu."
+
+#~ msgid ""
+#~ "Check this box if you don't want to share the same sequence for invoices "
+#~ "and credit notes made from this journal"
+#~ msgstr ""
+#~ "Pažymėkite varnele, jei nenorite, kad šiame žurnale kuriamos sąskaitos ir "
+#~ "sąskaitų grąžinimai naudotų tą pačią seką"
+
+#~ msgid "Color Index"
+#~ msgstr "Spalvos indeksas"
+
+#~ msgid "Communication Type"
+#~ msgstr "Bendravimo tipas"
+
+#~ msgid "Company"
+#~ msgstr "Įmonė"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "Įmonė, susieta su šiuo žurnalu"
+
+#~ msgid "Credit Note Entry Sequence"
+#~ msgstr "Kreditinės sąskaitos įrašų seka"
+
+#~ msgid "Currency"
+#~ msgstr "Valiuta"
+
+#~ msgid "Dedicated Credit Note Sequence"
+#~ msgstr "Dedikuota kreditinių sąskaitų seka"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "Numatytoji kreditinė sąskaita"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "Numatytoji debetinė sąskaita"
+
+#~ msgid "Defines how the bank statements will be registered"
+#~ msgstr "Nustato, kaip bus registruojami banko išrašai"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "Įrašų seka"
+
+#~ msgid "Filename"
+#~ msgstr "Failo pavadinimas"
+
+#~ msgid "Files"
+#~ msgstr "Failai"
+
+#~ msgid "Followers"
+#~ msgstr "Sekėjai"
+
+#~ msgid "Followers (Channels)"
+#~ msgstr "Sekėjai (kanalai)"
+
+#~ msgid "Followers (Partners)"
+#~ msgstr "Sekėjai (partneriai)"
+
+#~ msgid "For Incoming Payments"
+#~ msgstr "Įeinantiems mokėjimams"
+
+#~ msgid "For Outgoing Payments"
+#~ msgstr "Išeinantiems mokėjimams"
+
+#~ msgid "Icon"
+#~ msgstr "Piktograma"
+
+#~ msgid "If checked, new messages require your attention."
+#~ msgstr "Jeigu pažymėta, naujiems pranešimams reikės jūsų dėmesio."
+
+#~ msgid "If checked, some messages have a delivery error."
+#~ msgstr "Jei pažymėta, yra žinučių, turinčių pristatymo klaidų."
+
+#~ msgid "Install Import Format"
+#~ msgstr "Įdiegti importavimo formatą"
+
+#~ msgid "Is Follower"
+#~ msgstr "Yra sekėjas"
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "Veikia kaip numatytoji sąskaita kredito sumai"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "Veikia kaip numatytoji sąskaita debeto sumai"
+
+#~ msgid "Journal Creation"
+#~ msgstr "Žurnalo sukūrimas"
+
+#~ msgid "Journal Creation on Bank Statement Import"
+#~ msgstr "Žurnalo sukūrimas su banko išrašo importavimu"
+
+#~ msgid "Journal Name"
+#~ msgstr "Žurnalo pavadinimas"
+
+#~ msgid "Kanban Dashboard"
+#~ msgstr "Kanban skydelis"
+
+#~ msgid "Kanban Dashboard Graph"
+#~ msgstr "Kanban skydelio grafikas"
+
+#~ msgid "Loss Account"
+#~ msgstr "Nuostolių sąskaita"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Pagrindinis prisegtukas"
+
+#~ msgid ""
+#~ "Manual: Get paid by cash, check or any other method outside of Odoo.\n"
+#~ "Electronic: Get paid automatically through a payment acquirer by "
+#~ "requesting a transaction on a card saved by the customer when buying or "
+#~ "subscribing online (payment token).\n"
+#~ "Batch Deposit: Encase several customer checks at once by generating a "
+#~ "batch deposit to submit to your bank. When encoding the bank statement in "
+#~ "Odoo,you are suggested to reconcile the transaction with the batch "
+#~ "deposit. Enable this option from the settings."
+#~ msgstr ""
+#~ "Rankinis: priimkite mokėjimus grynaisiais, čekiais ar bet kokiu kitu "
+#~ "metodu už \"Odoo\" ribų.\n"
+#~ "Elektroninis: priimkite apmokėjimus automatiškai per mokėjimo surinkėją, "
+#~ "prašant operacijos kliento kortele.\n"
+#~ "Grupinis depozitas: sugrupuokite kelis čekius iš karto sugeneruodami "
+#~ "grupinį depozitą. Kai sukeliate banko išrašą į \"Odoo\", jums pasiūloma "
+#~ "sudengti operacijas grupiniu depozitu. Įjunkite šį pasirinkimą "
+#~ "nustatymuose."
+
+#~ msgid ""
+#~ "Manual:Pay bill by cash or any other method outside of Odoo.\n"
+#~ "Check:Pay bill by check and print it from Odoo.\n"
+#~ "SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you "
+#~ "submit to your bank. Enable this option from the settings."
+#~ msgstr ""
+#~ "Rankinis: atlikite mokėjimus grynaisiais ar bet kokiu kitu metodu už "
+#~ "\"Odoo\" ribų.\n"
+#~ "Čekis: apmokėkite sąskaitą čekiu ir atspausdinkite jį per \"Odoo\".\n"
+#~ "SEPA kredito pavedimas: apmokėkite sąskaita iš SEPA kredito pavedimo "
+#~ "failo, kurį pateikiate bankui. Įjunkite šį funkcionalumą nustatymuose."
+
+#~ msgid "Message Delivery error"
+#~ msgstr "Žinutės pristatymo klaida"
+
+#~ msgid "Messages"
+#~ msgstr "Žinutės"
+
+#~ msgid "Next Activity Deadline"
+#~ msgstr "Kito veiksmo terminas"
+
+#~ msgid "Next Activity Summary"
+#~ msgstr "Kito veiksmo santrauka"
+
+#~ msgid "Next Activity Type"
+#~ msgstr "Kito veiksmo tipas"
+
+#~ msgid "Next Number"
+#~ msgstr "Kitas skaičius"
+
+#~ msgid "No currency found matching '%s'."
+#~ msgstr "Nerasta valiutos, atitinkančios '%s'."
+
+#~ msgid "Number of Actions"
+#~ msgstr "Veiksmų skaičius"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Žinučių, kurioms reikia jūsų veiksmo, skaičius"
+
+#~ msgid "Number of messages with delivery error"
+#~ msgstr "Žinučių su pristatymo klaida skaičius"
+
+#~ msgid "Number of unread messages"
+#~ msgstr "Neperskaitytų žinučių skaičius"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Profit Account"
+#~ msgstr "Pelno sąskaita"
+
+#~ msgid "Responsible User"
+#~ msgstr "Atsakingas vartotojas"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "Pasirinkite \"Pardavimai\" norėdami atidaryti klientų sąskaitų "
+#~ "žurnalus. \n"
+#~ "Pasirinkite \"Pirkimai\" tiekėjų sąskaitų žurnalams. \n"
+#~ "Pasirinkite \"grynieji\" arba \"bankas\" žurnalams, naudojamiems klientų "
+#~ "ir tiekėjų mokėjimams. \n"
+#~ "Pasirinkite \"bendra\" įvairaus pobūdžio operacijų žurnalams. "
+
+#~ msgid "Sequence"
+#~ msgstr "Seka"
+
+#~ msgid "Set active to false to hide the Journal without removing it."
+#~ msgstr ""
+#~ "Nepažymėkite laukelio \"aktyvus\", jei norite paslėpti žurnalą jo "
+#~ "neištrinant."
+
+#~ msgid "Short Code"
+#~ msgstr "Trumpasis kodas"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "Skydelyje rodyti žurnalą"
+
+#~ msgid ""
+#~ "Status based on activities\n"
+#~ "Overdue: Due date is already passed\n"
+#~ "Today: Activity date is today\n"
+#~ "Planned: Future activities."
+#~ msgstr ""
+#~ "Būsena, paremta veiklomis\n"
+#~ "Vėluojantis: Termino data jau praėjo\n"
+#~ "Šiandien: Veikla turi būti baigta šiandien\n"
+#~ "Suplanuotas: Ateities veiklos."
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "Valiuta, naudojama įvedant išrašą"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr "Žurnalo įrašai šiam žurnalui bus pavadinami naudojant šį priešdėlį."
+
+#~ msgid "The next sequence number will be used for the next credit note."
+#~ msgstr ""
+#~ "Sekantis eilės numeris bus naudojamas sekančiai kreditinei sąskaitai."
+
+#~ msgid "The next sequence number will be used for the next invoice."
+#~ msgstr "Sekantis eilės numeris bus naudojamas sekančiai sąskaitai-faktūrai."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "credit note entries of this journal."
+#~ msgstr ""
+#~ "Šiame lauke saugoma informacija, susijusi su šio žurnalo kreditinės "
+#~ "sąskaitos įrašų numeravimu."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr ""
+#~ "Šiame lauke saugoma informacija, susijusi su šio žurnalo įrašų numeravimu."
+
+#~ msgid "Type"
+#~ msgstr "Tipas"
+
+#~ msgid "Unread Messages"
+#~ msgstr "Neperskaitytos žinutės"
+
+#~ msgid "Unread Messages Counter"
+#~ msgstr "Neperskaitytų žinučių skaičiavimas"
+
+#~ msgid "Upload"
+#~ msgstr "Įkelti"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr " Naudojamas žurnalų rikiavimui skydelio peržiūroje"
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Naudojama nuostolio registravimui, kai kasos aparato pabaigos balansas "
+#~ "skiriasi nuo sistemoje pateiktų skaičiavimų"
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "Naudojama pelno registravimui, kai kasos aparato pabaigos balansas "
+#~ "skiriasi nuo sistemoje pateiktų skaičiavimų"
+
+#~ msgid "Website Messages"
+#~ msgstr "Interneto svetainės žinutės"
+
+#~ msgid "Website communication history"
+#~ msgstr "Svetainės komunikacijos istorija"
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "Ar šis žurnalas turi būti vaizduojamas valdymo skyde, ar ne"
+
+#~ msgid "You already have imported that file."
+#~ msgstr "Jūs jau importavote tą failą."
+
+#~ msgid ""
+#~ "You can set here the default communication that will appear on customer "
+#~ "invoices, once validated, to help the customer to refer to that "
+#~ "particular invoice when making the payment."
+#~ msgstr ""
+#~ "Čia galite nustatyti numatytąją komunikaciją, kuri pasirodys klientų "
+#~ "sąskaitose-faktūrose, kai jos patvirtinamos, kad padėtumėte klientui "
+#~ "nurodyti į konkrečią S/F atliekant mokėjimą."
+
+#~ msgid ""
+#~ "You have to set a Default Debit Account and a Default Credit Account for "
+#~ "the journal: %s"
+#~ msgstr ""
+#~ "Jūs turite nustatyti \"Numatytąją debetinę sąskaitą\" ir \"Numatytąją "
+#~ "kreditinę sąskaitą\" žurnalui: %s"

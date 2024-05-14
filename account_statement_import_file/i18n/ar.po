@@ -1,0 +1,686 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_import
+#
+# Translators:
+# Mustafa Rawi <mustafa@cubexco.com>, 2019
+# Sadig Adam <sadig41@gmail.com>, 2019
+# amrnegm <amrnegm.01@gmail.com>, 2019
+# Martin Trigaux, 2019
+# Osoul <baruni@osoul.ly>, 2019
+# Mohammed Albasha <m.albasha.ma@gmail.com>, 2019
+# Ghaith Gammar <g.gammar@saharaifs.net>, 2019
+# Osama Ahmaro <osamaahmaro@gmail.com>, 2019
+# amal ahmed <amalalhashemy88@hotmail.com>, 2019
+# Mahmood Al Halwachi <mahmood.alhalwachi@gmail.com>, 2019
+# Zuhair Hammadi <zuhair12@gmail.com>, 2019
+# Shaima Safar <shaima.safar@open-inside.com>, 2019
+# Mostafa Hanafy <mostafa.s.hanafy@gmail.com>, 2019
+# Nisrine Tagri <nta@odoo.com>, 2019
+# Yazeed Dandashi <lay@odoo.com>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~12.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
+"PO-Revision-Date: 2019-08-26 09:08+0000\n"
+"Last-Translator: Yazeed Dandashi <lay@odoo.com>, 2019\n"
+"Language-Team: Arabic (https://www.transifex.com/odoo/teams/41243/ar/)\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "%d transactions had already been imported and were ignored."
+msgstr "تم تجاهل %d معاملة سبق استيرادها بالفعل."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "1 transaction had already been imported and was ignored."
+msgstr "تم تجاهل 1 معاملة سبق استيرادها بالفعل."
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "<span>Import (OCA)</span>"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"Could not find any bank account with number '%(account_number)s' linked to "
+"partner '%(partner_name)s'. You should create the bank account and set it on "
+"the related bank journal. If the related bank journal doesn't exist yet, you "
+"should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
+msgid "Download bank statement files from your bank and upload them here."
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+#, python-format
+msgid "Import"
+msgstr "استيراد"
+
+#. module: account_statement_import_file
+#: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
+#, fuzzy
+msgid "Import Bank Statement File"
+msgstr "استيراد كشف حساب بنكي"
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_statement_import
+#, fuzzy
+msgid "Import Bank Statement Files"
+msgstr "استيراد كشف حساب بنكي"
+
+#. module: account_statement_import_file
+#: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
+msgid "Import Statement"
+msgstr "استيراد كشف حساب"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
+msgid "Import Statement (OCA)"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Import and View"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model:ir.model,name:account_statement_import_file.model_account_journal
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل في"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "Missing currency code in the bank statement file."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "Missing payment_ref on a transaction."
+msgstr "هذا الملف لا يحتوي على أي معاملة."
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
+#, fuzzy
+msgid "Statement File"
+msgstr "بند كشف الحساب البنكي"
+
+#. module: account_statement_import_file
+#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
+#, fuzzy
+msgid "Statement Filename"
+msgstr "بند كشف الحساب البنكي"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Supported formats:"
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid "The Bank Accounting Account is not set on the journal '%s'."
+msgstr "الحساب في كشف الحساب البنكي مختلف عن حساب دفتر اليومية (%s)."
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank account with number '%(account_number)s' exists in Odoo but it is "
+"not set on any bank journal. You should set it on the related bank journal. "
+"If the related bank journal doesn't exist yet, you should create a new one."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The bank statement file uses currency '%s' but there is no such currency in "
+"Odoo."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The currency of the bank statement (%(currency_name)s) is not the same as "
+"the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The format of this bank statement file doesn't contain the bank account "
+"number, so you must start the wizard from the right bank journal in the "
+"dashboard."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file (%(journal_match)s) is different from the "
+"selected journal (%(journal_selected)s)."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid "The parsing of the statement file returned an invalid result."
+msgstr ""
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy, python-format
+msgid ""
+"This bank statement file format is not supported.\n"
+"Did you install the Odoo module to support this format?"
+msgstr ""
+"لم يمكن فهم طبيعة الملف المحدد.\n"
+"هل قمت بتثبيت الموديول لدعم هذا النوع من الملفات؟"
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+msgid "Upload Bank Statements"
+msgstr ""
+
+#. module: account_statement_import_file
+#: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
+#, fuzzy
+msgid "Upload a bank statement file"
+msgstr "بند كشف الحساب البنكي"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, python-format
+msgid ""
+"You have already imported this file, or this file only contains already "
+"imported transactions."
+msgstr ""
+
+#~ msgid ""
+#~ "Get you bank statements in electronic format from your bank and select "
+#~ "them here."
+#~ msgstr "احصل على كشوفات حسابك بصيغة إلكترونية واخترها من هنا."
+
+#, python-format
+#~ msgid "Already imported items"
+#~ msgstr "عناصر تم استيرادها بالفعل"
+
+#~ msgid "or"
+#~ msgstr "أو"
+
+#, fuzzy
+#~ msgid "A bank account transaction can be imported only once!"
+#~ msgstr "يمكن استيراد معاملات الحساب البنكي مرة واحدة فقط!"
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "بند كشف الحساب البنكي"
+
+#~ msgid "Import ID"
+#~ msgstr "معرف الاستيراد"
+
+#, fuzzy
+#~ msgid "Partner Bank Account"
+#~ msgstr "حساب بنكي"
+
+#, fuzzy
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal '%s' (%s)."
+#~ msgstr ""
+#~ "العملة في كشف الحساب البنكي (%s) مختلفة عن العملة في دفتر اليومية "
+#~ "'%s' (%s)."
+
+#~ msgid "This file doesn't contain any statement."
+#~ msgstr "هذا الملف لا يحتوي على أي كشف حساب."
+
+#~ msgid "This file doesn't contain any transaction."
+#~ msgstr "هذا الملف لا يحتوي على أي معاملة."
+
+#~ msgid " Import Template for Bank Statements"
+#~ msgstr "قالب استيراد كشوفات الحسابات البنكية"
+
+#~ msgid "Account Holder"
+#~ msgstr "مالك الحساب"
+
+#~ msgid "Account Number"
+#~ msgstr "رقم الحساب"
+
+#~ msgid "Account Types Allowed"
+#~ msgstr "أنواع الحسابات المسموح بها"
+
+#~ msgid "Accounts Allowed"
+#~ msgstr "الحسابات المسموح بها"
+
+#~ msgid "Action Needed"
+#~ msgstr "إجراء مطلوب"
+
+#~ msgid "Active"
+#~ msgstr "نشط"
+
+#~ msgid "Activities"
+#~ msgstr "الأنشطة"
+
+#~ msgid "Activity State"
+#~ msgstr "حالة النشاط"
+
+#~ msgid "Alias"
+#~ msgstr "لقب"
+
+#~ msgid "Alias Name"
+#~ msgstr "اسم اللقب"
+
+#~ msgid "Alias domain"
+#~ msgstr "نطاق اللقب"
+
+#~ msgid "At Least One Inbound"
+#~ msgstr "وارد واحد على الأقل"
+
+#~ msgid "At Least One Outbound"
+#~ msgstr "صادر واحد على الاقل"
+
+#~ msgid "Attachment Count"
+#~ msgstr "عدد المرفقات"
+
+#~ msgid "Bank"
+#~ msgstr "البنك"
+
+#~ msgid "Bank Feeds"
+#~ msgstr "التغذية البنكية"
+
+#~ msgid "Bank Journal Name"
+#~ msgstr "اسم دفتر اليومية"
+
+#~ msgid "Bank setup manual config"
+#~ msgstr "الضبط اليدوي لإعدادات البنك"
+
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr ""
+#~ "لم نتمكن من اكتشاف لأي دفتر يومية يتم استيراد كشف الحساب المحدد. نرجو "
+#~ "منكم اختيار دفتر اليومية يدوياً."
+
+#~ msgid ""
+#~ "Check this box if you don't want to share the same sequence for invoices "
+#~ "and credit notes made from this journal"
+#~ msgstr ""
+#~ "حدد هذا المربع إذا كنت لا تريد أن تتشارك الفواتير وإشعارات الخصم "
+#~ "المستخرجة من دفتر اليومية هذا نفس التسلسل"
+
+#~ msgid "Color Index"
+#~ msgstr "معرف اللون"
+
+#~ msgid "Communication Type"
+#~ msgstr "نوع التواصل"
+
+#~ msgid "Company"
+#~ msgstr "الشركة"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "المؤسسة المرتبطة بدفتر اليومية هذا"
+
+#~ msgid "Credit Note Entry Sequence"
+#~ msgstr "مسلسل قيود إشعار الخصم"
+
+#~ msgid "Currency"
+#~ msgstr "العملة"
+
+#~ msgid "Dedicated Credit Note Sequence"
+#~ msgstr "مسلسل إشعارات الخصم المخصصة"
+
+#~ msgid "Default Credit Account"
+#~ msgstr "حساب الائتمان الافتراضي"
+
+#~ msgid "Default Debit Account"
+#~ msgstr "حساب الخصم الافتراضي"
+
+#~ msgid "Defines how the bank statements will be registered"
+#~ msgstr "يحدد كيفية تسجيل كشوفات الحساب البنكية"
+
+#~ msgid "Entry Sequence"
+#~ msgstr "مسلسل القيد"
+
+#~ msgid "Filename"
+#~ msgstr "اسم الملف"
+
+#~ msgid "Files"
+#~ msgstr "الملفات"
+
+#~ msgid "Followers"
+#~ msgstr "المتابعون"
+
+#~ msgid "Followers (Channels)"
+#~ msgstr "المتابعون (القنوات)"
+
+#~ msgid "Followers (Partners)"
+#~ msgstr "المتابعون (الشركاء)"
+
+#~ msgid "For Incoming Payments"
+#~ msgstr "للمدفوعات الواردة"
+
+#~ msgid "For Outgoing Payments"
+#~ msgstr "للمدفوعات الصادرة"
+
+#~ msgid "Icon"
+#~ msgstr "الأيقونة"
+
+#~ msgid "If checked, new messages require your attention."
+#~ msgstr "إذا كان محددًا، فهناك رسائل جديدة تحتاج لرؤيتها."
+
+#~ msgid "If checked, some messages have a delivery error."
+#~ msgstr "إذا كان محددًا، فقد حدث خطأ في تسليم بعض الرسائل."
+
+#~ msgid "Install Import Format"
+#~ msgstr "تثبيت موديول صيغة الاستيراد"
+
+#~ msgid "Is Follower"
+#~ msgstr "متابع"
+
+#~ msgid "It acts as a default account for credit amount"
+#~ msgstr "يعمل كحساب افتراضي لمبلغ الدائن"
+
+#~ msgid "It acts as a default account for debit amount"
+#~ msgstr "يعمل كحساب افتراضي لمبلغ المدين"
+
+#~ msgid "Journal Creation"
+#~ msgstr "إنشاء دفتر يومية"
+
+#~ msgid "Journal Creation on Bank Statement Import"
+#~ msgstr "إنشاء دفتر يومية عند استيراد كشف الحساب البنكي"
+
+#~ msgid "Journal Groups"
+#~ msgstr "مجموعات الدفاتر اليومية"
+
+#~ msgid "Journal Name"
+#~ msgstr "اسم دفتر اليومية"
+
+#~ msgid "Kanban Dashboard"
+#~ msgstr "لوحة معلومات كانبان"
+
+#~ msgid "Kanban Dashboard Graph"
+#~ msgstr "الرسم البياني للوحة معلومات كانبان"
+
+#~ msgid "Loss Account"
+#~ msgstr "حساب الخسارة"
+
+#~ msgid "Main Attachment"
+#~ msgstr "المرفق الرئيسي"
+
+#~ msgid ""
+#~ "Manual: Get paid by cash, check or any other method outside of Odoo.\n"
+#~ "Electronic: Get paid automatically through a payment acquirer by "
+#~ "requesting a transaction on a card saved by the customer when buying or "
+#~ "subscribing online (payment token).\n"
+#~ "Batch Deposit: Encase several customer checks at once by generating a "
+#~ "batch deposit to submit to your bank. When encoding the bank statement in "
+#~ "Odoo,you are suggested to reconcile the transaction with the batch "
+#~ "deposit. Enable this option from the settings."
+#~ msgstr ""
+#~ "يدويًا: تتلقى أموالك نقدًا أو بشيكات أو بأي طريقة أخرى خارج أودو.\n"
+#~ "إلكترونيًا: تتلقى أموالك تلقائيًا باستخدام معالج سداد من خلال طلب معاملة "
+#~ "مالية على بطاقة مخزنة للعميل عند الشراء أو الاشتراك عبر الإنترنت (من خلال "
+#~ "رمز السداد السري).\n"
+#~ "إيداع دفعات: تغطي تكلفة عدة شيكات في نفس الوقت من خلال إيداع عدة دفعات. "
+#~ "عند تشفير كشف الحساب على أودو، ننصح بأن تقوم بتسوية المعاملة بنظام إيداع "
+#~ "الدفعات. فعل هذا الاختيار من الإعدادات."
+
+#~ msgid ""
+#~ "Manual:Pay bill by cash or any other method outside of Odoo.\n"
+#~ "Check:Pay bill by check and print it from Odoo.\n"
+#~ "SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you "
+#~ "submit to your bank. Enable this option from the settings."
+#~ msgstr ""
+#~ "يدويًا: تتلقى أموالك نقدًا أو بشيكات أو بأي طريقة أخرى خارج أودو.\n"
+#~ "شيك: تسدد قيمة فواتيرك بالشيكات وتطبعها من أودو. \n"
+#~ "النقل الائتماني بنظام SEPA: ادفع الفاتورة من خلال ملف نقل ائتماني تقوم "
+#~ "بتسليمه للبنك، قم بتفعيل هذا الخيار من الإعدادات."
+
+#~ msgid "Message Delivery error"
+#~ msgstr "خطأ في تسليم الرسائل"
+
+#~ msgid "Messages"
+#~ msgstr "الرسائل"
+
+#~ msgid "Next Activity Deadline"
+#~ msgstr "الموعد النهائي للنشاط التالي"
+
+#~ msgid "Next Activity Summary"
+#~ msgstr "ملخص النشاط التالي"
+
+#~ msgid "Next Activity Type"
+#~ msgstr "نوع النشاط التالي"
+
+#~ msgid "Next Number"
+#~ msgstr "الرقم التالي"
+
+#~ msgid "No currency found matching '%s'."
+#~ msgstr "لم يمكن العثور على أي عملة تطابق '%s'."
+
+#~ msgid "Number of Actions"
+#~ msgstr "عدد الإجراءات"
+
+#~ msgid "Number of errors"
+#~ msgstr "عدد الاخطاء"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#~ msgid "Number of messages with delivery error"
+#~ msgstr "عدد الرسائل الحادث بها خطأ في التسليم"
+
+#~ msgid "Number of unread messages"
+#~ msgstr "عدد الرسائل الجديدة"
+
+#~ msgid "OK"
+#~ msgstr "موافق"
+
+#~ msgid "Post At"
+#~ msgstr "انشر في"
+
+#~ msgid "Profit Account"
+#~ msgstr "حساب الربح"
+
+#~ msgid "Responsible User"
+#~ msgstr "المستخدم المسؤول"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "خطأ في تسليم الرسائل القصيرة"
+
+#~ msgid ""
+#~ "Select 'Sale' for customer invoices journals.\n"
+#~ "Select 'Purchase' for vendor bills journals.\n"
+#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
+#~ "payments.\n"
+#~ "Select 'General' for miscellaneous operations journals."
+#~ msgstr ""
+#~ "اختر 'بيع' لعرض دفاتر اليومية الخاصة بفواتير العملاء. \n"
+#~ "اختر 'شراء' لعرض دفاتر اليومية الخاصة بفواتير الموردين. \n"
+#~ "اختر 'نقدي' أو 'بنك' لعرض دفاتر اليومية الخاصة بمدفوعات العميل أو "
+#~ "المورد.\n"
+#~ " اختر 'عام' لعرض دفاتر اليومية الخاصة بالعمليات المتنوعة."
+
+#~ msgid "Sequence"
+#~ msgstr "المسلسل"
+
+#~ msgid "Set active to false to hide the Journal without removing it."
+#~ msgstr "قم بإزالة العلامة من الحقل نشط لإخفاء دفتر اليومية دون إزالته."
+
+#~ msgid "Short Code"
+#~ msgstr "الكود المختصر"
+
+#~ msgid "Show journal on dashboard"
+#~ msgstr "إظهار دفتر اليومية في لوحة المعلومات"
+
+#~ msgid ""
+#~ "Status based on activities\n"
+#~ "Overdue: Due date is already passed\n"
+#~ "Today: Activity date is today\n"
+#~ "Planned: Future activities."
+#~ msgstr ""
+#~ "الحالة على أساس الأنشطة\n"
+#~ "المتأخرة: تاريخ الاستحقاق مر\n"
+#~ "اليوم: تاريخ النشاط هو اليوم\n"
+#~ "المخطط: الأنشطة المستقبلية."
+
+#~ msgid "The currency used to enter statement"
+#~ msgstr "العملة المستخدمة في إدخال كشف الحساب البنكي"
+
+#~ msgid "The journal entries of this journal will be named using this prefix."
+#~ msgstr "سوف تُسمى القيود اليومية لدفتر اليومية المُختار باستخدام هذه البادئة."
+
+#~ msgid "The next sequence number will be used for the next credit note."
+#~ msgstr "سوف يُستخدم الرقم المسلسل التالي في إشعار الخصم التالي."
+
+#~ msgid "The next sequence number will be used for the next invoice."
+#~ msgstr "سوف يُستخدم الرقم المسلسل التالي في الفاتورة التالية."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "credit note entries of this journal."
+#~ msgstr ""
+#~ "يحتوى هذا الحقل على المعلومات الخاصة بترقيم إشعارات الخصم لدفتر اليومية "
+#~ "المُختار."
+
+#~ msgid ""
+#~ "This field contains the information related to the numbering of the "
+#~ "journal entries of this journal."
+#~ msgstr ""
+#~ "يحتوى هذا الحقل على المعلومات المرتبطة بترقيم قيود اليومية لدفتر اليومية "
+#~ "المُختار."
+
+#~ msgid "Type"
+#~ msgstr "النوع"
+
+#~ msgid "Unread Messages"
+#~ msgstr "الرسائل الجديدة"
+
+#~ msgid "Unread Messages Counter"
+#~ msgstr "عدد الرسائل الجديدة"
+
+#~ msgid "Upload"
+#~ msgstr "رفع"
+
+#~ msgid "Used to order Journals in the dashboard view"
+#~ msgstr "يُستخدم لترتيب دفاتر اليومية في واجهة لوحة المعلومات"
+
+#~ msgid ""
+#~ "Used to register a loss when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "يُستخدم لتسجيل خسارة عندما يكون الرصيد الختامي لصندوق نقدية مختلف عما "
+#~ "يحسبه النظام"
+
+#~ msgid ""
+#~ "Used to register a profit when the ending balance of a cash register "
+#~ "differs from what the system computes"
+#~ msgstr ""
+#~ "يُستخدم لتسجيل ربح عندما يكون الرصيد الختامي لصندوق نقدية مختلف عما يحسبه "
+#~ "النظام"
+
+#~ msgid "Website Messages"
+#~ msgstr "رسائل الموقع"
+
+#~ msgid "Website communication history"
+#~ msgstr "سجل تواصل الموقع"
+
+#~ msgid "Whether this journal should be displayed on the dashboard or not"
+#~ msgstr "ما إذا كان ينبغي عرض دفتر اليومية هذا في لوحة المعلومات أم لا"
+
+#~ msgid "You already have imported that file."
+#~ msgstr "لقد قمت باستيراد هذا الملف بالفعل."
+
+#~ msgid ""
+#~ "You can choose different models for each type of reference. The default "
+#~ "one is the Odoo reference."
+#~ msgstr "تستطيع اختيار نماذج مختلفة لكل مرجع. المرجع الإفتراضي هو مرجع أودو."
+
+#~ msgid ""
+#~ "You can set here the default communication that will appear on customer "
+#~ "invoices, once validated, to help the customer to refer to that "
+#~ "particular invoice when making the payment."
+#~ msgstr ""
+#~ "يمكنك من هنا تعيين وسيلة التواصل الافتراضية التي ستظهر على فواتير العميل "
+#~ "بمجرد اعتمادها، لمساعدة العميل على العودة لتلك الفاتورة تحديدًا عند القيام "
+#~ "بعملية السداد."
+
+#~ msgid ""
+#~ "You have to set a Default Debit Account and a Default Credit Account for "
+#~ "the journal: %s"
+#~ msgstr ""
+#~ "يجب عليك تعيين الحساب الدائن الافتراضي والحساب المدين الافتراضي في دفتر "
+#~ "اليومية: %s"
