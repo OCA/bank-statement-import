@@ -1,0 +1,1 @@
+odoo-addon-account_statement_import_camt @ git+https://github.com/OCA/bank-statement-import.git@refs/pull/684/head#subdirectory=account_statement_import_camt
