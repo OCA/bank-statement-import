@@ -80,7 +80,7 @@ class CamtParser(models.AbstractModel):
                 .xpath("./ns:AcctSvcrRef", namespaces={"ns": ns})
             )
             if trans_id_node:
-                payment_ref = "{} ({})".format(payment_ref, trans_id_node[0].text)
+                payment_ref = f"{payment_ref} ({trans_id_node[0].text})"
             if payment_ref:
                 transaction["payment_ref"] = payment_ref
         # End add esr to the label.
