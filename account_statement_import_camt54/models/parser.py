@@ -1,7 +1,8 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, exceptions, models
+from odoo import _, models
+from odoo.exceptions import UserError
 
 
 class CamtParser(models.AbstractModel):
@@ -11,7 +12,7 @@ class CamtParser(models.AbstractModel):
 
     def _get_partner_ref(self, isr):
         ICP = self.env["ir.config_parameter"]
-        ref_format = ICP.sudo().get_param("isr_partner_ref")
+        ref_format = ICP.sudo().get_param("qrr_partner_ref")
         if not ref_format:
             return
         config = ref_format.split(",")
@@ -21,9 +22,9 @@ class CamtParser(models.AbstractModel):
             start = config[0]
             size = 6
         else:
-            raise exceptions.UserError(
+            raise UserError(
                 _(
-                    "Config parameter `isr_partner_ref` is wrong.\n"
+                    "Config parameter `qrr_partner_ref` is wrong.\n"
                     "It must be in format `i[,n]` \n"
                     "where `i` is the position of the first digit and\n"
                     "`n` the number of digit in the reference,"
@@ -35,15 +36,15 @@ class CamtParser(models.AbstractModel):
             start = int(start) - 1  # count from 1 instead of 0
             size = int(size)
             end = start + size
-        except ValueError as err:
-            raise exceptions.UserError(
+        except ValueError:
+            raise UserError(
                 _(
-                    "Config parameter `isr_partner_ref` is wrong.\n"
+                    "Config parameter `qrr_partner_ref` is wrong.\n"
                     "It must be in format `i[,n]` \n"
                     "`i` and `n` must be integers.\n"
                     'e.g. "13,6"'
                 )
-            ) from err
+            ) from None
         return isr[start:end].lstrip("0")
 
     def parse_transaction_details(self, ns, node, transaction):
@@ -54,12 +55,12 @@ class CamtParser(models.AbstractModel):
         # put the esr in the label. odoo reconciles based on the label,
         # if there is no esr it tries to use the information textfield
 
-        isr_number = node.xpath(
+        qrr_number = node.xpath(
             "./ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref", namespaces={"ns": ns}
         )
-        if len(isr_number):
-            transaction["payment_ref"] = isr_number[0].text
-            partner_ref = self._get_partner_ref(isr_number[0].text)
+        if len(qrr_number):
+            transaction["payment_ref"] = qrr_number[0].text
+            partner_ref = self._get_partner_ref(qrr_number[0].text)
             if partner_ref:
                 transaction["partner_ref"] = partner_ref
         else:
