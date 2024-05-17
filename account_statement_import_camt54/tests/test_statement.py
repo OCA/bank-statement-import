@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import base64
 
-from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_path
 
 
 class TestGenerateBankStatement(TransactionCase):
@@ -40,9 +40,7 @@ class TestGenerateBankStatement(TransactionCase):
         )
 
     def _load_statement(self):
-        testfile = get_module_resource(
-            "account_statement_import_camt", "test_files", "test-camt054"
-        )
+        testfile = file_path("account_statement_import_camt/test_files/test-camt054")
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
             self.env["account.statement.import"].create(

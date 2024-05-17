@@ -11,7 +11,7 @@ class CamtParser(models.AbstractModel):
 
     def _get_partner_ref(self, isr):
         ICP = self.env["ir.config_parameter"]
-        ref_format = ICP.sudo().get_param("isr_partner_ref")
+        ref_format = ICP.sudo().get_param("qrr_partner_ref")
         if not ref_format:
             return
         config = ref_format.split(",")
@@ -23,7 +23,7 @@ class CamtParser(models.AbstractModel):
         else:
             raise exceptions.UserError(
                 _(
-                    "Config parameter `isr_partner_ref` is wrong.\n"
+                    "Config parameter `qrr_partner_ref` is wrong.\n"
                     "It must be in format `i[,n]` \n"
                     "where `i` is the position of the first digit and\n"
                     "`n` the number of digit in the reference,"
@@ -38,7 +38,7 @@ class CamtParser(models.AbstractModel):
         except ValueError as err:
             raise exceptions.UserError(
                 _(
-                    "Config parameter `isr_partner_ref` is wrong.\n"
+                    "Config parameter `qrr_partner_ref` is wrong.\n"
                     "It must be in format `i[,n]` \n"
                     "`i` and `n` must be integers.\n"
                     'e.g. "13,6"'
@@ -54,12 +54,12 @@ class CamtParser(models.AbstractModel):
         # put the esr in the label. odoo reconciles based on the label,
         # if there is no esr it tries to use the information textfield
 
-        isr_number = node.xpath(
+        qrr_number = node.xpath(
             "./ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref", namespaces={"ns": ns}
         )
-        if len(isr_number):
-            transaction["payment_ref"] = isr_number[0].text
-            partner_ref = self._get_partner_ref(isr_number[0].text)
+        if len(qrr_number):
+            transaction["payment_ref"] = qrr_number[0].text
+            partner_ref = self._get_partner_ref(qrr_number[0].text)
             if partner_ref:
                 transaction["partner_ref"] = partner_ref
         else:
