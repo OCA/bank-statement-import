@@ -3,16 +3,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import base64
 
-from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_path
 
 
 class TestGenerateBankStatement(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        eur = cls.env.ref("base.EUR")
-        eur.write({"active": True})
+        eur_currency = cls.env.ref("base.EUR")
+        eur_currency.write({"active": True})
         bank = cls.env["res.partner.bank"].create(
             {
                 "acc_number": "NL77ABNA0574908765",
@@ -35,14 +35,12 @@ class TestGenerateBankStatement(TransactionCase):
                 "code": "TBNKCAMT",
                 "type": "bank",
                 "bank_account_id": bank.id,
-                "currency_id": eur.id,
+                "currency_id": eur_currency.id,
             }
         )
 
     def _load_statement(self):
-        testfile = get_module_resource(
-            "account_statement_import_camt", "test_files", "test-camt054"
-        )
+        testfile = file_path("account_statement_import_camt/test_files/test-camt054")
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
             self.env["account.statement.import"].create(

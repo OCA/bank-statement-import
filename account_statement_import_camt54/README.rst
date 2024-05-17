@@ -50,12 +50,12 @@ configuration
 Switzerland localisation
 ------------------------
 
-For ISR containing a partner reference, uses the config parameter key
-isr_partner_ref. Doing so will fill the partners on bank statement lines
+For QRR containing a partner reference, uses the config parameter key
+qrr_partner_ref. Doing so will fill the partners on bank statement lines
 and speed up the matches in the reconciliation process.
 
-Value to set in isr_partner_ref defines the position of the partner
-reference inside the ISR. The format is i[,n] For instance 13,6 to start
+Value to set in qrr_partner_ref defines the position of the partner
+reference inside the QRR. The format is i[,n] For instance 13,6 to start
 on position 13 with a 6 digit long reference. n is optional and it's
 default value is 6.
 
@@ -98,6 +98,8 @@ Other credits
 
 -  Digital4efficiency.ch
 -  The migration of this module from 15.0 to 16.0 was financially
+   supported by Camptocamp
+-  The migration of this module from 16.0 to 17.0 was financially
    supported by Camptocamp
 
 Maintainers

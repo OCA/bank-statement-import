@@ -16,7 +16,7 @@ class AccountStatementImport(models.TransientModel):
         """Create additional line in statement to set bank statement statement
         to 0 balance"""
 
-        super()._create_bank_statements(stmts_vals, result)
+        res = super()._create_bank_statements(stmts_vals, result)
         statements = self.env["account.bank.statement"].browse(result["statement_ids"])
         for statement in statements:
             amount = sum(statement.line_ids.mapped("amount"))
@@ -34,7 +34,7 @@ class AccountStatementImport(models.TransientModel):
                 statement.balance_end_real = statement.balance_start
             else:
                 statement.balance_end_real = statement.balance_start + amount
-        return
+        return res
 
     def _complete_stmts_vals(self, stmts_vals, journal, account_number):
         """Search partner from partner reference"""
