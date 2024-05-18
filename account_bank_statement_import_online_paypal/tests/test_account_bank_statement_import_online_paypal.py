@@ -805,3 +805,16 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "unique_import_id": "1234567890-%s" % (self.today_timestamp,),
             },
         )
+
+    def test_ensure_unique(self):
+        lines = [
+            {"unique_import_id": "A", "name": "0 A key"},
+            {"unique_import_id": "A", "name": "1 A key 1"},
+            {"unique_import_id": "B", "name": "2 B key"},
+            {"unique_import_id": "A", "name": "3 A key 2"},
+        ]
+        self.OnlineBankStatementProvider._paypal_ensure_unique_import_ids(lines)
+        self.assertEqual(lines[0]["unique_import_id"], "A")
+        self.assertEqual(lines[1]["unique_import_id"], "A-1")
+        self.assertEqual(lines[2]["unique_import_id"], "B")
+        self.assertEqual(lines[3]["unique_import_id"], "A-2")

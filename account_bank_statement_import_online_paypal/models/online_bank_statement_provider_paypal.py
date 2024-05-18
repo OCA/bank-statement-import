@@ -227,6 +227,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 map(lambda x: self._paypal_transaction_to_lines(x), transactions)
             )
         )
+        # Make sure there are no duplicate unique_import_id's within a download.
+        # This way we still guard against importing twice the same data.
+        self._paypal_ensure_unique_import_ids(lines)
 
         first_transaction = transactions[0]
         first_transaction_id = first_transaction["transaction_info"]["transaction_id"]
@@ -322,6 +325,17 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 }
             ]
         return lines
+
+    def _paypal_ensure_unique_import_ids(self, lines):
+        """Check id's are unique within a list of lines."""
+        check_ids = {}
+        for line in lines:
+            unique_import_id = line["unique_import_id"]
+            counter = 0
+            if unique_import_id in check_ids:
+                counter = check_ids[unique_import_id] + 1
+                line["unique_import_id"] = "%s-%d" % (unique_import_id, counter)
+            check_ids[unique_import_id] = counter
 
     def _paypal_get_token(self):
         self.ensure_one()
