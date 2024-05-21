@@ -277,6 +277,19 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_inverse_sign
+msgid ""
+"In some cases such as in credit card statements the amounts are expressed in "
+"the inverse sign. By setting this flag during the upload the amounts will be "
+"inverted in sign."
+msgstr ""
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_inverse_sign
+msgid "Inverse sign of amount"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__shift_jis
 msgid "Japanese (Shift JIS)"
 msgstr "Japanese (Shift JIS)"
@@ -285,12 +298,6 @@ msgstr "Japanese (Shift JIS)"
 #: model:ir.model,name:account_statement_import_sheet_file.model_account_journal
 msgid "Journal"
 msgstr "Dagboek"
-
-#. module: account_statement_import_sheet_file
-#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping____last_update
-#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser____last_update
-msgid "Last Modified on"
-msgstr "Laatst gewijzigt op"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__write_uid
@@ -385,10 +392,10 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_type
 msgid ""
-"Simple value: use igned amount in ammount comlumn\n"
-"Absolute Value: use a same comlumn for debit and credit\n"
+"Simple value: use igned amount in amount column\n"
+"Absolute Value: use a same column for debit and credit\n"
 "(absolute value + indicate sign)\n"
-"Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
+"Distinct Credit/debit Column: use a distinct column for debit and credit"
 msgstr ""
 
 #. module: account_statement_import_sheet_file
@@ -470,8 +477,26 @@ msgid "Unique transaction ID column"
 msgstr "Unieke transactie ID kolom"
 
 #. module: account_statement_import_sheet_file
-#: model:ir.model.constraint,message:account_statement_import_sheet_file.constraint_account_statement_import_sheet_mapping_check_amount_columns
-msgid "Use amount_column OR (amount_debit_column AND amount_credit_column)."
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
+#, python-format
+msgid "Use amount_column if you have set Amount type = 'Single value'"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
+#, python-format
+msgid ""
+"Use amount_debit_column and amount_credit_column if you have set Amount type "
+"= 'Distinct Credit/debit Column'"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
+#, python-format
+msgid "Use debit_credit_column if you have set Amount type = 'Absolute value'"
 msgstr ""
 
 #. module: account_statement_import_sheet_file
@@ -556,3 +581,6 @@ msgstr "spatie"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "tab"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Laatst gewijzigt op"

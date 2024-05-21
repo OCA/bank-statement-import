@@ -316,12 +316,6 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: account_statement_import_sheet_file
-#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping____last_update
-#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
-
-#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__write_uid
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser__write_uid
 msgid "Last Updated by"
@@ -415,16 +409,11 @@ msgstr "Valor simple"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_type
 msgid ""
-"Simple value: use igned amount in ammount comlumn\n"
-"Absolute Value: use a same comlumn for debit and credit\n"
+"Simple value: use igned amount in amount column\n"
+"Absolute Value: use a same column for debit and credit\n"
 "(absolute value + indicate sign)\n"
-"Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
+"Distinct Credit/debit Column: use a distinct column for debit and credit"
 msgstr ""
-"Valor simple: utilizar un importe ignorado en la columna importe\n"
-"Valor absoluto: utilizar una misma columna para el debe y el haber\n"
-"(valor absoluto + signo indicativo)\n"
-"Columna distinta para débito/crédito: utilice una columna distinta para "
-"débito y crédito"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
@@ -622,3 +611,18 @@ msgstr "espacio"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "tabulador"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
+
+#~ msgid ""
+#~ "Simple value: use igned amount in ammount comlumn\n"
+#~ "Absolute Value: use a same comlumn for debit and credit\n"
+#~ "(absolute value + indicate sign)\n"
+#~ "Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
+#~ msgstr ""
+#~ "Valor simple: utilizar un importe ignorado en la columna importe\n"
+#~ "Valor absoluto: utilizar una misma columna para el debe y el haber\n"
+#~ "(valor absoluto + signo indicativo)\n"
+#~ "Columna distinta para débito/crédito: utilice una columna distinta para "
+#~ "débito y crédito"

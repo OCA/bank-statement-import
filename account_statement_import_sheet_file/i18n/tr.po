@@ -314,12 +314,6 @@ msgid "Journal"
 msgstr "Yevmiye"
 
 #. module: account_statement_import_sheet_file
-#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping____last_update
-#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser____last_update
-msgid "Last Modified on"
-msgstr "Son Değiştirilme"
-
-#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__write_uid
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser__write_uid
 msgid "Last Updated by"
@@ -618,3 +612,6 @@ msgstr "Boşluk"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "Tab"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Son Değiştirilme"
