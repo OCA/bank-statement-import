@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 ForgeFlow, S.L.
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="account_statement_import_sheet_mapping_form" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.form</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="account_statement_import_sheet_mapping_tree" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.tree</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="float_thousands_sep" />
+                            <field name="float_decimal_sep" />
+                        </group>
+                        <group>
+                            <field name="file_encoding" />
+                            <field name="delimiter" />
+                            <field name="quotechar" />
+                        </group>
+                        <group>
+                            <field name="timestamp_format" />
+                        </group>
+                        <group>
+                            <field name="no_header" />
+                            <div
+                                class="alert alert-warning"
+                                role="alert"
+                                invisible="not no_header"
+                            >
+                                <span
+                                    class="fa fa-info-circle"
+                                /> indicate the column number in the Columns section. The first column is 0.
+                            </div>
+                        </group>
+                        <group invisible="not debit_credit_column">
+                            <field name="debit_value" required="debit_credit_column" />
+                            <field name="credit_value" required="debit_credit_column" />
+                        </group>
+                        <group>
+                            <field name="header_lines_skip_count" />
+                            <field name="footer_lines_skip_count" />
+                        </group>
+                    </group>
+                    <group string="Columns">
+                        <group colspan="2" col="2">
+                            <div class="alert alert-info" role="alert" colspan="2">
+                                <span
+                                    class="fa fa-info-circle"
+                                /> Add the column names or column number (when the file has no header).
+                                You can concatenate multiple columns in the file into the same field, indicating the
+                                column names or numbers separated by comma.
+                            </div>
+                        </group>
+                        <group>
+                            <field name="timestamp_column" />
+                            <field name="currency_column" />
+                            <field name="amount_type" />
+                            <field
+                                name="amount_column"
+                                invisible="amount_type == 'distinct_credit_debit'"
+                                required="amount_type != 'distinct_credit_debit'"
+                            />
+
+                            <field
+                                name="amount_debit_column"
+                                invisible="amount_type != 'distinct_credit_debit'"
+                                required="amount_type == 'distinct_credit_debit'"
+                            />
+                            <field
+                                name="amount_credit_column"
+                                invisible="amount_type != 'distinct_credit_debit'"
+                                required="amount_type == 'distinct_credit_debit'"
+                            />
+                            <field name="amount_inverse_sign" />
+                            <field name="balance_column" />
+                            <field name="original_currency_column" />
+                            <field name="original_amount_column" />
+                            <field
+                                name="debit_credit_column"
+                                invisible="amount_type != 'absolute_value'"
+                                required="amount_type == 'absolute_value'"
+                            />
+                            <field name="transaction_id_column" />
+                            <field name="description_column" />
+                            <field name="notes_column" />
+                            <field name="reference_column" />
+                            <field name="partner_name_column" />
+                            <field name="bank_name_column" />
+                            <field name="bank_account_column" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record
+        id="action_statement_import_sheet_report_mappings"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Statement Sheet Mappings</field>
+        <field name="res_model">account.statement.import.sheet.mapping</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="menu_statement_import_sheet_mapping"
+        parent="account.account_account_menu"
+        action="action_statement_import_sheet_report_mappings"
+        name="Statement Sheet Mappings"
+    />
+</odoo>

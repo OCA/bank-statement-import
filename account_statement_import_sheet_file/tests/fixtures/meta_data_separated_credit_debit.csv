@@ -1,0 +1,10 @@
+Bank code : 1001010101,Agency Code : 10000,Download start date : 01/04/2020,Download end date : 02/04/2020,,
+Account Number : 08088804068,Account Name : Account Owner,: EUR,,,
+,,,,,
+Balance at end of period,,,,"+31070,11",
+Date,Operation Number,Label,Debit,Credit,Detail
+01/04/20,UNIQUE OP 1,LABEL 1,"-50,00",,DETAILS 1
+01/04/20,UNIQUE OP 2,LABEL 2,"-100,00",,CLIENTS X
+02/04/20,UNIQUE OP 3,LABEL 3,"-80,68",,DETAILS 2
+02/04/20,UNIQUE OP 4,LABEL 4,,"1300,00",DETAILS 3
+Balance at start of period,,,,"+30000,77",
