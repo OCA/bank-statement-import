@@ -1,8 +1,8 @@
 import base64
 import datetime
 
-from odoo.modules.module import get_module_resource
 from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_path
 
 
 class TestOfxFile(TransactionCase):
@@ -11,7 +11,7 @@ class TestOfxFile(TransactionCase):
     """
 
     def setUp(self):
-        super(TestOfxFile, self).setUp()
+        super().setUp()
         self.asi_model = self.env["account.statement.import"]
         self.abs_model = self.env["account.bank.statement"]
         self.j_model = self.env["account.journal"]
@@ -56,10 +56,8 @@ class TestOfxFile(TransactionCase):
         )
 
     def test_wrong_ofx_file_import(self):
-        ofx_file_path = get_module_resource(
-            "account_statement_import_ofx",
-            "tests/test_ofx_file/",
-            "test_ofx_wrong.ofx",
+        ofx_file_path = file_path(
+            "account_statement_import_ofx/tests/test_ofx_file/test_ofx_wrong.ofx"
         )
         ofx_file_wrong = base64.b64encode(open(ofx_file_path, "rb").read())
         bank_statement = self.asi_model.create(
@@ -71,8 +69,8 @@ class TestOfxFile(TransactionCase):
         self.assertFalse(bank_statement._check_ofx(data_file=ofx_file_wrong))
 
     def test_ofx_file_import(self):
-        ofx_file_path = get_module_resource(
-            "account_statement_import_ofx", "tests/test_ofx_file/", "test_ofx.ofx"
+        ofx_file_path = file_path(
+            "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
         )
         ofx_file = base64.b64encode(open(ofx_file_path, "rb").read())
         bank_statement = self.asi_model.create(
@@ -95,10 +93,8 @@ class TestOfxFile(TransactionCase):
         self.assertEqual(line.date, datetime.date(2013, 8, 24))
 
     def test_check_journal_bank_account(self):
-        ofx_file_path = get_module_resource(
-            "account_statement_import_ofx",
-            "tests/test_ofx_file/",
-            "test_ofx_iban.ofx",
+        ofx_file_path = file_path(
+            "account_statement_import_ofx/tests/test_ofx_file/test_ofx_iban.ofx"
         )
         ofx_file = base64.b64encode(open(ofx_file_path, "rb").read())
         bank_st = self.asi_model.create(
