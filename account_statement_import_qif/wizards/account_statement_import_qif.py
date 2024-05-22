@@ -10,7 +10,6 @@ import dateutil.parser
 
 from odoo import api, models
 from odoo.exceptions import UserError
-from odoo.tools.translate import _
 
 
 class AccountStatementImport(models.TransientModel):
@@ -32,7 +31,7 @@ class AccountStatementImport(models.TransientModel):
             header = data_list[0].strip()
             header = header.split(":")[1]
         except Exception as e:
-            raise UserError(_("Could not decipher the QIF file.")) from e
+            raise UserError(self.env._("Could not decipher the QIF file.")) from e
         transactions = []
         vals_line = {}
         total = 0
@@ -72,7 +71,7 @@ class AccountStatementImport(models.TransientModel):
                     pass
         else:
             raise UserError(
-                _(
+                self.env._(
                     "This file is either not a bank statement or is "
                     "not correctly formed."
                 )
