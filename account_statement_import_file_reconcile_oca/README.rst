@@ -78,6 +78,9 @@ Contributors
 ------------
 
 -  Alexis de Lattre <alexis.delattre@akretion.com>
+-  `APSL-Nagarro <https://apsl.tech>`__:
+
+   -  Miquel Pascual <mpascual@apsl.net>
 
 Maintainers
 -----------
