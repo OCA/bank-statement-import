@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_plaid
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20240104\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-22 12:02+0000\n"
+"PO-Revision-Date: 2024-05-22 13:04+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.3\n"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__development
+msgid "Development"
+msgstr "Desarrollo"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+#, python-format
+msgid "Error getting access token: %s"
+msgstr "Error al obtener el token de acceso: %s"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+#, python-format
+msgid "Error getting client api: %s"
+msgstr "Error obteniendo api de cliente: %s"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+#, python-format
+msgid "Error getting link token: %s"
+msgstr "Error al obtener el token de enlace: %s"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+#, python-format
+msgid "Error getting transactions: %s"
+msgstr "Error al obtener transacciones: %s"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model,name:account_statement_import_online_plaid.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Proveedor de extractos bancarios en línea"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields,field_description:account_statement_import_online_plaid.field_online_bank_statement_provider__plaid_access_token
+msgid "Plaid Access Token"
+msgstr "Ficha de acceso Plaid"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields,field_description:account_statement_import_online_plaid.field_online_bank_statement_provider__plaid_host
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Plaid Host"
+msgstr "Anfitrión"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model,name:account_statement_import_online_plaid.model_plaid_interface
+msgid "Plaid Interface"
+msgstr "Interfaz plaid"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Plaid config"
+msgstr "Configuración plaid"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__production
+msgid "Production"
+msgstr "Producción"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__sandbox
+msgid "Sandbox"
+msgstr "Salvadera"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Secret Key"
+msgstr "LLave secreta"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Sync with Plaid.com"
+msgstr "Sincronizar con plaid.com"
