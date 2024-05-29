@@ -74,7 +74,7 @@ class AccountStatementImport(models.TransientModel):
         return vals
 
     def import_single_file(self, file_data, result):
-        parsing_data = self.with_context(active_id=self.ids[0])._parse_file(file_data)
+        parsing_data = self._parse_file(file_data)
         if not isinstance(parsing_data, list):  # for backward compatibility
             parsing_data = [parsing_data]
         logger.info(
