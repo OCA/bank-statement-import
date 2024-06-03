@@ -9,7 +9,6 @@ from datetime import datetime
 from decimal import Decimal
 from io import StringIO
 from os import path
-import re
 
 from odoo import _, api, models
 from odoo.exceptions import UserError
@@ -480,19 +479,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
         return [transaction]
 
-    def _extract_number(self,value):
-        value = str(value)
-        patron = r'[-+]?\d+'
-        correct_value = re.search(patron, value)
-        if correct_value:
-            return correct_value.group()
-        else:
-            return None
-
-
     @api.model
     def _parse_decimal(self, value, mapping):
-        value = self._extract_number(value)
         if isinstance(value, Decimal):
             return value
         elif isinstance(value, float):

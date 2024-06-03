@@ -226,20 +226,6 @@ class AccountStatementImportSheetMapping(models.Model):
                         "have set Amount type = 'Distinct Credit/debit Column'"
                     )
                 )
-    
-    @api.onchange('amount_type')
-    def _onchange_amount_type(self):
-        if self.amount_type == 'simple_value':
-            self.debit_credit_column = False
-            self.amount_debit_column = False
-            self.amount_credit_column = False
-        elif self.amount_type == 'absolute_value':
-            self.amount_column = False
-            self.amount_debit_column = False
-            self.amount_credit_column = False
-        elif self.amount_type == 'distinct_credit_debit':
-            self.amount_column = False
-            self.debit_credit_column = False
 
     @api.onchange("float_thousands_sep")
     def onchange_thousands_separator(self):
