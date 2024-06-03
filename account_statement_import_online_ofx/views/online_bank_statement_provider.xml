@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="import_ofx_institutions"
+                        type="object"
+                        string="Import OFX Institutions"
+                        attrs="{'invisible': [('service', '!=', 'OFX')]}"
+                    />
+                </header>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page
+                        name="ofx_institutions_list"
+                        string="OFX Institutions"
+                        attrs="{'invisible': [('service', '!=', 'OFX')]}"
+                    >
+                        <field name="ofx_institution_line_ids" mode="tree">
+                            <tree editable="top">
+                                <field
+                                    name="institution_id"
+                                    options="{'no_create_edit': True, 'no_quick_create': True}"
+                                />
+                                <field name="username" required="1" />
+                                <field name="password" password="1" required="1" />
+                                <field name="bankid" required="1" />
+                                <field name="account_id" required="1" />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

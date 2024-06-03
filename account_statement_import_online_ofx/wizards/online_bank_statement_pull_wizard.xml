@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_pull_wizard_form">
+        <field name="name">online.bank.statement.pull.wizard.form</field>
+        <field name="model">online.bank.statement.pull.wizard</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_pull_wizard_form"
+        />
+        <field name="arch" type="xml">
+            <field name="date_since" position="before">
+                <field name="is_ofx_provider" invisible="1" />
+                <field
+                    name="ofx_institution_ids"
+                    options="{'no_create_edit': True, 'no_quick_create': True}"
+                    widget="many2many_tags"
+                    attrs="{'invisible':[('is_ofx_provider','!=',True)],'required':[('is_ofx_provider','=',True)]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
