@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2024-06-07 10:12+0000\n"
+"PO-Revision-Date: 2024-06-07 14:36+0000\n"
 "Last-Translator: Metin GÜLSOY <metin.gulsoy@kitayazilim.com>\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "Language: tr\n"
@@ -66,7 +66,7 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
-"'%(account_number)s' İş Ortağına bağlı,  '%(partner_name)s' numaralı banka "
+"'%(account_number)s' İş Ortağına bağlı, '%(partner_name)s' numaralı banka "
 "hesabı bulunamadı. Banka hesabını oluşturup ilgili banka yevmiyesine "
 "koymalısınız. İlgili banka yevmiyesi henüz mevcut değilse yenisini "
 "oluşturmalısınız."
@@ -89,7 +89,7 @@ msgstr "Görünüm Adı"
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Download bank statement files from your bank and upload them here."
-msgstr ""
+msgstr "Bankanızdan banka ekstresi dosyalarını indirin ve buraya yükleyin."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -105,15 +105,13 @@ msgstr "İçe Aktar"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "Banka İçe Aktar"
+msgstr "Banka Ekstresi Dosyasını İçe Aktar"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Banka İçe Aktar"
+msgstr "Banka Ekstresi Dosyalarını İçe Aktar"
 
 #. module: account_statement_import_file
 #: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
@@ -123,12 +121,12 @@ msgstr "Ekstre İçe Aktar"
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
-msgstr ""
+msgstr "Hesap Ektresi İçeri Aktarma"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "İçe Aktar ve Görüntüle"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_journal
@@ -155,36 +153,34 @@ msgstr "Son Güncelleme"
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing currency code in the bank statement file."
-msgstr ""
+msgstr "Banka ekstresi dosyasında para birimi kodu eksik."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Missing payment_ref on a transaction."
-msgstr "Bu dosya herhangi bir işlem içermiyor."
+msgstr "Bir işlemde ödeme_ref'i eksik."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
-#, fuzzy
 msgid "Statement File"
 msgstr "Banka Hesap Özeti Kalemi"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
 msgstr "Banka Hesap Özeti Kalemi"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "Desteklenen formatlar:"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr "Bu kaydın hesabı, yevmiye (%s) aynı değil."
 
@@ -197,6 +193,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"'%(account_number)s' numaralı banka hesabı Odoo'da mevcut ancak herhangi bir "
+"banka yevmiyesiayarlanmamış. İlgili banka yevmiyesine koymalısınız. İlgili "
+"banka yevmiyesi henüz mevcut değilse yenisini oluşturmalısınız."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -206,6 +205,8 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
+"Banka ekstresi dosyası '%s' para birimini kullanıyor ancak Odoo'da böyle bir "
+"para birimi yok."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -215,6 +216,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"Banka ekstresinin para birimi (%(currency_name)s), '%(journal_name)s' "
+"(%(journal_currency_name)s) yevmiyenin para birimiyle aynı değil."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -225,6 +228,8 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"Bu banka ekstresi dosyasının biçimi banka hesap numarasını içermediğinden "
+"sihirbazı kontrol panelindeki sağ banka yevmiyeden başlatmanız gerekir."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -234,18 +239,20 @@ msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
 msgstr ""
+"Dosya için bulunan yevmiye(%(journal_match)s) seçilen yevmiyeden "
+"(%(journal_selected)s) farklı."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "Ekstre dosyasının ayrıştırılması geçersiz bir sonuç döndürdü."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
@@ -256,11 +263,10 @@ msgstr ""
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Upload Bank Statements"
-msgstr ""
+msgstr "Banka Ekstrelerini Yükle"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
 msgstr "Banka Hesap Özeti Kalemi"
 
@@ -272,6 +278,8 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+"Bu dosyayı zaten içe aktardınız veya bu dosya yalnızca zaten içe aktarılmış "
+"işlemleri içeriyor."
 
 #~ msgid ""
 #~ "Get you bank statements in electronic format from your bank and select "
