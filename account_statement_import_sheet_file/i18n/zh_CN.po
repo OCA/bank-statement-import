@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-18 06:13+0000\n"
-"PO-Revision-Date: 2024-06-12 08:51+0000\n"
+"PO-Revision-Date: 2024-06-12 12:34+0000\n"
 "Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -484,7 +484,7 @@ msgstr "唯一交易ID列名"
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 #, python-format
 msgid "Use amount_column if you have set Amount type = 'Single value'"
-msgstr "如果将金额类型设置为“简单值”，请使用金额列。"
+msgstr "如果将金额类型设置为“简单值”，请使用金额列"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -493,14 +493,14 @@ msgstr "如果将金额类型设置为“简单值”，请使用金额列。"
 msgid ""
 "Use amount_debit_column and amount_credit_column if you have set Amount type "
 "= 'Distinct Credit/debit Column'"
-msgstr "如果将金额类型设置为“不同的贷方/借方列”，请使用借方金额和贷方金额列。"
+msgstr "如果将金额类型设置为“不同的贷方/借方列”，请使用借方金额和贷方金额列"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 #, python-format
 msgid "Use debit_credit_column if you have set Amount type = 'Absolute value'"
-msgstr "用于金额类型设置为“绝对值”，使用借/贷列。"
+msgstr "用于金额类型设置为“绝对值”，使用借/贷列"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__debit_credit_column
