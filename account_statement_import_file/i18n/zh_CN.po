@@ -25,8 +25,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2019-08-26 09:08+0000\n"
-"Last-Translator: ryan ryan <itechr@outlook.com>, 2019\n"
+"PO-Revision-Date: 2024-06-12 08:50+0000\n"
+"Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -34,13 +34,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "%d transactions had already been imported and were ignored."
-msgstr "%d 已导入的交易将被忽略"
+msgstr "%d 个已导入的交易将被忽略。"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -52,7 +53,7 @@ msgstr "1个 已导入的交易将被忽略."
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "<span>Import (OCA)</span>"
-msgstr ""
+msgstr "<span>导入(OCA)</span>"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
@@ -69,6 +70,9 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"找不到与合作伙伴 '%(partner_name)s' 关联的银行账户 '%(account_number)s'。您应"
+"该创建银行账户并将其设置在相关的银行日记账上。如果相关的银行日记账尚不存在，"
+"您应该创建一个新的。"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -78,7 +82,7 @@ msgstr "创建者"
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
 msgid "Created on"
-msgstr "创建时间"
+msgstr "创建于"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__display_name
@@ -88,7 +92,7 @@ msgstr "显示名称"
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Download bank statement files from your bank and upload them here."
-msgstr ""
+msgstr "从您的银行下载银行对账单文件，并在此处上传。"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -104,15 +108,13 @@ msgstr "导入"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "导入银行对账单"
+msgstr "导入银行对账单文件"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "导入银行对账单"
+msgstr "导入银行对账单文件"
 
 #. module: account_statement_import_file
 #: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
@@ -122,12 +124,12 @@ msgstr "导入对账单"
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
-msgstr ""
+msgstr "导入对账单(OCA)"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "导入并查看"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_journal
@@ -137,7 +139,7 @@ msgstr "日记账"
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
 msgid "Last Modified on"
-msgstr "最后更改日"
+msgstr "最后修改于"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
@@ -147,45 +149,43 @@ msgstr "最后更新者"
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_date
 msgid "Last Updated on"
-msgstr "更新时间"
+msgstr "最后更新于"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "Missing currency code in the bank statement file."
-msgstr ""
+msgstr "银行对账单文件中缺少货币代码。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Missing payment_ref on a transaction."
-msgstr "这个文件不包含任何交易"
+msgstr "交易中缺少payment_ref字段。"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
-#, fuzzy
 msgid "Statement File"
-msgstr "银行对账单明细"
+msgstr "对账单文件"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
-msgstr "银行对账单明细"
+msgstr "对账单文件名"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "支持的格式："
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
-msgstr "对账单中的科目和日记账(%s)中的不一样"
+msgstr "日记账 ‘%s’ 上未设置银行科目。"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -196,6 +196,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Odoo 中存在银行账户 '%(account_number)s'，但它没有设置在任何银行日记账上。您"
+"应该将其设置在相关的银行日记账上。如果相关的银行日记账尚不存在，您应该创建一"
+"个新的。"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -204,7 +207,7 @@ msgstr ""
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
-msgstr ""
+msgstr "银行对账单文件使用币种 '%s'，但 Odoo 中没有这个币种。"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -214,6 +217,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"银行对账单的币种 (%(currency_name)s) 与日记账 '%(journal_name)s' 的币种 "
+"(%(journal_currency_name)s) 不一致。"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -223,7 +228,8 @@ msgid ""
 "The format of this bank statement file doesn't contain the bank account "
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
-msgstr ""
+msgstr "此银行对账单文件的格式不包含银行账户号码，您应该从仪表板中正确的银行日记账上"
+"启动向导。"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -232,25 +238,26 @@ msgstr ""
 msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
-msgstr ""
+msgstr "从对账单文件中找到的日记账 (%(journal_match)s) 与所选的的日记账 "
+"(%(journal_selected)s) 不一致。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "解析对账单文件返回了无效的结果。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
 msgstr ""
-"提供的文件不对.\n"
-"你安装了模块来支持这种类型的文件吗？"
+"此银行对账单文件格式不受支持。 \n"
+"您是否安装了支持此格式的 Odoo 模块？"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
@@ -259,9 +266,8 @@ msgstr "上传银行对账单"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
-msgstr "上传银行对账单"
+msgstr "上传一个银行对账单文件"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -270,7 +276,7 @@ msgstr "上传银行对账单"
 msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
-msgstr ""
+msgstr "您已经导入过这个文件，或者这个文件只包含已经导入的交易。"
 
 #~ msgid ""
 #~ "Get you bank statements in electronic format from your bank and select "
