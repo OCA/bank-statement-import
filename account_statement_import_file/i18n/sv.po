@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2021-11-19 15:36+0000\n"
-"Last-Translator: Simon S <simon.stromberg@vertel.se>\n"
+"PO-Revision-Date: 2024-06-19 12:39+0000\n"
+"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -40,7 +40,7 @@ msgstr "1 transaktion hade redan importerats och ignorerats därför."
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "<span>Import (OCA)</span>"
-msgstr ""
+msgstr "<span>Import (OCA)</span>"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
@@ -57,6 +57,10 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Kunde inte hitta något bankkonto med nummer \"%(account_number)s\" kopplat "
+"till partner \"%(partner_name)s\". Du bör skapa bankkontot och ange det på "
+"den relaterade bankjournalen. Om den relaterade bankjournalen inte finns "
+"ännu bör du skapa en ny."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -76,7 +80,7 @@ msgstr "Visningsnamn"
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Download bank statement files from your bank and upload them here."
-msgstr ""
+msgstr "Ladda ner kontoutdragsfiler från din bank och ladda upp dem här."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -92,30 +96,28 @@ msgstr "Importera"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "Importera bankkontoutdrag"
+msgstr "Importera kontoutdragsfil"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Importera bankkontoutdrag"
+msgstr "Importera kontoutdragsfil"
 
 #. module: account_statement_import_file
 #: model:ir.ui.menu,name:account_statement_import_file.account_statement_import_menu
 msgid "Import Statement"
-msgstr "Importera kontoutdrag"
+msgstr "Importförsäkran"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
-msgstr ""
+msgstr "Importförsäkran (OCA)"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "Importera och visa"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_journal
@@ -169,9 +171,9 @@ msgstr "Format som stöds:"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
-msgstr "Bankbokföringskontot är inte inställt i journalen '%s'."
+msgstr "Bankkontot är inte inställt i journalen '%s'."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -182,6 +184,10 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't exist yet, you should create a new one."
 msgstr ""
+"Bankkontot med nummer \"%(account_number)s\" finns i Odoo men det är inte "
+"angivet på någon bankjournal. Du bör ange det på den relaterade "
+"bankjournalen. Om den relaterade bankjournalen inte finns ännu, bör du skapa "
+"en ny."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -191,7 +197,7 @@ msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
 msgstr ""
-"Bankutdragsraden använder valutan '%s' men det finns inte någon sådan valuta "
+"Bankutdragsfilen använder valutan '%s' men det finns inte någon sådan valuta "
 "i Odoo."
 
 #. module: account_statement_import_file
@@ -202,6 +208,8 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"Valutan på kontoutdraget (%(currency_name)s) är inte samma som valutan på "
+"journalen \"%(journal_name)s\" (%(journal_currency_name)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -212,8 +220,8 @@ msgid ""
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
-"Formatet för den här kontoutdragsfilen innehåller inte bankkontonumret, så "
-"du måste starta guiden från rätt bankjournal i instrumentpanelen."
+"Formatet för denna kontoutdragsfil innehåller inte bankkontonumret, så du "
+"måste starta guiden från rätt bankjournal i instrumentpanelen."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -223,13 +231,15 @@ msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
 msgstr ""
+"Den journal som hittades för filen (%(journal_match)s) skiljer sig från den "
+"valda journalen (%(journal_selected)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 #, python-format
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "Analysen av statement-filen gav ett ogiltigt resultat."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -244,15 +254,13 @@ msgstr ""
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload Bank Statements"
-msgstr "Importera bankkontoutdrag"
+msgstr "Ladda upp kontoutdrag"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
-msgstr "Välj ett kontoutdrag att importera"
+msgstr "Ladda upp ett kontoutdragsfil"
 
 #. module: account_statement_import_file
 #. odoo-python
