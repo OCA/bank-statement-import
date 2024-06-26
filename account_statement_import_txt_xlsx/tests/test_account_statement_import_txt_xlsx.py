@@ -476,6 +476,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
             {
                 "offset_column": 1,
                 "offset_row": 2,
+                "offset_footer": 3,
             }
         )
         wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(

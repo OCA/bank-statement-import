@@ -77,6 +77,13 @@ class AccountStatementImportSheetMapping(models.Model):
         default=0,
         help="Vertical spaces to ignore before starting to parse",
     )
+    offset_footer = fields.Integer(
+        string="Footer lines skip count",
+        help="Set the Footer lines number."
+        "Used in some csv/xlsx file that integrate meta data in"
+        "last lines.",
+        default="0",
+    )
     timestamp_column = fields.Char(string="Timestamp column", required=True)
     currency_column = fields.Char(
         string="Currency column",
@@ -157,7 +164,6 @@ class AccountStatementImportSheetMapping(models.Model):
         string="Bank Account column",
         help="Partner's bank account",
     )
-
     _sql_constraints = [
         (
             "check_amount_columns",
