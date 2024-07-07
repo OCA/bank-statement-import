@@ -1,0 +1,74 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_camt54
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-12-19 14:30+0000\n"
+"Last-Translator: Yung-Wa <yw.ng@onestein.nl>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_camt54
+#: model:ir.model,name:account_statement_import_camt54.model_account_statement_import_camt_parser
+msgid "Account Bank Statement Import CAMT parser"
+msgstr "Rekeningafschrift importeren CAMT ontleder"
+
+#. module: account_statement_import_camt54
+#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__transfer_line
+msgid "Add balance Line"
+msgstr "Saldolijn toevoegen"
+
+#. module: account_statement_import_camt54
+#. odoo-python
+#: code:addons/account_statement_import_camt54/models/parser.py:0
+#, python-format
+msgid ""
+"Config parameter `isr_partner_ref` is wrong.\n"
+"It must be in format `i[,n]` \n"
+"`i` and `n` must be integers.\n"
+"e.g. \"13,6\""
+msgstr ""
+"Configuratieparameter `isr_partner_ref` is verkeerd.\n"
+"Hij moet het formaat `i[,n]` hebben. \n"
+"`i` en `n` moeten gehele getallen zijn.\n"
+"Bijv. \"13,6\""
+
+#. module: account_statement_import_camt54
+#. odoo-python
+#: code:addons/account_statement_import_camt54/models/parser.py:0
+#, python-format
+msgid ""
+"Config parameter `isr_partner_ref` is wrong.\n"
+"It must be in format `i[,n]` \n"
+"where `i` is the position of the first digit and\n"
+"`n` the number of digit in the reference, by default 6.\n"
+"e.g. \"13,6\""
+msgstr ""
+"Configuratieparameter `isr_partner_ref` is verkeerd.\n"
+"Hij moet het formaat `i[,n]` hebben. \n"
+"waarbij `i` de positie van het eerste cijfer is en\n"
+"`n` het aantal cijfers in de verwijzing, standaard 6.\n"
+"Bijv \"13,6\""
+
+#. module: account_statement_import_camt54
+#: model:ir.model.fields,help:account_statement_import_camt54.field_account_journal__transfer_line
+msgid "Generate balance line on total of bank statement import"
+msgstr "Genereer saldoregel op het totaal van geïmporteerde bankafschriften"
+
+#. module: account_statement_import_camt54
+#: model:ir.model,name:account_statement_import_camt54.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Bankafschriften importeren"
+
+#. module: account_statement_import_camt54
+#: model:ir.model,name:account_statement_import_camt54.model_account_journal
+msgid "Journal"
+msgstr "Dagboek"
