@@ -92,6 +92,10 @@ Contributors
 
    -  Ronald Portier <ronald@therp.nl>
 
+-  `Tecnativa <https://www.tecnativa.com>`__:
+
+   -  Carolina Fernandez
+
 Maintainers
 -----------
 

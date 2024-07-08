@@ -164,7 +164,12 @@ class OnlineBankStatementProvider(models.Model):
     def _compute_name(self):
         """We can have multiple providers/journals for the same service."""
         for provider in self:
-            provider.name = " ".join([provider.journal_id.name, provider.service])
+            provider.name = " ".join(
+                [
+                    provider.journal_id.name if provider.journal_id else "",
+                    provider.service or "",
+                ]
+            )
 
     @api.depends("active", "interval_type", "interval_number")
     def _compute_update_schedule(self):
@@ -289,7 +294,7 @@ class OnlineBankStatementProvider(models.Model):
     def make_statement_name(self, statement_date_since):
         """Make name for statement using date and journal name."""
         self.ensure_one()
-        return "%s/%s" % (
+        return "{}/{}".format(
             self.journal_id.code,
             statement_date_since.strftime("%Y-%m-%d"),
         )
