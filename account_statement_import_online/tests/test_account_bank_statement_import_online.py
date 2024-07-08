@@ -406,13 +406,11 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
                 )
             else:
                 _logger.warning(
-                    _("Names and dates for statements found: %(statements)s"),
-                    dict(
-                        statements=", ".join(
-                            ["%s - %s" % (stmt.name, stmt.date) for stmt in statements]
-                        )
-                    ),
+                    _("Names and dates for statements found: {}").format(
+                        ", ".join(f"{stmt.name} - {stmt.date}" for stmt in statements)
+                    )
                 )
+
         # Now do the normal assert.
         self.assertEqual(len(statements), expected_length)
         # If we got expected number, return them.
