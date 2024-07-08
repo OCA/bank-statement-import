@@ -51,7 +51,7 @@
                     <button
                         type="action"
                         name="%(action_online_bank_statements_pull_wizard)d"
-                        attrs="{'invisible': [('active', '=', False)]}"
+                        invisible="not active"
                         string="Pull Online Bank Statement"
                     />
                 </header>
@@ -60,7 +60,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <group name="main" col="2">
                         <group name="params">
