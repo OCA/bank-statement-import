@@ -179,11 +179,13 @@ class CamtParser(models.AbstractModel):
             transaction,
             "ref",
         )
-        amount = self.parse_amount(ns, node)
-        if amount != 0.0:
-            transaction["amount"] = amount
+        self.parse_amount_details(ns, node,transaction)
         # remote party values
-        party_type = "Dbtr"
+        ultimate_debtor = node.xpath("./ns:RltdPties/ns:UltmtDbtr", namespaces={"ns": ns})
+        if ultimate_debtor:
+            party_type = "UltmtDbtr"
+        else:
+            party_type = "Dbtr"
         party_type_node = node.xpath("../../ns:CdtDbtInd", namespaces={"ns": ns})
         if party_type_node and party_type_node[0].text != "CRDT":
             party_type = "Cdtr"
@@ -241,6 +243,22 @@ class CamtParser(models.AbstractModel):
                     transaction,
                     "account_number",
                 )
+
+    def parse_amount_details(self,ns,node,transaction):
+        amount = self.parse_amount(ns,node)
+        if amount != 0.0:
+            if transaction["amount"] != 0 and transaction["amount"] != amount:
+                # Probably currencies in this transaction
+                ntry_dtls_currency = node.xpath("ns:Amt/@Ccy", namespaces={"ns": ns})[0]
+                ntry_currency = node.xpath("../../ns:Amt/@Ccy", namespaces={"ns": ns})[0]
+                if ntry_currency and ntry_dtls_currency and ntry_currency != ntry_dtls_currency:
+                    other_currency = self.env["res.currency"].search(
+                        [("name", "=", ntry_dtls_currency)], limit=1
+                    )
+                    transaction["amount_currency"] = amount
+                    transaction["foreign_currency_id"] = other_currency.id
+            else:
+                transaction["amount"] = amount
 
     def generate_narration(self, transaction):
         # this block ensure compatibility with v13
