@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, exceptions, models
-
+import re
 
 class CamtParser(models.AbstractModel):
     """Parser for camt bank statement import files."""
@@ -98,3 +98,34 @@ class CamtParser(models.AbstractModel):
             "ref",
         )
         return True
+    def parse_amount_details(self,ns,node,transaction):
+        re_camt_version = re.compile(
+            r"(^urn:iso:std:iso:20022:tech:xsd:camt.054."
+            r"|^ISO:camt.054.)"
+        )
+        if re_camt_version.search(ns):
+            #camt54 use amounts only from txdtls
+            transaction['amount'] = self.parse_amount(ns,node)
+        super().parse_amount_details(ns,node,transaction)
+
+    def parse_statement(self, ns, node):
+        """In case of a camt54 file, the QR-IBAN to be used as the account_number
+        is found in another place than the IBAN."""
+        result = super().parse_statement(ns, node)
+        re_camt_version = re.compile(
+            r"(^urn:iso:std:iso:20022:tech:xsd:camt.054."
+            r"|^ISO:camt.054.)"
+        )
+        if re_camt_version.search(ns):
+            self.add_value_from_node(
+                ns,
+                node,
+                [
+                    "./ns:Ntry[1]/ns:NtryRef",
+                    "./ns:Acct/ns:Id/ns:IBAN",
+                    "./ns:Acct/ns:Id/ns:Othr/ns:Id",
+                ],
+                result,
+                "account_number",
+            )
+        return result
