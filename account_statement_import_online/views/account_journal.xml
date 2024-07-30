@@ -21,6 +21,7 @@
                     groups="account.group_account_user"
                     attrs="{'invisible': [('bank_statements_source', '!=', 'online')]}"
                 >
+
                     <label
                         for="online_bank_statement_provider"
                         string="Provider"
@@ -28,25 +29,22 @@
                         class="oe_edit_only"
                         groups="account.group_account_user"
                     />
-                    <field
-                        name="online_bank_statement_provider"
-                        nolabel="1"
-                        attrs="{'required': [('bank_statements_source', '=', 'online')]}"
-                        class="oe_edit_only"
-                        groups="account.group_account_user"
-                    />
-                    <label
-                        for="online_bank_statement_provider_id"
-                        string="Provider"
-                        attrs="{'invisible': [('online_bank_statement_provider_id', '=', False)]}"
-                        class="oe_read_only"
-                    />
-                    <field
-                        name="online_bank_statement_provider_id"
-                        nolabel="1"
-                        attrs="{'invisible': [('online_bank_statement_provider_id', '=', False)]}"
-                        class="oe_read_only"
-                    />
+                    <div>
+                        <field
+                            name="online_bank_statement_provider"
+                            nolabel="1"
+                            attrs="{'required': [('bank_statements_source', '=', 'online')]}"
+                            class="oe_inline"
+                            groups="account.group_account_user"
+                        />
+                        <field name="online_bank_statement_provider_id" invisible="1" />
+                        <button
+                            name="action_open_online_bank_statement_provider"
+                            type="object"
+                            string="Configuration"
+                            attrs="{'invisible': [('online_bank_statement_provider_id', '=', False)]}"
+                        />
+                    </div>
                 </group>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">

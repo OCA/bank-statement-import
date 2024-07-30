@@ -95,3 +95,13 @@ class AccountJournal(models.Model):
         self.ensure_one()
         provider = self.online_bank_statement_provider_id
         return provider.action_online_bank_statements_pull_wizard()
+
+    def action_open_online_bank_statement_provider(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Statement Provider",
+            "view_mode": "form",
+            "res_model": "online.bank.statement.provider",
+            "res_id": self.online_bank_statement_provider_id.id,
+            "target": "current",
+        }
