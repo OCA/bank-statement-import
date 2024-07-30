@@ -98,6 +98,7 @@ msgstr "Compañía relacionada a este diario"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Configuration"
 msgstr "Configuración"
 
