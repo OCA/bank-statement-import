@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019 Dataplug (https://dataplug.io)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+    <record model="ir.cron" id="ir_cron_account_pull_online_bank_statements">
+        <field name="name">Pull Online Bank Statements</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="state">code</field>
+        <field name="nextcall">2019-01-01 00:10:00</field>
+        <field name="doall" eval="False" />
+        <field
+            name="model_id"
+            ref="account_statement_import_online.model_online_bank_statement_provider"
+        />
+        <field name="code">model._scheduled_pull()</field>
+    </record>
+</odoo>

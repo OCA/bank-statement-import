@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+    Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2019-2020 Dataplug (https://dataplug.io)
+-->
+<odoo noupdate="1">
+    <record id="online_bank_statement_provider_multicompany" model="ir.rule">
+        <field name="name">Online Bank Statement Provider multi-company</field>
+        <field name="model_id" ref="model_online_bank_statement_provider" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+    </record>
+</odoo>
