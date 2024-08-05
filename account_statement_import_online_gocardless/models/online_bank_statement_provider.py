@@ -364,8 +364,8 @@ class OnlineBankStatementProvider(models.Model):
                     "ref": partner_name or "/",
                     "payment_ref": payment_ref,
                     "unique_import_id": (
-                        tr.get("entryReference")
-                        or tr.get("transactionId")
+                        tr.get("transactionId")
+                        or tr.get("entryReference")
                         or tr.get("internalTransactionId")
                     ),
                     "amount": amount_currency,
