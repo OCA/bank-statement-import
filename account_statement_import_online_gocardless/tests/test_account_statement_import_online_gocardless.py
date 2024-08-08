@@ -21,6 +21,14 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         cls.now = fields.Datetime.now()
         cls.currency_eur = cls.env.ref("base.EUR")
         cls.currency_eur.write({"active": True})
+        bank_account = cls.env["res.partner.bank"].create(
+            {
+                "acc_number": "NL77ABNA0574908765",
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
+            }
+        )
         cls.journal = cls.env["account.journal"].create(
             {
                 "name": "GoCardless Bank Test",
@@ -29,6 +37,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
                 "currency_id": cls.currency_eur.id,
                 "bank_statements_source": "online",
                 "online_bank_statement_provider": "gocardless",
+                "bank_account_id": bank_account.id,
             }
         )
         cls.provider = cls.journal.online_bank_statement_provider_id
@@ -77,6 +86,31 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
             _provider_class + "._gocardless_request_transactions",
             return_value=cls.return_value,
         )
+        cls.request_requisition_value = {
+            "accounts": ["ACCOUNT-ID-1"],
+            "agreement": "TEST-AGREEMENT-ID",
+        }
+        cls.mock_requisition = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_requisition",
+            return_value=cls.request_requisition_value,
+        )
+        cls.request_account_value = {
+            "id": "ACCOUNT-ID-1",
+            "iban": "nl77abna0574908765",
+        }
+        cls.mock_account = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_account",
+            return_value=cls.request_account_value,
+        )
+        cls.request_agreement_value = {
+            "id": "TEST-AGREEMENT-ID",
+            "accepted": cls.now.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+            "access_valid_for_days": 30,
+        }
+        cls.mock_agreement = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_agreement",
+            return_value=cls.request_agreement_value,
+        )
 
     def test_mocked_gocardless(self):
         vals = {
@@ -100,3 +134,8 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         lines = statements.line_ids.sorted(lambda x: x.date)
         self.assertEqual(len(lines), 2)
         self.assertEqual(lines.mapped("amount"), [45.0, -15.0])
+
+    def test_provider_gocardless_finish_requisition(self):
+        with self.mock_requisition(), self.mock_account(), self.mock_agreement():
+            res = self.provider._gocardless_finish_requisition(dry=True)
+            self.assertTrue(res, "Bank account not found!")
