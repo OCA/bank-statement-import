@@ -13,7 +13,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
-GOCARDLESS_API = "https://bankaccountdata.gocardless.com/api/v2"
+GOCARDLESS_API = "https://bankaccountdata.gocardless.com/api/v2/"
 REQUESTS_TIMEOUT = 60
 
 
@@ -57,7 +57,9 @@ class OnlineBankStatementProvider(models.Model):
             headers["Authorization"] = f"Bearer {self._gocardless_get_token()}"
         return headers
 
-    def _gocardless_request(self, endpoint, request_type="get", params=None, data=None):
+    def _gocardless_request(
+        self, endpoint, request_type="get", params=None, data=None, basic_auth=False
+    ):
         content = {}
         url = url_join(GOCARDLESS_API, endpoint)
         response = getattr(requests, request_type)(
@@ -93,6 +95,7 @@ class OnlineBankStatementProvider(models.Model):
                 data=json.dumps(
                     {"secret_id": self.username, "secret_key": self.password}
                 ),
+                basic_auth=True,
             )
             expiration_date = now + relativedelta(seconds=data.get("access_expires", 0))
             vals = {
