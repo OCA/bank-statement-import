@@ -66,7 +66,7 @@ class OnlineBankStatementProvider(models.Model):
             url,
             data=data,
             params=params,
-            headers=self._gocardless_get_headers(),
+            headers=self._gocardless_get_headers(basic=basic_auth),
             timeout=REQUESTS_TIMEOUT,
         )
         if response.status_code in [200, 201]:
