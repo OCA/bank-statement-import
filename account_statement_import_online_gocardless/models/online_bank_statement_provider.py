@@ -61,7 +61,7 @@ class OnlineBankStatementProvider(models.Model):
         self, endpoint, request_type="get", params=None, data=None, basic_auth=False
     ):
         content = {}
-        url = url_join(GOCARDLESS_API, endpoint)
+        url = url_join(GOCARDLESS_API, endpoint) + "/"
         response = getattr(requests, request_type)(
             url,
             data=data,
@@ -143,9 +143,9 @@ class OnlineBankStatementProvider(models.Model):
                 "view_mode": "form",
                 "target": "new",
             }
-        return self._gocardless_select_bank_instituion()
+        return self._gocardless_select_bank_institution()
 
-    def _gocardless_select_bank_instituion(self):
+    def _gocardless_select_bank_institution(self):
         """Ask for the GoCardless bank instituion and continue full linkage."""
         country = (
             self.journal_id.bank_account_id.company_id or self.journal_id.company_id
