@@ -10,7 +10,7 @@
     "license": "LGPL-3",
     "depends": ["account_statement_import_base"],
     "author": "Odoo SA, Akretion, Odoo Community Association (OCA)",
-    "maintainers": ["alexis-via"],
+    "maintainers": ["alexis-via", "etobella"],
     "development_status": "Mature",
     "website": "https://github.com/OCA/bank-statement-import",
     "data": [
@@ -21,5 +21,11 @@
     "demo": [
         "demo/partner_bank.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "account_statement_import_file/static/src/**/*.xml",
+            "account_statement_import_file/static/src/**/*.esm.js",
+        ],
+    },
     "installable": True,
 }
