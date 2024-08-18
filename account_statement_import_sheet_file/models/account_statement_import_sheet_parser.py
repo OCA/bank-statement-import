@@ -189,6 +189,18 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 [next(csv_or_xlsx) for _i in range(header_line)]
                 header = [value.strip() for value in next(csv_or_xlsx)]
 
+        if mapping.amount_type == "simple_value":
+            mapping.debit_credit_column = False
+            mapping.amount_debit_column = False
+            mapping.amount_debit_column = False
+        elif mapping.amount_type == "absolute_value":
+            mapping.amount_column = False
+            mapping.amount_debit_column = False
+            mapping.amount_debit_column = False
+        elif mapping.amount_type == "distinct_credit_debit":
+            mapping.amount_column = False
+            mapping.debit_credit_column = False
+            
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
         # respectivos campos related
         for column_name in self._get_column_names():
