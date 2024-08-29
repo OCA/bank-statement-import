@@ -59,6 +59,7 @@
                                 name="offset_row"
                                 attrs="{'invisible': [('no_header', '=', True)]}"
                             />
+                            <field name="offset_footer" />
                         </group>
                         <group
                             attrs="{'invisible': [('debit_credit_column', '=', False)]}"
