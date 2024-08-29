@@ -61,7 +61,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
         lines = self._parse_lines(mapping, data_file, currency_code)
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
-
+        if not isinstance(lines[0]["timestamp"], datetime):
+            if lines[0]["description"] and lines[0]["balance"]:
+                lines[0]["timestamp"] = lines[1]["timestamp"]
         lines = list(sorted(lines, key=lambda line: line["timestamp"]))
         first_line = lines[0]
         last_line = lines[-1]
