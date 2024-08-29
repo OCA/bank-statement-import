@@ -4,6 +4,7 @@
 
 import itertools
 import logging
+import re
 from datetime import datetime
 from decimal import Decimal
 from io import StringIO
@@ -61,7 +62,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
         lines = self._parse_lines(mapping, data_file, currency_code)
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
-
         lines = list(sorted(lines, key=lambda line: line["timestamp"]))
         first_line = lines[0]
         last_line = lines[-1]
@@ -280,12 +280,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
             return {}
 
         if isinstance(timestamp, str):
-            timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
+            if not (timestamp == "" and description):
+                timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
 
-        if balance:
+        if balance or balance == 0.0:
             balance = self._parse_decimal(balance, mapping)
         else:
-            balance = None
+            if not balance:
+                balance = 0.0
 
         if debit_credit:
             amount = amount.copy_abs()
@@ -434,8 +436,16 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if isinstance(value, Decimal):
             return value
         elif isinstance(value, float):
-            return Decimal(value)
+            return Decimal(str(value))
         thousands, decimal = mapping._get_float_separators()
+        # Remove all characters except digits, thousands separator,
+        # decimal separator, and signs
+        value = (
+            re.sub(
+                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+", "", value
+            )
+            or "0"
+        )
         value = value.replace(thousands, "")
         value = value.replace(decimal, ".")
         return Decimal(value)

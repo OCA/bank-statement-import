@@ -1,7 +1,6 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import decimal
 from base64 import b64encode
 from os import path
 
@@ -516,7 +515,7 @@ class TestAccountBankStatementImportTxtXlsx(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        with self.assertRaises(decimal.InvalidOperation):
+        with self.assertRaises(ValueError):
             wizard.with_context(
                 account_statement_import_txt_xlsx_test=True
             ).import_file_button()
