@@ -30,7 +30,7 @@ addon | version | maintainers | summary
 [account_statement_import_ofx](account_statement_import_ofx/) | 14.0.1.0.0 |  | Import OFX Bank Statement
 [account_statement_import_ofx_by_acctid](account_statement_import_ofx_by_acctid/) | 14.0.1.0.0 |  | Import OFX Bank Statement by ACCTID
 [account_statement_import_online](account_statement_import_online/) | 14.0.4.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements update
-[account_statement_import_online_paypal](account_statement_import_online_paypal/) | 14.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
+[account_statement_import_online_paypal](account_statement_import_online_paypal/) | 14.0.1.0.1 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for PayPal.com
 [account_statement_import_online_ponto](account_statement_import_online_ponto/) | 14.0.2.0.0 |  | Online Bank Statements: MyPonto.com
 [account_statement_import_online_ponto_ing](account_statement_import_online_ponto_ing/) | 14.0.1.0.0 |  | Online Bank Statements: MyPonto.com ING customization
 [account_statement_import_online_wise](account_statement_import_online_wise/) | 14.0.1.0.0 | [![alexey-pelykh](https://github.com/alexey-pelykh.png?size=30px)](https://github.com/alexey-pelykh) | Online bank statements for Wise.com (TransferWise.com)
