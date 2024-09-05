@@ -168,6 +168,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 decoded_file = data_file.decode(detected_encoding)
             csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
         header = False
+
+        if mapping.offset_header:
+            for _row in range(mapping.offset_header):
+                next(csv_or_xlsx)
+
         if not mapping.no_header:
             if isinstance(csv_or_xlsx, tuple):
                 header = [

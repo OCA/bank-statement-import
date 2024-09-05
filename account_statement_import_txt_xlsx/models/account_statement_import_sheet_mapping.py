@@ -62,6 +62,11 @@ class AccountStatementImportSheetMapping(models.Model):
         help="When this occurs please indicate the column number in the Columns section "
         "instead of the column name, considering that the first column is 0",
     )
+    offset_header = fields.Integer(
+        "Offset Header",
+        default=0,
+        help="Number of row to ignore until the header",
+    )
     skip_empty_lines = fields.Boolean(
         "Skip Empty Lines",
         default=False,
