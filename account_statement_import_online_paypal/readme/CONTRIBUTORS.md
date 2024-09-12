@@ -1,0 +1,6 @@
+- [CorporateHub](https://corporatehub.eu/)
+  - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
+- Omar Castiñeira \<<omar@comunitea.com>\>
+- isufi kapasi \<<isufi.kapasi@initos.com>\>
+- [Ondergetekende BV](https://www.ondergetekende.nl)
+    - Koert van der Veer
