@@ -66,7 +66,8 @@ EVENT_DESCRIPTIONS = {
     "T0401": _("AutoSweep"),
     "T0402": _("Withdrawal to Hyperwallet"),
     "T0403": _(
-        "Withdrawals initiated by user manually. Not related to automated scheduled withdrawals"
+        "Withdrawals initiated by user manually. "
+        "Not related to automated scheduled withdrawals"
     ),
     "T0500": _("General PayPal debit card transaction"),
     "T0501": _("Virtual PayPal debit card transaction"),
@@ -295,10 +296,10 @@ class OnlineBankStatementProviderPayPal(models.Model):
             invoice = _("Invoice %s") % invoice
         note = transaction_id
         if transaction_subject or transaction_note:
-            note = "{}: {}".format(note, transaction_subject or transaction_note)
+            note = f"{note}: {transaction_subject or transaction_note}"
         if payer_email:
             note += " (%s)" % payer_email
-        unique_import_id = "{}-{}".format(transaction_id, int(date.timestamp()))
+        unique_import_id = f"{transaction_id}-{int(date.timestamp())}"
         name = (
             invoice
             or transaction_subject
@@ -368,11 +369,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
         url = (
             (self.api_base or PAYPAL_API_BASE)
             + "/v1/reporting/transactions"
-            + ("?start_date=%s" "&end_date=%s" "&fields=all")
-            % (
-                transaction_date,
-                transaction_date,
-            )
+            + f"?start_date={transaction_date}"
+            + f"&end_date={transaction_date}"
+            "&fields=all"
         )
         data = self._paypal_retrieve(url, token)
         transactions = data["transaction_details"]
@@ -471,8 +470,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
     def _paypal_decode_error(self, content):
         if "name" in content:
             return UserError(
-                "%s: %s"
-                % (
+                "{}: {}".format(
                     content["name"],
                     content.get("message", _("Unknown error")),
                 )
@@ -480,8 +478,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
         if "error" in content:
             return UserError(
-                "%s: %s"
-                % (
+                "{}: {}".format(
                     content["error"],
                     content.get("error_description", _("Unknown error")),
                 )
@@ -523,7 +520,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 "Authorization",
                 "Basic %s"
                 % str(
-                    b64encode(("{}:{}".format(auth[0], auth[1])).encode("utf-8")),
+                    b64encode((f"{auth[0]}:{auth[1]}").encode()),
                     "utf-8",
                 ),
             )
