@@ -560,7 +560,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.yesterday,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": (
+                    "1234567890: Payment for Invoice(s) 1 (partner@example.com)"
+                ),
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}",
             },
@@ -572,7 +574,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "amount": "-100.00",
                 "ref": "Fee for Invoice 1",
                 "payment_ref": (
-                    "Transaction fee for 1234567890: Payment for Invoice(s) 1"
+                    "Transaction fee for 1234567890: Payment for Invoice(s) 1 "
+                    "(partner@example.com)"
                 ),
                 "partner_name": "PayPal",
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}-FEE",
@@ -634,7 +637,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": (
+                    "1234567890: Payment for Invoice(s) 1 (partner@example.com)"
+                ),
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
@@ -694,7 +699,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": (
+                    "1234567890: Payment for Invoice(s) 1 (partner@example.com)"
+                ),
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
@@ -754,7 +761,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": (
+                    "1234567890: Payment for Invoice(s) 1 (partner@example.com)"
+                ),
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
@@ -766,7 +775,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "amount": "-100.00",
                 "ref": "Fee for Invoice 1",
                 "payment_ref": (
-                    "Transaction fee for 1234567890: Payment for Invoice(s) 1"
+                    "Transaction fee for 1234567890: Payment for Invoice(s) 1 "
+                    "(partner@example.com)"
                 ),
                 "partner_name": "PayPal",
                 "unique_import_id": f"1234567890-{self.today_timestamp}-FEE",
@@ -823,7 +833,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": (
+                    "1234567890: Payment for Invoice(s) 1 (partner@example.com)"
+                ),
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },

@@ -291,14 +291,17 @@ class OnlineBankStatementProviderPayPal(models.Model):
         transaction_note = transaction.get("transaction_note")
         invoice = transaction.get("invoice_id")
         payer_name = payer.get("payer_name", {})
-        payer_email = payer_name.get("email_address")
+        payer_email = payer_name.get("email_address") or payer.get("email_address")
+        payer_full_name = payer_name.get("full_name") or payer_name.get(
+            "alternate_full_name"
+        )
         if invoice:
             invoice = _("Invoice %s") % invoice
         note = transaction_id
         if transaction_subject or transaction_note:
             note = f"{note}: {transaction_subject or transaction_note}"
-        if payer_email:
-            note += " (%s)" % payer_email
+        if payer_email or payer_full_name:
+            note += f" ({payer_email or payer_full_name})"
         unique_import_id = f"{transaction_id}-{int(date.timestamp())}"
         name = (
             invoice
@@ -315,9 +318,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "unique_import_id": unique_import_id,
             "raw_data": transaction,
         }
-        payer_full_name = payer_name.get("full_name") or payer_name.get(
-            "alternate_full_name"
-        )
         if payer_full_name:
             line.update({"partner_name": payer_full_name})
         lines = [line]
