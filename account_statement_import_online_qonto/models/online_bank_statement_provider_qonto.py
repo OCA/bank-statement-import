@@ -54,9 +54,7 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_get_slug(self):
         self.ensure_one()
         url = QONTO_ENDPOINT + "/organizations/%7Bid%7D"
-        response = requests.get(
-            url, verify=False, headers=self._qonto_header(), timeout=10
-        )
+        response = requests.get(url, headers=self._qonto_header(), timeout=10)
         if response.status_code == 200:
             data = json.loads(response.text)
             res = {}
@@ -101,7 +99,6 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_get_transactions(self, url, params):
         response = requests.get(
             url,
-            verify=False,
             params=params,
             headers=self._qonto_header(),
             timeout=10,
