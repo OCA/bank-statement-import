@@ -125,8 +125,9 @@ class OnlineBankStatementProviderQonto(models.Model):
         vals_line = {
             "sequence": sequence,
             "date": date,
-            "name": " - ".join([x for x in payment_ref_list if x]) or "/",
-            "ref": transaction["reference"],
+            "payment_ref": " - ".join([x for x in payment_ref_list if x]) or "/",
+            "narration": transaction["note"],
+            "transaction_type": transaction["operation_type"],
             "unique_import_id": transaction["transaction_id"],
             "amount": transaction["amount"] * side,
         }
@@ -153,7 +154,7 @@ class OnlineBankStatementProviderQonto(models.Model):
         if journal_currency.id != line_currency_id:
             vals_line.update(
                 {
-                    "currency_id": line_currency_id,
+                    "foreign_currency_id": line_currency_id,
                     "amount_currency": transaction["local_amount"] * side,
                 }
             )
