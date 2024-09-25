@@ -54,9 +54,7 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_get_slug(self):
         self.ensure_one()
         url = QONTO_ENDPOINT + "/organizations/%7Bid%7D"
-        response = requests.get(
-            url, verify=False, headers=self._qonto_header(), timeout=10
-        )
+        response = requests.get(url, headers=self._qonto_header(), timeout=10)
         if response.status_code == 200:
             data = json.loads(response.text)
             res = {}
@@ -101,7 +99,6 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_get_transactions(self, url, params):
         response = requests.get(
             url,
-            verify=False,
             params=params,
             headers=self._qonto_header(),
             timeout=10,
@@ -125,8 +122,9 @@ class OnlineBankStatementProviderQonto(models.Model):
         vals_line = {
             "sequence": sequence,
             "date": date,
-            "name": " - ".join([x for x in payment_ref_list if x]) or "/",
-            "ref": transaction["reference"],
+            "payment_ref": " - ".join([x for x in payment_ref_list if x]) or "/",
+            "narration": transaction["note"],
+            "transaction_type": transaction["operation_type"],
             "unique_import_id": transaction["transaction_id"],
             "amount": transaction["amount"] * side,
         }
@@ -153,7 +151,7 @@ class OnlineBankStatementProviderQonto(models.Model):
         if journal_currency.id != line_currency_id:
             vals_line.update(
                 {
-                    "currency_id": line_currency_id,
+                    "foreign_currency_id": line_currency_id,
                     "amount_currency": transaction["local_amount"] * side,
                 }
             )
