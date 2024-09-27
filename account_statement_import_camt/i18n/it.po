@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-07 10:38+0000\n"
+"PO-Revision-Date: 2024-09-27 11:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,33 +14,33 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
 msgid "Account Bank Statement Import CAMT parser"
-msgstr ""
+msgstr "Parser CAMT importazione estratto conto bancario"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Account Servicer Reference"
-msgstr ""
+msgstr "Riferimento del gestore del conto"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Entry Information"
-msgstr ""
+msgstr "Informazioni addizionali registrazione"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Transaction Information"
-msgstr ""
+msgstr "Informazioni addizionali transizione"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
@@ -62,21 +62,21 @@ msgstr "CAMT"
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Cheque Number"
-msgstr ""
+msgstr "Numero assegno"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Communication"
-msgstr ""
+msgstr "Comunicazione"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "End To End Id"
-msgstr ""
+msgstr "ID end to end"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import
@@ -88,7 +88,7 @@ msgstr "Importazione file estratto conto bancario"
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Instructed Id"
-msgstr ""
+msgstr "ID indicato"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_journal
@@ -100,105 +100,105 @@ msgstr "Registro"
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Mandate Id"
-msgstr ""
+msgstr "ID mandato"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Msg Id"
-msgstr ""
+msgstr "ID messaggio"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Partner Account Number"
-msgstr ""
+msgstr "Numero conto partner"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Partner Name"
-msgstr ""
+msgstr "Nome partner"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Postal Address"
-msgstr ""
+msgstr "Indirizzo postale"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Reference"
-msgstr ""
+msgstr "Riferimento"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Additional Information"
-msgstr ""
+msgstr "Informazioni addizionali motivo reso"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Code"
-msgstr ""
+msgstr "Codice motivo reso"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Code (Proprietary)"
-msgstr ""
+msgstr "Codice motivo reso (proprietario)"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Reversal Indicator"
-msgstr ""
+msgstr "Indicatore inverso"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Structured Reference"
-msgstr ""
+msgstr "Riferimento strutturato"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Date"
-msgstr ""
+msgstr "Data transizione"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Identification"
-msgstr ""
+msgstr "Identificazione transizione"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Type"
-msgstr ""
+msgstr "Tipo transazione"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Unstructured Reference"
-msgstr ""
+msgstr "Riferimento non strutturato"
 
 #. module: account_statement_import_camt
 #. odoo-python
@@ -217,7 +217,7 @@ msgstr "camt.054.001.02"
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
 msgid "zipped CAMT"
-msgstr ""
+msgstr "CAMT zippato"
 
 #~ msgid "Display Name"
 #~ msgstr "Nome visualizzato"
