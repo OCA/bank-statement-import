@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t
+        t-name="account_statement_import_file.DashboardKanbanView.Buttons"
+        t-inherit="web.KanbanView.Buttons"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath
+            expr="//*[@class='o_cp_buttons d-flex align-items-baseline']"
+            position="inside"
+        >
+            <button
+                type="button"
+                class="btn btn-primary o-kanban-button-upload-statement"
+                accesskey="c"
+                t-on-click="() => this.uploadStatement()"
+                data-bounce-button=""
+            >
+                Import Statement (OCA)
+            </button>
+        </xpath>
+    </t>
+</templates>
