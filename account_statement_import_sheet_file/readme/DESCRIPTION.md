@@ -1,2 +1,1 @@
-This module allows you to import any TXT/CSV or XLSX file in Odoo as
-bank statements.
+This module allows users to import bank statements into Odoo using files in TXT, CSV, or XLSX formats.  It is designed to streamline the process of importing and managing bank statement data within Odoo, making it easier to handle financial records and reconcile transactions.
