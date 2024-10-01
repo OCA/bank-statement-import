@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="plaid"
+                    string="Plaid config"
+                    attrs="{'invisible':[('service','!=','plaid')]}"
+                >
+                    <field name="plaid_access_token" invisible="1" />
+                    <field name="username" string="Login" />
+                    <field name="password" string="Secret Key" />
+                    <field
+                        name="plaid_host"
+                        attrs="{'required': [('service', '=', 'plaid')]}"
+                        string="Plaid Host"
+                    />
+                </group>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button
+                    type="object"
+                    class="btn btn-secondary"
+                    name="action_sync_with_plaid"
+                    string="Sync with Plaid.com"
+                    attrs="{'invisible': [('service', '!=', 'plaid')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

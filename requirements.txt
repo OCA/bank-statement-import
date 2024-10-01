@@ -2,4 +2,5 @@
 chardet
 ofxparse
 ofxtools
+plaid-python
 xlrd
