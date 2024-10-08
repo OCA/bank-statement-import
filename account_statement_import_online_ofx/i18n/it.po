@@ -6,143 +6,145 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-10-08 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__account_id
 msgid "Account"
-msgstr ""
+msgstr "Conto"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__bankid
 msgid "Bankid"
-msgstr ""
+msgstr "BankID"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__create_date
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__id
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_import_online_ofx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ofx.online_bank_statement_provider_form
 msgid "Import OFX Institutions"
-msgstr ""
+msgstr "Importa istruzioni OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__institution_id
 msgid "Institution"
-msgstr ""
+msgstr "Istituto"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_online_bank_statement_pull_wizard__is_ofx_provider
 msgid "Is Ofx Provider"
-msgstr ""
+msgstr "È fornitore OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution____last_update
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__write_uid
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__write_date
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__nickname
 msgid "Nickname"
-msgstr ""
+msgstr "Nomignolo"
 
 #. module: account_statement_import_online_ofx
 #. odoo-python
 #: code:addons/account_statement_import_online_ofx/models/online_bank_statement_provider_ofx.py:0
 #, python-format
 msgid "OFX Data is not available"
-msgstr ""
+msgstr "I dati OFX non sono disponibili"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model,name:account_statement_import_online_ofx.model_ofx_institution
 msgid "OFX Institution"
-msgstr ""
+msgstr "Istituto OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model,name:account_statement_import_online_ofx.model_ofx_institution_line
 msgid "OFX Institution Line"
-msgstr ""
+msgstr "Riga istituto OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_online_bank_statement_pull_wizard__ofx_institution_ids
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ofx.online_bank_statement_provider_form
 msgid "OFX Institutions"
-msgstr ""
+msgstr "Istituti OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_online_bank_statement_provider__ofx_institution_line_ids
 msgid "Ofx Institution Line"
-msgstr ""
+msgstr "Riga istituto OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution__ofxhome_id
 msgid "Ofxhome"
-msgstr ""
+msgstr "Home OFX"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model,name:account_statement_import_online_ofx.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
-msgstr ""
+msgstr "Fornitore estratto conto bancario online"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model,name:account_statement_import_online_ofx.model_online_bank_statement_pull_wizard
 msgid "Online Bank Statement Pull Wizard"
-msgstr ""
+msgstr "Procedura guidata ricezione estratto conto online"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__password
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__provider_id
 msgid "Provider"
-msgstr ""
+msgstr "Fornitore"
 
 #. module: account_statement_import_online_ofx
 #. odoo-python
@@ -153,8 +155,11 @@ msgid ""
 "\n"
 " %s"
 msgstr ""
+"Si è verificato il seguente problema durante l'importazione.\n"
+"\n"
+"%s"
 
 #. module: account_statement_import_online_ofx
 #: model:ir.model.fields,field_description:account_statement_import_online_ofx.field_ofx_institution_line__username
 msgid "Username"
-msgstr ""
+msgstr "Nome utente"
