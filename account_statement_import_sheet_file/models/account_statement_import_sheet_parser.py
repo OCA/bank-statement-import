@@ -228,7 +228,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if isinstance(csv_or_xlsx, tuple):
             rows = range(mapping.header_lines_skip_count, footer_line)
         else:
-            rows = csv_or_xlsx
+            rows = list(csv_or_xlsx)[label_line:]
 
         lines = []
         for index, row in enumerate(rows, label_line):
