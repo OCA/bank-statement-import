@@ -24,7 +24,10 @@ class AccountJournal(models.Model):
             ["acc_number", "partner_id"],
         )
         for partner_bank in partner_banks:
-            speeddict["account_number"][partner_bank["acc_number"]] = {
+            sanitized_acc_number = self._sanitize_bank_account_number(
+                partner_bank["acc_number"]
+            )
+            speeddict["account_number"][sanitized_acc_number] = {
                 "partner_id": partner_bank["partner_id"][0],
                 "partner_bank_id": partner_bank["id"],
             }
