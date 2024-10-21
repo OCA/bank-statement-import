@@ -364,14 +364,15 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     def _paypal_get_transaction(self, token, transaction_id, timestamp):
         self.ensure_one()
-        transaction_date = timestamp.isoformat() + "Z"
+        transaction_date_ini = (timestamp - relativedelta(seconds=1)).isoformat() + "Z"
+        transaction_date_end = (timestamp + relativedelta(seconds=1)).isoformat() + "Z"
         url = (
             (self.api_base or PAYPAL_API_BASE)
             + "/v1/reporting/transactions"
             + ("?start_date=%s" "&end_date=%s" "&fields=all")
             % (
-                transaction_date,
-                transaction_date,
+                transaction_date_ini,
+                transaction_date_end,
             )
         )
         data = self._paypal_retrieve(url, token)
