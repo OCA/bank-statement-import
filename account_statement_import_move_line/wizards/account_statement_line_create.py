@@ -30,9 +30,15 @@ class AccountStatementLineCreate(models.TransientModel):
     move_date = fields.Date(default=fields.Date.context_today)
     move_line_ids = fields.Many2many("account.move.line", string="Move Lines")
 
-    @api.model
     def default_get(self, field_list):
         res = super().default_get(field_list)
+        res.update(
+            {
+                "target_move": "posted",
+                "date_type": "due",
+                "invoice": True,
+            }
+        )
         active_model = self.env.context.get("active_model")
         if active_model == "account.bank.statement":
             statement = (
@@ -43,9 +49,6 @@ class AccountStatementLineCreate(models.TransientModel):
             if statement:
                 res.update(
                     {
-                        "target_move": "posted",
-                        "date_type": "due",
-                        "invoice": True,
                         "statement_id": statement.id,
                     }
                 )
@@ -55,7 +58,11 @@ class AccountStatementLineCreate(models.TransientModel):
         self.ensure_one()
         domain = [
             ("reconciled", "=", False),
-            ("account_id.internal_type", "in", ("payable", "receivable")),
+            (
+                "account_id.account_type",
+                "in",
+                ("asset_receivable", "liability_payable"),
+            ),
             ("company_id", "=", self.env.company.id),
         ]
         if self.journal_ids:
@@ -122,7 +129,30 @@ class AccountStatementLineCreate(models.TransientModel):
         return res
 
     def create_statement_lines(self):
-        for rec in self:
-            if rec.move_line_ids and rec.statement_id:
-                rec.move_line_ids.create_statement_line_from_move_line(rec.statement_id)
+        if self.move_line_ids:
+            active_model = self.env.context.get("active_model")
+            if active_model == "account.journal":
+                journal = self.env["account.journal"].browse(
+                    self.env.context.get("active_id")
+                )
+                statement = self.env["account.bank.statement"].create(
+                    {
+                        "date": fields.Date.today(),
+                        "name": _("%(journal_code)s Statement %(date)s")
+                        % {
+                            "journal_code": journal.code,
+                            "date": fields.Date.today(),
+                        },
+                    }
+                )
+                statement.journal_id = journal.id
+                self.statement_id = statement.id
+            self.move_line_ids.create_statement_line_from_move_line(self.statement_id)
+            return {
+                "type": "ir.actions.act_window",
+                "res_model": "account.bank.statement",
+                "view_mode": "form",
+                "res_id": self.statement_id.id,
+                "target": "current",
+            }
         return True

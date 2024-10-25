@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,6 +12,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_statement_import_move_line
+#. odoo-python
+#: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
+#, python-format
+msgid "%(journal_code)s Statement %(date)s"
+msgstr ""
+
+#. module: account_statement_import_move_line
+#: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.view_bank_statement_form
+msgid "<span class=\"o_stat_text\">Import Journal Items</span>"
+msgstr ""
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
@@ -93,7 +105,7 @@ msgid "ID"
 msgstr ""
 
 #. module: account_statement_import_move_line
-#: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.view_bank_statement_form
+#: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_journal_dashboard_kanban_view
 msgid "Import Journal Items"
 msgstr ""
 
@@ -110,11 +122,6 @@ msgstr ""
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Keep empty for using all journals"
-msgstr ""
-
-#. module: account_statement_import_move_line
-#: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: account_statement_import_move_line
@@ -149,6 +156,7 @@ msgid "Partner Related"
 msgstr ""
 
 #. module: account_statement_import_move_line
+#. odoo-python
 #: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
 #, python-format
 msgid "Select Move Lines to Create Statement"
