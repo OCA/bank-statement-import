@@ -3,4 +3,5 @@
   - Victor M.M. Torres
   - João Marques
   - Ernesto García
+  - Pilar Vargas
 - Pedro Gonzalez \<<pegonzalezs@gmail.com>\>

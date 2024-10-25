@@ -3,18 +3,25 @@
     <record id="view_bank_statement_form" model="ir.ui.view">
         <field name="name">account.bank.statement.form.population</field>
         <field name="model">account.bank.statement</field>
-        <field name="inherit_id" ref="account.view_bank_statement_form" />
+        <field
+            name="inherit_id"
+            ref="account_statement_base.view_bank_statement_form"
+        />
         <field name="arch" type="xml">
-            <field name="all_lines_reconciled" position="after">
+            <button name="open_entries" position="after">
                 <button
                     name="%(account_statement_line_create_action)d"
-                    string="Import Journal Items"
                     type="action"
-                    class="oe_highlight"
-                    attrs="{'invisible':[('state', '!=', 'open')]}"
+                    class="oe_stat_button"
+                    icon="fa-upload"
+                    invisible="not id or not journal_id"
                     groups="account.group_account_user"
-                />
-            </field>
+                >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Import Journal Items</span>
+                    </div>
+                </button>
+            </button>
         </field>
     </record>
 </odoo>

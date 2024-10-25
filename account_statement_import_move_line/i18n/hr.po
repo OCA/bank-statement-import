@@ -16,9 +16,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.8\n"
+
+#. module: account_statement_import_move_line
+#. odoo-python
+#: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
+#, python-format
+msgid "%(journal_code)s Statement %(date)s"
+msgstr ""
+
+#. module: account_statement_import_move_line
+#: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.view_bank_statement_form
+msgid "<span class=\"o_stat_text\">Import Journal Items</span>"
+msgstr ""
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
@@ -100,7 +112,7 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_statement_import_move_line
-#: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.view_bank_statement_form
+#: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_journal_dashboard_kanban_view
 msgid "Import Journal Items"
 msgstr ""
 
@@ -118,11 +130,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Keep empty for using all journals"
 msgstr ""
-
-#. module: account_statement_import_move_line
-#: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create____last_update
-msgid "Last Modified on"
-msgstr "Zadnje modificirano"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__write_uid
@@ -156,6 +163,7 @@ msgid "Partner Related"
 msgstr ""
 
 #. module: account_statement_import_move_line
+#. odoo-python
 #: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
 #, python-format
 msgid "Select Move Lines to Create Statement"
@@ -185,3 +193,6 @@ msgstr ""
 #: model:ir.model,name:account_statement_import_move_line.model_account_statement_line_create
 msgid "Wizard to create statement lines"
 msgstr ""
+
+#~ msgid "Last Modified on"
+#~ msgstr "Zadnje modificirano"

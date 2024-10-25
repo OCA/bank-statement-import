@@ -1,0 +1,17 @@
+<odoo>
+    <record id="account_journal_dashboard_kanban_view" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//a[@id='create_transaction']/.." position="before">
+                <a
+                    name="%(account_statement_line_create_action)d"
+                    type="action"
+                    groups="account.group_account_user"
+                >
+                    Import Journal Items
+                </a>
+            </xpath>
+        </field>
+    </record>
+</odoo>
