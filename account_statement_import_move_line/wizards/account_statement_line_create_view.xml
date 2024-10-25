@@ -11,13 +11,13 @@
                     <field name="date_type" />
                     <field
                         name="move_date"
-                        attrs="{'required': [('date_type', '=', 'move')],
-                                   'invisible': [('date_type', '!=', 'move')]}"
+                        required="date_type == 'move'"
+                        invisible="date_type != 'move'"
                     />
                     <field
                         name="due_date"
-                        attrs="{'required': [('date_type', '=', 'due')],
-                                   'invisible': [('date_type', '!=', 'due')]}"
+                        required="date_type == 'due'"
+                        invisible="date_type != 'due'"
                     />
                     <field
                         name="journal_ids"
@@ -32,23 +32,32 @@
                         string="Click on Add All Move Lines to auto-select the move lines matching the above criteria or click on Add an item to manually select the move lines filtered by the above criteria."
                         colspan="2"
                     />
-                    <button name="populate" type="object" string="Add All Move Lines" />
+                    <button
+                        name="populate"
+                        type="object"
+                        colspan="2"
+                        string="Add All Move Lines"
+                    />
                 </group>
                 <group name="move_lines" string="Selected Move Lines to Create Lines">
-                    <field name="move_line_ids" nolabel="1">
+                    <field name="move_line_ids" colspan="2" nolabel="1">
                         <tree>
-                            <field name="date" />
-                            <field name="move_id" required="0" />
-                            <field name="journal_id" />
-                            <field name="partner_id" />
-                            <field name="account_id" />
-                            <field name="date_maturity" />
-                            <field name="debit" />
-                            <field name="credit" />
-                            <field name="amount_residual" sum="Total Residual" />
-                            <field name="amount_currency" />
-                            <field name="amount_residual_currency" />
-                            <field name="company_currency_id" invisible="1" />
+                            <field name="date" optional="show" />
+                            <field name="move_id" required="0" optional="show" />
+                            <field name="journal_id" optional="show" />
+                            <field name="partner_id" optional="hide" />
+                            <field name="account_id" optional="show" />
+                            <field name="date_maturity" optional="show" />
+                            <field name="debit" optional="show" />
+                            <field name="credit" optional="show" />
+                            <field
+                                name="amount_residual"
+                                sum="Total Residual"
+                                optional="show"
+                            />
+                            <field name="amount_currency" optional="show" />
+                            <field name="amount_residual_currency" optional="show" />
+                            <field name="company_currency_id" column_invisible="1" />
                         </tree>
                     </field>
                 </group>
