@@ -19,7 +19,7 @@ class AccountMoveLine(models.Model):
             "amount": amount,
             "partner_id": self.partner_id.id,
             "statement_id": statement.id,
-            "payment_ref": self.ref,
+            "payment_ref": self.ref or self.name,
             "date": self.date_maturity,
             "currency_id": self.currency_id.id,
         }
