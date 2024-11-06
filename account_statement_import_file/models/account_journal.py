@@ -3,7 +3,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
-from odoo import _, api, models
+from odoo import api, models
 
 
 class AccountJournal(models.Model):
@@ -28,7 +28,7 @@ class AccountJournal(models.Model):
             formats_list.sort()
             import_formats_str = ", ".join(formats_list)
             rslt.insert(
-                0, ("file_import_oca", _("Import") + "(" + import_formats_str + ")")
+                0, ("file_import_oca", self.env._(f"Import ({import_formats_str})"))
             )
         return rslt
 

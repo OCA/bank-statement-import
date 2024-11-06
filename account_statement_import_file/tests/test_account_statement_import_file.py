@@ -12,9 +12,7 @@ class TestAccountStatementImportFile(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.eur_currency = cls.env["res.currency"].search(
-            [("name", "=", "EUR"), ("active", "=", False)], limit=1
-        )
+        cls.eur_currency = cls.env.ref("base.EUR")
         cls.eur_currency.write({"active": True})
         cls.bank_account = cls.env["res.partner.bank"].create(
             {"acc_number": "1111111111", "partner_id": cls.env.company.partner_id.id}
@@ -38,7 +36,9 @@ class TestAccountStatementImportFile(common.TransactionCase):
                 "bank_account_id": cls.bank_account.id,
             }
         )
-        f_path = file_path("account_statement_import_file/tests/test_file.txt")
+        f_path = file_path(
+            "account_statement_import_file/tests/samples/test_statement_import.txt"
+        )
         file = base64.b64encode(open(f_path, "rb").read())
         cls.import_wizard = (
             cls.env["account.statement.import"]
