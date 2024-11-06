@@ -13,11 +13,11 @@
         />
         <field name="arch" type="xml">
             <group name="tech-fields" position="inside">
-                <field name="unique_import_id" />
+                <field name="unique_import_id" readonly="1" />
             </group>
             <group name="tech-fields" position="after">
                 <group name="raw_data" string="Raw Data">
-                    <field name="raw_data" nolabel="1" colspan="2" />
+                    <field name="raw_data" nolabel="1" colspan="2" readonly="1" />
                 </group>
             </group>
         </field>

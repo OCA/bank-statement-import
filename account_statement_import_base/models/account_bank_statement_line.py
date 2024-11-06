@@ -10,8 +10,8 @@ class AccountBankStatementLine(models.Model):
 
     # Ensure transactions can be imported only once
     # if the import format provides unique transaction IDs
-    unique_import_id = fields.Char(string="Import ID", readonly=True, copy=False)
-    raw_data = fields.Text(readonly=True, copy=False)
+    unique_import_id = fields.Char(string="Import ID", copy=False)
+    raw_data = fields.Text(copy=False)
 
     _sql_constraints = [
         (
