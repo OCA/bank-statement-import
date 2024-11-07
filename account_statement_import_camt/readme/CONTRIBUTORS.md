@@ -13,3 +13,4 @@
 - [Trobz](https://trobz.com):
 
   > - Son Ho \<<sonhd@trobz.com>\>
+  > - Do Anh Duy \<<duyda@trobz.com>\>
