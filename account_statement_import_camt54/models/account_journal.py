@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class AccountBankStatementImport(models.Model):
-
     _inherit = "account.journal"
 
     transfer_line = fields.Boolean(
