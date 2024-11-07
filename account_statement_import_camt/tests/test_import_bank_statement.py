@@ -76,7 +76,7 @@ class TestParserCommon(TransactionCase):
         :type obj: Path or str
         """
         if isinstance(file, str) and len(Path(file).parts) == 1:
-            file = Path("account_statement_import_camt") / "test_files" / file
+            file = Path("account_statement_import_camt") / "tests/samples" / file
         return Path(file)
 
 
@@ -159,7 +159,7 @@ class TestImport(TransactionCase):
 
     def test_statement_import(self):
         """Test correct creation of single statement."""
-        testfile = file_path("account_statement_import_camt/test_files/test-camt053")
+        testfile = file_path("account_statement_import_camt/tests/samples/test-camt053")
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
 
@@ -190,7 +190,7 @@ class TestImport(TransactionCase):
     def test_zip_import(self):
         """Test import of multiple statements from zip file."""
         testfile = file_path(
-            "account_statement_import_camt/test_files/test-camt053.zip"
+            "account_statement_import_camt/tests/samples/test-camt053.zip"
         )
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
