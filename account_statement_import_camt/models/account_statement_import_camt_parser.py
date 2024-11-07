@@ -7,7 +7,7 @@ import re
 
 from lxml import etree
 
-from odoo import _, models
+from odoo import models
 
 
 class AccountStatementImportCamtParser(models.AbstractModel):
@@ -56,6 +56,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse TxDtls node."""
+        _ = self.env._
         # message
         self.add_value_from_node(
             ns,
@@ -75,7 +76,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:RmtInf/ns:Ustrd"],
             transaction["narration"],
-            "%s (RmtInf/Ustrd)" % _("Unstructured Reference"),
+            f"{_('Unstructured Reference')} (RmtInf/Ustrd)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -83,7 +84,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref"],
             transaction["narration"],
-            "%s (RmtInf/Strd/CdtrRefInf/Ref)" % _("Structured Reference"),
+            f"{_('Structured Reference')} (RmtInf/Strd/CdtrRefInf/Ref)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -91,7 +92,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:AddtlTxInf"],
             transaction["narration"],
-            "%s (AddtlTxInf)" % _("Additional Transaction Information"),
+            f"{_('Additional Transaction Information')} (AddtlTxInf)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -99,21 +100,21 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:RtrInf/ns:Rsn/ns:Cd"],
             transaction["narration"],
-            "%s (RtrInf/Rsn/Cd)" % _("Return Reason Code"),
+            f"{_('Return Reason Code')} (RtrInf/Rsn/Cd)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:RtrInf/ns:Rsn/ns:Cd"],
             transaction["narration"],
-            "%s (RtrInf/Rsn/Prtry)" % _("Return Reason Code (Proprietary)"),
+            f"{_('Return Reason Code (Proprietary)')} (RtrInf/Rsn/Prtry)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:RtrInf/ns:AddtlInf"],
             transaction["narration"],
-            "%s (RtrInf/AddtlInf)" % _("Return Reason Additional Information"),
+            f"{_('Return Reason Additional Information')} (RtrInf/AddtlInf)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -121,49 +122,49 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:Refs/ns:MsgId"],
             transaction["narration"],
-            "%s (Refs/MsgId)" % _("Msg Id"),
+            f"{_('Msg Id')} (Refs/MsgId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:AcctSvcrRef"],
             transaction["narration"],
-            "%s (Refs/AcctSvcrRef)" % _("Account Servicer Reference"),
+            f"{_('Account Servicer Reference')} (Refs/AcctSvcrRef)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:EndToEndId"],
             transaction["narration"],
-            "%s (Refs/EndToEndId)" % _("End To End Id"),
+            f"{_('End To End Id')} (Refs/EndToEndId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:InstrId"],
             transaction["narration"],
-            "%s (Refs/InstrId)" % _("Instructed Id"),
+            f"{_('Instructed Id')} (Refs/InstrId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:TxId"],
             transaction["narration"],
-            "%s (Refs/TxId)" % _("Transaction Identification"),
+            f"{_('Transaction Identification')} (Refs/TxId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:MntId"],
             transaction["narration"],
-            "%s (Refs/MntId)" % _("Mandate Id"),
+            f"{_('Mandate Id')} (Refs/MntId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:ChqNb"],
             transaction["narration"],
-            "%s (Refs/ChqNb)" % _("Cheque Number"),
+            f"{_('Cheque Number')} (Refs/ChqNb)",
         )
 
         self.add_value_from_node(
@@ -190,7 +191,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         if party_type_node and party_type_node[0].text != "CRDT":
             party_type = "Cdtr"
         party_node = node.xpath(
-            "./ns:RltdPties/ns:%s" % party_type, namespaces={"ns": ns}
+            f"./ns:RltdPties/ns:{party_type}", namespaces={"ns": ns}
         )
         if party_node:
             name_node = node.xpath(
@@ -223,12 +224,12 @@ class AccountStatementImportCamtParser(models.AbstractModel):
                 "./ns:PstlAdr/ns:Ctry|"
                 "./ns:PstlAdr/ns:AdrLine",
                 transaction["narration"],
-                "%s (PstlAdr)" % _("Postal Address"),
+                f"{_('Postal Address')} (PstlAdr)",
                 join_str=" | ",
             )
         # Get remote_account from iban or from domestic account:
         account_node = node.xpath(
-            "./ns:RltdPties/ns:%sAcct/ns:Id" % party_type, namespaces={"ns": ns}
+            f"./ns:RltdPties/ns:{party_type}Acct/ns:Id", namespaces={"ns": ns}
         )
         if account_node:
             iban_node = account_node[0].xpath("./ns:IBAN", namespaces={"ns": ns})
@@ -245,6 +246,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def generate_narration(self, transaction):
         # this block ensure compatibility with v13
+        _ = self.env._
         transaction["narration"] = {
             "{} (RltdPties/Nm)".format(_("Partner Name")): transaction.get(
                 "partner_name", ""
@@ -267,6 +269,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def parse_entry(self, ns, node):
         """Parse an Ntry node and yield transactions"""
+        _ = self.env._
         transaction = {
             "payment_ref": "/",
             "amount": 0,
@@ -295,14 +298,14 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             "./ns:AddtlNtryInf",
             transaction["narration"],
-            "%s (AddtlNtryInf)" % _("Additional Entry Information"),
+            f"{_('Additional Entry Information')} (AddtlNtryInf)",
         )
         self.add_value_from_node(
             ns,
             node,
             "./ns:RvslInd",
             transaction["narration"],
-            "%s (RvslInd)" % _("Reversal Indicator"),
+            f"{_('Reversal Indicator')} (RvslInd)",
         )
 
         self.add_value_from_node(
@@ -356,7 +359,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         end_balance_node = None
         for node_name in ["OPBD", "PRCD", "CLBD", "ITBD"]:
             code_expr = (
-                './ns:Bal/ns:Tp/ns:CdOrPrtry/ns:Cd[text()="%s"]/../../..' % node_name
+                f'./ns:Bal/ns:Tp/ns:CdOrPrtry/ns:Cd[text()="{node_name}"]/../../..'
             )
             balance_node = node.xpath(code_expr, namespaces={"ns": ns})
             if balance_node:
@@ -427,11 +430,11 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             r"|^ISO:camt.052.)"
         )
         if not re_camt_version.search(ns):
-            raise ValueError("no camt 052 or 053 or 054: " + ns)
+            raise ValueError("no camt 052 or 053 or 054:" + ns)
         # Check GrpHdr element:
         root_0_0 = root[0][0].tag[len(ns) + 2 :]  # strip namespace
         if root_0_0 != "GrpHdr":
-            raise ValueError("expected GrpHdr, got: " + root_0_0)
+            raise ValueError("expected GrpHdr, got:", root_0_0)
 
     def parse(self, data):
         """Parse a camt.052 or camt.053 or camt.054 file."""
