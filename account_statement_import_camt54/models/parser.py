@@ -1,7 +1,7 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import UserError
 
 
@@ -23,7 +23,7 @@ class CamtParser(models.AbstractModel):
             size = 6
         else:
             raise UserError(
-                _(
+                self.env._(
                     "Config parameter `qrr_partner_ref` is wrong.\n"
                     "It must be in format `i[,n]` \n"
                     "where `i` is the position of the first digit and\n"
@@ -38,7 +38,7 @@ class CamtParser(models.AbstractModel):
             end = start + size
         except ValueError:
             raise UserError(
-                _(
+                self.env._(
                     "Config parameter `qrr_partner_ref` is wrong.\n"
                     "It must be in format `i[,n]` \n"
                     "`i` and `n` must be integers.\n"

@@ -40,7 +40,7 @@ class TestGenerateBankStatement(TransactionCase):
         )
 
     def _load_statement(self):
-        testfile = file_path("account_statement_import_camt/test_files/test-camt054")
+        testfile = file_path("account_statement_import_camt/tests/samples/test-camt054")
         with open(testfile, "rb") as datafile:
             camt_file = base64.b64encode(datafile.read())
             self.env["account.statement.import"].create(
@@ -50,7 +50,14 @@ class TestGenerateBankStatement(TransactionCase):
                 }
             ).import_file_button()
             bank_st_record = self.env["account.bank.statement"].search(
-                [("name", "=", "20220120000000000000000")], limit=1
+                [
+                    (
+                        "name",
+                        "in",
+                        ["TBNKC Statement 2022-01-26", "20220120000000000000000"],
+                    )
+                ],
+                limit=1,
             )
             statement_lines = bank_st_record.line_ids
             return statement_lines
