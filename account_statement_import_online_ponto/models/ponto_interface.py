@@ -33,7 +33,7 @@ class PontoInterface(models.AbstractModel):
         login_headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
-            "Authorization": "Basic {login}".format(login=login),
+            "Authorization": f"Basic {login}",
         }
         _logger.debug(_("POST request on %(url)s"), dict(url=url))
         response = requests.post(
