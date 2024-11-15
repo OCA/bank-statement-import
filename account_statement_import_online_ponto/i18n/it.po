@@ -17,60 +17,42 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid ""
-"%s \n"
-"\n"
-" %s"
+msgid "%d transactions present in response data"
 msgstr ""
-"%s \n"
-"\n"
-" %s"
 
 #. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__display_name
-msgid "Display Name"
-msgstr "Nome visualizzato"
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
+msgid "Execution Date"
+msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid ""
-"Error during Create Synchronisation %s \n"
-"\n"
-" %s"
+msgid "GET request on %(url)s"
 msgstr ""
-"Errore nella creazione della sincronizzazione %s \n"
-"\n"
-" %s"
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid ""
-"Error during get transaction.\n"
-"\n"
-"%s \n"
-"\n"
-" %s"
+msgid "GET request to %(url)s with headers %(headers)s and params %(params)s"
 msgstr ""
-"Errore nell'ottenere la transizione.\n"
-"\n"
-"%s \n"
-"\n"
-" %s"
 
 #. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__id
-msgid "ID"
-msgstr "ID"
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "HTTP answer code %(response_code)s from Ponto"
+msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
+#: model:ir.model,name:account_statement_import_online_ponto.model_ponto_interface
+msgid "Interface to all interactions with Ponto API"
+msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
@@ -78,27 +60,61 @@ msgid "Login"
 msgstr "Login"
 
 #. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid "No lines were retrieved from Ponto"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "No transactions where found in data %(data)s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
 #: model:ir.model,name:account_statement_import_online_ponto.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
 msgstr "Fornitore estratto conto bancario online"
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "POST request on %(url)s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "Please fill login and key."
 msgstr "Fornire login e chiave."
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "Ponto : no token"
 msgstr "Ponto : nessun token"
 
 #. module: account_statement_import_online_ponto
-#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
-msgid "Ponto : wrong configuration, unknow account %s"
-msgstr "Ponto: configurazione errata, account %s sconosciuto"
+msgid "Ponto : wrong configuration, account {account} not found in {data}"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Ponto Config"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid "Ponto Date Field"
+msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_last_identifier
@@ -106,21 +122,104 @@ msgid "Ponto Last Identifier"
 msgstr "Ultimo identificatore Ponto"
 
 #. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_token
-msgid "Ponto Token"
-msgstr "Token Ponto"
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid "Ponto obtain all new statement data for journal %s"
+msgstr ""
 
 #. module: account_statement_import_online_ponto
-#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_token_expiration
-msgid "Ponto Token Expiration"
-msgstr "Scadenza token Ponto"
-
-#. module: account_statement_import_online_ponto
-#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
-msgid "Reset Last identifier."
-msgstr "Resetta ultimo identificatore."
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+#, python-format
+msgid ""
+"Ponto obtain statement data for journal %(journal)s from %(date_since)s to "
+"%(date_until)s"
+msgstr ""
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Secret Key"
 msgstr "Chiave segreta"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,help:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid ""
+"Select the Ponto date field that will be used for the Odoo bank statement "
+"line date."
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+#, python-format
+msgid "Server returned status code {response_code}: {response_text}"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/tests/test_account_statement_import_online_ponto.py:0
+#, python-format
+msgid "Statement contains transactions: %s"
+msgstr ""
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__value_date
+msgid "Value Date"
+msgstr ""
+
+#, python-format
+#~ msgid ""
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+#~ msgstr ""
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#, python-format
+#~ msgid ""
+#~ "Error during Create Synchronisation %s \n"
+#~ "\n"
+#~ " %s"
+#~ msgstr ""
+#~ "Errore nella creazione della sincronizzazione %s \n"
+#~ "\n"
+#~ " %s"
+
+#, python-format
+#~ msgid ""
+#~ "Error during get transaction.\n"
+#~ "\n"
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+#~ msgstr ""
+#~ "Errore nell'ottenere la transizione.\n"
+#~ "\n"
+#~ "%s \n"
+#~ "\n"
+#~ " %s"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#, python-format
+#~ msgid "Ponto : wrong configuration, unknow account %s"
+#~ msgstr "Ponto: configurazione errata, account %s sconosciuto"
+
+#~ msgid "Ponto Token"
+#~ msgstr "Token Ponto"
+
+#~ msgid "Ponto Token Expiration"
+#~ msgstr "Scadenza token Ponto"
+
+#~ msgid "Reset Last identifier."
+#~ msgstr "Resetta ultimo identificatore."
