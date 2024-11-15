@@ -6,14 +6,15 @@ from unittest.mock import MagicMock, patch
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
-from odoo.tests import common
+from odoo.tests import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 from .test_account_statement_import_online_ponto import FOUR_TRANSACTIONS
 
 
-class TestPontoInterface(common.TransactionCase):
-    post_install = True
-
+@tagged("post_install", "-at_install")
+class TestPontoInterface(BaseCommon):
     @patch("requests.post")
     def test_login(self, requests_post):
         """Check Ponto API login."""
