@@ -257,7 +257,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         self.provider._create_or_update_statement(
             data, statement_date, datetime(2019, 11, 2)
         )
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions(),
+        ):  # noqa: B950
             vals = {
                 "date_since": datetime(2019, 11, 4),
                 "date_until": datetime(2019, 11, 5),
@@ -277,7 +281,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             self.assertEqual(new_statement.balance_end, 105.83)
 
     def test_ponto_execution_date(self):
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions(),
+        ):  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "execution_date"
             statement = self._get_statements_from_wizard()  # Will get 1 statement
@@ -285,7 +293,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             self._check_statement_amounts(statement, transaction_amounts[:2])
 
     def test_ponto_value_date(self):
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions(),
+        ):  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "value_date"
             statement = self._get_statements_from_wizard()  # Will get 1 statement
@@ -293,7 +305,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             self._check_statement_amounts(statement, transaction_amounts[:3])
 
     def test_ponto_get_transactions_multi(self):
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions_multi():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions_multi(),
+        ):  # noqa: B950
             # First base selection on execution date.
             self.provider.ponto_date_field = "execution_date"
             # Expect statements for october and november.
@@ -310,7 +326,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             )
 
     def test_ponto_scheduled(self):
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions(),
+        ):  # noqa: B950
             # Scheduled should get all transaction, ignoring date_until.
             self.provider.ponto_last_identifier = False
             date_since = datetime(2019, 11, 3)
@@ -326,7 +346,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             )
 
     def test_ponto_scheduled_from_identifier(self):
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions(),
+        ):  # noqa: B950
             # Scheduled should get all transactions after last identifier.
             self.provider.ponto_last_identifier = "9ac50483-16dc-4a82-aa60-df56077405cd"
             date_since = datetime(2019, 11, 3)
@@ -416,7 +440,11 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
         self.provider._create_or_update_statement(
             data, statement_date, datetime(2019, 11, 2)
         )
-        with self.mock_login(), self.mock_set_access_account(), self.mock_get_transactions():  # noqa: B950
+        with (
+            self.mock_login(),
+            self.mock_set_access_account(),
+            self.mock_get_transactions(),
+        ):  # noqa: B950
             vals = {
                 "date_since": datetime(2019, 11, 4),
                 "date_until": datetime(2019, 11, 5),

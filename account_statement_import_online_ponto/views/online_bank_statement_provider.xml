@@ -12,7 +12,7 @@
                 <group
                     name="ponto"
                     string="Ponto Config"
-                    attrs="{'invisible':[('service','!=','ponto')]}"
+                    invisible="service != 'ponto'"
                 >
                     <field name="username" string="Login" />
                     <field name="password" string="Secret Key" />

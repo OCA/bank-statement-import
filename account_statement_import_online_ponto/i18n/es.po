@@ -105,7 +105,8 @@ msgstr "Ponto: sin ficha"
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "Ponto : wrong configuration, account {account} not found in {data}"
-msgstr "Ponto : configuración errónea, cuenta {account} no encontrada en {data}"
+msgstr ""
+"Ponto : configuración errónea, cuenta {account} no encontrada en {data}"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
@@ -127,7 +128,8 @@ msgstr "Ponto Último Identificador"
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 #, python-format
 msgid "Ponto obtain all new statement data for journal %s"
-msgstr "Ponto obtener todos los datos de los nuevos extractos para el diario %s"
+msgstr ""
+"Ponto obtener todos los datos de los nuevos extractos para el diario %s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
