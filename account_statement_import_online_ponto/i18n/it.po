@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-03 16:35+0000\n"
+"PO-Revision-Date: 2024-11-20 13:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,45 +14,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "%d transactions present in response data"
-msgstr ""
+msgstr "%d transizioni presenti nei dati risposta"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
 msgid "Execution Date"
-msgstr ""
+msgstr "Data esecuzione"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "GET request on %(url)s"
-msgstr ""
+msgstr "Richiesta GET su %(url)s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "GET request to %(url)s with headers %(headers)s and params %(params)s"
-msgstr ""
+msgstr "Richiesta GET su %(url)s con header %(headers)s e parametri %(params)s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "HTTP answer code %(response_code)s from Ponto"
-msgstr ""
+msgstr "Codice risposta HTTP %(response_code)s da Ponto"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model,name:account_statement_import_online_ponto.model_ponto_interface
 msgid "Interface to all interactions with Ponto API"
-msgstr ""
+msgstr "Interfaccia con tutte le interazioni con API Ponto"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
@@ -64,14 +64,14 @@ msgstr "Login"
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 #, python-format
 msgid "No lines were retrieved from Ponto"
-msgstr ""
+msgstr "Nessuna riga ricevuta da Ponto"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "No transactions where found in data %(data)s"
-msgstr ""
+msgstr "Nessuna transizione trovata nei dati %(data)s"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model,name:account_statement_import_online_ponto.model_online_bank_statement_provider
@@ -83,7 +83,7 @@ msgstr "Fornitore estratto conto bancario online"
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "POST request on %(url)s"
-msgstr ""
+msgstr "Richiesta POST su %(url)s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -104,17 +104,17 @@ msgstr "Ponto : nessun token"
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 #, python-format
 msgid "Ponto : wrong configuration, account {account} not found in {data}"
-msgstr ""
+msgstr "Ponto: configurazione errata, conto {account} non trovato in {data}"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Ponto Config"
-msgstr ""
+msgstr "Configurazione Ponto"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
 msgid "Ponto Date Field"
-msgstr ""
+msgstr "Campo data Ponto"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_last_identifier
@@ -126,7 +126,7 @@ msgstr "Ultimo identificatore Ponto"
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 #, python-format
 msgid "Ponto obtain all new statement data for journal %s"
-msgstr ""
+msgstr "Ponto recupera tutti i dati estratto conto per il registro %s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -136,6 +136,8 @@ msgid ""
 "Ponto obtain statement data for journal %(journal)s from %(date_since)s to "
 "%(date_until)s"
 msgstr ""
+"Ponto ottiene i dati estratto conto per il registro %(journal)s dal "
+"%(date_since)s al %(date_until)s"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
@@ -148,6 +150,8 @@ msgid ""
 "Select the Ponto date field that will be used for the Odoo bank statement "
 "line date."
 msgstr ""
+"Selezionare il campo data Ponto che verrà utilizzato per la data riga "
+"estratto conto banca Odoo."
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -155,18 +159,19 @@ msgstr ""
 #, python-format
 msgid "Server returned status code {response_code}: {response_text}"
 msgstr ""
+"Il server ha restituito ilcodice di stato {response_code}: {response_text}"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/tests/test_account_statement_import_online_ponto.py:0
 #, python-format
 msgid "Statement contains transactions: %s"
-msgstr ""
+msgstr "L'estratto conto contiene transizioni: %s"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__value_date
 msgid "Value Date"
-msgstr ""
+msgstr "Data valore"
 
 #, python-format
 #~ msgid ""
