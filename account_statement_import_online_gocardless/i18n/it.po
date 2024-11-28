@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-30 10:06+0000\n"
+"PO-Revision-Date: 2024-11-28 23:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -42,7 +42,7 @@ msgstr "Creato da"
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__create_date
 msgid "Created on"
-msgstr "Creata il"
+msgstr "Creato il"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__display_name
