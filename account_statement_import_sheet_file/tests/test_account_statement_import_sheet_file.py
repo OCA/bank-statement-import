@@ -700,7 +700,7 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                account_statement_import_txt_xlsx_test=True
+                account_statement_import_sheet_file_test=True
             ).import_file_button()
         statement_map_offsets = self.sample_statement_map.copy(
             {
@@ -751,7 +751,7 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         )
         with self.assertRaises(UserError):
             wizard.with_context(
-                account_statement_import_txt_xlsx_test=True
+                account_statement_import_sheet_file_test=True
             ).import_file_button()
         wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
