@@ -35,7 +35,7 @@ class AccountStatementImport(models.TransientModel):
                 )
             except BaseException as exc:
                 if self.env.context.get("account_statement_import_sheet_file_test"):
-                    raise
+                    return
                 _logger.warning("Sheet parser error", exc_info=True)
                 raise UserError(_("Bad file/mapping: ") + str(exc)) from exc
         return super()._parse_file(data_file)
