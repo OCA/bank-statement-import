@@ -28,4 +28,4 @@ class OnlineBankStatementProviderExisting(models.TransientModel):
         provider._gocardless_finish_requisition(dry=True)
 
     def new_link(self):
-        return self.provider_id._gocardless_select_bank_instituion()
+        return self.provider_id._gocardless_select_bank_institution()
