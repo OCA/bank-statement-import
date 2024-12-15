@@ -98,17 +98,17 @@ class OnlineBankStatementProvider(models.Model):
             # Refresh token
             if (
                 self.gocardless_refresh_token
-                and now > self.gocardless_refresh_expiration
+                and now < self.gocardless_refresh_expiration
             ):
                 endpoint = "token/refresh"
+                request_data = {"refresh": self.gocardless_refresh_token}
             else:
                 endpoint = "token/new"
+                request_data = {"secret_id": self.username, "secret_key": self.password}
             _response, data = self._gocardless_request(
                 endpoint,
                 request_type="post",
-                data=json.dumps(
-                    {"secret_id": self.username, "secret_key": self.password}
-                ),
+                data=json.dumps(request_data),
                 basic_auth=True,
             )
             expiration_date = now + relativedelta(seconds=data.get("access_expires", 0))
