@@ -5,3 +5,5 @@
       - Pedro M. Baeza
   - [Alusage](https://nicolas.alusage.fr):
       - Nicolas JEUDY \<<https://github.com/njeudy>\>
+  - [ArPol](https://arpol.fr):
+      - Armand POLMARD
