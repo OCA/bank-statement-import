@@ -146,6 +146,10 @@ Contributors
 
   - Nicolas JEUDY <https://github.com/njeudy>
 
+- `ArPol <https://arpol.fr>`__:
+
+  - Armand POLMARD
+
 Maintainers
 -----------
 
