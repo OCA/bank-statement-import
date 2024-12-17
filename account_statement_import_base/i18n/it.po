@@ -19,7 +19,8 @@ msgstr ""
 #. module: account_statement_import_base
 #: model:ir.model.constraint,message:account_statement_import_base.constraint_account_bank_statement_line_unique_import_id
 msgid "A bank account transaction can be imported only once!"
-msgstr "Un'operazione di un conto bancario può essere importata una sola volta!"
+msgstr ""
+"Un'operazione di un conto bancario può essere importata una sola volta!"
 
 #. module: account_statement_import_base
 #: model:ir.model,name:account_statement_import_base.model_account_bank_statement_line
