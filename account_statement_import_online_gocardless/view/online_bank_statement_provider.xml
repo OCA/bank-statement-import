@@ -12,34 +12,35 @@
                 <group
                     name="gocardless"
                     string="GoCardless"
-                    attrs="{'invisible':[('service','!=','gocardless')]}"
+                    invisible="service != 'gocardless'"
                 >
                     <field name="username" string="Secret ID" />
                     <field name="password" string="Secret Key" />
                     <field
                         name="gocardless_requisition_id"
-                        attrs="{'invisible': [('gocardless_requisition_id', '=', False)]}"
+                        invisible="not gocardless_requisition_id"
                         groups="base.group_no_one"
                     />
                     <field
                         name="gocardless_requisition_expiration"
-                        attrs="{'invisible': [('gocardless_requisition_id', '=', False)]}"
+                        invisible="not gocardless_requisition_id"
                         groups="base.group_no_one"
                     />
                     <field
                         name="gocardless_institution_id"
-                        attrs="{'invisible': [('gocardless_institution_id', '=', False)]}"
+                        invisible="not gocardless_institution_id"
                         groups="base.group_no_one"
                     />
                     <field
                         name="gocardless_account_id"
-                        attrs="{'invisible': [('gocardless_account_id', '=', False)]}"
+                        invisible="not gocardless_account_id"
                         groups="base.group_no_one"
                     />
                     <button
                         name="action_select_gocardless_bank"
                         string="Select Bank Account Identifier"
-                        attrs="{'invisible': ['|', ('username', '=', False), ('password', '=', False)]}"
+                        colspan="2"
+                        invisible="not username or not password"
                         type="object"
                     />
                 </group>
