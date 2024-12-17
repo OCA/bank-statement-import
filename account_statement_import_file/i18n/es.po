@@ -94,6 +94,12 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr "Importar (OCA) (%s)"
+
+#. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
 msgid "Import Bank Statement File"
 msgstr "Importar archivo de extracto bancario"

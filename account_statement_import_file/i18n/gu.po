@@ -135,6 +135,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -232,41 +238,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#, python-format
-#~ msgid "Import"
-#~ msgstr "આયાત"
-
-#~ msgid "or"
-#~ msgstr "અથવા"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "બેન્ક વિધાન લીટી"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "બેન્ક એકાઉન્ટ"
-
-#~ msgid "Active"
-#~ msgstr "સક્રિય"
-
-#~ msgid "Bank"
-#~ msgstr "બેન્ક"
-
-#~ msgid "Company"
-#~ msgstr "કંપની"
-
-#~ msgid "Currency"
-#~ msgstr "ચલણ"
-
-#~ msgid "OK"
-#~ msgstr "બરાબર"
-
-#~ msgid "Sequence"
-#~ msgstr "ક્રમ"
-
-#~ msgid "Type"
-#~ msgstr "પ્રકાર"
-
-#~ msgid "_Import"
-#~ msgstr "_આયાત કરો"

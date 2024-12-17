@@ -133,6 +133,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr "Увоз (OCA) (%s)"
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -230,65 +236,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "Red bankovnog izveštaja"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "Bankovni račun"
-
-#~ msgid "Account Number"
-#~ msgstr "Број рачуна"
-
-#~ msgid "Active"
-#~ msgstr "Активно"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "Dozvoli storniranje stavki"
-
-#~ msgid "Bank"
-#~ msgstr "Банка"
-
-#~ msgid "Company"
-#~ msgstr "Kompanija"
-
-#~ msgid "Currency"
-#~ msgstr "Valuta"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "Osnovni konto potražuje"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "Osnovni dugovni konto"
-
-#~ msgid "Entry Sequence"
-#~ msgstr "Redoslijed unosa"
-
-#~ msgid ""
-#~ "If this box is checked, the system will try to group the accounting lines "
-#~ "when generating them from invoices."
-#~ msgstr ""
-#~ "Ako je cekirano, sistem ce probati da grupise konta prilikom generisanja "
-#~ "iz racuna."
-
-#~ msgid "Journal Name"
-#~ msgstr "Naziv dnevnika"
-
-#~ msgid "Next Number"
-#~ msgstr "Sledeći broj"
-
-#~ msgid "OK"
-#~ msgstr "U redu"
-
-#~ msgid "Sequence"
-#~ msgstr "Niz"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "Valuta upotrebljena pri unosu izvoda"
-
-#~ msgid "Type"
-#~ msgstr "Tip"
-
-#~ msgid "_Import"
-#~ msgstr "_Import"
