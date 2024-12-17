@@ -136,6 +136,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -233,99 +239,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#, python-format
-#~ msgid "Import"
-#~ msgstr "Uvoz"
-
-#~ msgid "Last Modified on"
-#~ msgstr "Zadnja promena"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "Stavka izvoda"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "Bankovni račun"
-
-#~ msgid "Account Number"
-#~ msgstr "Broj bankovnog računa"
-
-#~ msgid "Account Types Allowed"
-#~ msgstr "Dozvoljeni tipovi konta"
-
-#~ msgid "Accounts Allowed"
-#~ msgstr "Dozvoljena konta"
-
-#~ msgid "Active"
-#~ msgstr "Aktivan"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "Dozvoli poništavanje unosa"
-
-#~ msgid "Bank"
-#~ msgstr "Banka"
-
-#~ msgid "Color Index"
-#~ msgstr "Indeks boje"
-
-#~ msgid "Company"
-#~ msgstr "Preduzeće"
-
-#~ msgid "Company related to this journal"
-#~ msgstr "Preduzeće na koje se odnosi dnevnik"
-
-#~ msgid "Currency"
-#~ msgstr "Valuta"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "Osnovni potražni konto"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "Osnovni dugovni konto"
-
-#~ msgid "Entry Sequence"
-#~ msgstr "Redoslijed unosa"
-
-#~ msgid "Group Invoice Lines"
-#~ msgstr "Grupiši stavke fakture"
-
-#~ msgid ""
-#~ "If this box is checked, the system will try to group the accounting lines "
-#~ "when generating them from invoices."
-#~ msgstr ""
-#~ "Ako je cekirano, sistem ce probati da grupise konta prilikom generisanja "
-#~ "iz racuna."
-
-#~ msgid "Journal Name"
-#~ msgstr "Naziv dnevnika"
-
-#~ msgid "Loss Account"
-#~ msgstr "Konto gubitka"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Payment Methods"
-#~ msgstr "Metodi plaćanja"
-
-#~ msgid "Profit Account"
-#~ msgstr "Profitni konto"
-
-#~ msgid "Sequence"
-#~ msgstr "Prioritet"
-
-#~ msgid "Short Code"
-#~ msgstr "Kratki kod"
-
-#~ msgid "Show journal on dashboard"
-#~ msgstr "Prikaži dnevnik na kontrolnoj ploči"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "Korištena valuta"
-
-#~ msgid "Type"
-#~ msgstr "Tip"
-
-#~ msgid "_Import"
-#~ msgstr "_Uvoz"

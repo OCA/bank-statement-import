@@ -127,6 +127,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr "Falta o payment_ref numa transação."
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr "Ficheiro do Extrato"
@@ -228,64 +234,3 @@ msgid ""
 "imported transactions."
 msgstr ""
 "Ou já importou este arquivo ou este contém apenas transações já importadas."
-
-#, python-format
-#~ msgid "Import"
-#~ msgstr "Importar"
-
-#~ msgid "Last Modified on"
-#~ msgstr "Última Modificação em"
-
-#~ msgid ""
-#~ "Get you bank statements in electronic format from your bank and select "
-#~ "them here."
-#~ msgstr ""
-#~ "Obtenha os seus extratos bancários em formato eletrónico e selecione-os "
-#~ "aqui."
-
-#, python-format
-#~ msgid "Already imported items"
-#~ msgstr "Itens já importados"
-
-#~ msgid "or"
-#~ msgstr "ou"
-
-#~ msgid "A bank account transaction can be imported only once!"
-#~ msgstr "Uma transação de conta bancária só pode ser importada uma vez!"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "Linha de Extrato Bancário"
-
-#~ msgid "Import ID"
-#~ msgstr "ID de Importação"
-
-#~ msgid ""
-#~ "Could not find any bank account with number '%s' linked to partner '%s'. "
-#~ "You should create the bank account and set it on the related bank "
-#~ "journal. If the related bank journal doesn't exist yet, you should create "
-#~ "a new one."
-#~ msgstr ""
-#~ "Não foi encontrada nenhuma conta bancária com o número '%s' ligada ao "
-#~ "parceiro '%s'. Você deve criar a conta bancária e defini-la no diário "
-#~ "bancário relacionado. Se este ainda não existir, deve criar um novo "
-#~ "diário."
-
-#~ msgid "Partner Bank Account"
-#~ msgstr "Conta Bancária de Parceiro"
-
-#~ msgid ""
-#~ "The bank account with number '%s' exists in Odoo but it is not set on any "
-#~ "bank journal. You should set it on the related bank journal. If the "
-#~ "related bank journal doesn't exist yet, you should create a new one."
-#~ msgstr ""
-#~ "A conta bancária com o número \"%s\" existe no Odoo, mas não está "
-#~ "definida em nenhum diário bancário. Você deve defini-la no diário "
-#~ "bancário relacionado. Se este ainda não existir, deve criar um novo "
-#~ "diário."
-
-#~ msgid ""
-#~ "The currency of the bank statement (%s) is not the same as the currency "
-#~ "of the journal '%s' (%s)."
-#~ msgstr ""
-#~ "A moeda do extrato bancário (%s) não é a mesma que a moeda do diário "
-#~ "'%s' (%s))."
