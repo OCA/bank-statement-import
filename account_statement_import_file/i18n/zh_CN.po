@@ -39,14 +39,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr "%d 个已导入的交易将被忽略。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr "1个 已导入的交易将被忽略."
 
@@ -63,16 +61,12 @@ msgstr "取消日期"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
-"Could not find any bank account with number '%(account_number)s' linked to "
+"Could not find any bank account with number '%(account_number)s'  linked to "
 "partner '%(partner_name)s'. You should create the bank account and set it on "
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
-"找不到与合作伙伴 '%(partner_name)s' 关联的银行账户 '%(account_number)s'。您应"
-"该创建银行账户并将其设置在相关的银行日记账上。如果相关的银行日记账尚不存在，"
-"您应该创建一个新的。"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -98,13 +92,6 @@ msgstr "从您的银行下载银行对账单文件，并在此处上传。"
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
-
-#. module: account_statement_import_file
-#. odoo-python
-#: code:addons/account_statement_import_file/models/account_journal.py:0
-#, python-format
-msgid "Import"
-msgstr "导入"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
@@ -137,11 +124,6 @@ msgid "Journal"
 msgstr "日记账"
 
 #. module: account_statement_import_file
-#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
-msgid "Last Modified on"
-msgstr "最后修改于"
-
-#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
 msgid "Last Updated by"
 msgstr "最后更新者"
@@ -154,14 +136,12 @@ msgstr "最后更新于"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing currency code in the bank statement file."
 msgstr "银行对账单文件中缺少货币代码。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr "交易中缺少payment_ref字段。"
 
@@ -183,27 +163,21 @@ msgstr "支持的格式："
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr "日记账 ‘%s’ 上未设置银行科目。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank account with number '%(account_number)s' exists in Odoo but it is "
 "not set on any bank journal. You should set it on the related bank journal. "
-"If the related bank journal doesn't exist yet, you should create a new one."
+"If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
-"Odoo 中存在银行账户 '%(account_number)s'，但它没有设置在任何银行日记账上。您"
-"应该将其设置在相关的银行日记账上。如果相关的银行日记账尚不存在，您应该创建一"
-"个新的。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
@@ -212,7 +186,6 @@ msgstr "银行对账单文件使用币种 '%s'，但 Odoo 中没有这个币种�
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
@@ -223,35 +196,33 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The format of this bank statement file doesn't contain the bank account "
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
-msgstr "此银行对账单文件的格式不包含银行账户号码，您应该从仪表板中正确的银行日记账上"
+msgstr ""
+"此银行对账单文件的格式不包含银行账户号码，您应该从仪表板中正确的银行日记账上"
 "启动向导。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
-msgstr "从对账单文件中找到的日记账 (%(journal_match)s) 与所选的的日记账 "
+msgstr ""
+"从对账单文件中找到的日记账 (%(journal_match)s) 与所选的的日记账 "
 "(%(journal_selected)s) 不一致。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr "解析对账单文件返回了无效的结果。"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
@@ -272,11 +243,39 @@ msgstr "上传一个银行对账单文件"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr "您已经导入过这个文件，或者这个文件只包含已经导入的交易。"
+
+#, python-format
+#~ msgid ""
+#~ "Could not find any bank account with number '%(account_number)s' linked "
+#~ "to partner '%(partner_name)s'. You should create the bank account and set "
+#~ "it on the related bank journal. If the related bank journal doesn't exist "
+#~ "yet, you should create a new one."
+#~ msgstr ""
+#~ "找不到与合作伙伴 '%(partner_name)s' 关联的银行账户 '%(account_number)s'。"
+#~ "您应该创建银行账户并将其设置在相关的银行日记账上。如果相关的银行日记账尚不"
+#~ "存在，您应该创建一个新的。"
+
+#, python-format
+#~ msgid "Import"
+#~ msgstr "导入"
+
+#~ msgid "Last Modified on"
+#~ msgstr "最后修改于"
+
+#, python-format
+#~ msgid ""
+#~ "The bank account with number '%(account_number)s' exists in Odoo but it "
+#~ "is not set on any bank journal. You should set it on the related bank "
+#~ "journal. If the related bank journal doesn't exist yet, you should create "
+#~ "a new one."
+#~ msgstr ""
+#~ "Odoo 中存在银行账户 '%(account_number)s'，但它没有设置在任何银行日记账上。"
+#~ "您应该将其设置在相关的银行日记账上。如果相关的银行日记账尚不存在，您应该创"
+#~ "建一个新的。"
 
 #~ msgid ""
 #~ "Get you bank statements in electronic format from your bank and select "

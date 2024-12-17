@@ -26,14 +26,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr ""
 
@@ -50,9 +48,8 @@ msgstr "Ακύρωση"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
-"Could not find any bank account with number '%(account_number)s' linked to "
+"Could not find any bank account with number '%(account_number)s'  linked to "
 "partner '%(partner_name)s'. You should create the bank account and set it on "
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
@@ -82,13 +79,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
 msgid "ID"
 msgstr "Κωδικός"
-
-#. module: account_statement_import_file
-#. odoo-python
-#: code:addons/account_statement_import_file/models/account_journal.py:0
-#, python-format
-msgid "Import"
-msgstr "Εισαγωγή"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
@@ -123,11 +113,6 @@ msgid "Journal"
 msgstr "Ημερολόγιο"
 
 #. module: account_statement_import_file
-#: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import____last_update
-msgid "Last Modified on"
-msgstr "Τελευταία τροποποίηση στις"
-
-#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__write_uid
 msgid "Last Updated by"
 msgstr "Τελευταία Ενημέρωση από"
@@ -140,14 +125,12 @@ msgstr "Τελευταία Ενημέρωση στις"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing currency code in the bank statement file."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr ""
 
@@ -171,24 +154,21 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank account with number '%(account_number)s' exists in Odoo but it is "
 "not set on any bank journal. You should set it on the related bank journal. "
-"If the related bank journal doesn't exist yet, you should create a new one."
+"If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
@@ -197,7 +177,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
@@ -206,7 +185,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The format of this bank statement file doesn't contain the bank account "
 "number, so you must start the wizard from the right bank journal in the "
@@ -216,7 +194,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
@@ -225,14 +202,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
@@ -253,11 +228,17 @@ msgstr "Γραμμή Κίνησης Τραπεζικού Λογαριασμού"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
+
+#, python-format
+#~ msgid "Import"
+#~ msgstr "Εισαγωγή"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Τελευταία τροποποίηση στις"
 
 #~ msgid "or"
 #~ msgstr "ή"
