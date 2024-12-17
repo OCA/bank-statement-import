@@ -1,0 +1,7 @@
+  - [ForgeFlow](https://www.forgeflow.com):
+      - Christopher Ormaza
+      - Jordi Ballester
+  - [Tecnativa](https://www.tecnativa.com):
+      - Pedro M. Baeza
+  - [Alusage](https://nicolas.alusage.fr):
+      - Nicolas JEUDY \<<https://github.com/njeudy>\>

@@ -17,20 +17,20 @@ Online Bank Statements: GoCardless
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_online_gocardless
+    :target: https://github.com/OCA/bank-statement-import/tree/17.0/account_statement_import_online_gocardless
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-16-0/bank-statement-import-16-0-account_statement_import_online_gocardless
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-17-0/bank-statement-import-17-0-account_statement_import_online_gocardless
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module provides online bank statements from GoCardless Bank Account Data,
-which provides a free API for connecting and getting transactions for bank
-accounts.
+This module provides online bank statements from GoCardless Bank Account
+Data, which provides a free API for connecting and getting transactions
+for bank accounts.
 
 **Table of contents**
 
@@ -41,61 +41,76 @@ Configuration
 =============
 
 On the GoCardless website
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
-#. Go to https://bankaccountdata.gocardless.com, and create or login into your
-   "GoCardLess Bank Account Data" account.
-#. Go to Developers > User secrets option on the left.
-#. Click on the "+ Create new" button on the bottom part.
-#. Put a name to the user secret (eg. Odoo), and optionally limit it to certain
-   IPs using CIDR subnet notation.
-#. Copy or download the secret ID and key for later use. The second one won't be
-   available anymore, so make sure you don't forget this step.
+1. Go to
+   `https://bankaccountdata.gocardless.com <https://bankaccountdata.gocardless.com>`__,
+   and create or login into your "GoCardLess Bank Account Data" account.
+2. Go to Developers > User secrets option on the left.
+3. Click on the "+ Create new" button on the bottom part.
+4. Put a name to the user secret (eg. Odoo), and optionally limit it to
+   certain IPs using CIDR subnet notation.
+5. Copy or download the secret ID and key for later use. The second one
+   won't be available anymore, so make sure you don't forget this step.
 
 On Odoo
-~~~~~~~
+-------
 
 To configure online bank statements provider:
 
-#. Add your user to the "Full Accounting Settings" group.
-#. Go to *Invoicing > Configuration > Accounting > Journals*.
-#. Select the journal representing your bank account (or create it).
-#. The bank account number should be properly introduced.
-#. Set *Bank Feeds* to *Online (OCA)*.
-#. Select *GoCardless* as online bank statements provider in
-   *Online Bank Statements (OCA)* section.
-#. Save the journal
-#. Click on the created provider.
-#. Put your secret ID and secret key on the existing fields.
-#. Click on the button "Select Bank Account Identifier".
+1.  Add your user to the "Full Accounting Settings" group.
 
-   .. image:: https://raw.githubusercontent.com/OCA/bank-statement-import/16.0/account_statement_import_online_gocardless/static/img/gocardless_configuration.gif
+2.  Go to *Invoicing > Configuration > Accounting > Journals*.
 
-#. A new window will appear for selecting the bank entity.
+3.  Select the journal representing your bank account (or create it).
 
-   .. image:: https://raw.githubusercontent.com/OCA/bank-statement-import/16.0/account_statement_import_online_gocardless/static/img/gocardless_bank_selection.gif
+4.  The bank account number should be properly introduced.
 
-#. Select it, and you will be redirected to the selected entity for introducing
-   your bank credentials to allow the connection.
-#. If the process is completed, and the bank account linked to the journal is
-   accessible, you'll be again redirected to the online provider form, and
-   everything will be linked and ready to start the transaction pulling. A
-   message is logged about it on the chatter.
-#. If not, an error message will be logged either in the chatter.
+5.  Set *Bank Feeds* to *Online (OCA)*.
+
+6.  Select *GoCardless* as online bank statements provider in *Online
+    Bank Statements (OCA)* section.
+
+7.  Save the journal
+
+8.  Click on the created provider.
+
+9.  Put your secret ID and secret key on the existing fields.
+
+10. Click on the button "Select Bank Account Identifier".
+
+    |image_01|
+
+11. A new window will appear for selecting the bank entity.
+
+    |image_02|
+
+12. Select it, and you will be redirected to the selected entity for
+    introducing your bank credentials to allow the connection.
+
+13. If the process is completed, and the bank account linked to the
+    journal is accessible, you'll be again redirected to the online
+    provider form, and everything will be linked and ready to start the
+    transaction pulling. A message is logged about it on the chatter.
+
+14. If not, an error message will be logged either in the chatter.
+
+.. |image_01| image:: https://raw.githubusercontent.com/OCA/bank-statement-import/17.0/account_statement_import_online_gocardless/static/img/gocardless_configuration.gif
+.. |image_02| image:: https://raw.githubusercontent.com/OCA/bank-statement-import/17.0/account_statement_import_online_gocardless/static/img/gocardless_bank_selection.gif
 
 Usage
 =====
 
 To pull historical bank statements:
 
-#. Go to *Invoicing > Configuration > Accounting > Journals*.
-#. Select the journal representing your bank account.
-#. Launch *Actions > Online Bank Statements Pull Wizard*
-#. Configure date interval and click on *Pull*.
+1. Go to *Invoicing > Configuration > Accounting > Journals*.
+2. Select the journal representing your bank account.
+3. Launch *Actions > Online Bank Statements Pull Wizard*
+4. Configure date interval and click on *Pull*.
 
-If historical data is not needed, then just simply wait for the scheduled
-activity "Pull Online Bank Statements" to be executed for getting new
-transactions.
+If historical data is not needed, then just simply wait for the
+scheduled activity "Pull Online Bank Statements" to be executed for
+getting new transactions.
 
 Bug Tracker
 ===========
@@ -103,7 +118,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_gocardless%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_gocardless%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -111,27 +126,30 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ForgeFlow
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `ForgeFlow <https://www.forgeflow.com>`__:
+-  `ForgeFlow <https://www.forgeflow.com>`__:
 
-  * Christopher Ormaza
-  * Jordi Ballester
-* `Tecnativa <https://www.tecnativa.com>`__:
+   -  Christopher Ormaza
+   -  Jordi Ballester
 
-  * Pedro M. Baeza
-* `Alusage <https://nicolas.alusage.fr>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Nicolas JEUDY <https://github.com/njeudy>
+   -  Pedro M. Baeza
+
+-  `Alusage <https://nicolas.alusage.fr>`__:
+
+   -  Nicolas JEUDY
+      <`https://github.com/njeudy <https://github.com/njeudy>`__>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -143,6 +161,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_online_gocardless>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/17.0/account_statement_import_online_gocardless>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
