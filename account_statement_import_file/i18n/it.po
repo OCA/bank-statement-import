@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2024-05-03 16:35+0000\n"
+"PO-Revision-Date: 2024-12-19 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "Language: it\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -66,6 +66,9 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Impossibile trovare conti bancari con numero '%(account_number)s' collegati "
+"al partner '%(partner_name)s'. Creare il conto e impostarlo nel relativo "
+"registro banca. Se il registro ancora non esiste crearne uno nuovo."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -174,6 +177,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
+"Il conto bancario con numero '%(account_number)s' esiste in Odoo ma non è "
+"impostato in alcun registro banca. Assegnarlo nel relativo registro banca. "
+"Se tale registro ancora non esiste, crearne uno nuovo."
 
 #. module: account_statement_import_file
 #. odoo-python
