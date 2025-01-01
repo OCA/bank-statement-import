@@ -30,11 +30,9 @@ class AccountStatementImport(models.TransientModel):
     @api.model
     def _prepare_ofx_transaction_line(self, transaction):
         # Since ofxparse doesn't provide account numbers,
-        # we cannot provide the key 'bank_account_id',
-        # nor the key 'account_number'
-        # If you read odoo10/addons/account_bank_statement_import/
-        # account_bank_statement_import.py, it's the only 2 keys
-        # we can provide to match a partner.
+        # we cannot provide the key 'account_number'
+        # If you read the code of the module account_statement_import_base
+        # it's the only key we can provide to match a partner.
         payment_ref = transaction.payee
         if transaction.checknum:
             payment_ref += " " + transaction.checknum
