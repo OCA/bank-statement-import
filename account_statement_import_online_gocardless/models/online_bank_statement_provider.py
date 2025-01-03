@@ -379,11 +379,7 @@ class OnlineBankStatementProvider(models.Model):
                     "date": current_date,
                     "ref": partner_name or "/",
                     "payment_ref": payment_ref,
-                    "unique_import_id": (
-                        tr.get("entryReference")
-                        or tr.get("transactionId")
-                        or tr.get("internalTransactionId")
-                    ),
+                    "unique_import_id": self._gocardless_get_unique_import_id(tr),
                     "amount": amount_currency,
                     "account_number": account_number,
                     "partner_name": partner_name,
@@ -392,6 +388,13 @@ class OnlineBankStatementProvider(models.Model):
                 }
             )
         return res, {}
+
+    def _gocardless_get_unique_import_id(self, tr):
+        return (
+            tr.get("entryReference")
+            or tr.get("transactionId")
+            or tr.get("internalTransactionId")
+        )
 
     def _gocardless_get_note(self, tr):
         """Override to get different notes."""
