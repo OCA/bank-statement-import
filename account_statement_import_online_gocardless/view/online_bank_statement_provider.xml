@@ -17,6 +17,10 @@
                     <field name="username" string="Secret ID" />
                     <field name="password" string="Secret Key" />
                     <field
+                        name="gocardless_country_id"
+                        required="service == 'gocardless'"
+                    />
+                    <field
                         name="gocardless_requisition_id"
                         invisible="not gocardless_requisition_id"
                         groups="base.group_no_one"
