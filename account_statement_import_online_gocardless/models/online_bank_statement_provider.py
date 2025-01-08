@@ -29,6 +29,20 @@ class OnlineBankStatementProvider(models.Model):
     gocardless_requisition_expiration = fields.Datetime(readonly=True)
     gocardless_institution_id = fields.Char()
     gocardless_account_id = fields.Char()
+    gocardless_country_id = fields.Many2one(
+        "res.country",
+        compute="_compute_gocardless_country_id",
+        store=True,
+        readonly=False,
+    )
+
+    @api.depends("journal_id", "company_id")
+    def _compute_gocardless_country_id(self):
+        for provider in self:
+            provider.gocardless_country_id = (
+                provider.journal_id.bank_account_id.company_id
+                or provider.journal_id.company_id
+            ).country_id
 
     def gocardless_reset_requisition(self):
         self.write(
@@ -147,9 +161,7 @@ class OnlineBankStatementProvider(models.Model):
 
     def _gocardless_select_bank_institution(self):
         """Ask for the GoCardless bank instituion and continue full linkage."""
-        country = (
-            self.journal_id.bank_account_id.company_id or self.journal_id.company_id
-        ).country_id
+        country = self.gocardless_country_id
         response, data = self._gocardless_request(
             "institutions", params={"country": country.code}
         )
