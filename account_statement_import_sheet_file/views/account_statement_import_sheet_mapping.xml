@@ -45,6 +45,7 @@
                                 class="alert alert-warning"
                                 role="alert"
                                 invisible="not no_header"
+                                colspan="2"
                             >
                                 <span
                                     class="fa fa-info-circle"
