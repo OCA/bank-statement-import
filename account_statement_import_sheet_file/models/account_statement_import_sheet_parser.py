@@ -41,22 +41,40 @@ class AccountStatementImportSheetParser(models.TransientModel):
     _description = "Bank Statement Import Sheet Parser"
 
     @api.model
-    def parse_header(self, data_file, encoding, csv_options, header_lines_skip_count=0):
-        try:
-            workbook = xlrd.open_workbook(
-                file_contents=data_file,
-                encoding_override=encoding if encoding else None,
-            )
-            sheet = workbook.sheet_by_index(0)
-            values = sheet.row_values(header_lines_skip_count - 1)
-            return [str(value) for value in values]
-        except xlrd.XLRDError:
-            _logger.error("Pass this method")
-
-        data = StringIO(data_file.decode(encoding or "utf-8"))
-        csv_data = reader(data, **csv_options)
-        csv_data_lst = list(csv_data)
-        header = [value.strip() for value in csv_data_lst[header_lines_skip_count - 1]]
+    def parse_header(self, csv_or_xlsx, mapping):
+        if mapping.no_header:
+            return []
+        header_line = mapping.header_lines_skip_count
+        # prevent negative indexes
+        if header_line > 0:
+            header_line -= 1
+        if isinstance(csv_or_xlsx, tuple):
+            sheet = csv_or_xlsx[1]
+            # Check if it's xlrd (old Excel format)
+            if isinstance(sheet, xlrd.sheet.Sheet):
+                header = [str(value).strip() for value in sheet.row_values(header_line)]
+            else:
+                # It's openpyxl (new Excel format)
+                # iter_rows is 1-indexed, so we need to add 1
+                rows = list(
+                    sheet.iter_rows(
+                        min_row=header_line + 1,
+                        max_row=header_line + 1,
+                        values_only=True,
+                    )
+                )
+                if rows:
+                    header = [
+                        str(value).strip() if value is not None else ""
+                        for value in rows[0]
+                    ]
+                else:
+                    header = []
+        else:
+            [next(csv_or_xlsx) for _i in range(header_line)]
+            header = [value.strip() for value in next(csv_or_xlsx)]
+        if mapping.offset_column:
+            header = header[mapping.offset_column :]
         return header
 
     @api.model
@@ -190,33 +208,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
 
         # Procesar el header
-        header = False
-        if not mapping.no_header:
-            header_line = mapping.header_lines_skip_count - 1
-            if isinstance(csv_or_xlsx, tuple):
-                workbook, sheet = csv_or_xlsx
-                if isinstance(sheet, xlrd.sheet.Sheet):
-                    # XLS
-                    header = [
-                        str(value).strip() for value in sheet.row_values(header_line)
-                    ]
-                else:
-                    # XLSX
-                    header = [
-                        str(cell.value).strip()
-                        for cell in list(
-                            sheet.iter_rows(
-                                min_row=header_line + 1, max_row=header_line + 1
-                            )
-                        )[0]
-                    ]
-            else:
-                # CSV
-                [next(csv_or_xlsx) for _ in range(header_line)]
-                header = [value.strip() for value in next(csv_or_xlsx)]
-
-            if mapping.offset_column:
-                header = header[mapping.offset_column :]
+        header = self.parse_header(csv_or_xlsx, mapping)
 
         for column_name in self._get_column_names():
             columns[column_name] = self._get_column_indexes(
