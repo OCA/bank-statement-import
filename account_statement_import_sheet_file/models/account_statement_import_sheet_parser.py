@@ -179,7 +179,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
             csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
         header = False
         if not mapping.no_header:
-            header_line = mapping.header_lines_skip_count - 1
+            header_line = mapping.header_lines_skip_count
+            # prevent negative indexes
+            if header_line > 0:
+                header_line -= 1
             if isinstance(csv_or_xlsx, tuple):
                 header = [
                     str(value).strip()
