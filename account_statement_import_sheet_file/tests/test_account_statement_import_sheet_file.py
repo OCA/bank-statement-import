@@ -1,8 +1,10 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2025 Simone Rubino
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from base64 import b64encode
+from datetime import date
 from decimal import Decimal
 from os import path
 from unittest.mock import Mock
@@ -769,3 +771,40 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_start, 0.0)
         self.assertEqual(statement.balance_end_real, 2291.5)
         self.assertEqual(statement.balance_end, 2291.5)
+
+    def test_import_html_file(self):
+        """Import an XLS[X] file that is actually an HTML file."""
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data_file_path = "fixtures/sample_statement_html.xlsx"
+        data = self._data_file(data_file_path)
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": data_file_path,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1)
+        self.assertRecordValues(
+            statement.line_ids,
+            [
+                {
+                    "date": date(2025, month=1, day=15),
+                    "payment_ref": "Line description",
+                    "partner_name": "Azure Interior",
+                    "amount": -200.20,
+                },
+            ],
+        )

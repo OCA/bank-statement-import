@@ -1,5 +1,6 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2025 Simone Rubino
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import itertools
@@ -12,13 +13,15 @@ from decimal import Decimal
 from io import StringIO
 from os import path
 
+from lxml import etree
+
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
 try:
-    from csv import reader
+    from csv import reader, writer
 
     import xlrd
     from xlrd.xldate import xldate_as_datetime
@@ -161,11 +164,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
             )
         except xlrd.XLRDError:
             csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
             try:
                 decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
             except UnicodeDecodeError:
@@ -176,6 +174,25 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         _("No valid encoding was found for the attached file")
                     ) from None
                 decoded_file = data_file.decode(detected_encoding)
+            is_HTML = decoded_file.lower().lstrip().startswith("<html>")
+            if is_HTML:
+                # Convert to CSV and continue import as CSV
+                rows = etree.HTML(decoded_file).xpath("//table//tr")
+
+                csv_decoded_file = StringIO()
+                wr = writer(csv_decoded_file)
+                wr.writerow([col.text for col in rows[0].xpath("//th")])
+                wr.writerows(
+                    [[col.text for col in row.xpath(".//td")] for row in rows[1:]]
+                )
+                decoded_file = csv_decoded_file.getvalue()
+            else:
+                csv_delimiter = mapping._get_column_delimiter_character()
+                if csv_delimiter:
+                    csv_options["delimiter"] = csv_delimiter
+                if mapping.quotechar:
+                    csv_options["quotechar"] = mapping.quotechar
+
             csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
         header = self.parse_header(csv_or_xlsx, mapping)
 
