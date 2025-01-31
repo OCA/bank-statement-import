@@ -37,7 +37,6 @@ msgstr "Abrir intercambio financiero (.OFX Money)"
 #. module: account_statement_import_ofx
 #. odoo-python
 #: code:addons/account_statement_import_ofx/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The following problem occurred during import. The file might not be valid.\n"
 "\n"
