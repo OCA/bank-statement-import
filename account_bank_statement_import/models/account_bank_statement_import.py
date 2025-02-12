@@ -4,8 +4,10 @@ import logging
 import base64
 from StringIO import StringIO
 from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
+from psycopg2.errors import TransactionRollbackError
 
 from openerp import api, models, fields
+from openerp.modules.registry import RegistryManager
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError, RedirectWarning
 
@@ -166,6 +168,26 @@ class AccountBankStatementImport(models.TransientModel):
         # Prepare statement data to be used for bank statements creation
         stmt_vals = self._complete_statement(
             stmt_vals, journal_id, account_number)
+        # Compute the statement name in a different transaction to
+        # avoid possible concurrency errors due to taking too much time
+        # to create the statement
+        for attempt in range(5):
+            with RegistryManager.get(self.env.cr.dbname).cursor() as new_cr:
+                with api.Environment.manage():
+                    env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    try:
+                        stmt_vals['name'] = (
+                            env["account.bank.statement"].with_context(
+                                period_id=stmt_vals.get("period_id")
+                            )._compute_default_statement_name(journal_id)
+                        )
+                        break
+                    except TransactionRollbackError:
+                        new_cr.rollback()
+                        if attempt == 4:
+                            raise
+                    finally:
+                        new_cr.commit()
         # Create the bank stmt_vals
         return self._create_bank_statement(stmt_vals)
 

@@ -2,7 +2,7 @@
 {
     'name': 'Account Bank Statement Import',
     'category': 'Banking addons',
-    'version': '8.0.1.2.0',
+    'version': '8.0.1.3.0',
     'license': 'AGPL-3',
     'author': 'OpenERP SA,'
               'Odoo Community Association (OCA)',
