@@ -18,7 +18,7 @@ _logger = logging.getLogger(__name__)
 
 try:
     from csv import reader
-except (ImportError, IOError) as err:
+except (OSError, ImportError) as err:
     _logger.error(err)
 
 
@@ -200,13 +200,13 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
 
         if invoice:
             invoice = _("Invoice %s") % invoice
-        note = "{} {}".format(description, transaction_id)
+        note = f"{description} {transaction_id}"
         if details:
             note += ": %s" % details
         if payer_email:
             note += " (%s)" % payer_email
 
-        unique_import_id = "{}-{}".format(transaction_id, int(timestamp.timestamp()))
+        unique_import_id = f"{transaction_id}-{int(timestamp.timestamp())}"
         name = (invoice or details or description or "",)
         transaction = {
             "name": invoice or details or description or "",

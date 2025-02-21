@@ -17,13 +17,13 @@ PayPal CSV Format Bank Statements Import
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/15.0/account_statement_import_paypal
+    :target: https://github.com/OCA/bank-statement-import/tree/17.0/account_statement_import_paypal
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-15-0/bank-statement-import-15-0-account_statement_import_paypal
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-17-0/bank-statement-import-17-0-account_statement_import_paypal
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=15.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -41,42 +41,47 @@ Configuration
 
 To adjust PayPal report columns mapping:
 
-#. Open *Invoicing > Configuration > Accounting > PayPal Report Mappings*
-#. Modify mapping(s) according to your CSV reports format.
+1. Open *Invoicing > Configuration > Accounting > PayPal Report
+   Mappings*
+2. Modify mapping(s) according to your CSV reports format.
 
 Usage
 =====
 
 To import statements from PayPal via Statement report:
 
-#. Go to `PayPal <https://business.paypal.com/merchantdata/reportHome/>`__
-#. Open *Statements* and select *Monthly* or *Custom*
-#. Select date range of interest and click *Request* under *CSV* column
-#. Wait for statement report to be generated
-#. Download it and save to a file
-#. Go to Odoo and and import saved statement file, selecting corresponding format
+1. Go to
+   `PayPal <https://business.paypal.com/merchantdata/reportHome/>`__
+2. Open *Statements* and select *Monthly* or *Custom*
+3. Select date range of interest and click *Request* under *CSV* column
+4. Wait for statement report to be generated
+5. Download it and save to a file
+6. Go to Odoo and and import saved statement file, selecting
+   corresponding format
 
 To import statements from PayPal via Activity report:
 
-#. Go to `PayPal <https://business.paypal.com/merchantdata/reportHome/>`__
-#. Open *Activity download*
-#. Set *Transaction type* to *Balance affecting*
-#. Set *Format* to *CSV*
-#. Select date range of interest and click *Create report*
-#. Wait for activity report to be generated
-#. Download it and save to a file
-#. Go to Odoo and and import saved statement file, selecting corresponding format
+1. Go to
+   `PayPal <https://business.paypal.com/merchantdata/reportHome/>`__
+2. Open *Activity download*
+3. Set *Transaction type* to *Balance affecting*
+4. Set *Format* to *CSV*
+5. Select date range of interest and click *Create report*
+6. Wait for activity report to be generated
+7. Download it and save to a file
+8. Go to Odoo and and import saved statement file, selecting
+   corresponding format
 
 Changelog
 =========
 
 12.0.2.0.0
-~~~~~~~~~~
+----------
 
-* [BREAKING] New mapping, please review mappings after upgrade.
-* [BREAKING] Different bank accounts have to be used per each currency.
-* [ADD] Support for both Statement and Activity reports.
-* [ADD] Separate fee and currency exchange parsing.
+- [BREAKING] New mapping, please review mappings after upgrade.
+- [BREAKING] Different bank accounts have to be used per each currency.
+- [ADD] Support for both Statement and Activity reports.
+- [ADD] Separate fee and currency exchange parsing.
 
 Bug Tracker
 ===========
@@ -84,7 +89,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_paypal%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_paypal%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -92,27 +97,28 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 * CorporateHub
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Alexis de Lattre <alexis.delattre@akretion.com>
-* Sebastien BEAU <sebastien.beau@akretion.com>
-* Tecnativa (https://www.tecnativa.com)
+- Alexis de Lattre <alexis.delattre@akretion.com>
+- Sebastien BEAU <sebastien.beau@akretion.com>
+- Tecnativa (https://www.tecnativa.com)
 
-  * Vicent Cubells
-  * Victor M.M. Torres
-  * Carlos Roca
+  - Vicent Cubells
+  - Victor M.M. Torres
+  - Carlos Roca
 
-* Alexey Pelykh <alexey.pelykh@corphub.eu> (`CorporateHub <https://corporatehub.eu/>`__)
-* Manuel Regidor <manuel.regidor@sygel.es>
+- Alexey Pelykh <alexey.pelykh@corphub.eu>
+  (`CorporateHub <https://corporatehub.eu/>`__)
+- Manuel Regidor <manuel.regidor@sygel.es>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -124,6 +130,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/15.0/account_statement_import_paypal>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/17.0/account_statement_import_paypal>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
