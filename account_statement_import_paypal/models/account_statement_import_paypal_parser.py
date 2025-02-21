@@ -161,7 +161,6 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
                     if gross_amount < 0.0
                     else dict_values.get("from_email_address_column")
                 )
-
             lines.append(
                 {
                     "transaction_id": dict_values.get("transaction_id_column"),
@@ -207,9 +206,9 @@ class AccountBankStatementImportPayPalParser(models.TransientModel):
             note += " (%s)" % payer_email
 
         unique_import_id = f"{transaction_id}-{int(timestamp.timestamp())}"
-        name = (invoice or details or description or "",)
+        name = f"{invoice or details or description or ''}-{transaction_id}"
         transaction = {
-            "name": invoice or details or description or "",
+            "name": name,
             "amount": str(gross_amount),
             "date": timestamp,
             "payment_ref": note,

@@ -14,7 +14,7 @@
         <field name="arch" type="xml">
             <xpath expr="//footer" position="before">
                 <h2>Select a PayPal report file to import mapping.</h2>
-                <group name="start" attrs="{'invisible': [('state', '!=', 'start')]}">
+                <group name="start" invisible="state != 'start'">
                     <group colspan="2">
                         <field
                             name="data_file"
@@ -24,7 +24,7 @@
                         <field name="filename" invisible="1" />
                     </group>
                 </group>
-                <group name="final" attrs="{'invisible': [('state', '!=', 'final')]}">
+                <group name="final" invisible="state != 'final'">
                     <group colspan="2">
                         <field name="header" invisible="1" />
                         <field
@@ -32,63 +32,63 @@
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="time_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="tz_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="name_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="currency_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="gross_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="fee_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="balance_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="transaction_id_column"
                             widget="dynamic_dropdown"
                             values="statement_columns"
                             context="{'header': header}"
-                            attrs="{'required': [('state', '=', 'final')]}"
+                            required="state == 'final'"
                         />
                         <field
                             name="description_column"
@@ -153,7 +153,7 @@
                     string="Import"
                     type="object"
                     class="btn-primary"
-                    attrs="{'invisible': [('state', '!=', 'final')]}"
+                    invisible="state != 'final'"
                 />
             </xpath>
         </field>

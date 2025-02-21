@@ -19,7 +19,7 @@ class AccountBankStatementImportPayPalMappingWizard(models.TransientModel):
         string="PayPal Report File",
         required=True,
     )
-    filename = fields.Char()
+    filename = fields.Char(default="")
     header = fields.Char()
     date_column = fields.Char(
         string='"Date" column',

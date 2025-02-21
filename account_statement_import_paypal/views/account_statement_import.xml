@@ -7,12 +7,12 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <record id="account_statement_import_form" model="ir.ui.view">
+    <record id="paypal_account_statement_import_form" model="ir.ui.view">
         <field name="name">account.statement.import</field>
         <field name="model">account.statement.import</field>
         <field
             name="inherit_id"
-            ref="account_statement_import.account_statement_import_form"
+            ref="account_statement_import_file.account_statement_import_form"
         />
         <field name="arch" type="xml">
             <xpath expr="//ul[@id='statement_format']" position="inside">
