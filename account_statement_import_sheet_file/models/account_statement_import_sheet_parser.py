@@ -343,7 +343,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 else None
             )
 
-            if currency != currency_code:
+            if currency.lower() != currency_code.lower():
                 continue
 
             if isinstance(timestamp, str):
