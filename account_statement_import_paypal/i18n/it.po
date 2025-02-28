@@ -125,6 +125,7 @@ msgid "\"Type\" column"
 msgstr ""
 
 #. module: account_statement_import_paypal
+#. odoo-python
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "%(code)s: %(path)s"
@@ -192,6 +193,7 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: account_statement_import_paypal
+#. odoo-python
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Fee for %s"
@@ -230,12 +232,14 @@ msgid "Import Mapping"
 msgstr "Importa mappatura"
 
 #. module: account_statement_import_paypal
+#. odoo-python
 #: code:addons/account_statement_import_paypal/wizards/account_statement_import_paypal_mapping_wizard.py:0
 #, python-format
 msgid "Imported Mapping"
 msgstr "Mappatura importata"
 
 #. module: account_statement_import_paypal
+#. odoo-python
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Invoice %s"
@@ -245,13 +249,6 @@ msgstr "Fattura %s"
 #: model:ir.model,name:account_statement_import_paypal.model_account_journal
 msgid "Journal"
 msgstr "Registro"
-
-#. module: account_statement_import_paypal
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping____last_update
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard____last_update
-#: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__write_uid
@@ -268,6 +265,7 @@ msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: account_statement_import_paypal
+#. odoo-python
 #: code:addons/account_statement_import_paypal/wizards/account_statement_import_paypal_mapping_wizard.py:0
 #, python-format
 msgid "Mapping from %s"
@@ -290,7 +288,7 @@ msgid "PayPal Report Mappings"
 msgstr ""
 
 #. module: account_statement_import_paypal
-#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_form
+#: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.paypal_account_statement_import_form
 msgid "PayPal Report mapping:"
 msgstr ""
 
@@ -320,6 +318,7 @@ msgid "Time Format"
 msgstr ""
 
 #. module: account_statement_import_paypal
+#. odoo-python
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Transaction fee for %s"
@@ -342,6 +341,9 @@ msgstr "punto (.)"
 #: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_thousands_sep__none
 msgid "none"
 msgstr "nessuno"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
 
 #, python-format
 #~ msgid "%s: %s"
