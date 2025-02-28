@@ -21,7 +21,6 @@
                     groups="account.group_account_user"
                     invisible="bank_statements_source != 'online'"
                 >
-
                     <label
                         for="online_bank_statement_provider"
                         string="Provider"
