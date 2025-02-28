@@ -9,10 +9,7 @@
         <field name="name">Pull Online Bank Statements</field>
         <field name="interval_number">1</field>
         <field name="interval_type">hours</field>
-        <field name="numbercall">-1</field>
         <field name="state">code</field>
-        <field name="nextcall">2019-01-01 00:10:00</field>
-        <field name="doall" eval="False" />
         <field
             name="model_id"
             ref="account_statement_import_online.model_online_bank_statement_provider"
