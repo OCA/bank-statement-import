@@ -12,6 +12,7 @@ from odoo_test_helper import FakeModelLoader
 
 from odoo import _, fields
 from odoo.tests import common
+from odoo.tools import mute_logger
 
 _logger = logging.getLogger(__name__)
 
@@ -145,10 +146,14 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
     def test_pull_no_crash(self):
         self.provider.statement_creation_mode = "weekly"
-        self.provider.with_context(crash=True, scheduled=True)._pull(
-            self.now - relativedelta(hours=1),
-            self.now,
-        )
+        with mute_logger(
+            "odoo.addons.account_statement_import_online.models"
+            ".online_bank_statement_provider"
+        ):
+            self.provider.with_context(crash=True, scheduled=True)._pull(
+                self.now - relativedelta(hours=1),
+                self.now,
+            )
         self._getExpectedStatements(0)
 
     def test_pull_crash(self):
