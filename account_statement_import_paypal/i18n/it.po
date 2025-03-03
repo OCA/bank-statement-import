@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-01-02 11:48+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2025-03-03 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__balance_column
@@ -56,7 +56,7 @@ msgstr "Colonna \"Descrizione\""
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__fee_column
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__fee_column
 msgid "\"Fee\" column"
-msgstr ""
+msgstr "Colonna \"Tariffa\""
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__from_email_address_column
@@ -68,7 +68,7 @@ msgstr "Colonna \"Da indirizzo e-mail\""
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__gross_column
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__gross_column
 msgid "\"Gross\" column"
-msgstr ""
+msgstr "Colonna \"Lordo\""
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__invoice_id_column
@@ -98,7 +98,7 @@ msgstr "Colonna \"Oggetto\""
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__time_column
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__time_column
 msgid "\"Time\" column"
-msgstr ""
+msgstr "Colonna \"Orario\""
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__tz_column
@@ -116,35 +116,35 @@ msgstr "Colonna \"A indirizzo e-mail\""
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__transaction_id_column
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__transaction_id_column
 msgid "\"Transaction ID\" column"
-msgstr ""
+msgstr "Colonna \"ID transizione\""
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__type_column
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__type_column
 msgid "\"Type\" column"
-msgstr ""
+msgstr "Colonna \"Tipo\""
 
 #. module: account_statement_import_paypal
 #. odoo-python
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "%(code)s: %(path)s"
-msgstr ""
+msgstr "%(code)s: %(path)s"
 
 #. module: account_statement_import_paypal
 #: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_mapping
 msgid "Account Statement Import PayPal Mapping"
-msgstr ""
+msgstr "Mappatura importazione estratti conto PayPal"
 
 #. module: account_statement_import_paypal
 #: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_mapping_wizard
 msgid "Account Statement Import PayPal Mapping Wizard"
-msgstr ""
+msgstr "Procedura per mappatura importazione estratti conto PayPal"
 
 #. module: account_statement_import_paypal
 #: model:ir.model,name:account_statement_import_paypal.model_account_statement_import_paypal_parser
 msgid "Account Statement Import PayPal Parser"
-msgstr ""
+msgstr "Parser importazione estratti conto PayPal"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__allow_back
@@ -154,7 +154,7 @@ msgstr "Consenti indietro"
 #. module: account_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_wizard_form
 msgid "Choose a file to import..."
-msgstr ""
+msgstr "Scegliere un file da importare..."
 
 #. module: account_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_tree
@@ -166,7 +166,7 @@ msgstr "Colonne"
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_parser__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__create_date
@@ -197,7 +197,7 @@ msgstr "Nome visualizzato"
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Fee for %s"
-msgstr ""
+msgstr "Tariffa per %s"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__filename
@@ -279,18 +279,18 @@ msgstr "Nome"
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__data_file
 msgid "PayPal Report File"
-msgstr ""
+msgstr "File resoconto PayPal"
 
 #. module: account_statement_import_paypal
 #: model:ir.actions.act_window,name:account_statement_import_paypal.action_statement_import_paypal_report_mappings
 #: model:ir.ui.menu,name:account_statement_import_paypal.menu_statement_import_paypal_mapping
 msgid "PayPal Report Mappings"
-msgstr ""
+msgstr "Mappatura resoconto PayPal"
 
 #. module: account_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.paypal_account_statement_import_form
 msgid "PayPal Report mapping:"
-msgstr ""
+msgstr "Mappatura resoconto PayPal:"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import__paypal_mapping_id
@@ -300,7 +300,7 @@ msgstr "Mappatura PayPal"
 #. module: account_statement_import_paypal
 #: model_terms:ir.ui.view,arch_db:account_statement_import_paypal.account_statement_import_paypal_mapping_wizard_form
 msgid "Select a PayPal report file to import mapping."
-msgstr ""
+msgstr "Selezionare un file PayPal per importate la mappatura."
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__state
@@ -315,14 +315,14 @@ msgstr "Separatore migliaia"
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__time_format
 msgid "Time Format"
-msgstr ""
+msgstr "Formato ora"
 
 #. module: account_statement_import_paypal
 #. odoo-python
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Transaction fee for %s"
-msgstr ""
+msgstr "Tariffa transizione per %s"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_decimal_sep__comma
