@@ -6,7 +6,7 @@ from datetime import datetime
 from unittest import mock
 
 from odoo import _, fields
-from odoo.tests import common
+from odoo.tests import common, tagged
 
 _logger = logging.getLogger(__name__)
 
@@ -174,12 +174,19 @@ EARLY_TRANSACTIONS = [
 transaction_amounts = [5.48, 5.83, 6.08, 8.95]
 
 
+@tagged("-at_install", "post_install")
 class TestAccountStatementImportOnlinePonto(common.TransactionCase):
-    post_install = True
-
     def setUp(self):
         super().setUp()
-
+        if not self.env.company.chart_template_id:
+            # Load a CoA if there's none in current company
+            coa = self.env.ref("l10n_generic_coa.configurable_chart_template", False)
+            if not coa:
+                # Load the first available CoA
+                coa = self.env["account.chart.template"].search(
+                    [("visible", "=", True)], limit=1
+                )
+            coa.try_loading(company=self.env.company)
         self.now = fields.Datetime.now()
         self.currency_eur = self.env.ref("base.EUR")
         self.currency_usd = self.env.ref("base.USD")
