@@ -1,6 +1,10 @@
 import io
 import logging
 
+from typing import Literal
+
+from ofxparse.ofxparse import Ofx
+
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
@@ -16,17 +20,28 @@ except ImportError:
 class AccountStatementImport(models.TransientModel):
     _inherit = "account.statement.import"
 
-    @api.model
-    def _check_ofx(self, data_file):
+    def _check_ofx(self, data_file:bytes) -> Ofx | Literal[False]:
         if not OfxParser:
             return False
+
+        # Previous implementation tried to parse the ofx file, but this had the effect of suppressing helpful messages about the ofx file. Here we just just for the tag.
         try:
+            # Convert data_file to string and check for "<ofx>" case insensitive
+            data_str = data_file.decode('utf-8', errors='ignore')
+            if "<ofx>".lower() not in data_str.lower():
+                return False
+            
             ofx = OfxParser.parse(io.BytesIO(data_file))
+            return ofx
         except Exception as e:
             _logger.debug(e)
-            return False
-        return ofx
-
+            raise UserError(
+                _(
+                    "The following problem occurred during import. "
+                    "The file might not be valid.\n\n %s"
+                )
+                % str(e)
+            ) from e   
     @api.model
     def _prepare_ofx_transaction_line(self, transaction):
         # Since ofxparse doesn't provide account numbers,
