@@ -4,7 +4,7 @@ import logging
 import base64
 from StringIO import StringIO
 from zipfile import ZipFile, BadZipfile  # BadZipFile in Python >= 3.2
-from psycopg2.errors import TransactionRollbackError
+from psycopg2.extensions import TransactionRollbackError
 
 from openerp import api, models, fields
 from openerp.modules.registry import RegistryManager
