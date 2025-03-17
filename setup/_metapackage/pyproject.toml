@@ -1,10 +1,11 @@
 [project]
 name = "odoo-addons-oca-bank-statement-import"
-version = "18.0.20250131.0"
+version = "18.0.20250317.0"
 dependencies = [
     "odoo-addon-account_statement_import_base==18.0.*",
     "odoo-addon-account_statement_import_file==18.0.*",
     "odoo-addon-account_statement_import_ofx==18.0.*",
+    "odoo-addon-account_statement_import_online==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
