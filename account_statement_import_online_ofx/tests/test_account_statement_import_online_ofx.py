@@ -34,7 +34,6 @@ class TestAccountBankAccountStatementImportOnlineOFX(common.TransactionCase):
         )
 
     def test_import_online_ofx(self):
-
         provider_model = self.env["online.bank.statement.provider"]
         active_id = self.env.context.get("active_id")
         provider = provider_model.browse(active_id)
@@ -53,26 +52,29 @@ class TestAccountBankAccountStatementImportOnlineOFX(common.TransactionCase):
 
         # import statement
 
-        mocked_response = [
-            {
-                "date": self.today,
-                "payment_ref": "BANKCARD 12345678",
-                "amount": 5645.07,
-                "unique_import_id": "202302211",
-            },
-            {
-                "date": self.today,
-                "payment_ref": "ELECTRONIC IMAGE DEPOSIT",
-                "amount": 2874.91,
-                "unique_import_id": "202302212",
-            },
-            {
-                "date": self.today,
-                "payment_ref": "BANKCARD 567890123",
-                "amount": 1269.18,
-                "unique_import_id": "202302213",
-            },
-        ], {}
+        mocked_response = (
+            [
+                {
+                    "date": self.today,
+                    "payment_ref": "BANKCARD 12345678",
+                    "amount": 5645.07,
+                    "unique_import_id": "202302211",
+                },
+                {
+                    "date": self.today,
+                    "payment_ref": "ELECTRONIC IMAGE DEPOSIT",
+                    "amount": 2874.91,
+                    "unique_import_id": "202302212",
+                },
+                {
+                    "date": self.today,
+                    "payment_ref": "BANKCARD 567890123",
+                    "amount": 1269.18,
+                    "unique_import_id": "202302213",
+                },
+            ],
+            {},
+        )
         with mock.patch(
             _provider_class + "._obtain_statement_data",
             return_value=mocked_response,
