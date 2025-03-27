@@ -30,8 +30,7 @@ Online Bank Statements: OFX
 
 This module provides online bank statements from Open Financial Exchange
 (OFX) institutions. You can set-up your own provider, or import a list
-of supported providers. https://ofxhome.com/ is used as a data source,
-currently over 300 institutions are supported.
+of supported providers.
 
 **Table of contents**
 
@@ -87,6 +86,10 @@ Contributors
 -  `ForgeFlow <https://www.forgeflow.com/>`__
 
    -  Jasmin Solanki <jasmin.solanki@forgeflow.com>
+
+-  `Trobz <https://www.trobz.com/>`__
+
+   -  Do Anh Duy <duyda@trobz.com>
 
 Maintainers
 -----------

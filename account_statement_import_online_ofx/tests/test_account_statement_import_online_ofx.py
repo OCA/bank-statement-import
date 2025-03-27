@@ -18,18 +18,20 @@ _provider_class = (
 
 
 class TestAccountBankAccountStatementImportOnlineOFX(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.now = fields.Datetime.now()
-        self.today = datetime(self.now.year, self.now.month, self.now.day)
-        self.yesterday = self.today - relativedelta(days=1)
-        self.AccountJournal = self.env["account.journal"]
-        self.OnlineBankStatementProvider = self.env["online.bank.statement.provider"]
-        self.AccountBankStatement = self.env["account.bank.statement"]
-        self.AccountBankStatementLine = self.env["account.bank.statement.line"]
-        self.OfxInstitutionLine = self.env["ofx.institution.line"]
-        self.ofx_institute = self.env["ofx.institution"].create(
+        cls.now = fields.Datetime.now()
+        cls.today = datetime(cls.now.year, cls.now.month, cls.now.day)
+        cls.yesterday = cls.today - relativedelta(days=1)
+        cls.AccountJournal = cls.env["account.journal"]
+
+        cls.OnlineBankStatementProvider = cls.env["online.bank.statement.provider"]
+        cls.AccountBankStatement = cls.env["account.bank.statement"]
+        cls.AccountBankStatementLine = cls.env["account.bank.statement.line"]
+        cls.OfxInstitutionLine = cls.env["ofx.institution.line"]
+        cls.ofx_institute = cls.env["ofx.institution"].create(
             {"name": "Test", "nickname": "Test", "ofxhome_id": 1}
         )
 

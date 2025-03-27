@@ -3,15 +3,13 @@
 
 import io
 import time
-import xml.etree.ElementTree as ET
 from datetime import datetime
 
-import requests
 from ofxparse import OfxParser
 from ofxtools import ofxhome, utils
 from ofxtools.Client import OFXClient, StmtRq
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -66,11 +64,9 @@ class OnlineBankStatementProviderOFX(models.Model):
                 bankid = ofx_institution_line.bankid
                 ofxhome_id = ofx_institution_line.institution_id.ofxhome_id
                 acctid = ofx_institution_line.account_id
-
                 institute = ofxhome.lookup(ofxhome_id)
                 if institute is None or institute.url is None:
-                    raise UserError(_("OFX Data is not available"))
-                ofxhome_id = institute.id
+                    raise UserError(self.env._("OFX Data is not available"))
                 client = OFXClient(
                     institute.url,
                     userid=username,
@@ -96,7 +92,9 @@ class OnlineBankStatementProviderOFX(models.Model):
                             lines.append(vals)
             except Exception as e:
                 raise UserError(
-                    _("The following problem occurred during import.\n\n %s") % str(e)
+                    self.env._(
+                        "The following problem occurred during import.\n\n %s", str(e)
+                    )
                 ) from e
         return lines, {}
 
@@ -114,31 +112,6 @@ class OnlineBankStatementProviderOFX(models.Model):
             "unique_import_id": transaction.id,
         }
         return vals
-
-    def import_ofx_institutions(self):
-        OfxInstitution = self.env["ofx.institution"]
-        try:
-            with requests.get(
-                "http://www.ofxhome.com/api.php?all=yes", timeout=30
-            ) as f:
-                response = f.text
-            institute_list = {
-                fi.get("id").strip(): fi.get("name").strip()
-                for fi in ET.fromstring(response)
-            }
-        except Exception as e:
-            raise UserError(_(e)) from e
-
-        for ofxhome_id, name in institute_list.items():
-            institute = OfxInstitution.search([("ofxhome_id", "=", ofxhome_id)])
-            vals = {
-                "name": name,
-                "ofxhome_id": ofxhome_id,
-            }
-            if institute:
-                institute.write(vals)
-            else:
-                OfxInstitution.create(vals)
 
     def _create_or_update_statement(
         self, data, statement_date_since, statement_date_until

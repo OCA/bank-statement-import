@@ -14,7 +14,8 @@
                     name="ofx_institution_ids"
                     options="{'no_create_edit': True, 'no_quick_create': True}"
                     widget="many2many_tags"
-                    attrs="{'invisible':[('is_ofx_provider','!=',True)],'required':[('is_ofx_provider','=',True)]}"
+                    invisible="not is_ofx_provider"
+                    required="is_ofx_provider"
                 />
             </field>
         </field>
