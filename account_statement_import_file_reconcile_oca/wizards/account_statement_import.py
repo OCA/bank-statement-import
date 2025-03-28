@@ -12,7 +12,6 @@ class AccountStatementImport(models.TransientModel):
         """Process the file chosen in the wizard, create bank statement(s)
         and jump directly to the reconciliation widget"""
         result = self._import_file()
-        self.env["account.bank.statement"].browse(result["statement_ids"])
         action = self.env["ir.actions.actions"]._for_xml_id(
             "account_reconcile_oca.action_bank_statement_line_reconcile"
         )
