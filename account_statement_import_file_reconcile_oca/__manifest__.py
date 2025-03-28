@@ -5,7 +5,7 @@
 {
     "name": "Import Statement Files and Go Direct to Reconciliation",
     "category": "Accounting",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["account_statement_import_file", "account_reconcile_oca"],
     "author": "Akretion, Odoo Community Association (OCA)",
