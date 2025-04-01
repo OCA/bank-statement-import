@@ -345,9 +345,10 @@ class AccountStatementImport(models.TransientModel):
                         vals["sequence"] = seq
                 # Remove values that won't be used to create records
                 st_vals.pop("transactions", None)
+                context = st_vals.pop("creation_context", {})
                 # Create the statement with lines
                 st_vals["line_ids"] = [[0, False, line] for line in st_lines_to_create]
-                statement = abs_obj.create(st_vals)
+                statement = abs_obj.with_context(**context).create(st_vals)
                 statement_ids.append(statement.id)
 
         if not statement_ids:
