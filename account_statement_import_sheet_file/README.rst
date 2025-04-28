@@ -61,10 +61,10 @@ Changelog
 12.0.2.0.0
 ----------
 
-- [BREAKING] New mapping, please review mappings after upgrade.
-- [BREAKING] Different bank accounts have to be used per each currency.
-- [ADD] Support for both Statement and Activity reports.
-- [ADD] Separate fee and currency exchange parsing.
+-  [BREAKING] New mapping, please review mappings after upgrade.
+-  [BREAKING] Different bank accounts have to be used per each currency.
+-  [ADD] Support for both Statement and Activity reports.
+-  [ADD] Separate fee and currency exchange parsing.
 
 Bug Tracker
 ===========
@@ -88,25 +88,25 @@ Authors
 Contributors
 ------------
 
-- Alexis de Lattre <alexis.delattre@akretion.com>
-- Sebastien BEAU <sebastien.beau@akretion.com>
-- Katherine Zaoral
-- Tecnativa (https://www.tecnativa.com)
+-  Alexis de Lattre <alexis.delattre@akretion.com>
+-  Sebastien BEAU <sebastien.beau@akretion.com>
+-  Katherine Zaoral
+-  Tecnativa (https://www.tecnativa.com)
 
-  - Vicent Cubells
-  - Victor M.M. Torres
-  - Víctor Martínez
+   -  Vicent Cubells
+   -  Victor M.M. Torres
+   -  Víctor Martínez
 
-- ForgeFlow (https://www.forgeflow.com)
+-  ForgeFlow (https://www.forgeflow.com)
 
-  - Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
-  - Miquel Raïch Regué <miquel.raich@forgeflow.com>
+   -  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+   -  Miquel Raïch Regué <miquel.raich@forgeflow.com>
 
-- `CorporateHub <https://corporatehub.eu/>`__
+-  `CorporateHub <https://corporatehub.eu/>`__
 
-  - Alexey Pelykh <alexey.pelykh@corphub.eu>
+   -  Alexey Pelykh <alexey.pelykh@corphub.eu>
 
-- Sebastiano Picchi sebastiano.picchi@pytech.it
+-  Sebastiano Picchi sebastiano.picchi@pytech.it
 
 Maintainers
 -----------
