@@ -343,8 +343,16 @@ class AccountStatementImport(models.TransientModel):
                 st_vals.pop("transactions", None)
                 context = st_vals.pop("creation_context", {})
                 # Create the statement with lines
-                st_vals["line_ids"] = [[0, False, line] for line in st_lines_to_create]
                 statement = abs_obj.with_context(**context).create(st_vals)
+                for x in range(0, len(st_lines_to_create), 100):
+                    statement.write(
+                        {
+                            "line_ids": [
+                                [0, False, line]
+                                for line in st_lines_to_create[x : x + 99]
+                            ]
+                        }
+                    )
                 statement_ids.append(statement.id)
 
         if not statement_ids:
