@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import pprint
+from datetime import datetime
 
 from odoo import fields, models
 
@@ -12,15 +13,13 @@ class OnlineBankStatementPullWizard(models.TransientModel):
     _name = "online.bank.statement.pull.wizard"
     _description = "Online Bank Statement Pull Wizard"
 
-    date_since = fields.Datetime(
-        string="From",
-        required=True,
-        default=fields.Datetime.now,
-    )
-    date_until = fields.Datetime(
-        string="To",
-        required=True,
-        default=fields.Datetime.now,
+    date_since = fields.Date(string="From", required=True, default=fields.Date.today)
+    date_until = fields.Date(string="To", required=True, default=fields.Date.today)
+    one_fetch = fields.Boolean(
+        string="One fetch",
+        help="If checked, retrieve the whole interval in only one request to the "
+        "provider. This is useful if the provider sets request limits.",
+        default=True,
     )
 
     def _get_provider(self):
@@ -35,10 +34,20 @@ class OnlineBankStatementPullWizard(models.TransientModel):
             provider = active_record
         return provider
 
+    def _get_datetimes(self):
+        """Return the datetime values for the entered dates, including whole starting
+        and ending days.
+        """
+        self.ensure_one()
+        since = datetime.combine(self.date_since, datetime.min.time())
+        until = datetime.combine(self.date_until, datetime.max.time())
+        return since, until
+
     def action_pull(self):
         """Pull statements from provider and then show list of statements."""
         provider = self._get_provider()
-        provider._pull(self.date_since, self.date_until)
+        since, until = self._get_datetimes()
+        provider._pull(since, until, one_fetch=self.one_fetch)
         action = self.env.ref("account.action_bank_statement_tree").sudo().read([])[0]
         action["domain"] = [("journal_id", "=", provider.journal_id.id)]
         return action
@@ -46,10 +55,10 @@ class OnlineBankStatementPullWizard(models.TransientModel):
     def action_debug(self):
         """Pull statements in debug and show result."""
         provider = self._get_provider().with_context(
-            active_test=False,
-            account_statement_online_import_debug=True,
+            active_test=False, account_statement_online_import_debug=True
         )
-        data = provider._pull(self.date_since, self.date_until)
+        since, until = self._get_datetimes()
+        data = provider._pull(since, until, one_fetch=self.one_fetch)
         wizard = self.env["online.bank.statement.pull.debug"].create(
             {"data": pprint.pformat(data)}
         )
