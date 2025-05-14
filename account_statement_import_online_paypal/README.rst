@@ -17,13 +17,13 @@ Online Bank Statements: PayPal.com
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_online_paypal
+    :target: https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_paypal
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-16-0/bank-statement-import-16-0-account_statement_import_online_paypal
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-18-0/bank-statement-import-18-0-account_statement_import_online_paypal
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -39,69 +39,83 @@ This module provides online bank statements from
 Configuration
 =============
 
-You will need a *Client ID* and *Secret* from PayPal to communicate with the PayPal API. To obtain your PayPal API
-*Client ID* and *Secret*:
+You will need a *Client ID* and *Secret* from PayPal to communicate with
+the PayPal API. To obtain your PayPal API *Client ID* and *Secret*:
 
-#. Open `PayPal Developer <https://developer.paypal.com/dashboard/>`_.
-#. Login with your *PayPal for Business* account (upgrade your personal account to
-   a Business Account, if required).
-#. Go to *Apps & Credentials* and switch to *Live*.
-#. Under *REST API apps*, click *Create App* to begin creating a new application.
-#. Enter a descriptive name for your app (e.g. *Odoo-Statements*) and click *Create App*.
-#. Copy the *Client ID* and *Secret* to use during provider configuration (instructions below).
-#. Under *Features*, uncheck all optional features except *Transaction Search*.
-#. Click *Save Changes*.
+1. Open `PayPal Developer <https://developer.paypal.com/dashboard/>`__.
+2. Login with your *PayPal for Business* account (upgrade your personal
+   account to a Business Account, if required).
+3. Go to *Apps & Credentials* and switch to *Live*.
+4. Under *REST API apps*, click *Create App* to begin creating a new
+   application.
+5. Enter a descriptive name for your app (e.g. *Odoo-Statements*) and
+   click *Create App*.
+6. Copy the *Client ID* and *Secret* to use during provider
+   configuration (instructions below).
+7. Under *Features*, uncheck all optional features except *Transaction
+   Search*.
+8. Click *Save Changes*.
 
-To configure PayPal as an online bank statement provider, you will need to create a Bank Account & Journal that
-corresponds to your *PayPal for Business* account, and then configure the *PayPal.com* provider with the *Client ID*
-and *Secret* obtained above:
+To configure PayPal as an online bank statement provider, you will need
+to create a Bank Account & Journal that corresponds to your *PayPal for
+Business* account, and then configure the *PayPal.com* provider with the
+*Client ID* and *Secret* obtained above:
 
-#. Go to *Invoicing > Configuration > Banks > Add a Bank Account*.
-#. In the *Account Number* field, enter some descriptive text for the account, such as the email address or *PayPal
-   Merchant ID* of your *PayPal for Business* account. NOTE: This *Account Number* is not used in the authentication
-   with PayPal's API, and is only used to distinguish this PayPal Bank Account/Journal from others you may have
-   configured.
-#. Fill in the other fields for the Bank Account if desired, and then click *Create*.
-#. Go to *Invoicing > Configuration > Accounting > Journals*.
-#. Open and *Edit* the Journal corresponding to the PayPal bank account (this Journal was created automatically
-   when you created the Bank Account above.
-#. Set *Bank Feeds* to *Online (OCA)*.
-#. Select *PayPal.com* as the provider in the *Online Bank Statements (OCA)* section.
-#. *Save* the Journal.
-#. To configure provider-specific settings, click on the provider to open it and click *Edit*.
-#. Fill in your desired *Configuration* and *Scheduled Pull* settings.
-#. Leave the *API base* field empty, and fill in the *Client ID* and *Secret* from your PayPal
-   Developer account.
-#. Click *Save*.
+1.  Go to *Invoicing > Configuration > Banks > Add a Bank Account*.
+2.  In the *Account Number* field, enter some descriptive text for the
+    account, such as the email address or *PayPal Merchant ID* of your
+    *PayPal for Business* account. NOTE: This *Account Number* is not
+    used in the authentication with PayPal's API, and is only used to
+    distinguish this PayPal Bank Account/Journal from others you may
+    have configured.
+3.  Fill in the other fields for the Bank Account if desired, and then
+    click *Create*.
+4.  Go to *Invoicing > Configuration > Accounting > Journals*.
+5.  Open and *Edit* the Journal corresponding to the PayPal bank account
+    (this Journal was created automatically when you created the Bank
+    Account above.
+6.  Set *Bank Feeds* to *Online (OCA)*.
+7.  Select *PayPal.com* as the provider in the *Online Bank Statements
+    (OCA)* section.
+8.  *Save* the Journal.
+9.  To configure provider-specific settings, click on the provider to
+    open it and click *Edit*.
+10. Fill in your desired *Configuration* and *Scheduled Pull* settings.
+11. Leave the *API base* field empty, and fill in the *Client ID* and
+    *Secret* from your PayPal Developer account.
+12. Click *Save*.
 
-NOTE: For development and testing purposes, you can create Sandbox credentials associated with your *PayPal
-for Business* account. When configuring the provider-specific settings, enter the following in the *API base* field:
-https://api.sandbox.paypal.com
+NOTE: For development and testing purposes, you can create Sandbox
+credentials associated with your *PayPal for Business* account. When
+configuring the provider-specific settings, enter the following in the
+*API base* field: https://api.sandbox.paypal.com
 
 Usage
 =====
 
 To pull historical bank statements:
 
-#. Go to *Invoicing > Configuration > Accounting > Journals*.
-#. Open the Journal corresponding to the PayPal bank account.
-#. Click the *Pull Online Bank Statement* button.
-#. Configure a date interval and click *Pull*.
+1. Go to *Invoicing > Configuration > Accounting > Journals*.
+2. Open the Journal corresponding to the PayPal bank account.
+3. Click the *Pull Online Bank Statement* button.
+4. Configure a date interval and click *Pull*.
 
 Known issues / Roadmap
 ======================
 
-* Only transactions for the previous three years are retrieved, historical data
-  can be imported manually, see ``account_bank_statement_import_paypal``. See
-  `PayPal Help Center article <https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241>`_
-  for details.
-* `PayPal Transaction Info <https://developer.paypal.com/docs/api/transaction-search/v1/#definition-transaction_info>`_
-  defines extra fields like ``tip_amount``, ``shipping_amount``, etc. that
-  could be useful to be decomposed from a single transaction.
-* There's a known issue with PayPal API that on every Monday for couple of
-  hours after UTC midnight it returns ``INVALID_REQUEST`` incorrectly: their
-  servers have not inflated the data yet. PayPal tech support confirmed this
-  behaviour in case #06650320 (private).
+-  Only transactions for the previous three years are retrieved,
+   historical data can be imported manually, see
+   ``account_bank_statement_import_paypal``. See `PayPal Help Center
+   article <https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241>`__
+   for details.
+-  `PayPal Transaction
+   Info <https://developer.paypal.com/docs/api/transaction-search/v1/#definition-transaction_info>`__
+   defines extra fields like ``tip_amount``, ``shipping_amount``, etc.
+   that could be useful to be decomposed from a single transaction.
+-  There's a known issue with PayPal API that on every Monday for couple
+   of hours after UTC midnight it returns ``INVALID_REQUEST``
+   incorrectly: their servers have not inflated the data yet. PayPal
+   tech support confirmed this behaviour in case #06650320 (private).
 
 Bug Tracker
 ===========
@@ -109,7 +123,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_paypal%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_paypal%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -117,21 +131,22 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * CorporateHub
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `CorporateHub <https://corporatehub.eu/>`__
+-  `CorporateHub <https://corporatehub.eu/>`__
 
-  * Alexey Pelykh <alexey.pelykh@corphub.eu>
-* Omar Castiñeira <omar@comunitea.com>
-* isufi kapasi <isufi.kapasi@initos.com>
+   -  Alexey Pelykh <alexey.pelykh@corphub.eu>
+
+-  Omar Castiñeira <omar@comunitea.com>
+-  isufi kapasi <isufi.kapasi@initos.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -151,6 +166,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-alexey-pelykh| 
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_online_paypal>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_paypal>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
