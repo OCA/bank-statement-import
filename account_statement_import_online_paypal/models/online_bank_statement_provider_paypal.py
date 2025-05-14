@@ -295,10 +295,10 @@ class OnlineBankStatementProviderPayPal(models.Model):
             invoice = _("Invoice %s") % invoice
         note = transaction_id
         if transaction_subject or transaction_note:
-            note = "{}: {}".format(note, transaction_subject or transaction_note)
+            note = f"{note}: {transaction_subject or transaction_note}"
         if payer_email:
             note += " (%s)" % payer_email
-        unique_import_id = "{}-{}".format(transaction_id, int(date.timestamp()))
+        unique_import_id = f"{transaction_id}-{int(date.timestamp())}"
         name = (
             invoice
             or transaction_subject
@@ -524,7 +524,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 "Authorization",
                 "Basic %s"
                 % str(
-                    b64encode(("{}:{}".format(auth[0], auth[1])).encode("utf-8")),
+                    b64encode((f"{auth[0]}:{auth[1]}").encode()),
                     "utf-8",
                 ),
             )

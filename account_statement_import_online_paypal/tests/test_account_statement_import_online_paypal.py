@@ -264,10 +264,13 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 self.now_isoformat,
             )
         )
-        with mock.patch(
-            _provider_class + "._paypal_urlopen",
-            side_effect=[mocked_response_1, mocked_response_2],
-        ), self.mock_token():
+        with (
+            mock.patch(
+                _provider_class + "._paypal_urlopen",
+                side_effect=[mocked_response_1, mocked_response_2],
+            ),
+            self.mock_token(),
+        ):
             data = provider.with_context(
                 test_account_statement_import_online_paypal_monday=True,
             )._obtain_statement_data(
@@ -395,10 +398,13 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             ),
             parse_float=Decimal,
         )
-        with mock.patch(
-            _provider_class + "._paypal_retrieve",
-            side_effect=[mocked_response_1, mocked_response_2],
-        ), self.mock_token():
+        with (
+            mock.patch(
+                _provider_class + "._paypal_retrieve",
+                side_effect=[mocked_response_1, mocked_response_2],
+            ),
+            self.mock_token(),
+        ):
             data = provider._obtain_statement_data(
                 self.now - relativedelta(hours=1),
                 self.now,
@@ -437,10 +443,13 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             ),
             parse_float=Decimal,
         )
-        with mock.patch(
-            _provider_class + "._paypal_retrieve",
-            return_value=mocked_response,
-        ), self.mock_token():
+        with (
+            mock.patch(
+                _provider_class + "._paypal_retrieve",
+                return_value=mocked_response,
+            ),
+            self.mock_token(),
+        ):
             with self.assertRaisesRegex(
                 UserError,
                 "PayPal allows retrieving transactions only up to 3 years in "
@@ -570,10 +579,13 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             ),
             parse_float=Decimal,
         )
-        with mock.patch(
-            _provider_class + "._paypal_retrieve",
-            return_value=mocked_response,
-        ), self.mock_token():
+        with (
+            mock.patch(
+                _provider_class + "._paypal_retrieve",
+                return_value=mocked_response,
+            ),
+            self.mock_token(),
+        ):
             data = provider._obtain_statement_data(
                 self.yesterday,
                 self.today,
