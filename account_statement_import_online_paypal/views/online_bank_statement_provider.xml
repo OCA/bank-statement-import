@@ -13,10 +13,7 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main']" position="inside">
-                <group
-                    name="paypal"
-                    attrs="{'invisible': [('service', '!=', 'paypal')]}"
-                >
+                <group name="paypal" invisible="'service', '!=', 'paypal'">
                     <group>
                         <field
                             name="api_base"
@@ -27,13 +24,13 @@
                             name="username"
                             string="Client ID"
                             password="True"
-                            attrs="{'required': [('service', '=', 'paypal')]}"
+                            required="'service', '=', 'paypal'"
                         />
                         <field
                             name="password"
                             string="Secret"
                             password="True"
-                            attrs="{'required': [('service', '=', 'paypal')]}"
+                            required="'service', '=', 'paypal'"
                         />
                     </group>
                 </group>
