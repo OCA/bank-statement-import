@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-20 16:26+0000\n"
+"PO-Revision-Date: 2025-05-21 10:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -56,7 +56,7 @@ msgstr "ID"
 #. module: account_statement_import_online_wise
 #: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: account_statement_import_online_wise
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
