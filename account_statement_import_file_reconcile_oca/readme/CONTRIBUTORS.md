@@ -1,0 +1,3 @@
+- Alexis de Lattre \<<alexis.delattre@akretion.com>\>
+- [APSL-Nagarro](https://apsl.tech):
+  - Miquel Pascual  \<<mpascual@apsl.net>\>
