@@ -38,7 +38,11 @@ class OnlineBankStatementPullWizard(models.TransientModel):
     def action_pull(self):
         """Pull statements from provider and then show list of statements."""
         provider = self._get_provider()
-        provider._pull(self.date_since, self.date_until)
+        date_since = fields.Datetime.context_timestamp(self, self.date_since)
+        date_since = date_since.replace(tzinfo=self.date_since.tzinfo)
+        date_until = fields.Datetime.context_timestamp(self, self.date_until)
+        date_until = date_until.replace(tzinfo=self.date_until.tzinfo)
+        provider._pull(date_since, date_until)
         action = self.env.ref("account.action_bank_statement_tree").sudo().read([])[0]
         action["domain"] = [("journal_id", "=", provider.journal_id.id)]
         return action
@@ -49,6 +53,11 @@ class OnlineBankStatementPullWizard(models.TransientModel):
             active_test=False,
             account_statement_online_import_debug=True,
         )
+        date_since = fields.Datetime.context_timestamp(self, self.date_since)
+        date_since = date_since.replace(tzinfo=self.date_since.tzinfo)
+        date_until = fields.Datetime.context_timestamp(self, self.date_until)
+        date_until = date_until.replace(tzinfo=self.date_until.tzinfo)
+        provider._pull(date_since, date_until)
         data = provider._pull(self.date_since, self.date_until)
         wizard = self.env["online.bank.statement.pull.debug"].create(
             {"data": pprint.pformat(data)}
