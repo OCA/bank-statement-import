@@ -83,6 +83,7 @@
                         </group>
                         <group name="configuration" string="Configuration">
                             <field name="statement_creation_mode" />
+                            <field name="create_statement" />
                             <field name="tz" />
                         </group>
                     </group>
