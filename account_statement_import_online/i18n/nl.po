@@ -19,7 +19,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "%(number)s %(type)s"
 msgstr "%(number)s %(type)s"
 
@@ -36,7 +35,6 @@ msgstr "Actief"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "All lines passed filtering"
 msgstr ""
 
@@ -103,6 +101,16 @@ msgid "Configuration"
 msgstr "Configuratie"
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_statement
+msgid "Create Statement"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__create_statement
+msgid "Create statements for the downloaded transactions automatically or not."
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__create_uid
@@ -123,8 +131,8 @@ msgstr "Valuta"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__daily
-msgid "Daily statements"
-msgstr "Dagelijks afschrift"
+msgid "Day"
+msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__days
@@ -141,7 +149,6 @@ msgstr "Weergavenaam"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
@@ -191,6 +198,7 @@ msgstr "Indien aangevinkt, nieuwe berichten vereisen uw aandacht."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
+#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Indien aangevinkt, sommige berichten hebben een foutmelding."
 
@@ -202,7 +210,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Inactive"
 msgstr "inactief"
 
@@ -219,7 +226,6 @@ msgstr "Is volger"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Issue with Online Bank Statement self"
 msgstr ""
 
@@ -270,13 +276,12 @@ msgstr "Minuut/Minuten"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__monthly
-msgid "Monthly statements"
-msgstr "Maandelijkse afschriften"
+msgid "Month"
+msgstr ""
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "N/A"
 msgstr "N.V.T."
 
@@ -288,7 +293,6 @@ msgstr "Naam"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "Names and dates for statements found: {}"
 msgstr ""
 
@@ -300,7 +304,6 @@ msgstr "Volgende geplande opvraag"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "No statements found in journal"
 msgstr ""
 
@@ -327,7 +330,6 @@ msgstr "Aantal berichten met afleveringsfouten"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
 "%(after)s where on or after %(until)sand %(duplicate)s where not unique."
@@ -336,7 +338,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
-#, python-format
 msgid "Online (OCA)"
 msgstr "Online (OCA)"
 
@@ -367,7 +368,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
 "since %(since)s until %(until)s"
@@ -428,13 +428,17 @@ msgstr "Online Bank afschrifte opvragen"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
 msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__data
 msgid "RAW data"
+msgstr ""
+
+#. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
+msgid "SMS Delivery error"
 msgstr ""
 
 #. module: account_statement_import_online
@@ -450,14 +454,12 @@ msgstr "Geplande opvraag"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements complete."
 msgstr ""
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements..."
 msgstr ""
 
@@ -481,11 +483,6 @@ msgstr "Service"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Show Transaction Data"
 msgstr ""
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
-msgid "Statement Creation Mode"
-msgstr "Bankafschrift creatie modus"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
@@ -515,6 +512,11 @@ msgid "To"
 msgstr ""
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
+msgid "Transactions interval to obtain"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__update_schedule
 msgid "Update Schedule"
 msgstr "Update planning"
@@ -535,14 +537,26 @@ msgid "Website communication history"
 msgstr "Website berichten geschiedenis"
 
 #. module: account_statement_import_online
+#: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__weekly
+msgid "Week"
+msgstr ""
+
+#. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__weeks
 msgid "Week(s)"
 msgstr "Weken"
 
-#. module: account_statement_import_online
-#: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__weekly
-msgid "Weekly statements"
-msgstr "Weekelijkse afschriften"
+#~ msgid "Daily statements"
+#~ msgstr "Dagelijks afschrift"
+
+#~ msgid "Monthly statements"
+#~ msgstr "Maandelijkse afschriften"
+
+#~ msgid "Statement Creation Mode"
+#~ msgstr "Bankafschrift creatie modus"
+
+#~ msgid "Weekly statements"
+#~ msgstr "Weekelijkse afschriften"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Laatst bijgewerkt op"
