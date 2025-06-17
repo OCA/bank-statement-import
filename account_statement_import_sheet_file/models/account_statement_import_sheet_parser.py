@@ -348,6 +348,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
             if isinstance(timestamp, str):
                 timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
+                if timestamp.year == 1900:
+                    # No year indicated, so put the current or previous one depending
+                    # on the current month (i.e. in January, importing December)
+                    now = datetime.now()
+                    year = now.year
+                    if timestamp.month > now.month:
+                        year -= 1
+                    timestamp = timestamp.replace(year=year)
 
             if balance:
                 balance = self._parse_decimal(balance, mapping)
