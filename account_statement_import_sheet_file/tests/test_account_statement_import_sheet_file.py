@@ -1,6 +1,7 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # Copyright 2025 Tecnativa - Pedro M. Baeza
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from base64 import b64encode
@@ -47,6 +48,8 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         cls.mock_mapping_comma_dot._get_float_separators.return_value = (",", ".")
         cls.mock_mapping_dot_comma = Mock()
         cls.mock_mapping_dot_comma._get_float_separators.return_value = (".", ",")
+        cls.mock_mapping_none_none = Mock()
+        cls.mock_mapping_none_none._get_float_separators.return_value = ("", "")
         cls.journal = cls.AccountJournal.create(
             {
                 "name": "Bank",
@@ -399,6 +402,11 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 1234567.89,
                 self.mock_mapping_dot_comma,
             ),  # inverted separators
+            (
+                "123456",
+                1234.56,
+                self.mock_mapping_none_none,
+            ),  # no separator
         ]
 
         for value, expected, mock_mapping in test_cases:

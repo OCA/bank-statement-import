@@ -1,5 +1,6 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import itertools
@@ -493,5 +494,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
             or "0"
         )
         value = value.replace(thousands, "")
-        value = value.replace(decimal, ".")
+        float_separator = "."
+        if decimal:
+            value = value.replace(decimal, float_separator)
+        else:
+            journal = self.env["account.journal"].browse(
+                self.env.context.get("journal_id")
+            )
+            currency = journal.currency_id or journal.company_id.currency_id
+            decimal_places = currency.decimal_places if currency else 2
+            value = value[:-decimal_places] + float_separator + value[-decimal_places:]
         return float(value)

@@ -11,3 +11,4 @@
 - [CorporateHub](https://corporatehub.eu/)
   - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
 - Sebastiano Picchi <sebastiano.picchi@pytech.it>
+- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>

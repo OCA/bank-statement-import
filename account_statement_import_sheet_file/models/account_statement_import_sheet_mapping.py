@@ -27,6 +27,9 @@ class AccountStatementImportSheetMapping(models.Model):
         string="Decimals Separator",
         selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none")],
         default="comma",
+        help="When the separator is 'none', the value will be shifted according "
+        "to the currency decimals. For example, 12345 will be converted to "
+        "123.45",
     )
     file_encoding = fields.Selection(
         string="Encoding",
