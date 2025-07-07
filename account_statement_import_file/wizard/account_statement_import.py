@@ -349,7 +349,7 @@ class AccountStatementImport(models.TransientModel):
                         {
                             "line_ids": [
                                 [0, False, line]
-                                for line in st_lines_to_create[x : x + 99]
+                                for line in st_lines_to_create[x : x + 100]
                             ]
                         }
                     )
