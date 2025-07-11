@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "%d transactions present in response data"
 msgstr ""
 
@@ -28,21 +27,18 @@ msgstr ""
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "GET request on %(url)s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "GET request to %(url)s with headers %(headers)s and params %(params)s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "HTTP answer code %(response_code)s from Ponto"
 msgstr ""
 
@@ -59,14 +55,12 @@ msgstr ""
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#, python-format
 msgid "No lines were retrieved from Ponto"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "No transactions where found in data %(data)s"
 msgstr ""
 
@@ -78,28 +72,24 @@ msgstr ""
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "POST request on %(url)s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "Please fill login and key."
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "Ponto : no token"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "Ponto : wrong configuration, account {account} not found in {data}"
 msgstr ""
 
@@ -121,14 +111,12 @@ msgstr ""
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#, python-format
 msgid "Ponto obtain all new statement data for journal %s"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
-#, python-format
 msgid ""
 "Ponto obtain statement data for journal %(journal)s from %(date_since)s to "
 "%(date_until)s"
@@ -149,14 +137,12 @@ msgstr ""
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
-#, python-format
 msgid "Server returned status code {response_code}: {response_text}"
 msgstr ""
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/tests/test_account_statement_import_online_ponto.py:0
-#, python-format
 msgid "Statement contains transactions: %s"
 msgstr ""
 
