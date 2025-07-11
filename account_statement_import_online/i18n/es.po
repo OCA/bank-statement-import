@@ -202,7 +202,6 @@ msgstr "Si está marcado, nuevos mensajes necesitan su atención."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -443,11 +442,6 @@ msgstr "Obteniendo extractos bancarios en línea de: %(provider_names)s"
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__data
 msgid "RAW data"
 msgstr "RAW datos"
-
-#. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__account_number
