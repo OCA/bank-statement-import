@@ -10,10 +10,18 @@ class ResPartnerBank(models.Model):
 
     _inherit = "res.partner.bank"
 
-    acctid = fields.Char("ACCTID")
+    acctid = fields.Char(
+        string="OFX ACCTID",
+        help=(
+            "Technical account identifier (tag <ACCTID>) exactly as found in OFX "
+            "files; stored separately because it can differ from the usual account "
+            "number and is used only for matching imported bank statements."
+        ),
+    )
+
     sanitized_acctid = fields.Char(
         compute="_compute_sanitized_acctid",
-        string="Sanitized ACCTID",
+        string="Sanitized OFX ACCTID",
         readonly=True,
         store=True,
     )

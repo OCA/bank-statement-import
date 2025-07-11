@@ -2,7 +2,6 @@
 <!-- Copyright 2022 - TODAY, Marcel Savegnago <marcel.savegnago@escodoo.com.br>
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="res_partner_bank_form_view">
         <field
             name="name"
@@ -10,10 +9,9 @@
         <field name="model">res.partner.bank</field>
         <field name="inherit_id" ref="base.view_partner_bank_form" />
         <field name="arch" type="xml">
-            <field name="acc_number" position="after">
+            <field name="bank_id" position="after">
                 <field name="acctid" />
             </field>
         </field>
     </record>
-
 </odoo>

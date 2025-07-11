@@ -17,22 +17,33 @@ Import OFX Bank Statement by ACCTID
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/14.0/account_statement_import_ofx_by_acctid
+    :target: https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_ofx_by_acctid
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-14-0/bank-statement-import-14-0-account_statement_import_ofx_by_acctid
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-16-0/bank-statement-import-16-0-account_statement_import_ofx_by_acctid
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=16.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
+Adds an **OFX ACCTID** field to bank accounts and makes the OFX import
+engine match statements by this value, falling back to *Account Number*
+only when the field is empty. Fixes mismatches when the `<ACCTID>` in
+the file differs from the usual account number saved in Odoo.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Usage
+=====
+
+1. Go to **Contacts → Configuration → Bank Accounts**.
+2. Fill **OFX ACCTID** exactly as it appears in your OFX files.
+3. Import statements normally—the mapping now uses this field first.
 
 Bug Tracker
 ===========
@@ -40,7 +51,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_ofx_by_acctid%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_ofx_by_acctid%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -61,6 +72,10 @@ Contributors
   * Douglas Custódio <douglas.custodio@escodoo.com.br>
   * Augusto Lisboa <augusto.lisboa@escodoo.com.br>
 
+* `Engenere <https://engenere.one>`_:
+
+  * Antônio S. P. Neto <neto@engenere.one>
+
 Maintainers
 ~~~~~~~~~~~
 
@@ -74,6 +89,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/14.0/account_statement_import_ofx_by_acctid>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_ofx_by_acctid>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
