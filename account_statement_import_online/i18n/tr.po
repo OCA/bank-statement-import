@@ -201,7 +201,6 @@ msgstr "İşaretliyse yeni iletilerle ilgilenmeniz gerekir."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
-#: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "İşaretliyse, bazı iletilerde teslimat hatası olur."
 
@@ -445,11 +444,6 @@ msgid "RAW data"
 msgstr "Ham veri"
 
 #. module: account_statement_import_online
-#: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "SMS İletim Hatası"
-
-#. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__account_number
 msgid "Sanitized Account Number"
 msgstr "Düzeltilmiş Hesap Numarası"
@@ -555,6 +549,9 @@ msgstr "Hafta"
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__weeks
 msgid "Week(s)"
 msgstr "Hafta"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS İletim Hatası"
 
 #~ msgid "Daily statements"
 #~ msgstr "Günlük ekstreler"
