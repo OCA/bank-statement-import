@@ -83,6 +83,8 @@ class OnlineBankStatementProvider(models.Model):
             headers=self._gocardless_get_headers(basic=basic_auth),
             timeout=REQUESTS_TIMEOUT,
         )
+        if response.status_code == 429:  # Rate limit overpassed
+            raise UserError(json.loads(response.text)["detail"])
         if response.status_code in [200, 201]:
             content = json.loads(response.text)
         return response, content
