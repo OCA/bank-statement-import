@@ -1,0 +1,1151 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_paypal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-12-28 11:36+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "ACH funding for funds recovery from account balance"
+msgstr "Financiación ACH para la recuperación de fondos del saldo de la cuenta"
+
+#. module: account_statement_import_online_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_paypal.online_bank_statement_provider_form
+msgid "API base"
+msgstr "Base API"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "ATM withdrawal"
+msgstr "Retirada en cajero automático"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Account hold for ACH deposit"
+msgstr "Cuenta retenida para ingreso ACH"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Account hold for open authorization"
+msgstr "Cuenta retenida para autorización abierta"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Account receivable for shipping"
+msgstr "Cuentas a cobrar por envíos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Auto-sweep from account"
+msgstr "Barrido automático de la cuenta"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "AutoSweep"
+msgstr "Barrido automático"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "BML credit, transfer from BML"
+msgstr "Crédito BML, transferencia desde BML"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "BML withdrawal, transfer to BML"
+msgstr "Retirada de BML, transferencia a BML"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Balance manager account bonus"
+msgstr "Bono de cuenta de administrador de saldo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Bill pay transaction"
+msgstr "Transacción de pago de facturas"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Blocked payments"
+msgstr "Pagos bloqueados"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Bonus for first ACH use"
+msgstr "Bonificación por el primer uso de ACH"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Buyer credit payment"
+msgstr "Pago a crédito del comprador"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Buyer credit payment withdrawal, transfer to BML"
+msgstr "Retirada del pago a crédito del comprador, transferencia a BML"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Cancellation of hold for dispute resolution"
+msgstr "Cancelación de suspensión para resolución de disputas"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Charge-off adjustment"
+msgstr "Ajuste de la liquidación"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Chargeback"
+msgstr "Contracargo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Chargeback cancellation"
+msgstr "Cancelación de contracargo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Chargeback processing fee"
+msgstr "Tasa de tramitación de devoluciones"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Chargeback re-presentment rejection"
+msgstr "Rechazo de devolución de cargo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Chargeback reversal"
+msgstr "Anulación de devoluciones de cargo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Check withdrawal"
+msgstr "Retirada de cheques"
+
+#. module: account_statement_import_online_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_paypal.online_bank_statement_provider_form
+msgid "Client ID"
+msgstr "ID del cliente"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Coupon redemption"
+msgstr "Canjeo de cupones"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Credit card cash back bonus"
+msgstr "Bonificación por devolución de efectivo con tarjeta de crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Credit card deposit for negative PayPal account balance"
+msgstr "Depósito con tarjeta de crédito para saldo negativo de cuenta PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Credit card security charge refund"
+msgstr "Devolución de los gastos de seguridad de la tarjeta de crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Currency conversion required to cover negative balance"
+msgstr "Conversión de divisas necesaria para cubrir el saldo negativo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Debit card cash back bonus"
+msgstr "Bonificación por devolución en efectivo con tarjeta de débito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Deferred disbursement, funds collected for disbursement"
+msgstr "Desembolso diferido, fondos recaudados para desembolso"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Delayed disbursement, funds disbursed"
+msgstr "Retraso en el desembolso, fondos desembolsados"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Direct payment API"
+msgstr "API de pago directo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Display only transaction"
+msgstr "Visualizar sólo transacción"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Donation payment"
+msgstr "Pago de la donación"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Electronic funds transfer (EFT)"
+msgstr "Transferencia electrónica de fondos (TEF)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Failed to acquire token using Client ID and Secret!"
+msgstr ""
+"¡No se ha podido adquirir el autentificador con el ID de cliente y el "
+"secreto!"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"Failed to resolve transaction %(first_transaction_id)s "
+"(%(first_transaction_date)s)"
+msgstr ""
+"Error al resolver la transacción %(first_transaction_id)s "
+"(%(first_transaction_date)s)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"Failed to resolve transaction %(last_transaction_id)s "
+"(%(last_transaction_date)s)"
+msgstr ""
+"No se ha podido resolver la transacción %(last_transaction_id)s "
+"(%(last_transaction_date)s)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Fee for %s"
+msgstr "Tasa para %s"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Fee refund"
+msgstr "Reembolso de la tasa"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Fee reversal"
+msgstr "Anulación de la tasa"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Foreign bank withdrawal fee"
+msgstr "Comisión por retirada de fondos en bancos extranjeros"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Funds available"
+msgstr "Fondos disponibles"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Funds not yet available"
+msgstr "Fondos aún no disponibles"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Funds payable: PayPal-provided funds that must be paid back"
+msgstr "Fondos a pagar: Fondos proporcionados por PayPal que deben devolverse"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Funds receivable: PayPal-provided funds that are being paid back"
+msgstr ""
+"Fondos a cobrar: Fondos proporcionados por PayPal que se están devolviendo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General PayPal debit card transaction"
+msgstr "Transacción general con tarjeta de débito de PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General PayPal-to-PayPal payment"
+msgstr "Pago general de PayPal a PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General account adjustment"
+msgstr "Ajuste general de cuenta"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General adjustment without business-related event"
+msgstr "Ajuste general sin evento empresarial relacionado"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General authorization"
+msgstr "Autorización general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General bonus"
+msgstr "Bonificación general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General buyer credit payment"
+msgstr "Pago del crédito comprador general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General credit card deposit"
+msgstr "Depósito general con tarjeta de crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General credit card withdrawal"
+msgstr "Retirada general de tarjetas de crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General currency conversion"
+msgstr "Conversión general de divisas"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General dividend"
+msgstr "Dividendo general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General funding of PayPal account"
+msgstr "Financiamiento general de la cuenta PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General hold"
+msgstr "Retención general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General hold release"
+msgstr "Liberación general de la retención"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General incentive or certificate redemption"
+msgstr "Incentivo general o canje de certificados"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General intra-account transfer"
+msgstr "Transferencia general intracuenta"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General non-payment fee"
+msgstr "Comisión general por impago"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General reversal"
+msgstr "Reversión general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General temporary hold"
+msgstr "Retención temporal general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General withdrawal from PayPal account"
+msgstr "Retirada general de la cuenta PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "General withdrawal to non-bank institution"
+msgstr "Retirada general a institución no bancaria"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Generic instrument-funded payment"
+msgstr "Pago financiado con instrumentos genéricos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Generic instrument/Open Wallet reversals (buyer side)"
+msgstr "Instrumento genérico/Inversiones de cartera abierta (lado comprador)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Generic instrument/Open Wallet reversals (seller side)"
+msgstr "Instrumento genérico/Inversiones de cartera abierta (lado vendedor)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Generic instrument/Open Wallet transaction"
+msgstr "Instrumento genérico/transacción de Cartera Abierta"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Gift certificate expiration fee"
+msgstr "Tasa de caducidad del cheque regalo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Gift certificate payment, purchase of gift certificate"
+msgstr "Pago del cheque regalo, compra del cheque regalo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Gift certificate purchase"
+msgstr "Compra de cheques regalo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Gift certificate redemption"
+msgstr "Canjeo de vales regalo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Hidden virtual PayPal debit card transaction"
+msgstr "Transacción virtual oculta con tarjeta de débito PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Hold for dispute investigation"
+msgstr "Retención para investigación de disputas"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Incentive adjustment"
+msgstr "Ajuste de incentivos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Instant payment review (IPR) reversal"
+msgstr "Anulación de la revisión instantánea del pago (IPR)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "International credit card withdrawal"
+msgstr "Retirada internacional de tarjetas de crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Invalid token type!"
+msgstr "¡Tipo de símbolo no válido!"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Invoice %s"
+msgstr "Factura %s"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "MAM reversal"
+msgstr "reversión de MAM"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Mass payment batch fee"
+msgstr "Tarifa por lotes de pago masivo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "MassPay payment"
+msgstr "Pago masivo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "MassPay refund transaction"
+msgstr "Transacción de reembolso MassPay"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "MassPay reversal transaction"
+msgstr "Transacción de reembolso MassPay"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Merchant referral account bonus"
+msgstr "Bonificación por cuenta de referencia del comerciante"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Mobile payment, made through a mobile phone"
+msgstr "Pago por móvil, realizado a través de un teléfono móvil"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "No authentication specified!"
+msgstr "¡No se ha especificado la autenticación!"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Non-reference credit payment"
+msgstr "Pago de créditos no referenciados"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Offers used as funding source"
+msgstr "Ofertas utilizadas como fuente de financiación"
+
+#. module: account_statement_import_online_paypal
+#: model:ir.model,name:account_statement_import_online_paypal.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Proveedor de Extractos Bancarios en Línea"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Other"
+msgstr "Otro"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Partner fee"
+msgstr "Cuota de socio"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal App features are configured incorrectly!"
+msgstr ""
+"¡Las funciones de la aplicación de PayPal están configuradas incorrectamente!"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal Checkout APIs"
+msgstr "API de pago de PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal Here payment"
+msgstr "PayPal Pago aquí"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"PayPal allows retrieving transactions only up to 3 years in the past. Please "
+"import older transactions manually. See https://www.paypal.com/us/smarthelp/"
+"article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241"
+msgstr ""
+"PayPal permite recuperar transacciones sólo hasta hace 3 años. Importe "
+"transacciones anteriores manualmente. Consulte https://www.paypal.com/us/"
+"smarthelp/article/why-can't-i-access-transaction-history-greater-than-3-"
+"years-ts2241"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal balance manager funding of PayPal account"
+msgstr "Administrador de saldo de PayPal financiación de la cuenta PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal buyer credit payment funding"
+msgstr "Financiación del pago con crédito de comprador de PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal buyer warranty bonus"
+msgstr "Bonificación de la garantía de comprador de PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal debit authorization"
+msgstr "Autorización de débito de PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal debit card cash advance"
+msgstr "Anticipo de efectivo con tarjeta de débito PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "PayPal debit card withdrawal to ATM"
+msgstr "Retirada de tarjeta de débito de PayPal en cajero automático"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"PayPal protection bonus, payout for PayPal buyer protection, payout for full "
+"protection with PayPal buyer credit."
+msgstr ""
+"Bonificación por protección de PayPal, pago por protección de comprador de "
+"PayPal, pago por protección total con crédito de comprador de PayPal."
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment fee"
+msgstr "Comisión de pago"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment hold"
+msgstr "Retención del pago"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment hold release"
+msgstr "Liberación de la retención del pago"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment refund, initiated by merchant"
+msgstr "Devolución del pago, iniciada por el comerciante"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment reversal, initiated by PayPal"
+msgstr "Anulación de pago, iniciada por PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment review hold"
+msgstr "Retención de revisión de pagos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Payment review release"
+msgstr "Lanzamiento de revisión de pago"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Points incentive redemption"
+msgstr "Canjeo de incentivos por puntos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Postage payment to carrier"
+msgstr "Pago de porte al transportista"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Pre-approved payment (BillUser API)"
+msgstr "Pago preaprobado (BillUser API)"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reauthorization"
+msgstr "Reautorización"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Rebate or cash back reversal"
+msgstr "Anulación de reembolsos o devoluciones"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Rebate payments"
+msgstr "Pagos de reembolsos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Receivables financing - Applicable only in Brazil"
+msgstr "Financiación de créditos - Aplicable sólo en Brasil"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reimbursement of chargeback"
+msgstr "Reembolso de contracargo"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reserve hold"
+msgstr "Mantenimiento de reservas"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reserve release"
+msgstr "Liberación de la reserva"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reversal of ACH deposit"
+msgstr "Anulación de depósito ACH"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reversal of ACH withdrawal transaction"
+msgstr "Anulación de una transacción de retirada ACH"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reversal of debit card transaction"
+msgstr "Anulación de transacción con tarjeta de débito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reversal of general account hold"
+msgstr "Anulación de la retención de la cuenta general"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Reversal of points usage"
+msgstr "Anulación de la utilización de puntos"
+
+#. module: account_statement_import_online_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_paypal.online_bank_statement_provider_form
+msgid "Secret"
+msgstr "Secreto"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Settlement consolidation"
+msgstr "Consolidación de la liquidación"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Store-to-store transfers"
+msgstr "Transferencias de tienda a tienda"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Subscription payment"
+msgstr "Pago de la suscripción"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Tax hold"
+msgstr "Retención de Impuestos"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Tax withholding to IRS"
+msgstr "Retención de Impuestos a Hacienda"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Temporary hold on available balance"
+msgstr "Retención temporal del saldo disponible"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Third-party auction payment"
+msgstr "Pago de subastas por terceros"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Third-party payout"
+msgstr "Pago a terceros"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Third-party recoupment"
+msgstr "Recuperación por terceros"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Transaction fee for %s"
+msgstr "Tasa de transaccion para %s"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Transfer of funds from payable"
+msgstr "Transferencia de fondos de cuentas por pagar"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Transfer to and from a credit-card-funded restricted balance"
+msgstr ""
+"Transferencia hacia y desde un saldo restringido financiado con tarjeta de "
+"crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Transfer to external GL entity"
+msgstr "Transferencia a entidad GL externa"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Unknown authentication specified!"
+msgstr "¡Autenticación desconocida especificada!"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Unknown error"
+msgstr "Error desconocido"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "User-initiated currency conversion"
+msgstr "Conversión de divisas iniciada por el usuario"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Virtual PayPal debit card transaction"
+msgstr "Transacción virtual con tarjeta de débito PayPal"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Virtual terminal payment"
+msgstr "Pago mediante terminal virtual"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Void of authorization"
+msgstr "Nulidad de la autorización"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Warranty fee for warranty purchase"
+msgstr "Tasa de garantía por la compra de la garantía"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Website payments standard payment"
+msgstr "Pago estándar de pagos del sitio web"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Website payments. Pro account monthly fee"
+msgstr "Pagos del sitio web. Cuota mensual de la cuenta Pro"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "Withdrawal to Hyperwallet"
+msgstr "Retirada de fondos a Hyperwallet"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid ""
+"Withdrawals initiated by user manually. Not related to automated scheduled "
+"withdrawals"
+msgstr ""
+"Retiradas iniciadas manualmente por el usuario. No relacionado con retiradas "
+"programadas automatizadas"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "WorldLink check withdrawal fee"
+msgstr "Comisión por retirada de cheques de WorldLink"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "WorldLink withdrawal"
+msgstr "Retirada de WorldLink"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "eBay auction payment"
+msgstr "Pago de subastas en eBay"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+#, python-format
+msgid "eBay loyalty incentive"
+msgstr "Incentivo a la fidelidad en eBay"
