@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 16:26+0000\n"
+"PO-Revision-Date: 2025-07-15 16:04+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -20,12 +20,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_setup_bank_manual_config__acctid
 #: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank__acctid
 msgid "ACCTID"
-msgstr ""
+msgstr "ACCTID"
 
 #. module: account_statement_import_ofx_by_acctid
 #: model:ir.model,name:account_statement_import_ofx_by_acctid.model_res_partner_bank
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Conti bancari"
 
 #. module: account_statement_import_ofx_by_acctid
 #: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_statement_import__display_name
@@ -42,7 +42,7 @@ msgstr "ID"
 #. module: account_statement_import_ofx_by_acctid
 #: model:ir.model,name:account_statement_import_ofx_by_acctid.model_account_statement_import
 msgid "Import Bank Statement Files"
-msgstr ""
+msgstr "Importazione file estratto conto bancario"
 
 #. module: account_statement_import_ofx_by_acctid
 #: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_statement_import____last_update
@@ -54,7 +54,7 @@ msgstr "Ultima modifica il"
 #: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_setup_bank_manual_config__sanitized_acctid
 #: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank__sanitized_acctid
 msgid "Sanitized ACCTID"
-msgstr ""
+msgstr "ACCTID ripulito"
 
 #. module: account_statement_import_ofx_by_acctid
 #: code:addons/account_statement_import_ofx_by_acctid/wizards/account_statement_import.py:0
@@ -64,3 +64,6 @@ msgid ""
 "You should use the proper journal or use the generic button on the top of "
 "the Accounting Dashboard"
 msgstr ""
+"Il registro trovato per il file non è coerente con il registro selezionato. "
+"È necessario utilizzare il registro corretto o utilizzare il pulsante "
+"generico nella parte superiore del pannello Contabilità"
