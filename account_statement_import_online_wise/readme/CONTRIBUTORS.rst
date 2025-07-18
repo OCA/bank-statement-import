@@ -1,3 +1,3 @@
 * `CorporateHub <https://corporatehub.eu/>`__
 
-  * Alexey Pelykh <alexey.pelykh@corphub.eu>
+* Alexey Pelykh <alexey.pelykh@corphub.eu>

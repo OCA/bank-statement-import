@@ -1,10 +1,10 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_online_transferwise
+# 	* account_statement_import_online_wise
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2021-01-22 22:44+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
@@ -32,13 +32,13 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 #, python-format
 msgid "Ending balance unavailable"
 msgstr "Eindbalans is niet beschikbaar"
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 #, fuzzy, python-format
 msgid "Fee for %s"
 msgstr "Transactievergoeding voor %s"
@@ -59,7 +59,7 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 #, python-format
 msgid "No API key specified!"
 msgstr "Geen API sleutel ingegeven!"
@@ -70,7 +70,7 @@ msgid "Online Bank Statement Provider"
 msgstr "Online Bankafschrift Provider"
 
 #. module: account_statement_import_online_wise
-#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__transferwise_profile
+#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__wise_profile
 msgid "Origin"
 msgstr ""
 
@@ -95,19 +95,19 @@ msgid "Strong Customer Authentication"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 #, python-format
 msgid "Strong Customer Authentication is not configured"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 #, python-format
 msgid "Transaction fee for %s"
 msgstr "Transactievergoeding voor %s"
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 #, python-format
 msgid "Unable to parse key"
 msgstr ""

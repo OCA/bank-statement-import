@@ -5,7 +5,7 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+    <record id="online_bank_statement_provider_form" model="ir.ui.view">
         <field name="name">online.bank.statement.provider.form</field>
         <field name="model">online.bank.statement.provider</field>
         <field
@@ -14,7 +14,7 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="inside">
-                <group attrs="{'invisible': [('service', '!=', 'transferwise')]}">
+                <group attrs="{'invisible': [('service', '!=', 'wise')]}">
                     <group>
                         <field
                             name="api_base"
@@ -25,16 +25,16 @@
                             name="password"
                             string="API key"
                             password="True"
-                            attrs="{'required': [('service', '=', 'transferwise')]}"
+                            attrs="{'required': [('service', '=', 'wise')]}"
                         />
                     </group>
                     <group>
                         <field
-                            name="transferwise_profile"
+                            name="wise_profile"
                             string="Profile"
-                            attrs="{'required': [('service', '=', 'transferwise')]}"
+                            attrs="{'required': [('service', '=', 'wise')]}"
                             widget="dynamic_dropdown"
-                            values="values_transferwise_profile"
+                            values="values_wise_profile"
                             context="{'api_key': password, 'api_base': api_base}"
                         />
                     </group>
@@ -47,10 +47,12 @@
                         <field name="certificate_public_key" string="Public key" />
                         <div col="2" colspan="2">
                             <button
-                                name="button_transferwise_generate_key"
-                                title="Generate Key"
+                                name="button_wise_generate_key"
+                                string="Generate Key"
+                                title="Generate RSA key pair for Strong Customer Authentication"
                                 type="object"
-                                class="oe_edit_only"
+                                class="oe_edit_only btn-primary"
+                                icon="fa-key"
                             />
                         </div>
                     </group>

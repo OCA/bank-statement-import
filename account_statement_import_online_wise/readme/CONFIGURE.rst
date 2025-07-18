@@ -1,20 +1,20 @@
 To configure online bank statements provider:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Open bank account to configure and edit it
-#. Set *Bank Feeds* to *Online*
-#. Select *Wise.com (TransferWise.com)* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+#. Go to *Invoicing > Configuration > Journals*
+#. Open a journal to configure and edit it
 
 or, alternatively:
 
 #. Go to *Invoicing > Overview*
-#. Open settings of the corresponding journal account
-#. Switch to *Bank Account* tab
-#. Set *Bank Feeds* to *Online*
+#. Open Configuration of the corresponding journal account
+
+Then define the settings:
+
+#. Set *Bank Feeds* to *Online (OCA)*
 #. Select *Wise.com (TransferWise.com)* as online bank statements provider in
    *Online Bank Statements (OCA)* section
-#. Save the bank account
+#. Save the journal
 #. Click on provider and configure provider-specific settings.
+#. Set API base to the appropriate environments stated here: ahttps://docs.wise.com/api-docs/api-reference/environments
+#. Get the API key from your Wise account and paste it to API key.
+#. Press Generate Key and upload the public key to your Wise account.

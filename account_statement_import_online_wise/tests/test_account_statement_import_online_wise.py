@@ -16,9 +16,13 @@ from odoo.tests import common
 _module_ns = "odoo.addons.account_statement_import_online_wise"
 _provider_class = (
     _module_ns
-    + ".models.online_bank_statement_provider_transferwise"
-    + ".OnlineBankStatementProviderTransferwise"
+    + ".models.online_bank_statement_provider_wise"
+    + ".OnlineBankStatementProviderWise"
 )
+
+
+def raise_exception(*args, **kwargs):
+    raise Exception("Error during fetching wise profiles.")
 
 
 class MockedResponse:
@@ -44,7 +48,7 @@ class MockedResponse:
         return self.data
 
 
-class TestAccountBankAccountStatementImportOnlineTransferwise(common.TransactionCase):
+class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
     def setUp(self):
         super().setUp()
 
@@ -56,10 +60,11 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
         self.AccountBankStatement = self.env["account.bank.statement"]
         self.AccountBankStatementLine = self.env["account.bank.statement.line"]
 
-        Provider = self.OnlineBankStatementProvider
-        self.transferwise_parse_transaction = lambda payload: (
-            Provider._transferwise_transaction_to_lines(
-                Provider._transferwise_preparse_transaction(
+        self.currency_usd.write({"active": True})
+
+        self.wise_parse_transaction = lambda payload: (
+            self.env["online.bank.statement.provider"]._wise_transaction_to_lines(
+                self.env["online.bank.statement.provider"]._wise_preparse_transaction(
                     json.loads(
                         payload,
                         parse_float=Decimal,
@@ -98,7 +103,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
         }"""
         )
 
-    def test_values_transferwise_profile(self):
+    def test_values_wise_profile(self):
         mocked_response = json.loads(
             """[
     {
@@ -119,48 +124,48 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
 ]""",
             parse_float=Decimal,
         )
-        values_transferwise_profile = []
+        values_wise_profile = []
         with mock.patch(
-            _provider_class + "._transferwise_retrieve",
+            _provider_class + "._wise_retrieve",
             return_value=mocked_response,
         ):
-            values_transferwise_profile = self.OnlineBankStatementProvider.with_context(
-                {"api_base": "https://example.com", "api_key": "dummy"}
-            ).values_transferwise_profile()
+            values_wise_profile = self.OnlineBankStatementProvider.with_context(
+                **{"api_base": "https://example.com", "api_key": "dummy"}
+            ).values_wise_profile()
         self.assertEqual(
-            values_transferwise_profile,
+            values_wise_profile,
             [
                 ("1234567890", "Alexey Pelykh (personal)"),
                 ("1234567891", "Brainbean Apps OÜ"),
             ],
         )
 
-    def test_values_transferwise_profile_no_key(self):
-        values_transferwise_profile = self.OnlineBankStatementProvider.with_context(
-            {"api_base": "https://example.com"}
-        ).values_transferwise_profile()
-        self.assertEqual(values_transferwise_profile, [])
+    def test_values_wise_profile_no_key(self):
+        values_wise_profile = self.OnlineBankStatementProvider.with_context(
+            **{"api_base": "https://example.com"}
+        ).values_wise_profile()
+        self.assertEqual(values_wise_profile, [])
 
-    def test_values_transferwise_profile_error(self):
-        values_transferwise_profile = []
+    def test_values_wise_profile_error(self):
+        values_wise_profile = []
         with mock.patch(
-            _provider_class + "._transferwise_retrieve",
-            side_effect=lambda: Exception(),
+            _provider_class + "._wise_retrieve",
+            side_effect=raise_exception,
         ):
-            values_transferwise_profile = self.OnlineBankStatementProvider.with_context(
-                {"api_base": "https://example.com", "api_key": "dummy"}
-            ).values_transferwise_profile()
-        self.assertEqual(values_transferwise_profile, [])
+            values_wise_profile = self.OnlineBankStatementProvider.with_context(
+                **{"api_base": "https://example.com", "api_key": "dummy"}
+            ).values_wise_profile()
+        self.assertEqual(values_wise_profile, [])
 
     def test_pull(self):
         journal = self.AccountJournal.create(
             {
-                "name": "Bank",
+                "name": "Wise",
                 "type": "bank",
-                "code": "BANK",
+                "code": "Wise",
                 "currency_id": self.currency_eur.id,
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "transferwise",
+                "online_bank_statement_provider": "wise",
             }
         )
 
@@ -190,7 +195,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
             return json.loads(payload, parse_float=Decimal)
 
         with mock.patch(
-            _provider_class + "._transferwise_retrieve",
+            _provider_class + "._wise_retrieve",
             side_effect=mock_response,
         ):
             data = provider._obtain_statement_data(
@@ -210,7 +215,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
                 "code": "BANK",
                 "currency_id": self.currency_eur.id,
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "transferwise",
+                "online_bank_statement_provider": "wise",
             }
         )
 
@@ -219,7 +224,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
         provider.password = "API_KEY"
 
         with mock.patch(
-            _provider_class + "._transferwise_retrieve",
+            _provider_class + "._wise_retrieve",
             return_value=[],
         ):
             data = provider._obtain_statement_data(
@@ -237,7 +242,7 @@ class TestAccountBankAccountStatementImportOnlineTransferwise(common.Transaction
                 "code": "BANK",
                 "currency_id": self.currency_eur.id,
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "transferwise",
+                "online_bank_statement_provider": "wise",
             }
         )
 
@@ -286,14 +291,14 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "code": "BANK",
                 "currency_id": self.currency_eur.id,
                 "bank_statements_source": "online",
-                "online_bank_statement_provider": "transferwise",
+                "online_bank_statement_provider": "wise",
             }
         )
 
         provider = journal.online_bank_statement_provider_id
         provider.origin = "1234567891"
         provider.password = "API_KEY"
-        provider.button_transferwise_generate_key()
+        provider.button_wise_generate_key()
 
         with mock.patch(
             "urllib.request.urlopen",
@@ -315,7 +320,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         self.assertEqual(data[1]["balance_end_real"], 42.0)
 
     def test_transaction_parse_1(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "CREDIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -360,7 +365,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_2(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "DEBIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -415,7 +420,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_3(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "DEBIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -471,7 +476,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_4(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "DEBIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -528,8 +533,8 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "amount": "-455.55",
                 "name": ("Card transaction of 1234.56 USD issued by Paypal *XX CITY"),
                 "payment_ref": (
-                    "CARD-123456789: Card transaction of 1234.56 USD issued by"
-                    " Paypal *XX CITY"
+                    "CARD-123456789: Card transaction of 1234.56 USD issued by "
+                    "Paypal *XX CITY"
                 ),
                 "partner_name": "Paypal *XX",
                 "unique_import_id": "DEBIT-CARD-123456789-946684800",
@@ -550,7 +555,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_5(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "DEBIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -599,9 +604,9 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "partner_name": "Jane Doe",
                 "account_number": "(ADBCDEF) 0000000000000000",
                 "amount": "-265.34",
+                "unique_import_id": "DEBIT-TRANSFER-123456789-946684800",
                 "amount_currency": "-297.00",
                 "currency_id": self.currency_usd.id,
-                "unique_import_id": "DEBIT-TRANSFER-123456789-946684800",
             },
         )
         self.assertEqual(
@@ -617,7 +622,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_6(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "CREDIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -654,7 +659,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_7(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "CREDIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -712,7 +717,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_8(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
     "type": "DEBIT",
     "date": "2000-01-01T00:00:00.000Z",
@@ -781,7 +786,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_9(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
             "type": "CREDIT",
             "date": "2000-01-01T00:00:00.000Z",
@@ -829,7 +834,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         )
 
     def test_transaction_parse_10(self):
-        lines = self.transferwise_parse_transaction(
+        lines = self.wise_parse_transaction(
             """{
             "type": "CREDIT",
             "date": "2000-01-01T00:00:00.000Z",

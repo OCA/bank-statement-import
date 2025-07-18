@@ -5,7 +5,6 @@
 import itertools
 import json
 import logging
-import urllib.parse
 import urllib.request
 from base64 import b64encode
 from decimal import Decimal
@@ -24,29 +23,38 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
-TRANSFERWISE_API_BASE = "https://api.transferwise.com"
+WISE_API_BASE = "https://api.transferwise.com"
 
 
-class OnlineBankStatementProviderTransferwise(models.Model):
+class OnlineBankStatementProviderWise(models.Model):
     _inherit = "online.bank.statement.provider"
 
     # NOTE: This is needed to workaround possible multiple 'origin' fields
-    # present in the same view, resulting in wrong field view configuraion
+    # present in the same view, resulting in wrong field view configuration
     # if more than one is widget="dynamic_dropdown"
-    transferwise_profile = fields.Char(
+    wise_profile = fields.Char(
+        string="Profile",
         related="origin",
         readonly=False,
     )
 
     @api.model
-    def values_transferwise_profile(self):
-        api_base = self.env.context.get("api_base") or TRANSFERWISE_API_BASE
+    def _get_available_services(self):
+        result = super()._get_available_services() + [
+            ("wise", "Wise.com (TransferWise.com)"),
+        ]
+        _logger.info("Available services: %s", result)
+        return result
+
+    @api.model
+    def values_wise_profile(self):
+        api_base = self.env.context.get("api_base") or WISE_API_BASE
         api_key = self.env.context.get("api_key")
         if not api_key:
             return []
         try:
             url = api_base + "/v1/profiles"
-            data = self._transferwise_retrieve(url, api_key)
+            data = self._wise_retrieve(url, api_key)
         except BaseException:
             _logger.warning("Unable to get profiles", exc_info=True)
             return []
@@ -66,21 +74,15 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             )
         )
 
-    @api.model
-    def _get_available_services(self):
-        return super()._get_available_services() + [
-            ("transferwise", "Wise.com (TransferWise.com)"),
-        ]
-
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
-        if self.service != "transferwise":
+        if self.service != "wise":
             return super()._obtain_statement_data(
                 date_since,
                 date_until,
             )  # pragma: no cover
 
-        api_base = self.api_base or TRANSFERWISE_API_BASE
+        api_base = self.api_base or WISE_API_BASE
         api_key = self.password
         private_key = self.certificate_private_key
         if private_key:
@@ -98,7 +100,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
 
         # Get corresponding balance by currency
         url = api_base + "/v1/borderless-accounts?profileId={}".format(self.origin)
-        data = self._transferwise_retrieve(url, api_key, private_key)
+        data = self._wise_retrieve(url, api_key, private_key)
         if not data:
             return None
         borderless_account = data[0]["id"]
@@ -123,7 +125,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             starting_balance_timestamp,
             starting_balance_timestamp,
         )
-        data = self._transferwise_retrieve(url, api_key, private_key)
+        data = self._wise_retrieve(url, api_key, private_key)
         balance_start = data["endOfStatementBalance"]["value"]
 
         # Get statements, using 469 days (around 1 year 3 month) as step.
@@ -143,7 +145,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                 interval_start.isoformat() + "Z",
                 min(interval_start + interval_step, interval_end).isoformat() + "Z",
             )
-            data = self._transferwise_retrieve(url, api_key, private_key)
+            data = self._wise_retrieve(url, api_key, private_key)
             transactions += data["transactions"]
             balance_end = data["endOfStatementBalance"]["value"]
             interval_start += interval_step
@@ -152,13 +154,13 @@ class OnlineBankStatementProviderTransferwise(models.Model):
 
         # Normalize transactions' date, sort by it, and get lines
         transactions = map(
-            lambda transaction: self._transferwise_preparse_transaction(transaction),
+            lambda transaction: self._wise_preparse_transaction(transaction),
             transactions,
         )
         lines = list(
             itertools.chain.from_iterable(
                 map(
-                    lambda x: self._transferwise_transaction_to_lines(x),
+                    lambda x: self._wise_transaction_to_lines(x),
                     sorted(transactions, key=lambda transaction: transaction["date"]),
                 )
             )
@@ -167,14 +169,14 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         return lines, {"balance_start": balance_start, "balance_end_real": balance_end}
 
     @api.model
-    def _transferwise_preparse_transaction(self, transaction):
+    def _wise_preparse_transaction(self, transaction):
         transaction["date"] = dateutil.parser.parse(transaction["date"]).replace(
             tzinfo=None
         )
         return transaction
 
     @api.model
-    def _transferwise_transaction_to_lines(self, transaction):
+    def _wise_transaction_to_lines(self, transaction):
         transaction_type = transaction["type"]
         reference_number = transaction["referenceNumber"]
         details = transaction.get("details", {})
@@ -262,7 +264,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         return lines
 
     @api.model
-    def _transferwise_validate(self, content):
+    def _wise_validate(self, content):
         content = json.loads(content, parse_float=Decimal)
         if "error" in content and content["error"]:
             raise UserError(
@@ -273,9 +275,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
         return content
 
     @api.model
-    def _transferwise_retrieve(self, url, api_key, private_key=None):
+    def _wise_retrieve(self, url, api_key, private_key=None):
         try:
-            with self._transferwise_urlopen(url, api_key) as response:
+            with self._wise_urlopen(url, api_key) as response:
                 content = response.read().decode(
                     response.headers.get_content_charset() or "utf-8"
                 )
@@ -283,7 +285,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             if e.code != 403 or e.headers.get("X-2FA-Approval-Result") != "REJECTED":
                 raise e
             if not private_key:
-                raise UserError(_("Strong Customer Authentication is not configured"))
+                raise UserError(
+                    _("Strong Customer Authentication is not configured")
+                ) from None
             one_time_token = e.headers["X-2FA-Approval"]
             signature = private_key.sign(
                 one_time_token.encode(),
@@ -291,7 +295,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                 hashes.SHA256(),
             )
 
-            with self._transferwise_urlopen(
+            with self._wise_urlopen(
                 url,
                 api_key,
                 one_time_token,
@@ -301,22 +305,23 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                     response.headers.get_content_charset() or "utf-8"
                 )
 
-        return self._transferwise_validate(content)
+        return self._wise_validate(content)
 
     @api.model
-    def _transferwise_urlopen(self, url, api_key, ott=None, signature=None):
+    def _wise_urlopen(self, url, api_key, ott=None, signature=None):
         if not api_key:
             raise UserError(_("No API key specified!"))
         request = urllib.request.Request(url)
         request.add_header("Authorization", "Bearer %s" % api_key)
+        request.add_header("User-Agent", "Mozilla/5.0")
         if ott and signature:
             request.add_header("X-2FA-Approval", ott)
             request.add_header("X-Signature", signature)
         return urllib.request.urlopen(request)
 
     @api.onchange("certificate_private_key", "service")
-    def _onchange_transferwise_certificate_private_key(self):
-        if self.service != "transferwise":
+    def _onchange_wise_certificate_private_key(self):
+        if self.service != "wise":
             return
 
         self.certificate_public_key = False
@@ -339,9 +344,9 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             )
         except BaseException:
             _logger.warning("Unable to parse key", exc_info=True)
-            raise UserError(_("Unable to parse key"))
+            raise UserError(_("Unable to parse key")) from None
 
-    def _transferwise_generate_key(self):
+    def _wise_generate_key(self):
         self.ensure_one()
 
         private_key = rsa.generate_private_key(
@@ -364,6 +369,6 @@ class OnlineBankStatementProviderTransferwise(models.Model):
             .decode()
         )
 
-    def button_transferwise_generate_key(self):
+    def button_wise_generate_key(self):
         for provider in self:
-            provider._transferwise_generate_key()
+            provider._wise_generate_key()
