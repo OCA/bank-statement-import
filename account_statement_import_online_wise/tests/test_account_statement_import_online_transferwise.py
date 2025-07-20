@@ -534,7 +534,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "partner_name": "Paypal *XX",
                 "unique_import_id": "DEBIT-CARD-123456789-946684800",
                 "amount_currency": "-567.89",
-                "currency_id": self.currency_usd.id,
+                "foreign_currency_id": self.currency_usd.id,
             },
         )
         self.assertEqual(
@@ -600,7 +600,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "account_number": "(ADBCDEF) 0000000000000000",
                 "amount": "-265.34",
                 "amount_currency": "-297.00",
-                "currency_id": self.currency_usd.id,
+                "foreign_currency_id": self.currency_usd.id,
                 "unique_import_id": "DEBIT-TRANSFER-123456789-946684800",
             },
         )
@@ -706,7 +706,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "payment_ref": "BALANCE-123456789: Converted 7.93 USD to 6.93 EUR",
                 "amount": "6.93",
                 "amount_currency": "7.93",
-                "currency_id": self.currency_usd.id,
+                "foreign_currency_id": self.currency_usd.id,
                 "unique_import_id": "CREDIT-BALANCE-123456789-946684800",
             },
         )
@@ -764,7 +764,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
                 "payment_ref": "BALANCE-123456789: Converted 7.93 USD to 6.93 EUR",
                 "amount": "-7.88",
                 "amount_currency": "-6.93",
-                "currency_id": self.currency_eur.id,
+                "foreign_currency_id": self.currency_eur.id,
                 "unique_import_id": "DEBIT-BALANCE-123456789-946684800",
             },
         )
