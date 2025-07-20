@@ -244,7 +244,7 @@ class OnlineBankStatementProviderTransferwise(models.Model):
                 line.update(
                     {
                         "amount_currency": str(other_amount_value),
-                        "currency_id": other_currency.id,
+                        "foreign_currency_id": other_currency.id,
                     }
                 )
         lines = [line]
