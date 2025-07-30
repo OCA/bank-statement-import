@@ -117,7 +117,9 @@ class AccountStatementImport(models.TransientModel):
         # Prepare statement data to be used for bank statements creation
         stmts_vals = self._complete_stmts_vals(stmts_vals, journal, account_number)
         # Create the bank statements
-        self._create_bank_statements(stmts_vals, result)
+        self.with_context(from_stmt_import=True)._create_bank_statements(
+            stmts_vals, result
+        )
         # Now that the import worked out, set it as the bank_statements_source
         # of the journal
         if journal.bank_statements_source != "file_import_oca":
