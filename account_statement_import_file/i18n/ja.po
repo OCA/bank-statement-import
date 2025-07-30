@@ -136,6 +136,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -233,156 +239,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#, python-format
-#~ msgid "Import"
-#~ msgstr "インポート"
-
-#~ msgid "Last Modified on"
-#~ msgstr "最終更新日"
-
-#~ msgid "or"
-#~ msgstr "または"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "銀行取引明細書内容"
-
-#~ msgid "Import ID"
-#~ msgstr "インポートID"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "銀行口座"
-
-#~ msgid "Account Holder"
-#~ msgstr "口座保持者"
-
-#~ msgid "Account Number"
-#~ msgstr "口座番号"
-
-#~ msgid "Account Types Allowed"
-#~ msgstr "許可する勘定タイプ"
-
-#~ msgid "Accounts Allowed"
-#~ msgstr "許可する勘定科目"
-
-#~ msgid "Active"
-#~ msgstr "有効"
-
-#~ msgid "Alias"
-#~ msgstr "エイリアス"
-
-#~ msgid "Alias domain"
-#~ msgstr "エイリアスドメイン"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "エントリの取消許可"
-
-#~ msgid "At Least One Inbound"
-#~ msgstr "入金の支払方法あり"
-
-#~ msgid "At Least One Outbound"
-#~ msgstr "出金の支払方法あり"
-
-#~ msgid "Bank"
-#~ msgstr "銀行"
-
-#~ msgid "Bank Feeds"
-#~ msgstr "銀行取引"
-
-#~ msgid "Belong to the user's current company"
-#~ msgstr "ユーザの現在の会社に属する"
-
-#~ msgid ""
-#~ "Check this box if you want to allow the cancellation the entries related "
-#~ "to this journal or of the invoice related to this journal"
-#~ msgstr ""
-#~ "この仕訳帳に関連するエントリー、またはこの仕訳帳に関連する請求書のキャンセ"
-#~ "ルを許す場合は、このボックスをチェックして下さい。"
-
-#~ msgid "Color Index"
-#~ msgstr "カラーインデクス"
-
-#~ msgid "Company"
-#~ msgstr "会社"
-
-#~ msgid "Company related to this journal"
-#~ msgstr "この仕訳帳と関係する会社"
-
-#~ msgid "Credit Note Entry Sequence"
-#~ msgstr "クレジットノート付番規則"
-
-#~ msgid "Currency"
-#~ msgstr "通貨"
-
-#~ msgid "Dedicated Credit Note Sequence"
-#~ msgstr "固有のクレジットノート付番"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "デフォルト貸方勘定"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "デフォルト借方勘定"
-
-#~ msgid "Entry Sequence"
-#~ msgstr "仕訳付番"
-
-#~ msgid "Filename"
-#~ msgstr "ファイル名"
-
-#~ msgid "Group Invoice Lines"
-#~ msgstr "請求書明細グループ化"
-
-#~ msgid ""
-#~ "If this box is checked, the system will try to group the accounting lines "
-#~ "when generating them from invoices."
-#~ msgstr ""
-#~ "このボックスがチェックされると、システムは請求書から会計行の生成を行う時に"
-#~ "会計行のグループ化を行います。"
-
-#~ msgid "It acts as a default account for credit amount"
-#~ msgstr "それは貸方金額のデフォルトアカウントとして動作します。"
-
-#~ msgid "It acts as a default account for debit amount"
-#~ msgstr "これは借方金額のデフォルトアカウントとして動作します。"
-
-#~ msgid "Journal Name"
-#~ msgstr "仕訳帳名"
-
-#~ msgid "Kanban Dashboard"
-#~ msgstr "かんばんダッシュボード"
-
-#~ msgid "Loss Account"
-#~ msgstr "費用勘定"
-
-#~ msgid "Next Number"
-#~ msgstr "次の番号"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Profit Account"
-#~ msgstr "収益勘定"
-
-#~ msgid "Sequence"
-#~ msgstr "付番"
-
-#~ msgid "Short Code"
-#~ msgstr "短縮コード"
-
-#~ msgid "Show journal on dashboard"
-#~ msgstr "仕訳帳をダッシュボードに表示"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "明細入力に使用される通貨"
-
-#~ msgid ""
-#~ "This field contains the information related to the numbering of the "
-#~ "journal entries of this journal."
-#~ msgstr "このフィールドは仕訳帳の記帳番号に関連する情報を含みます。"
-
-#~ msgid "Type"
-#~ msgstr "タイプ"
-
-#~ msgid "_Import"
-#~ msgstr "_Import"

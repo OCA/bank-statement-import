@@ -132,6 +132,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Statement File"
 msgstr ""
@@ -227,31 +233,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#~ msgid "Last Modified on"
-#~ msgstr "កាលបរិច្ឆេតកែប្រែចុងក្រោយ"
-
-#~ msgid "or"
-#~ msgstr "ឬ​"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "គណនីធនាគារ"
-
-#~ msgid "Active"
-#~ msgstr "សកម្ម"
-
-#~ msgid "Bank"
-#~ msgstr "ធនាគារ"
-
-#~ msgid "Company"
-#~ msgstr "ក្រុមហ៊ុន"
-
-#~ msgid "Currency"
-#~ msgstr "រូបិយវត្ថុ"
-
-#~ msgid "Sequence"
-#~ msgstr "លំដាប់"
-
-#~ msgid "Type"
-#~ msgstr "ប្រភេទ"

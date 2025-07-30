@@ -135,6 +135,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr ""
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -232,99 +238,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#, python-format
-#~ msgid "Import"
-#~ msgstr "นำเข้า"
-
-#~ msgid "Last Modified on"
-#~ msgstr "แก้ไขครั้งสุดท้ายเมื่อ"
-
-#~ msgid "or"
-#~ msgstr "หรือ"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "บรรทัดรายการเดินบัญชีธนาคาร"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "บัญชีธนาคาร"
-
-#~ msgid "Account Holder"
-#~ msgstr "ผู้ถือบัญชี"
-
-#~ msgid "Account Number"
-#~ msgstr "หมายเลขบัญชี"
-
-#~ msgid "Accounts Allowed"
-#~ msgstr "บัญชีที่อนุญาต"
-
-#~ msgid "Active"
-#~ msgstr "เปิดใช้งาน"
-
-#~ msgid "Alias"
-#~ msgstr "นามแฝง"
-
-#~ msgid "Alias domain"
-#~ msgstr "ชื่อโดเมน"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "Allow Cancelling Entries"
-
-#~ msgid "Bank"
-#~ msgstr "ธนาคาร"
-
-#~ msgid ""
-#~ "Check this box if you want to allow the cancellation the entries related "
-#~ "to this journal or of the invoice related to this journal"
-#~ msgstr ""
-#~ "Check this box if you want to allow the cancellation the entries related "
-#~ "to this journal or of the invoice related to this journal"
-
-#~ msgid "Choose a file to import..."
-#~ msgstr "เลือกไฟล์ที่จะนำเข้า..."
-
-#~ msgid "Color Index"
-#~ msgstr "ดัชนีสี"
-
-#~ msgid "Company"
-#~ msgstr "บริษัท"
-
-#~ msgid "Currency"
-#~ msgstr "สกุลเงิน"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "บัญชีเครดิตเริ่มต้น"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "บัญชีเดบิตเริ่มต้น"
-
-#~ msgid "Filename"
-#~ msgstr "ชื่อไฟล์"
-
-#~ msgid "Group Invoice Lines"
-#~ msgstr "จัดกลุ่มรายการในใบแจ้งหนี้"
-
-#~ msgid "Journal Name"
-#~ msgstr "ชื่อสมุดรายวัน"
-
-#~ msgid "Next Number"
-#~ msgstr "หมายเลขต่อไป"
-
-#~ msgid "OK"
-#~ msgstr "ตกลง"
-
-#~ msgid "Profit Account"
-#~ msgstr "บัญชีกำไร"
-
-#~ msgid "Sequence"
-#~ msgstr "ลำดับ"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "หน่วยเงินตราที่ใช้ในงบการเงิน"
-
-#~ msgid "Type"
-#~ msgstr "ประเภท"
-
-#~ msgid "_Import"
-#~ msgstr "_Import"

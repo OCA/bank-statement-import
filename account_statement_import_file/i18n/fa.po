@@ -137,6 +137,12 @@ msgid "Missing payment_ref on a transaction."
 msgstr "این فایل دارای هیچ تراکنسی نیست."
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
 #, fuzzy
 msgid "Statement File"
@@ -234,154 +240,3 @@ msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#, python-format
-#~ msgid "Import"
-#~ msgstr "درونش"
-
-#~ msgid "Last Modified on"
-#~ msgstr "آخرین تغییر در"
-
-#, python-format
-#~ msgid "Already imported items"
-#~ msgstr "آیتمهای قبلا وارد شده"
-
-#~ msgid "or"
-#~ msgstr "یا"
-
-#, fuzzy
-#~ msgid "A bank account transaction can be imported only once!"
-#~ msgstr "ترکنشهای حساب بانکی تنها یک بار می‌توانند از فایل وارد شوند."
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "سطر صورتحساب بانک"
-
-#~ msgid "Import ID"
-#~ msgstr "آیدی ورود از فایل"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "حساب بانکی"
-
-#~ msgid "This file doesn't contain any statement."
-#~ msgstr "این فایل دارای هیچ صورتحسابی نیست"
-
-#~ msgid "This file doesn't contain any transaction."
-#~ msgstr "این فایل دارای هیچ تراکنسی نیست."
-
-#~ msgid "Account Holder"
-#~ msgstr "دارنده حساب"
-
-#~ msgid "Account Number"
-#~ msgstr "شماره حساب"
-
-#~ msgid "Account Types Allowed"
-#~ msgstr "انواع حساب مجاز"
-
-#~ msgid "Accounts Allowed"
-#~ msgstr "حسابهای مجاز"
-
-#~ msgid "Active"
-#~ msgstr "فعال"
-
-#~ msgid "Alias"
-#~ msgstr "مستعار"
-
-#~ msgid "Alias domain"
-#~ msgstr "دامین مستعار"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "اجازه لغو داده ها"
-
-#~ msgid "At Least One Inbound"
-#~ msgstr "حداقل یک ورودی"
-
-#~ msgid "At Least One Outbound"
-#~ msgstr "حداقل یک خروجی"
-
-#~ msgid "Bank"
-#~ msgstr "بانک"
-
-#~ msgid "Bank Feeds"
-#~ msgstr "فیدهای بانک"
-
-#~ msgid "Bank Journal Name"
-#~ msgstr "نام روزنامه بانک"
-
-#~ msgid "Belong to the user's current company"
-#~ msgstr "مطلق به شرکت فعلی کاربر است"
-
-#~ msgid "Choose a file to import..."
-#~ msgstr "انتخاب فایل برای ورود..."
-
-#~ msgid "Color Index"
-#~ msgstr "رنگ پس زمینه"
-
-#~ msgid "Company"
-#~ msgstr "شرکت"
-
-#~ msgid "Company related to this journal"
-#~ msgstr "شرکت مربوط به این روزنامه"
-
-#~ msgid "Credit Notes: Next Number"
-#~ msgstr "یادداشهای اعتباری: عدد بعدی"
-
-#~ msgid "Currency"
-#~ msgstr "ارز"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "حساب بستانکار پیش فرض"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "حساب بدهکار پیش فرض"
-
-#~ msgid "Entry Sequence"
-#~ msgstr "دنباله‌ی ورودی"
-
-#~ msgid "Filename"
-#~ msgstr "نام فایل"
-
-#~ msgid "Group Invoice Lines"
-#~ msgstr "گروه بندی سطرهای فاکتور"
-
-#~ msgid "Journal Creation"
-#~ msgstr "ایجاد روزنامه"
-
-#~ msgid "Journal Name"
-#~ msgstr "نام روزنامه"
-
-#~ msgid "Kanban Dashboard"
-#~ msgstr "داشبورد کانبان"
-
-#~ msgid "Kanban Dashboard Graph"
-#~ msgstr "گراف داشبورد کانبان"
-
-#~ msgid "Loss Account"
-#~ msgstr "حساب زیان"
-
-#~ msgid "Next Number"
-#~ msgstr "شماره بعدی"
-
-#~ msgid "OK"
-#~ msgstr "تایید"
-
-#~ msgid "Profit Account"
-#~ msgstr "حساب سود"
-
-#~ msgid "Sequence"
-#~ msgstr "دنباله"
-
-#~ msgid "Short Code"
-#~ msgstr "کد کوتاه"
-
-#~ msgid "Show journal on dashboard"
-#~ msgstr "نمایش روزنامه روی داشبورد"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "ارز مورد استفاده برای ورود به صورتحساب"
-
-#~ msgid "Type"
-#~ msgstr "نوع"
-
-#~ msgid "_Import"
-#~ msgstr "ـ‌وارد کردن"
