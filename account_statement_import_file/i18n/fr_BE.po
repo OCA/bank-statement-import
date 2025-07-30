@@ -78,6 +78,12 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
+
+#. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
 msgid "Import Bank Statement File"
 msgstr "Importer un fichier de relevé bancaire"
@@ -130,12 +136,6 @@ msgstr "Code de devise manquant dans le fichier de relevé bancaire."
 #, fuzzy
 msgid "Missing payment_ref on a transaction."
 msgstr "Référence de paiement manquant sur une transaction."
-
-#. module: account_statement_import_file
-#. odoo-python
-#: code:addons/account_statement_import_file/models/account_journal.py:0
-msgid "Import (OCA) (%s)"
-msgstr ""
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
