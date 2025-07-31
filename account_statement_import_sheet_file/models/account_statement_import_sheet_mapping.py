@@ -233,6 +233,13 @@ class AccountStatementImportSheetMapping(models.Model):
             if mapping.offset_column < 0:
                 raise ValidationError(_("Offsets cannot be negative"))
 
+    @api.onchange("amount_type")
+    def _clear_amount_columns(self):
+        self.amount_column = False
+        self.debit_credit_column = False
+        self.amount_debit_column = False
+        self.amount_credit_column = False
+
     def _get_float_separators(self):
         self.ensure_one()
         separators = {
