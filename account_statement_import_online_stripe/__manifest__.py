@@ -2,7 +2,7 @@
 
 {
     "name": "Online Bank Statements: Stripe",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "author": "Akiles, Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["juancarlosonate-tecnativa"],
     "website": "https://github.com/OCA/bank-statement-import",
