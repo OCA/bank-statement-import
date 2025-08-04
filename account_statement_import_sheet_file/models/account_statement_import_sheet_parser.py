@@ -43,9 +43,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if mapping.no_header:
             return []
         header_line = mapping.header_lines_skip_count
-        # prevent negative indexes
-        if header_line > 0:
-            header_line -= 1
         if isinstance(csv_or_xlsx, tuple):
             header = [
                 str(value).strip() for value in csv_or_xlsx[1].row_values(header_line)
@@ -212,16 +209,19 @@ class AccountStatementImportSheetParser(models.TransientModel):
         else:
             numrows = len(str(data_file.strip()).split("\\n"))
 
-        label_line = mapping.header_lines_skip_count
-        footer_line = numrows - mapping.footer_lines_skip_count
+        header_skip = mapping.header_lines_skip_count
+        data_first_index_line = header_skip + (0 if mapping.no_header else 1)
+        data_first_line = data_first_index_line + 1
+        data_last_line = numrows - mapping.footer_lines_skip_count
+        data_line_count = data_last_line - data_first_line + 1
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(label_line, footer_line)
+            rows = range(data_first_index_line, data_last_line)
         else:
             rows = csv_or_xlsx
 
         lines = []
-        for index, row in enumerate(rows, label_line):
+        for index, row in enumerate(rows):
             if isinstance(csv_or_xlsx, tuple):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
@@ -233,7 +233,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         cell_value = xldate_as_datetime(cell_value, book.datemode)
                     values.append(cell_value)
             else:
-                if index >= footer_line:
+                if mapping.no_header and index < data_first_index_line:
+                    continue
+                if not mapping.no_header and index >= data_line_count:
+                    continue
+                if mapping.no_header and index >= header_skip + data_line_count:
                     continue
                 values = list(row)
             if mapping.skip_empty_lines and not any(values):
