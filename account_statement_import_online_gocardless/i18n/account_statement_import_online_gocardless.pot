@@ -29,6 +29,11 @@ msgid "Available countries:"
 msgstr ""
 
 #. module: account_statement_import_online_gocardless
+#: model:ir.model.fields.selection,name:account_statement_import_online_gocardless.selection__online_bank_statement_provider__gocardless_date_type__bookingdate
+msgid "Booking Date"
+msgstr ""
+
+#. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__create_uid
 msgid "Created by"
 msgstr ""
@@ -36,6 +41,11 @@ msgstr ""
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: account_statement_import_online_gocardless
+#: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_date_type
+msgid "Date type for GoCardless Import"
 msgstr ""
 
 #. module: account_statement_import_online_gocardless
@@ -207,6 +217,11 @@ msgstr ""
 #: code:addons/account_statement_import_online_gocardless/models/online_bank_statement_provider.py:0
 #, python-format
 msgid "To continue configure bank account on journal %s"
+msgstr ""
+
+#. module: account_statement_import_online_gocardless
+#: model:ir.model.fields.selection,name:account_statement_import_online_gocardless.selection__online_bank_statement_provider__gocardless_date_type__valuedate
+msgid "Value Date"
 msgstr ""
 
 #. module: account_statement_import_online_gocardless

@@ -35,6 +35,11 @@ class OnlineBankStatementProvider(models.Model):
         store=True,
         readonly=False,
     )
+    gocardless_date_type = fields.Selection(
+        string="Date type for GoCardless Import",
+        selection=[("valueDate", "Value Date"), ("bookingDate", "Booking Date")],
+        default="valueDate",
+    )
 
     @api.depends("journal_id", "company_id")
     def _compute_gocardless_country_id(self):
@@ -334,7 +339,9 @@ class OnlineBankStatementProvider(models.Model):
         currencies_cache = {}
         for tr in transactions.get("transactions", {}).get("booked", []):
             # Reference: https://developer.gocardless.com/bank-account-data/transactions
-            string_date = tr.get("valueDate") or tr.get("bookingDate")
+            main_value = self.gocardless_date_type
+            alt_value = "bookingDate" if main_value == "valueDate" else "valueDate"
+            string_date = tr.get(main_value) or tr.get(alt_value)
             # CHECK ME: if there's not date string, is transaction still valid?
             if not string_date:
                 continue
