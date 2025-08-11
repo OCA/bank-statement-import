@@ -21,6 +21,11 @@
                         required="service == 'gocardless'"
                     />
                     <field
+                        name="gocardless_date_type"
+                        invisible="service != 'gocardless'"
+                        required="service == 'gocardless'"
+                    />
+                    <field
                         name="gocardless_requisition_id"
                         invisible="not gocardless_requisition_id"
                         groups="base.group_no_one"
