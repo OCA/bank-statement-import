@@ -35,6 +35,11 @@ msgid "Available countries:"
 msgstr "Países disponibles:"
 
 #. module: account_statement_import_online_gocardless
+#: model:ir.model.fields.selection,name:account_statement_import_online_gocardless.selection__online_bank_statement_provider__gocardless_date_type__bookingdate
+msgid "Booking Date"
+msgstr ""
+
+#. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -43,6 +48,11 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__create_date
 msgid "Created on"
 msgstr "Creado el"
+
+#. module: account_statement_import_online_gocardless
+#: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_date_type
+msgid "Date type for GoCardless Import"
+msgstr ""
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__display_name
@@ -65,6 +75,11 @@ msgstr "GoCardless"
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_account_id
 msgid "Gocardless Account"
 msgstr "ID de la cuenta Gocardless"
+
+#. module: account_statement_import_online_gocardless
+#: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_country_id
+msgid "Gocardless Country"
+msgstr ""
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider__gocardless_institution_id
@@ -107,6 +122,13 @@ msgid "Gocardless Token Expiration"
 msgstr "Caducdad del token"
 
 #. module: account_statement_import_online_gocardless
+#. odoo-javascript
+#: code:addons/account_statement_import_online_gocardless/static/src/js/select_bank_widget.esm.js:0
+#, python-format
+msgid "Gocardless selection"
+msgstr ""
+
+#. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__id
 msgid "ID"
 msgstr "Identificador"
@@ -117,11 +139,6 @@ msgstr "Identificador"
 #, python-format
 msgid "Incorrect country code or country not supported."
 msgstr "Código de país incorrecto o país no admitido."
-
-#. module: account_statement_import_online_gocardless
-#: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
 
 #. module: account_statement_import_online_gocardless
 #: model:ir.model.fields,field_description:account_statement_import_online_gocardless.field_online_bank_statement_provider_existing__write_uid
@@ -212,6 +229,11 @@ msgid "To continue configure bank account on journal %s"
 msgstr "Para seguir configurando la cuenta bancaria en el diario %s"
 
 #. module: account_statement_import_online_gocardless
+#: model:ir.model.fields.selection,name:account_statement_import_online_gocardless.selection__online_bank_statement_provider__gocardless_date_type__valuedate
+msgid "Value Date"
+msgstr ""
+
+#. module: account_statement_import_online_gocardless
 #: model:ir.model,name:account_statement_import_online_gocardless.model_online_bank_statement_provider_existing
 msgid "Wizard for reusing existing GoCardless provider"
 msgstr "Asistente para reutilizar un proveedor de GoCardless existente"
@@ -244,3 +266,6 @@ msgid ""
 msgstr ""
 "Su número de cuenta %(iban_number)s no está en los números de cuenta IBAN "
 "encontrados %(accounts_iban)s, por favor compruébelo"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
