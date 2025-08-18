@@ -119,7 +119,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                 (self.api_base or STRIPE_API_BASE) + path + "?" + urlencode(params),
                 data=data,
             )
-            request.add_header("Authorization", "Bearer %s" % self.password)
+            request.add_header("Authorization", f"Bearer {self.password}")
             response = urllib.request.urlopen(request)
             content = response.read().decode("utf-8")
             return json.loads(content)
