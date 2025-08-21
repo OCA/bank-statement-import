@@ -46,7 +46,9 @@
                      'transaction_type': 'PMNT-IDDT-UPDD'},
                     {'account_number': 'NL46ABNA0499998748',
                      'amount': -100.0,
+                     'amount_currency': -90.0,
                      'date': '2014-01-05',
+                     'foreign_currency_id': 2,
                      'narration': 'Partner Name (RltdPties/Nm): Test Customer\n'
                                   'Partner Account Number (RltdPties/Acct): NL46ABNA0499998748\n'
                                   'Transaction Date (BookgDt): 2014-01-05\n'

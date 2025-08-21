@@ -192,6 +192,9 @@
                             <TxAmt>
                                 <Amt Ccy="EUR">100.00</Amt>
                             </TxAmt>
+                            <InstdAmt>
+                                <Amt Ccy="USD">90.00</Amt>
+                            </InstdAmt>
                         </AmtDtls>
                         <RltdPties>
                             <Cdtr>

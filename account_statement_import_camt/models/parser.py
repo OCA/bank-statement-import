@@ -2,6 +2,7 @@
 # Copyright 2013-2016 Therp BV <https://therp.nl>
 # Copyright 2017 Open Net Sàrl
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+import math
 import re
 
 from lxml import etree
@@ -182,6 +183,19 @@ class CamtParser(models.AbstractModel):
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction["amount"] = amount
+            # foreign currency
+            for instructed_amount_node in node.xpath(
+                "./ns:AmtDtls/ns:InstdAmt/ns:Amt", namespaces={"ns": ns}
+            ):
+                instructed_amount = math.copysign(
+                    float(instructed_amount_node.text), amount
+                )
+                currency = self.env["res.currency"].search(
+                    [("name", "=", instructed_amount_node.attrib["Ccy"])], limit=1
+                )
+                if currency and instructed_amount != amount:
+                    transaction["foreign_currency_id"] = currency.id
+                    transaction["amount_currency"] = instructed_amount
         # remote party values
         party_type = "Dbtr"
         party_type_node = node.xpath("../../ns:CdtDbtInd", namespaces={"ns": ns})
