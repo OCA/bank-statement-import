@@ -1,7 +1,7 @@
 # Copyright 2017 Tecnativa - Luis M. Ontalba
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class AccountStatementLineCreate(models.TransientModel):
@@ -19,7 +19,6 @@ class AccountStatementLineCreate(models.TransientModel):
         [("posted", "All Posted Entries"), ("all", "All Entries")],
         string="Target Moves",
     )
-    allow_blocked = fields.Boolean(string="Allow Litigation Move Lines")
     invoice = fields.Boolean(string="Linked to an Invoice or Refund")
     date_type = fields.Selection(
         [("due", "Due Date"), ("move", "Move Date")],
@@ -74,8 +73,6 @@ class AccountStatementLineCreate(models.TransientModel):
             domain += [("partner_id", "=", self.partner_id.id)]
         if self.target_move == "posted":
             domain += [("move_id.state", "=", "posted")]
-        if not self.allow_blocked:
-            domain += [("blocked", "!=", True)]
         if self.date_type == "due":
             domain += [
                 "|",
@@ -89,7 +86,7 @@ class AccountStatementLineCreate(models.TransientModel):
         paylines = self.env["account.payment"].search(
             [
                 ("state", "in", ("draft", "posted", "sent")),
-                ("line_ids", "!=", False),
+                ("move_id.line_ids", "!=", False),
             ]
         )
         if paylines:
@@ -103,7 +100,7 @@ class AccountStatementLineCreate(models.TransientModel):
         self.move_line_ids = False
         self.move_line_ids = lines
         action = {
-            "name": _("Select Move Lines to Create Statement"),
+            "name": self.env._("Select Move Lines to Create Statement"),
             "type": "ir.actions.act_window",
             "res_model": "account.statement.line.create",
             "view_mode": "form",
@@ -120,7 +117,6 @@ class AccountStatementLineCreate(models.TransientModel):
         "journal_ids",
         "invoice",
         "target_move",
-        "allow_blocked",
         "partner_id",
     )
     def move_line_filters_change(self):
@@ -138,7 +134,7 @@ class AccountStatementLineCreate(models.TransientModel):
                 statement = self.env["account.bank.statement"].create(
                     {
                         "date": fields.Date.today(),
-                        "name": _("%(journal_code)s Statement %(date)s")
+                        "name": self.env._("%(journal_code)s Statement %(date)s")
                         % {
                             "journal_code": journal.code,
                             "date": fields.Date.today(),

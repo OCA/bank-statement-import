@@ -2,35 +2,20 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0
 
 from odoo import fields
-from odoo.tests import TransactionCase, tagged
+from odoo.tests import tagged
+
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @tagged("post_install", "-at_install")
-class TestAccountBankStatementImportMoveLine(TransactionCase):
+class TestAccountBankStatementImportMoveLine(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner 2"})
-        cls.journal_bank = cls.env["account.journal"].create(
-            {"name": "Test Journal Bank", "type": "bank", "code": "TJB0"}
-        )
-        cls.invoice = cls.env["account.move"].create(
-            {
-                "name": "Test Invoice 3",
-                "partner_id": cls.partner.id,
-                "move_type": "out_invoice",
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Test line",
-                            "quantity": 1.0,
-                            "price_unit": 100.00,
-                        },
-                    )
-                ],
-            }
+        cls.journal_bank = cls.company_data["default_journal_bank"]
+        cls.invoice = cls.init_invoice(
+            "out_invoice", partner=cls.partner, amounts=[100]
         )
         cls.statement = cls.env["account.bank.statement"].create(
             {"name": "Test account bank statement import move line"}
@@ -49,7 +34,6 @@ class TestAccountBankStatementImportMoveLine(TransactionCase):
             {
                 "statement_id": self.statement.id,
                 "partner_id": self.partner.id,
-                "allow_blocked": True,
                 "date_type": "move",
                 "move_date": fields.Date.today(),
                 "invoice": False,
