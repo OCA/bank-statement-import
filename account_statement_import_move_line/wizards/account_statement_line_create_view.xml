@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_statement_line_create_view_form" model="ir.ui.view">
+        <field name="name">account_statement_line_create_form</field>
+        <field name="model">account.statement.line.create</field>
+        <field name="arch" type="xml">
+            <form string="Choose Move Lines Filter Options">
+                <group name="main">
+                    <field name="statement_id" invisible="1" />
+                    <field name="partner_id" />
+                    <field name="date_type" />
+                    <field
+                        name="move_date"
+                        required="date_type == 'move'"
+                        invisible="date_type != 'move'"
+                    />
+                    <field
+                        name="due_date"
+                        required="date_type == 'due'"
+                        invisible="date_type != 'due'"
+                    />
+                    <field
+                        name="journal_ids"
+                        widget="many2many_tags"
+                        placeholder="Keep empty for using all journals"
+                    />
+                    <field name="target_move" widget="radio" />
+                    <field name="invoice" />
+                    <label
+                        for="populate"
+                        string="Click on Add All Move Lines to auto-select the move lines matching the above criteria or click on Add an item to manually select the move lines filtered by the above criteria."
+                        colspan="2"
+                    />
+                    <button
+                        name="populate"
+                        type="object"
+                        colspan="2"
+                        string="Add All Move Lines"
+                    />
+                </group>
+                <group name="move_lines" string="Selected Move Lines to Create Lines">
+                    <field name="move_line_ids" colspan="2" nolabel="1">
+                        <list>
+                            <field name="date" optional="show" />
+                            <field name="move_id" required="0" optional="show" />
+                            <field name="journal_id" optional="show" />
+                            <field name="partner_id" optional="hide" />
+                            <field name="account_id" optional="show" />
+                            <field name="date_maturity" optional="show" />
+                            <field name="debit" optional="show" />
+                            <field name="credit" optional="show" />
+                            <field
+                                name="amount_residual"
+                                sum="Total Residual"
+                                optional="show"
+                            />
+                            <field name="amount_currency" optional="show" />
+                            <field name="amount_residual_currency" optional="show" />
+                            <field name="company_currency_id" column_invisible="1" />
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        name="create_statement_lines"
+                        type="object"
+                        string="Create Statement Lines"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" special="cancel" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="account_statement_line_create_action" model="ir.actions.act_window">
+        <field name="name">Create Lines from Move Lines</field>
+        <field name="res_model">account.statement.line.create</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
