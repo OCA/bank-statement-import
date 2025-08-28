@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: account_statement_import_move_line
 #. odoo-python
 #: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
-#, python-format
 msgid "%(journal_code)s Statement %(date)s"
 msgstr ""
 
@@ -38,11 +37,6 @@ msgstr ""
 #. module: account_statement_import_move_line
 #: model:ir.model.fields.selection,name:account_statement_import_move_line.selection__account_statement_line_create__target_move__posted
 msgid "All Posted Entries"
-msgstr ""
-
-#. module: account_statement_import_move_line
-#: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__allow_blocked
-msgid "Allow Litigation Move Lines"
 msgstr ""
 
 #. module: account_statement_import_move_line
@@ -158,7 +152,6 @@ msgstr ""
 #. module: account_statement_import_move_line
 #. odoo-python
 #: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
-#, python-format
 msgid "Select Move Lines to Create Statement"
 msgstr ""
 
