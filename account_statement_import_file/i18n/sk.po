@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2018-09-21 13:17+0000\n"
-"Last-Translator: gebri <gebri@inmail.sk>, 2018\n"
+"PO-Revision-Date: 2025-09-02 10:43+0000\n"
+"Last-Translator: Jan Prokop <jprokop@jackie.sk>\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
 ">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -37,7 +38,7 @@ msgstr "1 transakcia už bola importovaná a bola ignorovaná."
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "<span>Import (OCA)</span>"
-msgstr ""
+msgstr "<span>Import (OCA)</span>"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
@@ -53,6 +54,9 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Nenašiel sa žiadny bankový účet '%(account_number)s' priradený partnerovi "
+"'%(partner_name)s'. Je potrebné vytvoriť bankový účet a nastavť ho v "
+"príslušnom účtovnom denníku. Ak denník neexistuje, je potrebné ho vytvoriť."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -72,7 +76,7 @@ msgstr "Zobrazovaný Názov"
 #. module: account_statement_import_file
 #: model:ir.model.fields,help:account_statement_import_file.field_account_statement_import__statement_file
 msgid "Download bank statement files from your bank and upload them here."
-msgstr ""
+msgstr "Stiahnite súbory s bankovými výpismi a nahrajte ich sem."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
@@ -83,13 +87,12 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/account_statement_import_file/models/account_journal.py:0
 msgid "Import (OCA) (%s)"
-msgstr ""
+msgstr "Import (OCA) (%s)"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
-#, fuzzy
 msgid "Import Bank Statement File"
-msgstr "Import Bank Statement"
+msgstr "Import súboru bankových výpisov"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_statement_import
@@ -105,12 +108,12 @@ msgstr "Importovať výpis"
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
 msgid "Import Statement (OCA)"
-msgstr ""
+msgstr "Import výpisov (OCA)"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Import and View"
-msgstr ""
+msgstr "Importovať a zobraziť"
 
 #. module: account_statement_import_file
 #: model:ir.model,name:account_statement_import_file.model_account_journal
@@ -131,7 +134,7 @@ msgstr "Naposledy upravované"
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 msgid "Missing currency code in the bank statement file."
-msgstr ""
+msgstr "Chýbajúci kód meny v súbore výpisu."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -148,21 +151,19 @@ msgstr "Súbor bankového výpisu"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_filename
-#, fuzzy
 msgid "Statement Filename"
-msgstr "Súbor bankového výpisu"
+msgstr "Názov súboru bankového výpisu"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
 msgid "Supported formats:"
-msgstr ""
+msgstr "Podporované formáty:"
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, fuzzy
 msgid "The Bank Accounting Account is not set on the journal '%s'."
-msgstr "Účet tohoto výpisu nie je rovnaký ako účtovná kniha (%s)."
+msgstr "Bankový účet nie je nastavený v účtovnej knihe (%s)."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -172,6 +173,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
+"Bankový účet číslo '%(account_number)s' existuje v Odoo ale nie je nastavený "
+"bna žiadnej účtovnej knihe banky. Je potrebné ho nastaviť na príslušnú "
+"účtovnú knihu banky. Ak táto neexistuje, je potrebné ju vytvoriť."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -179,7 +183,7 @@ msgstr ""
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
-msgstr ""
+msgstr "Súbor výpisu používa menu '%s', ktorá sa nenáchádza v Odoo."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -188,15 +192,20 @@ msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
 msgstr ""
+"Mena v bankovom výpise (%(currency_name)s) nei je rovnaká ako v mena "
+"účtovnej knihy '%(journal_name)s' (%(journal_currency_name)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
+#, fuzzy
 msgid ""
 "The format of this bank statement file doesn't contain the bank account "
 "number, so you must start the wizard from the right bank journal in the "
 "dashboard."
 msgstr ""
+"Formát tohto súboru bankového výpisu neobsahuje číslo účtu, treba začať s "
+"pomocníkom napravo na nástenke."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -205,12 +214,14 @@ msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
 msgstr ""
+"Účtovná kniha použítá v súbore (%(journal_match)s) sa líši od vybranej "
+"(%(journal_selected)s)."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 msgid "The parsing of the statement file returned an invalid result."
-msgstr ""
+msgstr "Spracovanie súboru výpisu vrátilo nesprávny výsledok."
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -225,15 +236,13 @@ msgstr ""
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload Bank Statements"
-msgstr "Importovať bankové výpisy"
+msgstr "Nahrať bankové výpisy"
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.account_statement_import_form
-#, fuzzy
 msgid "Upload a bank statement file"
-msgstr "Zvoľte súbor bankového výpisu n importovanie"
+msgstr "Zvoľte súbor bankového výpisu na import"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -241,4 +250,4 @@ msgstr "Zvoľte súbor bankového výpisu n importovanie"
 msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
-msgstr ""
+msgstr "Tento súbor ste už nahrali, alebo obsahuje len už nahraté transakcie."
