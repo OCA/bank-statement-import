@@ -13,7 +13,11 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main']" position="inside">
-                <group name="paypal" invisible="'service', '!=', 'paypal'">
+                <group
+                    name="paypal"
+                    string="Credentials"
+                    invisible="service != 'paypal'"
+                >
                     <group>
                         <field
                             name="api_base"
