@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-09-04 22:42+0000\n"
+"Last-Translator: myacc-pro <ai@myacc.pro>\n"
 "Language-Team: none\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -14,107 +15,109 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
 "19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "%d transactions present in response data"
-msgstr ""
+msgstr "%d darījumi, kas atrodas atbildes datos"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
 msgid "Execution Date"
-msgstr ""
+msgstr "Izpildes datums"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "GET request on %(url)s"
-msgstr ""
+msgstr "GET pieprasījums uz %(url)s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "GET request to %(url)s with headers %(headers)s and params %(params)s"
 msgstr ""
+"GET pieprasījums uz %(url)s ar galvenēm %(headers)s un parametriem %(params)s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "HTTP answer code %(response_code)s from Ponto"
-msgstr ""
+msgstr "HTTP atbildes kods %(response_code)s no Ponto"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model,name:account_statement_import_online_ponto.model_ponto_interface
 msgid "Interface to all interactions with Ponto API"
-msgstr ""
+msgstr "Saskarne visām mijiedarbībām ar Ponto API"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Login"
-msgstr ""
+msgstr "Lietotājs"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 msgid "No lines were retrieved from Ponto"
-msgstr ""
+msgstr "No Ponto netika iegūta neviena rinda"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "No transactions where found in data %(data)s"
-msgstr ""
+msgstr "Nav atrasti darījumi datos %(data)s"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model,name:account_statement_import_online_ponto.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
-msgstr ""
+msgstr "Tiešsaistes bankas izrakstu pakalpojumu sniedzējs"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "POST request on %(url)s"
-msgstr ""
+msgstr "POST pieprasījums uz %(url)s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "Please fill login and key."
-msgstr ""
+msgstr "Lūdzu, ievadiet pieteikšanās vārdu un atslēgu."
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "Ponto : no token"
-msgstr ""
+msgstr "Ponto : nav tokena"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "Ponto : wrong configuration, account {account} not found in {data}"
-msgstr ""
+msgstr "Ponto : nepareiza konfigurācija, konts {account} nav atrasts {data}"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Ponto Config"
-msgstr ""
+msgstr "Ponto konfigurācija"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
 msgid "Ponto Date Field"
-msgstr ""
+msgstr "Ponto datuma lauks"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_last_identifier
 msgid "Ponto Last Identifier"
-msgstr ""
+msgstr "Ponto pēdējais identifikators"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
 msgid "Ponto obtain all new statement data for journal %s"
-msgstr ""
+msgstr "Ponto iegūt visus jaunākos izrakstu datus žurnālam %s"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -123,11 +126,13 @@ msgid ""
 "Ponto obtain statement data for journal %(journal)s from %(date_since)s to "
 "%(date_until)s"
 msgstr ""
+"Ponto iegūt izrakstu datus žurnālam %(journal)s no %(date_since)s līdz "
+"%(date_until)s"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Secret Key"
-msgstr ""
+msgstr "Slepenā atslēga"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields,help:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
@@ -135,20 +140,22 @@ msgid ""
 "Select the Ponto date field that will be used for the Odoo bank statement "
 "line date."
 msgstr ""
+"Izvēlieties Ponto datuma lauku, kas tiks izmantots Odoo bankas izraksta "
+"rindas datumam."
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
 msgid "Server returned status code {response_code}: {response_text}"
-msgstr ""
+msgstr "Serveris atgrieza statusa kodu {response_code}: {response_text}"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
 #: code:addons/account_statement_import_online_ponto/tests/test_account_statement_import_online_ponto.py:0
 msgid "Statement contains transactions: %s"
-msgstr ""
+msgstr "Izrakstā ir darījumi: %s"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__value_date
 msgid "Value Date"
-msgstr ""
+msgstr "Valutēšanas datums"
