@@ -168,6 +168,11 @@ msgid "Coupon redemption"
 msgstr ""
 
 #. module: account_statement_import_online_paypal
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_paypal.online_bank_statement_provider_form
+msgid "Credentials"
+msgstr ""
+
+#. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid "Credit card cash back bonus"
