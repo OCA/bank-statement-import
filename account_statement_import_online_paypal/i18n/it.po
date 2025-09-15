@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-29 12:06+0000\n"
+"PO-Revision-Date: 2025-09-15 08:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -173,7 +173,7 @@ msgstr "Riscatto del buono"
 #. module: account_statement_import_online_paypal
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_paypal.online_bank_statement_provider_form
 msgid "Credentials"
-msgstr ""
+msgstr "Credenziali"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
