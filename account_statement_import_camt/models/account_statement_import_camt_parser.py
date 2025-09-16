@@ -296,7 +296,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             journal = self.env["account.journal"].browse(
                 self.env.context.get("journal_id")
             )
-            if journal.ignore_camt_transaction_details:
+            if journal.ignore_camt_transaction_details and amount < 0:
                 transaction["narration"] = transaction["narration"] or None
                 yield transaction
                 return

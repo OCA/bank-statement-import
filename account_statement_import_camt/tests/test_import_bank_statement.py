@@ -186,6 +186,8 @@ class TestImport(TransactionCase):
                     for line in statement_lines
                 )
             )
+            for line in statement_lines:
+                self.assertIsNotNone(line.partner_id)
 
     def test_statement_import_without_transaction_details(self):
         """Test correct creation of single statement."""
@@ -205,6 +207,11 @@ class TestImport(TransactionCase):
             )
             statement_lines = bank_st_record.line_ids
             self.assertEqual(len(statement_lines), 3)
+            for line in statement_lines:
+                if line.amount < 0:
+                    self.assertFalse(line.partner_id)
+                else:
+                    self.assertIsNotNone(line.partner_id)
 
     def test_zip_import(self):
         """Test import of multiple statements from zip file."""

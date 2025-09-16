@@ -8,7 +8,7 @@ class AccountJournal(models.Model):
     _inherit = "account.journal"
 
     ignore_camt_transaction_details = fields.Boolean(
-        string="Ignore CAMT transaction details"
+        string="Ignore CAMT transaction details for negative amounts",
     )
 
     def _get_bank_statements_available_import_formats(self):
