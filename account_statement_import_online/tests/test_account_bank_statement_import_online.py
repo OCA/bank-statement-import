@@ -399,6 +399,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self._getExpectedStatements(0)
         self._getExpectedLines(31)
 
+    @mute_logger("odoo.models.unlink")
     def test_unlink_provider(self):
         """Unlink provider should clear fields on journal."""
         self.provider.unlink()
