@@ -6,5 +6,5 @@ class AccountJournal(models.Model):
 
     def _get_bank_statements_available_import_formats(self):
         res = super()._get_bank_statements_available_import_formats()
-        res.append('CSV')
+        res.append("CSV")
         return res
