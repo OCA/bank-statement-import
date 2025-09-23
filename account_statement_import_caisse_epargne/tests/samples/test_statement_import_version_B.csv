@@ -1,0 +1,9 @@
+Code de la banque : 10101;Date de début de téléchargement : 01/02/2024;Date de fin de téléchargement : 29/02/2024;;
+Numéro de compte : 01234567890;Devise : EUR;;;
+
+Solde en fin de période;;;799,50;
+Date;Libellé;Débit;Crédit;Détail
+02/02/2024;VIREMENT RECU MR DURAND;;150,00;Remboursement
+12/02/2024;PRLV SEPA TELECOM;-55,00;;Facture telephone
+20/02/2024;PAIEMENT CB RESTAURANT;-45,50;;Repas
+Solde en début de période;;;750,00;

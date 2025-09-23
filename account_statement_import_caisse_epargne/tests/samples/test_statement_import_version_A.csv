@@ -1,0 +1,9 @@
+Code de la banque : 10101;Code de l'agence : 00100;Date de début de téléchargement : 01/01/2024;Date de fin de téléchargement : 31/01/2024;;
+Numéro de compte : 01234567890;Nom du compte : MONSIEUR DUPONT;Devise : EUR;;;
+
+Solde en fin de période;;;;655,25;
+Date;Numéro d'opération;Libellé;Débit;Crédit;Détail
+05/01/2024;0123456789;VIREMENT RECU;;250,50;Salaire
+10/01/2024;9876543210;PAIEMENT CB;-75,25;;Achat supermarché
+15/01/2024;1122334455;RETRAIT DAB;-20,00;;Retrait distributeur
+Solde en début de période;;;;500,00;

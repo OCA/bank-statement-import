@@ -3,22 +3,21 @@ import logging
 import re
 
 from odoo import api, models
-from odoo.exceptions import Warning
+from odoo.exceptions import ValidationError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
-from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementImport(models.TransientModel):
-    _inherit = "account.bank.statement.import"
+    _inherit = "account.statement.import"
 
     regexp_version = {
         "version_A": {
             "line_1": r"Code de la banque : (?P<bank_group_code>\d{5});"
             r"Code de l'agence : (?P<bank_local_code>\d{5});"
             "Date de début de téléchargement : "
-            r"(?P<opening_date>r'\d{2}/r'\d{2}/\d{4});"
+            r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
             "Date de fin de téléchargement : "
             r"(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
             "line_2": r"^Numéro de compte : (?P<bank_account_number>\d{11})"
@@ -37,22 +36,22 @@ class AccountBankStatementImport(models.TransientModel):
             "line_date_format": "%d/%m/%Y",
         },
         "version_B": {
-            "line_1": r"^Code de la banque : (?P<bank_group_code>\d{5})"
-            ";Date de début de téléchargement : "
+            "line_1": r"^Code de la banque : (?P<bank_group_code>\d{5});"
+            "Date de début de téléchargement : "
             r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
-            "Date de fin de téléchargement : "
+            r"Date de fin de téléchargement : "
             r"(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
             "line_2": "^Numéro de compte : "
             r"(?P<bank_account_number>\d{11});Devise :"
             r" (?P<currency>.{3});;;$",
             "line_closing_balance": "^Solde en fin de période;;;"
-            r"(?P<balance>\d+(,\d{1,2})?);$",
-            "line_opening_balance": "^Solde en début de période;;;"
-            r"(?P<balance>\d+(,\d{1,2})?);$",
+            r"(?P<balance>(\+|-)?\d+(,\d{1,2})?);$",
+            "line_opening_balance": r"^Solde en début de période;;;"
+            r"(?P<balance>(\+|-)?\d+(,\d{1,2})?);$",
             "line_credit": r"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);;"
-            r"(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
+            r"(?P<credit>\d+(,\d{1,2})?);(?P<note>.*);?\s*$",
             "line_debit": r"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);"
-            r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
+            r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*);?\s*$",
             "line_date_format": "%d/%m/%Y",
         },
         "version_C": {
@@ -149,8 +148,8 @@ class AccountBankStatementImport(models.TransientModel):
         )
 
     @api.model
-    def _parse_file(self, data_file):
-        data_file = data_file.decode("cp1252")
+    def _parse_file(self, data_file: bytes):
+        data_file = data_file.decode("utf-8")
         data_file = data_file.splitlines()
         result = self._check_file(data_file)
         if not result:
@@ -189,6 +188,11 @@ class AccountBankStatementImport(models.TransientModel):
                 libelle = transaction.group("name")
                 if transaction.group("note") != "":
                     libelle += " */* " + transaction.group("note")
+                payment_ref = libelle
+                if "ref" in transaction.groupdict():
+                    payment_ref = transaction.group("ref")
+                elif "unique_import_id" in transaction.groupdict():
+                    payment_ref = transaction.group("unique_import_id")
                 vals_line = {
                     "date": datetime.datetime.strptime(
                         transaction.group("date"),
@@ -205,27 +209,29 @@ class AccountBankStatementImport(models.TransientModel):
                     + transaction.group("note"),
                     "account_number": bank_account_number,
                     "partner_id": False,
-                    "bank_account_id": self._find_bank_account_id(bank_account_number),
+                    # "bank_account_id": self._find_bank_account_id(bank_account_number), # noqa
+                    "payment_ref": payment_ref,
                 }
                 total_amt += transaction_amount
                 transactions.append(vals_line)
                 index = index + 1
 
             if abs(opening_balance + total_amt - closing_balance) > 0.00001:
-                raise ValueError(
-                    _(
+                raise ValidationError(
+                    self.env._(
                         "Sum of opening balance and transaction "
                         "lines is not equel to closing balance."
                     )
                 )
 
         except Exception as e:
-            raise Warning(
-                _(
+            raise ValidationError(
+                self.env._(
                     "The following problem occurred during import. "
-                    "The file might not be valid.\n\n %s" % e.message
+                    "The file might not be valid.\n\n %s",
+                    str(e),
                 )
-            )
+            ) from e
 
         vals_bank_statement = {
             "name": bank_account_number + "/" + openning_date,
