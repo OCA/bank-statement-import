@@ -45,9 +45,6 @@ class AccountJournal(models.Model):
                 journal.online_bank_statement_provider_id
                 and service == journal.online_bank_statement_provider_id.service
             ):
-                _logger.info(
-                    "Journal %s already linked to service %s", journal.name, service
-                )
                 # Provider already exists.
                 continue
             # Use existing or create new provider for service.
