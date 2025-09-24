@@ -39,16 +39,16 @@ class AccountStatementImportSheetParser(models.TransientModel):
     _description = "Bank Statement Import Sheet Parser"
 
     @api.model
-    def parse_header(self, csv_or_xlsx, mapping):
+    def parse_header(self, csv_or_xlsx, mapping, data_file_is_xlsx):
         if mapping.no_header:
             return []
         header_line = mapping.header_lines_skip_count
         # prevent negative indexes
         if header_line > 0:
             header_line -= 1
-        if isinstance(csv_or_xlsx, tuple):
+        if data_file_is_xlsx:
             header = [
-                str(value).strip() for value in csv_or_xlsx[1].row_values(header_line)
+                str(value).strip() for value in csv_or_xlsx.row_values(header_line)
             ]
         else:
             [next(csv_or_xlsx) for _i in range(header_line)]
@@ -149,6 +149,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
     def _parse_lines(self, mapping, data_file, currency_code):
         columns = dict()
         try:
+            data_file_is_xlsx = True
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
                 encoding_override=(
@@ -160,6 +161,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 workbook.sheet_by_index(0),
             )
         except xlrd.XLRDError:
+            data_file_is_xlsx = False
             csv_options = {}
             csv_delimiter = mapping._get_column_delimiter_character()
             if csv_delimiter:
@@ -176,8 +178,15 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         _("No valid encoding was found for the attached file")
                     ) from None
                 decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
-        header = self.parse_header(csv_or_xlsx, mapping)
+            csv = reader(StringIO(decoded_file), **csv_options)
+            csv_or_xlsx, csv_iterator_copy = itertools.tee(csv)
+
+        if data_file_is_xlsx:
+            header = self.parse_header(
+                workbook.sheet_by_index(0), mapping, data_file_is_xlsx
+            )
+        else:
+            header = self.parse_header(csv_iterator_copy, mapping, data_file_is_xlsx)
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
         # respectivos campos related
@@ -212,16 +221,17 @@ class AccountStatementImportSheetParser(models.TransientModel):
         else:
             numrows = len(str(data_file.strip()).split("\\n"))
 
-        label_line = mapping.header_lines_skip_count
-        footer_line = numrows - mapping.footer_lines_skip_count
+        data_first_index_line = mapping.header_lines_skip_count
+        data_last_line = numrows - mapping.footer_lines_skip_count
+        data_line_count = data_last_line - data_first_index_line
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(label_line, footer_line)
+            rows = range(data_first_index_line, data_last_line)
         else:
             rows = csv_or_xlsx
 
         lines = []
-        for index, row in enumerate(rows, label_line):
+        for index, row in enumerate(rows):
             if isinstance(csv_or_xlsx, tuple):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
@@ -233,7 +243,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         cell_value = xldate_as_datetime(cell_value, book.datemode)
                     values.append(cell_value)
             else:
-                if index >= footer_line:
+                if index < data_first_index_line:
+                    continue
+                if index >= data_first_index_line + data_line_count:
                     continue
                 values = list(row)
             if mapping.skip_empty_lines and not any(values):

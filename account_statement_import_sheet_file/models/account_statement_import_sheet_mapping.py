@@ -163,14 +163,16 @@ class AccountStatementImportSheetMapping(models.Model):
     )
     footer_lines_skip_count = fields.Integer(
         string="Footer lines skip count",
-        help="Set the Footer lines number."
-        "Used in some csv/xlsx file that integrate meta data in"
-        "last lines.",
+        help="Define the number of footer lines to be skipped in CSV/XLSX"
+        "files containing metadata at the bottom.",
         default="0",
     )
     header_lines_skip_count = fields.Integer(
         string="Header lines skip count",
-        help="Set the Header lines number.",
+        help="Define the number of header lines to be skipped in CSV/XLSX"
+        "files containing metadata at the top."
+        "The header line containing the titles of columns should "
+        "be counted",
         default="0",
     )
     skip_empty_lines = fields.Boolean(
