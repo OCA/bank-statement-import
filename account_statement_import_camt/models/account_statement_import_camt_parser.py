@@ -9,6 +9,8 @@ from lxml import etree
 
 from odoo import models
 
+from odoo.addons.base.models.res_bank import sanitize_account_number
+
 
 class AccountStatementImportCamtParser(models.AbstractModel):
     _name = "account.statement.import.camt.parser"
@@ -438,6 +440,15 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def parse(self, data):
         """Parse a camt.052 or camt.053 or camt.054 file."""
+        journal_account_number = None
+        journal_currency_name = None
+        if self.env.context.get("journal_id", None):
+            journal_id = self.env.context.get("journal_id", None)
+            journal = self.env["account.journal"].browse(journal_id)
+            journal_account_number = sanitize_account_number(
+                journal.bank_account_id.acc_number
+            )
+            journal_currency_name = journal.currency_id.name
         try:
             root = etree.fromstring(data, parser=etree.XMLParser(recover=True))
         except etree.XMLSyntaxError:
@@ -450,15 +461,24 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             raise ValueError("Not a valid xml file, or not an xml file at all.")
         ns = root.tag[1 : root.tag.index("}")]
         self.check_version(ns, root)
-        statements = []
+        statements_to_treat = []
+        result = []
         currency = None
         account_number = None
         for node in root[0][1:]:
             statement = self.parse_statement(ns, node)
             if len(statement["transactions"]):
-                if "currency" in statement:
-                    currency = statement.pop("currency")
-                if "account_number" in statement:
-                    account_number = statement.pop("account_number")
-                statements.append(statement)
-        return currency, account_number, statements
+                statements_to_treat.append(statement)
+        for statement in statements_to_treat:
+            if "currency" in statement:
+                currency = statement.pop("currency")
+                if journal_currency_name and journal_currency_name != currency:
+                    continue
+            if "account_number" in statement:
+                account_number = statement.pop("account_number")
+                if journal_account_number and journal_account_number != account_number:
+                    continue
+            result.append(
+                (currency, journal_account_number or account_number, [statement])
+            )
+        return result

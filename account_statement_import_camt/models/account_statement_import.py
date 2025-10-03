@@ -14,22 +14,18 @@ class AccountStatementImport(models.TransientModel):
 
     def _parse_file(self, data_file):
         """Parse a CAMT053 XML file."""
-        try:
+        if not zipfile.is_zipfile(BytesIO(data_file)):
             parser = self.env["account.statement.import.camt.parser"]
             _logger.debug("Try parsing with camt.")
             return parser.parse(data_file)
-        except ValueError:
+        else:
             try:
                 with zipfile.ZipFile(BytesIO(data_file)) as data:
-                    currency = None
-                    account_number = None
-                    transactions = []
+                    result = []
                     for member in data.namelist():
-                        currency, account_number, new = self._parse_file(
-                            data.open(member).read()
-                        )
-                        transactions.extend(new)
-                return currency, account_number, transactions
+                        result = self._parse_file(data.open(member).read())
+                        result.extend(result)
+                return result
             # pylint: disable=except-pass
             except (zipfile.BadZipFile, ValueError):
                 _logger.exception("BadZipfile exception")
