@@ -183,7 +183,7 @@ class AccountStatementImport(models.TransientModel):
 
         no_st_line = True
         for vals in stmts_vals:
-            if vals["transactions"] and len(vals["transactions"]) > 0:
+            if vals.get("transactions") and len(vals["transactions"]) > 0:
                 no_st_line = False
                 break
         if no_st_line:
