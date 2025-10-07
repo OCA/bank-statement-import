@@ -28,13 +28,13 @@
                             name="username"
                             string="Client ID"
                             password="True"
-                            required="'service', '=', 'paypal'"
+                            required="service == 'paypal'"
                         />
                         <field
                             name="password"
                             string="Secret"
                             password="True"
-                            required="'service', '=', 'paypal'"
+                            required="service == 'paypal'"
                         />
                     </group>
                 </group>
