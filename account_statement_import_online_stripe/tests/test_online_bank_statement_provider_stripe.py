@@ -1,13 +1,14 @@
 from datetime import datetime
 from unittest.mock import patch
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestOnlineBankStatementProviderStripe(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.journal = self.env["account.journal"].create(
+class TestOnlineBankStatementProviderStripe(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.journal = cls.env["account.journal"].create(
             {
                 "name": "Bank",
                 "type": "bank",
@@ -15,13 +16,13 @@ class TestOnlineBankStatementProviderStripe(TransactionCase):
                 "bank_statements_source": "online",
             }
         )
-        self.provider = self.env["online.bank.statement.provider"].create(
+        cls.provider = cls.env["online.bank.statement.provider"].create(
             {
                 "name": "Test Stripe Provider",
                 "service": "stripe",
                 "password": "test_api_key",
-                "journal_id": self.journal.id,
-                "currency_id": self.env.ref("base.USD").id,
+                "journal_id": cls.journal.id,
+                "currency_id": cls.env.ref("base.USD").id,
                 "stripe_note": "Custom Note {source.object}",
                 "stripe_fee_note": "Fee Note {source.object}",
             }
