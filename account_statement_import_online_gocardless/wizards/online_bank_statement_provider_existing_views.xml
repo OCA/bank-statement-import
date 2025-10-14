@@ -8,8 +8,8 @@
             <form>
                 <div class="oe_form_box_info bg-info oe_text_center">
                     <p><i
-                            class="fa fa-info-circle"
-                        /> There's already another journal from the same bank institution linked with GoCardless. Do you want to reuse the existing credentials or create new ones?</p>
+                        class="fa fa-info-circle"
+                    /> There's already another journal from the same bank institution linked with GoCardless. Do you want to reuse the existing credentials or create new ones?</p>
                 </div>
                 <br />
                 <div>
