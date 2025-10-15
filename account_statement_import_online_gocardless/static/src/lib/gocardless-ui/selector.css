@@ -1,0 +1,209 @@
+
+* {
+	box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "HK Grotesk";
+    src: url('fonts/HKGrotesk-Bold.ttf') format("truetype");
+}
+
+.institution-content-wrapper {
+	margin: 0 auto;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+}
+
+.institution-search-bx-body {
+	max-height: 52vh;
+	overflow-y: auto;
+}
+
+
+.institution-search-bx-body::-webkit-scrollbar-thumb {
+  background: #AEB0B0; 
+  border-radius: 7px;
+}
+
+.institution-search-bx-body::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F1F1F1;
+	border-radius: 7px;
+}
+
+#institution-modal-content {
+	width: 100%;
+	max-width: 40rem;
+	background-color: #fff;
+	padding: 4.5rem;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0px 1px 3px #00000029;
+	border-radius: 14px;
+	color: #1B2021;
+}
+
+.institution-modal-header {
+	text-align: right;
+}
+
+.institution-modal-header h2 {
+	text-align: left;
+	font-size: 2.5rem;
+	margin: 0;
+}
+
+.institution-modal-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 2rem;
+}
+
+.institution-modal-footer > a {
+	line-height: 2.8rem;
+	text-decoration: none;
+	color: #808080;
+}
+
+.institution-modal-footer > a:hover {
+	text-decoration: underline;
+}
+
+.institution-modal-close {
+	color: #8D9090;
+	font-size: 2.6rem;
+	font-weight: bold;
+	cursor: pointer;
+	position: relative;
+	top: -20px;
+}
+
+.institution-search-container {
+	position: relative;
+	bottom: 2.2rem;
+}
+
+.institution-search-container input {
+	text-indent: 2.8rem;
+}
+
+.institution-search-icon {
+	position: relative;
+	padding: 1rem;
+	height: 3.8rem;
+	top: 3.8rem;
+}
+
+.institution-search-input {
+	width: 100%;
+	padding: 1rem;
+	border-radius: 9px;
+	color: #8C8E8F;
+	border: 1px solid #8c8e8f;
+	font-size: 1.6rem;
+	font-weight: 400;
+	outline-color: #70b1f7;
+}
+
+
+.institution-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.list-institution {
+	padding: 14px 0;
+	border-bottom: 1px solid #D7D8D8;
+}
+
+.list-institution:last-child {
+	border: none;
+}
+
+.list-institution a {
+	padding-right: 2.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-decoration: none;
+}
+
+
+.list-institution span {
+	margin-left: 1.5rem;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: #1B2021;
+} 
+
+.list-institution:hover {
+	background-color: #F1F1F1;
+}
+
+img.institution-logo {
+	width: 100%;
+	max-width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 6px;
+}
+
+.institution-company-logo {
+	max-width: 13rem;
+	height: 10rem;
+	margin: 2.5rem 0 7rem;
+}
+
+@media screen and (max-width: 640px) {
+
+	html {
+		font-size: 8px;
+	}
+
+	#institution-modal-content {
+		height: 100%;
+		max-width: 100%;
+		border-radius: 0;
+	}
+
+	#institution-modal-content,
+	.institution-company-logo {
+		margin: 0;
+	}
+
+	.institution-company-logo {
+		position: absolute;
+		bottom: 0;
+		padding: 2.5rem;
+	}
+
+	.institution-modal-close {
+		display: none;
+	}
+
+
+	.institution-modal-header {
+		margin-top: 3rem;
+	}
+
+	.institution-modal-header h2 {
+		font-size: 3rem;
+	}
+
+	.list-institution span {
+		font-size: 1.9rem;
+	}
+}	
+
+@media screen and (device-height: 568px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+	
+	html {
+		font-size: 7px;
+	}
+	
+}

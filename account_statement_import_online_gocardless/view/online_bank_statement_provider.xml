@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="gocardless"
+                    string="GoCardless"
+                    invisible="service != 'gocardless'"
+                >
+                    <field name="username" string="Secret ID" />
+                    <field name="password" string="Secret Key" />
+                    <field
+                        name="gocardless_country_id"
+                        required="service == 'gocardless'"
+                    />
+                    <field
+                        name="gocardless_date_type"
+                        invisible="service != 'gocardless'"
+                        required="service == 'gocardless'"
+                    />
+                    <field
+                        name="gocardless_requisition_id"
+                        invisible="not gocardless_requisition_id"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="gocardless_requisition_expiration"
+                        invisible="not gocardless_requisition_id"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="gocardless_institution_id"
+                        invisible="not gocardless_institution_id"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="gocardless_account_id"
+                        invisible="not gocardless_account_id"
+                        groups="base.group_no_one"
+                    />
+                    <button
+                        name="action_select_gocardless_bank"
+                        string="Select Bank Account Identifier"
+                        colspan="2"
+                        invisible="not username or not password"
+                        type="object"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
