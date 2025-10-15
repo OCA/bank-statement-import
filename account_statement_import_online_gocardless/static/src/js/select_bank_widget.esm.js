@@ -1,7 +1,7 @@
-/** @odoo-module **/
 import {Component, useState} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {_t} from "@web/core/l10n/translation";
+import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
 export class GocardlessDialog extends Component {
@@ -73,7 +73,7 @@ async function OnlineSyncAccountInstitutionSelector(env, action) {
                 [[action.context.provider_id]]
             );
             if (redirect_url !== undefined) {
-                window.location.replace(redirect_url);
+                browser.location.replace(redirect_url);
             }
         },
     });
