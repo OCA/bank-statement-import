@@ -30,7 +30,7 @@
                                         >
                                             <option
                                                 t-attf-value="#{country.code}"
-                                                t-esc="country.name"
+                                                t-out="country.name"
                                             />
                                         </t>
                                     </t>
@@ -63,7 +63,7 @@
                                         class="institution-logo"
                                         t-attf-src="#{institution.logo}"
                                     />
-                                    <span t-esc="institution.name" />
+                                    <span t-out="institution.name" />
                                 </a>
                             </div>
                         </t>
