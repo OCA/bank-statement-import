@@ -77,7 +77,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                     "amount": float(tx["amount"]) / (10**currency.decimal_places),
                     "date": datetime.fromtimestamp(tx["created"]),
                     "unique_import_id": tx["id"],
-                    "raw_data": tx,
+                    "raw_data": json.dumps(tx),
                 }
             )
             if tx.get("fee"):
@@ -89,7 +89,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                         "amount": float(-tx["fee"]) / (10**currency.decimal_places),
                         "date": datetime.fromtimestamp(tx["created"]),
                         "unique_import_id": tx["id"] + "_fee",
-                        "raw_data": tx,
+                        "raw_data": json.dumps(tx),
                     }
                 )
         return lines, {}
