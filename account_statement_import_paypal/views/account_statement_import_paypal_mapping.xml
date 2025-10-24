@@ -10,13 +10,13 @@
         <field name="name">account.statement.import.paypal.mapping.form</field>
         <field name="model">account.statement.import.paypal.mapping</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="account_statement_import_paypal_mapping_tree" model="ir.ui.view">
-        <field name="name">account.statement.import.paypal.mapping.tree</field>
+        <field name="name">account.statement.import.paypal.mapping.list</field>
         <field name="model">account.statement.import.paypal.mapping</field>
         <field name="arch" type="xml">
             <form>
@@ -67,7 +67,7 @@
     >
         <field name="name">PayPal Report Mappings</field>
         <field name="res_model">account.statement.import.paypal.mapping</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         id="menu_statement_import_paypal_mapping"
