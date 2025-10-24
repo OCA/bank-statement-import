@@ -18,9 +18,9 @@
             <xpath expr="//ul[@id='statement_format']" position="inside">
                 <li>
                     PayPal Report mapping: <field
-                        name="paypal_mapping_id"
-                        nolabel="1"
-                    />
+                    name="paypal_mapping_id"
+                    nolabel="1"
+                />
                 </li>
             </xpath>
         </field>
