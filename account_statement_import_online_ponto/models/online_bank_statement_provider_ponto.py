@@ -178,11 +178,11 @@ class OnlineBankStatementProvider(models.Model):
         attributes = transaction.get("attributes", {})
         ref_list = [
             attributes.get(x)
-            for x in {
+            for x in [
                 "description",
                 "counterpartName",
                 "counterpartReference",
-            }
+            ]
             if attributes.get(x)
         ]
         ref = " ".join(ref_list)
