@@ -268,16 +268,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
         return lines, {"balance_start": balance_start, "balance_end_real": balance_end}
 
     @api.model
-    def _paypal_preparse_transaction(self, transaction):
-        date = (
-            dateutil.parser.parse(self._paypal_get_transaction_date(transaction))
-            .astimezone(pytz.utc)
-            .replace(tzinfo=None)
-        )
-        transaction["transaction_info"]["transaction_updated_date"] = date
-        return transaction
-
-    @api.model
     def _paypal_transaction_to_lines(self, data):
         transaction = data["transaction_info"]
         payer = data["payer_info"]
@@ -312,7 +302,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "date": date,
             "payment_ref": note,
             "unique_import_id": unique_import_id,
-            "raw_data": transaction,
+            "raw_data": json.dumps(transaction),
         }
         payer_full_name = payer_name.get("full_name") or payer_name.get(
             "alternate_full_name"
@@ -430,10 +420,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 data = self.with_context(
                     invalid_data_workaround=invalid_data_workaround,
                 )._paypal_retrieve(url, token)
-                interval_transactions = map(
-                    lambda transaction: self._paypal_preparse_transaction(transaction),
-                    data["transaction_details"],
-                )
+                interval_transactions = data["transaction_details"]
                 transactions += list(
                     filter(
                         lambda transaction: interval_start
@@ -450,7 +437,11 @@ class OnlineBankStatementProviderPayPal(models.Model):
     @api.model
     def _paypal_get_transaction_date(self, transaction):
         # NOTE: CSV reports from PayPal use this date, search as well
-        return transaction["transaction_info"]["transaction_updated_date"]
+        return (
+            dateutil.parser.parse(transaction["transaction_info"]["transaction_updated_date"])
+            .astimezone(pytz.utc)
+            .replace(tzinfo=None)
+        )
 
     @api.model
     def _paypal_get_transaction_total_amount(self, transaction):
