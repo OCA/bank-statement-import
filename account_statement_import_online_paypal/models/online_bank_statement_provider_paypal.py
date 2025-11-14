@@ -438,7 +438,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
     def _paypal_get_transaction_date(self, transaction):
         # NOTE: CSV reports from PayPal use this date, search as well
         return (
-            dateutil.parser.parse(transaction["transaction_info"]["transaction_updated_date"])
+            dateutil.parser.parse(
+                transaction["transaction_info"]["transaction_updated_date"]
+            )
             .astimezone(pytz.utc)
             .replace(tzinfo=None)
         )
