@@ -74,9 +74,6 @@ class AccountStatementImportSheetMapping(models.Model):
             "transaction from"
         ),
     )
-    amount_column = fields.Char(
-        help="Amount of transaction in journal's currency",
-    )
     amount_debit_column = fields.Char(
         string="Debit amount column",
         help="Debit amount of transaction in journal's currency",
@@ -119,7 +116,7 @@ class AccountStatementImportSheetMapping(models.Model):
         required=True,
         default="simple_value",
         help=(
-            "Simple value: use igned amount in amount column\n"
+            "Simple value: use signed amount in amount column\n"
             "Absolute Value: use a same column for debit and credit\n"
             "(absolute value + indicate sign)\n"
             "Distinct Credit/debit Column: use a distinct column for debit and credit"

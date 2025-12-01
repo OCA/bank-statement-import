@@ -9,50 +9,52 @@ from unittest.mock import Mock
 
 from odoo import fields
 from odoo.exceptions import UserError
-from odoo.tests import common
 from odoo.tools import float_round
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestAccountStatementImportSheetFile(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
 
-        self.now = fields.Datetime.now()
-        self.currency_eur = self.env.ref("base.EUR")
-        self.currency_usd = self.env.ref("base.USD")
-        self.currency_usd.active = True
+class TestAccountStatementImportSheetFile(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.now = fields.Datetime.now()
+        cls.currency_eur = cls.env.ref("base.EUR")
+        cls.currency_usd = cls.env.ref("base.USD")
+        cls.currency_usd.active = True
         # Make sure the currency of the company is USD, as this not always happens
         # To be removed in V17: https://github.com/odoo/odoo/pull/107113
-        self.company = self.env.company
-        self.env.cr.execute(
-            "UPDATE res_company SET currency_id = %s WHERE id = %s",
-            (self.env.ref("base.USD").id, self.company.id),
-        )
+        # cls.company = cls.env.company
+        # cls.env.cr.execute(
+        #     "UPDATE res_company SET currency_id = %s WHERE id = %s",
+        #     (cls.env.ref("base.USD").id, cls.company.id),
+        # )
         # Activate EUR for unit test, by default is not active
-        self.currency_eur.active = True
-        self.sample_statement_map = self.env.ref(
+        cls.currency_eur.active = True
+        cls.sample_statement_map = cls.env.ref(
             "account_statement_import_sheet_file.sample_statement_map"
         )
-        self.AccountJournal = self.env["account.journal"]
-        self.AccountBankStatement = self.env["account.bank.statement"]
-        self.AccountStatementImport = self.env["account.statement.import"]
-        self.AccountStatementImportSheetMapping = self.env[
+        cls.AccountJournal = cls.env["account.journal"]
+        cls.AccountBankStatement = cls.env["account.bank.statement"]
+        cls.AccountStatementImport = cls.env["account.statement.import"]
+        cls.AccountStatementImportSheetMapping = cls.env[
             "account.statement.import.sheet.mapping"
         ]
-        self.AccountStatementImportWizard = self.env["account.statement.import"]
-        self.suspense_account = self.env["account.account"].create(
+        cls.AccountStatementImportWizard = cls.env["account.statement.import"]
+        cls.suspense_account = cls.env["account.account"].create(
             {
                 "code": "987654",
                 "name": "Suspense Account",
                 "account_type": "asset_current",
             }
         )
-        self.parser = self.env["account.statement.import.sheet.parser"]
+        cls.parser = cls.env["account.statement.import.sheet.parser"]
         # Mock the mapping object to return predefined separators
-        self.mock_mapping_comma_dot = Mock()
-        self.mock_mapping_comma_dot._get_float_separators.return_value = (",", ".")
-        self.mock_mapping_dot_comma = Mock()
-        self.mock_mapping_dot_comma._get_float_separators.return_value = (".", ",")
+        cls.mock_mapping_comma_dot = Mock()
+        cls.mock_mapping_comma_dot._get_float_separators.return_value = (",", ".")
+        cls.mock_mapping_dot_comma = Mock()
+        cls.mock_mapping_dot_comma._get_float_separators.return_value = (".", ",")
 
     def _data_file(self, filename, encoding=None):
         mode = "rt" if encoding else "rb"
@@ -716,7 +718,7 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             }
         )
         wizard.with_context(
-            account_statement_import_txt_xlsx_test=True
+            account_statement_import_sheet_file_test=True
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
@@ -761,7 +763,7 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             }
         )
         wizard.with_context(
-            account_statement_import_txt_xlsx_test=True
+            account_statement_import_sheet_file_test=True
         ).import_file_button()
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
