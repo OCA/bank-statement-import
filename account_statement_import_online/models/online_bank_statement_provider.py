@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 from dateutil.relativedelta import MO, relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_partner import _tz_get
@@ -52,7 +52,7 @@ class OnlineBankStatementProvider(models.Model):
     tz = fields.Selection(
         selection=_tz_get,
         string="Timezone",
-        default=lambda self: self.env.context.get("tz"),
+        default=lambda self: str(self.env.tz),
         help=(
             "Timezone to convert transaction timestamps to prior being"
             " saved into a statement."
@@ -107,18 +107,13 @@ class OnlineBankStatementProvider(models.Model):
     certificate_private_key = fields.Text()
     certificate_chain = fields.Text()
 
-    _sql_constraints = [
-        (
-            "journal_id_uniq",
-            "UNIQUE(journal_id)",
-            "Only one online banking statement provider per journal!",
-        ),
-        (
-            "valid_interval_number",
-            "CHECK(interval_number > 0)",
-            "Scheduled update interval must be greater than zero!",
-        ),
-    ]
+    _journal_id_uniq = models.Constraint(
+        "UNIQUE(journal_id)", "Only one online banking statement provider per journal!"
+    )
+    _valid_interval_number = models.Constraint(
+        "CHECK(interval_number > 0)",
+        "Scheduled update interval must be greater than zero!",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -189,18 +184,19 @@ class OnlineBankStatementProvider(models.Model):
     def _compute_update_schedule(self):
         for provider in self:
             if not provider.active:
-                provider.update_schedule = _("Inactive")
+                provider.update_schedule = self.env._("Inactive")
                 continue
 
-            provider.update_schedule = _("%(number)s %(type)s") % {
-                "number": provider.interval_number,
-                "type": list(
+            provider.update_schedule = self.env._(
+                "%(number)s %(type)s",
+                number=provider.interval_number,
+                type=list(
                     filter(
                         lambda x: x[0] == provider.interval_type,
                         self._fields["interval_type"].selection,
                     )
                 )[0][1],
-            }
+            )
 
     def _pull(self, date_since, date_until):
         """Pull data for all providers within requested period."""
@@ -261,7 +257,7 @@ class OnlineBankStatementProvider(models.Model):
         """Both log error, and post a message on the provider record."""
         self.ensure_one()
         _logger.warning(
-            _(
+            self.env._(
                 'Online Bank Statement provider "%(name)s" failed to'
                 " obtain statement data since %(since)s until %(until)s"
             ),
@@ -273,16 +269,15 @@ class OnlineBankStatementProvider(models.Model):
             exc_info=True,
         )
         self.message_post(
-            body=_(
+            body=self.env._(
                 "Failed to obtain statement data for period "
-                "since {since} until {until}: {exception}. See server logs for "
-                "more details."
-            ).format(
+                "since %(since)s until %(until)s: %(exception)s. See server logs for "
+                "more details.",
                 since=statement_date_since,
                 until=statement_date_until,
-                exception=escape(str(exception)) or _("N/A"),
+                exception=escape(str(exception)) or self.env._("N/A"),
             ),
-            subject=_("Issue with Online Bank Statement self"),
+            subject=self.env._("Issue with Online Bank Statement self"),
         )
 
     def _create_or_update_statement(
@@ -429,10 +424,10 @@ class OnlineBankStatementProvider(models.Model):
             filtered_lines.append(line_values)
         if unfiltered_lines:
             if len(unfiltered_lines) == len(filtered_lines):
-                _logger.debug(_("All lines passed filtering"))
+                _logger.debug(self.env._("All lines passed filtering"))
             else:
                 _logger.debug(
-                    _(
+                    self.env._(
                         "Of %(lines_provided)s lines provided"
                         ", %(before)s where before %(since)s"
                         ", %(after)s where on or after %(until)s"
@@ -489,7 +484,7 @@ class OnlineBankStatementProvider(models.Model):
         elif self.statement_creation_mode == "monthly":
             return date.replace(day=1)
         else:
-            raise UserError(_("Invalid statement creation mode"))
+            raise UserError(self.env._("Invalid statement creation mode"))
 
     def _get_next_run_period(self):
         self.ensure_one()
@@ -504,13 +499,13 @@ class OnlineBankStatementProvider(models.Model):
 
     @api.model
     def _scheduled_pull(self):
-        _logger.info(_("Scheduled pull of online bank statements..."))
+        _logger.info(self.env._("Scheduled pull of online bank statements..."))
         providers = self.search(
             [("active", "=", True), ("next_run", "<=", fields.Datetime.now())]
         )
         if providers:
             _logger.info(
-                _("Pulling online bank statements of: %(provider_names)s"),
+                self.env._("Pulling online bank statements of: %(provider_names)s"),
                 dict(provider_names=", ".join(providers.mapped("journal_id.name"))),
             )
             for provider in providers.with_context(
@@ -524,7 +519,7 @@ class OnlineBankStatementProvider(models.Model):
                 )
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
-        _logger.info(_("Scheduled pull of online bank statements complete."))
+        _logger.info(self.env._("Scheduled pull of online bank statements complete."))
 
     def _adjust_schedule(self):
         """Make sure next_run is current.

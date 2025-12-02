@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from random import randrange
 
 from dateutil.relativedelta import relativedelta
-from pytz import timezone
 
 from odoo import fields, models
 
@@ -40,9 +39,7 @@ class OnlineBankStatementProviderDummy(models.Model):
         )
         balance = balance_start
 
-        tz = self.env.context.get("tz")
-        if tz:
-            tz = timezone(tz)
+        tz = self.env.tz
 
         timestamp_mode = self.env.context.get("timestamp_mode")
 

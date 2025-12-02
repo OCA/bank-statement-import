@@ -8,9 +8,9 @@ from unittest import mock
 from urllib.error import HTTPError
 
 from dateutil.relativedelta import relativedelta
-from odoo_test_helper import FakeModelLoader
 
-from odoo import _, fields
+from odoo import fields
+from odoo.orm.model_classes import add_to_registry
 from odoo.tests import common
 from odoo.tools import mute_logger
 
@@ -29,14 +29,15 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         super().setUpClass()
 
         # Load fake model
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-        cls.addClassCleanup(cls.loader.restore_registry)
         from .online_bank_statement_provider_dummy import (
             OnlineBankStatementProviderDummy,
         )
 
-        cls.loader.update_registry((OnlineBankStatementProviderDummy,))
+        add_to_registry(cls.registry, OnlineBankStatementProviderDummy)
+        cls.registry._setup_models__(cls.env.cr, ["online.bank.statement.provider"])
+        cls.registry.init_models(
+            cls.env.cr, ["online.bank.statement.provider"], {"models_to_check": True}
+        )
 
         cls.now = fields.Datetime.now()
         cls.AccountAccount = cls.env["account.account"]
@@ -46,12 +47,21 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         cls.AccountBankStatement = cls.env["account.bank.statement"]
         cls.AccountBankStatementLine = cls.env["account.bank.statement.line"]
 
+        cls.suspense_account = cls.AccountAccount.create(
+            {
+                "name": "Bank Suspense Account",
+                "code": "101402",
+                "account_type": "asset_current",
+            }
+        )
+
         cls.journal = cls.AccountJournal.create(
             {
                 "name": "Bank",
                 "type": "bank",
                 "code": "BANK",
                 "bank_statements_source": "online",
+                "suspense_account_id": cls.suspense_account.id,
             }
         )
         cls.provider = cls.OnlineBankStatementProvider.create(
@@ -393,12 +403,13 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         if actual_length != expected_length:
             if actual_length == 0:
                 _logger.warning(
-                    _("No statements found in journal"),
+                    self.env._("No statements found in journal"),
                 )
             else:
                 _logger.warning(
-                    _("Names and dates for statements found: {}").format(
-                        ", ".join(f"{stmt.name} - {stmt.date}" for stmt in statements)
+                    self.env._(
+                        "Names and dates for statements found: %s",
+                        ", ".join(f"{stmt.name} - {stmt.date}" for stmt in statements),
                     )
                 )
 

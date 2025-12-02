@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ class AccountJournal(models.Model):
 
     def __get_bank_statements_available_sources(self):
         result = super().__get_bank_statements_available_sources()
-        result.append(("online", _("Online (OCA)")))
+        result.append(("online", self.env._("Online (OCA)")))
         return result
 
     def _update_providers(self):
