@@ -50,7 +50,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         cls.suspense_account = cls.AccountAccount.create(
             {
                 "name": "Bank Suspense Account",
-                "code": "101402",
+                "code": "1014020",
                 "account_type": "asset_current",
             }
         )
