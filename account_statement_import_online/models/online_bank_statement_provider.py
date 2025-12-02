@@ -8,9 +8,9 @@ import logging
 from datetime import datetime
 from decimal import Decimal
 from html import escape
+from zoneinfo import ZoneInfo
 
 from dateutil.relativedelta import MO, relativedelta
-from zoneinfo import ZoneInfo
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -21,10 +21,11 @@ _logger = logging.getLogger(__name__)
 utc = ZoneInfo("UTC")
 
 DELTA_MAP = {
-    'daily': relativedelta(days=1),
-    'weekly': relativedelta(weeks=1),
-    'monthly': relativedelta(months=1)
+    "daily": relativedelta(days=1),
+    "weekly": relativedelta(weeks=1),
+    "monthly": relativedelta(months=1),
 }
+
 
 class OnlineBankStatementProvider(models.Model):
     _name = "online.bank.statement.provider"
@@ -221,8 +222,12 @@ class OnlineBankStatementProvider(models.Model):
                     statement_date_since + DELTA_MAP[provider.statement_creation_mode]
                 )
 
-                statement_date_since_naive_utc = statement_date_since.astimezone(utc).replace(tzinfo=None)
-                statement_date_until_naive_utc = statement_date_until.astimezone(utc).replace(tzinfo=None)
+                statement_date_since_naive_utc = statement_date_since.astimezone(
+                    utc
+                ).replace(tzinfo=None)
+                statement_date_until_naive_utc = statement_date_until.astimezone(
+                    utc
+                ).replace(tzinfo=None)
 
                 try:
                     data = provider._obtain_statement_data(
@@ -232,14 +237,18 @@ class OnlineBankStatementProvider(models.Model):
                     if not is_scheduled:
                         raise
                     provider._log_provider_exception(
-                        exception, statement_date_since_naive_utc, statement_date_until_naive_utc
+                        exception,
+                        statement_date_since_naive_utc,
+                        statement_date_until_naive_utc,
                     )
                     break  # Continue with next provider.
                 if debug:
                     debug_data += data
                 else:
                     provider._create_or_update_statement(
-                        data, statement_date_since_naive_utc, statement_date_until_naive_utc
+                        data,
+                        statement_date_since_naive_utc,
+                        statement_date_until_naive_utc,
                     )
                 statement_date_since = statement_date_until
             if is_scheduled:
@@ -480,7 +489,7 @@ class OnlineBankStatementProvider(models.Model):
         elif self.statement_creation_mode == "monthly":
             return date.replace(day=1)
         else:
-            raise UserError(_('Invalid statement creation mode'))
+            raise UserError(_("Invalid statement creation mode"))
 
     def _get_next_run_period(self):
         self.ensure_one()
