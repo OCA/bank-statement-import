@@ -8,23 +8,15 @@ import logging
 from datetime import datetime
 from decimal import Decimal
 from html import escape
-from zoneinfo import ZoneInfo
 
 from dateutil.relativedelta import MO, relativedelta
+from pytz import timezone, utc
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_partner import _tz_get
 
 _logger = logging.getLogger(__name__)
-utc = ZoneInfo("UTC")
-
-DELTA_MAP = {
-    "daily": relativedelta(days=1),
-    "weekly": relativedelta(weeks=1),
-    "monthly": relativedelta(months=1),
-}
 
 
 class OnlineBankStatementProvider(models.Model):
@@ -203,48 +195,31 @@ class OnlineBankStatementProvider(models.Model):
         is_scheduled = self.env.context.get("scheduled")
         debug = self.env.context.get("account_statement_online_import_debug")
         debug_data = []
-
-        provider_tz = ZoneInfo(self.tz) if self.tz else utc
-        date_until = date_until.astimezone(provider_tz)
-
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
                 # Note that statement_date_until is exclusive, while date_until is
                 # inclusive. So if we have daily statements date_until might
                 # be 2020-01-31, while statement_date_until is 2020-02-01.
-
                 statement_date_until = (
-                    statement_date_since + DELTA_MAP[provider.statement_creation_mode]
+                    statement_date_since + provider._get_statement_date_step()
                 )
-
-                statement_date_since_naive_utc = statement_date_since.astimezone(
-                    utc
-                ).replace(tzinfo=None)
-                statement_date_until_naive_utc = statement_date_until.astimezone(
-                    utc
-                ).replace(tzinfo=None)
-
                 try:
                     data = provider._obtain_statement_data(
-                        statement_date_since_naive_utc, statement_date_until_naive_utc
+                        statement_date_since, statement_date_until
                     )
                 except BaseException as exception:
                     if not is_scheduled:
                         raise
                     provider._log_provider_exception(
-                        exception,
-                        statement_date_since_naive_utc,
-                        statement_date_until_naive_utc,
+                        exception, statement_date_since, statement_date_until
                     )
                     break  # Continue with next provider.
                 if debug:
                     debug_data += data
                 else:
                     provider._create_or_update_statement(
-                        data,
-                        statement_date_since_naive_utc,
-                        statement_date_until_naive_utc,
+                        data, statement_date_since, statement_date_until
                     )
                 statement_date_since = statement_date_until
             if is_scheduled:
@@ -320,10 +295,6 @@ class OnlineBankStatementProvider(models.Model):
     def make_statement_name(self, statement_date_since):
         """Make name for statement using date and journal name."""
         self.ensure_one()
-
-        provider_tz = ZoneInfo(self.tz) if self.tz else utc
-        statement_date_since = statement_date_since.astimezone(provider_tz)
-
         return "{}/{}".format(
             self.journal_id.code,
             statement_date_since.strftime("%Y-%m-%d"),
@@ -376,7 +347,7 @@ class OnlineBankStatementProvider(models.Model):
     ):
         """Get lines from line data, but only for the right date."""
         AccountBankStatementLine = self.env["account.bank.statement.line"]
-        provider_tz = ZoneInfo(self.tz) if self.tz else utc
+        provider_tz = timezone(self.tz) if self.tz else utc
         journal = self.journal_id
         speeddict = journal._statement_line_import_speeddict()
         filtered_lines = []
@@ -472,10 +443,6 @@ class OnlineBankStatementProvider(models.Model):
 
     def _get_statement_date_since(self, date):
         self.ensure_one()
-
-        provider_tz = ZoneInfo(self.tz) if self.tz else utc
-        date = date.astimezone(provider_tz)
-
         date = date.replace(hour=0, minute=0, second=0, microsecond=0)
         if self.statement_creation_mode == "daily":
             return date
@@ -483,8 +450,29 @@ class OnlineBankStatementProvider(models.Model):
             return date + relativedelta(weekday=MO(-1))
         elif self.statement_creation_mode == "monthly":
             return date.replace(day=1)
-        else:
-            raise UserError(self.env._("Invalid statement creation mode"))
+
+    def _get_statement_date_step(self):
+        self.ensure_one()
+        if self.statement_creation_mode == "daily":
+            return relativedelta(days=1, hour=0, minute=0, second=0, microsecond=0)
+        elif self.statement_creation_mode == "weekly":
+            return relativedelta(
+                weeks=1,
+                weekday=MO,
+                hour=0,
+                minute=0,
+                second=0,
+                microsecond=0,
+            )
+        elif self.statement_creation_mode == "monthly":
+            return relativedelta(
+                months=1,
+                day=1,
+                hour=0,
+                minute=0,
+                second=0,
+                microsecond=0,
+            )
 
     def _get_next_run_period(self):
         self.ensure_one()

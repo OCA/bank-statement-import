@@ -288,6 +288,30 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[2].date, date(2020, 4, 18))
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
+    def test_tz_non_utc(self):
+        """Test situation where the provider is west of Greenwich.
+
+        In this case, when it is 22:00 according to the provider, it is
+        00:00 the next day according to GMT/UTZ.
+        """
+        self.provider.tz = "Etc/GMT-2"
+        self.provider.with_context(
+            step={"hours": 1},
+            override_date_since=datetime(2020, 4, 17, 22, 0),
+            override_date_until=datetime(2020, 4, 18, 2, 0),
+            tz="UTC",
+        )._pull(
+            datetime(2020, 4, 17, 22, 0),
+            datetime(2020, 4, 18, 2, 0),
+        )
+        statements = self._getExpectedStatements(2)
+        lines = statements.mapped("line_ids").sorted(key=lambda r: r.id)
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(lines[0].date, date(2020, 4, 18))
+        self.assertEqual(lines[1].date, date(2020, 4, 18))
+        self.assertEqual(lines[2].date, date(2020, 4, 18))
+        self.assertEqual(lines[3].date, date(2020, 4, 18))
+
     def test_other_tz_to_utc(self):
         """Test the situation where we are tot the west of the provider.
 
