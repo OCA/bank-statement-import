@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class AccountStatementImport(models.TransientModel):
     sheet_mapping_id = fields.Many2one(
         string="Sheet mapping",
         comodel_name="account.statement.import.sheet.mapping",
-        default=_get_default_mapping_id,
+        default=lambda self: self._get_default_mapping_id(),
     )
 
     def _parse_file(self, data_file):
@@ -37,7 +37,7 @@ class AccountStatementImport(models.TransientModel):
                 if self.env.context.get("account_statement_import_sheet_file_test"):
                     return
                 _logger.warning("Sheet parser error", exc_info=True)
-                raise UserError(_("Bad file/mapping: ") + str(exc)) from exc
+                raise UserError(self.env._("Bad file/mapping: ") + str(exc)) from exc
         return super()._parse_file(data_file)
 
     def _create_bank_statements(self, stmts_vals, result):
