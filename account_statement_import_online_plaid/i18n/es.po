@@ -18,42 +18,39 @@ msgstr ""
 "X-Generator: Poedit 3.4.3\n"
 
 #. module: account_statement_import_online_plaid
-#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__development
-msgid "Development"
-msgstr "Desarrollo"
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Client ID"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/online_bank_statement_provider_plaid.py:0
+msgid "Country code not found for the bank or the company..."
+msgstr ""
 
 #. module: account_statement_import_online_plaid
 #. odoo-python
 #: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
-#, python-format
 msgid "Error getting access token: %s"
 msgstr "Error al obtener el token de acceso: %s"
 
 #. module: account_statement_import_online_plaid
 #. odoo-python
 #: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
-#, python-format
 msgid "Error getting client api: %s"
 msgstr "Error obteniendo api de cliente: %s"
 
 #. module: account_statement_import_online_plaid
 #. odoo-python
 #: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
-#, python-format
 msgid "Error getting link token: %s"
 msgstr "Error al obtener el token de enlace: %s"
 
 #. module: account_statement_import_online_plaid
 #. odoo-python
 #: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
-#, python-format
 msgid "Error getting transactions: %s"
 msgstr "Error al obtener transacciones: %s"
-
-#. module: account_statement_import_online_plaid
-#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
-msgid "Login"
-msgstr "Iniciar sesión"
 
 #. module: account_statement_import_online_plaid
 #: model:ir.model,name:account_statement_import_online_plaid.model_online_bank_statement_provider
@@ -82,6 +79,12 @@ msgid "Plaid config"
 msgstr "Configuración plaid"
 
 #. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/online_bank_statement_provider_plaid.py:0
+msgid "Please link your Plaid account first by clicking on 'Sync with Plaid'."
+msgstr ""
+
+#. module: account_statement_import_online_plaid
 #: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__production
 msgid "Production"
 msgstr "Producción"
@@ -100,3 +103,9 @@ msgstr "LLave secreta"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
 msgid "Sync with Plaid.com"
 msgstr "Sincronizar con plaid.com"
+
+#~ msgid "Development"
+#~ msgstr "Desarrollo"
+
+#~ msgid "Login"
+#~ msgstr "Iniciar sesión"

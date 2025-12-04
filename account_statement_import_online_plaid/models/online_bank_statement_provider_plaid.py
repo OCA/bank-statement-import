@@ -92,7 +92,8 @@ class OnlineBankStatementProvider(models.Model):
         if not self.plaid_access_token:
             raise UserError(
                 _(
-                    "Please link your Plaid account first by clicking on 'Sync with Plaid'."
+                    "Please link your Plaid account first by "
+                    "clicking on 'Sync with Plaid'."
                 )
             )
         plaid_interface = self.env["plaid.interface"]
