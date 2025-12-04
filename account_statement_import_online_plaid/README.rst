@@ -17,18 +17,19 @@ Online Bank Statements: plaid.com
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_online_plaid
+    :target: https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_plaid
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-16-0/bank-statement-import-16-0-account_statement_import_online_plaid
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-18-0/bank-statement-import-18-0-account_statement_import_online_plaid
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module provides online bank statements from Plaid.com, supporting both Sandbox and Production environments.
+This module provides online bank statements from Plaid.com, supporting
+both Sandbox and Production environments.
 
 **Table of contents**
 
@@ -40,78 +41,87 @@ Configuration
 
 To configure online bank statements provider:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Open bank account to configure and edit it
-#. Set *Bank Feeds* to *Online*
-#. Select *Plaid.com* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+1. Go to *Invoicing > Configuration > Bank Accounts*
+2. Open bank account to configure and edit it
+3. Set *Bank Feeds* to *Online*
+4. Select *Plaid.com* as online bank statements provider in *Online Bank
+   Statements (OCA)* section
+5. Save the bank account
+6. Click on provider and configure provider-specific settings.
 
 or, alternatively:
 
-#. Go to *Invoicing > Overview*
-#. Open settings of the corresponding journal account
-#. Switch to *Bank Account* tab
-#. Set *Bank Feeds* to *Online*
-#. Select *Plaid.com* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+1. Go to *Invoicing > Overview*
+2. Open settings of the corresponding journal account
+3. Switch to *Bank Account* tab
+4. Set *Bank Feeds* to *Online*
+5. Select *Plaid.com* as online bank statements provider in *Online Bank
+   Statements (OCA)* section
+6. Save the bank account
+7. Click on provider and configure provider-specific settings.
 
 Plaid Account & Credentials
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
-To obtain the necessary credentials (*Client ID* and *Secret*), follow these steps:
+To obtain the necessary credentials (*Client ID* and *Secret*), follow
+these steps:
 
-#. **Create a Plaid Account**:
-   Go to `dashboard.plaid.com/signup <https://dashboard.plaid.com/signup>`_ and sign up for a developer account.
+1. **Create a Plaid Account**: Go to
+   `dashboard.plaid.com/signup <https://dashboard.plaid.com/signup>`__
+   and sign up for a developer account.
 
-#. **Get Credentials**:
-   Once logged in, navigate to **Platform > Developers > Keys** in the Plaid Dashboard.
-   Here you will find your **Client ID** and **Secret**.
+2. **Get Credentials**: Once logged in, navigate to **Platform >
+   Developers > Keys** in the Plaid Dashboard. Here you will find your
+   **Client ID** and **Secret**.
 
-   .. image:: https://raw.githubusercontent.com/OCA/bank-statement-import/16.0/account_statement_import_online_plaid/static/description/plaid_keys.png
-      :alt: Plaid Keys Dashboard
+   |Plaid Keys Dashboard|
 
    .. note::
-      There are different secrets for **Sandbox** (testing) and **Production** (live) environments.
-      Make sure to copy the secret corresponding to the environment you intend to use.
+
+      There are different secrets for **Sandbox** (testing) and
+      **Production** (live) environments. Make sure to copy the secret
+      corresponding to the environment you intend to use.
 
    .. important::
+
       **Account Approval Times:**
 
-      * For **US-based companies**, approval typically takes **1-2 business days**.
-      * For **companies outside the United States**, the approval process may take longer.
+      - For **US-based companies**, approval typically takes **1-2
+        business days**.
+      - For **companies outside the United States**, the approval
+        process may take longer.
 
 Configuration in Odoo
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
-When configuring the provider in Odoo, map the Plaid credentials as follows:
+When configuring the provider in Odoo, map the Plaid credentials as
+follows:
 
-* **Username**: Enter your Plaid **Client ID**.
-* **Password**: Enter your Plaid **Secret** (Sandbox or Production).
-* **Plaid Environment**: Select **Sandbox** for testing or **Production** for live data.
+- **Username**: Enter your Plaid **Client ID**.
+- **Password**: Enter your Plaid **Secret** (Sandbox or Production).
+- **Plaid Environment**: Select **Sandbox** for testing or
+  **Production** for live data.
 
-Check also ``account_bank_statement_import_online`` configuration instructions
-for more information.
+Check also ``account_bank_statement_import_online`` configuration
+instructions for more information.
+
+.. |Plaid Keys Dashboard| image:: https://raw.githubusercontent.com/OCA/bank-statement-import/18.0/account_statement_import_online_plaid/static/description/plaid_keys.png
 
 Usage
 =====
 
 To pull historical bank statements:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Select specific bank accounts
-#. Configure username, password and host for plaid
-#. Launch *Actions > Sync with plaid.com*
+1. Go to *Invoicing > Configuration > Bank Accounts*
+2. Select specific bank accounts
+3. Configure username, password and host for plaid
+4. Launch *Actions > Sync with plaid.com*
+5. After launch *Actions > Online Bank Statements Pull Wizard*
+6. Configure date interval and click *Pull*
 
-#. After launch *Actions > Online Bank Statements Pull Wizard*
-#. Configure date interval and click *Pull*
-
-If historical data is not needed, then just simply wait for the scheduled
-activity "Pull Online Bank Statements" to be executed for getting new
-transactions.
+If historical data is not needed, then just simply wait for the
+scheduled activity "Pull Online Bank Statements" to be executed for
+getting new transactions.
 
 Bug Tracker
 ===========
@@ -119,7 +129,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_plaid%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_plaid%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -127,19 +137,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Binhex
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Binhex <https://binhex.cloud>`_:
+- `Binhex <https://binhex.cloud>`__:
 
-  * Adasat Torres de León <a.torres@binhex.cloud>
+  - Adasat Torres de León <a.torres@binhex.cloud>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -151,6 +161,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_online_plaid>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_plaid>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
