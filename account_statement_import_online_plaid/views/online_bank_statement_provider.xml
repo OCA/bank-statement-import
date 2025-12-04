@@ -12,24 +12,24 @@
                 <group
                     name="plaid"
                     string="Plaid config"
-                    attrs="{'invisible':[('service','!=','plaid')]}"
+                    invisible="service != 'plaid'"
                 >
                     <field name="plaid_access_token" invisible="1" />
                     <field
                         name="username"
-                        attrs="{'required': [('service', '=', 'plaid')]}"
+                        required="service == 'plaid'"
                         password="1"
                         string="Client ID"
                     />
                     <field
                         name="password"
-                        attrs="{'required': [('service', '=', 'plaid')]}"
+                        required="service == 'plaid'"
                         password="1"
                         string="Secret Key"
                     />
                     <field
                         name="plaid_host"
-                        attrs="{'required': [('service', '=', 'plaid')]}"
+                        required="service == 'plaid'"
                         string="Plaid Host"
                     />
                 </group>
@@ -40,7 +40,7 @@
                     class="btn btn-secondary"
                     name="action_sync_with_plaid"
                     string="Sync with Plaid.com"
-                    attrs="{'invisible': [('service', '!=', 'plaid')]}"
+                    invisible="service != 'plaid'"
                 />
             </xpath>
         </field>
