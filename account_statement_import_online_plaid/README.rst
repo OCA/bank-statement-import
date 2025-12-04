@@ -147,6 +147,8 @@ Contributors
 - `Binhex <https://binhex.cloud>`__:
 
   - Adasat Torres de León <a.torres@binhex.cloud>
+  - Rolando Rebollo \\ <rrebollo@binhex.cloud>
+  - Antonio Ruban \\ <a.ruban@binhex.cloud>
 
 Maintainers
 -----------
