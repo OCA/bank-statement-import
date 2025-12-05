@@ -23,8 +23,8 @@ class AccountStatementImport(models.TransientModel):
                 with zipfile.ZipFile(BytesIO(data_file)) as data:
                     result = []
                     for member in data.namelist():
-                        result = self._parse_file(data.open(member).read())
-                        result.extend(result)
+                        parsed = self._parse_file(data.open(member).read())
+                        result.extend(parsed)
                 return result
             # pylint: disable=except-pass
             except (zipfile.BadZipFile, ValueError):
