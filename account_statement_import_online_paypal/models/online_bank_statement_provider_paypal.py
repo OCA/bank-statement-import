@@ -23,6 +23,7 @@ _lt = LazyTranslate(__name__, default_lang="en_US")
 
 PAYPAL_API_BASE = "https://api.paypal.com"
 TRANSACTIONS_SCOPE = "https://uri.paypal.com/services/reporting/search/read"
+# pylint: disable=prefer-env-translation
 EVENT_DESCRIPTIONS = {
     "T0000": _lt("General PayPal-to-PayPal payment"),
     "T0001": _lt("MassPay payment"),
@@ -175,6 +176,7 @@ EVENT_DESCRIPTIONS = {
     "T9800": _lt("Display only transaction"),
     "T9900": _lt("Other"),
 }
+# pylint: enable=prefer-env-translation
 NO_DATA_FOR_DATE_AVAIL_MSG = "Data for the given start date is not available."
 
 
@@ -296,7 +298,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
         payer_name = payer.get("payer_name", {})
         payer_email = payer_name.get("email_address")
         if invoice:
-            invoice = self.env._("Invoice %s") % invoice
+            invoice = self.env._("Invoice %s", invoice)
         note = transaction_id
         if transaction_subject or transaction_note:
             note = f"{note}: {transaction_subject or transaction_note}"
@@ -332,7 +334,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     "date": date,
                     "partner_name": "PayPal",
                     "unique_import_id": f"{unique_import_id}-FEE",
-                    "payment_ref": self.env._("Transaction fee for %s") % note,
+                    "payment_ref": self.env._("Transaction fee for %s", note),
                 }
             ]
         return lines
@@ -407,19 +409,18 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     (self.api_base or PAYPAL_API_BASE)
                     + "/v1/reporting/transactions"
                     + (
-                        "?transaction_currency=%s"
-                        "&start_date=%s"
-                        "&end_date=%s"
+                        "?transaction_currency={currency}"
+                        "&start_date={start}"
+                        "&end_date={end}"
                         "&fields=all"
                         "&balance_affecting_records_only=Y"
                         "&page_size=500"
-                        "&page=%d"
-                        % (
-                            currency,
-                            interval_start.isoformat() + "Z",
-                            interval_end.isoformat() + "Z",
-                            page,
-                        )
+                        "&page={page}"
+                    ).format(
+                        currency=currency,
+                        start=interval_start.isoformat() + "Z",
+                        end=interval_end.isoformat() + "Z",
+                        page=page,
                     )
                 )
 
