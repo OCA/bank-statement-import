@@ -6,144 +6,147 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-12-11 08:48+0000\n"
+"Last-Translator: Ricard <ricard.calvo@forgeflow.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "%(number)s %(type)s"
-msgstr ""
+msgstr "%(number)s %(type)s"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Acció necessària"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__active
 msgid "Active"
-msgstr ""
+msgstr "Actiu"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "All lines passed filtering"
-msgstr ""
+msgstr "Totes les línies han passat el filtre"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__api_base
 msgid "Api Base"
-msgstr ""
+msgstr "Base Api"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_filter
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 msgid "Archived"
-msgstr ""
+msgstr "Arxivat"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Recompte d'Adjunts"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·lar"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__certificate
 msgid "Certificate"
-msgstr ""
+msgstr "Certificat"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__certificate_chain
 msgid "Certificate Chain"
-msgstr ""
+msgstr "Cadena de Certificats"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__certificate_private_key
 msgid "Certificate Private Key"
-msgstr ""
+msgstr "Clau Privada del Certificat"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__certificate_public_key
 msgid "Certificate Public Key"
-msgstr ""
+msgstr "Clau Pública del Certificat"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_debug_form
 msgid "Close"
-msgstr ""
+msgstr "Tancar"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "Companyia"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__company_id
 msgid "Company related to this journal"
-msgstr ""
+msgstr "Companyia relacionada amb aquest diari"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Configuration"
-msgstr ""
+msgstr "Configuració"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_statement
 msgid "Create Statement"
-msgstr ""
+msgstr "Crear Extracte"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__create_statement
 msgid ""
 "Create statements for the downloaded transactions automatically or not."
 msgstr ""
+"Crear extractes per a les transaccions descarregades automàticament o no."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__create_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_date
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__create_date
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat el"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Divisa"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__daily
 msgid "Day"
-msgstr ""
+msgstr "Dia"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__days
 msgid "Day(s)"
-msgstr ""
+msgstr "Dia(s)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom a mostrar"
 
 #. module: account_statement_import_online
 #. odoo-python
@@ -152,178 +155,183 @@ msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
 msgstr ""
+"Error en obtenir les dades de l'extracte per al període des de {since} fins "
+"a {until}: {exception}. Consulteu els registres del servidor per a més "
+"detalls."
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Fetch and display transaction data (for debug purposes)"
 msgstr ""
+"Obtenció i visualització de dades de transaccions (amb finalitats de "
+"depuració)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidors"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidors (Empreses)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__date_since
 msgid "From"
-msgstr ""
+msgstr "Des de"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Té un missatge"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__hours
 msgid "Hour(s)"
-msgstr ""
+msgstr "Hora(s)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si està marcat, hi ha missatges nous que requereixen la vostra atenció."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si està marcat, alguns missatges tenen un error de lliurament."
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Import Transactions"
-msgstr ""
+msgstr "Importar Transaccions"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "Inactive"
-msgstr ""
+msgstr "Inactiu"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__interval_type
 msgid "Interval Type"
-msgstr ""
+msgstr "Tipus d'Interval"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "És seguidor"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "Issue with Online Bank Statement self"
-msgstr ""
+msgstr "Problema amb l'Extracte Bancari en Línia propi"
 
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_account_journal
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Diari"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__key
 msgid "Key"
-msgstr ""
+msgstr "Clau"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__write_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__write_uid
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__write_date
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__write_date
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__last_successful_run
 msgid "Last successful pull"
-msgstr ""
+msgstr "Darrera extracció amb èxit"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Error de lliurament del missatge"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Missatges"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__minutes
 msgid "Minute(s)"
-msgstr ""
+msgstr "Minut(s)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__monthly
 msgid "Month"
-msgstr ""
+msgstr "Mes"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
 msgid "Names and dates for statements found: {}"
-msgstr ""
+msgstr "Noms i dates d'extractes trobats: {}"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__next_run
 msgid "Next scheduled pull"
-msgstr ""
+msgstr "Pròxima extracció programada"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
 msgid "No statements found in journal"
-msgstr ""
+msgstr "No s'han trobat extractes en el diari"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Nombre d'accions"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Nombre d'errors"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Nombre de missatges que requereixen una acció"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Nombre de missatges amb error de lliurament"
 
 #. module: account_statement_import_online
 #. odoo-python
@@ -332,36 +340,39 @@ msgid ""
 "Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
 "%(after)s where on or after %(until)sand %(duplicate)s where not unique."
 msgstr ""
+"De %(lines_provided)s línies proporcionades, %(before)s eren anteriors a "
+"%(since)s, %(after)s eren iguals o posteriors a %(until)s i %(duplicate)s no "
+"eren úniques."
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
 msgid "Online (OCA)"
-msgstr ""
+msgstr "En línia (OCA)"
 
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_provider
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__online_bank_statement_provider
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 msgid "Online Bank Statement Provider"
-msgstr ""
+msgstr "Proveïdor d'Extracte Bancari en Línia"
 
 #. module: account_statement_import_online
 #: model:ir.actions.act_window,name:account_statement_import_online.online_bank_statement_provider_action
 #: model:ir.ui.menu,name:account_statement_import_online.online_bank_statement_provider_menu
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_filter
 msgid "Online Bank Statement Providers"
-msgstr ""
+msgstr "Proveïdors d'Extractes Bancaris en Línia"
 
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_debug
 msgid "Online Bank Statement Pull Debug Wizard"
-msgstr ""
+msgstr "Assistent de Depuració d'Extracció d'Extractes Bancaris en Línia"
 
 #. module: account_statement_import_online
 #: model:ir.model,name:account_statement_import_online.model_online_bank_statement_pull_wizard
 msgid "Online Bank Statement Pull Wizard"
-msgstr ""
+msgstr "Assistent d'Extracció d'Extractes Bancaris en Línia"
 
 #. module: account_statement_import_online
 #. odoo-python
@@ -370,126 +381,128 @@ msgid ""
 "Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
 "since %(since)s until %(until)s"
 msgstr ""
+"El proveïdor d'extractes bancaris en línia \"%(name)s\" no ha pogut obtenir "
+"les dades dels extractes des de %(since)s fins a %(until)s"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Online Bank Statements (OCA)"
-msgstr ""
+msgstr "Extractes Bancaris en Línia (OCA)"
 
 #. module: account_statement_import_online
 #: model:ir.actions.act_window,name:account_statement_import_online.action_online_bank_statements_pull_wizard
 msgid "Online Bank Statements Pull Wizard"
-msgstr ""
+msgstr "Assistent d'Extracció d'Extractes Bancaris en Línia"
 
 #. module: account_statement_import_online
 #: model:ir.actions.act_window,name:account_statement_import_online.online_bank_statement_pull_debug_action
 msgid "Online bank statements - Debug"
-msgstr ""
+msgstr "Extractes bancaris en línia - Depurar"
 
 #. module: account_statement_import_online
 #: model:ir.model.constraint,message:account_statement_import_online.constraint_online_bank_statement_provider_journal_id_uniq
 msgid "Only one online banking statement provider per journal!"
-msgstr ""
+msgstr "Només un proveïdor d'extractes bancaris en línia per diari!"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__origin
 msgid "Origin"
-msgstr ""
+msgstr "Origen"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__passphrase
 msgid "Passphrase"
-msgstr ""
+msgstr "Frase de contrasenya"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__password
 msgid "Password"
-msgstr ""
+msgstr "Contrasenya"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Provider"
-msgstr ""
+msgstr "Proveïdor"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.view_account_journal_form
 msgid "Pull Online Bank Statement"
-msgstr ""
+msgstr "Extreure Extracte Bancari en Línia"
 
 #. module: account_statement_import_online
 #: model:ir.actions.server,name:account_statement_import_online.ir_cron_account_pull_online_bank_statements_ir_actions_server
 msgid "Pull Online Bank Statements"
-msgstr ""
+msgstr "Extreure Extractes Bancaris en Línia"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "Pulling online bank statements of: %(provider_names)s"
-msgstr ""
+msgstr "Extreient extractes bancaris en línia de: %(provider_names)s"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__data
 msgid "RAW data"
-msgstr ""
+msgstr "RAW dades"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__account_number
 msgid "Sanitized Account Number"
-msgstr ""
+msgstr "Número de Compte Sanejat"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_form
 msgid "Scheduled Pull"
-msgstr ""
+msgstr "Extracció Programada"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "Scheduled pull of online bank statements complete."
-msgstr ""
+msgstr "Extracció programada d'extractes bancaris en línia finalitzada."
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid "Scheduled pull of online bank statements..."
-msgstr ""
+msgstr "Extracció programada d'extractes bancaris en línia..."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__interval_number
 msgid "Scheduled update interval"
-msgstr ""
+msgstr "Interval d'actualització programada"
 
 #. module: account_statement_import_online
 #: model:ir.model.constraint,message:account_statement_import_online.constraint_online_bank_statement_provider_valid_interval_number
 msgid "Scheduled update interval must be greater than zero!"
-msgstr ""
+msgstr "L'interval d'actualització programada ha de ser superior a zero!"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__service
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_provider_filter
 msgid "Service"
-msgstr ""
+msgstr "Servei"
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Show Transaction Data"
-msgstr ""
+msgstr "Mostrar Dades de la Transacció"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
 msgid "Statement Provider"
-msgstr ""
+msgstr "Proveïdor d'Extracte"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__currency_id
 msgid "The currency used to enter statement"
-msgstr ""
+msgstr "La divisa utilitzada per introduir l'extracte"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__tz
 msgid "Timezone"
-msgstr ""
+msgstr "Fus horari"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__tz
@@ -497,43 +510,45 @@ msgid ""
 "Timezone to convert transaction timestamps to prior being saved into a "
 "statement."
 msgstr ""
+"Fus horari per convertir les marques de temps de les transaccions abans de "
+"guardar-les en un extracte."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__date_until
 msgid "To"
-msgstr ""
+msgstr "Fins a"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
 msgid "Transactions interval to obtain"
-msgstr ""
+msgstr "Interval de transaccions a obtenir"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__update_schedule
 msgid "Update Schedule"
-msgstr ""
+msgstr "Programació d'Actualització"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__username
 msgid "Username"
-msgstr ""
+msgstr "Nom d'usuari"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Missatges del lloc web"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Historial de comunicació del lloc web"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__weekly
 msgid "Week"
-msgstr ""
+msgstr "Setmana"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__weeks
 msgid "Week(s)"
-msgstr ""
+msgstr "Setmana(s)"
