@@ -9,9 +9,9 @@
         <field name="name">account.statement.import.sheet.mapping.form</field>
         <field name="model">account.statement.import.sheet.mapping</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="account_statement_import_sheet_mapping_tree" model="ir.ui.view">
@@ -47,9 +47,9 @@
                                 invisible="not no_header"
                                 colspan="2"
                             >
-                                <span
-                                class="fa fa-info-circle"
-                            /> indicate the column number in the Columns section. The first column is 0.
+                                <span class="fa fa-info-circle">
+                                    indicate the column number in the Columns section. The first column is 0.
+                                </span>
                             </div>
                         </group>
                         <group invisible="not debit_credit_column">
@@ -66,11 +66,9 @@
                     <group string="Columns">
                         <group colspan="2" col="2">
                             <div class="alert alert-info" role="alert" colspan="2">
-                                <span
-                                class="fa fa-info-circle"
-                            /> Add the column names or column number (when the file has no header).
-                                You can concatenate multiple columns in the file into the same field, indicating the
-                                column names or numbers separated by comma.
+                                <span class="fa fa-info-circle">
+                                    Add the column names or column number (when the file has no header). You can concatenate multiple columns in the file into the same field, indicating the column names or numbers separated by comma.
+                                </span>
                             </div>
                         </group>
                         <group>
@@ -121,7 +119,7 @@
     >
         <field name="name">Statement Sheet Mappings</field>
         <field name="res_model">account.statement.import.sheet.mapping</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         id="menu_statement_import_sheet_mapping"
