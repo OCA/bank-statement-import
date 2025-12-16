@@ -48,8 +48,8 @@
                                 colspan="2"
                             >
                                 <span
-                                    class="fa fa-info-circle"
-                                /> indicate the column number in the Columns section. The first column is 0.
+                                class="fa fa-info-circle"
+                            /> indicate the column number in the Columns section. The first column is 0.
                             </div>
                         </group>
                         <group invisible="not debit_credit_column">
@@ -67,8 +67,8 @@
                         <group colspan="2" col="2">
                             <div class="alert alert-info" role="alert" colspan="2">
                                 <span
-                                    class="fa fa-info-circle"
-                                /> Add the column names or column number (when the file has no header).
+                                class="fa fa-info-circle"
+                            /> Add the column names or column number (when the file has no header).
                                 You can concatenate multiple columns in the file into the same field, indicating the
                                 column names or numbers separated by comma.
                             </div>
