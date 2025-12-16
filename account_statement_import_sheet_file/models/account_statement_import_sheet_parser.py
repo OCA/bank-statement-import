@@ -446,9 +446,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 transaction["currency_id"] = currency.id
 
         if transaction_id:
-            transaction["unique_import_id"] = "{}-{}".format(
-                transaction_id,
-                int(timestamp.timestamp()),
+            transaction["unique_import_id"] = (
+                f"{transaction_id}-{int(timestamp.timestamp())}"
             )
 
         transaction["payment_ref"] = description or _("N/A")
