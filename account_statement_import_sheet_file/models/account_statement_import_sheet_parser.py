@@ -12,7 +12,7 @@ from decimal import Decimal
 from io import StringIO
 from os import path
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -72,11 +72,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
         last_line = lines[-1]
         data = {
             "date": first_line["timestamp"].date(),
-            "name": _("%(code)s: %(filename)s")
-            % {
-                "code": journal.code,
-                "filename": path.basename(filename),
-            },
+            "name": self.env._(
+                "%(code)s: %(filename)s",
+                code=journal.code,
+                filename=path.basename(filename),
+            ),
         }
 
         if mapping.balance_column:
@@ -173,7 +173,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 detected_encoding = chardet.detect(data_file).get("encoding", False)
                 if not detected_encoding:
                     raise UserError(
-                        _("No valid encoding was found for the attached file")
+                        self.env._("No valid encoding was found for the attached file")
                     ) from None
                 decoded_file = data_file.decode(detected_encoding)
             csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
@@ -450,17 +450,17 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 f"{transaction_id}-{int(timestamp.timestamp())}"
             )
 
-        transaction["payment_ref"] = description or _("N/A")
+        transaction["payment_ref"] = description or self.env._("N/A")
         if reference:
             transaction["ref"] = reference
 
         note = ""
         if bank_name:
-            note += _("Bank: %s; ") % (bank_name,)
+            note += self.env._("Bank: %s; ") % (bank_name,)
         if bank_account:
-            note += _("Account: %s; ") % (bank_account,)
+            note += self.env._("Account: %s; ") % (bank_account,)
         if transaction_id:
-            note += _("Transaction ID: %s; ") % (transaction_id,)
+            note += self.env._("Transaction ID: %s; ") % (transaction_id,)
         if note and notes:
             note = f"{notes}\n{note.strip()}"
         elif note:
