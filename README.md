@@ -34,6 +34,7 @@ addon | version | maintainers | summary
 [account_statement_import_online_plaid](account_statement_import_online_plaid/) | 18.0.1.0.0 |  | Online Bank Statements: plaid.com
 [account_statement_import_online_ponto](account_statement_import_online_ponto/) | 18.0.1.0.1 |  | Online Bank Statements: MyPonto.com
 [account_statement_import_online_stripe](account_statement_import_online_stripe/) | 18.0.1.0.1 | <a href='https://github.com/juancarlosonate-tecnativa'><img src='https://github.com/juancarlosonate-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='juancarlosonate-tecnativa'/></a> | Online bank statements for Stripe
+[account_statement_import_sheet_file](account_statement_import_sheet_file/) | 18.0.1.0.0 | <a href='https://github.com/alexey-pelykh'><img src='https://github.com/alexey-pelykh.png' width='32' height='32' style='border-radius:50%;' alt='alexey-pelykh'/></a> | Import TXT/CSV or XLSX files as Bank Statements in Odoo
 
 [//]: # (end addons)
 
