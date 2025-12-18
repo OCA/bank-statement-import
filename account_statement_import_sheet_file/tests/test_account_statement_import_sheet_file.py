@@ -1,6 +1,5 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
-# Copyright 2025 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from base64 import b64encode
@@ -10,18 +9,27 @@ from unittest.mock import Mock
 
 from odoo import fields
 from odoo.exceptions import UserError
-from odoo.tests import common
-from odoo.tools import float_round, mute_logger
+from odoo.tools import float_round
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountStatementImportSheetFile(common.TransactionCase):
+class TestAccountStatementImportSheetFile(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
         cls.now = fields.Datetime.now()
         cls.currency_eur = cls.env.ref("base.EUR")
         cls.currency_usd = cls.env.ref("base.USD")
         cls.currency_usd.active = True
+        # Make sure the currency of the company is USD, as this not always happens
+        # To be removed in V17: https://github.com/odoo/odoo/pull/107113
+        # cls.company = cls.env.company
+        # cls.env.cr.execute(
+        #     "UPDATE res_company SET currency_id = %s WHERE id = %s",
+        #     (cls.env.ref("base.USD").id, cls.company.id),
+        # )
         # Activate EUR for unit test, by default is not active
         cls.currency_eur.active = True
         cls.sample_statement_map = cls.env.ref(
@@ -47,27 +55,6 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         cls.mock_mapping_comma_dot._get_float_separators.return_value = (",", ".")
         cls.mock_mapping_dot_comma = Mock()
         cls.mock_mapping_dot_comma._get_float_separators.return_value = (".", ",")
-        cls.journal = cls.AccountJournal.create(
-            {
-                "name": "Bank",
-                "type": "bank",
-                "code": "BANK",
-                "currency_id": cls.currency_usd.id,
-                "suspense_account_id": cls.suspense_account.id,
-            }
-        )
-        cls.statement_domain = [("journal_id", "=", cls.journal.id)]
-
-    def _get_import_wizard(self, path):
-        return self.AccountStatementImport.with_context(
-            journal_id=self.journal.id, account_statement_import_sheet_file_test=True
-        ).create(
-            {
-                "statement_filename": path,
-                "statement_file": self._data_file(path),
-                "sheet_mapping_id": self.sample_statement_map.id,
-            }
-        )
 
     def _data_file(self, filename, encoding=None):
         mode = "rt" if encoding else "rb"
@@ -78,39 +65,130 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             return b64encode(data)
 
     def test_import_csv_file(self):
-        wizard = self._get_import_wizard("fixtures/sample_statement_en.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/sample_statement_en.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/sample_statement_en.csv",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
     def test_import_empty_csv_file(self):
-        wizard = self._get_import_wizard("fixtures/empty_statement_en.csv")
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/empty_statement_en.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/empty_statement_en.csv",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
         with self.assertRaises(UserError):
-            wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+            wizard.with_context(
+                account_statement_import_sheet_file_test=True
+            ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
 
     def test_import_xlsx_file(self):
-        wizard = self._get_import_wizard("fixtures/sample_statement_en.xlsx")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/sample_statement_en.xlsx")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/sample_statement_en.xlsx",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
     def test_import_empty_xlsx_file(self):
-        wizard = self._get_import_wizard("fixtures/empty_statement_en.xlsx")
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/empty_statement_en.xlsx")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/empty_statement_en.xlsx",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
         with self.assertRaises(UserError):
-            wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+            wizard.with_context(
+                account_statement_import_sheet_file_test=True
+            ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 0)
 
     def test_original_currency(self):
-        wizard = self._get_import_wizard("fixtures/original_currency.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/original_currency.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/original_currency.csv",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
+
         line = statement.line_ids
         self.assertEqual(line.currency_id, self.currency_usd)
         self.assertEqual(line.amount, 1525.0)
@@ -138,12 +216,30 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "bank_account_column": "6",
             }
         )
-        wizard = self._get_import_wizard("fixtures/original_currency_no_header.csv")
-        wizard.sheet_mapping_id = no_header_statement_map.id
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/original_currency_no_header.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/original_currency.csv",
+                "statement_file": data,
+                "sheet_mapping_id": no_header_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
+
         line = statement.line_ids
         self.assertEqual(line.currency_id, self.currency_usd)
         self.assertEqual(line.foreign_currency_id, self.currency_eur)
@@ -151,43 +247,99 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(line.payment_ref, "Your payment INV0001")
 
     def test_original_currency_empty(self):
-        wizard = self._get_import_wizard("fixtures/original_currency_empty.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        data = self._data_file("fixtures/original_currency_empty.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/original_currency_empty.csv",
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
+
         line = statement.line_ids
         self.assertFalse(line.foreign_currency_id)
         self.assertEqual(line.amount_currency, 0.0)
 
     def test_multi_currency(self):
-        self.sample_statement_map.write(
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
             {
                 "currency_column": "Currency",
                 "original_currency_column": None,
                 "original_amount_column": None,
             }
         )
-        wizard = self._get_import_wizard("fixtures/multi_currency.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        data = self._data_file("fixtures/multi_currency.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/multi_currency.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 1)
+
         line = statement.line_ids
         self.assertFalse(line.foreign_currency_id)
         self.assertEqual(line.amount, -33.5)
 
     def test_balance(self):
-        self.sample_statement_map.write(
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
             {
                 "balance_column": "Balance",
                 "original_currency_column": None,
                 "original_amount_column": None,
             }
         )
-        wizard = self._get_import_wizard("fixtures/balance.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        data = self._data_file("fixtures/balance.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/balance.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
         self.assertEqual(statement.balance_start, 10.0)
@@ -195,7 +347,16 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_end, 1510.0)
 
     def test_debit_credit(self):
-        self.sample_statement_map.write(
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
             {
                 "balance_column": "Balance",
                 "original_currency_column": None,
@@ -205,9 +366,18 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "credit_value": "C",
             }
         )
-        wizard = self._get_import_wizard("fixtures/debit_credit.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        data = self._data_file("fixtures/debit_credit.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/debit_credit.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
         self.assertEqual(statement.balance_start, 10.0)
@@ -215,7 +385,16 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_end, 1510.0)
 
     def test_debit_credit_amount(self):
-        self.sample_statement_map.write(
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
             {
                 "amount_type": "distinct_credit_debit",
                 "amount_debit_column": "Debit",
@@ -226,9 +405,18 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "original_amount_column": None,
             }
         )
-        wizard = self._get_import_wizard("fixtures/debit_credit_amount.csv")
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        data = self._data_file("fixtures/debit_credit_amount.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/debit_credit_amount.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 4)
         self.assertEqual(statement.balance_start, 10.0)
@@ -236,7 +424,16 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_end, 1510.0)
 
     def test_metadata_separated_debit_credit_csv(self):
-        self.sample_statement_map.write(
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
             {
                 "footer_lines_skip_count": 1,
                 "header_lines_skip_count": 5,
@@ -253,11 +450,19 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "amount_credit_column": "Credit",
             }
         )
-        wizard = self._get_import_wizard(
-            "fixtures/meta_data_separated_credit_debit.csv"
+        data = self._data_file("fixtures/meta_data_separated_credit_debit.csv", "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/meta_data_separated_credit_debit.csv",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
         )
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        wizard.with_context(
+            journal_id=journal.id,
+            account_bank_statement_import_txt_xlsx_test=True,
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 4)
         line1 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 1")
@@ -266,7 +471,16 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(line4.amount, -1300)
 
     def test_metadata_separated_debit_credit_xlsx(self):
-        self.sample_statement_map.write(
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+        statement_map = self.sample_statement_map.copy(
             {
                 "footer_lines_skip_count": 1,
                 "header_lines_skip_count": 5,
@@ -283,11 +497,19 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "amount_credit_column": "Credit",
             }
         )
-        wizard = self._get_import_wizard(
-            "fixtures/meta_data_separated_credit_debit.xlsx"
+        data = self._data_file("fixtures/meta_data_separated_credit_debit.xlsx")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/meta_data_separated_credit_debit.xlsx",
+                "statement_file": data,
+                "sheet_mapping_id": statement_map.id,
+            }
         )
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        wizard.with_context(
+            journal_id=journal.id,
+            account_bank_statement_import_txt_xlsx_test=True,
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 4)
         line1 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 1")
@@ -297,11 +519,28 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
 
     def test_amount_inverse_sign(self):
         self.sample_statement_map.amount_inverse_sign = True
-        wizard = self._get_import_wizard(
-            "fixtures/sample_statement_credit_card_inverse_sign_en.csv"
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
         )
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        filename = "fixtures/sample_statement_credit_card_inverse_sign_en.csv"
+        data = self._data_file(filename, "utf-8")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": filename,
+                "statement_file": data,
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
         line1 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 1")
@@ -334,12 +573,27 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 }
             )
         )
-        wizard = self._get_import_wizard(
-            "fixtures/sample_statement_en_empty_values.xlsx"
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank 2",
+                "type": "bank",
+                "code": "BAN2",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
         )
-        wizard.sheet_mapping_id = sample_statement_map_empty_values.id
-        wizard.import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        data = self._data_file("fixtures/sample_statement_en_empty_values.xlsx")
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": "fixtures/sample_statement_en_empty_values.xlsx",
+                "statement_file": data,
+                "sheet_mapping_id": sample_statement_map_empty_values.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 3)
 
@@ -427,12 +681,16 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             1234.56,
         )
 
-    @mute_logger(
-        "odoo.addons.account_statement_import_sheet_file.models."
-        "account_statement_import"
-    )
     def test_offsets(self):
-        journal = self.journal
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
         file_name = "fixtures/sample_statement_offsets.xlsx"
         data = self._data_file(file_name)
         wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
@@ -442,33 +700,61 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        # First try with incorrect values
         with self.assertRaises(UserError):
             wizard.with_context(
-                account_statement_import_txt_xlsx_test=True
+                account_statement_import_sheet_file_test=True
             ).import_file_button()
-        self.sample_statement_map.write(
-            {"offset_column": 1, "header_lines_skip_count": 3}
+        statement_map_offsets = self.sample_statement_map.copy(
+            {
+                "offset_column": 1,
+                "header_lines_skip_count": 3,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": statement_map_offsets.id,
+            }
         )
         wizard.with_context(
-            account_statement_import_txt_xlsx_test=True
+            account_statement_import_sheet_file_test=True
         ).import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
         self.assertEqual(statement.balance_start, 0.0)
         self.assertEqual(statement.balance_end_real, 1491.5)
         self.assertEqual(statement.balance_end, 1491.5)
 
-    @mute_logger(
-        "odoo.addons.account_statement_import_sheet_file.models."
-        "account_statement_import"
-    )
     def test_skip_empty_lines(self):
-        journal = self.journal
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
         file_name = "fixtures/empty_lines_statement.csv"
         data = self._data_file(file_name, "utf-8")
-        self.sample_statement_map.skip_empty_lines = False
+        statement_map_empty_line = self.sample_statement_map.copy(
+            {
+                "skip_empty_lines": False,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": file_name,
+                "statement_file": data,
+                "sheet_mapping_id": statement_map_empty_line.id,
+            }
+        )
+        with self.assertRaises(UserError):
+            wizard.with_context(
+                account_statement_import_sheet_file_test=True
+            ).import_file_button()
         wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
             {
                 "statement_filename": file_name,
@@ -476,15 +762,10 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
                 "sheet_mapping_id": self.sample_statement_map.id,
             }
         )
-        with self.assertRaises(UserError):
-            wizard.with_context(
-                account_statement_import_txt_xlsx_test=True
-            ).import_file_button()
-        self.sample_statement_map.skip_empty_lines = True
         wizard.with_context(
-            account_statement_import_txt_xlsx_test=True
+            account_statement_import_sheet_file_test=True
         ).import_file_button()
-        statement = self.AccountBankStatement.search(self.statement_domain)
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 3)
         self.assertEqual(statement.balance_start, 0.0)
