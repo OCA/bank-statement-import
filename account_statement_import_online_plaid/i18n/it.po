@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_plaid
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Client ID"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/online_bank_statement_provider_plaid.py:0
+msgid "Country code not found for the bank or the company..."
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting access token: %s"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting client api: %s"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting link token: %s"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting transactions: %s"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model,name:account_statement_import_online_plaid.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields,field_description:account_statement_import_online_plaid.field_online_bank_statement_provider__plaid_access_token
+msgid "Plaid Access Token"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields,field_description:account_statement_import_online_plaid.field_online_bank_statement_provider__plaid_host
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Plaid Host"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model,name:account_statement_import_online_plaid.model_plaid_interface
+msgid "Plaid Interface"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Plaid config"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/online_bank_statement_provider_plaid.py:0
+msgid "Please link your Plaid account first by clicking on 'Sync with Plaid'."
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__production
+msgid "Production"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__sandbox
+msgid "Sandbox"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Secret Key"
+msgstr ""
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Sync with Plaid.com"
+msgstr ""
