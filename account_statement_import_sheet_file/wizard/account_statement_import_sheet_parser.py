@@ -456,11 +456,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
         note = ""
         if bank_name:
-            note += self.env._("Bank: %s; ") % (bank_name,)
+            note += self.env._("Bank: %s; ", bank_name)
         if bank_account:
-            note += self.env._("Account: %s; ") % (bank_account,)
+            note += self.env._("Account: %s; ", bank_account)
         if transaction_id:
-            note += self.env._("Transaction ID: %s; ") % (transaction_id,)
+            note += self.env._("Transaction ID: %s; ", transaction_id)
         if note and notes:
             note = f"{notes}\n{note.strip()}"
         elif note:

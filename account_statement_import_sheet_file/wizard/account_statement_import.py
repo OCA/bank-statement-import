@@ -22,7 +22,7 @@ class AccountStatementImport(models.TransientModel):
     sheet_mapping_id = fields.Many2one(
         string="Sheet mapping",
         comodel_name="account.statement.import.sheet.mapping",
-        default=_get_default_mapping_id,
+        default=lambda self: self._get_default_mapping_id(),
     )
 
     def _parse_file(self, data_file):
