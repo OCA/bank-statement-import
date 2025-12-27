@@ -6,7 +6,7 @@
 from base64 import b64encode
 from decimal import Decimal
 from os import path
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from odoo import fields
 from odoo.exceptions import UserError
@@ -531,3 +531,43 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(result_none, 0.0)
         self.assertEqual(result_decimal, 999.99)
         self.assertEqual(result_str, 1234.56)
+
+    @mute_logger(
+        "odoo.addons.account_statement_import_sheet_file.models."
+        "account_statement_import"
+    )
+    def test_xlsx_openpyxl_error(self):
+        """Test error handling when openpyxl fails to open an .xlsx file"""
+        self.sample_statement_map.write({"delimiter": "n/a"})
+        wizard = self._get_import_wizard("fixtures/sample_statement_en.xlsx")
+
+        with patch(
+            "odoo.addons.account_statement_import_sheet_file.models."
+            "account_statement_import_sheet_parser.openpyxl.load_workbook"
+        ) as mock_load:
+            mock_load.side_effect = Exception("Failed to open workbook")
+            with self.assertRaises(UserError) as context:
+                wizard.with_context(
+                    account_statement_import_sheet_file_test=True
+                ).import_file_button()
+            self.assertIn("Could not open Excel .xlsx file", str(context.exception))
+
+    @mute_logger(
+        "odoo.addons.account_statement_import_sheet_file.models."
+        "account_statement_import"
+    )
+    def test_xlsx_no_openpyxl_installed(self):
+        """Test error when .xlsx file is detected but openpyxl is not installed"""
+        self.sample_statement_map.write({"delimiter": "n/a"})
+        wizard = self._get_import_wizard("fixtures/sample_statement_en.xlsx")
+
+        with patch(
+            "odoo.addons.account_statement_import_sheet_file.models."
+            "account_statement_import_sheet_parser.openpyxl",
+            None,
+        ):
+            with self.assertRaises(UserError) as context:
+                wizard.with_context(
+                    account_statement_import_sheet_file_test=True
+                ).import_file_button()
+            self.assertIn("openpyxl library is not installed", str(context.exception))
