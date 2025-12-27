@@ -23,4 +23,7 @@
         "views/account_statement_import.xml",
         "views/account_journal_views.xml",
     ],
+    "external_dependencies": {
+        "python": ["openpyxl", "xlrd"],
+    },
 }

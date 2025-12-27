@@ -26,6 +26,14 @@ except (OSError, ImportError) as err:  # pragma: no cover
     _logger.error(err)
 
 try:
+    from io import BytesIO
+
+    import openpyxl
+except (OSError, ImportError):  # pragma: no cover
+    openpyxl = None
+    _logger.warning("openpyxl library not found, .xlsx files may not be supported")
+
+try:
     import chardet
 except ImportError:
     _logger.warning(
@@ -47,13 +55,25 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if header_line > 0:
             header_line -= 1
         if isinstance(csv_or_xlsx, tuple):
-            header = [
-                str(value).strip() for value in csv_or_xlsx[1].row_values(header_line)
-            ]
+            sheet = csv_or_xlsx[1]
+            if hasattr(sheet, "cell"):
+                header = []
+                max_col = sheet.max_column
+                for col_index in range(mapping.offset_column + 1, max_col + 1):
+                    cell_value = sheet.cell(header_line + 1, col_index).value
+                    header.append(
+                        str(cell_value).strip() if cell_value is not None else ""
+                    )
+            else:
+                header = [str(value).strip() for value in sheet.row_values(header_line)]
+                if mapping.offset_column:
+                    header = header[mapping.offset_column :]
         else:
             [next(csv_or_xlsx) for _i in range(header_line)]
             header = [value.strip() for value in next(csv_or_xlsx)]
-        if mapping.offset_column:
+        if mapping.offset_column and not (
+            isinstance(csv_or_xlsx, tuple) and hasattr(csv_or_xlsx[1], "cell")
+        ):
             header = header[mapping.offset_column :]
         return header
 
@@ -148,6 +168,15 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _parse_lines(self, mapping, data_file, currency_code):
         columns = dict()
+        is_xlsx = False
+        is_xls = False
+        if isinstance(data_file, bytes) and len(data_file) >= 8:
+            if data_file.startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"):
+                is_xls = True
+            elif data_file.startswith(b"PK\x03\x04") or data_file.startswith(
+                b"PK\x05\x06"
+            ):
+                is_xlsx = True
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
@@ -159,24 +188,49 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 workbook,
                 workbook.sheet_by_index(0),
             )
-        except xlrd.XLRDError:
-            csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
-            try:
-                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
-            except UnicodeDecodeError:
-                # Try auto guessing the format
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    raise UserError(
-                        self.env._("No valid encoding was found for the attached file")
-                    ) from None
-                decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
+        except xlrd.XLRDError as e:
+            if is_xlsx and openpyxl:
+                try:
+                    workbook = openpyxl.load_workbook(
+                        BytesIO(data_file), read_only=True, data_only=True
+                    )
+                    sheet = workbook.active
+                    csv_or_xlsx = (workbook, sheet)
+                except Exception as openpyxl_error:
+                    error_msg = (
+                        f"Could not open Excel .xlsx file. " f"Error: {openpyxl_error}"
+                    )
+                    raise UserError(self.env._(error_msg)) from openpyxl_error
+            elif is_xlsx and not openpyxl:
+                raise UserError(
+                    self.env._(
+                        "The file is .xlsx but the openpyxl library is not "
+                        "installed. Please install openpyxl: pip install openpyxl"
+                    )
+                ) from None
+            elif is_xls or mapping.delimiter == "n/a":
+                error_msg = f"Could not open Excel file. Error: {e}"
+                raise UserError(self.env._(error_msg)) from e
+            else:
+                csv_options = {}
+                csv_delimiter = mapping._get_column_delimiter_character()
+                if csv_delimiter:
+                    csv_options["delimiter"] = csv_delimiter
+                if mapping.quotechar:
+                    csv_options["quotechar"] = mapping.quotechar
+                try:
+                    decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
+                except UnicodeDecodeError:
+                    # Try auto guessing the format
+                    detected_encoding = chardet.detect(data_file).get("encoding", False)
+                    if not detected_encoding:
+                        raise UserError(
+                            self.env._(
+                                "No valid encoding was found for the attached file"
+                            )
+                        ) from None
+                    decoded_file = data_file.decode(detected_encoding)
+                csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
         header = self.parse_header(csv_or_xlsx, mapping)
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
@@ -208,7 +262,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
         # Get the numbers of rows of the file
         if isinstance(csv_or_xlsx, tuple):
-            numrows = csv_or_xlsx[1].nrows
+            sheet = csv_or_xlsx[1]
+            if hasattr(sheet, "max_row"):
+                numrows = sheet.max_row
+            else:
+                numrows = sheet.nrows
         else:
             numrows = len(str(data_file.strip()).split("\\n"))
 
@@ -226,12 +284,24 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
                 values = []
-                for col_index in range(mapping.offset_column, sheet.row_len(row)):
-                    cell_type = sheet.cell_type(row, col_index)
-                    cell_value = sheet.cell_value(row, col_index)
-                    if cell_type == xlrd.XL_CELL_DATE:
-                        cell_value = xldate_as_datetime(cell_value, book.datemode)
-                    values.append(cell_value)
+                if hasattr(sheet, "cell"):
+                    max_col = sheet.max_column
+                    for col_index_0based in range(mapping.offset_column, max_col):
+                        col_index_1based = col_index_0based + 1
+                        cell = sheet.cell(row + 1, col_index_1based)
+                        cell_value = cell.value
+                        if isinstance(cell_value, datetime):
+                            pass
+                        elif cell_value is None:
+                            cell_value = ""
+                        values.append(cell_value)
+                else:
+                    for col_index in range(mapping.offset_column, sheet.row_len(row)):
+                        cell_type = sheet.cell_type(row, col_index)
+                        cell_value = sheet.cell_value(row, col_index)
+                        if cell_type == xlrd.XL_CELL_DATE:
+                            cell_value = xldate_as_datetime(cell_value, book.datemode)
+                        values.append(cell_value)
             else:
                 if index >= footer_line:
                     continue
@@ -481,8 +551,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
     def _parse_decimal(self, value, mapping):
         if isinstance(value, Decimal):
             return float(value)
-        elif isinstance(value, float):
-            return value
+        elif isinstance(value, float | int):
+            return float(value)
+        elif value is None:
+            return 0.0
+        if not isinstance(value, str):
+            value = str(value)
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs

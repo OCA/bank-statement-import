@@ -490,3 +490,44 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_start, 0.0)
         self.assertEqual(statement.balance_end_real, 2291.5)
         self.assertEqual(statement.balance_end, 2291.5)
+
+    def test_import_xlsx_with_n_a_delimiter(self):
+        """Test that .xlsx files can be imported when delimiter is set to 'N/A'"""
+        self.sample_statement_map.write(
+            {
+                "delimiter": "n/a",
+            }
+        )
+        wizard = self._get_import_wizard("fixtures/sample_statement_en.xlsx")
+        wizard.import_file_button()
+        statement = self.AccountBankStatement.search(self.statement_domain)
+        self.assertEqual(len(statement), 1)
+        self.assertGreater(len(statement.line_ids), 0)
+
+    def test_parse_decimal_with_numeric_values(self):
+        """Test that _parse_decimal handles numeric values from openpyxl correctly"""
+        value_float = 1234.56
+        value_int = 1000
+        value_none = None
+        value_decimal = Decimal("999.99")
+        value_str_comma_dot = "1,234.56"
+
+        result_float = self.parser._parse_decimal(
+            value_float, self.mock_mapping_comma_dot
+        )
+        result_int = self.parser._parse_decimal(value_int, self.mock_mapping_comma_dot)
+        result_none = self.parser._parse_decimal(
+            value_none, self.mock_mapping_comma_dot
+        )
+        result_decimal = self.parser._parse_decimal(
+            value_decimal, self.mock_mapping_comma_dot
+        )
+        result_str = self.parser._parse_decimal(
+            value_str_comma_dot, self.mock_mapping_comma_dot
+        )
+
+        self.assertEqual(result_float, 1234.56)
+        self.assertEqual(result_int, 1000.0)
+        self.assertEqual(result_none, 0.0)
+        self.assertEqual(result_decimal, 999.99)
+        self.assertEqual(result_str, 1234.56)
