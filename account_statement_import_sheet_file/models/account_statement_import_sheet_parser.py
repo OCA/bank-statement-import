@@ -59,11 +59,13 @@ class AccountStatementImportSheetParser(models.TransientModel):
             if hasattr(sheet, "max_column"):
                 header = []
                 max_col = sheet.max_column
-                for col_index in range(mapping.offset_column + 1, max_col + 1):
+                for col_index in range(1, max_col + 1):
                     cell_value = sheet.cell(header_line + 1, col_index).value
                     header.append(
                         str(cell_value).strip() if cell_value is not None else ""
                     )
+                if mapping.offset_column:
+                    header = header[mapping.offset_column :]
             else:
                 header = [str(value).strip() for value in sheet.row_values(header_line)]
                 if mapping.offset_column:
@@ -71,9 +73,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         else:
             [next(csv_or_xlsx) for _i in range(header_line)]
             header = [value.strip() for value in next(csv_or_xlsx)]
-        if mapping.offset_column and not (
-            isinstance(csv_or_xlsx, tuple) and hasattr(csv_or_xlsx[1], "max_column")
-        ):
+        if mapping.offset_column and not isinstance(csv_or_xlsx, tuple):
             header = header[mapping.offset_column :]
         return header
 
