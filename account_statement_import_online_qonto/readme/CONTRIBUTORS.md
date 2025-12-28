@@ -1,0 +1,4 @@
+- Florent de Labarre
+- [Tecnativa](https://www.tecnativa.com):
+  - Pedro M. Baeza
+  - Caolina Fernandez

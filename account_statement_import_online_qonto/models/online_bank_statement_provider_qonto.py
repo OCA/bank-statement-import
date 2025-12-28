@@ -48,7 +48,7 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_header(self):
         self.ensure_one()
         if self.username and self.password:
-            return {"Authorization": "{}:{}".format(self.username, self.password)}
+            return {"Authorization": f"{self.username}:{self.password}"}
         raise UserError(_("Please fill login and key"))
 
     def _qonto_get_slug(self):
