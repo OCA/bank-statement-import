@@ -1,9 +1,19 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import re
+from io import BytesIO
+
+from PyPDF2 import PdfReader
+
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools.safe_eval import (
+    safe_eval,
+    test_python_expr,
+)
 
 
 class AccountStatementImportSheetMapping(models.Model):
@@ -185,6 +195,55 @@ class AccountStatementImportSheetMapping(models.Model):
         default=0,
         help="Columns to ignore before starting to parse",
     )
+
+    DEFAULT_PYTHON_CODE = (
+        "# Available variables:\n"
+        "#  - data_file: the data to preprocess\n"
+        "#  - match: re.match regex Python library\n"
+        "#\n"
+        "# update data_file so that it can be parsed as a string in a csv format\n"
+    )
+
+    preprocessor_code = fields.Text(
+        string="Python Code",
+        groups="base.group_system",
+        default=DEFAULT_PYTHON_CODE,
+        help="Write Python code to pre-process a file like converting a pdf to csv.",
+    )
+
+    @api.constrains("preprocessor_code")
+    def _check_python_code(self):
+        for action in self.sudo().filtered("preprocessor_code"):
+            msg = test_python_expr(expr=action.preprocessor_code.strip(), mode="exec")
+            if msg:
+                raise ValidationError(msg)
+
+    def _eval_code(self, data_file):
+        code = self.sudo().preprocessor_code
+        expr = code.strip()
+        eval_context = {
+            "match": re.match,
+            "data_file": data_file,
+        }
+        try:
+            safe_eval(expr, eval_context, mode="exec", nocopy=True)
+        except Exception as err:
+            raise UserError(
+                self.env._(
+                    "Error when evaluating the preprocessor code:"
+                    "\n %(name)s \n(%(error)s)",
+                    name=self.name,
+                    error=err,
+                )
+            ) from err
+        return eval_context.get("data_file", data_file)
+
+    def _preprocess(self, data_file):
+        self.ensure_one()
+        if data_file[:4] == b"%PDF":
+            data_file = PdfReader(BytesIO(data_file))
+        data_file = self._eval_code(data_file)
+        return data_file
 
     @api.constrains(
         "amount_type",

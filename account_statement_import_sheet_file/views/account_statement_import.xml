@@ -15,7 +15,10 @@
         <field name="arch" type="xml">
             <xpath expr="//ul[@id='statement_format']" position="inside">
                 <li>
-                    TXT/CSV/XLSX mapping: <field name="sheet_mapping_id" nolabel="1" />
+                    TXT/CSV/XLSX/PDF mapping: <field
+                    name="sheet_mapping_id"
+                    nolabel="1"
+                />
                 </li>
             </xpath>
         </field>

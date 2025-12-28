@@ -109,6 +109,14 @@
                             <field name="bank_account_column" />
                         </group>
                     </group>
+                    <group string="Pre-Processor">
+                        <button
+                            name="%(account_statement_import_sheet_preprocessor_action)d"
+                            string="Test"
+                            type="action"
+                        />
+                        <field name="preprocessor_code" />
+                    </group>
                 </sheet>
             </form>
         </field>

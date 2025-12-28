@@ -16,9 +16,13 @@
     "depends": [
         "account_statement_import_file",
     ],
+    "external_dependencies": {
+        "python": ["PyPDF2>=2.12.1,<3"],
+    },
     "data": [
         "security/ir.model.access.csv",
         "data/map_data.xml",
+        "wizards/test_preprocessor.xml",
         "views/account_statement_import_sheet_mapping.xml",
         "views/account_statement_import.xml",
         "views/account_journal_views.xml",

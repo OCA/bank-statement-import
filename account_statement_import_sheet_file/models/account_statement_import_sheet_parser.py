@@ -148,6 +148,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
         ]
 
     def _parse_lines(self, mapping, data_file, currency_code):
+        data_file = mapping._preprocess(data_file)
+
         columns = dict()
         try:
             workbook = xlrd.open_workbook(
