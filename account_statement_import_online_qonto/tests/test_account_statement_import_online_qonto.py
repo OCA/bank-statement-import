@@ -28,6 +28,8 @@ class TestAccountStatementImportOnlineQonto(TransactionCase):
         cls.AccountBankStatement = cls.env["account.bank.statement"]
         cls.AccountBankStatementLine = cls.env["account.bank.statement.line"]
 
+        self.currency_eur.write({"active": True})
+
         cls.bank_account = cls.ResPartnerBank.create(
             {
                 "acc_number": "FR0214508000302245362775K46",
