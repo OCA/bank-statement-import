@@ -271,7 +271,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         """Parse an Ntry node and yield transactions"""
         transaction = {
             "payment_ref": "/",
-            "amount": 0,
+            "amount": 0.0,
             "narration": {},
             "transaction_type": {},
         }  # fallback defaults
