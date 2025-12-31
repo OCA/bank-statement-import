@@ -5,7 +5,7 @@
     "version": "18.0.1.0.0",
     "category": "Account",
     "website": "https://github.com/OCA/bank-statement-import",
-    "author": "camptocamp, " "Odoo Community Association (OCA)",
+    "author": "camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
     "depends": ["account_statement_import_camt"],
