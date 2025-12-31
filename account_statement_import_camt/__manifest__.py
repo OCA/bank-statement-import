@@ -8,5 +8,5 @@
     "website": "https://github.com/OCA/bank-statement-import",
     "category": "Banking addons",
     "depends": ["account_statement_import_file"],
-    "data": ["views/account_bank_statement_import.xml"],
+    "data": ["wizard/account_bank_statement_import.xml"],
 }

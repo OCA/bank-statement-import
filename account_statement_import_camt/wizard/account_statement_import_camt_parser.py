@@ -56,7 +56,6 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def parse_transaction_details(self, ns, node, transaction):
         """Parse TxDtls node."""
-        _ = self.env._
         # message
         self.add_value_from_node(
             ns,
@@ -76,7 +75,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:RmtInf/ns:Ustrd"],
             transaction["narration"],
-            f"{_('Unstructured Reference')} (RmtInf/Ustrd)",
+            f"{self.env._('Unstructured Reference')} (RmtInf/Ustrd)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -84,7 +83,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref"],
             transaction["narration"],
-            f"{_('Structured Reference')} (RmtInf/Strd/CdtrRefInf/Ref)",
+            f"{self.env._('Structured Reference')} (RmtInf/Strd/CdtrRefInf/Ref)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -92,7 +91,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:AddtlTxInf"],
             transaction["narration"],
-            f"{_('Additional Transaction Information')} (AddtlTxInf)",
+            f"{self.env._('Additional Transaction Information')} (AddtlTxInf)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -100,21 +99,21 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:RtrInf/ns:Rsn/ns:Cd"],
             transaction["narration"],
-            f"{_('Return Reason Code')} (RtrInf/Rsn/Cd)",
+            f"{self.env._('Return Reason Code')} (RtrInf/Rsn/Cd)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:RtrInf/ns:Rsn/ns:Cd"],
             transaction["narration"],
-            f"{_('Return Reason Code (Proprietary)')} (RtrInf/Rsn/Prtry)",
+            f"{self.env._('Return Reason Code (Proprietary)')} (RtrInf/Rsn/Prtry)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:RtrInf/ns:AddtlInf"],
             transaction["narration"],
-            f"{_('Return Reason Additional Information')} (RtrInf/AddtlInf)",
+            f"{self.env._('Return Reason Additional Information')} (RtrInf/AddtlInf)",
             join_str=" ",
         )
         self.add_value_from_node(
@@ -122,49 +121,49 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             ["./ns:Refs/ns:MsgId"],
             transaction["narration"],
-            f"{_('Msg Id')} (Refs/MsgId)",
+            f"{self.env._('Msg Id')} (Refs/MsgId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:AcctSvcrRef"],
             transaction["narration"],
-            f"{_('Account Servicer Reference')} (Refs/AcctSvcrRef)",
+            f"{self.env._('Account Servicer Reference')} (Refs/AcctSvcrRef)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:EndToEndId"],
             transaction["narration"],
-            f"{_('End To End Id')} (Refs/EndToEndId)",
+            f"{self.env._('End To End Id')} (Refs/EndToEndId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:InstrId"],
             transaction["narration"],
-            f"{_('Instructed Id')} (Refs/InstrId)",
+            f"{self.env._('Instructed Id')} (Refs/InstrId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:TxId"],
             transaction["narration"],
-            f"{_('Transaction Identification')} (Refs/TxId)",
+            f"{self.env._('Transaction Identification')} (Refs/TxId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:MntId"],
             transaction["narration"],
-            f"{_('Mandate Id')} (Refs/MntId)",
+            f"{self.env._('Mandate Id')} (Refs/MntId)",
         )
         self.add_value_from_node(
             ns,
             node,
             ["./ns:Refs/ns:ChqNb"],
             transaction["narration"],
-            f"{_('Cheque Number')} (Refs/ChqNb)",
+            f"{self.env._('Cheque Number')} (Refs/ChqNb)",
         )
 
         self.add_value_from_node(
@@ -224,7 +223,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
                 "./ns:PstlAdr/ns:Ctry|"
                 "./ns:PstlAdr/ns:AdrLine",
                 transaction["narration"],
-                f"{_('Postal Address')} (PstlAdr)",
+                f"{self.env._('Postal Address')} (PstlAdr)",
                 join_str=" | ",
             )
         # Get remote_account from iban or from domestic account:
@@ -246,18 +245,19 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def generate_narration(self, transaction):
         # this block ensure compatibility with v13
-        _ = self.env._
         transaction["narration"] = {
-            "{} (RltdPties/Nm)".format(_("Partner Name")): transaction.get(
+            "{} (RltdPties/Nm)".format(self.env._("Partner Name")): transaction.get(
                 "partner_name", ""
             ),
-            "{} (RltdPties/Acct)".format(_("Partner Account Number")): transaction.get(
-                "account_number", ""
+            "{} (RltdPties/Acct)".format(
+                self.env._("Partner Account Number")
+            ): transaction.get("account_number", ""),
+            "{} (BookgDt)".format(self.env._("Transaction Date")): transaction.get(
+                "date", ""
             ),
-            "{} (BookgDt)".format(_("Transaction Date")): transaction.get("date", ""),
-            _("Reference"): transaction.get("ref", ""),
-            _("Communication"): transaction.get("name", ""),
-            "{} (BkTxCd)".format(_("Transaction Type")): transaction.get(
+            self.env._("Reference"): transaction.get("ref", ""),
+            self.env._("Communication"): transaction.get("name", ""),
+            "{} (BkTxCd)".format(self.env._("Transaction Type")): transaction.get(
                 "transaction_type", ""
             ),
             **transaction["narration"],
@@ -269,7 +269,6 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
     def parse_entry(self, ns, node):
         """Parse an Ntry node and yield transactions"""
-        _ = self.env._
         transaction = {
             "payment_ref": "/",
             "amount": 0,
@@ -298,14 +297,14 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             node,
             "./ns:AddtlNtryInf",
             transaction["narration"],
-            f"{_('Additional Entry Information')} (AddtlNtryInf)",
+            f"{self.env._('Additional Entry Information')} (AddtlNtryInf)",
         )
         self.add_value_from_node(
             ns,
             node,
             "./ns:RvslInd",
             transaction["narration"],
-            f"{_('Reversal Indicator')} (RvslInd)",
+            f"{self.env._('Reversal Indicator')} (RvslInd)",
         )
 
         self.add_value_from_node(
