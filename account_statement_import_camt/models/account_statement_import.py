@@ -60,10 +60,10 @@ class AccountStatementImport(models.TransientModel):
                             # Create temporary xml file
                             attachment = self.env['ir.attachment'].create(
                                 {
-                                    'name': member,
-                                    'datas': base64.b64encode(xml_content),
-                                    'res_model': self._name,
-                                    'res_id': self.id,
+                                    "name": member,
+                                    "datas": base64.b64encode(xml_content),
+                                    "res_model": self._name,
+                                    "res_id": self.id,
                                 }
                             )
                             temp_result = {
@@ -90,9 +90,11 @@ class AccountStatementImport(models.TransientModel):
                             )
                         except Exception as e:
                             _logger.exception(
-                                f"Error processing file {member} in ZIP: {e}")
+                                f"Error processing file {member} in ZIP: {e}"
+                            )
                             global_result["notifications"].append(
-                                f"Error processing file {member} in ZIP: {e}")
+                                f"Error processing file {member} in ZIP: {e}"
+                            )
                 return global_result
 
         except zipfile.BadZipFile:
