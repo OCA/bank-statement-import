@@ -53,35 +53,41 @@ class AccountStatementImport(models.TransientModel):
                 }
                 # browse files in zip
                 for member in zip_file.namelist():
-                    if member.lower().endswith(
-                        ('.xml', '.camt')):
+                    if member.lower().endswith(('.xml', '.camt')):
                         try:
                             xml_content = zip_file.open(member).read()
 
                             # Create temporary xml file
-                            attachment = self.env['ir.attachment'].create({
-                                'name': member,
-                                'datas': base64.b64encode(xml_content),
-                                'res_model': self._name,
-                                'res_id': self.id,
-                            })
+                            attachment = self.env['ir.attachment'].create(
+                                {
+                                    'name': member,
+                                    'datas': base64.b64encode(xml_content),
+                                    'res_model': self._name,
+                                    'res_id': self.id,
+                                }
+                            )
                             temp_result = {
                                 "statement_ids": [],
                                 "notifications": [],
                             }
                             self.with_context(
-                                attachment_id=attachment.id).import_single_file(
-                                xml_content, temp_result)
+                                attachment_id=attachment.id
+                            ).import_single_file(xml_content, temp_result)
                             for statement_id in temp_result["statement_ids"]:
                                 statement = self.env["account.bank.statement"].browse(
-                                    statement_id)
-                                statement.write({"attachment_ids": [(4, attachment.id)]})
+                                    statement_id
+                                )
+                                statement.write(
+                                    {"attachment_ids": [(4, attachment.id)]}
+                                )
 
                             # merge results
                             global_result["statement_ids"].extend(
-                                temp_result["statement_ids"])
+                                temp_result["statement_ids"]
+                            )
                             global_result["notifications"].extend(
-                                temp_result["notifications"])
+                                temp_result["notifications"]
+                            )
                         except Exception as e:
                             _logger.exception(
                                 f"Error processing file {member} in ZIP: {e}")
