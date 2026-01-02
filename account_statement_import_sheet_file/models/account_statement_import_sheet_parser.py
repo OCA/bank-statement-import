@@ -481,8 +481,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
     def _parse_decimal(self, value, mapping):
         if isinstance(value, Decimal):
             return float(value)
-        elif isinstance(value, float):
-            return value
+        elif isinstance(value, float | int):
+            return float(value)
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
