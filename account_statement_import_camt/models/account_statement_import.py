@@ -96,7 +96,6 @@ class AccountStatementImport(models.TransientModel):
                                 f"Error processing file {member} in ZIP: {e}"
                             )
                 return global_result
-
         except zipfile.BadZipFile:
-            pass
+            _logger.exception("BadZipfile exception")
         return super()._import_file()
