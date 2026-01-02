@@ -53,12 +53,12 @@ class AccountStatementImport(models.TransientModel):
                 }
                 # browse files in zip
                 for member in zip_file.namelist():
-                    if member.lower().endswith(('.xml', '.camt')):
+                    if member.lower().endswith((".xml", ".camt")):
                         try:
                             xml_content = zip_file.open(member).read()
 
                             # Create temporary xml file
-                            attachment = self.env['ir.attachment'].create(
+                            attachment = self.env["ir.attachment"].create(
                                 {
                                     "name": member,
                                     "datas": base64.b64encode(xml_content),
