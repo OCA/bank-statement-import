@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-06 14:34+0000\n"
-"Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
+"PO-Revision-Date: 2026-01-15 14:25+0000\n"
+"Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -63,7 +63,7 @@ msgstr "Hesap: %s; "
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__skip_empty_lines
 msgid "Allows to skip empty lines"
-msgstr ""
+msgstr "Boş satırları atlamaya izin verir"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_column
@@ -137,7 +137,7 @@ msgstr "Sütunlar"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__offset_column
 msgid "Columns to ignore before starting to parse"
-msgstr ""
+msgstr "Ayrıştırmaya başlamadan önce göz ardı edilecek sütunlar"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__create_uid
@@ -341,7 +341,7 @@ msgstr "Son Güncelleme"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__n/a
 #, python-format
 msgid "N/A"
-msgstr ""
+msgstr "Yok"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__name
@@ -363,14 +363,14 @@ msgstr "Not Sütunu"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__offset_column
 msgid "Offset Column"
-msgstr ""
+msgstr "Ofset Sütunu"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 #, python-format
 msgid "Offsets cannot be negative"
-msgstr ""
+msgstr "Ofset negatif olamaz"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_amount_column
@@ -442,7 +442,7 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__skip_empty_lines
 msgid "Skip Empty Lines"
-msgstr ""
+msgstr "Boş Satırları Atla"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
@@ -623,7 +623,7 @@ msgstr "Hiçbiri"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__float_thousands_sep__quote
 msgid "quote (')"
-msgstr ""
+msgstr "alıntı (')"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__semicolon
