@@ -189,6 +189,18 @@ class OnlineBankStatementProviderPayPal(models.Model):
             ("paypal", "PayPal.com"),
         ]
 
+    @api.model
+    def _paypal_format_datetime(self, dt_naive_utc):
+        """Format naive UTC datetime for PayPal query params.
+
+        PayPal is picky about schema; microseconds often break requests.
+        Use RFC3339-like format with seconds and Z (UTC).
+        """
+        if not dt_naive_utc:
+            return None
+        dt_naive_utc = dt_naive_utc.replace(microsecond=0)
+        return dt_naive_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "paypal":
@@ -374,8 +386,14 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     def _paypal_get_transaction(self, token, transaction_id, timestamp):
         self.ensure_one()
-        transaction_date_ini = (timestamp - relativedelta(seconds=1)).isoformat() + "Z"
-        transaction_date_end = (timestamp + relativedelta(seconds=1)).isoformat() + "Z"
+        # Make sure we cover the whole day to avoid PayPal "missing" some transactions
+        ts = timestamp.replace(microsecond=0)
+        transaction_date_ini = self._paypal_format_datetime(
+            ts - relativedelta(seconds=1)
+        )
+        transaction_date_end = self._paypal_format_datetime(
+            ts + relativedelta(hour=23, minute=59, second=59)
+        )
         url = (
             (self.api_base or PAYPAL_API_BASE)
             + "/v1/reporting/transactions"
@@ -409,18 +427,13 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     (self.api_base or PAYPAL_API_BASE)
                     + "/v1/reporting/transactions"
                     + (
-                        "?transaction_currency={currency}"
-                        "&start_date={start}"
-                        "&end_date={end}"
+                        f"?transaction_currency={currency}"
+                        f"&start_date={self._paypal_format_datetime(interval_start)}"
+                        f"&end_date={self._paypal_format_datetime(interval_end)}"
                         "&fields=all"
                         "&balance_affecting_records_only=Y"
                         "&page_size=500"
-                        "&page={page}"
-                    ).format(
-                        currency=currency,
-                        start=interval_start.isoformat() + "Z",
-                        end=interval_end.isoformat() + "Z",
-                        page=page,
+                        f"&page={page}"
                     )
                 )
 
