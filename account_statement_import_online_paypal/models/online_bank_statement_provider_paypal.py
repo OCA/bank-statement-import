@@ -394,21 +394,21 @@ class OnlineBankStatementProviderPayPal(models.Model):
         transaction_date_end = self._paypal_format_datetime(
             ts + relativedelta(hour=23, minute=59, second=59)
         )
-        url = (
-            (self.api_base or PAYPAL_API_BASE)
-            + "/v1/reporting/transactions"
-            + (
-                f"?start_date={transaction_date_ini}"
-                f"&end_date={transaction_date_end}"
-                "&fields=all"
-            )
-        )
+        base = self.api_base or PAYPAL_API_BASE
+        params = {
+            "start_date": transaction_date_ini,
+            "end_date": transaction_date_end,
+            "fields": "all",
+        }
+        url = f"{base}/v1/reporting/transactions?{urlencode(params)}"
         data = self._paypal_retrieve(url, token)
-        transactions = data["transaction_details"]
+        transactions = data.get("transaction_details") or []
         for transaction in transactions:
-            if transaction["transaction_info"]["transaction_id"] != transaction_id:
-                continue
-            return transaction
+            if (
+                transaction.get("transaction_info", {}).get("transaction_id")
+                == transaction_id
+            ):
+                return transaction
         return None
 
     def _paypal_get_transactions(self, token, currency, since, until):
@@ -418,24 +418,22 @@ class OnlineBankStatementProviderPayPal(models.Model):
         interval_step = relativedelta(days=31)
         interval_start = since
         transactions = []
+        base = self.api_base or PAYPAL_API_BASE
         while interval_start < until:
             interval_end = min(interval_start + interval_step, until)
             page = 1
             total_pages = None
             while total_pages is None or page <= total_pages:
-                url = (
-                    (self.api_base or PAYPAL_API_BASE)
-                    + "/v1/reporting/transactions"
-                    + (
-                        f"?transaction_currency={currency}"
-                        f"&start_date={self._paypal_format_datetime(interval_start)}"
-                        f"&end_date={self._paypal_format_datetime(interval_end)}"
-                        "&fields=all"
-                        "&balance_affecting_records_only=Y"
-                        "&page_size=500"
-                        f"&page={page}"
-                    )
-                )
+                params = {
+                    "transaction_currency": currency,
+                    "start_date": self._paypal_format_datetime(interval_start),
+                    "end_date": self._paypal_format_datetime(interval_end),
+                    "fields": "all",
+                    "balance_affecting_records_only": "Y",
+                    "page_size": 500,
+                    "page": page,
+                }
+                url = f"{base}/v1/reporting/transactions?{urlencode(params)}"
 
                 # NOTE: Workaround for INVALID_REQUEST (see ROADMAP.rst)
                 invalid_data_workaround = self.env.context.get(
@@ -446,9 +444,10 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 data = self.with_context(
                     invalid_data_workaround=invalid_data_workaround,
                 )._paypal_retrieve(url, token)
+                transaction_details = data.get("transaction_details") or []
                 interval_transactions = map(
                     lambda transaction: self._paypal_preparse_transaction(transaction),
-                    data["transaction_details"],
+                    transaction_details,
                 )
                 transactions += list(
                     filter(
@@ -458,7 +457,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
                         interval_transactions,
                     )
                 )
-                total_pages = data["total_pages"]
+                total_pages = data.get("total_pages")
+                if total_pages is None:
+                    # If payload is incomplete but no error was raised,
+                    # treat as single page to avoid infinite loop.
+                    total_pages = 1
+
                 page += 1
             interval_start += interval_step
         return transactions
@@ -514,7 +518,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
     def _paypal_retrieve(self, url, auth, data=None):
         try:
             with self._paypal_urlopen(url, auth, data) as response:
-                content = response.read().decode("utf-8")
+                raw = response.read().decode("utf-8")
         except HTTPError as e:
             content = json.loads(e.read().decode("utf-8"))
 
@@ -532,7 +536,20 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 }
 
             raise self._paypal_decode_error(content) or e from None
-        return json.loads(content)
+
+        # Parse JSON
+        try:
+            content = json.loads(raw)
+        except Exception as exc:
+            raise UserError(
+                self.env._("Invalid JSON response from PayPal API.")
+            ) from exc
+
+        err = self._paypal_decode_error(content)
+        if err:
+            raise err
+
+        return content
 
     @api.model
     def _paypal_urlopen(self, url, auth, data=None):
