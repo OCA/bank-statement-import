@@ -183,6 +183,18 @@ class OnlineBankStatementProviderPayPal(models.Model):
             ("paypal", "PayPal.com"),
         ]
 
+    @api.model
+    def _paypal_format_datetime(self, dt_naive_utc):
+        """Format naive UTC datetime for PayPal query params.
+
+        PayPal is picky about schema; microseconds often break requests.
+        Use RFC3339-like format with seconds and Z (UTC).
+        """
+        if not dt_naive_utc:
+            return None
+        dt_naive_utc = dt_naive_utc.replace(microsecond=0)
+        return dt_naive_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         if self.service != "paypal":
@@ -408,14 +420,14 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     def _paypal_get_transaction(self, token, transaction_id, timestamp):
         self.ensure_one()
-        transaction_date_ini = (timestamp - relativedelta(seconds=1)).isoformat() + "Z"
-        # We want to intentionally force 23:59:59 because in some very specific cases
-        # and without apparent explanation, a transaction that has a specific date and
-        # time defined is not obtained at that time, therefore, we want to ensure that
-        # it will be obtained in this request to avoid false errors.
-        transaction_date_end = (
-            timestamp + relativedelta(hour=23, minute=59, second=59)
-        ).isoformat() + "Z"
+        # Make sure we cover the whole day to avoid PayPal "missing" some transactions
+        ts = timestamp.replace(microsecond=0)
+        transaction_date_ini = self._paypal_format_datetime(
+            ts - relativedelta(seconds=1)
+        )
+        transaction_date_end = self._paypal_format_datetime(
+            ts + relativedelta(hour=23, minute=59, second=59)
+        )
         url = (
             (self.api_base or PAYPAL_API_BASE)
             + "/v1/reporting/transactions"
@@ -458,8 +470,8 @@ class OnlineBankStatementProviderPayPal(models.Model):
                         "&page=%d"
                         % (
                             currency,
-                            interval_start.isoformat() + "Z",
-                            interval_end.isoformat() + "Z",
+                            self._paypal_format_datetime(interval_start),
+                            self._paypal_format_datetime(interval_end),
                             page,
                         )
                     )
