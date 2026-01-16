@@ -867,3 +867,297 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "unique_import_id": "1234567890-%s" % (self.today_timestamp,),
             },
         )
+
+    def test_retrieve_invalid_json_response(self):
+        """Cover new logic: if PayPal returns non-JSON body, raise UserError."""
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        mocked_response = UrlopenRetValMock("<html>not a json</html>", throw=False)
+        with mock.patch(
+            _provider_class + "._paypal_urlopen",
+            return_value=mocked_response,
+        ):
+            with self.assertRaisesRegex(
+                UserError, "Invalid JSON response from PayPal API"
+            ):
+                provider._paypal_retrieve("https://url", "--TOKEN--")
+
+    def test_get_transactions_missing_transaction_details(self):
+        """
+        Response without `transaction_details` must
+        not crash and should return empty list.
+        """
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        # PayPal-like error payload without `transaction_details`
+        mocked_payload = {
+            "name": "INVALID_REQUEST",
+            "message": "Request is not well-formed, syntactically "
+            "incorrect, or violates schema.",
+            # so that the page cycle ends correctly
+            "total_pages": 0,
+        }
+        since = self.now - relativedelta(hours=1)
+        until = self.now
+        with mock.patch(
+            _provider_class + "._paypal_retrieve",
+            return_value=mocked_payload,
+        ):
+            tx = provider._paypal_get_transactions("--TOKEN--", "EUR", since, until)
+        self.assertEqual(tx, [])
+
+    def test_paypal_format_datetime(self):
+        """
+        Ensure PayPal datetime formatter drops
+        microseconds and uses UTC Z format.
+        """
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        # None -> None
+        self.assertIsNone(provider._paypal_format_datetime(None))
+        # Drops microseconds + Z format
+        dt = datetime(2026, 1, 15, 11, 28, 27, 749445)  # naive UTC
+        self.assertEqual(
+            provider._paypal_format_datetime(dt),
+            "2026-01-15T11:28:27Z",
+        )
+
+    def test_transaction_parse_sets_narration_from_cart_info(self):
+        """
+        `cart_info.item_details[].item_code`
+        should be stored in line narration.
+        """
+        lines = self.paypal_parse_transaction(
+            f"""{{
+    "transaction_info": {{
+        "paypal_account_id": "1234567890",
+        "transaction_id": "1234567890",
+        "transaction_event_code": "T0007",
+        "transaction_initiation_date": "{self.today_isoformat}",
+        "transaction_updated_date": "{self.today_isoformat}",
+        "transaction_amount": {{
+            "currency_code": "EUR",
+            "value": "1624.35"
+        }},
+        "fee_amount": {{
+            "currency_code": "EUR",
+            "value": "-48.96"
+        }},
+        "transaction_status": "S"
+    }},
+    "payer_info": {{
+        "account_id": "1234567890",
+        "email_address": "partner@example.com",
+        "payer_name": {{
+            "alternate_full_name": "Acme, Inc."
+        }},
+        "country_code": "DE"
+    }},
+    "shipping_info": {{}},
+    "cart_info": {{
+        "item_details": [
+          {{
+            "item_code": "AG-052216",
+            "item_name": "NetIntegrations GmbH: AG-052216",
+            "item_quantity": "1",
+            "item_unit_price": {{
+              "currency_code": "EUR",
+              "value": "1624.35"
+            }}
+          }}
+        ]
+    }},
+    "store_info": {{}},
+    "auction_info": {{}},
+    "incentive_info": {{}}
+}}"""
+        )
+        # 2 lines: main + fee
+        self.assertEqual(len(lines), 2)
+        # main line should have narration
+        self.assertEqual(lines[0].get("narration"), "AG-052216")
+        # fee line should not be polluted
+        self.assertFalse(lines[1].get("narration"))
+
+    def test_transaction_parse_no_cart_info_no_narration(self):
+        """When `cart_info` is missing, narration must stay empty."""
+        lines = self.paypal_parse_transaction(
+            f"""{{
+    "transaction_info": {{
+        "paypal_account_id": "1234567890",
+        "transaction_id": "1234567899",
+        "transaction_event_code": "T0007",
+        "transaction_initiation_date": "{self.today_isoformat}",
+        "transaction_updated_date": "{self.today_isoformat}",
+        "transaction_amount": {{
+            "currency_code": "USD",
+            "value": "10.00"
+        }},
+        "transaction_status": "S"
+    }},
+    "payer_info": {{
+        "account_id": "1234567890",
+        "email_address": "partner@example.com",
+        "payer_name": {{
+            "alternate_full_name": "Acme, Inc."
+        }},
+        "country_code": "US"
+    }},
+    "shipping_info": {{}},
+    "store_info": {{}},
+    "auction_info": {{}},
+    "incentive_info": {{}}
+}}"""
+        )
+        self.assertEqual(len(lines), 1)
+        self.assertFalse(lines[0].get("narration"))
+
+    def test_transaction_parse_multiple_item_codes_in_narration(self):
+        """
+        Multiple item_codes should be preserved
+        in narration (at least included).
+        """
+        lines = self.paypal_parse_transaction(
+            f"""{{
+    "transaction_info": {{
+        "paypal_account_id": "1234567890",
+        "transaction_id": "1234567888",
+        "transaction_event_code": "T0007",
+        "transaction_initiation_date": "{self.today_isoformat}",
+        "transaction_updated_date": "{self.today_isoformat}",
+        "transaction_amount": {{
+            "currency_code": "EUR",
+            "value": "100.00"
+        }},
+        "transaction_status": "S"
+    }},
+    "payer_info": {{
+        "account_id": "1234567890",
+        "email_address": "partner@example.com",
+        "payer_name": {{
+            "alternate_full_name": "Acme, Inc."
+        }},
+        "country_code": "DE"
+    }},
+    "cart_info": {{
+        "item_details": [
+          {{ "item_code": "SO001" }},
+          {{ "item_code": "SO002" }}
+        ]
+    }}
+}}"""
+        )
+        self.assertEqual(len(lines), 1)
+        narration = lines[0].get("narration") or ""
+        self.assertIn("SO001", narration)
+        self.assertIn("SO002", narration)
+
+    def test_pull_sets_narration_from_cart_info(self):
+        """
+        Pull should propagate cart_info.item_code
+        into statement line narration.
+        """
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+
+        # Build a transaction that will be returned by _paypal_get_transactions()
+        tx = json.loads(
+            f"""{{
+    "transaction_info": {{
+        "paypal_account_id": "1234567890",
+        "transaction_id": "1234567890",
+        "transaction_event_code": "T0007",
+        "transaction_initiation_date": "{self.today_isoformat}",
+        "transaction_updated_date": "{self.today_isoformat}",
+        "transaction_amount": {{
+            "currency_code": "EUR",
+            "value": "1624.35"
+        }},
+        "fee_amount": {{
+            "currency_code": "EUR",
+            "value": "-48.96"
+        }},
+        "available_balance": {{
+            "currency_code": "EUR",
+            "value": "900.00"
+        }},
+        "transaction_status": "S"
+    }},
+    "payer_info": {{
+        "account_id": "1234567890",
+        "email_address": "partner@example.com",
+        "payer_name": {{
+            "alternate_full_name": "Acme, Inc."
+        }},
+        "country_code": "DE"
+    }},
+    "cart_info": {{
+        "item_details": [
+          {{ "item_code": "AG-052216" }}
+        ]
+    }},
+    "shipping_info": {{}},
+    "store_info": {{}},
+    "auction_info": {{}},
+    "incentive_info": {{}}
+}}""",
+            parse_float=Decimal,
+        )
+        tx = provider._paypal_preparse_transaction(tx)
+        with mock.patch(
+            _provider_class + "._paypal_get_transactions",
+            return_value=[tx],
+        ), mock.patch(
+            _provider_class + "._paypal_get_transaction",
+            return_value=tx,
+        ), self.mock_token():
+            lines, balances = provider._obtain_statement_data(
+                self.today - relativedelta(hours=1),
+                self.today + relativedelta(hours=1),
+            )
+        self.assertTrue(lines)
+        # Main line must have narration from cart_info.item_details[].item_code
+        self.assertEqual(lines[0].get("narration"), "AG-052216")
+        # Fee line must not have narration
+        fee_lines = [line for line in lines if str(line.get("amount")) == "-48.96"]
+        self.assertEqual(len(fee_lines), 1)
+        self.assertFalse(fee_lines[0].get("narration"))
+        # Not the focus of this test, but keep basic shape
+        self.assertIn("balance_start", balances)
+        self.assertIn("balance_end_real", balances)
