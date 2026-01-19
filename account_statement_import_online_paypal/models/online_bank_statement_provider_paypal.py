@@ -287,6 +287,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
     def _paypal_transaction_to_lines(self, data):
         transaction = data["transaction_info"]
         transaction_details = (data or {}).get("_odoo_transaction_details") or {}
+        transaction_details_json = json.dumps(transaction_details, default=str)
         payer = data["payer_info"]
         transaction_id = transaction["transaction_id"]
         event_code = transaction["transaction_event_code"]
@@ -322,7 +323,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "payment_ref": note,
             "unique_import_id": unique_import_id,
             "raw_data": transaction,
-            "transaction_details": transaction_details,
+            "transaction_details": transaction_details_json,
         }
         if narration:
             line["narration"] = narration
@@ -341,7 +342,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     "partner_name": "PayPal",
                     "unique_import_id": "%s-FEE" % unique_import_id,
                     "payment_ref": _("Transaction fee for %s") % note,
-                    "transaction_details": transaction_details,
+                    "transaction_details": transaction_details_json,
                 }
             ]
         return lines
