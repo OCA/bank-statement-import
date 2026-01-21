@@ -201,7 +201,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     content_l.append(values[index])
         if all(isinstance(content, str) for content in content_l):
             return " ".join(content_l)
-        return content_l[0]
+        elif any(isinstance(content, int) for content in content_l):
+            # Convert all content to string and join when we have integers
+            return " ".join(str(content) for content in content_l)
+        else:
+            # Fallback to first content for other mixed types
+            return content_l[0]
 
     def _parse_rows(self, mapping, currency_code, data, columns):  # noqa: C901
         csv_or_xlsx, data_file = data
