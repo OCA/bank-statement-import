@@ -306,7 +306,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
             note = "{}: {}".format(note, transaction_subject or transaction_note)
         if payer_email:
             note += " (%s)" % payer_email
-        unique_import_id = "{}-{}".format(transaction_id, int(date.timestamp()))
+        unique_import_id = f"{transaction_id}-{int(date.timestamp())}"
+        bank_ref = transaction.get("bank_reference_id") or transaction.get(
+            "settlement_reference_id"
+        )
+        if bank_ref and note == transaction_id:
+            note = f"General withdrawal from PayPal account {bank_ref} {note}"
         name = (
             invoice
             or transaction_subject
