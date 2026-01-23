@@ -276,7 +276,9 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             "narration": {},
             "transaction_type": {},
         }  # fallback defaults
-        self.add_value_from_node(ns, node, "./ns:BookgDt/ns:Dt", transaction, "date")
+        self.add_value_from_node(
+            ns, node, "./ns:BookgDt/ns:Dt | ./ns:BookgDt/ns:DtTm", transaction, "date"
+        )
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction["amount"] = amount
