@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-20 16:50+0000\n"
+"PO-Revision-Date: 2026-01-27 20:09+0000\n"
 "Last-Translator: smaddlsoft <jm.veddeler@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -108,12 +108,12 @@ msgstr "Banknamespalte"
 #. module: account_statement_import_sheet_file
 #: model:ir.model,name:account_statement_import_sheet_file.model_account_statement_import_sheet_mapping
 msgid "Bank Statement Import Sheet Mapping"
-msgstr "Kontoauszugsimport Tabellenzuordnung"
+msgstr "Kontoauszugsimport Mapping-Tabelle"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model,name:account_statement_import_sheet_file.model_account_statement_import_sheet_parser
 msgid "Bank Statement Import Sheet Parser"
-msgstr "Kontoauszugsimport Tabellenparser"
+msgstr "Kontoauszugsimport Parser"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -211,7 +211,7 @@ msgstr "Dezimaltrennzeichen"
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_journal__default_sheet_mapping_id
 msgid "Default Sheet Mapping"
-msgstr "Standard-Tabellenzuordnung"
+msgstr "Standard Mapping-Tabelle"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__delimiter
@@ -414,7 +414,7 @@ msgstr "Legen Sie die Anzahl der Kopfzeilen fest."
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import__sheet_mapping_id
 msgid "Sheet mapping"
-msgstr "Tabellenzuordnung"
+msgstr "Mapping-Tabelle"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__simple_value
@@ -444,13 +444,13 @@ msgstr "Leere Zeilen überspringen"
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
 msgid "Statement Import Map"
-msgstr "Auszugsimport-Zuordnung"
+msgstr "Kontoauszugs-Zuordnung"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.actions.act_window,name:account_statement_import_sheet_file.action_statement_import_sheet_report_mappings
 #: model:ir.ui.menu,name:account_statement_import_sheet_file.menu_statement_import_sheet_mapping
 msgid "Statement Sheet Mappings"
-msgstr "Auszug-Tabellenzuordnungen"
+msgstr "Kontoauszugimport-Mappings"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_form
