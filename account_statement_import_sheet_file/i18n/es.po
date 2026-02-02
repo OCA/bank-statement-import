@@ -20,34 +20,28 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "%(code)s: %(filename)s"
 msgstr "%(code)s: %(filename)s"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
-"(when the file has no header).\n"
-"                                You can concatenate multiple columns in the "
-"file into the same field, indicating the\n"
-"                                column names or numbers separated by comma."
+"<span class=\"fa fa-info-circle\">\n"
+"                                    Add the column names or column number "
+"(when the file has no header). You can concatenate multiple columns in the "
+"file into the same field, indicating the column names or numbers separated "
+"by comma.\n"
+"                                </span>"
 msgstr ""
-"<span class=\"fa fa-info-circle\"/> Agregue los nombres de columna o el "
-"número de columna (cuando el archivo no tiene encabezado).\n"
-"                                Puede concatenar varias columnas en el "
-"archivo en el mismo campo, indicando el\n"
-"                                nombres de columnas o números separados por "
-"comas."
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> indicate the column number in the "
-"Columns section. The first column is 0."
+"<span class=\"fa fa-info-circle\">\n"
+"                                    indicate the column number in the "
+"Columns section. The first column is 0.\n"
+"                                </span>"
 msgstr ""
-"<span class=\"fa fa-info-circle\"/> indique el número de columna en la "
-"sección Columnas. La primera columna es 0."
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__absolute_value
@@ -57,7 +51,6 @@ msgstr "Valor absoluto"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "Account: %s; "
 msgstr "Cuenta: %s; "
 
@@ -79,7 +72,6 @@ msgstr "Tipo de importe"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import.py:0
-#, python-format
 msgid "Bad file/mapping: "
 msgstr "Archivo/mapeo defectuoso: "
 
@@ -121,7 +113,6 @@ msgstr "Analizador de hojas de importación de extractos bancarios"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "Bank: %s; "
 msgstr "Banco: %s; "
 
@@ -341,7 +332,6 @@ msgstr "Última modificación el"
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__n/a
-#, python-format
 msgid "N/A"
 msgstr "N/A"
 
@@ -353,7 +343,6 @@ msgstr "Nombre"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "No valid encoding was found for the attached file"
 msgstr "No hay una codificación válida para el fichero adjunto"
 
@@ -370,7 +359,6 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid "Offsets cannot be negative"
 msgstr ""
 
@@ -486,7 +474,6 @@ msgstr "Chino tradicional (big5)"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "Transaction ID: %s; "
 msgstr "ID de transacción: %s; "
 
@@ -523,14 +510,12 @@ msgstr "Columna de ID único de trasacción"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid "Use amount_column if you have set Amount type = 'Single value'"
 msgstr "Utilice amount_column si ha establecido Amount type = 'Single value'"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid ""
 "Use amount_debit_column and amount_credit_column if you have set Amount type "
 "= 'Distinct Credit/debit Column'"
@@ -541,7 +526,6 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid "Use debit_credit_column if you have set Amount type = 'Absolute value'"
 msgstr ""
 "Utilice debit_credit_column si ha establecido Amount type = 'Absolute value'"
@@ -588,6 +572,13 @@ msgstr "Occidental (Latín-1 / ISO 8859-1)"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
 msgstr "Occidental (Windows-1252)"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__float_decimal_sep
+msgid ""
+"When the separator is 'none', the value will be shifted according to the "
+"currency decimals. For example, 12345 will be converted to 123.45"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header
@@ -638,6 +629,28 @@ msgstr "espacio"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "tabulador"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+#~ "(when the file has no header).\n"
+#~ "                                You can concatenate multiple columns in "
+#~ "the file into the same field, indicating the\n"
+#~ "                                column names or numbers separated by "
+#~ "comma."
+#~ msgstr ""
+#~ "<span class=\"fa fa-info-circle\"/> Agregue los nombres de columna o el "
+#~ "número de columna (cuando el archivo no tiene encabezado).\n"
+#~ "                                Puede concatenar varias columnas en el "
+#~ "archivo en el mismo campo, indicando el\n"
+#~ "                                nombres de columnas o números separados "
+#~ "por comas."
+
+#~ msgid ""
+#~ "<span class=\"fa fa-info-circle\"/> indicate the column number in the "
+#~ "Columns section. The first column is 0."
+#~ msgstr ""
+#~ "<span class=\"fa fa-info-circle\"/> indique el número de columna en la "
+#~ "sección Columnas. La primera columna es 0."
 
 #~ msgid "Last Modified on"
 #~ msgstr "Última modificación el"
