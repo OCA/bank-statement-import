@@ -26,7 +26,10 @@ msgstr "%(code)s: %(filename)s"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
 "<span class=\"fa fa-info-circle\">\n"
-"                                    Add the column names or column number (when the file has no header). You can concatenate multiple columns in the file into the same field, indicating the column names or numbers separated by comma.\n"
+"                                    Add the column names or column number "
+"(when the file has no header). You can concatenate multiple columns in the "
+"file into the same field, indicating the column names or numbers separated "
+"by comma.\n"
 "                                </span>"
 msgstr ""
 "<span class=\"fa fa-info-circle\">\n"
@@ -40,7 +43,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
 "<span class=\"fa fa-info-circle\">\n"
-"                                    indicate the column number in the Columns section. The first column is 0.\n"
+"                                    indicate the column number in the "
+"Columns section. The first column is 0.\n"
 "                                </span>"
 msgstr ""
 "<span class=\"fa fa-info-circle\">\n"
@@ -277,8 +281,8 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_currency_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original currency of transaction from"
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "Falls der Auszug die Originalwährung für Transaktionen mit automatischer "
 "Währungsumrechnung bereitstellt, Spalte, aus der die Originalwährung der "
@@ -287,8 +291,8 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_amount_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original transaction amount in original "
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
 "transaction currency from"
 msgstr ""
 "Falls der Auszug die Originalwährung für Transaktionen mit automatischer "
@@ -298,9 +302,9 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_inverse_sign
 msgid ""
-"In some cases such as in credit card statements the amounts are expressed in"
-" the inverse sign. By setting this flag during the upload the amounts will "
-"be inverted in sign."
+"In some cases such as in credit card statements the amounts are expressed in "
+"the inverse sign. By setting this flag during the upload the amounts will be "
+"inverted in sign."
 msgstr ""
 "In einigen Fällen, wie z.B. bei Kreditkartenabrechnungen, werden die Beträge "
 "mit umgekehrtem Vorzeichen angegeben. Durch Setzen dieses Flags beim Upload "
@@ -530,8 +534,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 msgid ""
-"Use amount_debit_column and amount_credit_column if you have set Amount type"
-" = 'Distinct Credit/debit Column'"
+"Use amount_debit_column and amount_credit_column if you have set Amount type "
+"= 'Distinct Credit/debit Column'"
 msgstr ""
 "Verwenden Sie amount_debit_column und amount_credit_column, wenn Sie "
 "Betragstyp = 'Getrennte Haben/Soll-Spalte' festgelegt haben"
@@ -590,6 +594,13 @@ msgstr "Westeuropäisch (Latin-1 / ISO 8859-1)"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
 msgstr "Westeuropäisch (Windows-1252)"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__float_decimal_sep
+msgid ""
+"When the separator is 'none', the value will be shifted according to the "
+"currency decimals. For example, 12345 will be converted to 123.45"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header

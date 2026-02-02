@@ -20,28 +20,28 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "%(code)s: %(filename)s"
 msgstr "%(code)s: %(filename)s"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
-"(when the file has no header).\n"
-"                                You can concatenate multiple columns in the "
-"file into the same field, indicating the\n"
-"                                column names or numbers separated by comma."
+"<span class=\"fa fa-info-circle\">\n"
+"                                    Add the column names or column number "
+"(when the file has no header). You can concatenate multiple columns in the "
+"file into the same field, indicating the column names or numbers separated "
+"by comma.\n"
+"                                </span>"
 msgstr ""
-"<span class=\"fa fa-info-circle\"/> 添加列名或列号（当文件没有标题时）。 \n"
-"您可以将文件中的多个列合并到同一个字段，用逗号分隔列名或列号。"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> indicate the column number in the "
-"Columns section. The first column is 0."
-msgstr "<span class=\"fa fa-info-circle\"/>在列表中的列号，第一列是0。"
+"<span class=\"fa fa-info-circle\">\n"
+"                                    indicate the column number in the "
+"Columns section. The first column is 0.\n"
+"                                </span>"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__absolute_value
@@ -51,7 +51,6 @@ msgstr "绝对值"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "Account: %s; "
 msgstr "科目： %s; "
 
@@ -73,7 +72,6 @@ msgstr "金额类型"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import.py:0
-#, python-format
 msgid "Bad file/mapping: "
 msgstr "文件/映射错误： "
 
@@ -115,7 +113,6 @@ msgstr "银行对帐表格导入解析"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "Bank: %s; "
 msgstr "银行 %s; "
 
@@ -328,7 +325,6 @@ msgstr "最后更新于"
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__n/a
-#, python-format
 msgid "N/A"
 msgstr "N/A"
 
@@ -340,7 +336,6 @@ msgstr "名称"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "No valid encoding was found for the attached file"
 msgstr "未找到文件的合法编码"
 
@@ -357,7 +352,6 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid "Offsets cannot be negative"
 msgstr ""
 
@@ -474,7 +468,6 @@ msgstr "繁体中文 (big5)"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-#, python-format
 msgid "Transaction ID: %s; "
 msgstr "交易 ID： %s; "
 
@@ -511,14 +504,12 @@ msgstr "唯一交易ID列名"
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid "Use amount_column if you have set Amount type = 'Single value'"
 msgstr "如果将金额类型设置为“简单值”，请使用金额列"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid ""
 "Use amount_debit_column and amount_credit_column if you have set Amount type "
 "= 'Distinct Credit/debit Column'"
@@ -527,7 +518,6 @@ msgstr "如果将金额类型设置为“不同的贷方/借方列”，请使�
 #. module: account_statement_import_sheet_file
 #. odoo-python
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
-#, python-format
 msgid "Use debit_credit_column if you have set Amount type = 'Absolute value'"
 msgstr "用于金额类型设置为“绝对值”，使用借/贷列"
 
@@ -571,6 +561,13 @@ msgstr "西方 (Latin-1 / ISO 8859-1)"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__file_encoding__windows-1252
 msgid "Western (Windows-1252)"
 msgstr "Western (Windows-1252)"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__float_decimal_sep
+msgid ""
+"When the separator is 'none', the value will be shifted according to the "
+"currency decimals. For example, 12345 will be converted to 123.45"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header
@@ -618,3 +615,20 @@ msgstr "空格"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "制表符"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+#~ "(when the file has no header).\n"
+#~ "                                You can concatenate multiple columns in "
+#~ "the file into the same field, indicating the\n"
+#~ "                                column names or numbers separated by "
+#~ "comma."
+#~ msgstr ""
+#~ "<span class=\"fa fa-info-circle\"/> 添加列名或列号（当文件没有标题"
+#~ "时）。 \n"
+#~ "您可以将文件中的多个列合并到同一个字段，用逗号分隔列名或列号。"
+
+#~ msgid ""
+#~ "<span class=\"fa fa-info-circle\"/> indicate the column number in the "
+#~ "Columns section. The first column is 0."
+#~ msgstr "<span class=\"fa fa-info-circle\"/>在列表中的列号，第一列是0。"
