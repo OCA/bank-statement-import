@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-18 06:13+0000\n"
-"PO-Revision-Date: 2024-12-05 12:06+0000\n"
+"PO-Revision-Date: 2026-02-04 11:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -33,6 +33,12 @@ msgid ""
 "by comma.\n"
 "                                </span>"
 msgstr ""
+"<span class=\"fa fa-info-circle\">\n"
+"                                    Aggiungere i nomi o i numeri delle "
+"colonne (quando il file non ha intestazione). È possibile concatenare più "
+"colonne del file nello stesso campo, indicando i nomi o i numeri delle "
+"colonne separati da virgola.\n"
+"                                </span>"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
@@ -42,6 +48,10 @@ msgid ""
 "Columns section. The first column is 0.\n"
 "                                </span>"
 msgstr ""
+"<span class=\"fa fa-info-circle\">\n"
+"                                    Indicare il numero di colonna nella "
+"sezione Colonne. La prima colonna è 0.\n"
+"                                </span>"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__amount_type__absolute_value
@@ -582,6 +592,8 @@ msgid ""
 "When the separator is 'none', the value will be shifted according to the "
 "currency decimals. For example, 12345 will be converted to 123.45"
 msgstr ""
+"Quando il separatore è \"nessuno\", il valore verrà spostato in base ai "
+"decimali della valuta. Ad esempio, 12345 verrà convertito in 123,45"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header
