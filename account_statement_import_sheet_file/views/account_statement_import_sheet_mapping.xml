@@ -52,10 +52,6 @@
                                 </span>
                             </div>
                         </group>
-                        <group invisible="not debit_credit_column">
-                            <field name="debit_value" required="debit_credit_column" />
-                            <field name="credit_value" required="debit_credit_column" />
-                        </group>
                         <group>
                             <field name="skip_empty_lines" />
                             <field name="header_lines_skip_count" />
@@ -77,8 +73,8 @@
                             <field name="amount_type" />
                             <field
                                 name="amount_column"
-                                invisible="amount_type == 'distinct_credit_debit'"
-                                required="amount_type != 'distinct_credit_debit'"
+                                invisible="amount_type != 'simple_value'"
+                                required="amount_type == 'simple_value'"
                             />
 
                             <field
@@ -91,15 +87,15 @@
                                 invisible="amount_type != 'distinct_credit_debit'"
                                 required="amount_type == 'distinct_credit_debit'"
                             />
-                            <field name="amount_inverse_sign" />
-                            <field name="balance_column" />
-                            <field name="original_currency_column" />
-                            <field name="original_amount_column" />
                             <field
                                 name="debit_credit_column"
                                 invisible="amount_type != 'absolute_value'"
                                 required="amount_type == 'absolute_value'"
                             />
+                            <field name="amount_inverse_sign" />
+                            <field name="balance_column" />
+                            <field name="original_currency_column" />
+                            <field name="original_amount_column" />
                             <field name="transaction_id_column" />
                             <field name="description_column" />
                             <field name="notes_column" />

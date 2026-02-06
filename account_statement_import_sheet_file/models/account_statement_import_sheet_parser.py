@@ -256,11 +256,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         mapping,
                     )
 
-            amount = _decimal("amount_column", values)
-            if not amount:
+            if mapping.amount_type == "distinct_credit_debit":
                 amount = abs(_decimal("amount_debit_column", values) or 0)
-            if not amount:
-                amount = -abs(_decimal("amount_credit_column", values) or 0)
+                if not amount:
+                    amount = -abs(_decimal("amount_credit_column", values) or 0)
+            elif mapping.amount_type == "simple_value":
+                amount = _decimal("amount_column", values)
+            elif mapping.amount_type == "absolute_value":
+                amount = abs(_decimal("debit_credit_column", values) or 0)
 
             balance = (
                 self._get_values_from_column(values, columns, "balance_column")
