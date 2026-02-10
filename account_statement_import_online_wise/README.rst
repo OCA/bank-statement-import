@@ -1,10 +1,6 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
-===================================================
-Online Bank Statements: Wise.com (TransferWise.com)
-===================================================
+================================
+Online Bank Statements: Wise.com
+================================
 
 .. 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -17,24 +13,23 @@ Online Bank Statements: Wise.com (TransferWise.com)
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/14.0/account_statement_import_online_wise
+    :target: https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_wise
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-14-0/bank-statement-import-14-0-account_statement_import_online_wise
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-18-0/bank-statement-import-18-0-account_statement_import_online_wise
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module provides online bank statements from
 `Wise.com <https://wise.com/>`__.
-(formely `TransferWise.com <https://transferwise.com/>`__).
 
 **Table of contents**
 
@@ -46,40 +41,44 @@ Configuration
 
 To configure online bank statements provider:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Open bank account to configure and edit it
-#. Set *Bank Feeds* to *Online*
-#. Select *Wise.com (TransferWise.com)* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+1. Go to *Invoicing > Configuration > Bank Accounts*
+2. Open bank account to configure and edit it
+3. Set *Bank Feeds* to *Online*
+4. Select *Wise.com* as online bank statements provider in *Online Bank
+   Statements (OCA)* section
+5. Save the bank account
+6. Click on provider and configure provider-specific settings.
 
 or, alternatively:
 
-#. Go to *Invoicing > Overview*
-#. Open settings of the corresponding journal account
-#. Switch to *Bank Account* tab
-#. Set *Bank Feeds* to *Online*
-#. Select *Wise.com (TransferWise.com)* as online bank statements provider in
-   *Online Bank Statements (OCA)* section
-#. Save the bank account
-#. Click on provider and configure provider-specific settings.
+1. Go to *Invoicing > Overview*
+2. Open settings of the corresponding journal account
+3. Switch to *Bank Account* tab
+4. Set *Bank Feeds* to *Online*
+5. Select *Wise.com* as online bank statements provider in *Online Bank
+   Statements (OCA)* section
+6. Save the bank account
+7. Click on provider and configure provider-specific settings.
 
 Usage
 =====
 
 To pull historical bank statements:
 
-#. Go to *Invoicing > Configuration > Bank Accounts*
-#. Select specific bank accounts
-#. Launch *Actions > Online Bank Statements Pull Wizard*
-#. Configure date interval and click *Pull*
+1. Go to *Invoicing > Configuration > Bank Accounts*
+2. Select specific bank accounts
+3. Launch *Actions > Online Bank Statements Pull Wizard*
+4. Configure date interval and click *Pull*
 
 To configure Strong Customer Authentication:
 
-#. Go to provider-specific settings and either press *Generate Key* or paste
-manually-generate private and public keys
-#. Navigate to `Wise.com <https://wise.com/public-keys/>`__ and register the public key.
+#. Go to provider-specific settings and either press *Generate Key* or
+paste manually-generate private and public keys #. Navigate to
+`Wise.com <https://wise.com/public-keys/>`__ and register the public
+key.
+
+Note that it's no longer possible to sign API requests with public keys
+on Personal Accounts.
 
 Bug Tracker
 ===========
@@ -87,7 +86,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_wise%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_wise%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -95,19 +94,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * CorporateHub
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `CorporateHub <https://corporatehub.eu/>`__
+- `CorporateHub <https://corporatehub.eu/>`__
 
-  * Alexey Pelykh <alexey.pelykh@corphub.eu>
+  - Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -127,6 +126,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-alexey-pelykh| 
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/14.0/account_statement_import_online_wise>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_wise>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
