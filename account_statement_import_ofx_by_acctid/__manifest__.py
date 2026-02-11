@@ -6,9 +6,9 @@
     "summary": """
         Import OFX Bank Statement by ACCTID""",
     "category": "Banking addons",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "license": "AGPL-3",
-    "author": "Escodoo,Odoo Community Association (OCA)",
+    "author": "Escodoo, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/bank-statement-import",
     "depends": [
         "account_statement_import_ofx",
