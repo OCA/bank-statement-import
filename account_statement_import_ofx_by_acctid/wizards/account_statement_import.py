@@ -10,7 +10,6 @@ from odoo.addons.base.models.res_bank import sanitize_account_number
 
 
 class AccountStatementImport(models.TransientModel):
-
     _inherit = "account.statement.import"
 
     @api.model

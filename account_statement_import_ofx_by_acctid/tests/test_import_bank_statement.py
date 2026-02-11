@@ -11,7 +11,7 @@ class TestOfxFile(TransactionCase):
     """
 
     def setUp(self):
-        super(TestOfxFile, self).setUp()
+        super().setUp()
         self.asi_model = self.env["account.statement.import"]
         self.abs_model = self.env["account.bank.statement"]
         self.j_model = self.env["account.journal"]

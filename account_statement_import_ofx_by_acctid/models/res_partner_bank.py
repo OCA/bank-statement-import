@@ -7,7 +7,6 @@ from odoo.addons.base.models.res_bank import sanitize_account_number
 
 
 class ResPartnerBank(models.Model):
-
     _inherit = "res.partner.bank"
 
     acctid = fields.Char(
