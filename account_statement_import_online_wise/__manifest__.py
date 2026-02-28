@@ -4,7 +4,7 @@
 
 {
     "name": "Online Bank Statements: Wise.com",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import",
