@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,19 +24,14 @@ msgid "API key"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
-#, python-format
+#. odoo-python
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 msgid "Ending balance unavailable"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
-#, python-format
+#. odoo-python
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 msgid "Fee for %s"
 msgstr ""
 
@@ -46,29 +41,14 @@ msgid "Generate Key"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__id
-msgid "ID"
-msgstr ""
-
-#. module: account_statement_import_online_wise
-#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
-#, python-format
+#. odoo-python
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 msgid "No API key specified!"
 msgstr ""
 
 #. module: account_statement_import_online_wise
 #: model:ir.model,name:account_statement_import_online_wise.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
-msgstr ""
-
-#. module: account_statement_import_online_wise
-#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__transferwise_profile
-msgid "Origin"
 msgstr ""
 
 #. module: account_statement_import_online_wise
@@ -92,19 +72,29 @@ msgid "Strong Customer Authentication"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
-#, python-format
+#. odoo-python
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 msgid "Strong Customer Authentication is not configured"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
-#, python-format
+#. odoo-python
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 msgid "Transaction fee for %s"
 msgstr ""
 
 #. module: account_statement_import_online_wise
-#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
-#, python-format
+#. odoo-python
+#: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_wise.py:0
 msgid "Unable to parse key"
+msgstr ""
+
+#. module: account_statement_import_online_wise
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
+msgid "Wise Configuration"
+msgstr ""
+
+#. module: account_statement_import_online_wise
+#: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__wise_profile
+msgid "Wise Profile"
 msgstr ""
