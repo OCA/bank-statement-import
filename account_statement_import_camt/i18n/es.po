@@ -1,0 +1,232 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_statement_import_camt
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-16 08:08+0000\n"
+"PO-Revision-Date: 2023-10-10 22:57+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
+msgid "Account Bank Statement Import CAMT parser"
+msgstr "Análisis de importación de extractos bancarios CAMT"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Account Servicer Reference"
+msgstr "Referencia del administrador de cuentas"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Additional Entry Information"
+msgstr "Información adicional sobre la entrada"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Additional Transaction Information"
+msgstr "Información adicional sobre la transacción"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Extracto bancario"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línea del Extracto Bancario"
+
+#. module: account_statement_import_camt
+#: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
+msgid "CAMT"
+msgstr "CAMT"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Cheque Number"
+msgstr "Número de cheque"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Communication"
+msgstr "Comunicación"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "End To End Id"
+msgstr "Id. de extremo a extremo"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Importar archivos de extractos bancarios"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Instructed Id"
+msgstr "Id de Instrucción"
+
+#. module: account_statement_import_camt
+#: model:ir.model,name:account_statement_import_camt.model_account_journal
+msgid "Journal"
+msgstr "Dario"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Mandate Id"
+msgstr "Id de Mandato"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Msg Id"
+msgstr "Id de Msg"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Partner Account Number"
+msgstr "Número de cuenta del socio"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Partner Name"
+msgstr "Nombre del Socio"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Postal Address"
+msgstr "Dirección postal"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Return Reason Additional Information"
+msgstr "Motivo de la devolución Información adicional"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Return Reason Code"
+msgstr "Código del motivo de la devolución"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Return Reason Code (Proprietary)"
+msgstr "Código de devolución (Propietario)"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Reversal Indicator"
+msgstr "Indicador de inversión"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Structured Reference"
+msgstr "Referencia esctructurada"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Transaction Date"
+msgstr "Fecha de la transacción"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Transaction Identification"
+msgstr "Identificación de transacciones"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Transaction Type"
+msgstr "Tipo de transacción"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/parser.py:0
+#, python-format
+msgid "Unstructured Reference"
+msgstr "Referencia desestructurada"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/account_journal.py:0
+#, python-format
+msgid "camt.053.001.02"
+msgstr "camt.053.001.02"
+
+#. module: account_statement_import_camt
+#. odoo-python
+#: code:addons/account_statement_import_camt/models/account_journal.py:0
+#, python-format
+msgid "camt.054.001.02"
+msgstr "camt.054.001.02"
+
+#. module: account_statement_import_camt
+#: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
+msgid "zipped CAMT"
+msgstr "CAMT en .zip"
+
+#~ msgid "Display Name"
+#~ msgstr "Nombre a mostrar"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación en"
