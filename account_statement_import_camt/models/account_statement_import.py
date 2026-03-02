@@ -34,8 +34,6 @@ class AccountStatementImport(models.TransientModel):
                 return currency, account_number, transactions
             # pylint: disable=except-pass
             except (zipfile.BadZipFile, ValueError):
-                # Utilisation de debug au lieu de exception car ce n'est pas une erreur,
-                # mais le comportement normal si on importe un simple fichier XML
                 _logger.debug("Statement file is not a zip file.")
             # Not a camt file, returning super will call next candidate:
             _logger.debug("Statement file was not a camt file.", exc_info=True)
@@ -50,12 +48,18 @@ class AccountStatementImport(models.TransientModel):
 
         try:
             with zipfile.ZipFile(BytesIO(file_data)) as zip_file:
+                namelist = zip_file.namelist()
+                if "[Content_Types].xml" in namelist or (
+                    "mimetype" in namelist and "content.xml" in namelist
+                ):
+                    return super()._import_file()
+
                 global_result = {
                     "statement_ids": [],
                     "notifications": [],
                 }
                 # browse files in zip
-                for member in zip_file.namelist():
+                for member in namelist:
                     if member.lower().endswith((".xml", ".camt")):
                         try:
                             xml_content = zip_file.open(member).read()
@@ -92,7 +96,7 @@ class AccountStatementImport(models.TransientModel):
                                 temp_result["notifications"]
                             )
                         except (ValueError, UserError) as e:
-                            _logger.exception(
+                            _logger.warning(
                                 "Error processing file %s in ZIP: %s", member, e
                             )
                             global_result["notifications"].append(
