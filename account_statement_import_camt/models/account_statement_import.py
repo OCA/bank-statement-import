@@ -6,6 +6,7 @@ import zipfile
 from io import BytesIO
 
 from odoo import models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -88,12 +89,12 @@ class AccountStatementImport(models.TransientModel):
                             global_result["notifications"].extend(
                                 temp_result["notifications"]
                             )
-                        except Exception as e:
+                        except (ValueError, UserError) as e:
                             _logger.exception(
-                                f"Error processing file {member} in ZIP: {e}"
+                                "Error processing file %s in ZIP: %s", member, e
                             )
                             global_result["notifications"].append(
-                                f"Error processing file {member} in ZIP: {e}"
+                                "Error processing file %s in ZIP: %s" % (member, e)
                             )
                 return global_result
         except zipfile.BadZipFile:
