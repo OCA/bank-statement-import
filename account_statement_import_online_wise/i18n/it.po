@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-29 16:26+0000\n"
+"PO-Revision-Date: 2026-03-02 18:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "API base"
-msgstr ""
+msgstr "API base"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "API key"
-msgstr ""
+msgstr "Chiave API"
 
 #. module: account_statement_import_online_wise
 #: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__display_name
@@ -35,18 +35,18 @@ msgstr "Nome visualizzato"
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
 #, python-format
 msgid "Ending balance unavailable"
-msgstr ""
+msgstr "Saldo finale non disponibile"
 
 #. module: account_statement_import_online_wise
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
 #, python-format
 msgid "Fee for %s"
-msgstr ""
+msgstr "Tariffa per %s"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "Generate Key"
-msgstr ""
+msgstr "Genera chiave"
 
 #. module: account_statement_import_online_wise
 #: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__id
@@ -62,52 +62,52 @@ msgstr "Ultima modifica il"
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
 #, python-format
 msgid "No API key specified!"
-msgstr ""
+msgstr "Nessuna chiave API indicata!"
 
 #. module: account_statement_import_online_wise
 #: model:ir.model,name:account_statement_import_online_wise.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
-msgstr ""
+msgstr "Fornitore estratto conto bancario online"
 
 #. module: account_statement_import_online_wise
 #: model:ir.model.fields,field_description:account_statement_import_online_wise.field_online_bank_statement_provider__transferwise_profile
 msgid "Origin"
-msgstr ""
+msgstr "Origine"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "Private key"
-msgstr ""
+msgstr "Chiave privata"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "Profile"
-msgstr ""
+msgstr "Profilo"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "Public key"
-msgstr ""
+msgstr "Chiave pubblica"
 
 #. module: account_statement_import_online_wise
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_wise.online_bank_statement_provider_form
 msgid "Strong Customer Authentication"
-msgstr ""
+msgstr "Autenticazione forte cliente"
 
 #. module: account_statement_import_online_wise
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
 #, python-format
 msgid "Strong Customer Authentication is not configured"
-msgstr ""
+msgstr "L'autenticazione forte cliente non è configurata"
 
 #. module: account_statement_import_online_wise
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
 #, python-format
 msgid "Transaction fee for %s"
-msgstr ""
+msgstr "Tariffa transizione per %s"
 
 #. module: account_statement_import_online_wise
 #: code:addons/account_statement_import_online_wise/models/online_bank_statement_provider_transferwise.py:0
 #, python-format
 msgid "Unable to parse key"
-msgstr ""
+msgstr "Impossibile decodificare la chiave"
