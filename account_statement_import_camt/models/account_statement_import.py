@@ -91,7 +91,7 @@ class AccountStatementImport(models.TransientModel):
                             )
                         except (ValueError, UserError) as e:
                             _logger.exception(
-                                "Error processing file %s in ZIP: %s", member, e
+                                "Error processing %s in ZIP: %s", member, e
                             )
                             global_result["notifications"].append(
                                 "Error processing file %s in ZIP: %s" % (member, e)
