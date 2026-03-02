@@ -867,13 +867,14 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             "alternate_full_name": "Acme, Inc."
         },
         "country_code": "US"
-    }},
-    "shipping_info": {{}},
-    "cart_info": {{}},
-    "store_info": {{}},
-    "auction_info": {{}},
-    "incentive_info": {{}}
-    }}"""
+    },
+    "shipping_info": {},
+    "cart_info": {},
+    "store_info": {},
+    "auction_info": {},
+    "incentive_info": {}
+    }"""
+            % (self.today_isoformat, self.today_isoformat)
         )
         self.assertEqual(len(lines), 2)
         del lines[0]["raw_data"]
