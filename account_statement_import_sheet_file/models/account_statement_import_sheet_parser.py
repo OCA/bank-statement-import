@@ -8,6 +8,7 @@ import itertools
 import logging
 import math
 import re
+import warnings
 from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
@@ -179,8 +180,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
         They accept `mapping` and `data_file` arguments and return the parsed file.
         """
         return [
-            self._parse_data_xlrd,
             self._parse_data_xlsx,
+            self._parse_data_xlrd,
             self._parse_data_csv,
         ]
 
@@ -203,11 +204,17 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _parse_data_xlsx(self, mapping, data_file):
         try:
-            workbook = openpyxl.load_workbook(
-                filename=BytesIO(data_file),
-                read_only=True,
-                data_only=True,
-            )
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    "ignore",
+                    category=UserWarning,
+                    message=".*Workbook contains no default style.*",
+                )
+                workbook = openpyxl.load_workbook(
+                    filename=BytesIO(data_file),
+                    read_only=True,
+                    data_only=True,
+                )
         except Exception:
             _logger.debug("Failed decoding with openpyxl", exc_info=True)
             return None
@@ -274,7 +281,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     content_l.append(values[index])
         if all(isinstance(content, str) for content in content_l):
             return " ".join(content_l)
-        return content_l[0]
+        elif any(isinstance(content, int) for content in content_l):
+            # Convert all content to string and join when we have integers
+            return " ".join(str(content) for content in content_l)
+        else:
+            # Fallback to first content for other mixed types
+            return content_l[0]
 
     def _parse_rows(self, mapping, currency_code, data, columns):  # noqa: C901
         csv_or_xlsx, data_file = data
@@ -347,11 +359,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         mapping,
                     )
 
-            amount = _decimal("amount_column", values)
-            if not amount:
+            if mapping.amount_type == "distinct_credit_debit":
                 amount = abs(_decimal("amount_debit_column", values) or 0)
-            if not amount:
-                amount = -abs(_decimal("amount_credit_column", values) or 0)
+                if not amount:
+                    amount = -abs(_decimal("amount_credit_column", values) or 0)
+            elif mapping.amount_type == "simple_value":
+                amount = _decimal("amount_column", values)
+            elif mapping.amount_type == "absolute_value":
+                amount = abs(_decimal("debit_credit_column", values) or 0)
 
             balance = (
                 self._get_values_from_column(values, columns, "balance_column")
@@ -578,7 +593,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
         # decimal separator, and signs
         value = (
             re.sub(
-                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+", "", value
+                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+",
+                "",
+                str(value),
             )
             or "0"
         )
