@@ -18,7 +18,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, service
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -304,11 +304,20 @@ class OnlineBankStatementProviderWise(models.Model):
     def _wise_urlopen(self, url, api_key, ott=None, signature=None):
         if not api_key:
             raise UserError(_("No API key specified!"))
-        request = urllib.request.Request(url)
-        request.add_header("Authorization", f"Bearer {api_key}")
-        if ott and signature:
-            request.add_header("X-2FA-Approval", ott)
-            request.add_header("X-Signature", signature)
+        odoo_version = service.common.exp_version()["server_version"]
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Accept": "*/*",
+            "User-Agent": f"Odoo/{odoo_version}",
+            "Content-Type": "application/json",
+            "Connection": "keep-alive",
+            **(
+                {"X-2FA-Approval": ott, "X-Signature": signature}
+                if ott and signature
+                else {}
+            ),
+        }
+        request = urllib.request.Request(url, headers=headers)
         return urllib.request.urlopen(request)
 
     @api.onchange("certificate_private_key", "service")
