@@ -186,26 +186,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
             columns[column_name] = self._get_column_indexes(
                 header, column_name, mapping
             )
-        data = csv_or_xlsx, data_file
-        return self._parse_rows(mapping, currency_code, data, columns)
-
-    def _get_values_from_column(self, values, columns, column_name):
-        indexes = columns[column_name]
-        content_l = []
-        max_index = len(values) - 1
-        for index in indexes:
-            if isinstance(index, int):
-                if index <= max_index:
-                    content_l.append(values[index])
-            else:
-                if index in values:
-                    content_l.append(values[index])
-        if all(isinstance(content, str) for content in content_l):
-            return " ".join(content_l)
-        return content_l[0]
-
-    def _parse_rows(self, mapping, currency_code, data, columns):  # noqa: C901
-        csv_or_xlsx, data_file = data
 
         # Get the numbers of rows of the file
         if isinstance(csv_or_xlsx, tuple):
@@ -220,6 +200,120 @@ class AccountStatementImportSheetParser(models.TransientModel):
             rows = range(label_line, footer_line)
         else:
             rows = csv_or_xlsx
+        data = csv_or_xlsx, rows, label_line, footer_line
+        return self._parse_rows(mapping, currency_code, data, columns)
+
+    def _get_values_from_column(self, values, columns, column_name):
+        if not columns[column_name]:
+            return None
+        indexes = columns[column_name]
+        content_l = []
+        max_index = len(values) - 1
+        for index in indexes:
+            if isinstance(index, int):
+                if index <= max_index:
+                    content_l.append(values[index])
+            else:
+                if index in values:
+                    content_l.append(values[index])
+        if all(isinstance(content, str) for content in content_l):
+            return " ".join(content_l)
+        return content_l[0]
+
+    def _parse_one_line(self, mapping, currency_code, values, columns):  # noqa: C901
+        # Get all the raw values from the columns processed in one dict, and extract
+        # the ones we need to process in order to use less variables in the rest of
+        # the method
+        raw_values = {}
+        for column in self._get_column_names():
+            raw_values[column] = self._get_values_from_column(values, columns, column)
+
+        timestamp = raw_values["timestamp_column"]
+        currency = raw_values["currency_column"] or currency_code
+
+        if currency != currency_code:
+            return None
+
+        def _decimal(column_name):
+            if columns[column_name]:
+                return self._parse_decimal(raw_values[column_name], mapping)
+            return None
+
+        amount = _decimal("amount_column")
+        if not amount:
+            amount = abs(_decimal("amount_debit_column") or 0)
+        if not amount:
+            amount = -abs(_decimal("amount_credit_column") or 0)
+
+        balance = raw_values["balance_column"]
+        original_amount = raw_values["original_amount_column"]
+        debit_credit = raw_values["debit_credit_column"]
+        debit_column = raw_values["amount_debit_column"]
+        credit_column = raw_values["amount_credit_column"]
+
+        if isinstance(timestamp, str):
+            timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
+            if timestamp.year == 1900:
+                # No year indicated, so put the current or previous one depending
+                # on the current month (i.e. in January, importing December)
+                now = datetime.now()
+                year = now.year
+                if timestamp.month > now.month:
+                    year -= 1
+                timestamp = timestamp.replace(year=year)
+
+        if balance:
+            balance = self._parse_decimal(balance, mapping)
+        else:
+            balance = None
+
+        if debit_credit is not None:
+            amount = abs(amount)
+            if debit_credit == mapping.debit_value:
+                amount = -amount
+
+        if debit_column and credit_column:
+            debit_amount = self._parse_decimal(debit_column, mapping)
+            debit_amount = abs(debit_amount)
+            credit_amount = self._parse_decimal(credit_column, mapping)
+            credit_amount = abs(credit_amount)
+            amount = -(credit_amount - debit_amount)
+
+        if original_amount:
+            original_amount = math.copysign(
+                self._parse_decimal(original_amount, mapping), amount
+            )
+        else:
+            original_amount = 0.0
+        if mapping.amount_inverse_sign:
+            amount = -amount
+            original_amount = -original_amount
+            balance = -balance if balance is not None else balance
+        line = {
+            "timestamp": timestamp,
+            "amount": amount,
+            "currency": currency,
+            "original_amount": original_amount,
+            "original_currency": raw_values["original_currency_column"],
+        }
+
+        def _update_line(column_name, value):
+            if value is not None:
+                line[column_name] = value
+
+        # Update line with the rest of the values if they are not None
+        _update_line("balance", balance)
+        _update_line("transaction_id", raw_values["transaction_id_column"])
+        _update_line("description", raw_values["description_column"])
+        _update_line("notes", raw_values["notes_column"])
+        _update_line("reference", raw_values["reference_column"])
+        _update_line("partner_name", raw_values["partner_name_column"])
+        _update_line("bank_name", raw_values["bank_name_column"])
+        _update_line("bank_account", raw_values["bank_account_column"])
+        return line
+
+    def _parse_rows(self, mapping, currency_code, data, columns):
+        csv_or_xlsx, rows, label_line, footer_line = data
 
         lines = []
         for index, row in enumerate(rows, label_line):
@@ -240,163 +334,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
             if mapping.skip_empty_lines and not any(values):
                 continue
 
-            timestamp = self._get_values_from_column(
-                values, columns, "timestamp_column"
-            )
-            currency = (
-                self._get_values_from_column(values, columns, "currency_column")
-                if columns["currency_column"]
-                else currency_code
-            )
-
-            def _decimal(column_name, values):
-                if columns[column_name]:
-                    return self._parse_decimal(
-                        self._get_values_from_column(values, columns, column_name),
-                        mapping,
-                    )
-
-            amount = _decimal("amount_column", values)
-            if not amount:
-                amount = abs(_decimal("amount_debit_column", values) or 0)
-            if not amount:
-                amount = -abs(_decimal("amount_credit_column", values) or 0)
-
-            balance = (
-                self._get_values_from_column(values, columns, "balance_column")
-                if columns["balance_column"]
-                else None
-            )
-            original_currency = (
-                self._get_values_from_column(
-                    values, columns, "original_currency_column"
-                )
-                if columns["original_currency_column"]
-                else None
-            )
-            original_amount = (
-                self._get_values_from_column(values, columns, "original_amount_column")
-                if columns["original_amount_column"]
-                else None
-            )
-            debit_credit = (
-                self._get_values_from_column(values, columns, "debit_credit_column")
-                if columns["debit_credit_column"]
-                else None
-            )
-            transaction_id = (
-                self._get_values_from_column(values, columns, "transaction_id_column")
-                if columns["transaction_id_column"]
-                else None
-            )
-            description = (
-                self._get_values_from_column(values, columns, "description_column")
-                if columns["description_column"]
-                else None
-            )
-            notes = (
-                self._get_values_from_column(values, columns, "notes_column")
-                if columns["notes_column"]
-                else None
-            )
-            reference = (
-                self._get_values_from_column(values, columns, "reference_column")
-                if columns["reference_column"]
-                else None
-            )
-            partner_name = (
-                self._get_values_from_column(values, columns, "partner_name_column")
-                if columns["partner_name_column"]
-                else None
-            )
-            bank_name = (
-                self._get_values_from_column(values, columns, "bank_name_column")
-                if columns["bank_name_column"]
-                else None
-            )
-            bank_account = (
-                self._get_values_from_column(values, columns, "bank_account_column")
-                if columns["bank_account_column"]
-                else None
-            )
-
-            debit_column = (
-                self._get_values_from_column(values, columns, "amount_debit_column")
-                if columns["amount_debit_column"]
-                else None
-            )
-
-            credit_column = (
-                self._get_values_from_column(values, columns, "amount_credit_column")
-                if columns["amount_credit_column"]
-                else None
-            )
-
-            if currency != currency_code:
-                continue
-
-            if isinstance(timestamp, str):
-                timestamp = datetime.strptime(timestamp, mapping.timestamp_format)
-                if timestamp.year == 1900:
-                    # No year indicated, so put the current or previous one depending
-                    # on the current month (i.e. in January, importing December)
-                    now = datetime.now()
-                    year = now.year
-                    if timestamp.month > now.month:
-                        year -= 1
-                    timestamp = timestamp.replace(year=year)
-
-            if balance:
-                balance = self._parse_decimal(balance, mapping)
-            else:
-                balance = None
-
-            if debit_credit is not None:
-                amount = abs(amount)
-                if debit_credit == mapping.debit_value:
-                    amount = -amount
-
-            if debit_column and credit_column:
-                debit_amount = self._parse_decimal(debit_column, mapping)
-                debit_amount = abs(debit_amount)
-                credit_amount = self._parse_decimal(credit_column, mapping)
-                credit_amount = abs(credit_amount)
-                amount = -(credit_amount - debit_amount)
-
-            if original_amount:
-                original_amount = math.copysign(
-                    self._parse_decimal(original_amount, mapping), amount
-                )
-            else:
-                original_amount = 0.0
-            if mapping.amount_inverse_sign:
-                amount = -amount
-                original_amount = -original_amount
-                balance = -balance if balance is not None else balance
-            line = {
-                "timestamp": timestamp,
-                "amount": amount,
-                "currency": currency,
-                "original_amount": original_amount,
-                "original_currency": original_currency,
-            }
-            if balance is not None:
-                line["balance"] = balance
-            if transaction_id is not None:
-                line["transaction_id"] = transaction_id
-            if description is not None:
-                line["description"] = description
-            if notes is not None:
-                line["notes"] = notes
-            if reference is not None:
-                line["reference"] = reference
-            if partner_name is not None:
-                line["partner_name"] = partner_name
-            if bank_name is not None:
-                line["bank_name"] = bank_name
-            if bank_account is not None:
-                line["bank_account"] = bank_account
-
+            line = self._parse_one_line(mapping, currency_code, values, columns)
             if line:
                 lines.append(line)
         return lines
@@ -428,23 +366,20 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 amount = original_amount
             original_amount = "0.0"
 
-        if original_currency:
-            original_currency = self.env["res.currency"].search(
-                [("name", "=", original_currency)],
-                limit=1,
-            )
-            if original_currency:
-                transaction["foreign_currency_id"] = original_currency.id
-            if original_amount:
-                transaction["amount_currency"] = str(original_amount)
+        def _update_currency(column_name, value):
+            if value:
+                currency = self.env["res.currency"].search(
+                    [("name", "=", value)],
+                    limit=1,
+                )
+                if currency:
+                    transaction[column_name] = currency.id
 
-        if currency:
-            currency = self.env["res.currency"].search(
-                [("name", "=", currency)],
-                limit=1,
-            )
-            if currency:
-                transaction["currency_id"] = currency.id
+        _update_currency("currency_id", currency)
+        _update_currency("foreign_currency_id", original_currency)
+
+        if original_amount:
+            transaction["amount_currency"] = str(original_amount)
 
         if transaction_id:
             transaction["unique_import_id"] = (
@@ -457,11 +392,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
         note = ""
         if bank_name:
-            note += self.env._("Bank: %s; ") % (bank_name,)
+            note += self.env._("Bank: %s; ", bank_name)
         if bank_account:
-            note += self.env._("Account: %s; ") % (bank_account,)
+            note += self.env._("Account: %s; ", bank_account)
         if transaction_id:
-            note += self.env._("Transaction ID: %s; ") % (transaction_id,)
+            note += self.env._("Transaction ID: %s; ", transaction_id)
         if note and notes:
             note = f"{notes}\n{note.strip()}"
         elif note:

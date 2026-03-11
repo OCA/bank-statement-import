@@ -12,3 +12,5 @@
   - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
 - Sebastiano Picchi <sebastiano.picchi@pytech.it>
 - Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+- Studio73 (https://www.studio73.es)
+  - Roger Amorós \<<roger@studio73.es>\>

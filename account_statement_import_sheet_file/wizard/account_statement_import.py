@@ -22,7 +22,7 @@ class AccountStatementImport(models.TransientModel):
     sheet_mapping_id = fields.Many2one(
         string="Sheet mapping",
         comodel_name="account.statement.import.sheet.mapping",
-        default=_get_default_mapping_id,
+        default=lambda self: self._get_default_mapping_id(),
     )
 
     def _parse_file(self, data_file):
@@ -36,7 +36,6 @@ class AccountStatementImport(models.TransientModel):
             except BaseException as exc:
                 if self.env.context.get("account_statement_import_sheet_file_test"):
                     raise
-                _logger.warning("Sheet parser error", exc_info=True)
                 raise UserError(self.env._("Bad file/mapping: ") + str(exc)) from exc
         return super()._parse_file(data_file)
 
