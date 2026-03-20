@@ -24,6 +24,27 @@ class AccountStatementImport(models.TransientModel):
         comodel_name="account.statement.import.sheet.mapping",
         default=_get_default_mapping_id,
     )
+    mapping_template_datas = fields.Binary(
+        string="Template File",
+        related="sheet_mapping_id.template_datas",
+    )
+    mapping_template_fname = fields.Char(
+        string="Template File Name", related="sheet_mapping_id.template_fname"
+    )
+    statement_file = fields.Binary(required=False)
+
+    def get_import_sample(self) -> dict:
+        self.ensure_one()
+        return {
+            "name": self.env._("Import Bank Statement File"),
+            "type": "ir.actions.act_window",
+            "res_model": "account.statement.import",
+            "view_mode": "form",
+            "res_id": self.id,
+            "views": [(False, "form")],
+            "target": "new",
+            "context": self.env.context.copy(),
+        }
 
     def _parse_file(self, data_file):
         self.ensure_one()
