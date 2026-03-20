@@ -2,6 +2,12 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import base64
+import io
+from typing import Any
+
+import xlsxwriter
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -185,6 +191,166 @@ class AccountStatementImportSheetMapping(models.Model):
         default=0,
         help="Columns to ignore before starting to parse",
     )
+    template_datas = fields.Binary(string="Template File", readonly=True)
+    template_fname = fields.Char(string="Template File Name", readonly=True)
+
+    def _get_template_columns(self) -> list[dict]:
+        self.ensure_one()
+        columns = []
+        if self.transaction_id_column:
+            columns += [
+                {"header": self.transaction_id_column, "type": "text", "width": 18}
+            ]
+
+        if self.timestamp_column:
+            columns += [
+                {"header": self.timestamp_column, "type": "datetime", "width": 15}
+            ]
+
+        if self.partner_name_column:
+            columns += [
+                {"header": self.partner_name_column, "type": "text", "width": 30}
+            ]
+
+        if self.description_column:
+            columns += [
+                {"header": self.description_column, "type": "text", "width": 60}
+            ]
+
+        if self.reference_column:
+            columns += [{"header": self.reference_column, "type": "text", "width": 18}]
+
+        if self.amount_type == "simple_value":
+            columns += [{"header": self.amount_column, "type": "float", "width": 15}]
+        elif self.amount_type == "absolute_value":
+            columns.append(
+                {"header": self.debit_credit_column, "type": "float", "width": 15}
+            )
+        else:
+            columns += [
+                {"header": self.amount_debit_column, "type": "float", "width": 15},
+                {"header": self.amount_credit_column, "type": "float", "width": 15},
+            ]
+
+        if self.currency_column:
+            columns += [{"header": self.currency_column, "type": "text", "width": 15}]
+
+        if self.original_currency_column:
+            columns += [
+                {"header": self.original_currency_column, "type": "text", "width": 18}
+            ]
+
+        if self.original_amount_column:
+            columns += [
+                {"header": self.original_amount_column, "type": "float", "width": 15}
+            ]
+
+        if self.balance_column:
+            columns += [{"header": self.balance_column, "type": "float", "width": 15}]
+
+        if self.notes_column:
+            columns += [{"header": self.notes_column, "type": "text", "width": 15}]
+
+        if self.bank_name_column:
+            columns += [{"header": self.bank_name_column, "type": "text", "width": 15}]
+
+        if self.bank_account_column:
+            columns += [
+                {"header": self.bank_account_column, "type": "text", "width": 15}
+            ]
+        return columns
+
+    def generate_xlsx_template(self) -> None:
+        self.ensure_one()
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {"in_memory": True})
+        worksheet = workbook.add_worksheet("Sheet1")
+
+        # Formats
+        header_format = workbook.add_format(
+            {
+                "bold": True,
+                "border": 1,
+                "align": "center",
+                "font_size": 12,
+            }
+        )
+
+        float_format = workbook.add_format(
+            {
+                "align": "right",
+                "font_size": 11,
+            }
+        )
+
+        datetime_format = workbook.add_format(
+            {
+                "align": "right",
+                "font_size": 11,
+            }
+        )
+
+        text_format = workbook.add_format(
+            {
+                "align": "left",
+                "font_size": 11,
+            }
+        )
+
+        # Define columns
+        columns = self._get_template_columns()
+
+        # Write headers
+        for col_idx, col in enumerate(columns):
+            if col["type"] == "float":
+                worksheet.set_column(col_idx, col_idx, col["width"], float_format)
+            elif col["type"] == "datetime":
+                worksheet.set_column(col_idx, col_idx, col["width"], datetime_format)
+            else:
+                worksheet.set_column(col_idx, col_idx, col["width"], text_format)
+            worksheet.write(0, col_idx, col["header"], header_format)
+
+        workbook.close()
+        output.seek(0)
+
+        self.write(
+            {
+                "template_datas": base64.b64encode(output.read()),
+                "template_fname": f"{self.name}.xlsx",
+            }
+        )
+        output.close()
+
+    def download_xlsx_template(self) -> dict | bool:
+        self.ensure_one()
+        self.generate_xlsx_template()
+        if not self.template_datas:
+            return False
+        return {
+            "type": "ir.actions.act_url",
+            "url": (
+                f"/web/content/?model={self._name}"
+                f"&id={self.id}"
+                f"&field=template_datas"
+                f"&filename={self.template_fname}"
+                f"&download=true"
+            ),
+            "target": "self",
+        }
+
+    @api.model_create_multi
+    def create(self, vals_list: list[dict]) -> Any:
+        res = super().create(vals_list)
+        for rec in res:
+            rec.generate_xlsx_template()
+        return res
+
+    def write(self, vals: dict) -> bool:
+        res = super().write(vals)
+        if not vals.get("template_datas") and not vals.get("template_fname"):
+            for rec in self:
+                rec.generate_xlsx_template()
+        return res
 
     @api.constrains(
         "amount_type",
