@@ -36,6 +36,7 @@ addon | version | maintainers | summary
 [account_statement_import_online_stripe](account_statement_import_online_stripe/) | 18.0.1.0.1 | <a href='https://github.com/juancarlosonate-tecnativa'><img src='https://github.com/juancarlosonate-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='juancarlosonate-tecnativa'/></a> | Online bank statements for Stripe
 [account_statement_import_online_wise](account_statement_import_online_wise/) | 18.0.1.1.0 | <a href='https://github.com/alexey-pelykh'><img src='https://github.com/alexey-pelykh.png' width='32' height='32' style='border-radius:50%;' alt='alexey-pelykh'/></a> | Online bank statements for Wise.com
 [account_statement_import_sheet_file](account_statement_import_sheet_file/) | 18.0.1.0.1 | <a href='https://github.com/alexey-pelykh'><img src='https://github.com/alexey-pelykh.png' width='32' height='32' style='border-radius:50%;' alt='alexey-pelykh'/></a> | Import TXT/CSV or XLSX files as Bank Statements in Odoo
+[account_statement_line_order](account_statement_line_order/) | 18.0.1.0.0 |  | Adds ordering option on bank statement lines
 
 [//]: # (end addons)
 
