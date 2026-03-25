@@ -42,5 +42,5 @@ class AccountJournal(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id(
             "account_statement_import_file.account_statement_import_action"
         )
-        action["context"] = {"journal_id": self.id}
+        action["context"] = {"default_journal_id": self.id, "journal_id": self.id}
         return action
