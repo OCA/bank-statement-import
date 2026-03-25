@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record
+        id="view_account_statement_import_sheet_mapping_form_inherit_required_fields"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >account.statement.import.sheet.mapping.form.inherit.required.fields</field>
+        <field name="model">account.statement.import.sheet.mapping</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[last()]" position="before">
+                <group invisible="not name">
+                    <field name="available_field_ids" invisible="1" />
+                    <field
+                        name="required_field_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                        domain="[('id', 'in', available_field_ids)]"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
