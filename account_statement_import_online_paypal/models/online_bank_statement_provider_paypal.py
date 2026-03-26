@@ -432,18 +432,21 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 data = self.with_context(
                     invalid_data_workaround=invalid_data_workaround,
                 )._paypal_retrieve(url, token)
-                interval_transactions = map(
-                    lambda transaction: self._paypal_preparse_transaction(transaction),
-                    data["transaction_details"],
-                )
-                transactions += list(
-                    filter(
-                        lambda transaction: interval_start
-                        <= self._paypal_get_transaction_date(transaction)
-                        < interval_end,
-                        interval_transactions,
+                if data.get("transaction_details"):
+                    interval_transactions = map(
+                        lambda transaction: self._paypal_preparse_transaction(
+                            transaction
+                        ),
+                        data["transaction_details"],
                     )
-                )
+                    transactions += list(
+                        filter(
+                            lambda transaction: interval_start
+                            <= self._paypal_get_transaction_date(transaction)
+                            < interval_end,
+                            interval_transactions,
+                        )
+                    )
                 total_pages = data["total_pages"]
                 page += 1
             interval_start += interval_step
