@@ -21,7 +21,6 @@ _logger = logging.getLogger(__name__)
 try:
     from csv import reader
     from io import BytesIO
-    from zipfile import BadZipFile
 
     import openpyxl
 except (OSError, ImportError) as err:  # pragma: no cover
@@ -163,7 +162,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 workbook,
                 workbook.worksheets[0],
             )
-        except (BadZipFile, Exception):
+        except Exception:
             csv_options = {}
             csv_delimiter = mapping._get_column_delimiter_character()
             if csv_delimiter:
