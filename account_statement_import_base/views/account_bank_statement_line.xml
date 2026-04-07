@@ -22,4 +22,18 @@
             </group>
         </field>
     </record>
+
+    <record id="account_bank_statement_line_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.tree</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="unique_import_id" readonly="1" optional="hide" />
+            </xpath>
+        </field>
+    </record>
 </odoo>
