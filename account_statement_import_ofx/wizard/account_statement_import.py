@@ -1,7 +1,7 @@
 import io
 import logging
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -77,10 +77,10 @@ class AccountStatementImport(models.TransientModel):
                 )
         except Exception as e:
             raise UserError(
-                _(
+                self.env._(
                     "The following problem occurred during import. "
-                    "The file might not be valid.\n\n %s"
+                    "The file might not be valid.\n\n %s",
+                    str(e),
                 )
-                % str(e)
             ) from e
         return result
