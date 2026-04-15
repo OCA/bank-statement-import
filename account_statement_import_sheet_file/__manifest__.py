@@ -18,9 +18,11 @@
     ],
     "data": [
         "security/ir.model.access.csv",
-        "data/map_data.xml",
         "views/account_statement_import_sheet_mapping.xml",
         "views/account_statement_import.xml",
         "views/account_journal_views.xml",
+    ],
+    "demo": [
+        "demo/map_data_demo.xml",
     ],
 }

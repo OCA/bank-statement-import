@@ -25,8 +25,26 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         cls.currency_usd.active = True
         # Activate EUR for unit test, by default is not active
         cls.currency_eur.active = True
-        cls.sample_statement_map = cls.env.ref(
-            "account_statement_import_sheet_file.sample_statement_map"
+        Mapping = cls.env["account.statement.import.sheet.mapping"]
+        cls.sample_statement_map = Mapping.create(
+            {
+                "name": "Sample Statement",
+                "footer_lines_skip_count": 0,
+                "header_lines_skip_count": 1,
+                "float_thousands_sep": "comma",
+                "float_decimal_sep": "dot",
+                "delimiter": "comma",
+                "quotechar": '"',
+                "timestamp_format": "%m/%d/%Y",
+                "timestamp_column": "Date",
+                "amount_type": "simple_value",
+                "amount_column": "Amount",
+                "original_currency_column": "Currency",
+                "original_amount_column": "Amount Currency",
+                "description_column": "Label",
+                "partner_name_column": "Partner Name",
+                "bank_account_column": "Bank Account",
+            }
         )
         cls.AccountJournal = cls.env["account.journal"]
         cls.AccountBankStatement = cls.env["account.bank.statement"]

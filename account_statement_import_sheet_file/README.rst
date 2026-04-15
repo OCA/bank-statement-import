@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==================================
 Bank Statement TXT/CSV/XLSX Import
 ==================================
@@ -17,7 +13,7 @@ Bank Statement TXT/CSV/XLSX Import
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
@@ -65,10 +61,10 @@ Changelog
 12.0.2.0.0
 ----------
 
-- [BREAKING] New mapping, please review mappings after upgrade.
-- [BREAKING] Different bank accounts have to be used per each currency.
-- [ADD] Support for both Statement and Activity reports.
-- [ADD] Separate fee and currency exchange parsing.
+-  [BREAKING] New mapping, please review mappings after upgrade.
+-  [BREAKING] Different bank accounts have to be used per each currency.
+-  [ADD] Support for both Statement and Activity reports.
+-  [ADD] Separate fee and currency exchange parsing.
 
 Bug Tracker
 ===========
@@ -92,28 +88,27 @@ Authors
 Contributors
 ------------
 
-- Alexis de Lattre <alexis.delattre@akretion.com>
-- Sebastien BEAU <sebastien.beau@akretion.com>
-- Katherine Zaoral
-- Tecnativa (https://www.tecnativa.com)
+-  Alexis de Lattre <alexis.delattre@akretion.com>
+-  Sebastien BEAU <sebastien.beau@akretion.com>
+-  Katherine Zaoral
+-  Tecnativa (https://www.tecnativa.com)
 
-  - Vicent Cubells
-  - Victor M.M. Torres
-  - Víctor Martínez
+   -  Vicent Cubells
+   -  Victor M.M. Torres
+   -  Víctor Martínez
 
-- ForgeFlow (https://www.forgeflow.com)
+-  ForgeFlow (https://www.forgeflow.com)
 
-  - Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
-  - Miquel Raïch Regué <miquel.raich@forgeflow.com>
+   -  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+   -  Miquel Raïch Regué <miquel.raich@forgeflow.com>
 
-- `CorporateHub <https://corporatehub.eu/>`__
+-  `CorporateHub <https://corporatehub.eu/>`__
 
-  - Alexey Pelykh <alexey.pelykh@corphub.eu>
+   -  Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 - Sebastiano Picchi sebastiano.picchi@pytech.it
 - Jacques-Etienne Baudoux (BCIM) je@bcim.be
 - Studio73 (https://www.studio73.es)
-
   - Roger Amorós <roger@studio73.es>
 
 Maintainers
