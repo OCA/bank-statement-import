@@ -1,13 +1,15 @@
 import base64
 import datetime
+from unittest.mock import patch
 
 import odoo.tests.common as common
+from odoo.exceptions import UserError
 from odoo.tools import file_open
 
 
 class TestOfxFile(common.TransactionCase):
     """Tests for import bank statement ofx file format
-    (account.bank.statement.import)
+    (account.statement.import)
     """
 
     @classmethod
@@ -36,7 +38,7 @@ class TestOfxFile(common.TransactionCase):
         )
         bank_iban_ofx = cls.env["res.partner.bank"].create(
             {
-                "acc_number": "FR7630001007941234567890185",
+                "acc_number": "12345678901",
                 "partner_id": cls.env.ref("base.main_partner").id,
                 "company_id": cls.env.ref("base.main_company").id,
                 "bank_id": cls.env.ref("base.res_bank_1").id,
@@ -44,7 +46,7 @@ class TestOfxFile(common.TransactionCase):
         )
         cls.env["account.journal"].create(
             {
-                "name": "FR7630001007941234567890185",
+                "name": "Bank Journal TEST OFX IBAN",
                 "code": "BNK13",
                 "type": "bank",
                 "bank_account_id": bank_iban_ofx.id,
@@ -65,7 +67,9 @@ class TestOfxFile(common.TransactionCase):
             self.assertFalse(wizard._check_ofx(data_file=ofx_bin_wrong))
 
     def test_ofx_file_import(self):
-        ofx_path = "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
+        ofx_path = (
+            "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
+        )
         with file_open(ofx_path, "rb") as ofx_file:
             ofx_bin = ofx_file.read()
             wizard = self.asi_model.create(
@@ -75,7 +79,9 @@ class TestOfxFile(common.TransactionCase):
                 }
             )
             wizard.import_file_button()
-            bank_st_record = self.abs_model.search([("name", "like", "123456")])[0]
+            bank_st_record = self.abs_model.search(
+                [("name", "like", "123456")]
+            )[0]
             self.assertEqual(bank_st_record.balance_start, 2516.56)
             self.assertEqual(bank_st_record.balance_end_real, 2156.56)
 
@@ -87,7 +93,7 @@ class TestOfxFile(common.TransactionCase):
             )[0]
             self.assertEqual(line.date, datetime.date(2013, 8, 24))
 
-    def no_test_check_journal_bank_account(self):
+    def test_ofx_iban_file_import(self):
         ofx_path = "account_statement_import_ofx/tests/test_ofx_file/test_ofx_iban.ofx"
         with file_open(ofx_path, "rb") as ofx_file:
             ofx_bin = ofx_file.read()
@@ -98,3 +104,58 @@ class TestOfxFile(common.TransactionCase):
                 }
             )
             wizard.import_file_button()
+            bank_st_record = self.abs_model.search(
+                [("name", "like", "12345678901")]
+            )[0]
+            self.assertEqual(bank_st_record.balance_end_real, 2156.56)
+
+    def test_ofx_transaction_checknum_and_memo(self):
+        ofx_path = (
+            "account_statement_import_ofx/tests/test_ofx_file/"
+            "test_ofx_checknum_memo.ofx"
+        )
+        with file_open(ofx_path, "rb") as ofx_file:
+            ofx_bin = ofx_file.read()
+            wizard = self.asi_model.create(
+                {
+                    "statement_file": base64.b64encode(ofx_bin),
+                    "statement_filename": "test_ofx_checknum_memo.ofx",
+                }
+            )
+            wizard.import_file_button()
+            line = self.absl_model.search(
+                [("payment_ref", "like", "Office Supplies")]
+            )[0]
+            self.assertIn("1001", line.payment_ref)
+            self.assertIn("Paper and pens for Q3", line.payment_ref)
+
+    def test_parse_file_error_handling(self):
+        ofx_path = (
+            "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
+        )
+        with file_open(ofx_path, "rb") as ofx_file:
+            ofx_bin = ofx_file.read()
+            wizard = self.asi_model.create(
+                {
+                    "statement_file": base64.b64encode(ofx_bin),
+                    "statement_filename": "test_ofx.ofx",
+                }
+            )
+            ofx = wizard._check_ofx(ofx_bin)
+            with patch.object(type(wizard), "_check_ofx", return_value=ofx):
+                # Make account iteration fail by breaking the balance attribute
+                for account in ofx.accounts:
+                    account.statement.balance = "not_a_number"
+                with self.assertRaises(UserError):
+                    wizard._parse_file(ofx_bin)
+
+    def test_parse_non_ofx_file(self):
+        non_ofx_data = b"This is not an OFX file"
+        wizard = self.asi_model.create(
+            {
+                "statement_file": base64.b64encode(non_ofx_data),
+                "statement_filename": "test.txt",
+            }
+        )
+        with self.assertRaises(UserError):
+            wizard._parse_file(non_ofx_data)
