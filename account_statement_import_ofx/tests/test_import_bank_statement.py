@@ -149,5 +149,4 @@ class TestOfxFile(common.TransactionCase):
                 "statement_filename": "test.txt",
             }
         )
-        with self.assertRaises(UserError):
-            wizard._parse_file(non_ofx_data)
+        self.assertFalse(wizard._check_ofx(non_ofx_data))
