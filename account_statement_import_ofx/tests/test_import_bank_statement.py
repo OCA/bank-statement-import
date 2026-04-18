@@ -67,9 +67,7 @@ class TestOfxFile(common.TransactionCase):
             self.assertFalse(wizard._check_ofx(data_file=ofx_bin_wrong))
 
     def test_ofx_file_import(self):
-        ofx_path = (
-            "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
-        )
+        ofx_path = "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
         with file_open(ofx_path, "rb") as ofx_file:
             ofx_bin = ofx_file.read()
             wizard = self.asi_model.create(
@@ -79,9 +77,7 @@ class TestOfxFile(common.TransactionCase):
                 }
             )
             wizard.import_file_button()
-            bank_st_record = self.abs_model.search(
-                [("name", "like", "123456")]
-            )[0]
+            bank_st_record = self.abs_model.search([("name", "like", "123456")])[0]
             self.assertEqual(bank_st_record.balance_start, 2516.56)
             self.assertEqual(bank_st_record.balance_end_real, 2156.56)
 
@@ -104,9 +100,7 @@ class TestOfxFile(common.TransactionCase):
                 }
             )
             wizard.import_file_button()
-            bank_st_record = self.abs_model.search(
-                [("name", "like", "12345678901")]
-            )[0]
+            bank_st_record = self.abs_model.search([("name", "like", "12345678901")])[0]
             self.assertEqual(bank_st_record.balance_end_real, 2156.56)
 
     def test_ofx_transaction_checknum_and_memo(self):
@@ -123,16 +117,14 @@ class TestOfxFile(common.TransactionCase):
                 }
             )
             wizard.import_file_button()
-            line = self.absl_model.search(
-                [("payment_ref", "like", "Office Supplies")]
-            )[0]
+            line = self.absl_model.search([("payment_ref", "like", "Office Supplies")])[
+                0
+            ]
             self.assertIn("1001", line.payment_ref)
             self.assertIn("Paper and pens for Q3", line.payment_ref)
 
     def test_parse_file_error_handling(self):
-        ofx_path = (
-            "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
-        )
+        ofx_path = "account_statement_import_ofx/tests/test_ofx_file/test_ofx.ofx"
         with file_open(ofx_path, "rb") as ofx_file:
             ofx_bin = ofx_file.read()
             wizard = self.asi_model.create(
