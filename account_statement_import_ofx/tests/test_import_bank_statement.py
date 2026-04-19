@@ -19,11 +19,22 @@ class TestOfxFile(common.TransactionCase):
         cls.abs_model = cls.env["account.bank.statement"]
         cls.absl_model = cls.env["account.bank.statement.line"]
         cur = cls.env.ref("base.USD")
+        company = cls.env.ref("base.main_company")
+        suspense_account = company.account_journal_suspense_account_id
+        if not suspense_account:
+            suspense_account = cls.env["account.account"].create(
+                {
+                    "name": "Suspense Account",
+                    "code": "999999",
+                    "account_type": "asset_current",
+                }
+            )
+            company.account_journal_suspense_account_id = suspense_account
         bank = cls.env["res.partner.bank"].create(
             {
                 "acc_number": "123456",
                 "partner_id": cls.env.ref("base.main_partner").id,
-                "company_id": cls.env.ref("base.main_company").id,
+                "company_id": company.id,
                 "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
@@ -40,7 +51,7 @@ class TestOfxFile(common.TransactionCase):
             {
                 "acc_number": "12345678901",
                 "partner_id": cls.env.ref("base.main_partner").id,
-                "company_id": cls.env.ref("base.main_company").id,
+                "company_id": company.id,
                 "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
