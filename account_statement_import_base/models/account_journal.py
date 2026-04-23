@@ -24,11 +24,14 @@ class AccountJournal(models.Model):
             ["acc_number", "partner_id"],
         )
         for partner_bank in partner_banks:
-            speeddict["account_number"][partner_bank["acc_number"]] = {
-                "partner_id": partner_bank["partner_id"][0],
-                "partner_bank_id": partner_bank["id"],
-            }
+            acc_number = self._sanitize_bank_account_number(partner_bank["acc_number"])
+            if acc_number and partner_bank.get("partner_id"):
+                speeddict["account_number"][acc_number] = {
+                    "partner_id": partner_bank["partner_id"][0],
+                    "partner_bank_id": partner_bank["id"],
+                }
         return speeddict
+
 
     def _statement_line_import_update_hook(self, st_line_vals, speeddict):
         """This method is designed to be inherited by reconciliation modules.
