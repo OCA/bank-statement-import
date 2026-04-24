@@ -16,8 +16,8 @@ class AccountStatementImport(models.TransientModel):
             "account_reconcile_oca.action_bank_statement_line_reconcile"
         )
         action["context"] = {
-            "default_journal_id": self._context.get("journal_id"),
-            "active_id": self._context.get("journal_id"),
+            "default_journal_id": self.env.context.get("journal_id"),
+            "active_id": self.env.context.get("journal_id"),
             "search_default_not_reconciled": True,
             "view_ref": "account_reconcile_oca.bank_statement_line_form_reconcile_view",
         }
