@@ -6,7 +6,7 @@
     "version": "18.0.1.0.0",
     "category": "Accounting",
     "summary": "Import journal items into bank statement",
-    "author": "Tecnativa, " "Odoo Community Association (OCA)",
+    "author": "Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["pedrobaeza"],
     "website": "https://github.com/OCA/bank-statement-import",
     "depends": ["account_statement_base"],

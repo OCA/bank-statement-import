@@ -66,9 +66,7 @@ class AccountStatementLineCreate(models.TransientModel):
         ]
         if self.journal_ids:
             domain += [("journal_id", "in", self.journal_ids.ids)]
-        else:
-            journals = self.env["account.journal"].search([])
-            domain += [("journal_id", "in", journals.ids)]
+
         if self.partner_id:
             domain += [("partner_id", "=", self.partner_id.id)]
         if self.target_move == "posted":
@@ -134,11 +132,11 @@ class AccountStatementLineCreate(models.TransientModel):
                 statement = self.env["account.bank.statement"].create(
                     {
                         "date": fields.Date.today(),
-                        "name": self.env._("%(journal_code)s Statement %(date)s")
-                        % {
-                            "journal_code": journal.code,
-                            "date": fields.Date.today(),
-                        },
+                        "name": self.env._(
+                            "%(journal_code)s Statement %(date)s",
+                            journal_code=journal.code,
+                            date=fields.Date.today(),
+                        ),
                     }
                 )
                 statement.journal_id = journal.id
