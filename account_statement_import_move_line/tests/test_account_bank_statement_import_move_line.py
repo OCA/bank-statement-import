@@ -26,7 +26,7 @@ class TestAccountBankStatementImportMoveLine(AccountTestInvoicingCommon):
         self.invoice.action_post()
         self.assertTrue(self.invoice.id)
         wizard_o = self.env["account.statement.line.create"]
-        context = wizard_o._context.copy()
+        context = dict(self.env.context)
         context.update(
             {"active_model": "account.bank.statement", "active_id": self.statement.id}
         )
@@ -46,3 +46,25 @@ class TestAccountBankStatementImportMoveLine(AccountTestInvoicingCommon):
         wizard.create_statement_lines()
         line = self.statement.line_ids[0]
         self.assertEqual(line.amount, self.invoice.amount_total)
+
+    def test_payment_exclusion(self):
+        self.invoice.action_post()
+        payment = self.env["account.payment"].create(
+            {
+                "payment_type": "inbound",
+                "partner_type": "customer",
+                "partner_id": self.partner.id,
+                "amount": self.invoice.amount_total,
+                "journal_id": self.journal_bank.id,
+            }
+        )
+        payment.action_post()
+        wizard = self.env["account.statement.line.create"].create(
+            {
+                "statement_id": self.statement.id,
+                "date_type": "move",
+                "move_date": fields.Date.today(),
+            }
+        )
+        wizard.populate()
+        self.assertTrue(len(wizard.move_line_ids) >= 1)

@@ -97,6 +97,9 @@ Contributors
   - Pilar Vargas
 
 - Pedro Gonzalez <pegonzalezs@gmail.com>
+- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+
+  - Bhavesh Heliconia
 
 Maintainers
 -----------
