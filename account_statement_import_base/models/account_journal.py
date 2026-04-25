@@ -32,7 +32,6 @@ class AccountJournal(models.Model):
                 }
         return speeddict
 
-
     def _statement_line_import_update_hook(self, st_line_vals, speeddict):
         """This method is designed to be inherited by reconciliation modules.
         In this method you can:
