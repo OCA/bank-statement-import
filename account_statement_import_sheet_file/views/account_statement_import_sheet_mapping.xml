@@ -73,6 +73,7 @@
                         </group>
                         <group>
                             <field name="timestamp_column" />
+                            <field name="statement_order" />
                             <field name="currency_column" />
                             <field name="amount_type" />
                             <field

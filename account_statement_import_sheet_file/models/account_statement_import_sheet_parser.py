@@ -3,7 +3,6 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import itertools
 import logging
 import math
 import re
@@ -68,7 +67,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
 
-        lines = list(sorted(lines, key=lambda line: line["timestamp"]))
+        lines = self._sort_lines(mapping, lines)
         first_line = lines[0]
         last_line = lines[-1]
         data = {
@@ -90,14 +89,39 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     "balance_end_real": balance_end,
                 }
             )
-        transactions = list(
-            itertools.chain.from_iterable(
-                map(lambda line: self._convert_line_to_transactions(line), lines)
-            )
-        )
+        transactions = []
+        total_lines = len(lines)
+
+        for index, line in enumerate(lines):
+            line_transactions = self._convert_line_to_transactions(line)
+
+            # Odoo uses sequence in reverse in internal_index:
+            # longest sequence = oldest line within the same day.
+            sequence = total_lines - index
+
+            for transaction in line_transactions:
+                transaction["sequence"] = sequence
+
+            transactions.extend(line_transactions)
+
         data.update({"transactions": transactions})
 
         return currency_code, account_number, [data]
+
+    @api.model
+    def _sort_lines(self, mapping, lines):
+        """Sort lines preserving file order for equal timestamps."""
+        for sequence, line in enumerate(lines):
+            line["_file_sequence"] = sequence
+        if mapping.statement_order == "desc":
+            return list(
+                sorted(
+                    lines, key=lambda line: (line["timestamp"], -line["_file_sequence"])
+                )
+            )
+        return list(
+            sorted(lines, key=lambda line: (line["timestamp"], line["_file_sequence"]))
+        )
 
     def _get_column_indexes(self, header, column_name, mapping):
         column_indexes = []
