@@ -50,7 +50,10 @@ class AccountStatementImportCamtParser(models.AbstractModel):
                 elif join_str is None:
                     attr_value = found_node[0].text
                 else:
-                    attr_value = join_str.join([x.text for x in found_node])
+                    # x.text can be None for empty element (example: <Ustrd />).
+                    attr_value = join_str.join([x.text for x in found_node if x.text])
+                if not attr_value:
+                    continue
                 obj[attr_name] = attr_value
                 break
 
