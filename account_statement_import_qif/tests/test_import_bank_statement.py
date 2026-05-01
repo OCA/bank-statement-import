@@ -7,8 +7,9 @@
 
 import base64
 
-from odoo.modules.module import get_module_resource
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_path
 
 
 class TestQifFile(TransactionCase):
@@ -37,11 +38,7 @@ class TestQifFile(TransactionCase):
         )
 
     def test_qif_file_import(self):
-        qif_file_path = get_module_resource(
-            "account_statement_import_qif",
-            "tests",
-            "test_qif.qif",
-        )
+        qif_file_path = file_path("account_statement_import_qif/tests/test_qif.qif")
         qif_file = base64.b64encode(open(qif_file_path, "rb").read())
         wizard = self.statement_import_model.with_context(
             journal_id=self.journal.id
@@ -57,3 +54,79 @@ class TestQifFile(TransactionCase):
             limit=1,
         )
         self.assertEqual(line.partner_id, self.partner)
+
+    def test_check_qif(self):
+        self.assertTrue(self.statement_import_model._check_qif(b"!Type:Bank\n"))
+        self.assertFalse(self.statement_import_model._check_qif(b"DATE,AMOUNT\n"))
+
+    def test_parse_file_not_supported(self):
+        with self.assertRaises(UserError):
+            self.statement_import_model._parse_file(b"DATE,AMOUNT\n")
+
+    def test_parse_file_decipher_error(self):
+        with self.assertRaises(UserError):
+            self.statement_import_model._parse_file(b"!Type:\xff")
+
+    def test_parse_file_invalid_header(self):
+        with self.assertRaises(UserError):
+            self.statement_import_model._parse_file(b"!Type:Invst\n")
+
+    def test_parse_file_ccard(self):
+        qif_data = b"!Type:CCard\nD01/31/2024\nT-10.50\nNCHK-001\nPCard Store\n^\n"
+        currency_code, account_number, stmts_vals = (
+            self.statement_import_model.with_context(
+                journal_id=self.journal.id
+            )._parse_file(qif_data)
+        )
+        self.assertEqual(currency_code, self.journal.currency_id.name)
+        self.assertFalse(account_number)
+        self.assertEqual(stmts_vals[0]["balance_end_real"], -10.5)
+        self.assertEqual(len(stmts_vals[0]["transactions"]), 1)
+        self.assertEqual(stmts_vals[0]["transactions"][0]["ref"], "CHK-001")
+        self.assertEqual(stmts_vals[0]["transactions"][0]["payment_ref"], "Card Store")
+
+    def test_complete_stmts_vals_partner_match_qif(self):
+        qif_file_path = file_path("account_statement_import_qif/tests/test_qif.qif")
+        qif_file = base64.b64encode(open(qif_file_path, "rb").read())
+        wizard = self.statement_import_model.with_context(
+            journal_id=self.journal.id
+        ).create({"statement_file": qif_file, "statement_filename": "test_qif.qif"})
+        stmts_vals = [
+            {
+                "transactions": [
+                    {
+                        "payment_ref": "Epic Technologies",
+                        "date": "2024-01-01",
+                        "amount": -1.0,
+                        "unique_import_id": "line-1",
+                    }
+                ]
+            }
+        ]
+        res = wizard._complete_stmts_vals(stmts_vals, self.journal, None)
+        self.assertEqual(res[0]["transactions"][0]["partner_id"], self.partner.id)
+
+    def test_complete_stmts_vals_no_qif_keeps_partner_empty(self):
+        non_qif_file = base64.b64encode(b"DATE,AMOUNT\n")
+        wizard = self.statement_import_model.with_context(
+            journal_id=self.journal.id
+        ).create(
+            {
+                "statement_file": non_qif_file,
+                "statement_filename": "test.csv",
+            }
+        )
+        stmts_vals = [
+            {
+                "transactions": [
+                    {
+                        "payment_ref": "Epic Technologies",
+                        "date": "2024-01-01",
+                        "amount": -1.0,
+                        "unique_import_id": "line-2",
+                    }
+                ]
+            }
+        ]
+        res = wizard._complete_stmts_vals(stmts_vals, self.journal, None)
+        self.assertFalse(res[0]["transactions"][0].get("partner_id"))
