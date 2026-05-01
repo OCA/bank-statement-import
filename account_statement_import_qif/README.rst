@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ==========================
 Import QIF Bank Statements
 ==========================
@@ -13,35 +17,37 @@ Import QIF Bank Statements
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_qif
+    :target: https://github.com/OCA/bank-statement-import/tree/19.0/account_statement_import_qif
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-16-0/bank-statement-import-16-0-account_statement_import_qif
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-19-0/bank-statement-import-19-0-account_statement_import_qif
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows you to import the machine readable QIF Files in Odoo: they
-are parsed and stored in human readable format in
-Accounting \ Bank and Cash \ Bank Statements.
+This module allows you to import the machine readable QIF Files in Odoo:
+they are parsed and stored in human readable format in Accounting Bank
+and Cash Bank Statements.
 
 Important Note
-~~~~~~~~~~~~~~
-Because of the QIF format limitation, we cannot ensure the same transactions
-aren't imported several times or handle multicurrency. Whenever possible, you
-should use a more appropriate file format like OFX.
+--------------
 
-The module was initiated as a backport of the new framework developed
-by Odoo for V9 at its early stage. As Odoo has relicensed this module as
-private inside its Odoo enterprise layer, now this one is maintained from the
-original AGPL code.
+Because of the QIF format limitation, we cannot ensure the same
+transactions aren't imported several times or handle multicurrency.
+Whenever possible, you should use a more appropriate file format like
+OFX.
+
+The module was initiated as a backport of the new framework developed by
+Odoo for V9 at its early stage. As Odoo has relicensed this module as
+private inside its Odoo enterprise layer, now this one is maintained
+from the original AGPL code.
 
 **Table of contents**
 
@@ -53,10 +59,10 @@ Usage
 
 To use this module, you need to:
 
-#. Go to *Invoicing / Accounting* dashboard.
-#. Click on *Import statement* from any of the bank journals.
-#. Select a QIF file.
-#. Press *Import*.
+1. Go to *Invoicing / Accounting* dashboard.
+2. Click on *Import statement* from any of the bank journals.
+3. Select a QIF file.
+4. Press *Import*.
 
 Bug Tracker
 ===========
@@ -64,7 +70,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_qif%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_qif%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -72,30 +78,33 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * OpenERP SA
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Odoo SA
-* Akretion
+- Odoo SA
+- Akretion
 
-  * Alexis de Lattre <alexis@via.ecp.fr>
-* ACSONE A/V
+  - Alexis de Lattre <alexis@via.ecp.fr>
 
-  * Laurent Mignon <laurent.mignon@acsone.eu>
-* Therp
+- ACSONE A/V
 
-  * Ronald Portier <rportier@therp.nl>
-* Tecnativa (https://www.tecnativa.com)
+  - Laurent Mignon <laurent.mignon@acsone.eu>
 
-  * Pedro M. Baeza
+- Therp
+
+  - Ronald Portier <rportier@therp.nl>
+
+- Tecnativa (https://www.tecnativa.com)
+
+  - Pedro M. Baeza
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -107,6 +116,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/16.0/account_statement_import_qif>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/19.0/account_statement_import_qif>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
