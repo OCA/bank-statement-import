@@ -141,6 +141,7 @@ msgid "Day(s)"
 msgstr "Gün"
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__display_name
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__display_name
@@ -151,11 +152,9 @@ msgstr "Görünen Ad"
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid ""
-"Failed to obtain statement data for period since {since} until {until}: "
-"{exception}. See server logs for more details."
+"Failed to obtain statement data for period since %(since)s until %(until)s: %"
+"(exception)s. See server logs for more details."
 msgstr ""
-"{since} tarihinden {until} tarihine kadar ki döneme ait ekstreler alınamadı: "
-"{exception}. Daha fazla ayrıntı için sunucu günlüklerine bakın."
 
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
@@ -188,6 +187,7 @@ msgid "Hour(s)"
 msgstr "Saat"
 
 #. module: account_statement_import_online
+#: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_debug__id
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_pull_wizard__id
@@ -295,8 +295,8 @@ msgstr "Adı"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-msgid "Names and dates for statements found: {}"
-msgstr "Bulunan ekstrelerin Adları ve tarihleri: {}"
+msgid "Names and dates for statements found: %s"
+msgstr ""
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__next_run
@@ -333,8 +333,8 @@ msgstr "Teslimat hatası bulunan iletiler"
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
 msgid ""
-"Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
-"%(after)s where on or after %(until)sand %(duplicate)s where not unique."
+"Of %(lines_provided)s lines provided, %(before)s where before %(since)s, %"
+"(after)s where on or after %(until)sand %(duplicate)s where not unique."
 msgstr ""
 "Alınan %(lines_provided)s satırdan, %(before)s adedi %(since)s tarihinden "
 "önce, %(after)s adedi %(until)s tarihinden sonra ve %(duplicate)s adedi "
@@ -549,6 +549,16 @@ msgstr "Hafta"
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__weeks
 msgid "Week(s)"
 msgstr "Hafta"
+
+#~ msgid ""
+#~ "Failed to obtain statement data for period since {since} until {until}: "
+#~ "{exception}. See server logs for more details."
+#~ msgstr ""
+#~ "{since} tarihinden {until} tarihine kadar ki döneme ait ekstreler "
+#~ "alınamadı: {exception}. Daha fazla ayrıntı için sunucu günlüklerine bakın."
+
+#~ msgid "Names and dates for statements found: {}"
+#~ msgstr "Bulunan ekstrelerin Adları ve tarihleri: {}"
 
 #~ msgid "SMS Delivery error"
 #~ msgstr "SMS İletim Hatası"
