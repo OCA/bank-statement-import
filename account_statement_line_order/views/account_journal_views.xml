@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="model">account.journal</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='advanced_settings']/group" position="inside">
+                <group string="Bank Statements" invisible="type!='bank'">
+                    <field name="statement_line_internal_index" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

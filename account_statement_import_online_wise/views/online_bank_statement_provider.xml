@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    Copyright 2021 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='configuration']" position="after">
+                <group
+                    invisible="service != 'transferwise'"
+                    string="Wise Configuration"
+                >
+                    <field
+                        name="api_base"
+                        string="API base"
+                        groups="base.group_no_one"
+                        required="service == 'transferwise'"
+                    />
+                    <field
+                        name="password"
+                        string="API key"
+                        password="True"
+                        required="service == 'transferwise'"
+                    />
+                    <field
+                        name="wise_profile"
+                        string="Profile"
+                        widget="dynamic_dropdown"
+                        options="{'values': 'values_wise_profile'}"
+                        context="{'api_key': password, 'api_base': api_base}"
+                        required="service == 'transferwise' and id"
+                    />
+                </group>
+
+                <group
+                    string="Strong Customer Authentication"
+                    invisible="service != 'transferwise'"
+                >
+                    <field
+                        name="certificate_private_key"
+                        string="Private key"
+                        password="True"
+                    />
+                    <field name="certificate_public_key" string="Public key" />
+                    <div col="2" colspan="2">
+                        <button
+                            name="button_wise_generate_key"
+                            string="Generate Key"
+                            type="object"
+                            class="btn btn-secondary oe_edit_only"
+                        />
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

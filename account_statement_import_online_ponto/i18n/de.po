@@ -1,0 +1,160 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_ponto
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-01-20 16:50+0000\n"
+"Last-Translator: smaddlsoft <jm.veddeler@gmail.com>\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "%d transactions present in response data"
+msgstr "%d Transaktionen in den Antwortdaten vorhanden"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
+msgid "Execution Date"
+msgstr "Ausführungsdatum"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "GET request on %(url)s"
+msgstr "GET-Anfrage an %(url)s"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "GET request to %(url)s with headers %(headers)s and params %(params)s"
+msgstr ""
+"GET-Anfrage an %(url)s mit Headers %(headers)s und Parametern %(params)s"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "HTTP answer code %(response_code)s from Ponto"
+msgstr "HTTP-Antwortcode %(response_code)s von Ponto"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model,name:account_statement_import_online_ponto.model_ponto_interface
+msgid "Interface to all interactions with Ponto API"
+msgstr "Schnittstelle für alle Interaktionen mit Ponto API"
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Login"
+msgstr "Anmeldung"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+msgid "No lines were retrieved from Ponto"
+msgstr "Keine Zeilen von Ponto abgerufen"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "No transactions where found in data %(data)s"
+msgstr "Keine Transaktionen in Daten %(data)s gefunden"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model,name:account_statement_import_online_ponto.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Online-Kontoauszugsanbieter"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "POST request on %(url)s"
+msgstr "POST-Anfrage an %(url)s"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "Please fill login and key."
+msgstr "Bitte Anmeldung und Schlüssel ausfüllen."
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "Ponto : no token"
+msgstr "Ponto: kein Token"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "Ponto : wrong configuration, account {account} not found in {data}"
+msgstr "Ponto: falsche Konfiguration, Konto {account} nicht gefunden in {data}"
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Ponto Config"
+msgstr "Ponto-Konfiguration"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid "Ponto Date Field"
+msgstr "Ponto-Datumsfeld"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,field_description:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_last_identifier
+msgid "Ponto Last Identifier"
+msgstr "Ponto letzte Kennung"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+msgid "Ponto obtain all new statement data for journal %s"
+msgstr "Ponto ruft alle neuen Auszugsdaten für Journal %s ab"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/online_bank_statement_provider_ponto.py:0
+msgid ""
+"Ponto obtain statement data for journal %(journal)s from %(date_since)s to "
+"%(date_until)s"
+msgstr ""
+"Ponto ruft Auszugsdaten für Journal %(journal)s von %(date_since)s bis %"
+"(date_until)s ab"
+
+#. module: account_statement_import_online_ponto
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
+msgid "Secret Key"
+msgstr "Geheimer Schlüssel"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields,help:account_statement_import_online_ponto.field_online_bank_statement_provider__ponto_date_field
+msgid ""
+"Select the Ponto date field that will be used for the Odoo bank statement "
+"line date."
+msgstr ""
+"Wählen Sie das Ponto-Datumsfeld, das für das Datum der Odoo-"
+"Kontoauszugszeile verwendet wird."
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/models/ponto_interface.py:0
+msgid "Server returned status code {response_code}: {response_text}"
+msgstr "Server lieferte Statuscode {response_code}: {response_text}"
+
+#. module: account_statement_import_online_ponto
+#. odoo-python
+#: code:addons/account_statement_import_online_ponto/tests/test_account_statement_import_online_ponto.py:0
+msgid "Statement contains transactions: %s"
+msgstr "Auszug enthält Transaktionen: %s"
+
+#. module: account_statement_import_online_ponto
+#: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__value_date
+msgid "Value Date"
+msgstr "Wertstellungsdatum"
