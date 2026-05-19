@@ -1,6 +1,6 @@
 # Copyright 2024 Binhex - Adasat Torres de León.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 AVAILABLE_LANGS = [
@@ -52,7 +52,9 @@ class OnlineBankStatementProvider(models.Model):
             return self.journal_id.bank_id.country.code
         if self.journal_id.company_id.country_id:
             return self.journal_id.company_id.country_id.code
-        raise UserError(_("Country code not found for the bank or the company..."))
+        raise UserError(
+            self.env._("Country code not found for the bank or the company...")
+        )
 
     def _verify_lang(self, lang):
         if lang not in AVAILABLE_LANGS:
@@ -91,7 +93,7 @@ class OnlineBankStatementProvider(models.Model):
     def _plaid_retrieve_data(self, date_since, date_until):
         if not self.plaid_access_token:
             raise UserError(
-                _(
+                self.env._(
                     "Please link your Plaid account first by "
                     "clicking on 'Sync with Plaid'."
                 )

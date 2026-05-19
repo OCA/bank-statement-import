@@ -13,7 +13,7 @@ from plaid.model.products import Products
 from plaid.model.transactions_get_request import TransactionsGetRequest
 from plaid.model.transactions_get_request_options import TransactionsGetRequestOptions
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import ValidationError
 
 
@@ -39,7 +39,9 @@ class PlaidInterface(models.AbstractModel):
         try:
             return plaid_api.PlaidApi(plaid.ApiClient(configuration))
         except plaid.ApiException as e:
-            raise ValidationError(_("Error getting client api: %s") % e.body) from e
+            raise ValidationError(
+                self.env._("Error getting client api: %s", e.body)
+            ) from e
 
     def _link(self, client, language, country_code, company_name, products):
         request = LinkTokenCreateRequest(
@@ -52,7 +54,9 @@ class PlaidInterface(models.AbstractModel):
         try:
             response = client.link_token_create(request)
         except plaid.ApiException as e:
-            raise ValidationError(_("Error getting link token: %s") % e.body) from e
+            raise ValidationError(
+                self.env._("Error getting link token: %s", e.body)
+            ) from e
         return response.to_dict()["link_token"]
 
     def _login(self, client, public_token):
@@ -60,7 +64,9 @@ class PlaidInterface(models.AbstractModel):
         try:
             response = client.item_public_token_exchange(request)
         except plaid.ApiException as e:
-            raise ValidationError(_("Error getting access token: %s") % e.body) from e
+            raise ValidationError(
+                self.env._("Error getting access token: %s", e.body)
+            ) from e
         return response["access_token"]
 
     def _get_transactions(self, client, access_token, start_date, end_date):
@@ -76,7 +82,9 @@ class PlaidInterface(models.AbstractModel):
         try:
             response = client.transactions_get(request)
         except plaid.ApiException as e:
-            raise ValidationError(_("Error getting transactions: %s") % e.body) from e
+            raise ValidationError(
+                self.env._("Error getting transactions: %s", e.body)
+            ) from e
         transactions = response["transactions"]
         while len(transactions) < response["total_transactions"]:
             options.offset = len(transactions)
@@ -90,7 +98,7 @@ class PlaidInterface(models.AbstractModel):
                 response = client.transactions_get(request)
             except plaid.ApiException as e:
                 raise ValidationError(
-                    _("Error getting transactions: %s") % e.body
+                    self.env._("Error getting transactions: %s", e.body)
                 ) from e
             transactions.extend(response["transactions"])
         return transactions
