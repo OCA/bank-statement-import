@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import_sheet_parser.py:0
 msgid "%(code)s: %(filename)s"
 msgstr ""
 
@@ -42,7 +42,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import_sheet_parser.py:0
 msgid "Account: %s; "
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import.py:0
 msgid "Bad file/mapping: "
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import_sheet_parser.py:0
 msgid "Bank: %s; "
 msgstr ""
 
@@ -211,6 +211,8 @@ msgid "Description Column"
 msgstr ""
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import__display_name
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__display_name
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser__display_name
 msgid "Display Name"
@@ -242,6 +244,8 @@ msgid "Header lines skip count"
 msgstr ""
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import__id
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__id
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser__id
 msgid "ID"
@@ -311,7 +315,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import_sheet_parser.py:0
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__n/a
 msgid "N/A"
 msgstr ""
@@ -323,7 +327,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import_sheet_parser.py:0
 msgid "No valid encoding was found for the attached file"
 msgstr ""
 
@@ -452,7 +456,7 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#: code:addons/account_statement_import_sheet_file/wizard/account_statement_import_sheet_parser.py:0
 msgid "Transaction ID: %s; "
 msgstr ""
 
