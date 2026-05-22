@@ -1,5 +1,6 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2025 Tecnativa - Pedro M. Baeza
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
@@ -10,8 +11,10 @@ import re
 from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
-from io import StringIO
+from io import BytesIO, StringIO
 from os import path
+
+import openpyxl
 
 from odoo import api, models
 from odoo.exceptions import UserError
@@ -48,9 +51,25 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if header_line > 0:
             header_line -= 1
         if isinstance(csv_or_xlsx, tuple):
-            header = [
-                str(value).strip() for value in csv_or_xlsx[1].row_values(header_line)
-            ]
+            sheet = csv_or_xlsx[1]
+            if isinstance(sheet, xlrd.sheet.Sheet):
+                header = [str(value).strip() for value in sheet.row_values(header_line)]
+            else:
+                # openpyxl sheet (iter_rows is 1-indexed)
+                rows = list(
+                    sheet.iter_rows(
+                        min_row=header_line + 1,
+                        max_row=header_line + 1,
+                        values_only=True,
+                    )
+                )
+                if rows:
+                    header = [
+                        str(value).strip() if value is not None else ""
+                        for value in rows[0]
+                    ]
+                else:
+                    header = []
         else:
             [next(csv_or_xlsx) for _i in range(header_line)]
             header = [value.strip() for value in next(csv_or_xlsx)]
@@ -124,7 +143,18 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     column_indexes.append(column_index)
             else:
                 if column_name_or_index:
-                    column_indexes.append(header.index(column_name_or_index))
+                    if column_name_or_index in header:
+                        column_indexes.append(header.index(column_name_or_index))
+                    else:
+                        # Try case-insensitive match before raising
+                        header_lower = [h.lower() for h in header]
+                        column_name_lower = column_name_or_index.lower()
+                        if column_name_lower in header_lower:
+                            column_indexes.append(
+                                header_lower.index(column_name_lower)
+                            )
+                        else:
+                            column_indexes.append(header.index(column_name_or_index))
         return column_indexes
 
     def _get_column_names(self):
@@ -149,6 +179,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     def _parse_lines(self, mapping, data_file, currency_code):
         columns = dict()
+        csv_or_xlsx = None
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
@@ -156,40 +187,54 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     mapping.file_encoding if mapping.file_encoding else None
                 ),
             )
-            csv_or_xlsx = (
-                workbook,
-                workbook.sheet_by_index(0),
-            )
-        except xlrd.XLRDError:
-            csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
+            sheet = workbook.sheet_by_index(0)
+            csv_or_xlsx = (workbook, sheet)
+        except Exception:
+            # Try openpyxl for newer .xlsx format
             try:
-                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
-            except UnicodeDecodeError:
-                # Try auto guessing the format
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    raise UserError(
-                        self.env._("No valid encoding was found for the attached file")
-                    ) from None
-                decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
+                workbook = openpyxl.load_workbook(
+                    filename=BytesIO(data_file),
+                    read_only=True,
+                    data_only=True,
+                )
+                sheet = workbook.active
+                csv_or_xlsx = (workbook, sheet)
+            except Exception:
+                # Fall back to CSV
+                csv_options = {}
+                csv_delimiter = mapping._get_column_delimiter_character()
+                if csv_delimiter:
+                    csv_options["delimiter"] = csv_delimiter
+                if mapping.quotechar:
+                    csv_options["quotechar"] = mapping.quotechar
+                try:
+                    decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
+                except UnicodeDecodeError:
+                    detected_encoding = chardet.detect(data_file).get("encoding", False)
+                    if not detected_encoding:
+                        raise UserError(
+                            self.env._(
+                                "No valid encoding was found for the attached file"
+                            )
+                        ) from None
+                    decoded_file = data_file.decode(detected_encoding)
+                csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
+
         header = self.parse_header(csv_or_xlsx, mapping)
 
-        # NOTE no seria necesario debit_column y credit_column ya que tenemos los
-        # respectivos campos related
         for column_name in self._get_column_names():
             columns[column_name] = self._get_column_indexes(
                 header, column_name, mapping
             )
 
-        # Get the numbers of rows of the file
+        # Get the number of rows
         if isinstance(csv_or_xlsx, tuple):
-            numrows = csv_or_xlsx[1].nrows
+            sheet = csv_or_xlsx[1]
+            numrows = (
+                sheet.nrows
+                if isinstance(sheet, xlrd.sheet.Sheet)
+                else sheet.max_row
+            )
         else:
             numrows = len(str(data_file.strip()).split("\\n"))
 
@@ -197,7 +242,15 @@ class AccountStatementImportSheetParser(models.TransientModel):
         footer_line = numrows - mapping.footer_lines_skip_count
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(label_line, footer_line)
+            sheet = csv_or_xlsx[1]
+            if isinstance(sheet, xlrd.sheet.Sheet):
+                rows = range(label_line, footer_line)
+            else:
+                rows = sheet.iter_rows(
+                    min_row=label_line + 1,
+                    max_row=footer_line,
+                    values_only=False,
+                )
         else:
             rows = csv_or_xlsx
         data = csv_or_xlsx, rows, label_line, footer_line
@@ -218,7 +271,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     content_l.append(values[index])
         if all(isinstance(content, str) for content in content_l):
             return " ".join(content_l)
-        return content_l[0]
+        elif any(isinstance(content, int) for content in content_l):
+            # Convert to string when concatenating integer values
+            return " ".join(str(content) for content in content_l)
+        return content_l[0] if content_l else None
 
     def _parse_one_line(self, mapping, currency_code, values, columns):  # noqa: C901
         # Get all the raw values from the columns processed in one dict, and extract
@@ -321,12 +377,20 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
                 values = []
-                for col_index in range(mapping.offset_column, sheet.row_len(row)):
-                    cell_type = sheet.cell_type(row, col_index)
-                    cell_value = sheet.cell_value(row, col_index)
-                    if cell_type == xlrd.XL_CELL_DATE:
-                        cell_value = xldate_as_datetime(cell_value, book.datemode)
-                    values.append(cell_value)
+                if isinstance(sheet, xlrd.sheet.Sheet):
+                    for col_index in range(mapping.offset_column, sheet.row_len(row)):
+                        cell_type = sheet.cell_type(row, col_index)
+                        cell_value = sheet.cell_value(row, col_index)
+                        if cell_type == xlrd.XL_CELL_DATE:
+                            cell_value = xldate_as_datetime(cell_value, book.datemode)
+                        values.append(cell_value)
+                else:
+                    # openpyxl: row is a tuple of Cell objects
+                    for cell in row[mapping.offset_column :]:
+                        cell_value = cell.value
+                        if isinstance(cell_value, datetime):
+                            cell_value = cell_value.strftime(mapping.timestamp_format)
+                        values.append(str(cell_value) if cell_value is not None else "")
             else:
                 if index >= footer_line:
                     continue
@@ -424,7 +488,9 @@ class AccountStatementImportSheetParser(models.TransientModel):
         # decimal separator, and signs
         value = (
             re.sub(
-                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+", "", value
+                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+",
+                "",
+                str(value),
             )
             or "0"
         )
