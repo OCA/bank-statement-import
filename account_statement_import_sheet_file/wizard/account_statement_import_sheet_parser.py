@@ -150,9 +150,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         header_lower = [h.lower() for h in header]
                         column_name_lower = column_name_or_index.lower()
                         if column_name_lower in header_lower:
-                            column_indexes.append(
-                                header_lower.index(column_name_lower)
-                            )
+                            column_indexes.append(header_lower.index(column_name_lower))
                         else:
                             column_indexes.append(header.index(column_name_or_index))
         return column_indexes
@@ -231,9 +229,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         if isinstance(csv_or_xlsx, tuple):
             sheet = csv_or_xlsx[1]
             numrows = (
-                sheet.nrows
-                if isinstance(sheet, xlrd.sheet.Sheet)
-                else sheet.max_row
+                sheet.nrows if isinstance(sheet, xlrd.sheet.Sheet) else sheet.max_row
             )
         else:
             numrows = len(str(data_file.strip()).split("\\n"))

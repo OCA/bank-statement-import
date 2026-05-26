@@ -170,8 +170,8 @@ class AccountStatementImportSheetMapping(models.Model):
         default="0",
     )
     header_lines_skip_count = fields.Integer(
-        string="Header lines skip count",
-        help="Set the Header lines number.",
+        string="Header row number",
+        help="Row number where the column headers are located (first row is 0).",
         default="0",
     )
     skip_empty_lines = fields.Boolean(
