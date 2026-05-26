@@ -5,6 +5,7 @@
   - Vicent Cubells
   - Victor M.M. Torres
   - Víctor Martínez
+  - Andrii Kompaniiets
 - ForgeFlow (<https://www.forgeflow.com>)
   - Jordi Ballester Alomar \<<jordi.ballester@forgeflow.com>\>
   - Miquel Raïch Regué \<<miquel.raich@forgeflow.com>\>

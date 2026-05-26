@@ -1,7 +1,10 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2026 Andrii Kompaniiets - Tecnativa
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+"""Parse mapped bank statement sheet files into Odoo import values."""
 
 import itertools
 import logging
@@ -15,14 +18,12 @@ from os import path
 
 from odoo import api, models
 from odoo.exceptions import UserError
+from odoo.tools.mimetypes import guess_mimetype
 
 _logger = logging.getLogger(__name__)
 
 try:
     from csv import reader
-
-    import xlrd
-    from xlrd.xldate import xldate_as_datetime
 except (OSError, ImportError) as err:  # pragma: no cover
     _logger.error(err)
 
@@ -40,34 +41,55 @@ class AccountStatementImportSheetParser(models.TransientModel):
     _description = "Bank Statement Import Sheet Parser"
 
     @api.model
-    def parse_header(self, csv_or_xlsx, mapping):
+    def parse_header_csv(self, rows, mapping):
+        """Return the CSV header row after applying configured skips and offset."""
         if mapping.no_header:
             return []
         header_line = mapping.header_lines_skip_count
         # prevent negative indexes
         if header_line > 0:
             header_line -= 1
-        if isinstance(csv_or_xlsx, tuple):
-            header = [
-                str(value).strip() for value in csv_or_xlsx[1].row_values(header_line)
-            ]
-        else:
-            [next(csv_or_xlsx) for _i in range(header_line)]
-            header = [value.strip() for value in next(csv_or_xlsx)]
+        [next(rows) for _i in range(header_line)]
+        header = [value.strip() for value in next(rows)]
         if mapping.offset_column:
             header = header[mapping.offset_column :]
         return header
 
+    def _get_mimetype_sheet_type_map(self):
+        """Return supported MIME types and their parser suffixes."""
+        return {
+            "application/csv": "csv",
+            "text/csv": "csv",
+            "text/plain": "csv",
+        }
+
+    def _get_sheet_type(self, data_file):
+        """Detect the sheet parser suffix from the uploaded file content."""
+        mimetype = guess_mimetype(data_file)
+        return self._get_mimetype_sheet_type_map().get(mimetype)
+
     @api.model
     def parse(self, data_file, mapping, filename):
+        """Parse an uploaded sheet file into account statement import data.
+
+        :param bytes data_file: Uploaded file content.
+        :param recordset mapping: Sheet mapping used to read columns and formats.
+        :param str filename: Original upload filename
+        :return: Tuple with currency code, account number, and statement values.
+        :rtype: tuple(str, str, list[dict])
+        """
+        # Get sheet type to run the correct parse lines method
+        sheet_type = self._get_sheet_type(data_file)
+        if not hasattr(self, f"_parse_lines_{sheet_type}"):
+            raise ValueError(f"Unsupported sheet type: {sheet_type}")
         journal = self.env["account.journal"].browse(self.env.context.get("journal_id"))
         currency_code = (journal.currency_id or journal.company_id.currency_id).name
         account_number = journal.bank_account_id.acc_number
-
-        lines = self._parse_lines(mapping, data_file, currency_code)
+        lines = getattr(self, f"_parse_lines_{sheet_type}")(
+            mapping, data_file, currency_code
+        )
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
-
         lines = list(sorted(lines, key=lambda line: line["timestamp"]))
         first_line = lines[0]
         last_line = lines[-1]
@@ -79,7 +101,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 filename=path.basename(filename),
             ),
         }
-
         if mapping.balance_column:
             balance_start = first_line["balance"]
             balance_start -= first_line["amount"]
@@ -96,7 +117,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
             )
         )
         data.update({"transactions": transactions})
-
         return currency_code, account_number, [data]
 
     def _get_column_indexes(self, header, column_name, mapping):
@@ -147,38 +167,25 @@ class AccountStatementImportSheetParser(models.TransientModel):
             "bank_account_column",
         ]
 
-    def _parse_lines(self, mapping, data_file, currency_code):
+    def _parse_lines_csv(self, mapping, data_file, currency_code):
+        """Parse CSV content into normalized statement line dictionaries.
+        :return: Parsed statement lines ready for transaction conversion.
+        """
         columns = dict()
-        try:
-            workbook = xlrd.open_workbook(
-                file_contents=data_file,
-                encoding_override=(
-                    mapping.file_encoding if mapping.file_encoding else None
-                ),
-            )
-            csv_or_xlsx = (
-                workbook,
-                workbook.sheet_by_index(0),
-            )
-        except xlrd.XLRDError:
-            csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
-            try:
-                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
-            except UnicodeDecodeError:
-                # Try auto guessing the format
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    raise UserError(
-                        self.env._("No valid encoding was found for the attached file")
-                    ) from None
-                decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
-        header = self.parse_header(csv_or_xlsx, mapping)
+        csv_options = {}
+        csv_delimiter = mapping._get_column_delimiter_character()
+        if csv_delimiter:
+            csv_options["delimiter"] = csv_delimiter
+        if mapping.quotechar:
+            csv_options["quotechar"] = mapping.quotechar
+        detected_encoding = chardet.detect(data_file).get("encoding", False)
+        if not detected_encoding:
+            raise UserError(
+                self.env._("No valid encoding was found for the attached file")
+            ) from None
+        decoded_file = data_file.decode(detected_encoding)
+        rows = reader(StringIO(decoded_file), **csv_options)
+        header = self.parse_header_csv(rows, mapping)
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
         # respectivos campos related
@@ -186,21 +193,11 @@ class AccountStatementImportSheetParser(models.TransientModel):
             columns[column_name] = self._get_column_indexes(
                 header, column_name, mapping
             )
-
-        # Get the numbers of rows of the file
-        if isinstance(csv_or_xlsx, tuple):
-            numrows = csv_or_xlsx[1].nrows
-        else:
-            numrows = len(str(data_file.strip()).split("\\n"))
+        numrows = len(str(data_file.strip()).split("\\n"))
 
         label_line = mapping.header_lines_skip_count
         footer_line = numrows - mapping.footer_lines_skip_count
-
-        if isinstance(csv_or_xlsx, tuple):
-            rows = range(label_line, footer_line)
-        else:
-            rows = csv_or_xlsx
-        data = csv_or_xlsx, rows, label_line, footer_line
+        data = rows, label_line, footer_line
         return self._parse_rows(mapping, currency_code, data, columns)
 
     def _get_values_from_column(self, values, columns, column_name):
@@ -313,27 +310,15 @@ class AccountStatementImportSheetParser(models.TransientModel):
         return line
 
     def _parse_rows(self, mapping, currency_code, data, columns):
-        csv_or_xlsx, rows, label_line, footer_line = data
+        rows, label_line, footer_line = data
 
         lines = []
         for index, row in enumerate(rows, label_line):
-            if isinstance(csv_or_xlsx, tuple):
-                book = csv_or_xlsx[0]
-                sheet = csv_or_xlsx[1]
-                values = []
-                for col_index in range(mapping.offset_column, sheet.row_len(row)):
-                    cell_type = sheet.cell_type(row, col_index)
-                    cell_value = sheet.cell_value(row, col_index)
-                    if cell_type == xlrd.XL_CELL_DATE:
-                        cell_value = xldate_as_datetime(cell_value, book.datemode)
-                    values.append(cell_value)
-            else:
-                if index >= footer_line:
-                    continue
-                values = list(row)
+            if index >= footer_line:
+                continue
+            values = list(row)
             if mapping.skip_empty_lines and not any(values):
                 continue
-
             line = self._parse_one_line(mapping, currency_code, values, columns)
             if line:
                 lines.append(line)
@@ -341,7 +326,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
 
     @api.model
     def _convert_line_to_transactions(self, line):  # noqa: C901
-        """Hook for extension"""
         timestamp = line["timestamp"]
         amount = line["amount"]
         currency = line["currency"]

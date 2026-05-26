@@ -2,9 +2,9 @@
    :target: https://odoo-community.org/get-involved?utm_source=readme
    :alt: Odoo Community Association
 
-==================================
-Bank Statement TXT/CSV/XLSX Import
-==================================
+====================================
+Bank Statement TXT/CSV Import (Base)
+====================================
 
 .. 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -32,8 +32,9 @@ Bank Statement TXT/CSV/XLSX Import
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows you to import any TXT/CSV or XLSX file in Odoo as
-bank statements.
+This module is the base for a system for importing sheet-like files, and
+includes the direct support for TXT/CSV. Other formats like XLS, XLSX
+will be added by additional modules.
 
 **Table of contents**
 
@@ -55,7 +56,7 @@ Usage
 
 To use this module, you need to:
 
-1. Get statement in TXT/CSV or XLSX from your online banking software
+1. Get statement in TXT/CSV from your online banking software
 2. Go to Odoo and and import the statement file, selecting corresponding
    format
 
@@ -100,6 +101,7 @@ Contributors
   - Vicent Cubells
   - Victor M.M. Torres
   - Víctor Martínez
+  - Andrii Kompaniiets
 
 - ForgeFlow (https://www.forgeflow.com)
 
