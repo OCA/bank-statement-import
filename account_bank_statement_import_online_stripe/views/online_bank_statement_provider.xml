@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_bank_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='configuration']" position="inside">
+                <group attrs="{'invisible': [('service', '!=', 'stripe')]}">
+                    <group string="Stripe configuration">
+                        <field
+                            name="api_base"
+                            string="API base"
+                            groups="base.group_no_one"
+                        />
+                        <field name="password" string="API Key" password="True" />
+                        <field name="stripe_expand" string="Expand" />
+                    </group>
+                    <group string="Transaction labels">
+                        <field name="stripe_label" string="Statement Label" />
+                        <field name="stripe_note" string="Statement Note" />
+                        <field name="stripe_reference" string="Statement Reference" />
+                        <field name="stripe_fee_label" string="Fee Label" />
+                        <field name="stripe_fee_note" string="Fee Note" />
+                        <field name="stripe_fee_reference" string="Fee Reference" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
