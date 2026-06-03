@@ -10,7 +10,7 @@ import re
 from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
-from io import StringIO
+from io import BytesIO, StringIO
 from os import path
 
 from odoo import api, models
@@ -33,6 +33,45 @@ except ImportError:
         "chardet library not found, please install it "
         "from http://pypi.python.org/pypi/chardet"
     )
+
+try:
+    import openpyxl
+except (OSError, ImportError) as err:  # pragma: no cover
+    _logger.error(err)
+
+
+class _OpenpyxlWorkbookWrapper:
+    """Minimal xlrd workbook compatibility wrapper for openpyxl."""
+
+    datemode = 0  # unused; openpyxl returns native datetime objects
+
+
+class _OpenpyxlSheetWrapper:
+    """Minimal xlrd sheet compatibility wrapper for openpyxl worksheets."""
+
+    def __init__(self, sheet):
+        self._sheet = sheet
+        self.nrows = sheet.max_row or 0
+
+    def row_values(self, row_index):
+        """Return list of cell values for 0-based row_index."""
+        return [
+            "" if cell.value is None else cell.value
+            for cell in self._sheet[row_index + 1]
+        ]
+
+    def row_len(self, row_index):
+        """Return number of cells in 0-based row_index."""
+        return len(self._sheet[row_index + 1])
+
+    def cell_type(self, row, col):
+        """Return XL_CELL_TEXT; datetimes are already native datetime objects."""
+        return xlrd.XL_CELL_TEXT
+
+    def cell_value(self, row, col):
+        """Return cell value for 0-based row and col."""
+        value = self._sheet.cell(row + 1, col + 1).value
+        return "" if value is None else value
 
 
 class AccountStatementImportSheetParser(models.TransientModel):
@@ -161,23 +200,33 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 workbook.sheet_by_index(0),
             )
         except xlrd.XLRDError:
-            csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
+            # xlrd only supports .xls; try openpyxl for .xlsx
             try:
-                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
-            except UnicodeDecodeError:
-                # Try auto guessing the format
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    raise UserError(
-                        self.env._("No valid encoding was found for the attached file")
-                    ) from None
-                decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
+                wb = openpyxl.load_workbook(BytesIO(data_file), data_only=True)
+                csv_or_xlsx = (
+                    _OpenpyxlWorkbookWrapper(),
+                    _OpenpyxlSheetWrapper(wb.active),
+                )
+            except Exception:
+                csv_options = {}
+                csv_delimiter = mapping._get_column_delimiter_character()
+                if csv_delimiter:
+                    csv_options["delimiter"] = csv_delimiter
+                if mapping.quotechar:
+                    csv_options["quotechar"] = mapping.quotechar
+                try:
+                    decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
+                except UnicodeDecodeError:
+                    # Try auto guessing the format
+                    detected_encoding = chardet.detect(data_file).get("encoding", False)
+                    if not detected_encoding:
+                        raise UserError(
+                            self.env._(
+                                "No valid encoding was found for the attached file"
+                            )
+                        ) from None
+                    decoded_file = data_file.decode(detected_encoding)
+                csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
         header = self.parse_header(csv_or_xlsx, mapping)
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
@@ -417,8 +466,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
     def _parse_decimal(self, value, mapping):
         if isinstance(value, Decimal):
             return float(value)
-        elif isinstance(value, float):
-            return value
+        elif isinstance(value, (float, int)):
+            return float(value)
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
