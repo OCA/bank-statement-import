@@ -46,8 +46,7 @@ class OnlineBankStatementProviderStripe(models.Model):
         self.ensure_one()
         if self.service != "stripe":
             return super()._obtain_statement_data(
-                date_since,
-                date_until,
+                date_since, date_until,
             )  # pragma: no cover
         currency = self.currency_id or self.company_id.currency_id
         if date_since.tzinfo:
@@ -74,7 +73,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                     "ref": safe_format(self.stripe_reference, tx),
                     "payment_ref": safe_format(self.stripe_label, tx),
                     "narration": safe_format(self.stripe_note, tx),
-                    "amount": float(tx["amount"]) / (10**currency.decimal_places),
+                    "amount": float(tx["amount"]) / (10 ** currency.decimal_places),
                     "date": datetime.fromtimestamp(tx["created"]),
                     "unique_import_id": tx["id"],
                     "raw_data": json.dumps(tx),
@@ -86,7 +85,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                         "ref": safe_format(self.stripe_fee_reference, tx),
                         "payment_ref": safe_format(self.stripe_fee_label, tx),
                         "narration": safe_format(self.stripe_fee_note, tx),
-                        "amount": float(-tx["fee"]) / (10**currency.decimal_places),
+                        "amount": float(-tx["fee"]) / (10 ** currency.decimal_places),
                         "date": datetime.fromtimestamp(tx["created"]),
                         "unique_import_id": tx["id"] + "_fee",
                         "raw_data": json.dumps(tx),
