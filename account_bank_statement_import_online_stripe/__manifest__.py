@@ -2,14 +2,14 @@
 
 {
     "name": "Online Bank Statements: Stripe",
-    "version": "18.0.1.0.1",
+    "version": "13.0.1.0.0",
     "author": "Akiles, Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["juancarlosonate-tecnativa"],
     "website": "https://github.com/OCA/bank-statement-import",
     "license": "AGPL-3",
     "category": "Accounting",
     "summary": "Online bank statements for Stripe",
-    "depends": ["account_statement_import_online"],
+    "depends": ["account_bank_statement_import_online"],
     "data": ["views/online_bank_statement_provider.xml"],
     "installable": True,
 }
