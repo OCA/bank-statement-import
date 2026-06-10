@@ -8,6 +8,12 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 _logger = logging.getLogger(__name__)
 
+_VERSION_D_HEADER = (
+    "Date comptable;Libelle simplifie;Reference;"
+    "Informations complementaires;Type operation;"
+    "Debit;Credit;Date operation;Date de valeur;Pointage"
+)
+
 
 class AccountBankStatementImport(models.TransientModel):
     _inherit = "account.statement.import"
@@ -148,10 +154,89 @@ class AccountBankStatementImport(models.TransientModel):
         )
 
     @api.model
+    def _parse_cep_version_d(self, lines):
+        """Parse the Caisse d'Epargne flat CSV format (version D).
+
+        Columns (semicolon-separated):
+          0  Date comptable
+          1  Libelle simplifie
+          2  Reference
+          3  Informations complementaires
+          4  Type operation
+          5  Debit   (negative value, e.g. -18,25)
+          6  Credit  (positive value with +, e.g. +4850,47)
+          7  Date operation
+          8  Date de valeur
+          9  Pointage
+        """
+        transactions = []
+        for index, line in enumerate(lines[1:]):
+            if not line.strip():
+                continue
+            parts = line.split(";")
+            if len(parts) < 7:
+                continue
+
+            date_str = parts[0].strip()
+            name = parts[1].strip()
+            ref = parts[2].strip()
+            note = parts[3].strip()
+            debit_str = parts[5].strip()
+            credit_str = parts[6].strip()
+
+            if debit_str:
+                transaction_amount = float(debit_str.replace(",", "."))
+            elif credit_str:
+                transaction_amount = float(credit_str.lstrip("+").replace(",", "."))
+            else:
+                continue
+
+            try:
+                date = datetime.datetime.strptime(date_str, "%d/%m/%Y").strftime(
+                    DEFAULT_SERVER_DATE_FORMAT
+                )
+            except ValueError:
+                _logger.warning("Skipping line with unparseable date: %s", line)
+                continue
+
+            libelle = name
+            if note:
+                libelle += " */* " + note
+
+            transactions.append(
+                {
+                    "date": date,
+                    "name": libelle,
+                    "amount": transaction_amount,
+                    "unique_import_id": (
+                        str(index) + date_str + name + str(transaction_amount) + ref
+                    ),
+                    "partner_id": False,
+                    "payment_ref": ref if ref else name,
+                }
+            )
+
+        if not transactions:
+            raise ValidationError(self.env._("No transactions found in file."))
+
+        return (
+            "EUR",
+            None,
+            [{"name": transactions[0]["date"], "transactions": transactions}],
+        )
+
+    @api.model
     def _parse_file(self, data_file: bytes):
-        data_file = data_file.decode("utf-8")
-        data_file = data_file.splitlines()
-        result = self._check_file(data_file)
+        try:
+            content = data_file.decode("utf-8")
+        except UnicodeDecodeError:
+            content = data_file.decode("iso-8859-1")
+        lines = content.splitlines()
+
+        if lines and lines[0].strip() == _VERSION_D_HEADER:
+            return self._parse_cep_version_d(lines)
+
+        result = self._check_file(lines)
         if not result:
             return super()._parse_file(data_file)
 
@@ -165,6 +250,7 @@ class AccountBankStatementImport(models.TransientModel):
             closing_balance,
             currency,
         ) = result
+        data_file = lines
         transactions = []
         total_amt = 0.00
         try:
