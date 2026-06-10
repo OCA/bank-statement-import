@@ -49,8 +49,8 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         )
         self.provider = self.journal.online_bank_statement_provider_id
 
-        self.mock_slug = lambda: mock.patch(
-            _provider_class + "._qonto_get_slug",
+        self.mock_bank_account_ids = lambda: mock.patch(
+            _provider_class + "._qonto_get_bank_account_ids",
             return_value={"FR0214508000302245362775K46": "qonto-1234-bank-account-1"},
         )
         self.mock_transaction = lambda: mock.patch(
@@ -132,13 +132,15 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
             "label": "LABEL",
             "settled_at": "2020-04-16T07:01:55.503Z",
             "reference": "REF",
+            "note": None,
+            "operation_type": "income",
         }
         transaction.update(kwargs)
         return transaction
 
     def test_01_obtain_statement_data(self):
         # Given: a qonto provider with two mocked transactions (credit/debit).
-        with self.mock_transaction(), self.mock_slug():
+        with self.mock_transaction(), self.mock_bank_account_ids():
             # When: statement data is obtained for the period.
             lines, statement_values = self.provider._obtain_statement_data(
                 datetime(2020, 4, 15),
@@ -165,7 +167,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         # Then: it contains the login and key.
         self.assertEqual(self.provider._qonto_header(), {"Authorization": "login:key"})
 
-    def test_04_get_slug(self):
+    def test_04_get_bank_account_ids(self):
         # Given: a provider with credentials and a valid API response.
         self.provider.write({"username": "login", "password": "key"})
         response = mock.Mock(
@@ -176,30 +178,31 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
                         "bank_accounts": [
                             {
                                 "iban": "FR02 1450 8000 3022 4536 2775 K46",
-                                "slug": "qonto-1234-bank-account-1",
+                                "id": "qonto-1234-bank-account-1",
                             }
                         ]
                     }
                 }
             ),
         )
-        # When: slugs are fetched.
+        # When: bank account ids are fetched.
         with mock.patch(_requests_get, return_value=response):
-            slugs = self.provider._qonto_get_slug()
-        # Then: the IBAN is sanitized and mapped to the slug.
+            bank_account_ids = self.provider._qonto_get_bank_account_ids()
+        # Then: the IBAN is sanitized and mapped to the bank account id.
         self.assertEqual(
-            slugs, {"FR0214508000302245362775K46": "qonto-1234-bank-account-1"}
+            bank_account_ids,
+            {"FR0214508000302245362775K46": "qonto-1234-bank-account-1"},
         )
 
-    def test_05_get_slug_error(self):
+    def test_05_get_bank_account_ids_error(self):
         # Given: a provider with credentials and a failing API response.
         self.provider.write({"username": "login", "password": "key"})
         response = mock.Mock(status_code=401, text="Unauthorized")
-        # When: slugs are fetched.
+        # When: bank account ids are fetched.
         # Then: a UserError is raised.
         with mock.patch(_requests_get, return_value=response):
             with self.assertRaises(UserError):
-                self.provider._qonto_get_slug()
+                self.provider._qonto_get_bank_account_ids()
 
     def test_06_get_transactions_error(self):
         # Given: a provider with credentials and a failing API response.
@@ -212,9 +215,9 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
                 self.provider._qonto_get_transactions("http://test", {})
 
     def test_07_unknown_account(self):
-        # Given: Qonto returns slugs for an IBAN not matching the journal.
+        # Given: Qonto returns accounts for an IBAN not matching the journal.
         with self.mock_transaction(), mock.patch(
-            _provider_class + "._qonto_get_slug",
+            _provider_class + "._qonto_get_bank_account_ids",
             return_value={"FR7630001007941234567890185": "qonto-other"},
         ):
             # When: statement data is obtained.
@@ -227,7 +230,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
 
     def test_08_no_transactions(self):
         # Given: Qonto returns no transactions for the period.
-        with self.mock_slug(), mock.patch(
+        with self.mock_bank_account_ids(), mock.patch(
             _provider_class + "._qonto_get_transactions",
             return_value={"transactions": [], "meta": {"total_pages": 1}},
         ):
@@ -321,7 +324,7 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
         )
         # Then: the line carries the foreign currency and amount.
         self.assertEqual(vals_line["amount"], -100.0)
-        self.assertEqual(vals_line["currency_id"], self.currency_usd.id)
+        self.assertEqual(vals_line["foreign_currency_id"], self.currency_usd.id)
         self.assertEqual(vals_line["amount_currency"], -120.0)
 
     def test_14_get_statement_date(self):
