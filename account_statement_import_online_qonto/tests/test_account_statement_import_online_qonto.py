@@ -7,7 +7,7 @@ from unittest import mock
 from odoo import fields
 from odoo.tests import common
 
-_module_ns = "odoo.addons.account_bank_statement_import_online_qonto"
+_module_ns = "odoo.addons.account_statement_import_online_qonto"
 _provider_class = (
     _module_ns
     + ".models.online_bank_statement_provider_qonto"
@@ -122,7 +122,8 @@ class TestAccountBankAccountStatementImportOnlineQonto(common.TransactionCase):
     def test_qonto(self):
         with self.mock_transaction(), self.mock_slug():
             lines, statement_values = self.provider._obtain_statement_data(
-                datetime(2020, 4, 15), datetime(2020, 4, 17),
+                datetime(2020, 4, 15),
+                datetime(2020, 4, 17),
             )
 
         self.assertEqual(len(lines), 2)
