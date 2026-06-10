@@ -31,6 +31,12 @@ class TestParserCommon(TransactionCase):
                 "account_statement_import_caisse_epargne/tests/samples/test_statement_import_version_C.csv"
             ),
         )
+        cls.import_wizard_D = cls._create_import_wizard(
+            cls,
+            file_path(
+                "account_statement_import_caisse_epargne/tests/samples/test_statement_import_version_D.csv"
+            ),
+        )
 
     def _create_import_wizard(self, file_path):
         file = base64.b64encode(open(file_path, "rb").read())
@@ -90,6 +96,18 @@ class TestParserCommon(TransactionCase):
                 statement["balance_end_real"],
                 places=2,
             )
+
+    def test_parse_file_version_d(self):
+        data_file = base64.b64decode(self.import_wizard_D.statement_file)
+        currency, bank_account_number, statements = self.import_wizard_D._parse_file(
+            data_file
+        )
+        self.assertEqual(currency, "EUR")
+        self.assertIsNone(bank_account_number)
+        self.assertEqual(len(statements), 1)
+        statement = statements[0]
+        self.assertIn("transactions", statement)
+        self.assertGreater(len(statement["transactions"]), 0)
 
     def test_parse_file_invalid_balance_A(self):
         data_file = (
