@@ -13,6 +13,7 @@
                 <group name="main">
                     <field name="date_since" />
                     <field name="date_until" />
+                    <field name="one_fetch" />
                 </group>
                 <footer>
                     <button
