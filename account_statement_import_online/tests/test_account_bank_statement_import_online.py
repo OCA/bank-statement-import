@@ -39,6 +39,7 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             cls.env.cr, ["online.bank.statement.provider"], {"models_to_check": True}
         )
 
+        cls.env.user.tz = "UTC"
         cls.now = fields.Datetime.now()
         cls.AccountAccount = cls.env["account.account"]
         cls.AccountJournal = cls.env["account.journal"]
