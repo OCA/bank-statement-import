@@ -6,7 +6,7 @@
 {
     "name": "Bank Statement XLSX Import",
     "summary": "Import XLSX files as Bank Statements in Odoo",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "category": "Accounting",
     "website": "https://github.com/OCA/bank-statement-import",
     "author": "Tecnativa, Odoo Community Association (OCA)",
