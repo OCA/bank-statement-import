@@ -1,0 +1,104 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_plaid
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-01-15 14:25+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Client ID"
+msgstr "ID client"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/online_bank_statement_provider_plaid.py:0
+msgid "Country code not found for the bank or the company..."
+msgstr "Codice nazione non trovato per la banca o l'azienda..."
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting access token: %s"
+msgstr "Errore durante l'ottenimento del token di accesso: %s"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting client api: %s"
+msgstr "Errore durante il recupero dell'API client: %s"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting link token: %s"
+msgstr "Errore durante l'ottenimento del token di collegamento: %s"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/plaid_interface.py:0
+msgid "Error getting transactions: %s"
+msgstr "Errore durante il recupero delle transazioni: %s"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model,name:account_statement_import_online_plaid.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Fornitore estratto conto bancario online"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields,field_description:account_statement_import_online_plaid.field_online_bank_statement_provider__plaid_access_token
+msgid "Plaid Access Token"
+msgstr "Token accesso Plaid"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields,field_description:account_statement_import_online_plaid.field_online_bank_statement_provider__plaid_host
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Plaid Host"
+msgstr "Host Plaid"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model,name:account_statement_import_online_plaid.model_plaid_interface
+msgid "Plaid Interface"
+msgstr "Interfaccia Plaid"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Plaid config"
+msgstr "Configurazione Plaid"
+
+#. module: account_statement_import_online_plaid
+#. odoo-python
+#: code:addons/account_statement_import_online_plaid/models/online_bank_statement_provider_plaid.py:0
+msgid "Please link your Plaid account first by clicking on 'Sync with Plaid'."
+msgstr "Collegare l'account Plaid cliccando su \"Sincronizza con Plaid\"."
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__production
+msgid "Production"
+msgstr "Produzione"
+
+#. module: account_statement_import_online_plaid
+#: model:ir.model.fields.selection,name:account_statement_import_online_plaid.selection__online_bank_statement_provider__plaid_host__sandbox
+msgid "Sandbox"
+msgstr "Sandbox"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Secret Key"
+msgstr "Chiave segreta"
+
+#. module: account_statement_import_online_plaid
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_plaid.online_bank_statement_provider_form
+msgid "Sync with Plaid.com"
+msgstr "Sincronizza con Plaid.com"
