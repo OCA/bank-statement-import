@@ -4,7 +4,7 @@
 import base64
 import logging
 
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -39,7 +39,6 @@ class AccountStatementImport(models.TransientModel):
                     "only contains already imported transactions."
                 )
             )
-        self.env["ir.attachment"].create(self._prepare_create_attachment(result))
         return result
 
     def import_file_button(self):
@@ -66,14 +65,8 @@ class AccountStatementImport(models.TransientModel):
         return action
 
     def _prepare_create_attachment(self, result):
-        # Attach to first bank statement
-        res_id = result["statement_ids"][0]
-        st = self.env["account.bank.statement"].browse(res_id)
         vals = {
             "name": self.statement_filename,
-            "res_id": res_id,
-            "company_id": st.company_id.id,
-            "res_model": "account.bank.statement",
             "datas": self.statement_file,
         }
         return vals
@@ -87,6 +80,10 @@ class AccountStatementImport(models.TransientModel):
             self.statement_filename,
             len(parsing_data),
         )
+        attach = self.env["ir.attachment"].create(
+            self._prepare_create_attachment(result)
+        )
+        result["attachment_id"] = attach.id
         i = 0
         for single_statement_data in parsing_data:
             i += 1
@@ -340,7 +337,14 @@ class AccountStatementImport(models.TransientModel):
                 st_vals.pop("transactions", None)
                 context = st_vals.pop("creation_context", {})
                 # Create the statement with lines
-                st_vals["line_ids"] = [[0, False, line] for line in st_lines_to_create]
+                st_vals.update(
+                    {
+                        "attachment_ids": [Command.set([result["attachment_id"]])],
+                        "line_ids": [
+                            Command.create(line) for line in st_lines_to_create
+                        ],
+                    }
+                )
                 statement = abs_obj.with_context(**context).create(st_vals)
                 statement_ids.append(statement.id)
 
