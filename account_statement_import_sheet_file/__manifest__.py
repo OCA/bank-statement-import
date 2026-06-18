@@ -16,6 +16,9 @@
     "depends": [
         "account_statement_import_file",
     ],
+    "external_dependencies": {
+        "python": ["openpyxl"],
+    },
     "data": [
         "security/ir.model.access.csv",
         "views/account_statement_import_sheet_mapping.xml",
