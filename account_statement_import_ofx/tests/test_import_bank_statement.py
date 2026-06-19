@@ -108,3 +108,50 @@ class TestOfxFile(TransactionCase):
             }
         )
         bank_st.import_file_button()
+
+    def _parse_ofx_memos(self, filename):
+        """Return the list of transaction memos parsed from an OFX fixture.
+
+        ``_check_ofx`` is fed the raw (decoded) file bytes, exactly as the
+        base ``_parse_file`` does in production.
+        """
+        ofx_file_path = get_module_resource(
+            "account_statement_import_ofx", "tests/test_ofx_file/", filename
+        )
+        with open(ofx_file_path, "rb") as fh:
+            data_file = fh.read()
+        ofx = self.asi_model._check_ofx(data_file=data_file)
+        self.assertTrue(ofx, "%s should be recognized as a valid OFX file" % filename)
+        return [
+            transaction.memo
+            for account in ofx.accounts
+            for transaction in account.statement.transactions
+        ]
+
+    def test_ofx_encoding_latin(self):
+        """UTF-8 body mislabeled as CHARSET:1252 (the reported bug).
+
+        The accented "Á" produces byte 0x81, which is undefined in cp1252 and
+        used to crash ofxparse with a UnicodeDecodeError.
+        """
+        memos = self._parse_ofx_memos("test_ofx_utf8_latin.ofx")
+        self.assertIn("TRANSFERENCIA ROMÁRIO ção JOSÉ", memos)
+
+    def test_ofx_encoding_cp1252(self):
+        """Genuine cp1252 body with the Euro sign (0x80) and Western accents."""
+        memos = self._parse_ofx_memos("test_ofx_cp1252_euro.ofx")
+        self.assertIn("Loyer 850€ café Müller", memos)
+
+    def test_ofx_encoding_utf8_euro(self):
+        """UTF-8 body with characters outside latin-1 (€, em dash).
+
+        These used to be silently corrupted into mojibake; they must be
+        preserved verbatim.
+        """
+        memos = self._parse_ofx_memos("test_ofx_utf8_euro.ofx")
+        self.assertIn("Paiement 850€ — café", memos)
+
+    def test_ofx_encoding_asian(self):
+        """UTF-8 body with CJK characters, far outside any 8-bit codepage."""
+        memos = self._parse_ofx_memos("test_ofx_utf8_asian.ofx")
+        self.assertIn("送金 日本 中文 결제", memos)

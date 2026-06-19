@@ -12,7 +12,7 @@
     "depends": [
         "account_statement_import_online",
     ],
-    "external_dependencies": {"python": ["ofxtools", "ofxparse"]},
+    "external_dependencies": {"python": ["ofxtools==0.9.5", "ofxparse"]},
     "data": [
         "security/ir.model.access.csv",
         "views/online_bank_statement_provider.xml",

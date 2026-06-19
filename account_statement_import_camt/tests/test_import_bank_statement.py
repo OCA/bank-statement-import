@@ -37,7 +37,7 @@ class TestParserCommon(TransactionCase):
         self.assertLessEqual(
             len(diff),
             max_diff_count,
-            f"Actual output doesn't match expected output:\n{''.join(diff)}",
+            f"Actual output doesn't match expected output: \n{''.join(diff)}",
         )
 
     def _get_files_diffs(self, inputfile_path, goldenfile_path) -> list:
