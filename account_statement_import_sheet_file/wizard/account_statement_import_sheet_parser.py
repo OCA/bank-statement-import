@@ -144,7 +144,22 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     column_indexes.append(column_index)
             else:
                 if column_name_or_index:
-                    column_indexes.append(header.index(column_name_or_index))
+                    try:
+                        column_indexes.append(header.index(column_name_or_index))
+                    except ValueError:
+                        # Fallback: case-insensitive match
+                        column_index = next(
+                            (
+                                i
+                                for i, h in enumerate(header)
+                                if str(h).lower() == column_name_or_index.lower()
+                            ),
+                            None,
+                        )
+                        if column_index is not None:
+                            column_indexes.append(column_index)
+                        else:
+                            raise
         return column_indexes
 
     def _get_column_names(self):
@@ -403,6 +418,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
             return float(value)
         elif isinstance(value, float):
             return value
+        if not isinstance(value, str):
+            value = str(value)
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
