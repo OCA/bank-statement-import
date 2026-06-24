@@ -181,6 +181,7 @@ class AccountBankStatementImport(models.TransientModel):
             name = parts[1].strip()
             ref = parts[2].strip()
             note = parts[3].strip()
+            transaction_type = parts[4].strip() if len(parts) > 4 else ""
             debit_str = parts[5].strip()
             credit_str = parts[6].strip()
 
@@ -201,18 +202,20 @@ class AccountBankStatementImport(models.TransientModel):
 
             libelle = name
             if note:
-                libelle += " */* " + note
+                libelle += " (" + note + ")"
 
             transactions.append(
                 {
                     "date": date,
-                    "name": libelle,
                     "amount": transaction_amount,
                     "unique_import_id": (
                         str(index) + date_str + name + str(transaction_amount) + ref
                     ),
                     "partner_id": False,
-                    "payment_ref": ref if ref else name,
+                    "payment_ref": libelle,
+                    "ref": ref or False,
+                    "transaction_type": transaction_type,
+                    "narration": libelle,
                 }
             )
 
@@ -224,6 +227,16 @@ class AccountBankStatementImport(models.TransientModel):
             None,
             [{"name": transactions[0]["date"], "transactions": transactions}],
         )
+
+    def _complete_stmts_vals(self, stmts_vals, journal, account_number):
+        stmts_vals = super()._complete_stmts_vals(stmts_vals, journal, account_number)
+        if not account_number and journal.bank_account_id:
+            journal_acc = journal.bank_account_id.acc_number
+            for st_vals in stmts_vals:
+                for lvals in st_vals.get("transactions", []):
+                    if not lvals.get("account_number"):
+                        lvals["account_number"] = journal_acc
+        return stmts_vals
 
     @api.model
     def _parse_file(self, data_file: bytes):
@@ -284,10 +297,7 @@ class AccountBankStatementImport(models.TransientModel):
                         transaction.group("date"),
                         self.regexp_version[file_version]["line_date_format"],
                     ).strftime(DEFAULT_SERVER_DATE_FORMAT),
-                    "name": libelle,
-                    # 'ref': transaction.group('unique_import_id'),
                     "amount": transaction_amount,
-                    # 'note': transaction.group('note'),
                     "unique_import_id": str(index)
                     + transaction.group("date")
                     + transaction.group("name")
@@ -295,7 +305,6 @@ class AccountBankStatementImport(models.TransientModel):
                     + transaction.group("note"),
                     "account_number": bank_account_number,
                     "partner_id": False,
-                    # "bank_account_id": self._find_bank_account_id(bank_account_number), # noqa
                     "payment_ref": payment_ref,
                 }
                 total_amt += transaction_amount
