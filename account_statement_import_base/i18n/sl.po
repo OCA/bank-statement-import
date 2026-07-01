@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-07-01 10:03+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,41 +15,42 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_base
 #: model:ir.model.constraint,message:account_statement_import_base.constraint_account_bank_statement_line_unique_import_id
 msgid "A bank account transaction can be imported only once!"
-msgstr ""
+msgstr "Transakcijo bančnega računa je mogoče uvoziti samo enkrat!"
 
 #. module: account_statement_import_base
 #: model:ir.model,name:account_statement_import_base.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Postavka bančnega izpiska"
 
 #. module: account_statement_import_base
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_journal__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: account_statement_import_base
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_journal__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_import_base
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__unique_import_id
 msgid "Import ID"
-msgstr ""
+msgstr "ID uvoza"
 
 #. module: account_statement_import_base
 #: model:ir.model,name:account_statement_import_base.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Dnevnik"
 
 #. module: account_statement_import_base
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__raw_data
 #: model_terms:ir.ui.view,arch_db:account_statement_import_base.account_bank_statement_line_form
 msgid "Raw Data"
-msgstr ""
+msgstr "Neobdelani podatki"
