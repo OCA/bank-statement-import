@@ -8,219 +8,217 @@ msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-16 08:08+0000\n"
-"PO-Revision-Date: 2015-07-25 12:19+0000\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"PO-Revision-Date: 2026-07-01 10:03+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-"
 "import-8-0/language/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import_camt_parser
 msgid "Account Bank Statement Import CAMT parser"
-msgstr ""
+msgstr "Razčlenjevalnik CAMT za uvoz bančnih izpiskov računa"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Account Servicer Reference"
-msgstr ""
+msgstr "Referenca ponudnika storitev računa"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Entry Information"
-msgstr ""
+msgstr "Dodatne informacije o vnosu"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Additional Transaction Information"
-msgstr ""
+msgstr "Dodatne informacije o transakciji"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
-#, fuzzy
 msgid "Bank Statement"
-msgstr "Uvoz bančnega izpiska"
+msgstr "Bančni izpisek"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
-#, fuzzy
 msgid "Bank Statement Line"
-msgstr "Uvoz bančnega izpiska"
+msgstr "Postavka bančnega izpiska"
 
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
 msgid "CAMT"
-msgstr ""
+msgstr "CAMT"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Cheque Number"
-msgstr ""
+msgstr "Številka čeka"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Communication"
-msgstr ""
+msgstr "Komunikacija"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "End To End Id"
-msgstr ""
+msgstr "ID od začetka do konca"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Uvoz bančnega izpiska"
+msgstr "Uvozi datoteke bančnih izpiskov"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Instructed Id"
-msgstr ""
+msgstr "ID navodila"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Dnevnik"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Mandate Id"
-msgstr ""
+msgstr "ID mandata"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Msg Id"
-msgstr ""
+msgstr "ID sporočila"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Partner Account Number"
-msgstr ""
+msgstr "Številka računa partnerja"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Partner Name"
-msgstr ""
+msgstr "Naziv partnerja"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Postal Address"
-msgstr ""
+msgstr "Poštni naslov"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Reference"
-msgstr ""
+msgstr "Sklic"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Additional Information"
-msgstr ""
+msgstr "Dodatne informacije o razlogu vračila"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Code"
-msgstr ""
+msgstr "Koda razloga vračila"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Return Reason Code (Proprietary)"
-msgstr ""
+msgstr "Koda razloga vračila (lastniška)"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Reversal Indicator"
-msgstr ""
+msgstr "Indikator stornacije"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Structured Reference"
-msgstr ""
+msgstr "Strukturiran sklic"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Date"
-msgstr ""
+msgstr "Datum transakcije"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Identification"
-msgstr ""
+msgstr "Identifikacija transakcije"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Transaction Type"
-msgstr ""
+msgstr "Tip transakcije"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/parser.py:0
 #, python-format
 msgid "Unstructured Reference"
-msgstr ""
+msgstr "Nestrukturiran sklic"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/account_journal.py:0
 #, python-format
 msgid "camt.053.001.02"
-msgstr ""
+msgstr "camt.053.001.02"
 
 #. module: account_statement_import_camt
 #. odoo-python
 #: code:addons/account_statement_import_camt/models/account_journal.py:0
 #, python-format
 msgid "camt.054.001.02"
-msgstr ""
+msgstr "camt.054.001.02"
 
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
 msgid "zipped CAMT"
-msgstr ""
+msgstr "CAMT zip"
