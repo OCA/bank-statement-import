@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2024-06-05 13:36+0000\n"
-"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
+"PO-Revision-Date: 2026-07-01 15:07+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_file
 #. odoo-python
@@ -54,6 +54,10 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Kunde inte hitta något bankkonto med nummer '%(account_number)s' kopplat "
+"till partner '%(partner_name)s'. Du bör skapa bankkontot och ange det på "
+"tillhörande bankjournal. Om tillhörande bankjournal inte finns ännu bör du "
+"skapa en ny."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -84,7 +88,7 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/account_statement_import_file/models/account_journal.py:0
 msgid "Import (OCA) (%s)"
-msgstr ""
+msgstr "Importera (OCA) (%s)"
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
@@ -167,6 +171,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
+"Bankkontot med nummer '%(account_number)s' finns i Odoo men är inte angivet "
+"på någon bankjournal. Du bör ange det på tillhörande bankjournal. Om "
+"tillhörande bankjournal inte finns ännu bör du skapa en ny."
 
 #. module: account_statement_import_file
 #. odoo-python
