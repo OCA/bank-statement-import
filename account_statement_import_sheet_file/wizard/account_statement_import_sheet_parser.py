@@ -259,10 +259,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                     year -= 1
                 timestamp = timestamp.replace(year=year)
 
-        if balance:
+        if balance is not None:
             balance = self._parse_decimal(balance, mapping)
-        else:
-            balance = None
 
         if debit_credit is not None:
             amount = abs(amount)
