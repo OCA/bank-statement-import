@@ -39,7 +39,9 @@ class OnlineBankStatementProvider(models.Model):
         self.ensure_one()
         if self.service != "plaid":
             return super()._obtain_statement_data(date_since, date_until)
-        return self._plaid_retrieve_data(date_since, date_until), {}
+        lines = self._plaid_retrieve_data(date_since, date_until)
+        self._plaid_replace_settled_pending_lines(lines)
+        return lines, {}
 
     @api.model
     def _get_available_services(self):
@@ -126,6 +128,39 @@ class OnlineBankStatementProvider(models.Model):
                 "unique_import_id": transaction["transaction_id"],
                 "amount": float(transaction["amount"]) * -1.00,
                 "raw_data": transaction,
+                "plaid_pending_transaction_id": transaction.get(
+                    "pending_transaction_id"
+                ),
             }
             for transaction in transactions
         ]
+
+    def _plaid_replace_settled_pending_lines(self, lines):
+        """Delete previously imported pending lines superseded by settled ones.
+
+        When a Plaid transaction settles it receives a new
+        ``transaction_id``; the old pending ID is stored in
+        ``pending_transaction_id``.  If the pending version was already
+        imported, we remove it so the settled version can take its place.
+        Reconciled lines are never touched.
+        """
+        BankStLine = self.env["account.bank.statement.line"]
+        journal = self.journal_id
+        account_number = self.account_number
+        for line_vals in lines:
+            pending_tid = line_vals.pop("plaid_pending_transaction_id", None)
+            if not pending_tid:
+                continue
+            # Reconstruct the unique_import_id as stored by the base
+            # module (which prepends account/journal info).
+            lookup = {"unique_import_id": pending_tid}
+            journal._statement_line_import_update_unique_import_id(
+                lookup, account_number
+            )
+            existing = BankStLine.sudo().search(
+                [("unique_import_id", "=", lookup["unique_import_id"])],
+                limit=1,
+            )
+            if existing and not existing.is_reconciled:
+                existing.move_id.button_draft()
+                existing.move_id.unlink()
