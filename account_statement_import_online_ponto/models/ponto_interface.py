@@ -28,18 +28,19 @@ class PontoInterface(models.AbstractModel):
         url = PONTO_ENDPOINT + "/oauth2/token"
         if not (username and password):
             raise UserError(_("Please fill login and key."))
-        login = "%s:%s" % (username, password)
+        login = ":".join([username, password])
         login = base64.b64encode(login.encode("UTF-8")).decode("UTF-8")
         login_headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
-            "Authorization": "Basic %s" % login,
+            "Authorization": "Basic {login}".format(login=login),
         }
-        _logger.debug(_("POST request on %s"), url)
+        _logger.debug(_("POST request on %(url)s"), dict(url=url))
         response = requests.post(
             url,
             params={"grant_type": "client_credentials"},
             headers=login_headers,
+            timeout=60,
         )
         data = self._get_response_data(response)
         access_token = data.get("access_token", False)
@@ -62,15 +63,20 @@ class PontoInterface(models.AbstractModel):
             access_data.update(updated_data)
         return {
             "Accept": "application/json",
-            "Authorization": "Bearer %s" % access_data["access_token"],
+            "Authorization": "Bearer {access_token}".format(
+                access_token=access_data["access_token"]
+            ),
         }
 
     def _set_access_account(self, access_data, account_number):
         """Set ponto account for bank account in access_data."""
         url = PONTO_ENDPOINT + "/accounts"
-        _logger.debug(_("GET request on %s"), url)
+        _logger.debug(_("GET request on %(url)s"), dict(url=url))
         response = requests.get(
-            url, params={"limit": 100}, headers=self._get_request_headers(access_data)
+            url,
+            params={"limit": 100},
+            headers=self._get_request_headers(access_data),
+            timeout=60,
         )
         data = self._get_response_data(response)
         for ponto_account in data.get("data", []):
@@ -82,8 +88,9 @@ class PontoInterface(models.AbstractModel):
                 return
         # If we get here, we did not find Ponto account for bank account.
         raise UserError(
-            _("Ponto : wrong configuration, account %s not found in %s")
-            % (account_number, data)
+            _(
+                "Ponto : wrong configuration, account {account} not found in {data}"
+            ).format(account=account_number, data=data)
         )
 
     def _get_transactions(self, access_data, last_identifier):
@@ -112,8 +119,8 @@ class PontoInterface(models.AbstractModel):
         transactions = data.get("data", [])
         if not transactions:
             _logger.debug(
-                _("No transactions where found in data %s"),
-                data,
+                _("No transactions where found in data %(data)s"),
+                dict(data=data),
             )
         else:
             _logger.debug(
@@ -126,17 +133,34 @@ class PontoInterface(models.AbstractModel):
         """Interact with Ponto to get next page of data."""
         headers = self._get_request_headers(access_data)
         _logger.debug(
-            _("GET request to %s with headers %s and params %s"), url, params, headers
+            _("GET request to %(url)s with headers %(headers)s and params %(params)s"),
+            dict(
+                url=url,
+                headers=headers,
+                params=params,
+            ),
         )
-        response = requests.get(url, params=params, headers=headers)
+        response = requests.get(
+            url,
+            params=params,
+            headers=headers,
+            timeout=(60, 300),
+        )
         return self._get_response_data(response)
 
     def _get_response_data(self, response):
         """Get response data for GET or POST request."""
-        _logger.debug(_("HTTP answer code %s from Ponto"), response.status_code)
+        _logger.debug(
+            _("HTTP answer code %(response_code)s from Ponto"),
+            dict(response_code=response.status_code),
+        )
         if response.status_code not in (200, 201):
             raise UserError(
-                _("Server returned status code %s: %s")
-                % (response.status_code, response.text)
+                _(
+                    "Server returned status code {response_code}: {response_text}"
+                ).format(
+                    response_code=response.status_code,
+                    response_text=response.text,
+                )
             )
         return json.loads(response.text)

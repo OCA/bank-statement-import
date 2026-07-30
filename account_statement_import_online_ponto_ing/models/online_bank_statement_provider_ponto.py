@@ -8,10 +8,10 @@ from odoo import models
 class OnlineBankStatementProviderPonto(models.Model):
     _inherit = "online.bank.statement.provider"
 
-    def _ponto_get_transaction_vals(self, transaction, sequence):
+    def _ponto_get_transaction_vals(self, transaction):
         """Remove duplicate information from payment_ref (Label)."""
         self.ensure_one()
-        vals_line = super()._ponto_get_transaction_vals(transaction, sequence)
+        vals_line = super()._ponto_get_transaction_vals(transaction)
         if not self.journal_id.bank_account_id.bank_id.bic == "INGBNL2A":
             return vals_line
         payment_ref = vals_line["payment_ref"]
