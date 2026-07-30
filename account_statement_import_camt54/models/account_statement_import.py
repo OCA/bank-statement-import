@@ -20,8 +20,9 @@ class AccountStatementImport(models.TransientModel):
         statements = self.env["account.bank.statement"].browse(result["statement_ids"])
         for statement in statements:
             amount = sum(statement.line_ids.mapped("amount"))
-            if statement.journal_id.transfer_line:
-                if amount != 0:
+            journal = statement.journal_id
+            if journal.transfer_line:
+                if not journal.currency_id.is_zero(amount):
                     amount = -amount
                 statement.line_ids.create(
                     {
