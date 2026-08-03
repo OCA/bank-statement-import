@@ -11,6 +11,7 @@ from odoo.exceptions import ValidationError
 class AccountStatementImport(models.TransientModel):
     _inherit = "account.statement.import"
 
+    journal_id = fields.Many2one("account.journal", string="Journal")
     statement_file = fields.Binary(required=False)
 
     def _import_file(self) -> Any:
