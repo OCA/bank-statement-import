@@ -1,34 +1,34 @@
 import base64
 import datetime
 
-from odoo.tests.common import TransactionCase
 from odoo.tools.misc import file_path
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestOfxFile(TransactionCase):
+
+class TestOfxFile(BaseCommon):
     """Tests for import bank statement ofx file format
     (account.bank.statement.import)
     """
 
-    def setUp(self):
-        super().setUp()
-        self.asi_model = self.env["account.statement.import"]
-        self.abs_model = self.env["account.bank.statement"]
-        self.j_model = self.env["account.journal"]
-        self.absl_model = self.env["account.bank.statement.line"]
-        cur = self.env.ref("base.USD")
-        # self.env.ref("base.main_company").currency_id = cur.id
-        bank = self.env["res.partner.bank"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.asi_model = cls.env["account.statement.import"]
+        cls.abs_model = cls.env["account.bank.statement"]
+        cls.absl_model = cls.env["account.bank.statement.line"]
+        cur = cls.env.ref("base.USD")
+        bank = cls.env["res.partner.bank"].create(
             {
                 "acc_number": "223456",
                 "acctid": "223456-X",
-                "partner_id": self.env.ref("base.main_partner").id,
-                "company_id": self.env.ref("base.main_company").id,
-                "bank_id": self.env.ref("base.res_bank_1").id,
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
 
-        self.env["account.journal"].create(
+        cls.env["account.journal"].create(
             {
                 "name": "Bank Journal TEST OFX",
                 "code": "BNK12",
@@ -38,16 +38,16 @@ class TestOfxFile(TransactionCase):
             }
         )
 
-        bank_iban_ofx = self.env["res.partner.bank"].create(
+        bank_iban_ofx = cls.env["res.partner.bank"].create(
             {
                 "acc_number": "FR7630001007942234567890185",
-                "partner_id": self.env.ref("base.main_partner").id,
-                "company_id": self.env.ref("base.main_company").id,
-                "bank_id": self.env.ref("base.res_bank_1").id,
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
 
-        self.env["account.journal"].create(
+        cls.env["account.journal"].create(
             {
                 "name": "FR7630001007942234567890185",
                 "code": "BNK13",

@@ -3,7 +3,7 @@
 
 import base64
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -34,7 +34,7 @@ class AccountStatementImport(models.TransientModel):
             journal_id = self.env.context.get("journal_id")
             if journal_id and journal.id != journal_id:
                 raise UserError(
-                    _(
+                    self.env._(
                         "The journal found for the file is not consistent with the "
                         "selected journal. You should use the proper journal or "
                         "use the generic button on the top of the Accounting Dashboard"
