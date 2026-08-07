@@ -51,26 +51,29 @@ class OnlineBankStatementProviderQonto(models.Model):
             return {"Authorization": "{}:{}".format(self.username, self.password)}
         raise UserError(_("Please fill login and key"))
 
-    def _qonto_get_slug(self):
+    def _qonto_get_bank_account_ids(self):
         self.ensure_one()
-        url = QONTO_ENDPOINT + "/organizations/%7Bid%7D"
+        url = QONTO_ENDPOINT + "/organization"
         response = requests.get(url, headers=self._qonto_header(), timeout=10)
         if response.status_code == 200:
             data = json.loads(response.text)
             res = {}
-            for account in data.get("organization", {}).get("bank_accounts", []):
+            organization_data = data.get("organization", {})
+            for account in organization_data.get("bank_accounts", []):
                 iban = sanitize_account_number(account.get("iban", ""))
-                res[iban] = account.get("slug")
+                res[iban] = account.get("id", "")
             return res
         raise UserError(
             _("%(status_code)s \n\n %(response_text)s")
             % {"status_code": response.status_code, "response_text": response.text}
         )
 
-    def _qonto_obtain_transactions(self, slug, date_since, date_until):
+    def _qonto_obtain_transactions(self, bank_account_id, date_since, date_until):
         self.ensure_one()
         url = QONTO_ENDPOINT + "/transactions"
-        params = {"slug": slug, "iban": self.account_number}
+        params = {"iban": self.account_number}
+        if bank_account_id:
+            params.update({"bank_account_id": bank_account_id})
         # settled_at_to param isn't well formatted (ISO 8601) or year is out of range".
         # We set the last day of the year in such case.
         if date_since and date_until and date_since.year != date_until.year:
@@ -160,14 +163,16 @@ class OnlineBankStatementProviderQonto(models.Model):
     def _qonto_obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
         journal = self.journal_id
-        slugs = self._qonto_get_slug()
-        slug = slugs.get(self.account_number)
-        if not slug:
+        bank_account_ids = self._qonto_get_bank_account_ids()
+        bank_account_id = bank_account_ids.get(self.account_number)
+        if not bank_account_id:
             raise UserError(
                 _("Qonto : wrong configuration, unknow account %s")
                 % journal.bank_account_id.acc_number
             )
-        transactions = self._qonto_obtain_transactions(slug, date_since, date_until)
+        transactions = self._qonto_obtain_transactions(
+            bank_account_id, date_since, date_until
+        )
         journal_currency = journal.currency_id or journal.company_id.currency_id
         all_currencies = self.env["res.currency"].search_read([], ["name"])
         currencies_code2id = {x["name"]: x["id"] for x in all_currencies}

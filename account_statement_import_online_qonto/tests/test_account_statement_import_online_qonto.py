@@ -49,8 +49,10 @@ class TestAccountStatementImportOnlineQonto(TransactionCase):
 
     def mock_slug(self):
         return mock.patch(
-            _provider_class + "._qonto_get_slug",
-            return_value={"FR0214508000302245362775K46": "qonto-1234-bank-account-1"},
+            _provider_class + "._qonto_get_bank_account_ids",
+            return_value={
+                "FR0214508000302245362775K46": "018f71db-c635-78b5-b90a-ea05de98c2bf"
+            },
         )
 
     def mock_transaction(self):

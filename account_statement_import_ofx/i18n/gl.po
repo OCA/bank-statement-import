@@ -9,30 +9,30 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-19 03:39+0000\n"
-"PO-Revision-Date: 2017-03-19 03:39+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2026-05-23 04:20+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: Galician (https://www.transifex.com/oca/teams/23907/gl/)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_ofx
 #: model:ir.model,name:account_statement_import_ofx.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Importar extracto bancario"
+msgstr "Importar arquivos de extractos bancarios"
 
 #. module: account_statement_import_ofx
 #: model:ir.model,name:account_statement_import_ofx.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: account_statement_import_ofx
 #: model_terms:ir.ui.view,arch_db:account_statement_import_ofx.account_statement_import_form
 msgid "Open Financial Exchange (.OFX Money)"
-msgstr ""
+msgstr "Abrir intercambio financeiro (.OFX Money)"
 
 #. module: account_statement_import_ofx
 #. odoo-python
@@ -43,3 +43,7 @@ msgid ""
 "\n"
 " %s"
 msgstr ""
+"O seguinte problema ocorreu durante a importación. É posible que o arquivo "
+"non sexa válido.\n"
+"\n"
+" %s"
