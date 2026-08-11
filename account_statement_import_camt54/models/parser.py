@@ -1,6 +1,8 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import re
+
 from odoo import models
 from odoo.exceptions import UserError
 
@@ -99,3 +101,25 @@ class CamtParser(models.AbstractModel):
             "ref",
         )
         return True
+
+    def parse_statement(self, ns, node):
+        """In case of a camt.054 file, the QR-IBAN to be used as the
+        account_number is found in the entry's own reference rather than
+        the account-level IBAN."""
+        result = super().parse_statement(ns, node)
+        re_camt_version = re.compile(
+            r"(^urn:iso:std:iso:20022:tech:xsd:camt.054." r"|^ISO:camt.054.)"
+        )
+        if re_camt_version.search(ns):
+            self.add_value_from_node(
+                ns,
+                node,
+                [
+                    "./ns:Ntry[1]/ns:NtryRef",
+                    "./ns:Acct/ns:Id/ns:IBAN",
+                    "./ns:Acct/ns:Id/ns:Othr/ns:Id",
+                ],
+                result,
+                "account_number",
+            )
+        return result

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.04" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.054.001.04 camt.054.001.04.xsd">
+  <BkToCstmrDbtCdtNtfctn>
+    <GrpHdr>
+      <MsgId>M/00000000000/CA</MsgId>
+      <CreDtTm>2026-08-03T12:13:14+02:00</CreDtTm>
+      <AddtlInf>SPS/1.7/PROD</AddtlInf>
+    </GrpHdr>
+    <Ntfctn>
+      <Id>M/00000000000/CA</Id>
+      <ElctrncSeqNb>1</ElctrncSeqNb>
+      <CreDtTm>2026-08-03T12:13:14+02:00</CreDtTm>
+      <Acct>
+        <Id>
+          <IBAN>CH0000000000000000001</IBAN>
+        </Id>
+        <Ownr>
+          <Nm>TEST COMPANY</Nm>
+        </Ownr>
+        <Svcr>
+          <FinInstnId>
+            <Nm>Test Bank</Nm>
+          </FinInstnId>
+        </Svcr>
+      </Acct>
+      <Ntry>
+        <NtryRef>CH0000000000000000002</NtryRef>
+        <Amt Ccy="CHF">184</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>BOOK</Sts>
+        <BookgDt>
+          <Dt>2026-08-03</Dt>
+        </BookgDt>
+        <ValDt>
+          <Dt>2026-08-03</Dt>
+        </ValDt>
+        <AcctSvcrRef>00000000000</AcctSvcrRef>
+        <BkTxCd>
+          <Domn>
+            <Cd>PMNT</Cd>
+            <Fmly>
+              <Cd>RCDT</Cd>
+              <SubFmlyCd>VCOM</SubFmlyCd>
+            </Fmly>
+          </Domn>
+          <Prtry>
+            <Cd>1004</Cd>
+          </Prtry>
+        </BkTxCd>
+        <NtryDtls>
+          <Btch>
+            <NbOfTxs>2</NbOfTxs>
+          </Btch>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>A000000000000001</AcctSvcrRef>
+            </Refs>
+            <Amt Ccy="CHF">42</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <BkTxCd>
+              <Domn>
+                <Cd>PMNT</Cd>
+                <Fmly>
+                  <Cd>RCDT</Cd>
+                  <SubFmlyCd>VCOM</SubFmlyCd>
+                </Fmly>
+              </Domn>
+              <Prtry>
+                <Cd>1004</Cd>
+              </Prtry>
+            </BkTxCd>
+            <RltdPties>
+              <Dbtr>
+                <Nm>Test Donor One</Nm>
+                <PstlAdr>
+                  <StrtNm>Test Street</StrtNm>
+                  <BldgNb>1</BldgNb>
+                  <PstCd>1000</PstCd>
+                  <TwnNm>Test Town</TwnNm>
+                  <Ctry>CH</Ctry>
+                </PstlAdr>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH0000000000000000101</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RltdAgts>
+              <DbtrAgt>
+                <FinInstnId>
+                  <Nm>Test Debtor Bank One</Nm>
+                </FinInstnId>
+              </DbtrAgt>
+            </RltdAgts>
+            <RmtInf>
+              <Strd>
+                <CdtrRefInf>
+                  <Tp>
+                    <CdOrPrtry>
+                      <Prtry>QRR</Prtry>
+                    </CdOrPrtry>
+                  </Tp>
+                  <Ref>000000000000000000000000001</Ref>
+                </CdtrRefInf>
+              </Strd>
+            </RmtInf>
+          </TxDtls>
+          <TxDtls>
+            <Refs>
+              <AcctSvcrRef>A000000000000002</AcctSvcrRef>
+            </Refs>
+            <Amt Ccy="CHF">142</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <BkTxCd>
+              <Domn>
+                <Cd>PMNT</Cd>
+                <Fmly>
+                  <Cd>RCDT</Cd>
+                  <SubFmlyCd>VCOM</SubFmlyCd>
+                </Fmly>
+              </Domn>
+              <Prtry>
+                <Cd>1004</Cd>
+              </Prtry>
+            </BkTxCd>
+            <RltdPties>
+              <Dbtr>
+                <Nm>Test Donor Two</Nm>
+                <PstlAdr>
+                  <StrtNm>Test Street</StrtNm>
+                  <BldgNb>2</BldgNb>
+                  <PstCd>2000</PstCd>
+                  <TwnNm>Test Town</TwnNm>
+                  <Ctry>CH</Ctry>
+                </PstlAdr>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH0000000000000000102</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RltdAgts>
+              <DbtrAgt>
+                <FinInstnId>
+                  <Nm>Test Debtor Bank Two</Nm>
+                </FinInstnId>
+              </DbtrAgt>
+            </RltdAgts>
+            <RmtInf>
+              <Strd>
+                <CdtrRefInf>
+                  <Tp>
+                    <CdOrPrtry>
+                      <Prtry>QRR</Prtry>
+                    </CdOrPrtry>
+                  </Tp>
+                  <Ref>000000000000000000000000002</Ref>
+                </CdtrRefInf>
+                <AddtlRmtInf>Test remittance info</AddtlRmtInf>
+              </Strd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Ntfctn>
+  </BkToCstmrDbtCdtNtfctn>
+</Document>
