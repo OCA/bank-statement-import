@@ -186,11 +186,24 @@ class OnlineBankStatementProvider(models.Model):
             if attributes.get(x)
         ]
         ref = " ".join(ref_list)
+        narration = " ".join(
+            filter(
+                None,
+                [
+                    attributes.get(x)
+                    for x in [
+                        "additionalInformation",
+                        "remittanceInformation",
+                    ]
+                ],
+            )
+        )
         date = self._ponto_get_transaction_datetime(transaction)
         vals_line = {
             "sequence": 1,  # Sequence is not meaningfull for Ponto.
             "date": date,
             "ref": re.sub(" +", " ", ref) or "/",
+            "narration": re.sub(" +", " ", narration) or None,
             "payment_ref": attributes.get("remittanceInformation", ref),
             "unique_import_id": transaction["id"],
             "amount": attributes["amount"],
