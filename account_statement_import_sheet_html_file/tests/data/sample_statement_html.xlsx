@@ -1,0 +1,92 @@
+
+
+
+
+
+<html>
+<head>
+<style>
+#OUTLetFac * {
+	font-size:9pt;}
+#OUTLetFac thead, #OUTLetFac tfoot, #OUTLetFac tbody {
+	border:1px solid #000000;}
+#OUTLetFac thead th {
+	background: #e6e6e6;
+	border:solid 1px #ffffff;
+	color:#000000;
+	text-align:center;
+	vertical-align:middle;
+	font-weight:bold;
+	padding:5px;}
+#OUTLetFac tbody td, #OUTLetFac tbody th {
+	border:solid 1px #000000;
+	vertical-align:top;
+	padding:3px 20px 2px 10px;
+	color:#000000;
+	}
+#OUTLetFac .pari {
+	background-color:#ffffff;}
+#OUTLetFac tbody th {
+	text-align:left;}
+#OUTLetFac p.small {
+	padding:0px;}
+#OUTLetFac img {
+	border:0px;
+	padding:0px;}
+#OUTLetFac tfoot th{
+	border-top: solid 1px #003f6e;
+	border-bottom: solid 1px #000000;
+	color: #000000;
+	padding:5px 20px 5px 10px;	}
+#OUTLetFac .negativo {
+		color:red;}
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="OUTLetFac">
+	<table id="CCMO" class="table table-striped dataTable no-footer">
+<thead>
+<tr class="hover">
+<th class=" date" title="Date">Date</th>
+<th class="hidden-xs date" title="Currency Date">Currency Date</th>
+<th class="amountTd number" title="Amount">Amount</th>
+<th class="amountTd number" title="Amount Currency">Amount Currency</th>
+<th class="hidden-xs hidecol-sm text" title="Currency">Currency</th>
+<th class="text" title="Partner Name">Partner Name</th>
+<th class="text" title="Bank Account">Bank Account</th>
+<th class="break-xs text" title="Label">Label</th>
+
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="oCenter">01/15/2025</td>
+<td class="oCenter hidden-xs">01/15/2025</td>
+<td class="amount oRight negativo oRight amountTd">-200.20</td>
+<td class="amount oRight negativo oRight amountTd">-210.20</td>
+<td class="oCenter hidden-xs hidecol-sm">EUR</td>
+<td class="oLeft">Azure Interior</td>
+<td class="oLeft">123456789</td>
+<td class="oLeft break-xs">Line description</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</body>
+</html>

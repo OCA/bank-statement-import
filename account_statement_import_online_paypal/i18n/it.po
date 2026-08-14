@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-14 15:42+0000\n"
+"PO-Revision-Date: 2026-08-11 12:48+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -251,21 +251,21 @@ msgstr "Acquisizione token fallita utilizzando ID cliente e segreto!"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(first_transaction_id)s "
-"(%(first_transaction_date)s)"
+"Failed to resolve transaction %(first_transaction_id)s (%"
+"(first_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(first_transaction_id)s "
-"(%(first_transaction_date)s)"
+"Risoluzione transizione fallita %(first_transaction_id)s (%"
+"(first_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(last_transaction_id)s "
-"(%(last_transaction_date)s)"
+"Failed to resolve transaction %(last_transaction_id)s (%"
+"(last_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(last_transaction_id)s "
-"(%(last_transaction_date)s)"
+"Risoluzione transizione fallita %(last_transaction_id)s (%"
+"(last_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -522,6 +522,12 @@ msgstr "Prelievo con carta di credito internazionale"
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+msgid "Invalid JSON response from PayPal API."
+msgstr "Risposta JSON non valida da API PayPal."
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid "Invalid token type!"
 msgstr "Tipo token non valido!"
 
@@ -635,9 +641,9 @@ msgid ""
 "article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241"
 msgstr ""
 "PayPal consente di recuperare transazioni solo fino a 3 anni fa. Si prega di "
-"importare manualmente le transazioni più vecchie. Vedere https://www.paypal."
-"com/us/smarthelp/article/why-can't-i-access-transaction-history-greater-"
-"than-3-years-ts2241"
+"importare manualmente le transazioni più vecchie. Vedere https://"
+"www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-history-"
+"greater-than-3-years-ts2241"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python

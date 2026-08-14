@@ -1,6 +1,7 @@
 # Copyright 2019 ForgeFlow, S.L.
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2025 Simone Rubino
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import itertools
@@ -147,8 +148,26 @@ class AccountStatementImportSheetParser(models.TransientModel):
             "bank_account_column",
         ]
 
-    def _parse_lines(self, mapping, data_file, currency_code):
-        columns = dict()
+    def _get_csv_options(self, mapping):
+        csv_options = {}
+        csv_delimiter = mapping._get_column_delimiter_character()
+        if csv_delimiter:
+            csv_options["delimiter"] = csv_delimiter
+        if mapping.quotechar:
+            csv_options["quotechar"] = mapping.quotechar
+        return csv_options
+
+    def _get_data_parsers(self):
+        """List of callables that can parse a file.
+
+        They accept `mapping` and `data_file` arguments and return the parsed file.
+        """
+        return [
+            self._parse_data_xlrd,
+            self._parse_data_csv,
+        ]
+
+    def _parse_data_xlrd(self, mapping, data_file):
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
@@ -161,24 +180,48 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 workbook.sheet_by_index(0),
             )
         except xlrd.XLRDError:
-            csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
-            try:
-                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
-            except UnicodeDecodeError:
-                # Try auto guessing the format
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    raise UserError(
-                        self.env._("No valid encoding was found for the attached file")
-                    ) from None
-                decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
-        header = self.parse_header(csv_or_xlsx, mapping)
+            _logger.debug("Failed decoding with xlrd", exc_info=True)
+            csv_or_xlsx = None
+        return csv_or_xlsx
+
+    def _decode_data_file(self, data_file, encoding="utf-8"):
+        """Decode `data_file` with `encoding`."""
+        try:
+            decoded_file = data_file.decode(encoding)
+        except UnicodeDecodeError:
+            # Try auto guessing the format
+            detected_encoding = chardet.detect(data_file).get("encoding", False)
+            if not detected_encoding:
+                _logger.debug("Failed decoding detection")
+            decoded_file = data_file.decode(detected_encoding)
+        return decoded_file
+
+    def _parse_data_csv(self, mapping, data_file):
+        csv_options = self._get_csv_options(mapping)
+        decoded_file = self._decode_data_file(data_file, encoding=mapping.file_encoding)
+        if decoded_file:
+            parsed_data = reader(StringIO(decoded_file), **csv_options)
+        else:
+            parsed_data = None
+        return parsed_data
+
+    def _parse_data(self, mapping, data_file):
+        """Try the available parsers for `data_file`.
+
+        The available parsers are returned by `_get_data_parsers`.
+        """
+
+        for parser in self._get_data_parsers():
+            if parsed_data := parser(mapping, data_file):
+                break
+        else:
+            raise UserError(self.env._("Failed to parse file"))
+        return parsed_data
+
+    def _parse_lines(self, mapping, data_file, currency_code):
+        parsed_data = self._parse_data(mapping, data_file)
+        columns = dict()
+        header = self.parse_header(parsed_data, mapping)
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
         # respectivos campos related
@@ -186,7 +229,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
             columns[column_name] = self._get_column_indexes(
                 header, column_name, mapping
             )
-        data = csv_or_xlsx, data_file
+        data = parsed_data, data_file
         return self._parse_rows(mapping, currency_code, data, columns)
 
     def _get_values_from_column(self, values, columns, column_name):
@@ -346,10 +389,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         year -= 1
                     timestamp = timestamp.replace(year=year)
 
-            if balance:
+            if balance is not None:
                 balance = self._parse_decimal(balance, mapping)
-            else:
-                balance = None
 
             if debit_credit is not None:
                 amount = abs(amount)

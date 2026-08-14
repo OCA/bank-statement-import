@@ -235,6 +235,12 @@ msgid "Encoding"
 msgstr "编码"
 
 #. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+msgid "Failed to parse file"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header
 msgid "File does not contain header line"
 msgstr "文件不包含标题行"
@@ -332,12 +338,6 @@ msgstr "N/A"
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__name
 msgid "Name"
 msgstr "名称"
-
-#. module: account_statement_import_sheet_file
-#. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-msgid "No valid encoding was found for the attached file"
-msgstr "未找到文件的合法编码"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__notes_column
@@ -615,6 +615,9 @@ msgstr "空格"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "制表符"
+
+#~ msgid "No valid encoding was found for the attached file"
+#~ msgstr "未找到文件的合法编码"
 
 #~ msgid ""
 #~ "<span class=\"fa fa-info-circle\"/> Add the column names or column number "

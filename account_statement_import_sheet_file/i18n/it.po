@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-18 06:13+0000\n"
-"PO-Revision-Date: 2026-02-04 11:09+0000\n"
+"PO-Revision-Date: 2026-07-20 09:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -245,6 +245,12 @@ msgid "Encoding"
 msgstr "Codifica"
 
 #. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+msgid "Failed to parse file"
+msgstr "Decodifica riga fallita"
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__no_header
 msgid "File does not contain header line"
 msgstr "Il file non contiene riga di intestazione"
@@ -349,12 +355,6 @@ msgstr "N/D"
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__name
 msgid "Name"
 msgstr "Nome"
-
-#. module: account_statement_import_sheet_file
-#. odoo-python
-#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
-msgid "No valid encoding was found for the attached file"
-msgstr "Nessuna codifica valida è stata trovata per il file allegato"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__notes_column
@@ -644,6 +644,9 @@ msgstr "spazio"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__tab
 msgid "tab"
 msgstr "tabulazione"
+
+#~ msgid "No valid encoding was found for the attached file"
+#~ msgstr "Nessuna codifica valida è stata trovata per il file allegato"
 
 #~ msgid ""
 #~ "<span class=\"fa fa-info-circle\"/> Add the column names or column number "

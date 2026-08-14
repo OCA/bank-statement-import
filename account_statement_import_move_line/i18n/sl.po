@@ -9,47 +9,48 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-11 02:41+0000\n"
-"PO-Revision-Date: 2017-08-11 02:41+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2026-06-07 08:18+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_move_line
 #. odoo-python
 #: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
 #, python-format
 msgid "%(journal_code)s Statement %(date)s"
-msgstr ""
+msgstr "%(journal_code)s Izpisek %(date)s"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.view_bank_statement_form
 msgid "<span class=\"o_stat_text\">Import Journal Items</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Uvozi dnevniške postavke</span>"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Add All Move Lines"
-msgstr ""
+msgstr "Dodaj vse dnevniške postavke"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields.selection,name:account_statement_import_move_line.selection__account_statement_line_create__target_move__all
 msgid "All Entries"
-msgstr ""
+msgstr "Vsi vnosi"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields.selection,name:account_statement_import_move_line.selection__account_statement_line_create__target_move__posted
 msgid "All Posted Entries"
-msgstr ""
+msgstr "Vsi vknjiženi vnosi"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__allow_blocked
 msgid "Allow Litigation Move Lines"
-msgstr ""
+msgstr "Dovoli sporne postavke"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__statement_id
@@ -59,12 +60,12 @@ msgstr "Bančni izpisek"
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Choose Move Lines Filter Options"
-msgstr ""
+msgstr "Izberi opcije filtra postavk"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
@@ -73,122 +74,125 @@ msgid ""
 "criteria or click on Add an item to manually select the move lines filtered "
 "by the above criteria."
 msgstr ""
+"Kliknite na Dodaj vse dnevniške postavke, da samodejno izberete dnevniške "
+"postavke, ki ustrezajo zgornjim kriterijem, ali kliknite na Dodaj postavko, "
+"da ročno izberete dnevniške postavke filtrirane po zgornjih kriterijih."
 
 #. module: account_statement_import_move_line
 #: model:ir.actions.act_window,name:account_statement_import_move_line.account_statement_line_create_action
 msgid "Create Lines from Move Lines"
-msgstr ""
+msgstr "Ustvari postavke iz postavk temeljnice"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Create Statement Lines"
-msgstr ""
+msgstr "Ustvari postavke izpiska"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__due_date
 #: model:ir.model.fields.selection,name:account_statement_import_move_line.selection__account_statement_line_create__date_type__due
 msgid "Due Date"
-msgstr ""
+msgstr "Datum zapadlosti"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_journal_dashboard_kanban_view
 msgid "Import Journal Items"
-msgstr ""
+msgstr "Uvozi dnevniške postavke"
 
 #. module: account_statement_import_move_line
 #: model:ir.model,name:account_statement_import_move_line.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Dnevniška postavka"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__journal_ids
 msgid "Journals Filter"
-msgstr ""
+msgstr "Dnevniški filter"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Keep empty for using all journals"
-msgstr ""
+msgstr "Pustite prazno za uporabo vseh dnevnikov"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__invoice
 msgid "Linked to an Invoice or Refund"
-msgstr ""
+msgstr "Vezano na račun ali vračilo"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__move_date
 #: model:ir.model.fields.selection,name:account_statement_import_move_line.selection__account_statement_line_create__date_type__move
 msgid "Move Date"
-msgstr ""
+msgstr "Datum premika"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__move_line_ids
 msgid "Move Lines"
-msgstr ""
+msgstr "Postavke"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__partner_id
 msgid "Partner Related"
-msgstr ""
+msgstr "Povezani partner"
 
 #. module: account_statement_import_move_line
 #. odoo-python
 #: code:addons/account_statement_import_move_line/wizards/account_statement_line_create.py:0
 #, python-format
 msgid "Select Move Lines to Create Statement"
-msgstr ""
+msgstr "Izberi postavke za ustvarjanje izpiska"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Selected Move Lines to Create Lines"
-msgstr ""
+msgstr "Izbrane postavke premika za ustvarjanje postavk"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__target_move
 msgid "Target Moves"
-msgstr ""
+msgstr "Ciljni premiki"
 
 #. module: account_statement_import_move_line
 #: model_terms:ir.ui.view,arch_db:account_statement_import_move_line.account_statement_line_create_view_form
 msgid "Total Residual"
-msgstr ""
+msgstr "Skupaj preostalo"
 
 #. module: account_statement_import_move_line
 #: model:ir.model.fields,field_description:account_statement_import_move_line.field_account_statement_line_create__date_type
 msgid "Type of Date Filter"
-msgstr ""
+msgstr "Tip datumskega filtra"
 
 #. module: account_statement_import_move_line
 #: model:ir.model,name:account_statement_import_move_line.model_account_statement_line_create
 msgid "Wizard to create statement lines"
-msgstr ""
+msgstr "Čarovnik za ustvarjanje postavk izpiska"

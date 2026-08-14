@@ -253,21 +253,21 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(first_transaction_id)s "
-"(%(first_transaction_date)s)"
+"Failed to resolve transaction %(first_transaction_id)s (%"
+"(first_transaction_date)s)"
 msgstr ""
-"Error al resolver la transacción %(first_transaction_id)s "
-"(%(first_transaction_date)s)"
+"Error al resolver la transacción %(first_transaction_id)s (%"
+"(first_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(last_transaction_id)s "
-"(%(last_transaction_date)s)"
+"Failed to resolve transaction %(last_transaction_id)s (%"
+"(last_transaction_date)s)"
 msgstr ""
-"No se ha podido resolver la transacción %(last_transaction_id)s "
-"(%(last_transaction_date)s)"
+"No se ha podido resolver la transacción %(last_transaction_id)s (%"
+"(last_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -521,6 +521,12 @@ msgstr "Anulación de la revisión instantánea del pago (IPR)"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid "International credit card withdrawal"
 msgstr "Retirada internacional de tarjetas de crédito"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+msgid "Invalid JSON response from PayPal API."
+msgstr ""
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
