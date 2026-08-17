@@ -73,6 +73,11 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             return b64encode(data)
 
     def test_import_csv_file(self):
+        statement_map = self.sample_statement_map.copy(
+            {
+                "transaction_id_auto": True,
+            }
+        )
         journal = self.AccountJournal.create(
             {
                 "name": "Bank",
@@ -87,7 +92,7 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             {
                 "statement_filename": "fixtures/sample_statement_en.csv",
                 "statement_file": data,
-                "sheet_mapping_id": self.sample_statement_map.id,
+                "sheet_mapping_id": statement_map.id,
             }
         )
         wizard.with_context(
@@ -96,6 +101,19 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
+        unique_import_ids = statement.line_ids.mapped("unique_import_id")
+        self.assertTrue(all(unique_import_ids))
+        self.assertEqual(len(set(unique_import_ids)), 2)
+
+    def test_hash_row_values(self):
+        values = [None, self.now, 12.34, "Payment"]
+        row_hash = self.parser._hash_row_values(values)
+
+        self.assertEqual(row_hash, self.parser._hash_row_values(values))
+        self.assertNotEqual(
+            row_hash,
+            self.parser._hash_row_values([None, self.now, 12.34, "Other payment"]),
+        )
 
     def test_import_empty_csv_file(self):
         journal = self.AccountJournal.create(

@@ -10,7 +10,6 @@ class AccountJournal(models.Model):
 
     default_sheet_mapping_id = fields.Many2one(
         comodel_name="account.statement.import.sheet.mapping",
-        string="Default Sheet Mapping",
     )
 
     def _get_bank_statements_available_import_formats(self):
