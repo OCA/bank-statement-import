@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_journal_dashboard_kanban_view" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.import.move.line</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='bank_customer_payment']" position="before">
+                <div name="import_journal_items">
+                    <a
+                        name="%(account_statement_line_create_action)d"
+                        type="action"
+                        role="menuitem"
+                        groups="account.group_account_user"
+                    >Import Journal Items</a>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
