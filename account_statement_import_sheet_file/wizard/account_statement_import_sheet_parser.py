@@ -398,6 +398,38 @@ class AccountStatementImportSheetParser(models.TransientModel):
         return [transaction]
 
     @api.model
+    def _check_decimal_mark(self, value, thousands, decimal):
+        """Refuse a value whose decimal mark the mapping does not account for.
+
+        A thousands separator always groups three digits, so a "." or a "," that
+        is followed by fewer than three digits at the end of the value can only
+        be a decimal mark. When it is not the configured one it gets stripped as
+        noise, which multiplies the amount by ten or a hundred -- silently, and
+        with no way to tell afterwards, since the factor varies per value.
+
+        Skipped when no decimal separator is configured: that mode reads the
+        last digits as the decimals, so it has a contract of its own.
+        """
+        if not decimal:
+            return
+        cleaned = re.sub(r"[^\d\-+.,]+", "", value)
+        for candidate in (".", ","):
+            if candidate in (thousands, decimal):
+                continue
+            if re.search(re.escape(candidate) + r"\d{1,2}$", cleaned):
+                raise UserError(
+                    self.env._(
+                        "Cannot read the amount %(value)s: it uses %(candidate)s as "
+                        "the decimal mark, but the statement mapping declares "
+                        "%(decimal)s. Importing it would change the amount. Fix the "
+                        "decimal separator of the mapping and import the file again.",
+                        value=value,
+                        candidate=candidate,
+                        decimal=decimal,
+                    )
+                )
+
+    @api.model
     def _parse_decimal(self, value, mapping):
         if isinstance(value, Decimal):
             return float(value)
@@ -406,6 +438,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
             # whole values); they carry no separators to interpret.
             return float(value)
         thousands, decimal = mapping._get_float_separators()
+        self._check_decimal_mark(value, thousands, decimal)
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
         value = (
