@@ -394,6 +394,23 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             1234.56,
         )
 
+    def test_int_inputs(self):
+        # Sheet backends hand over native ints for whole values. Parsing them
+        # as text made the "no decimal separator" branch insert a decimal point
+        # based on the currency precision, turning 1234 into 12.34.
+        self.assertEqual(
+            self.parser._parse_decimal(1234, self.mock_mapping_none_none),
+            1234,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(-1234, self.mock_mapping_none_none),
+            -1234,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(1234, self.mock_mapping_comma_dot),
+            1234,
+        )
+
     @mute_logger(
         "odoo.addons.account_statement_import_sheet_file.models."
         "account_statement_import"
