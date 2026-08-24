@@ -401,8 +401,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
     def _parse_decimal(self, value, mapping):
         if isinstance(value, Decimal):
             return float(value)
-        elif isinstance(value, float):
-            return value
+        elif isinstance(value, int | float) and not isinstance(value, bool):
+            # Sheet backends hand over native numbers (openpyxl returns int for
+            # whole values); they carry no separators to interpret.
+            return float(value)
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
