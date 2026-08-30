@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_import_bank_statement_history_form" model="ir.ui.view">
+        <field name="name">import.bank.statement.history.form</field>
+        <field name="model">import.bank.statement.history</field>
+        <field name="arch" type="xml">
+            <form string="Import Bank Statement History Form">
+                <header>
+                    <button
+                        name="button_import_data"
+                        string="Import Data"
+                        type="object"
+                        invisible="not id or state != 'draft'"
+                    />
+                    <button
+                        name="button_cancel"
+                        string="Cancel"
+                        type="object"
+                        invisible="not id or state in ['importing_data', 'done', 'cancel']"
+                    />
+                    <button
+                        name="button_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        invisible="1"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,importing_data,done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!-- Queue Job button -->
+                        <button
+                            name="button_open_linked_queue_jobs"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-tasks"
+                            invisible="not queue_job_ids"
+                            groups="queue_job.group_queue_job_manager"
+                        >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Queue Jobs</span>
+                            </div>
+                        </button>
+                        <!-- Related Record button -->
+                        <button
+                            name="button_open_related_records"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                            invisible="not res_ids"
+                        >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Related Records</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field
+                                name="name"
+                                required="1"
+                                readonly="state != 'draft'"
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="res_model" readonly="state != 'draft'" />
+                            <field name="journal_id" />
+                            <field
+                                name="res_ids"
+                                readonly="state != 'draft'"
+                                invisible="not res_ids"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="import_attachment_id"
+                                required="1"
+                                readonly="state != 'draft'"
+                            />
+                            <field name="create_date" />
+                            <field name="create_uid" />
+                            <field
+                                name="company_id"
+                                readonly="1"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page
+                            name="results"
+                            string="Results"
+                            invisible="result == False and exc_info == False"
+                        >
+                            <group
+                                name="result"
+                                string="Result"
+                                invisible="result == False"
+                            >
+                                <field nolabel="1" name="result" />
+                            </group>
+                            <group
+                                name="exc_message"
+                                string="Exception Message"
+                                invisible="exc_message == False"
+                                colspan="4"
+                            >
+                                <field colspan="4" nolabel="1" name="exc_message" />
+                            </group>
+                            <group
+                                name="exc_info"
+                                groups="base.group_system"
+                                string="Exception Information"
+                                invisible="exc_info == False"
+                                colspan="4"
+                            >
+                                <div id="exc_name" colspan="4">
+                                    <label for="exc_name" string="Exception:" />
+                                    <field name="exc_name" class="oe_inline" />
+                                </div>
+                                <field colspan="4" nolabel="1" name="exc_info" />
+                            </group>
+                        </page>
+                        <page
+                            groups="base.group_system"
+                            name="context_info"
+                            string="Context"
+                        >
+                            <group name="context_info">
+                                <field name="context" invisible="1" />
+                                <field name="context_text" nolabel="1" />
+                            </group>
+                        </page>
+                        <page
+                            groups="queue_job.group_queue_job_manager"
+                            name="queue_jobs_info"
+                            string="Queue Jobs"
+                        >
+                            <group>
+                                <field
+                                    name="queue_job_ids"
+                                    readonly="1"
+                                    widget="many2many_tags"
+                                />
+                            </group>
+                        </page>
+                        <page
+                            name="import_json_data_info"
+                            string="Import JSON Data(as text)"
+                            invisible="1"
+                        >
+                            <group name="import_json_data_info">
+                                <field name="import_json_data" invisible="1" />
+                                <field name="import_json_data_text" nolabel="1" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="view_import_bank_statement_history_list" model="ir.ui.view">
+        <field name="name">import.bank.statement.history.list</field>
+        <field name="model">import.bank.statement.history</field>
+        <field name="arch" type="xml">
+            <list default_order="create_date desc">
+                <field name="name" />
+                <field name="res_model" optional="hide" />
+                <field name="create_date" />
+                <field name="create_uid" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-danger="state in ['import_data_error', 'cancel']"
+                    decoration-warning="state == 'importing_data'"
+                    decoration-success="state == 'done'"
+                />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
+            </list>
+        </field>
+    </record>
+    <record id="view_import_bank_statement_history_search" model="ir.ui.view">
+        <field name="name">import.bank.statement.history.search</field>
+        <field name="model">import.bank.statement.history</field>
+        <field name="arch" type="xml">
+            <search string="Import Bank Statement History Search">
+                <field name="name" />
+                <field name="state" invisible="1" />
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]" />
+                <filter
+                    string="Importing Data"
+                    name="importing_data"
+                    domain="[('state','=','importing_data')]"
+                />
+                <filter
+                    string="Import Data Error"
+                    name="import_data_error"
+                    domain="[('state','=','import_data_error')]"
+                />
+                <filter string="Done" name="done" domain="[('state','=','done')]" />
+                <filter
+                    string="Cancelled"
+                    name="cancel"
+                    domain="[('state','=','cancel')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_company"
+                        string="Company"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company"
+                    />
+                    <filter
+                        name="group_by_state"
+                        string="State"
+                        context="{'group_by':'state'}"
+                    />
+                    <filter
+                        name="group_by_res_model"
+                        string="Model"
+                        context="{'group_by': 'res_model'}"
+                    />
+                    <filter
+                        name="group_by_exc_name"
+                        string="Exception"
+                        context="{'group_by': 'exc_name'}"
+                    />
+                    <filter
+                        name="group_by_exc_message"
+                        string="Exception message"
+                        context="{'group_by': 'exc_message'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_import_bank_statement_history" model="ir.actions.act_window">
+        <field name="name">Import Bank Statement History</field>
+        <field name="res_model">import.bank.statement.history</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_import_bank_statement_history_search" />
+        <field name="view_id" ref="view_import_bank_statement_history_list" />
+        <field name="context">{'create': 0, 'edit': 0, 'delete': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Import Bank Statement History
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_import_bank_statement_history"
+        name="Import Bank Statement History"
+        parent="account.menu_finance_entries"
+        action="action_import_bank_statement_history"
+    />
+</odoo>
