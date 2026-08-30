@@ -13,3 +13,9 @@ of the counter-part for some transactions (only a few statement file
 formats support that, in some countries) and that these bank account
 numbers exists on partners in Odoo, the partners will be set on the
 related statement lines.
+
+Additionally, if the statement file contains a **partner name** and no
+partner ID is found by other means, the module will try to find a partner with
+matching name in the current company. If no match is found, it will try to find
+a partner with matching name and no company. If multiple matching partners are
+found in either step, it will raise an error listing the matching partner IDs.
