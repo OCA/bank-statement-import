@@ -13,6 +13,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
+from odoo.addons.base.models.res_bank import sanitize_account_number
+
 GOCARDLESS_API = "https://bankaccountdata.gocardless.com/api/v2/"
 REQUESTS_TIMEOUT = 60
 
@@ -228,15 +230,71 @@ class OnlineBankStatementProvider(models.Model):
         _response, data = self._gocardless_request(f"accounts/{account_id}")
         return data
 
+    def _gocardless_request_account_details(self, account_id):
+        """Request the extended details of a GoCardless account.
+
+        Isolated for being mocked in tests.
+        """
+        _response, data = self._gocardless_request(f"accounts/{account_id}/details")
+        return data
+
+    def _gocardless_get_account_numbers(self, account_id, account_data):
+        """Return the sanitized account numbers that identify a GoCardless account.
+
+        The main account endpoint returns the IBAN and the BBAN, but both are empty
+        for non European accounts (or they don't hold the number registered in the
+        journal). In that case, the number is available in the extended details
+        endpoint, either as an IBAN or as a BBAN, so we fall back to it. For USD
+        accounts, the BBAN holds the account number and the
+        `additionalAccountData/secondaryIdentification` key the routing number, so
+        the concatenation of both is also considered, as some journals register the
+        account that way.
+
+        The details endpoint is only queried when the main one doesn't match, as
+        GoCardless applies a strict daily rate limit on it.
+
+        :param account_id: GoCardless account UUID.
+        :param account_data: Dictionary returned by the main account endpoint.
+        :return: List of sanitized candidate account numbers.
+        """
+        self.ensure_one()
+        numbers = []
+        for key in ("iban", "bban"):
+            number = sanitize_account_number(account_data.get(key))
+            if number and number not in numbers:
+                numbers.append(number)
+        own_number = self.journal_id.bank_account_id.sanitized_acc_number
+        if own_number and own_number in numbers:
+            return numbers
+        details = self._gocardless_request_account_details(account_id) or {}
+        account_details = details.get("account") or {}
+        bban = sanitize_account_number(account_details.get("bban"))
+        routing = sanitize_account_number(
+            (account_details.get("additionalAccountData") or {}).get(
+                "secondaryIdentification"
+            )
+        )
+        candidates = [
+            sanitize_account_number(account_details.get("iban")),
+            bban,
+            # The routing number alone doesn't identify an account, so it's only
+            # used prefixing the account number.
+            f"{routing}{bban}" if routing and bban else False,
+        ]
+        for number in candidates:
+            if number and number not in numbers:
+                numbers.append(number)
+        return numbers
+
     def _gocardless_request_agreement(self, agreement_id):
         _response, data = self._gocardless_request(f"agreements/enduser/{agreement_id}")
         return data
 
     def _gocardless_finish_requisition(self, dry=False):
         """Once the requisiton to the bank institution has been made, and this is called
-        from the controller assigned to the redirect URL, we check that the IBAN account
-        of the linked journal is included in the accessible bank accounts, and if so,
-        we set the rest of the needed data.
+        from the controller assigned to the redirect URL, we check that the account
+        number of the linked journal is included in the accessible bank accounts, and
+        if so, we set the rest of the needed data.
 
         A message in the chatter is logged both for sucessful or failed operation (this
         last one only if not in dry mode).
@@ -248,15 +306,14 @@ class OnlineBankStatementProvider(models.Model):
         requisition_data = self._gocardless_request_requisition()
         accounts = requisition_data.get("accounts", [])
         found_account = False
-        accounts_iban = []
+        accounts_numbers = []
+        own_number = self.journal_id.bank_account_id.sanitized_acc_number
         for account_id in accounts:
             account_data = self._gocardless_request_account(account_id)
             if account_data:
-                accounts_iban.append(account_data["iban"])
-                if (
-                    self.journal_id.bank_account_id.sanitized_acc_number
-                    == account_data["iban"].upper()
-                ):
+                numbers = self._gocardless_get_account_numbers(account_id, account_data)
+                accounts_numbers += numbers
+                if own_number and own_number in numbers:
                     found_account = True
                     self.gocardless_account_id = account_data["id"]
                     break
@@ -282,12 +339,12 @@ class OnlineBankStatementProvider(models.Model):
             )
             self.sudo().message_post(
                 body=_(
-                    "Your account number %(iban_number)s it's not in the IBAN "
-                    "account numbers found %(accounts_iban)s, please check"
+                    "Your account number %(acc_number)s it's not in the "
+                    "account numbers found %(accounts_numbers)s, please check"
                 )
                 % {
-                    "iban_number": self.journal_id.bank_account_id.display_name,
-                    "accounts_iban": " / ".join(accounts_iban),
+                    "acc_number": self.journal_id.bank_account_id.display_name,
+                    "accounts_numbers": " / ".join(accounts_numbers),
                 }
             )
         return False

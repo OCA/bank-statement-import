@@ -102,6 +102,33 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
             _provider_class + "._gocardless_request_account",
             return_value=cls.request_account_value,
         )
+        # Non European accounts return null IBAN and BBAN in the main endpoint,
+        # but the number can be obtained from the extended details endpoint.
+        cls.request_account_no_iban_value = {
+            "id": "ACCOUNT-ID-1",
+            "iban": None,
+            "bban": None,
+        }
+        cls.mock_account_no_iban = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_account",
+            return_value=cls.request_account_no_iban_value,
+        )
+        cls.request_account_details_value = {
+            "account": {
+                "resourceId": "7023002",
+                "bban": "8310433194",
+                "currency": "USD",
+                "ownerName": "FORGEFLOW",
+                "cashAccountType": "OTHR",
+                "usage": "ORGA",
+                "details": "USD",
+                "additionalAccountData": {"secondaryIdentification": "026073150"},
+            }
+        }
+        cls.mock_account_details = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_account_details",
+            return_value=cls.request_account_details_value,
+        )
         cls.request_agreement_value = {
             "id": "TEST-AGREEMENT-ID",
             "accepted": cls.now.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
@@ -139,3 +166,56 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         with self.mock_requisition(), self.mock_account(), self.mock_agreement():
             res = self.provider._gocardless_finish_requisition(dry=True)
             self.assertTrue(res, "Bank account not found!")
+
+    def test_provider_gocardless_finish_requisition_bban(self):
+        """Non European account matched through the BBAN of the details endpoint."""
+        self.journal.bank_account_id.acc_number = "8310433194"
+        with (
+            self.mock_requisition(),
+            self.mock_account_no_iban(),
+            self.mock_account_details(),
+            self.mock_agreement(),
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertTrue(res, "Bank account not found!")
+        self.assertEqual(self.provider.gocardless_account_id, "ACCOUNT-ID-1")
+
+    def test_provider_gocardless_finish_requisition_routing_and_bban(self):
+        """USD account registered as routing number + account number."""
+        self.journal.bank_account_id.acc_number = "026073150 8310433194"
+        with (
+            self.mock_requisition(),
+            self.mock_account_no_iban(),
+            self.mock_account_details(),
+            self.mock_agreement(),
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertTrue(res, "Bank account not found!")
+        self.assertEqual(self.provider.gocardless_account_id, "ACCOUNT-ID-1")
+
+    def test_provider_gocardless_finish_requisition_not_found(self):
+        """The details endpoint numbers don't match the journal bank account."""
+        self.journal.bank_account_id.acc_number = "1234567890"
+        with (
+            self.mock_requisition(),
+            self.mock_account_no_iban(),
+            self.mock_account_details(),
+            self.mock_agreement(),
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertFalse(res)
+        self.assertEqual(self.provider.gocardless_account_id, "SANDBOXFINANCE_SFIN0000")
+
+    def test_provider_gocardless_iban_match_avoids_details_request(self):
+        """The rate limited details endpoint isn't hit when the IBAN matches."""
+        with (
+            self.mock_requisition(),
+            self.mock_account(),
+            self.mock_agreement(),
+            (
+                mock.patch(_provider_class + "._gocardless_request_account_details")
+            ) as details_mock,
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertTrue(res, "Bank account not found!")
+        details_mock.assert_not_called()
