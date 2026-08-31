@@ -77,9 +77,6 @@ class AccountStatementImportSheetMapping(models.Model):
             "transaction from"
         ),
     )
-    amount_column = fields.Char(
-        help="Amount of transaction in journal's currency",
-    )
     amount_debit_column = fields.Char(
         string="Debit amount column",
         help="Debit amount of transaction in journal's currency",
@@ -122,7 +119,7 @@ class AccountStatementImportSheetMapping(models.Model):
         required=True,
         default="simple_value",
         help=(
-            "Simple value: use igned amount in amount column\n"
+            "Simple value: use signed amount in amount column\n"
             "Absolute Value: use a same column for debit and credit\n"
             "(absolute value + indicate sign)\n"
             "Distinct Credit/debit Column: use a distinct column for debit and credit"
@@ -173,8 +170,8 @@ class AccountStatementImportSheetMapping(models.Model):
         default="0",
     )
     header_lines_skip_count = fields.Integer(
-        string="Header lines skip count",
-        help="Set the Header lines number.",
+        string="Header row number",
+        help="Row number where the column headers are located (first row is 0).",
         default="0",
     )
     skip_empty_lines = fields.Boolean(
@@ -231,6 +228,13 @@ class AccountStatementImportSheetMapping(models.Model):
             self.float_thousands_sep = "comma"
         elif "comma" == self.float_thousands_sep == self.float_decimal_sep:
             self.float_thousands_sep = "dot"
+
+    @api.onchange("amount_type")
+    def _clear_amount_columns(self):
+        self.amount_column = False
+        self.debit_credit_column = False
+        self.amount_debit_column = False
+        self.amount_credit_column = False
 
     @api.constrains("offset_column")
     def _check_columns(self):
