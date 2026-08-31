@@ -244,11 +244,7 @@ class OnlineBankStatementProvider(models.Model):
         The main account endpoint returns the IBAN and the BBAN, but both are empty
         for non European accounts (or they don't hold the number registered in the
         journal). In that case, the number is available in the extended details
-        endpoint, either as an IBAN or as a BBAN, so we fall back to it. For USD
-        accounts, the BBAN holds the account number and the
-        `additionalAccountData/secondaryIdentification` key the routing number, so
-        the concatenation of both is also considered, as some journals register the
-        account that way.
+        endpoint, either as an IBAN or as a BBAN, so we fall back to it.
 
         The details endpoint is only queried when the main one doesn't match, as
         GoCardless applies a strict daily rate limit on it.
@@ -268,20 +264,8 @@ class OnlineBankStatementProvider(models.Model):
             return numbers
         details = self._gocardless_request_account_details(account_id) or {}
         account_details = details.get("account") or {}
-        bban = sanitize_account_number(account_details.get("bban"))
-        routing = sanitize_account_number(
-            (account_details.get("additionalAccountData") or {}).get(
-                "secondaryIdentification"
-            )
-        )
-        candidates = [
-            sanitize_account_number(account_details.get("iban")),
-            bban,
-            # The routing number alone doesn't identify an account, so it's only
-            # used prefixing the account number.
-            f"{routing}{bban}" if routing and bban else False,
-        ]
-        for number in candidates:
+        for key in ("iban", "bban"):
+            number = sanitize_account_number(account_details.get(key))
             if number and number not in numbers:
                 numbers.append(number)
         return numbers

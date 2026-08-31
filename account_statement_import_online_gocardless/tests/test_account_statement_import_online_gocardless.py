@@ -192,8 +192,8 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         self.assertTrue(res, "Bank account not found!")
         self.assertEqual(self.provider.gocardless_account_id, "ACCOUNT-ID-1")
 
-    def test_provider_gocardless_finish_requisition_routing_and_bban(self):
-        """USD account registered as routing number + account number."""
+    def test_provider_gocardless_finish_requisition_routing_not_matched(self):
+        """The routing number isn't used for matching, only the IBAN and the BBAN."""
         self._set_journal_acc_number("026073150 8310433194")
         with (
             self.mock_requisition(),
@@ -202,8 +202,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
             self.mock_agreement(),
         ):
             res = self.provider._gocardless_finish_requisition(dry=True)
-        self.assertTrue(res, "Bank account not found!")
-        self.assertEqual(self.provider.gocardless_account_id, "ACCOUNT-ID-1")
+        self.assertFalse(res)
 
     def test_provider_gocardless_finish_requisition_not_found(self):
         """The details endpoint numbers don't match the journal bank account."""
