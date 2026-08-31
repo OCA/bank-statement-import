@@ -68,6 +68,8 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         cls.mock_mapping_dot_comma._get_float_separators.return_value = (".", ",")
         cls.mock_mapping_none_none = Mock()
         cls.mock_mapping_none_none._get_float_separators.return_value = ("", "")
+        cls.mock_mapping_none_comma = Mock()
+        cls.mock_mapping_none_comma._get_float_separators.return_value = ("", ",")
         cls.journal = cls.AccountJournal.create(
             {
                 "name": "Bank",
@@ -392,6 +394,47 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(
             self.parser._parse_decimal(Decimal("1234.56"), self.mock_mapping_comma_dot),
             1234.56,
+        )
+
+    def test_decimal_mark_not_in_mapping(self):
+        # A separator followed by fewer than three digits cannot be a thousands
+        # group, so it is a decimal mark. Stripping it as noise would multiply
+        # the amount, so the import refuses it instead.
+        for value in ["31.24", "-41.94", "460763013.7", "31.24 USD"]:
+            with self.subTest(value=value), self.assertRaises(UserError):
+                self.parser._parse_decimal(value, self.mock_mapping_none_comma)
+
+    def test_decimal_mark_thousands_group_is_allowed(self):
+        # Three digits after the separator is a well-formed thousands group:
+        # ambiguous at worst, so it keeps being read as the mapping says.
+        for value, expected in [
+            ("1.234", 1234),
+            ("1.234.567", 1234567),
+            ("100.000", 100000),
+            ("-41,94", -41.94),
+            ("", 0),
+        ]:
+            with self.subTest(value=value):
+                self.assertEqual(
+                    self.parser._parse_decimal(value, self.mock_mapping_none_comma),
+                    expected,
+                )
+
+    def test_int_inputs(self):
+        # Sheet backends hand over native ints for whole values. Parsing them
+        # as text made the "no decimal separator" branch insert a decimal point
+        # based on the currency precision, turning 1234 into 12.34.
+        self.assertEqual(
+            self.parser._parse_decimal(1234, self.mock_mapping_none_none),
+            1234,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(-1234, self.mock_mapping_none_none),
+            -1234,
+        )
+        self.assertEqual(
+            self.parser._parse_decimal(1234, self.mock_mapping_comma_dot),
+            1234,
         )
 
     @mute_logger(
