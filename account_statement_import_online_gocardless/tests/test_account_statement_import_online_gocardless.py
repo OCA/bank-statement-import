@@ -21,14 +21,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         cls.now = fields.Datetime.now()
         cls.currency_eur = cls.env.ref("base.EUR")
         cls.currency_eur.write({"active": True})
-        bank_account = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "NL77ABNA0574908765",
-                "partner_id": cls.env.ref("base.main_partner").id,
-                "company_id": cls.env.ref("base.main_company").id,
-                "bank_id": cls.env.ref("base.res_bank_1").id,
-            }
-        )
+        bank_account = cls._create_bank_account("NL77ABNA0574908765")
         cls.journal = cls.env["account.journal"].create(
             {
                 "name": "GoCardless Bank Test",
@@ -139,6 +132,25 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
             return_value=cls.request_agreement_value,
         )
 
+    @classmethod
+    def _create_bank_account(cls, acc_number):
+        return cls.env["res.partner.bank"].create(
+            {
+                "acc_number": acc_number,
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
+            }
+        )
+
+    def _set_journal_acc_number(self, acc_number):
+        """Link a bank account with the given number to the test journal.
+
+        A new account is created instead of changing the number of the existing
+        one, as that isn't allowed once the account has been trusted.
+        """
+        self.journal.bank_account_id = self._create_bank_account(acc_number)
+
     def test_mocked_gocardless(self):
         vals = {
             "date_since": "2020-10-30",
@@ -169,7 +181,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
 
     def test_provider_gocardless_finish_requisition_bban(self):
         """Non European account matched through the BBAN of the details endpoint."""
-        self.journal.bank_account_id.acc_number = "8310433194"
+        self._set_journal_acc_number("8310433194")
         with (
             self.mock_requisition(),
             self.mock_account_no_iban(),
@@ -182,7 +194,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
 
     def test_provider_gocardless_finish_requisition_routing_and_bban(self):
         """USD account registered as routing number + account number."""
-        self.journal.bank_account_id.acc_number = "026073150 8310433194"
+        self._set_journal_acc_number("026073150 8310433194")
         with (
             self.mock_requisition(),
             self.mock_account_no_iban(),
@@ -195,7 +207,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
 
     def test_provider_gocardless_finish_requisition_not_found(self):
         """The details endpoint numbers don't match the journal bank account."""
-        self.journal.bank_account_id.acc_number = "1234567890"
+        self._set_journal_acc_number("1234567890")
         with (
             self.mock_requisition(),
             self.mock_account_no_iban(),
