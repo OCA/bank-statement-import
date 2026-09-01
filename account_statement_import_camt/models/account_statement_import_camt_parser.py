@@ -50,7 +50,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
                 elif join_str is None:
                     attr_value = found_node[0].text
                 else:
-                    attr_value = join_str.join([x.text for x in found_node])
+                    attr_value = join_str.join([x.text for x in found_node if x.text])
                 obj[attr_name] = attr_value
                 break
 
@@ -289,6 +289,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
                 "./ns:NtryDtls/ns:RmtInf/ns:Strd/ns:CdtrRefInf/ns:Ref",
                 "./ns:NtryDtls/ns:Btch/ns:PmtInfId",
                 "./ns:NtryDtls/ns:TxDtls/ns:Refs/ns:AcctSvcrRef",
+                "./ns:AcctSvcrRef",
             ],
             transaction,
             "ref",
@@ -337,12 +338,21 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
         details_nodes = node.xpath("./ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
         if len(details_nodes) == 0:
+            self.add_value_from_node(
+                ns, node, "./ns:AddtlNtryInf", transaction, "payment_ref"
+            )
             self.generate_narration(transaction)
             yield transaction
             return
         transaction_base = transaction
         for node in details_nodes:
             transaction = transaction_base.copy()
+            transaction["narration"] = transaction_base["narration"].copy()
+            detail_amount = self.parse_amount(ns, node)
+            if detail_amount != 0.0:
+                transaction["amount"] = detail_amount
+            elif len(details_nodes) == 1 and node.tag.endswith("TxDtls"):
+                transaction["amount"] = amount
             self.parse_transaction_details(ns, node, transaction)
             self.generate_narration(transaction)
             yield transaction
@@ -450,7 +460,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
                 root = None
         if root is None:
             raise ValueError("Not a valid xml file, or not an xml file at all.")
-        ns = root.tag[1 : root.tag.index("}")]
+        ns = root.tag[1 : root.tag.index("}")] if "}" in root.tag else ""
         self.check_version(ns, root)
         statements = []
         currency = None
