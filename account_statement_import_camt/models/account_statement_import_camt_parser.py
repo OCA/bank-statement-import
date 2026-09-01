@@ -19,7 +19,6 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         if node is None:
             return 0.0
         sign = 1
-        amount = 0.0
         sign_node = node.xpath("ns:CdtDbtInd", namespaces={"ns": ns})
         if not sign_node:
             sign_node = node.xpath("../../ns:CdtDbtInd", namespaces={"ns": ns})
@@ -30,9 +29,77 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             amount_node = node.xpath(
                 "./ns:AmtDtls/ns:TxAmt/ns:Amt", namespaces={"ns": ns}
             )
+            parent_amount_currency = node.xpath(
+                "../../ns:Amt/@Ccy", namespaces={"ns": ns}
+            )
+            if amount_node and parent_amount_currency:
+                amount_currency = amount_node[0].get("Ccy")
+                if amount_currency and amount_currency != parent_amount_currency[0]:
+                    amount_node = []
         if amount_node:
-            amount = sign * float(amount_node[0].text)
-        return amount
+            return sign * float(amount_node[0].text or 0.0)
+        return 0.0
+
+    def parse_amount_details_currency(self, ns, node, transaction):
+        """Extract original transaction currency details when available."""
+        statement_currency = transaction.get("currency")
+        original_currency = None
+        original_amount = 0.0
+
+        original_amount_nodes = node.xpath(
+            "./ns:AmtDtls/ns:TxAmt/ns:Amt[@Ccy] | .//ns:AmtDtls/ns:TxAmt/ns:Amt[@Ccy]",
+            namespaces={"ns": ns},
+        )
+        for amount_node in original_amount_nodes:
+            currency = amount_node.get("Ccy")
+            if currency and currency != statement_currency:
+                original_currency = currency
+                original_amount = float(amount_node.text or 0.0)
+                break
+
+        if not original_currency:
+            ccy_nodes = node.xpath(".//ns:AmtDtls//@Ccy", namespaces={"ns": ns})
+            for currency in ccy_nodes:
+                if currency == statement_currency:
+                    continue
+                value_node = node.xpath(
+                    f".//ns:AmtDtls//*[@Ccy='{currency}']",
+                    namespaces={"ns": ns},
+                )
+                if value_node:
+                    original_currency = currency
+                    original_amount = float(value_node[0].text or 0.0)
+                    break
+
+        if not original_currency:
+            trgt_ccy = node.xpath(".//ns:CcyXchg/ns:TrgtCcy", namespaces={"ns": ns})
+            rate = node.xpath(".//ns:CcyXchg/ns:XchgRate", namespaces={"ns": ns})
+            amount_node = node.xpath("ns:Amt", namespaces={"ns": ns})
+            if (
+                trgt_ccy
+                and rate
+                and amount_node
+                and trgt_ccy[0].text
+                and trgt_ccy[0].text != statement_currency
+            ):
+                original_currency = trgt_ccy[0].text
+                original_amount = float(amount_node[0].text or 0.0) * float(
+                    rate[0].text or 0.0
+                )
+
+        if not original_currency:
+            return False
+
+        currency = self.env["res.currency"].search(
+            [("name", "=", original_currency)], limit=1
+        )
+        if not currency:
+            return False
+
+        sign = 1 if transaction.get("amount", 0.0) >= 0 else -1
+        transaction["foreign_currency_id"] = currency.id
+        transaction["amount_currency"] = sign * abs(original_amount)
+        return True
 
     def add_value_from_node(self, ns, node, xpath_str, obj, attr_name, join_str=None):
         """Add value to object from first or all nodes found with xpath.
@@ -279,6 +346,13 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         self.add_value_from_node(
             ns, node, "./ns:BookgDt/ns:Dt | ./ns:BookgDt/ns:DtTm", transaction, "date"
         )
+        self.add_value_from_node(
+            ns,
+            node,
+            ["./ns:Amt/@Ccy", ".//ns:AmtDtls/ns:TxAmt/ns:Amt/@Ccy"],
+            transaction,
+            "currency",
+        )
         amount = self.parse_amount(ns, node)
         if amount != 0.0:
             transaction["amount"] = amount
@@ -337,6 +411,8 @@ class AccountStatementImportCamtParser(models.AbstractModel):
 
         details_nodes = node.xpath("./ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
         if len(details_nodes) == 0:
+            self.parse_amount_details_currency(ns, node, transaction)
+            transaction.pop("currency", None)
             self.generate_narration(transaction)
             yield transaction
             return
@@ -344,6 +420,11 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         for node in details_nodes:
             transaction = transaction_base.copy()
             self.parse_transaction_details(ns, node, transaction)
+            if not self.parse_amount_details_currency(ns, node, transaction):
+                self.parse_amount_details_currency(
+                    ns, node.getparent().getparent(), transaction
+                )
+            transaction.pop("currency", None)
             self.generate_narration(transaction)
             yield transaction
 
