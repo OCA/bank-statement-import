@@ -1,0 +1,9 @@
+Code de la banque : 10101;Code de l'agence : 00100;Date de début de téléchargement : 01/03/2024;Date de fin de téléchargement : 31/03/2024;
+Numéro de compte : 01234567890;Nom du compte : MONSIEUR DUPONT;Devise : EUR;
+
+Solde en fin de période;;;;-15,00
+Date;Numéro d'opération;Libellé;Débit;Crédit;Détail;
+05/03/24;R12345;VIREMENT EMIS LOYER;-800,00;;Loyer Mars;
+10/03/24;R12346;PAIEMENT CB LIBRAIRIE;-25,00;;Livre;
+20/03/24;R12347;VIREMENT RECU AMIS;;+10,00;Remboursement;
+Solde en début de période;;;;+800,00

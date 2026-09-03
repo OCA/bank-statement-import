@@ -1,0 +1,355 @@
+import datetime
+import logging
+import re
+
+from odoo import api, models
+from odoo.exceptions import ValidationError
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+
+_logger = logging.getLogger(__name__)
+
+_VERSION_D_HEADER = (
+    "Date comptable;Libelle simplifie;Reference;"
+    "Informations complementaires;Type operation;"
+    "Debit;Credit;Date operation;Date de valeur;Pointage"
+)
+_VERSION_D_ACCOUNT_NUMBER_RE = re.compile(
+    r"Numéro de compte : (?P<account_number>\d{11})"
+)
+
+
+class AccountBankStatementImport(models.TransientModel):
+    _inherit = "account.statement.import"
+
+    regexp_version = {
+        "version_A": {
+            "line_1": r"Code de la banque : (?P<bank_group_code>\d{5});"
+            r"Code de l'agence : (?P<bank_local_code>\d{5});"
+            "Date de début de téléchargement : "
+            r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
+            "Date de fin de téléchargement : "
+            r"(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
+            "line_2": r"^Numéro de compte : (?P<bank_account_number>\d{11})"
+            ";Nom du compte : (?P<bank_account_name>.*);"
+            "Devise : (?P<currency>.{3});;;$",
+            "line_closing_balance": r"^Solde en fin de période;;;;"
+            r"(?P<balance>\d+(,\d{1,2})?);$",
+            "line_opening_balance": "^Solde en début de période;;;;"
+            r"(?P<balance>\d+(,\d{1,2})?);$",
+            "line_credit": r"^(?P<date>\d{2}/\d{2}/\d{4});"
+            "(?P<unique_import_id>.*);(?P<name>.*);;"
+            r"(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
+            "line_debit": r"^(?P<date>\d{2}/\d{2}/\d{4});"
+            "(?P<unique_import_id>.*);(?P<name>.*);"
+            r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
+            "line_date_format": "%d/%m/%Y",
+        },
+        "version_B": {
+            "line_1": r"^Code de la banque : (?P<bank_group_code>\d{5});"
+            "Date de début de téléchargement : "
+            r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
+            r"Date de fin de téléchargement : "
+            r"(?P<closing_date>\d{2}/\d{2}/\d{4});;$",
+            "line_2": "^Numéro de compte : "
+            r"(?P<bank_account_number>\d{11});Devise :"
+            r" (?P<currency>.{3});;;$",
+            "line_closing_balance": "^Solde en fin de période;;;"
+            r"(?P<balance>(\+|-)?\d+(,\d{1,2})?);$",
+            "line_opening_balance": r"^Solde en début de période;;;"
+            r"(?P<balance>(\+|-)?\d+(,\d{1,2})?);$",
+            "line_credit": r"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);;"
+            r"(?P<credit>\d+(,\d{1,2})?);(?P<note>.*);?\s*$",
+            "line_debit": r"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);"
+            r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*);?\s*$",
+            "line_date_format": "%d/%m/%Y",
+        },
+        "version_C": {
+            "line_1": r"^Code de la banque : (?P<bank_group_code>\d{5});"
+            r"Code de l'agence : (?P<bank_local_code>\d{5});"
+            "Date de début de téléchargement : "
+            r"(?P<opening_date>\d{2}/\d{2}/\d{4});"
+            "Date de fin de téléchargement : "
+            r"(?P<closing_date>\d{2}/\d{2}/\d{4});$",
+            "line_2": r"^Numéro de compte : (?P<bank_account_number>\d{11})"
+            ";Nom du compte : (?P<nom_compte>.*);"
+            "Devise : (?P<currency>.{3});$",
+            "line_closing_balance": "^Solde en fin de période;;;;"
+            r"(?P<balance>(\+|-)?\d+(,\d{1,2})?)$",
+            "line_opening_balance": "^Solde en début de période;;;;"
+            r"(?P<balance>(\+|-)?\d+(,\d{1,2})?)$",
+            "line_credit": r"^(?P<date>\d{2}/\d{2}/\d{2});(?P<ref>.*);"
+            r"(?P<name>.*);;\+(?P<credit>\d+(,\d{1,2})?)"
+            ";(?P<note>.*);$",
+            "line_debit": r"^(?P<date>\d{2}/\d{2}/\d{2});"
+            "(?P<ref>.*);(?P<name>.*);"
+            r"(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*);$",
+            "line_date_format": "%d/%m/%y",
+        },
+    }
+
+    @api.model
+    def _find_bank_account_id(self, account_number):
+        """Get res.partner.bank ID"""
+        bank_account_id = None
+        if account_number and len(account_number) > 4:
+            bank_account_ids = self.env["res.partner.bank"].search(
+                [("acc_number", "=", account_number)], limit=1
+            )
+            if bank_account_ids:
+                bank_account_id = bank_account_ids[0].id
+        return bank_account_id
+
+    @api.model
+    def _check_file(self, data_file):
+        try:
+            file_version = "version_A"
+            # for files generated before june 2017
+            test_versionA = re.compile(
+                self.regexp_version[file_version]["line_1"]
+            ).search(data_file[0])
+            if not test_versionA:
+                # for files generated after june 2017 and before decembre 2017
+                file_version = "version_B"
+                test_versionB = re.compile(
+                    self.regexp_version[file_version]["line_1"]
+                ).search(data_file[0])
+                if not test_versionB:
+                    # for files generated after december 2017
+                    file_version = "version_C"
+
+            parse_line_1 = re.compile(
+                self.regexp_version[file_version]["line_1"]
+            ).search(data_file[0])
+            bank_group_code = parse_line_1.group("bank_group_code")
+            openning_date = parse_line_1.group("opening_date")
+            closing_date = parse_line_1.group("closing_date")
+
+            parse_line_2 = re.compile(
+                self.regexp_version[file_version]["line_2"]
+            ).search(data_file[1])
+            bank_account_number = parse_line_2.group("bank_account_number")
+            currency = parse_line_2.group("currency")
+
+            closing_balance = float(
+                re.compile(self.regexp_version[file_version]["line_closing_balance"])
+                .search(data_file[3])
+                .group("balance")
+                .replace(",", ".")
+            )
+            opening_balance = float(
+                re.compile(self.regexp_version[file_version]["line_opening_balance"])
+                .search(data_file[len(data_file) - 1])
+                .group("balance")
+                .replace(",", ".")
+            )
+        except Exception as e:
+            _logger.debug(e)
+            return False
+        return (
+            file_version,
+            bank_group_code,
+            openning_date,
+            closing_date,
+            bank_account_number,
+            opening_balance,
+            closing_balance,
+            currency,
+        )
+
+    @api.model
+    def _parse_cep_version_d(self, lines, account_number=None):
+        """Parse the Caisse d'Epargne flat CSV format (version D).
+
+        Columns (semicolon-separated):
+          0  Date comptable
+          1  Libelle simplifie
+          2  Reference
+          3  Informations complementaires
+          4  Type operation
+          5  Debit   (negative value, e.g. -18,25)
+          6  Credit  (positive value with +, e.g. +4850,47)
+          7  Date operation
+          8  Date de valeur
+          9  Pointage
+        """
+        transactions = []
+        for index, line in enumerate(lines[1:]):
+            if not line.strip():
+                continue
+            parts = line.split(";")
+            if len(parts) < 7:
+                continue
+
+            date_str = parts[0].strip()
+            name = parts[1].strip()
+            ref = parts[2].strip()
+            note = parts[3].strip()
+            transaction_type = parts[4].strip() if len(parts) > 4 else ""
+            debit_str = parts[5].strip()
+            credit_str = parts[6].strip()
+
+            if debit_str:
+                transaction_amount = float(debit_str.replace(",", "."))
+            elif credit_str:
+                transaction_amount = float(credit_str.lstrip("+").replace(",", "."))
+            else:
+                continue
+
+            try:
+                date = datetime.datetime.strptime(date_str, "%d/%m/%Y").strftime(
+                    DEFAULT_SERVER_DATE_FORMAT
+                )
+            except ValueError:
+                _logger.warning("Skipping line with unparseable date: %s", line)
+                continue
+
+            libelle = name
+            if note:
+                libelle += " (" + note + ")"
+
+            transactions.append(
+                {
+                    "date": date,
+                    "amount": transaction_amount,
+                    "unique_import_id": (
+                        str(index) + date_str + name + str(transaction_amount) + ref
+                    ),
+                    "partner_id": False,
+                    "payment_ref": libelle,
+                    "ref": ref or False,
+                    "transaction_type": transaction_type,
+                    "narration": libelle,
+                }
+            )
+
+        if not transactions:
+            raise ValidationError(self.env._("No transactions found in file."))
+
+        return (
+            "EUR",
+            account_number,
+            [{"name": transactions[0]["date"], "transactions": transactions}],
+        )
+
+    def _complete_stmts_vals(self, stmts_vals, journal, account_number):
+        stmts_vals = super()._complete_stmts_vals(stmts_vals, journal, account_number)
+        if not account_number and journal.bank_account_id:
+            journal_acc = journal.bank_account_id.acc_number
+            for st_vals in stmts_vals:
+                for lvals in st_vals.get("transactions", []):
+                    if not lvals.get("account_number"):
+                        lvals["account_number"] = journal_acc
+        return stmts_vals
+
+    @api.model
+    def _parse_file(self, data_file: bytes):
+        try:
+            content = data_file.decode("utf-8")
+        except UnicodeDecodeError:
+            content = data_file.decode("iso-8859-1")
+        lines = content.splitlines()
+
+        header_index = next(
+            (i for i, line in enumerate(lines) if line.strip() == _VERSION_D_HEADER),
+            None,
+        )
+        if header_index is not None:
+            account_number = next(
+                (
+                    m.group("account_number")
+                    for line in lines[:header_index]
+                    if (m := _VERSION_D_ACCOUNT_NUMBER_RE.search(line))
+                ),
+                None,
+            )
+            return self._parse_cep_version_d(lines[header_index:], account_number)
+
+        result = self._check_file(lines)
+        if not result:
+            return super()._parse_file(data_file)
+
+        (
+            file_version,
+            bank_group_code,
+            openning_date,
+            closing_date,
+            bank_account_number,
+            opening_balance,
+            closing_balance,
+            currency,
+        ) = result
+        data_file = lines
+        transactions = []
+        total_amt = 0.00
+        try:
+            index = 0
+            for line in data_file[5 : len(data_file) - 1]:
+                transaction = re.compile(
+                    self.regexp_version[file_version]["line_debit"]
+                ).search(line)
+                if transaction:
+                    transaction_amount = float(
+                        transaction.group("debit").replace(",", ".")
+                    )
+                else:
+                    transaction = re.compile(
+                        self.regexp_version[file_version]["line_credit"]
+                    ).search(line)
+                    transaction_amount = float(
+                        transaction.group("credit").replace(",", ".")
+                    )
+
+                libelle = transaction.group("name")
+                if transaction.group("note") != "":
+                    libelle += " */* " + transaction.group("note")
+                payment_ref = libelle
+                if "ref" in transaction.groupdict():
+                    payment_ref = transaction.group("ref")
+                elif "unique_import_id" in transaction.groupdict():
+                    payment_ref = transaction.group("unique_import_id")
+                vals_line = {
+                    "date": datetime.datetime.strptime(
+                        transaction.group("date"),
+                        self.regexp_version[file_version]["line_date_format"],
+                    ).strftime(DEFAULT_SERVER_DATE_FORMAT),
+                    "amount": transaction_amount,
+                    "unique_import_id": str(index)
+                    + transaction.group("date")
+                    + transaction.group("name")
+                    + str(transaction_amount)
+                    + transaction.group("note"),
+                    "account_number": bank_account_number,
+                    "partner_id": False,
+                    "payment_ref": payment_ref,
+                }
+                total_amt += transaction_amount
+                transactions.append(vals_line)
+                index = index + 1
+
+            if abs(opening_balance + total_amt - closing_balance) > 0.00001:
+                raise ValidationError(
+                    self.env._(
+                        "Sum of opening balance and transaction "
+                        "lines is not equel to closing balance."
+                    )
+                )
+
+        except Exception as e:
+            raise ValidationError(
+                self.env._(
+                    "The following problem occurred during import. "
+                    "The file might not be valid.\n\n %s",
+                    str(e),
+                )
+            ) from e
+
+        vals_bank_statement = {
+            "name": bank_account_number + "/" + openning_date,
+            "date": datetime.datetime.strptime(openning_date, "%d/%m/%Y").strftime(
+                DEFAULT_SERVER_DATE_FORMAT
+            ),
+            "transactions": list(reversed(transactions)),
+            "balance_start": opening_balance,
+            "balance_end_real": closing_balance,
+        }
+        return currency, bank_account_number, [vals_bank_statement]
