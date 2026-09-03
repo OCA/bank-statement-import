@@ -1,0 +1,8 @@
+Code de la banque : 17515;Code de l'agence : 90000;Date de début de téléchargement : 01/05/2026;Date de fin de téléchargement : 31/05/2026
+Numéro de compte : 01234567890;Nom du compte : COMPTE COURANT;Devise : EUR
+
+Solde en fin de période;;;9822,50
+Date comptable;Libelle simplifie;Reference;Informations complementaires;Type operation;Debit;Credit;Date operation;Date de valeur;Pointage
+02/05/2026;VIR SEPA FOURNISSEUR TEST;261490000237304;FOURNISSEUR TEST FA2026-001;Remise virement;-500,00;;02/05/2026;02/05/2026;Non
+03/05/2026;CB LA LOUVE 030526;19612020260503;CONTRAT 8815598 REM 196120;Remise CB;;+1500,75;04/05/2026;04/05/2026;Non
+Solde en début de période;;;8821,75

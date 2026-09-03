@@ -37,6 +37,13 @@ class TestParserCommon(TransactionCase):
                 "account_statement_import_caisse_epargne/tests/samples/test_statement_import_version_D.csv"
             ),
         )
+        cls.import_wizard_D_full = cls._create_import_wizard(
+            cls,
+            file_path(
+                "account_statement_import_caisse_epargne/tests/samples/"
+                "test_statement_import_version_D_full.csv"
+            ),
+        )
 
     def _create_import_wizard(self, file_path):
         file = base64.b64encode(open(file_path, "rb").read())
@@ -108,6 +115,21 @@ class TestParserCommon(TransactionCase):
         statement = statements[0]
         self.assertIn("transactions", statement)
         self.assertGreater(len(statement["transactions"]), 0)
+
+    def test_parse_file_version_d_with_preamble(self):
+        """Real-world CEP exports keep the version A/B/C-style preamble
+        (bank/account info, closing balance) before the header line, and an
+        opening balance footer after the transactions, instead of starting
+        the file with the header line."""
+        data_file = base64.b64decode(self.import_wizard_D_full.statement_file)
+        currency, bank_account_number, statements = (
+            self.import_wizard_D_full._parse_file(data_file)
+        )
+        self.assertEqual(currency, "EUR")
+        self.assertEqual(bank_account_number, "01234567890")
+        self.assertEqual(len(statements), 1)
+        statement = statements[0]
+        self.assertEqual(len(statement["transactions"]), 2)
 
     def test_parse_file_invalid_balance_A(self):
         data_file = (

@@ -13,6 +13,9 @@ _VERSION_D_HEADER = (
     "Informations complementaires;Type operation;"
     "Debit;Credit;Date operation;Date de valeur;Pointage"
 )
+_VERSION_D_ACCOUNT_NUMBER_RE = re.compile(
+    r"Numéro de compte : (?P<account_number>\d{11})"
+)
 
 
 class AccountBankStatementImport(models.TransientModel):
@@ -154,7 +157,7 @@ class AccountBankStatementImport(models.TransientModel):
         )
 
     @api.model
-    def _parse_cep_version_d(self, lines):
+    def _parse_cep_version_d(self, lines, account_number=None):
         """Parse the Caisse d'Epargne flat CSV format (version D).
 
         Columns (semicolon-separated):
@@ -224,7 +227,7 @@ class AccountBankStatementImport(models.TransientModel):
 
         return (
             "EUR",
-            None,
+            account_number,
             [{"name": transactions[0]["date"], "transactions": transactions}],
         )
 
@@ -246,8 +249,20 @@ class AccountBankStatementImport(models.TransientModel):
             content = data_file.decode("iso-8859-1")
         lines = content.splitlines()
 
-        if lines and lines[0].strip() == _VERSION_D_HEADER:
-            return self._parse_cep_version_d(lines)
+        header_index = next(
+            (i for i, line in enumerate(lines) if line.strip() == _VERSION_D_HEADER),
+            None,
+        )
+        if header_index is not None:
+            account_number = next(
+                (
+                    m.group("account_number")
+                    for line in lines[:header_index]
+                    if (m := _VERSION_D_ACCOUNT_NUMBER_RE.search(line))
+                ),
+                None,
+            )
+            return self._parse_cep_version_d(lines[header_index:], account_number)
 
         result = self._check_file(lines)
         if not result:
