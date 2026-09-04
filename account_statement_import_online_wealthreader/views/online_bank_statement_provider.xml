@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright 2025 Wealthreader
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="online_bank_statement_provider_form" model="ir.ui.view">
+        <field name="name">
+            online.bank.statement.provider.form - Wealthreader
+        </field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="wealthreader"
+                    string="Wealthreader Configuration"
+                    invisible="service != 'wealthreader'"
+                >
+                    <field
+                        name="password"
+                        string="API Key"
+                        password="True"
+                        required="service == 'wealthreader'"
+                    />
+                    <field
+                        name="wealthreader_entity_code"
+                        required="service == 'wealthreader'"
+                    />
+                    <field
+                        name="username"
+                        string="Bank Username"
+                        help="Your online banking username. Required for the first connection; afterwards the token is used."
+                    />
+                    <field name="wealthreader_bank_password" password="True" />
+                    <field name="wealthreader_date_field" />
+                    <field
+                        name="wealthreader_token"
+                        readonly="1"
+                        invisible="not wealthreader_token"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="wealthreader_account_uuid"
+                        invisible="not wealthreader_account_uuid"
+                        groups="base.group_no_one"
+                    />
+                    <field
+                        name="wealthreader_account_code"
+                        invisible="not wealthreader_account_code"
+                    />
+                    <field name="api_base" groups="base.group_no_one" />
+                </group>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_wealthreader_test_connection"
+                    string="Test Connection"
+                    type="object"
+                    class="oe_highlight"
+                    invisible="service != 'wealthreader'"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
