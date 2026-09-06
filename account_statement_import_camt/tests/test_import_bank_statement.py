@@ -9,6 +9,8 @@ import tempfile
 from datetime import date
 from pathlib import Path
 
+from lxml import etree
+
 from odoo.tests.common import TransactionCase
 from odoo.tools.misc import file_path
 
@@ -94,6 +96,48 @@ class TestParser(TestParserCommon):
 
     def test_parse_no_ntry(self):
         self._do_parse_test("test-camt053-no-ntry", "golden-camt053-no-ntry.pydata")
+
+    def test_parse_empty_element(self):
+        DATA = """\
+        <?xml version="1.0" encoding="utf-8"?>
+        <Document
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02"
+        >
+            <BkToCstmrStmt>
+                <Stmt>
+                    <Ntry>
+                        <NtryDtls>
+                            <TxDtls>
+                                <RmtInf>
+                                    <Ustrd/>
+                                </RmtInf>
+                            </TxDtls>
+                        </NtryDtls>
+                    </Ntry>
+                </Stmt>
+            </BkToCstmrStmt>
+        </Document>
+        """
+        root = etree.fromstring(DATA, parser=etree.XMLParser(recover=True))
+        ns = root.tag[1 : root.tag.index("}")]
+        transaction = {}
+        details_nodes = root.xpath("//ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
+        node = details_nodes[0]
+        self.parser.add_value_from_node(
+            ns,
+            node,
+            [
+                "./ns:RmtInf/ns:Ustrd|./ns:RtrInf/ns:AddtlInf",
+                "./ns:AddtlNtryInf",
+                "./ns:Refs/ns:InstrId",
+            ],
+            transaction,
+            "payment_ref",
+            join_str="\n",
+        )
+        self.assertNotIn("payment_ref", transaction)
 
 
 class TestImport(TransactionCase):
