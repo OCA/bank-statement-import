@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_mercury_form">
+        <field name="name">online.bank.statement.provider.mercury.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="mercury"
+                    string="Mercury Configuration"
+                    invisible="service != 'mercury'"
+                >
+                    <field
+                        name="password"
+                        string="API Key"
+                        password="True"
+                        help="Mercury API key from Settings → API Keys. Paste the bare token or the full 'secret-token:…' form — both are accepted."
+                    />
+                    <field
+                        name="mercury_account_id"
+                        placeholder="Leave blank to auto-detect first account"
+                    />
+                    <field name="mercury_include_pending" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
