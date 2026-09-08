@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[account_bank_statement_cascade_delete](account_bank_statement_cascade_delete/) | 18.0.1.0.0 | <a href='https://github.com/Bhavesh Heliconia'><img src='https://github.com/Bhavesh Heliconia.png' width='32' height='32' style='border-radius:50%;' alt='Bhavesh Heliconia'/></a> | Delete bank statement lines along with the bank statement
 [account_statement_import_base](account_statement_import_base/) | 18.0.1.0.2 | <a href='https://github.com/alexis-via'><img src='https://github.com/alexis-via.png' width='32' height='32' style='border-radius:50%;' alt='alexis-via'/></a> | Base module for Bank Statement Import
 [account_statement_import_camt](account_statement_import_camt/) | 18.0.1.0.1 |  | CAMT Format Bank Statements Import
 [account_statement_import_camt54](account_statement_import_camt54/) | 18.0.1.0.0 |  | Bank Account Camt54 Import
