@@ -166,6 +166,13 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             transaction["narration"],
             f"{_('Cheque Number')} (Refs/ChqNb)",
         )
+        self.add_value_from_node(
+            ns,
+            node,
+            ["./ns:Chrgs/ns:Rcrd/ns:Amt", "./ns:Chrgs/ns:TtlChrgsAndTaxAmt"],
+            transaction["narration"],
+            f"{_('Charges Amount')} (Chrgs/Amt)",
+        )
 
         self.add_value_from_node(
             ns, node, ["./ns:AddtlTxInf"], transaction, "payment_ref", join_str="\n"
@@ -341,9 +348,26 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             yield transaction
             return
         transaction_base = transaction
+        # Make sure the sum of TxDtls amounts equals the Ntry amount.
+        # Any difference is added to the largest TxDtls amount.
+        # (might be transaction fees ...)
+        entry_amount = transaction_base["amount"]
+        details_sum = 0.0
+        largest_transaction = None
+        parsed_transactions = []
         for node in details_nodes:
             transaction = transaction_base.copy()
+            transaction["narration"] = dict(transaction_base["narration"])
             self.parse_transaction_details(ns, node, transaction)
+            if largest_transaction is None or abs(transaction["amount"]) >= abs(
+                largest_transaction["amount"]
+            ):
+                largest_transaction = transaction
+            details_sum += transaction["amount"]
+            parsed_transactions.append(transaction)
+        if largest_transaction is not None:
+            largest_transaction["amount"] += entry_amount - details_sum
+        for transaction in parsed_transactions:
             self.generate_narration(transaction)
             yield transaction
 
