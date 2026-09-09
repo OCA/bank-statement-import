@@ -112,3 +112,15 @@ class TestQifFile(TransactionCase):
         _currency, _account, stmts = self._parse_qif(data)
         dates = [line["date"] for line in stmts[0]["transactions"]]
         self.assertEqual(dates, [date(2026, 8, 7), date(2026, 1, 7)])
+
+    def test_qif_iso_dates_keep_year_month_day_order(self):
+        self.env.company.country_id = self.env.ref("base.au")
+        for prefix in (b"", b"D31/07/2026\nT10.00\nPDay-first transaction\n^\n"):
+            with self.subTest(prefix=prefix):
+                data = (
+                    b"!Type:Bank\n"
+                    + prefix
+                    + b"D2026-07-08\nT360.00\nPISO transaction\n^\n"
+                )
+                _currency, _account, stmts = self._parse_qif(data)
+                self.assertEqual(stmts[0]["transactions"][-1]["date"], date(2026, 7, 8))

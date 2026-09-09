@@ -12,7 +12,11 @@ import dateutil.parser
 from odoo import api, models
 from odoo.exceptions import UserError
 
-from ..qif_dates import QIF_DAYFIRST_COUNTRIES, qif_file_dayfirst
+from ..qif_dates import (
+    QIF_DAYFIRST_COUNTRIES,
+    qif_file_dayfirst,
+    qif_numeric_date_parts,
+)
 
 
 class AccountStatementImport(models.TransientModel):
@@ -50,6 +54,9 @@ class AccountStatementImport(models.TransientModel):
         return self._qif_locale_dayfirst()
 
     def _qif_parse_date(self, raw, dayfirst):
+        parts = qif_numeric_date_parts(raw)
+        if parts and parts[0] > 31:
+            dayfirst = False
         return dateutil.parser.parse(raw, fuzzy=True, dayfirst=dayfirst).date()
 
     def _parse_file(self, data_file):
