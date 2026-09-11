@@ -320,6 +320,74 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[2].date, date(2020, 4, 18))
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
+    def test_daily_statement_window_uses_provider_timezone(self):
+        """
+        Daily pull should pull data for the day according to the provider timezone, not according to UTC.
+        Pulling data for 15th of November with provider timezone being Europe/Vienna,
+        should pull data from 23:00 on 14th of November to 23:00 on 15th of November in UTC terms,
+        as this corresponds to 00:00 on 15th of November to 00:00 on 16th of November in provider local time.
+        """
+        self.provider.statement_creation_mode = "daily"
+        self.provider.tz = "Europe/Vienna"
+        with mock.patch(mock_obtain_statement_data, return_value=([], {})) as mock_data:
+            self.provider._pull(
+                datetime(2025, 11, 15, 7, 0),
+                datetime(2025, 11, 15, 7, 0),
+            )
+        mock_data.assert_called_once()
+        self.assertEqual(
+            mock_data.call_args.args,
+            (datetime(2025, 11, 14, 23, 0), datetime(2025, 11, 15, 23, 0)),
+        )
+
+    def test_statement_name_uses_provider_local_date(self):
+        """
+        See above test. The name of the statement should also be based on the provider local date, not on UTC date.
+        """
+        self.provider.tz = "Europe/Vienna"
+        self.assertEqual(
+            self.provider.make_statement_name(datetime(2025, 11, 14, 23, 0)),
+            "BANK/2025-11-15",
+        )
+
+    def test_daily_statement_window_handles_dst_start(self):
+        """
+        On the DST start day in Europe/Vienna, the local day is 23 hours long.
+        Pulling data for 30th of March 2025 should therefore use the UTC window
+        2025-03-29 23:00:00 to 2025-03-30 22:00:00.
+        """
+        self.provider.statement_creation_mode = "daily"
+        self.provider.tz = "Europe/Vienna"
+        with mock.patch(mock_obtain_statement_data, return_value=([], {})) as mock_data:
+            self.provider._pull(
+                datetime(2025, 3, 30, 6, 0),
+                datetime(2025, 3, 30, 6, 0),
+            )
+        mock_data.assert_called_once()
+        self.assertEqual(
+            mock_data.call_args.args,
+            (datetime(2025, 3, 29, 23, 0), datetime(2025, 3, 30, 22, 0)),
+        )
+
+    def test_daily_statement_window_handles_dst_end(self):
+        """
+        On the DST end day in Europe/Vienna, the local day is 25 hours long.
+        Pulling data for 26th of October 2025 should therefore use the UTC
+        window 2025-10-25 22:00:00 to 2025-10-26 23:00:00.
+        """
+        self.provider.statement_creation_mode = "daily"
+        self.provider.tz = "Europe/Vienna"
+        with mock.patch(mock_obtain_statement_data, return_value=([], {})) as mock_data:
+            self.provider._pull(
+                datetime(2025, 10, 26, 7, 0),
+                datetime(2025, 10, 26, 7, 0),
+            )
+        mock_data.assert_called_once()
+        self.assertEqual(
+            mock_data.call_args.args,
+            (datetime(2025, 10, 25, 22, 0), datetime(2025, 10, 26, 23, 0)),
+        )
+
     def test_other_tz_to_utc(self):
         """Test the situation where we are tot the west of the provider.
 
