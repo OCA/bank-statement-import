@@ -21,14 +21,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         cls.now = fields.Datetime.now()
         cls.currency_eur = cls.env.ref("base.EUR")
         cls.currency_eur.write({"active": True})
-        bank_account = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "NL77ABNA0574908765",
-                "partner_id": cls.env.ref("base.main_partner").id,
-                "company_id": cls.env.ref("base.main_company").id,
-                "bank_id": cls.env.ref("base.res_bank_1").id,
-            }
-        )
+        bank_account = cls._create_bank_account("NL77ABNA0574908765")
         cls.journal = cls.env["account.journal"].create(
             {
                 "name": "GoCardless Bank Test",
@@ -102,6 +95,33 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
             _provider_class + "._gocardless_request_account",
             return_value=cls.request_account_value,
         )
+        # Non European accounts return null IBAN and BBAN in the main endpoint,
+        # but the number can be obtained from the extended details endpoint.
+        cls.request_account_no_iban_value = {
+            "id": "ACCOUNT-ID-1",
+            "iban": None,
+            "bban": None,
+        }
+        cls.mock_account_no_iban = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_account",
+            return_value=cls.request_account_no_iban_value,
+        )
+        cls.request_account_details_value = {
+            "account": {
+                "resourceId": "7023002",
+                "bban": "8310433194",
+                "currency": "USD",
+                "ownerName": "FORGEFLOW",
+                "cashAccountType": "OTHR",
+                "usage": "ORGA",
+                "details": "USD",
+                "additionalAccountData": {"secondaryIdentification": "026073150"},
+            }
+        }
+        cls.mock_account_details = lambda cls: mock.patch(
+            _provider_class + "._gocardless_request_account_details",
+            return_value=cls.request_account_details_value,
+        )
         cls.request_agreement_value = {
             "id": "TEST-AGREEMENT-ID",
             "accepted": cls.now.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
@@ -111,6 +131,25 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
             _provider_class + "._gocardless_request_agreement",
             return_value=cls.request_agreement_value,
         )
+
+    @classmethod
+    def _create_bank_account(cls, acc_number):
+        return cls.env["res.partner.bank"].create(
+            {
+                "acc_number": acc_number,
+                "partner_id": cls.env.ref("base.main_partner").id,
+                "company_id": cls.env.ref("base.main_company").id,
+                "bank_id": cls.env.ref("base.res_bank_1").id,
+            }
+        )
+
+    def _set_journal_acc_number(self, acc_number):
+        """Link a bank account with the given number to the test journal.
+
+        A new account is created instead of changing the number of the existing
+        one, as that isn't allowed once the account has been trusted.
+        """
+        self.journal.bank_account_id = self._create_bank_account(acc_number)
 
     def test_mocked_gocardless(self):
         vals = {
@@ -139,3 +178,55 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         with self.mock_requisition(), self.mock_account(), self.mock_agreement():
             res = self.provider._gocardless_finish_requisition(dry=True)
             self.assertTrue(res, "Bank account not found!")
+
+    def test_provider_gocardless_finish_requisition_bban(self):
+        """Non European account matched through the BBAN of the details endpoint."""
+        self._set_journal_acc_number("8310433194")
+        with (
+            self.mock_requisition(),
+            self.mock_account_no_iban(),
+            self.mock_account_details(),
+            self.mock_agreement(),
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertTrue(res, "Bank account not found!")
+        self.assertEqual(self.provider.gocardless_account_id, "ACCOUNT-ID-1")
+
+    def test_provider_gocardless_finish_requisition_routing_not_matched(self):
+        """The routing number isn't used for matching, only the IBAN and the BBAN."""
+        self._set_journal_acc_number("026073150 8310433194")
+        with (
+            self.mock_requisition(),
+            self.mock_account_no_iban(),
+            self.mock_account_details(),
+            self.mock_agreement(),
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertFalse(res)
+
+    def test_provider_gocardless_finish_requisition_not_found(self):
+        """The details endpoint numbers don't match the journal bank account."""
+        self._set_journal_acc_number("1234567890")
+        with (
+            self.mock_requisition(),
+            self.mock_account_no_iban(),
+            self.mock_account_details(),
+            self.mock_agreement(),
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertFalse(res)
+        self.assertEqual(self.provider.gocardless_account_id, "SANDBOXFINANCE_SFIN0000")
+
+    def test_provider_gocardless_iban_match_avoids_details_request(self):
+        """The rate limited details endpoint isn't hit when the IBAN matches."""
+        with (
+            self.mock_requisition(),
+            self.mock_account(),
+            self.mock_agreement(),
+            (
+                mock.patch(_provider_class + "._gocardless_request_account_details")
+            ) as details_mock,
+        ):
+            res = self.provider._gocardless_finish_requisition(dry=True)
+        self.assertTrue(res, "Bank account not found!")
+        details_mock.assert_not_called()
