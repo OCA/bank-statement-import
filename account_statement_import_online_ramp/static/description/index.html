@@ -1,0 +1,531 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
+<title>Online Bank Statements: Ramp</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: gray; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic, pre.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="online-bank-statements-ramp">
+<h1 class="title">Online Bank Statements: Ramp</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! source digest: sha256:014c26271557700ee275f7181e7064b7b8b9a5faceda8d6abe649ead32e3d3c4
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_ramp"><img alt="OCA/bank-statement-import" src="https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/bank-statement-import-18-0/bank-statement-import-18-0-account_statement_import_online_ramp"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>Connects Odoo to <a class="reference external" href="https://ramp.com">Ramp</a> using the <a class="reference external" href="https://docs.ramp.com/developer-api">Ramp Developer
+API</a> to automatically pull
+corporate-card transactions into your accounting journals as bank
+statement lines.</p>
+<p><strong>Ramp</strong> is a US corporate-card and spend-management platform. A Ramp
+organization has one credit line shared across all cards, billed as a
+single monthly statement and paid via one ACH transfer. This module
+follows that accounting reality: one Ramp credit line maps to <strong>one</strong>
+Odoo bank-type journal, regardless of how many cards are issued under
+it.</p>
+<p>The module uses these endpoints:</p>
+<ul class="simple">
+<li><tt class="docutils literal">POST /developer/v1/token</tt> — OAuth2 client_credentials, mints a
+short-lived bearer that is cached on the provider record and refreshed
+on expiry or 401.</li>
+<li><tt class="docutils literal">GET /developer/v1/transactions</tt> — paginated card-transaction feed
+filtered by date range; cursor pagination via the <tt class="docutils literal">page.next</tt> field.</li>
+</ul>
+<p>Cardholder, card, merchant category, and Ramp accounting-category
+metadata are preserved in each statement line’s <tt class="docutils literal">raw_data</tt> field so
+downstream automation (reconcile rules, server actions, custom reports)
+can use them without a second API call.</p>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a><ul>
+<li><a class="reference internal" href="#generate-ramp-api-credentials" id="toc-entry-2">Generate Ramp API credentials</a></li>
+<li><a class="reference internal" href="#configure-odoo" id="toc-entry-3">Configure Odoo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage" id="toc-entry-4">Usage</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-5">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-6">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-7">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-8">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-9">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-10">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
+<div class="section" id="generate-ramp-api-credentials">
+<h2><a class="toc-backref" href="#toc-entry-2">Generate Ramp API credentials</a></h2>
+<ol class="arabic simple">
+<li>Log in to <a class="reference external" href="https://app.ramp.com">Ramp</a> as an Owner or Admin and go
+to <strong>Settings → Developer API</strong>.</li>
+<li>Click <strong>Create new app</strong>, give it a name (e.g. <em>Odoo statement
+import</em>), and select the OAuth2 grant type <strong>Client credentials</strong>.</li>
+<li>Grant the scopes <tt class="docutils literal">transactions:read</tt> and <tt class="docutils literal">users:read</tt>.
+(<tt class="docutils literal">users:read</tt> lets the cardholder name and email travel with each
+transaction in <tt class="docutils literal">raw_data</tt>; it is read-only.)</li>
+<li>Copy the <strong>Client ID</strong> and <strong>Client Secret</strong>. The secret is shown
+once — store it securely.</li>
+</ol>
+</div>
+<div class="section" id="configure-odoo">
+<h2><a class="toc-backref" href="#toc-entry-3">Configure Odoo</a></h2>
+<ol class="arabic simple">
+<li>Go to <strong>Accounting → Configuration → Journals</strong> and open or create a
+bank-type journal whose default account is your Ramp credit-line
+liability GL account.</li>
+<li>In the <strong>Online Synchronization</strong> section, select <strong>Ramp</strong> as the
+service.</li>
+<li>Paste your <strong>Client ID</strong> and <strong>Client Secret</strong>.</li>
+<li>Set the <strong>Ramp Environment</strong> to <em>Sandbox</em> for <tt class="docutils literal"><span class="pre">demo-api.ramp.com</span></tt>
+(Ramp’s developer sandbox) or <em>Production</em> for <tt class="docutils literal">api.ramp.com</tt>.</li>
+<li>Set the <strong>Synchronization Frequency</strong> and save.</li>
+<li>Click <strong>Pull Now</strong> (or let the scheduled activity run) to import
+transactions.</li>
+</ol>
+<p>The bearer token is minted automatically on the first pull and cached on
+the provider record. It refreshes a minute before its declared expiry,
+and on any HTTP 401 it is dropped and re-minted transparently.</p>
+</div>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#toc-entry-4">Usage</a></h1>
+<p>Once configured, statement lines are created automatically in the linked
+journal. Each line carries:</p>
+<ul class="simple">
+<li><strong>Date</strong> — <tt class="docutils literal">user_transaction_time</tt> (falls back to
+<tt class="docutils literal">settlement_date</tt>), normalized to UTC.</li>
+<li><strong>Amount</strong> — Ramp returns positive amounts on spend; the module flips
+the sign so spend lands as a negative line on the credit-line
+liability journal (matching the standard Odoo convention for bank-type
+journals).</li>
+<li><strong>Reference / Payment Reference</strong> — <tt class="docutils literal">merchant_name</tt> (falls back to
+<tt class="docutils literal">merchant_descriptor</tt> then <tt class="docutils literal">memo</tt>).</li>
+<li><strong>Partner name</strong> — <tt class="docutils literal">merchant_name</tt> when present (no <tt class="docutils literal">res.partner</tt>
+is auto- created; reconcile rules can match against the name).</li>
+<li><strong>Raw data</strong> — the full Ramp transaction payload as JSON, including
+<tt class="docutils literal">card_id</tt>, <tt class="docutils literal">user_id</tt>, <tt class="docutils literal">sk_category_name</tt>,
+<tt class="docutils literal">accounting_categories</tt>, and any other fields Ramp returns.</li>
+</ul>
+<p>Transactions in state <tt class="docutils literal">DECLINED</tt>, <tt class="docutils literal">PENDING_INITIATION</tt>, or <tt class="docutils literal">ERROR</tt>
+are skipped — they do not post to the credit line and would otherwise
+produce statement lines that need manual deletion.</p>
+<p>Transactions are deduplicated by Ramp’s transaction UUID, so pulling the
+same date range twice will not create duplicate statement lines.</p>
+</div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#toc-entry-5">Known issues / Roadmap</a></h1>
+<ul class="simple">
+<li><strong>Per-card journal routing</strong> — for organizations with multiple credit
+lines or that want per-card analytic attribution at the journal level,
+allow a provider field to filter the transaction pull to a list of
+Ramp card UUIDs (or by card last-4).</li>
+<li><strong>Cardholder as a first-class field</strong> — add <tt class="docutils literal">ramp_card_last_four</tt>
+and <tt class="docutils literal">ramp_cardholder_user_id</tt> (M2O <tt class="docutils literal">res.users</tt>) to
+<tt class="docutils literal">account.bank.statement.line</tt> in a companion module so cardholder is
+queryable/groupable in standard reports without parsing <tt class="docutils literal">raw_data</tt>.</li>
+<li><strong>Reimbursements / bills</strong> — extend coverage to
+<tt class="docutils literal">/developer/v1/reimbursements</tt> and <tt class="docutils literal">/developer/v1/bills</tt> for
+organizations that use Ramp’s full spend-management feature set.</li>
+<li><strong>Webhook ingestion</strong> — Ramp supports webhook delivery; a webhook
+receiver would deliver near-real-time statement lines instead of
+polling on cron.</li>
+</ul>
+</div>
+<div class="section" id="bug-tracker">
+<h1><a class="toc-backref" href="#toc-entry-6">Bug Tracker</a></h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/bank-statement-import/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us to smash it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_ramp%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1><a class="toc-backref" href="#toc-entry-7">Credits</a></h1>
+<div class="section" id="authors">
+<h2><a class="toc-backref" href="#toc-entry-8">Authors</a></h2>
+<ul class="simple">
+<li>Ledo Enterprises</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h2><a class="toc-backref" href="#toc-entry-9">Contributors</a></h2>
+<ul class="simple">
+<li>Dan Kendall <a class="reference external" href="mailto:dkendall&#64;ledoweb.com">dkendall&#64;ledoweb.com</a></li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h2><a class="toc-backref" href="#toc-entry-10">Maintainers</a></h2>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_ramp">OCA/bank-statement-import</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
