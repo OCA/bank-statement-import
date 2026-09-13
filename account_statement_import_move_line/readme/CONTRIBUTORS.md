@@ -1,0 +1,9 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Luis M. Ontalba
+  - Victor M.M. Torres
+  - João Marques
+  - Ernesto García
+  - Pilar Vargas
+- Pedro Gonzalez \<<pegonzalezs@gmail.com>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
