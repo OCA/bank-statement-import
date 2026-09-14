@@ -19,6 +19,15 @@
         <field name="model">account.statement.import.sheet.mapping</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button
+                        name="download_xlsx_template"
+                        string="Download Template"
+                        type="object"
+                        class="oe_highlight"
+                        invisible="not id"
+                    />
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only" />
@@ -41,6 +50,12 @@
                         </group>
                         <group>
                             <field name="no_header" />
+                            <field name="template_fname" invisible="1" />
+                            <field
+                                name="template_datas"
+                                filename="template_fname"
+                                invisible="1"
+                            />
                             <div
                                 class="alert alert-warning"
                                 role="alert"

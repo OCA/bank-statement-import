@@ -431,3 +431,23 @@ class TestAccountStatementImportSheetFile(Common):
         self.assertEqual(statement.balance_start, 0.0)
         self.assertEqual(statement.balance_end_real, 2291.5)
         self.assertEqual(statement.balance_end, 2291.5)
+
+    def test_xlsx_template_generation(self):
+        """Test the XLSX template generation logic."""
+        mapping = self.AccountStatementImportSheetMapping.create(
+            {
+                "name": "Template Test Mapping",
+                "timestamp_format": "%Y-%m-%d",
+                "timestamp_column": "Date",
+                "amount_column": "Amount",
+                "amount_type": "simple_value",
+            }
+        )
+        self.assertTrue(mapping.template_datas)
+        self.assertEqual(mapping.template_fname, "Template Test Mapping.xlsx")
+        initial_datas = mapping.template_datas
+        mapping.write({"partner_name_column": "Partner"})
+        self.assertNotEqual(mapping.template_datas, initial_datas)
+        action = mapping.download_xlsx_template()
+        self.assertEqual(action["type"], "ir.actions.act_url")
+        self.assertIn("field=template_datas", action["url"])

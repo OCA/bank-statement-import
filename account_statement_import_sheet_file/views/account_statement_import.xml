@@ -18,6 +18,27 @@
                     TXT/CSV/XLSX mapping: <field name="sheet_mapping_id" nolabel="1" />
                 </li>
             </xpath>
+            <xpath expr="//p" position="after">
+                <group>
+                    <group name="group_2">
+                        <div colspan="2">
+                            <button
+                                name="get_import_sample"
+                                string="⇒ Get Sample Import Template"
+                                type="object"
+                                class="oe_link"
+                                invisible="id or not sheet_mapping_id"
+                            />
+                        </div>
+                        <field name="mapping_template_fname" invisible="1" />
+                        <field
+                            name="mapping_template_datas"
+                            filename="mapping_template_fname"
+                            invisible="not id"
+                        />
+                    </group>
+                </group>
+            </xpath>
         </field>
     </record>
 </odoo>
