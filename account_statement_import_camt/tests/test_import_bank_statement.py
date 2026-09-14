@@ -19,7 +19,9 @@ class TestParserCommon(TransactionCase):
         super().setUpClass()
         cls.parser = cls.env["account.statement.import.camt.parser"]
 
-    def _do_parse_test(self, inputfile, goldenfile, max_diff_count=None):
+    def _do_parse_test(
+        self, inputfile, goldenfile, max_diff_count=None, normalize=False
+    ):
         """Imports ``inputfile`` and confronts its output against ``goldenfile`` data
 
         An AssertionError is raised if max_diff_count < 0
@@ -30,17 +32,37 @@ class TestParserCommon(TransactionCase):
         :type goldenfile: Path or str
         :param max_diff_count: maximum nr of lines that can differ (default: 2)
         :type max_diff_count: int
+        :param normalize: apply :meth:`_normalize_result` before comparison
+        :type normalize: bool
         """
         max_diff_count = max_diff_count or 2
         assert max_diff_count >= 0
-        diff = self._get_files_diffs(*map(self._to_filepath, (inputfile, goldenfile)))
+        diff = self._get_files_diffs(
+            *map(self._to_filepath, (inputfile, goldenfile)), normalize=normalize
+        )
         self.assertLessEqual(
             len(diff),
             max_diff_count,
             f"Actual output doesn't match expected output:\n{''.join(diff)}",
         )
 
-    def _get_files_diffs(self, inputfile_path, goldenfile_path) -> list:
+    def _normalize_result(self, result):
+        """Normalize parsed result for stable golden-file comparison.
+
+        Replaces ``foreign_currency_id`` integer database IDs with the ISO
+        currency name so that golden files are portable across databases.
+        """
+        _currency, _account, statements = result
+        for stmt in statements:
+            for txn in stmt.get("transactions", []):
+                if isinstance(txn.get("foreign_currency_id"), int):
+                    rec = self.env["res.currency"].browse(txn["foreign_currency_id"])
+                    txn["foreign_currency_id"] = rec.name
+        return result
+
+    def _get_files_diffs(
+        self, inputfile_path, goldenfile_path, normalize=False
+    ) -> list:
         """Creates diffs between ``inputfile_path`` and ``goldenfile_path`` data
 
         :param inputfile_path: path for file to import and test
@@ -48,11 +70,15 @@ class TestParserCommon(TransactionCase):
         :param goldenfile_path: path for file to use for comparison
                                 (the expected values)
         :type goldenfile_path: Path
+        :param normalize: apply :meth:`_normalize_result` before comparison
+        :type normalize: bool
         """
 
         # Read the input file, store the actual imported values
         with open(file_path(inputfile_path), "rb") as inputf:
             res = self.parser.parse(inputf.read())
+        if normalize:
+            res = self._normalize_result(res)
         # Read the output file, store the expected imported values
         with open(file_path(goldenfile_path)) as goldf:
             gold_name, gold_lines = goldf.name, goldf.readlines()
@@ -83,6 +109,32 @@ class TestParserCommon(TransactionCase):
 class TestParser(TestParserCommon):
     """Tests for the camt parser itself."""
 
+    def _parse_single_tx_from_inline_camt(self, ntry_xml, account_currency="EUR"):
+        camt_data = f"""<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>INLINE-1</MsgId>
+      <CreDtTm>2026-05-06T10:00:00</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>STATEMENT-1</Id>
+      <Acct>
+        <Id>
+          <IBAN>SE3550000000054910000003</IBAN>
+        </Id>
+        <Ccy>{account_currency}</Ccy>
+      </Acct>
+      {ntry_xml}
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>
+"""
+        currency, account_number, statements = self.parser.parse(camt_data.encode())
+        self.assertEqual(len(statements), 1)
+        self.assertEqual(len(statements[0]["transactions"]), 1)
+        return currency, account_number, statements[0]["transactions"][0]
+
     def test_parse(self):
         self._do_parse_test("test-camt053", "golden-camt053.pydata")
 
@@ -94,6 +146,109 @@ class TestParser(TestParserCommon):
 
     def test_parse_no_ntry(self):
         self._do_parse_test("test-camt053-no-ntry", "golden-camt053-no-ntry.pydata")
+
+    def test_parse_multicurrency_amount_details(self):
+        self.env.ref("base.EUR").write({"active": True})
+        self.env.ref("base.SEK").write({"active": True})
+        self._do_parse_test(
+            "test-camt053-multicurrency",
+            "golden-camt053-multicurrency.pydata",
+            normalize=True,
+        )
+
+    def test_parse_multicurrency_amount_details_ccyxchg(self):
+        self.env.ref("base.EUR").write({"active": True})
+        self.env.ref("base.SEK").write({"active": True})
+
+        _, _, transaction = self._parse_single_tx_from_inline_camt(
+            """
+<Ntry>
+  <Amt Ccy="SEK">100.00</Amt>
+  <CdtDbtInd>DBIT</CdtDbtInd>
+  <BookgDt>
+    <Dt>2026-05-06</Dt>
+  </BookgDt>
+  <NtryDtls>
+    <TxDtls>
+      <Amt Ccy="SEK">100.00</Amt>
+      <CcyXchg>
+        <TrgtCcy>EUR</TrgtCcy>
+        <XchgRate>0.10</XchgRate>
+      </CcyXchg>
+    </TxDtls>
+  </NtryDtls>
+</Ntry>
+""",
+            account_currency="SEK",
+        )
+
+        self.assertEqual(transaction["amount"], -100.0)
+        self.assertEqual(transaction["amount_currency"], -10.0)
+        self.assertEqual(
+            transaction["foreign_currency_id"], self.env.ref("base.EUR").id
+        )
+
+    def test_parse_multicurrency_amount_details_amtdtls_fallback(self):
+        self.env.ref("base.EUR").write({"active": True})
+        self.env.ref("base.USD").write({"active": True})
+
+        _, _, transaction = self._parse_single_tx_from_inline_camt(
+            """
+<Ntry>
+  <Amt Ccy="EUR">100.00</Amt>
+  <CdtDbtInd>CRDT</CdtDbtInd>
+  <BookgDt>
+    <Dt>2026-05-06</Dt>
+  </BookgDt>
+  <NtryDtls>
+    <TxDtls>
+      <Amt Ccy="EUR">100.00</Amt>
+      <AmtDtls>
+        <InstdAmt>
+          <Amt Ccy="USD">110.00</Amt>
+        </InstdAmt>
+      </AmtDtls>
+    </TxDtls>
+  </NtryDtls>
+</Ntry>
+""",
+            account_currency="EUR",
+        )
+
+        self.assertEqual(transaction["amount"], 100.0)
+        self.assertEqual(transaction["amount_currency"], 110.0)
+        self.assertEqual(
+            transaction["foreign_currency_id"], self.env.ref("base.USD").id
+        )
+
+    def test_parse_multicurrency_amount_details_unknown_currency(self):
+        self.env.ref("base.SEK").write({"active": True})
+
+        _, _, transaction = self._parse_single_tx_from_inline_camt(
+            """
+<Ntry>
+  <Amt Ccy="SEK">345.34</Amt>
+  <CdtDbtInd>CRDT</CdtDbtInd>
+  <BookgDt>
+    <Dt>2026-05-06</Dt>
+  </BookgDt>
+  <NtryDtls>
+    <TxDtls>
+      <AmtDtls>
+        <TxAmt>
+          <Amt Ccy="ZZZ">32.00</Amt>
+        </TxAmt>
+      </AmtDtls>
+    </TxDtls>
+  </NtryDtls>
+</Ntry>
+""",
+            account_currency="SEK",
+        )
+
+        self.assertEqual(transaction["amount"], 345.34)
+        self.assertNotIn("amount_currency", transaction)
+        self.assertNotIn("foreign_currency_id", transaction)
 
 
 class TestImport(TransactionCase):
@@ -154,6 +309,9 @@ class TestImport(TransactionCase):
                 "type": "bank",
                 "bank_account_id": bank.id,
                 "currency_id": eur.id,
+                "suspense_account_id": (
+                    cls.env.company.account_journal_suspense_account_id.id
+                ),
             }
         )
 
