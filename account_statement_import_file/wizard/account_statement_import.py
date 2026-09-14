@@ -306,6 +306,52 @@ class AccountStatementImport(models.TransientModel):
                     lvals, account_number
                 )
                 journal._statement_line_import_update_hook(lvals, speeddict)
+
+                partner_name = lvals.get("partner_name")
+                if partner_name and not lvals.get("partner_id"):
+                    partners = self.env["res.partner"].search(
+                        [
+                            ("name", "=", partner_name),
+                            ("company_id", "=", self.env.company.id),
+                        ]
+                    )
+                    if len(partners) > 1:
+                        partner_list_str = "\n".join(
+                            [f"{p.display_name} (ID : {p.id})" for p in partners]
+                        )
+                        raise UserError(
+                            self.env._(
+                                "%s partners are found for the same name '%s' "
+                                "in '%s' company.\n%s"
+                            )
+                            % (
+                                len(partners),
+                                partner_name,
+                                self.env.company.name,
+                                partner_list_str,
+                            )
+                        )
+                    if not partners:
+                        partners = self.env["res.partner"].search(
+                            [
+                                ("name", "=", partner_name),
+                                ("company_id", "=", False),
+                            ]
+                        )
+                        if len(partners) > 1:
+                            partner_list_str = "\n".join(
+                                [f"{p.display_name} (ID : {p.id})" for p in partners]
+                            )
+                            raise UserError(
+                                self.env._(
+                                    "%s partners are found for the same name "
+                                    "'%s' without a company.\n%s"
+                                )
+                                % (len(partners), partner_name, partner_list_str)
+                            )
+                    if partners:
+                        lvals["partner_id"] = partners.id
+
                 if not lvals.get("payment_ref"):
                     raise UserError(self.env._("Missing payment_ref on a transaction."))
         return stmts_vals

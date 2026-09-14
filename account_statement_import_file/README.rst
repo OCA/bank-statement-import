@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ======================
 Import Statement Files
 ======================
@@ -17,7 +13,7 @@ Import Statement Files
 .. |badge1| image:: https://img.shields.io/badge/maturity-Mature-brightgreen.png
     :target: https://odoo-community.org/page/development-status
     :alt: Mature
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
@@ -44,7 +40,9 @@ This module has several additionnal feature:
 - support multi-account bank statement files,
 - attach the file to the bank statement (to facilitate the diagnostic in
   case of problem),
-- improved error messages.
+- improved error messages,
+- automatic partner matching based on the partner name provided in the
+  statement file.
 
 This module only provides the technical framework for the import of
 statement files. You must also install the format-specific modules to
@@ -79,6 +77,13 @@ formats support that, in some countries) and that these bank account
 numbers exists on partners in Odoo, the partners will be set on the
 related statement lines.
 
+Additionally, if the statement file contains a **partner name** and no
+partner ID is found by other means, the module will try to find a
+partner with matching name in the current company. If no match is found,
+it will try to find a partner with matching name and no company. If
+multiple matching partners are found in either step, it will raise an
+error listing the matching partner IDs.
+
 Bug Tracker
 ===========
 
@@ -102,16 +107,16 @@ Contributors
 ------------
 
 - Odoo S.A.
-
 - Alexis de Lattre <alexis.delattre@akretion.com>
-
 - Tecnativa - Pedro M. Baeza
-
 - Sygel - Manuel Regidor
-
 - Trobz <https://www.trobz.com/>
 
   - Do Anh Duy <duyda@trobz.com>
+
+- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+
+  - Bhavesh Heliconia
 
 Other credits
 -------------

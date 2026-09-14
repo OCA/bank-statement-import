@@ -45,6 +45,24 @@ class TestAccountStatementImportFile(common.TransactionCase):
             .with_context(journal_id=cls.journal_1.id)
             .create({"statement_file": file, "statement_filename": "Test"})
         )
+        cls.partner_in_company = cls.env["res.partner"].create(
+            {"name": "Partner In Company", "company_id": cls.env.company.id}
+        )
+        cls.partner_without_company = cls.env["res.partner"].create(
+            {"name": "Partner Without Company", "company_id": False}
+        )
+        cls.partner_duplicate_1 = cls.env["res.partner"].create(
+            {"name": "Duplicate Partner", "company_id": cls.env.company.id}
+        )
+        cls.partner_duplicate_2 = cls.env["res.partner"].create(
+            {"name": "Duplicate Partner", "company_id": cls.env.company.id}
+        )
+        cls.partner_no_company_duplicate_1 = cls.env["res.partner"].create(
+            {"name": "No Company Duplicate", "company_id": False}
+        )
+        cls.partner_no_company_duplicate_2 = cls.env["res.partner"].create(
+            {"name": "No Company Duplicate", "company_id": False}
+        )
 
     def test_complete_stmts_vals(self):
         # ERROR: Missing payment_ref on a transaction.
@@ -52,6 +70,88 @@ class TestAccountStatementImportFile(common.TransactionCase):
         stmts_vals = [{"transactions": [{"payment_ref": ""}]}]
         with self.assertRaises(UserError):
             import_wizard._complete_stmts_vals(stmts_vals, self.journal_1, "1111111111")
+
+    def test_partner_matching(self):
+        import_wizard = self.import_wizard
+
+        # Match in company
+        stmts_vals = [
+            {
+                "transactions": [
+                    {"payment_ref": "REF", "partner_name": "Partner In Company"}
+                ]
+            }
+        ]
+        res = import_wizard._complete_stmts_vals(
+            stmts_vals, self.journal_1, "1111111111"
+        )
+        self.assertEqual(
+            res[0]["transactions"][0]["partner_id"], self.partner_in_company.id
+        )
+
+        # Match without company
+        stmts_vals = [
+            {
+                "transactions": [
+                    {"payment_ref": "REF", "partner_name": "Partner Without Company"}
+                ]
+            }
+        ]
+        res = import_wizard._complete_stmts_vals(
+            stmts_vals, self.journal_1, "1111111111"
+        )
+        self.assertEqual(
+            res[0]["transactions"][0]["partner_id"], self.partner_without_company.id
+        )
+
+        # Duplicate in company should raise UserError
+        stmts_vals = [
+            {
+                "transactions": [
+                    {"payment_ref": "REF", "partner_name": "Duplicate Partner"}
+                ]
+            }
+        ]
+        with self.assertRaisesRegex(UserError, "partners are found for the same name"):
+            import_wizard._complete_stmts_vals(stmts_vals, self.journal_1, "1111111111")
+
+        # Duplicate without company should raise UserError
+        stmts_vals = [
+            {
+                "transactions": [
+                    {"payment_ref": "REF", "partner_name": "No Company Duplicate"}
+                ]
+            }
+        ]
+        with self.assertRaisesRegex(UserError, "partners are found for the same name"):
+            import_wizard._complete_stmts_vals(stmts_vals, self.journal_1, "1111111111")
+
+        # Partner ID already set should not be overwritten
+        existing_partner = self.env["res.partner"].create({"name": "Existing Partner"})
+        stmts_vals = [
+            {
+                "transactions": [
+                    {
+                        "payment_ref": "REF",
+                        "partner_name": "Partner In Company",
+                        "partner_id": existing_partner.id,
+                    }
+                ]
+            }
+        ]
+        res = import_wizard._complete_stmts_vals(
+            stmts_vals, self.journal_1, "1111111111"
+        )
+        self.assertEqual(res[0]["transactions"][0]["partner_id"], existing_partner.id)
+
+        # Partner not found
+        stmts_vals = [
+            {"transactions": [{"payment_ref": "REF", "partner_name": "Non Existent"}]}
+        ]
+        res = import_wizard._complete_stmts_vals(
+            stmts_vals, self.journal_1, "1111111111"
+        )
+        self.assertFalse(res[0]["transactions"][0].get("partner_id"))
 
     def test_match_journal(self):
         import_wizard = self.import_wizard
