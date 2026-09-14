@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-11-20 13:06+0000\n"
+"PO-Revision-Date: 2026-09-14 16:34+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -25,12 +25,12 @@ msgstr "%d transizioni presenti nei dati risposta"
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Client ID"
-msgstr ""
+msgstr "ID cliente"
 
 #. module: account_statement_import_online_ponto
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_ponto.online_bank_statement_provider_form
 msgid "Client Secret"
-msgstr ""
+msgstr "Chiave segreta client"
 
 #. module: account_statement_import_online_ponto
 #: model:ir.model.fields.selection,name:account_statement_import_online_ponto.selection__online_bank_statement_provider__ponto_date_field__execution_date
@@ -67,6 +67,8 @@ msgid ""
 "No bank account number configured for the journal '{journal}'. Please set "
 "the Account Number field in the journal configuration."
 msgstr ""
+"Nessun numero di conto bancario configurato per il registro '{journal}'. Si "
+"prega di impostare il campo Numero conto nella configurazione del registro."
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -127,6 +129,11 @@ msgid ""
 "Please add at least one account to your Custom Integration at https://"
 "myponto.com/"
 msgstr ""
+"Errore di configurazione Ponto: nessun conto trovato nell'integrazione "
+"Ponto.\n"
+"\n"
+"Aggiungere almeno un conto alla integrazione personalizzata su https://"
+"myponto.com/"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
@@ -142,6 +149,15 @@ msgid ""
 "1. The Account Number in Odoo matches a Ponto account reference\n"
 "2. The account is added to your Ponto integration\n"
 msgstr ""
+"Errore di configurazione Ponto: numero di conto bancario Odoo '{account}' "
+"non trovato tra i conti Ponto.\n"
+"\n"
+"Conti Ponto disponibili:\n"
+"{ponto_ibans}\n"
+"\n"
+"Verificare che:\n"
+"1. Il numero di conto in Odoo corrisponda a un riferimento di conto Ponto\n"
+"2. Il conto sia stato aggiunto all'integrazione Ponto\n"
 
 #. module: account_statement_import_online_ponto
 #. odoo-python
