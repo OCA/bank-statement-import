@@ -43,7 +43,12 @@ class TestAccountStatementImportFile(common.TransactionCase):
         cls.import_wizard = (
             cls.env["account.statement.import"]
             .with_context(journal_id=cls.journal_1.id)
-            .create({"statement_file": file, "statement_filename": "Test"})
+            .create(
+                {
+                    "statement_file": file,
+                    "statement_filename": "Test",
+                }
+            )
         )
 
     def test_complete_stmts_vals(self):
