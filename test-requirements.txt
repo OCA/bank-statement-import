@@ -1,1 +1,2 @@
 odoo-test-helper
+odoo-addon-account_statement_import_file @ git+https://github.com/OCA/bank-statement-import.git@refs/pull/917/head#subdirectory=account_statement_import_file
