@@ -96,6 +96,9 @@
               </Domn>
             </BkTxCd>
             <RltdPties>
+              <UltmtDbtr>
+                <Nm>Ultimate Payer Ltd</Nm>
+              </UltmtDbtr>
               <Dbtr>
                 <Nm>Banque Cantonale Vaudoise</Nm>
                 <PstlAdr>

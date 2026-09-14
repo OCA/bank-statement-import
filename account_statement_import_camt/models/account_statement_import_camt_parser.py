@@ -190,13 +190,19 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         party_type_node = node.xpath("../../ns:CdtDbtInd", namespaces={"ns": ns})
         if party_type_node and party_type_node[0].text != "CRDT":
             party_type = "Cdtr"
+        party_name_type = party_type
+        ultimate_party_type = f"Ultmt{party_type}"
+        if node.xpath(
+            f"./ns:RltdPties/ns:{ultimate_party_type}", namespaces={"ns": ns}
+        ):
+            party_name_type = ultimate_party_type
         party_node = node.xpath(
-            f"./ns:RltdPties/ns:{party_type}", namespaces={"ns": ns}
+            f"./ns:RltdPties/ns:{party_name_type}", namespaces={"ns": ns}
         )
         if party_node:
             name_node = node.xpath(
-                f"./ns:RltdPties/ns:{party_type}/ns:Nm |"
-                f"./ns:RltdPties/ns:{party_type}/ns:Pty/ns:Nm",
+                f"./ns:RltdPties/ns:{party_name_type}/ns:Nm |"
+                f"./ns:RltdPties/ns:{party_name_type}/ns:Pty/ns:Nm",
                 namespaces={"ns": ns},
             )
             if name_node:
