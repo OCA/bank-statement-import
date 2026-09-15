@@ -1,0 +1,4 @@
+- [Akiles](https://akiles.app/):
+  - Dario Nieuwenhuis
+- [Tecnativa](https://www.tecnativa.com):
+  - Juan Carlos Oñate
