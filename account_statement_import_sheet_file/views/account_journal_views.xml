@@ -5,7 +5,10 @@
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
             <xpath expr="//page[@name='advanced_settings']/group" position="inside">
-                <group string="Statement Import Map" invisible="type != 'bank'">
+                <group
+                    string="Statement Import Map"
+                    invisible="type not in ('bank', 'credit')"
+                >
                     <field name="default_sheet_mapping_id" />
                 </group>
             </xpath>
