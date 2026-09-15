@@ -91,6 +91,28 @@ class OnlineBankStatementProviderStripe(models.Model):
                 )
         return lines, {}
 
+    def _pull(self, date_since, date_until):
+        res = super()._pull(date_since, date_until)
+        self.filtered(lambda p: p.service == "stripe")._stripe_fill_ending_balances()
+        return res
+
+    def _stripe_fill_ending_balances(self):
+        statement_model = self.env["account.bank.statement"]
+        if self.env.context.get("scheduled"):
+            statement_model = statement_model.with_context(tracking_disable=True)
+        statements = statement_model.search(
+            [("journal_id", "in", self.journal_id.ids), ("state", "=", "open")]
+        )
+        for statement in statements:
+            currency = statement.currency_id
+            if (
+                currency.compare_amounts(
+                    statement.balance_end_real, statement.balance_end
+                )
+                != 0
+            ):
+                statement.balance_end_real = statement.balance_end
+
     def _stripe_api_get_all(self, path, params=None):
         if params is None:
             params = []
