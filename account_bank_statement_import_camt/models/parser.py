@@ -68,6 +68,19 @@ class CamtParser(models.AbstractModel):
             return amount, ccy
         return amount
 
+    def parse_date(self, node, xpath_str):
+        """Return the date from an ISO 20022 date choice node.
+
+        BookgDt and ValDt are a choice between Dt (a date) and DtTm (a
+        timestamp, used for instance by Revolut in camt.053.001.08).
+        Return the date part for both variants, or False if neither exists.
+        """
+        for tag in ('Dt', 'DtTm'):
+            found_node = self.xpath(node, '%s/ns:%s' % (xpath_str, tag))
+            if found_node and found_node[0].text:
+                return found_node[0].text[:10]
+        return False
+
     def add_value_from_node(
         self, node, xpath_str, obj, attr_name, join_str=None,
         default=None):
@@ -140,6 +153,12 @@ class CamtParser(models.AbstractModel):
                 party_node[0], './ns:PstlAdr/ns:AdrLine')
             if address_node:
                 transaction.remote_owner_address = [address_node[0].text]
+        if not transaction.remote_owner:
+            # In the entry details everything below TxDtls/RltdPties is
+            # optional: RltdPties itself, the party node (Cdtr/Dbtr) or just
+            # its Nm can be absent. Fall back to a placeholder so the
+            # transaction stays importable instead of ending up nameless.
+            transaction.remote_owner = 'unknown'
         # Get remote_account from iban or from domestic account:
         account_node = self.xpath(
             node, './ns:RltdPties/ns:%sAcct/ns:Id' % party_type)
@@ -175,12 +194,13 @@ class CamtParser(models.AbstractModel):
         """Parse transaction (entry) node."""
         self.add_value_from_node(
             node, './ns:BkTxCd/ns:Prtry/ns:Cd', transaction, 'transfer_type')
-        self.add_value_from_node(
-            node, './ns:BookgDt/ns:Dt', transaction, 'date')
-        self.add_value_from_node(
-            node, './ns:BookgDt/ns:Dt', transaction, 'execution_date')
-        self.add_value_from_node(
-            node, './ns:BookgDt/ns:Dt', transaction, 'value_date')
+        # BookgDt is an ISO 20022 choice: either Dt (a date) or DtTm (a
+        # timestamp). Read both and reduce them to the plain booking date.
+        booking_date = self.parse_date(node, './ns:BookgDt')
+        if booking_date:
+            transaction.date = booking_date
+            transaction.execution_date = booking_date
+            transaction.value_date = booking_date
         transaction.transferred_amount = self.parse_amount(node)
         self.add_value_from_node(
             node, './ns:AddtlNtryInf', transaction, 'name')
@@ -273,7 +293,12 @@ class CamtParser(models.AbstractModel):
             total_amount += transaction.transferred_amount
         statement['transactions'] = transactions
         if statement['transactions']:
-            execution_date = statement['transactions'][0].execution_date[:10]
+            execution_date = statement['transactions'][0].execution_date
+            if not execution_date:
+                raise ValueError(
+                    'No booking date (BookgDt) found for the first entry of'
+                    ' statement %s.' % statement.statement_id)
+            execution_date = execution_date[:10]
             statement.date = datetime.strptime(execution_date, "%Y-%m-%d")
             # Prepend date of first transaction to improve id uniquenes
             if execution_date not in statement.statement_id:
