@@ -336,6 +336,19 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         )
 
         details_nodes = node.xpath("./ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
+
+        # AddtlNtryInf applies to the whole Ntry, so use it as a fallback only
+        # when there is at most one TxDtls. With multiple TxDtls, propagating
+        # it would assign the same entry-level description to every transaction.
+        if len(details_nodes) <= 1:
+            addtl_info = node.xpath("./ns:AddtlNtryInf", namespaces={"ns": ns})
+            if (
+                addtl_info
+                and addtl_info[0].text
+                and transaction.get("payment_ref") == "/"
+            ):
+                transaction["payment_ref"] = addtl_info[0].text.strip()
+
         if len(details_nodes) == 0:
             self.generate_narration(transaction)
             yield transaction
