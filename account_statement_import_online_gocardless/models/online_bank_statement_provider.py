@@ -52,25 +52,30 @@ class OnlineBankStatementProvider(models.Model):
         """
         self.ensure_one()
         now = fields.Datetime.now()
-        if not self.gocardless_token or now > self.gocardless_token_expiration:
+        if (
+            not self.gocardless_token
+            or not self.gocardless_token_expiration
+            or now >= self.gocardless_token_expiration
+        ):
             # Refresh token
             if (
                 self.gocardless_refresh_token
-                and now > self.gocardless_refresh_expiration
+                and self.gocardless_refresh_expiration
+                and now < self.gocardless_refresh_expiration
             ):
                 url = f"{GOCARDLESS_ENDPOINT}/token/refresh/"
+                payload = {"refresh": self.gocardless_refresh_token}
             else:
                 url = f"{GOCARDLESS_ENDPOINT}/token/new/"
+                payload = {"secret_id": self.username, "secret_key": self.password}
             response = requests.post(
                 url,
-                data=json.dumps(
-                    {"secret_id": self.username, "secret_key": self.password}
-                ),
+                data=json.dumps(payload),
                 headers=self._gocardless_get_headers(basic=True),
             )
-            data = {}
-            if response.status_code == 200:
-                data = json.loads(response.text)
+            if response.status_code != 200:
+                raise UserError(response.text)
+            data = json.loads(response.text)
             expiration_date = now + relativedelta(seconds=data.get("access_expires", 0))
             vals = {
                 "gocardless_token": data.get("access", False),
@@ -142,6 +147,8 @@ class OnlineBankStatementProvider(models.Model):
         )
         if response.status_code == 400:
             raise UserError(_("Incorrect country code or country not supported."))
+        if response.status_code != 200:
+            raise UserError(response.text)
         institutions = json.loads(response.text)
         # Prepare data for being showed in the JS widget
         ctx = self.env.context.copy()
