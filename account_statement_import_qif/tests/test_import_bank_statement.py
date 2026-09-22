@@ -102,6 +102,12 @@ class TestQifFile(TransactionCase):
         dates = [line["date"] for line in stmts[0]["transactions"]]
         self.assertEqual(dates, [date(2026, 7, 8), date(2026, 7, 1)])
 
+    def test_qif_unlisted_country_ambiguous_dates_are_day_first(self):
+        self.env.company.country_id = self.env.ref("base.ar")
+        data = b"!Type:Bank\nD08/07/2026\nT360.00\nPTransaction 2\n^\n"
+        _currency, _account, stmts = self._parse_qif(data)
+        self.assertEqual(stmts[0]["transactions"][0]["date"], date(2026, 7, 8))
+
     def test_qif_us_ambiguous_dates_stay_month_first(self):
         self.env.company.country_id = self.env.ref("base.us")
         data = (

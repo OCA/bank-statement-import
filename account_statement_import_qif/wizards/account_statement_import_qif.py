@@ -13,7 +13,8 @@ from odoo import api, models
 from odoo.exceptions import UserError
 
 from ..qif_dates import (
-    QIF_DAYFIRST_COUNTRIES,
+    QIF_MIXED_ORDER_COUNTRIES,
+    QIF_MONTHFIRST_COUNTRIES,
     qif_file_dayfirst,
     qif_numeric_date_parts,
 )
@@ -35,11 +36,12 @@ class AccountStatementImport(models.TransientModel):
         """
         journal = self.env["account.journal"].browse(self.env.context.get("journal_id"))
         company = journal.company_id if journal else self.env.company
-        if company.country_id.code in QIF_DAYFIRST_COUNTRIES:
-            return True
+        country = company.country_id.code
+        if country and country not in QIF_MIXED_ORDER_COUNTRIES:
+            return country not in QIF_MONTHFIRST_COUNTRIES
         lang_code = self.env.user.lang or company.partner_id.lang
         if lang_code:
-            lang = self.env["res.lang"].search([("code", "=", lang_code)], limit=1)
+            lang = self.env["res.lang"]._lang_get(lang_code)
             if lang and lang.date_format:
                 day_pos = lang.date_format.find("%d")
                 month_pos = lang.date_format.find("%m")

@@ -3,33 +3,14 @@
 
 import re
 
-# Numeric dates in these countries are written day-first (dd/mm/yyyy).
+# Numeric dates are written month-first (mm/dd/yyyy) in these countries and
+# day-first almost everywhere else. Canada commonly uses both orders, so it
+# falls back to the language's date format, like a company without a country.
 # Used only when the QIF file itself does not prove a format.
-QIF_DAYFIRST_COUNTRIES = frozenset(
-    {
-        "AU",
-        "NZ",
-        "GB",
-        "IE",
-        "ZA",
-        "IN",
-        "DE",
-        "FR",
-        "ES",
-        "IT",
-        "NL",
-        "BE",
-        "PT",
-        "AT",
-        "CH",
-        "SE",
-        "NO",
-        "DK",
-        "FI",
-        "PL",
-        "BR",
-    }
+QIF_MONTHFIRST_COUNTRIES = frozenset(
+    {"US", "AS", "GU", "MP", "PR", "UM", "VI", "PH", "FM", "MH", "PW"}
 )
+QIF_MIXED_ORDER_COUNTRIES = frozenset({"CA"})
 
 _QIF_DATE_SPLIT = re.compile(r"[/\-.]")
 
