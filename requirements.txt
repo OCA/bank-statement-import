@@ -1,6 +1,6 @@
 # generated from manifests external_dependencies
 chardet
 ofxparse
-ofxtools
+ofxtools<1
 plaid-python
 xlrd
