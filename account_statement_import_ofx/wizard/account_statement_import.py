@@ -3,6 +3,7 @@ import logging
 
 from odoo import _, api, models
 from odoo.exceptions import UserError
+from odoo.tools import plaintext2html
 
 _logger = logging.getLogger(__name__)
 
@@ -35,17 +36,36 @@ class AccountStatementImport(models.TransientModel):
         # If you read odoo10/addons/account_bank_statement_import/
         # account_bank_statement_import.py, it's the only 2 keys
         # we can provide to match a partner.
-        payment_ref = transaction.payee
+
+        # payment_ref (Label): use payee name only for clean
+        # reconciliation matching. Fall back to memo or type
+        # if payee is missing (some banks omit NAME).
+        payment_ref = transaction.payee or ""
+        if not payment_ref and transaction.memo:
+            payment_ref = transaction.memo
+        elif not payment_ref:
+            payment_ref = transaction.type or "/"
+
+        # narration (Note): memo and checknum kept separate from
+        # payment_ref so reconciliation models can match on the
+        # Note field independently of the Label field.
+        narration_parts = []
         if transaction.checknum:
-            payment_ref += " " + transaction.checknum
+            narration_parts.append(transaction.checknum)
         if transaction.memo:
-            payment_ref += " : " + transaction.memo
+            narration_parts.append(transaction.memo)
+        narration = " ".join(narration_parts)
+
         vals = {
             "date": transaction.date,
             "payment_ref": payment_ref,
             "amount": float(transaction.amount),
             "unique_import_id": transaction.id,
+            "narration": plaintext2html(narration) if narration else False,
+            "transaction_type": transaction.type or False,
         }
+        if transaction.checknum:
+            vals["ref"] = transaction.checknum
         return vals
 
     def _parse_file(self, data_file):
