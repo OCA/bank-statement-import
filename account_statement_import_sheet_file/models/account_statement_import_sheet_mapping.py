@@ -98,6 +98,18 @@ class AccountStatementImportSheetMapping(models.Model):
     balance_column = fields.Char(
         help="Balance after transaction in journal's currency",
     )
+    statement_order = fields.Selection(
+        selection=[
+            ("asc", "Oldest first"),
+            ("desc", "Newest first"),
+        ],
+        default="asc",
+        required=True,
+        help=(
+            "Order of the statement file rows. This is used to preserve the "
+            "original file order when several transactions have the same timestamp."
+        ),
+    )
     original_currency_column = fields.Char(
         help=(
             "In case statement provides original currency for transactions "
