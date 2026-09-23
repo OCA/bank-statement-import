@@ -6,6 +6,7 @@ import logging
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
@@ -56,6 +57,15 @@ class AccountStatementImport(models.TransientModel):
         )
         # there is no more bank statement form view in v16
         action["domain"] = [("id", "in", result["statement_ids"])]
+        ctx = safe_eval(action.get("context", "{}"))
+        ctx.update(
+            {
+                "active_id": self._context.get("journal_id"),
+                "active_ids": [self._context.get("journal_id")],
+                "active_model": "account.journal",
+            }
+        )
+        action["context"] = ctx
         if result["notifications"]:
             action_with_notif = {
                 "type": "ir.actions.client",
