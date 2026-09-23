@@ -1,4 +1,5 @@
 # Copyright 2022 Akretion France (http://www.akretion.com/)
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
@@ -14,6 +15,7 @@
     "website": "https://github.com/OCA/bank-statement-import",
     "data": [
         "views/account_bank_statement_line.xml",
+        "views/account_journal.xml",
     ],
     "installable": True,
 }

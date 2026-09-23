@@ -1,14 +1,22 @@
 # Copyright 2022 Akretion France (http://www.akretion.com/)
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models
+from odoo import api, fields, models
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"
+
+    ensure_unique_import_id = fields.Boolean(
+        help="Ensures that a unique_import_id is set"
+        "on a bank statement lines when importing it via bank statement import"
+        "If no unique identifier was provided, the value is created from the "
+        "account number, date, payment reference and amount."
+    )
 
     def _statement_line_import_speeddict(self):
         """This method is designed to be inherited by reconciliation modules.
@@ -53,11 +61,27 @@ class AccountJournal(models.Model):
                     speeddict["account_number"][st_line_vals["account_number"]]
                 )
 
+    @api.model
+    def _get_unique_identifier_keys(self):
+        return ["account_number", "date", "payment_ref", "amount"]
+
+    def _generate_statement_line_unique_import_id(self, st_line_vals):
+        values = []
+        for key in self._get_unique_identifier_keys():
+            value = st_line_vals.get(key)
+            if value:
+                values.append(str(value))
+        return "-".join(values)
+
     def _statement_line_import_update_unique_import_id(
         self, st_line_vals, account_number
     ):
         self.ensure_one()
         unique_import_id = st_line_vals.get("unique_import_id")
+        if not unique_import_id and self.ensure_unique_import_id:
+            unique_import_id = self._generate_statement_line_unique_import_id(
+                st_line_vals
+            )
         if unique_import_id:
             sanitized_acc_number = self._sanitize_bank_account_number(account_number)
             st_line_vals["unique_import_id"] = (

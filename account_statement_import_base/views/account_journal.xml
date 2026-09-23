@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
+  Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+-->
+<odoo>
+    <record id="account_journal_from_view" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <field name="autocheck_on_post" position="after">
+                <field name="ensure_unique_import_id" invisible="type != 'bank'" />
+            </field>
+        </field>
+    </record>
+</odoo>
