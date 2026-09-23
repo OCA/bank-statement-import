@@ -527,6 +527,11 @@ msgid "Unified Chinese (gb18030)"
 msgstr "Cinese unificato (gb18030)"
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__transaction_id_auto
+msgid "Automatic operation ID"
+msgstr "ID Operazione automatica"
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__transaction_id_column
 msgid "Unique transaction ID column"
 msgstr "Colonna ID operazione univoca"

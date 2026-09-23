@@ -2,7 +2,7 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from base64 import b64encode
+from base64 import b64decode, b64encode
 from decimal import Decimal
 from os import path
 from unittest.mock import Mock
@@ -96,6 +96,30 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
+
+    def test_hash_row_values(self):
+        values = [None, self.now, 12.34, "Payment"]
+        row_hash = self.parser._hash_row_values(values)
+
+        self.assertEqual(row_hash, self.parser._hash_row_values(values))
+        self.assertNotEqual(
+            row_hash,
+            self.parser._hash_row_values([None, self.now, 12.34, "Other payment"]),
+        )
+
+    def test_transaction_id_auto(self):
+        statement_map = self.sample_statement_map.copy(
+            {
+                "transaction_id_auto": True,
+            }
+        )
+        data = b64decode(self._data_file("fixtures/sample_statement_en.csv", "utf-8"))
+
+        lines = self.parser._parse_lines(statement_map, data, self.currency_usd.name)
+
+        transaction_ids = [line.get("transaction_id") for line in lines]
+        self.assertTrue(all(transaction_ids))
+        self.assertEqual(len(set(transaction_ids)), 2)
 
     def test_import_empty_csv_file(self):
         journal = self.AccountJournal.create(
