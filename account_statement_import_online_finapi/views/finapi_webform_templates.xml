@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Landing page after the user finished the finAPI Web Form and was
+         redirected back to Odoo (redirectUrl). Built on the plain web.layout:
+         web.frontend_layout is extended by portal with a language selector
+         that needs the frontend values of a website route. -->
+    <template
+        id="finapi_webform_return_template"
+        name="finAPI: Authorisation Completed"
+    >
+        <t t-call="web.layout">
+            <t t-set="title">finAPI: authorisation completed</t>
+            <t t-set="head">
+                <t t-call-assets="web.assets_frontend" t-js="false" />
+            </t>
+            <div class="container py-5">
+                <h1>Authorisation completed</h1>
+                <p>You can close this tab and return to Odoo.</p>
+                <p>
+                    In the wizard, click
+                    <b>Refresh status</b>
+                    to load your accounts.
+                </p>
+            </div>
+        </t>
+    </template>
+</odoo>
