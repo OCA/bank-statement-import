@@ -95,13 +95,13 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-Bhavesh Heliconia| image:: https://github.com/Bhavesh Heliconia.png?size=40px
-    :target: https://github.com/Bhavesh Heliconia
-    :alt: Bhavesh Heliconia
+.. |maintainer-BhaveshHeliconia| image:: https://github.com/BhaveshHeliconia.png?size=40px
+    :target: https://github.com/BhaveshHeliconia
+    :alt: BhaveshHeliconia
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Bhavesh Heliconia| 
+|maintainer-BhaveshHeliconia| 
 
 This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/18.0/account_bank_statement_cascade_delete>`_ project on GitHub.
 
