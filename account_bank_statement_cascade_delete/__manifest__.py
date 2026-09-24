@@ -9,7 +9,7 @@
     "category": "Accounting",
     "website": "https://github.com/OCA/bank-statement-import",
     "author": "Heliconia Solutions Pvt. Ltd., Odoo Community Association (OCA)",
-    "maintainers": ["Bhavesh Heliconia"],
+    "maintainers": ["BhaveshHeliconia"],
     "license": "AGPL-3",
     "depends": ["account"],
     "installable": True,
