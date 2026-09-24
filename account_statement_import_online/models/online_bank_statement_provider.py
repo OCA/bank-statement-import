@@ -191,13 +191,15 @@ class OnlineBankStatementProvider(models.Model):
                 )[0][1],
             }
 
-    def _pull(self, date_since, date_until):
+    def _pull(self, date_since, date_until, one_fetch=False):
         """Pull data for all providers within requested period."""
         is_scheduled = self.env.context.get("scheduled")
         debug = self.env.context.get("account_statement_online_import_debug")
         debug_data = []
         for provider in self:
             statement_date_since = provider._get_statement_date_since(date_since)
+            if one_fetch:
+                statement_date_since = date_since
             while statement_date_since < date_until:
                 # Note that statement_date_until is exclusive, while date_until is
                 # inclusive. So if we have daily statements date_until might
@@ -205,6 +207,8 @@ class OnlineBankStatementProvider(models.Model):
                 statement_date_until = (
                     statement_date_since + provider._get_statement_date_step()
                 )
+                if one_fetch:
+                    statement_date_until = date_until
                 try:
                     data = provider._obtain_statement_data(
                         statement_date_since, statement_date_until
