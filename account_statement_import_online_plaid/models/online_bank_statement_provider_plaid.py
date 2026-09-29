@@ -1,5 +1,7 @@
 # Copyright 2024 Binhex - Adasat Torres de León.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from dateutil.relativedelta import relativedelta
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -40,6 +42,15 @@ class OnlineBankStatementProvider(models.Model):
         if self.service != "plaid":
             return super()._obtain_statement_data(date_since, date_until)
         return self._plaid_retrieve_data(date_since, date_until), {}
+
+    def _get_scheduled_pull_lookback(self):
+        if self.service == "plaid":
+            # Look back 10 days for scheduled syncs. This is because:
+            # 1. Transactions can take a few days to clear.
+            # 2. Some bank data is delayed, for example data from Wells Fargo
+            #    can take 24-48 hours to become available in Plaid.
+            return relativedelta(days=10)
+        return super()._get_scheduled_pull_lookback()
 
     @api.model
     def _get_available_services(self):
