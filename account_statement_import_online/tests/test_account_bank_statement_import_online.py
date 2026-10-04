@@ -1,6 +1,7 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # Copyright 2022-2023 Therp BV (https://therp.nl)
+# Copyright 2026 Ryan Duguid <ryan@duguid.com.au>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 from datetime import date, datetime
@@ -11,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields
 from odoo.orm.model_classes import add_to_registry
-from odoo.tests import common
+from odoo.tests import common, freeze_time
 from odoo.tools import mute_logger
 
 _logger = logging.getLogger(__name__)
@@ -98,8 +99,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         )
         self._getExpectedStatements(2)
 
+    @freeze_time("2026-08-29 12:00:00")
     def test_pull_scheduled(self):
-        self.provider.next_run = self.now - relativedelta(days=15)
+        now = fields.Datetime.now()
+        self.provider.next_run = now - relativedelta(days=15)
         self._getExpectedStatements(0)
         self.provider.with_context(step={"hours": 8})._scheduled_pull()
         self._getExpectedStatements(1)
@@ -201,10 +204,12 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertTrue(statements[0].balance_end)
         self.assertTrue(statements[1].balance_start)
 
+    @freeze_time("2026-08-29 12:00:00")
     def test_wizard(self):
+        now = fields.Datetime.now()
         vals = {
-            "date_since": self.now - relativedelta(hours=1),
-            "date_until": self.now,
+            "date_since": now - relativedelta(hours=1),
+            "date_until": now,
         }
         wizard = self.OnlineBankStatementPullWizard.with_context(
             active_model=self.provider._name, active_id=self.provider.id
@@ -212,10 +217,12 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         wizard.action_pull()
         self._getExpectedStatements(1)
 
+    @freeze_time("2026-08-29 12:00:00")
     def test_wizard_on_journal(self):
+        now = fields.Datetime.now()
         vals = {
-            "date_since": self.now - relativedelta(hours=1),
-            "date_until": self.now,
+            "date_since": now - relativedelta(hours=1),
+            "date_until": now,
         }
         wizard = self.OnlineBankStatementPullWizard.with_context(
             active_model=self.journal._name, active_id=self.journal.id
