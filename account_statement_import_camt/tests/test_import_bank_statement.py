@@ -2,7 +2,6 @@
 # Copyright 2017 Open Net Sàrl
 # Copyright 2020 Camptocamp
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-import base64
 import difflib
 import pprint
 import tempfile
@@ -10,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from odoo.tests.common import TransactionCase
+from odoo.tools import BinaryBytes
 from odoo.tools.misc import file_path
 
 
@@ -99,7 +99,7 @@ class TestParser(TestParserCommon):
 class TestImport(TransactionCase):
     """Run test to import camt import."""
 
-    transactions = [
+    transactions = [  # noqa: RUF012
         {
             "account_number": "NL46ABNA0499998748",
             "amount": -754.25,
@@ -133,18 +133,16 @@ class TestImport(TransactionCase):
         eur.write({"active": True})
         bank = cls.env["res.partner.bank"].create(
             {
-                "acc_number": "NL77ABNA0574908765",
+                "account_number": "NL77ABNA0574908765",
                 "partner_id": cls.env.ref("base.main_partner").id,
                 "company_id": cls.env.ref("base.main_company").id,
-                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
         cls.env["res.partner.bank"].create(
             {
-                "acc_number": "NL46ABNA0499998748",
+                "account_number": "NL46ABNA0499998748",
                 "partner_id": cls.env.ref("base.main_partner").id,
                 "company_id": cls.env.ref("base.main_company").id,
-                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
         cls.env["account.journal"].create(
@@ -161,7 +159,7 @@ class TestImport(TransactionCase):
         """Test correct creation of single statement."""
         testfile = file_path("account_statement_import_camt/tests/samples/test-camt053")
         with open(testfile, "rb") as datafile:
-            camt_file = base64.b64encode(datafile.read())
+            camt_file = BinaryBytes(datafile.read())
 
             self.env["account.statement.import"].create(
                 {
@@ -193,7 +191,7 @@ class TestImport(TransactionCase):
             "account_statement_import_camt/tests/samples/test-camt053.zip"
         )
         with open(testfile, "rb") as datafile:
-            camt_file = base64.b64encode(datafile.read())
+            camt_file = BinaryBytes(datafile.read())
             self.env["account.statement.import"].create(
                 {"statement_filename": "test import", "statement_file": camt_file}
             ).import_file_button()
@@ -201,5 +199,5 @@ class TestImport(TransactionCase):
                 [("name", "in", ["1234Test/2", "1234Test/3"])]
             )
 
-        self.assertTrue(all([st.line_ids for st in bank_st_record]))
+        self.assertTrue(all(st.line_ids for st in bank_st_record))
         self.assertEqual(bank_st_record[0].line_ids.mapped("sequence"), [1, 2, 3])

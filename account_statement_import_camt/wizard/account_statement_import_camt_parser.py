@@ -340,9 +340,9 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             yield transaction
             return
         transaction_base = transaction
-        for node in details_nodes:
+        for details_node in details_nodes:
             transaction = transaction_base.copy()
-            self.parse_transaction_details(ns, node, transaction)
+            self.parse_transaction_details(ns, details_node, transaction)
             self.generate_narration(transaction)
             yield transaction
 
@@ -410,9 +410,7 @@ class AccountStatementImportCamtParser(models.AbstractModel):
         result["transactions"] = transactions
         result["date"] = None
         if transactions:
-            result["date"] = sorted(
-                transactions, key=lambda x: x["date"], reverse=True
-            )[0]["date"]
+            result["date"] = max(t["date"] for t in transactions)
         return result
 
     def check_version(self, ns, root):
