@@ -11,11 +11,10 @@
             ref="account_statement_import_online.online_bank_statement_provider_form"
         />
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='main']" position="after">
+            <xpath expr="//group[@name='main']" position="inside">
                 <group
                     name="stripe"
-                    string="Stripe configuration"
-                    invisible="service != 'stripe'"
+                    attrs="{'invisible': [('service', '!=', 'stripe')]}"
                 >
                     <field
                         name="api_base"

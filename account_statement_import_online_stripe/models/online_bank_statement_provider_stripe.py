@@ -131,7 +131,7 @@ class OnlineBankStatementProviderStripe(models.Model):
 def safe_format(template, kwargs):
     template = template or ""
 
-    def sub(m: re.Match):
+    def sub(m):
         val = kwargs
         for k in m.group(1).split("."):
             try:

@@ -1,10 +1,10 @@
 from datetime import datetime
 from unittest.mock import patch
 
-from odoo.addons.base.tests.common import BaseCommon
+from odoo.tests.common import SavepointCase
 
 
-class TestOnlineBankStatementProviderStripe(BaseCommon):
+class TestOnlineBankStatementProviderStripe(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -65,7 +65,9 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
             "has_more": False,
         }
         with patch(
-            "odoo.addons.account_statement_import_online_stripe.models.online_bank_statement_provider_stripe.OnlineBankStatementProviderStripe._stripe_api_get_all",
+            "odoo.addons.account_statement_import_online_stripe.models"
+            ".online_bank_statement_provider_stripe"
+            ".OnlineBankStatementProviderStripe._stripe_api_get_all",
             return_value=mock_stripe_data["data"],
         ) as mock_get_all:
             date_since = datetime(2023, 3, 15)
