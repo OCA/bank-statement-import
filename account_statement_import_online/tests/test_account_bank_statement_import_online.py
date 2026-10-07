@@ -107,6 +107,50 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.provider.with_context(step={"hours": 8})._scheduled_pull()
         self._getExpectedStatements(1)
 
+    @freeze_time("2026-08-29 12:00:00")
+    def test_pull_scheduled_lookback(self):
+        """lookback_days moves date_since back, so an already-pulled window is
+        re-covered. Without it a transaction the bank publishes after its own
+        window was pulled is skipped permanently."""
+        now = fields.Datetime.now()
+        self.provider.statement_creation_mode = "daily"
+        self.provider.last_successful_run = now - relativedelta(days=1)
+        self.provider.next_run = now
+
+        self.provider.lookback_days = 0
+        self.provider.with_context(step={"hours": 24})._scheduled_pull()
+        without_lookback = self.AccountBankStatementLine.search_count(
+            [("journal_id", "=", self.journal.id)]
+        )
+
+        # Same pull, now reaching three days further back. The extra lines can
+        # only come from windows the previous run did not cover.
+        self.provider.last_successful_run = now - relativedelta(days=1)
+        self.provider.next_run = now
+        self.provider.lookback_days = 3
+        self.provider.with_context(step={"hours": 24})._scheduled_pull()
+        with_lookback = self.AccountBankStatementLine.search_count(
+            [("journal_id", "=", self.journal.id)]
+        )
+        self.assertGreater(
+            with_lookback,
+            without_lookback,
+            "lookback_days did not widen the scheduled pull window",
+        )
+
+        # And it stays idempotent: a third identical run adds nothing, because
+        # unique_import_id already covers everything in the widened window.
+        self.provider.last_successful_run = now - relativedelta(days=1)
+        self.provider.next_run = now
+        self.provider.with_context(step={"hours": 24})._scheduled_pull()
+        self.assertEqual(
+            self.AccountBankStatementLine.search_count(
+                [("journal_id", "=", self.journal.id)]
+            ),
+            with_lookback,
+            "re-pulling a window already imported created duplicates",
+        )
+
     def test_pull_skip_duplicates_by_unique_import_id(self):
         self.provider.statement_creation_mode = "weekly"
         # Get for two weeks of data.
