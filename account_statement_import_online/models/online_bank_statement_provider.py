@@ -73,6 +73,21 @@ class OnlineBankStatementProvider(models.Model):
         compute="_compute_update_schedule",
     )
     last_successful_run = fields.Datetime(string="Last successful pull")
+    lookback_days = fields.Integer(
+        string="Lookback days",
+        default=0,
+        help=(
+            "Re-pull this many days before the last successful pull.\n"
+            "Some banks publish a transaction only after the window covering"
+            " its date has already been pulled -- an ACH that settles several"
+            " days after it was initiated, for example. The scheduled pull"
+            " never looks back, so such a transaction is skipped permanently"
+            " and the balance silently diverges from the bank's.\n"
+            "Duplicates are not a concern: lines are matched on"
+            " unique_import_id, so re-pulling a window already imported adds"
+            " nothing. Leave at 0 to keep the previous behaviour."
+        ),
+    )
     next_run = fields.Datetime(
         string="Next scheduled pull",
         default=fields.Datetime.now,
@@ -505,6 +520,8 @@ class OnlineBankStatementProvider(models.Model):
                     if provider.last_successful_run
                     else (provider.next_run - provider._get_next_run_period())
                 )
+                if provider.lookback_days:
+                    date_since -= relativedelta(days=provider.lookback_days)
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
         _logger.info(self.env._("Scheduled pull of online bank statements complete."))
