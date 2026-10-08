@@ -4,7 +4,7 @@
 {
     "name": "Account Bank Statement Cascade Delete",
     "summary": "Delete bank statement lines along with the bank statement",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "development_status": "Beta",
     "category": "Accounting",
     "website": "https://github.com/OCA/bank-statement-import",
