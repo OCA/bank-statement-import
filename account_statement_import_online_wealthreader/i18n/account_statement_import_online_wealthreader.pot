@@ -1,0 +1,254 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_wealthreader
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-29 14:07+0000\n"
+"PO-Revision-Date: 2026-04-29 14:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_statement_import_online_wealthreader
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_wealthreader.online_bank_statement_provider_form
+msgid "API Key"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,field_description:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_account_code
+msgid "Account Code (IBAN)"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,field_description:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_account_uuid
+msgid "Account UUID"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Account: %s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,field_description:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_bank_password
+msgid "Bank Password"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_wealthreader.online_bank_statement_provider_form
+msgid "Bank Username"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Category: %s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,help:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_date_field
+msgid ""
+"Choose which date to use for each imported transaction line. 'Operation "
+"Date' is when the bank processed the operation; 'Value Date' is when funds "
+"were effectively available."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Concept: %s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Connection successful but no accounts were returned. Please verify the "
+"entity code and credentials."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Connection successful! Found %(count)d account(s):\n"
+"%(accounts)s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Connection test failed: %s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Could not connect to Wealthreader. Please check your internet connection and"
+" try again."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Counterparty: %s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,field_description:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_token
+msgid "Credential Token"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,field_description:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_entity_code
+msgid "Entity Code"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,help:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_account_code
+msgid ""
+"IBAN or account code returned by Wealthreader. Displayed for informational "
+"purposes and used to match the correct account when the entity returns "
+"multiple accounts."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model,name:account_statement_import_online_wealthreader.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,help:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_bank_password
+msgid ""
+"Online banking password used together with the bank username. Only needed "
+"until the credential is tokenized; afterwards the token is used instead."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields.selection,name:account_statement_import_online_wealthreader.selection__online_bank_statement_provider__wealthreader_date_field__operation_date
+msgid "Operation Date"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Operation date: %(op_date)s / Value date: %(val_date)s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Please set the Entity Code in the provider configuration (e.g. 'caixabank', "
+"'santander')."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Please set the Wealthreader API Key in the provider configuration (Secret "
+"Key field)."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_wealthreader.online_bank_statement_provider_form
+msgid "Test Connection"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,help:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_entity_code
+msgid ""
+"The bank entity code as listed at https://www.wealthreader.com/supported-"
+"entities/ (e.g. 'caixabank', 'santander', 'bbva')."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"The request to Wealthreader timed out. The bank may be temporarily slow. "
+"Please try again later."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,help:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_token
+msgid ""
+"Tokenized credential returned by Wealthreader after the first successful "
+"login. Using a token avoids sending raw credentials on every request. Leave "
+"empty on first connection; it will be populated automatically."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,field_description:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_date_field
+msgid "Transaction Date Type"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields,help:account_statement_import_online_wealthreader.field_online_bank_statement_provider__wealthreader_account_uuid
+msgid ""
+"UUID of the specific bank account to import transactions from. When multiple"
+" accounts are returned by the entity, this field identifies which one maps "
+"to this Odoo journal. It is populated automatically after the first "
+"successful synchronization."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Unexpected response from Wealthreader (HTTP %s). Please try again later or "
+"contact support."
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Unknown error"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model:ir.model.fields.selection,name:account_statement_import_online_wealthreader.selection__online_bank_statement_provider__wealthreader_date_field__value_date
+msgid "Value Date"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Wealthreader"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_wealthreader.online_bank_statement_provider_form
+msgid "Wealthreader Configuration"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid "Wealthreader error (code %(code)s): %(message)s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#. odoo-python
+#: code:addons/account_statement_import_online_wealthreader/models/online_bank_statement_provider_wealthreader.py:0
+msgid ""
+"Wealthreader returned multiple accounts and the correct one could not be "
+"determined automatically. Please ensure the journal's bank account number "
+"(IBAN) matches one of the following accounts: %s"
+msgstr ""
+
+#. module: account_statement_import_online_wealthreader
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_wealthreader.online_bank_statement_provider_form
+msgid ""
+"Your online banking username. Required for the first connection; afterwards "
+"the token is used."
+msgstr ""
