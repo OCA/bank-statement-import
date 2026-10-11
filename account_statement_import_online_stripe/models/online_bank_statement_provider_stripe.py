@@ -3,11 +3,9 @@
 import json
 import re
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.error import HTTPError
 from urllib.parse import urlencode
-
-import pytz
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -51,9 +49,9 @@ class OnlineBankStatementProviderStripe(models.Model):
             )  # pragma: no cover
         currency = self.currency_id or self.company_id.currency_id
         if date_since.tzinfo:
-            date_since = date_since.astimezone(pytz.utc).replace(tzinfo=None)
+            date_since = date_since.astimezone(timezone.utc).replace(tzinfo=None)
         if date_until.tzinfo:
-            date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
+            date_until = date_until.astimezone(timezone.utc).replace(tzinfo=None)
         date_since = int(date_since.timestamp())
         date_until = int(date_until.timestamp())
         params = [

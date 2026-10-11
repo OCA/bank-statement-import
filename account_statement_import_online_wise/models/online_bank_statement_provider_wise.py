@@ -8,11 +8,11 @@ import logging
 import urllib.parse
 import urllib.request
 from base64 import b64encode
+from datetime import timezone
 from decimal import Decimal
 from urllib.error import HTTPError
 
 import dateutil.parser
-import pytz
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
@@ -89,9 +89,9 @@ class OnlineBankStatementProviderWise(models.Model):
         currency = (self.currency_id or self.company_id.currency_id).name
 
         if date_since.tzinfo:
-            date_since = date_since.astimezone(pytz.utc).replace(tzinfo=None)
+            date_since = date_since.astimezone(timezone.utc).replace(tzinfo=None)
         if date_until.tzinfo:
-            date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
+            date_until = date_until.astimezone(timezone.utc).replace(tzinfo=None)
 
         # Get corresponding balance by currency
         url = api_base + f"/v1/borderless-accounts?profileId={self.origin}"

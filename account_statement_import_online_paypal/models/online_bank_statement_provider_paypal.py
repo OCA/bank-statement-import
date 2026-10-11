@@ -6,13 +6,12 @@ import itertools
 import json
 import urllib.request
 from base64 import b64encode
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 
 import dateutil.parser
-import pytz
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, models
@@ -210,9 +209,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
         currency = (self.currency_id or self.company_id.currency_id).name
 
         if date_since.tzinfo:
-            date_since = date_since.astimezone(pytz.utc).replace(tzinfo=None)
+            date_since = date_since.astimezone(timezone.utc).replace(tzinfo=None)
         if date_until.tzinfo:
-            date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
+            date_until = date_until.astimezone(timezone.utc).replace(tzinfo=None)
 
         if date_since < datetime.utcnow() - relativedelta(years=3):
             raise UserError(
@@ -287,7 +286,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
     def _paypal_preparse_transaction(self, transaction):
         date = (
             dateutil.parser.parse(self._paypal_get_transaction_date(transaction))
-            .astimezone(pytz.utc)
+            .astimezone(timezone.utc)
             .replace(tzinfo=None)
         )
         transaction["transaction_info"]["transaction_updated_date"] = date
