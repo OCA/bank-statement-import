@@ -7,10 +7,39 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 try:
-    from ofxparse import OfxParser
+    from ofxparse import OfxParser, OfxParserException
+
+    OriginalOfxParser = OfxParser
+
 except ImportError:
     _logger.debug("ofxparse not found.")
     OfxParser = None
+    OfxParserClass = object
+
+
+class PatchedOfxParser(OriginalOfxParser):
+    """This class monkey-patches the ofxparse library:
+    -
+    """
+
+    @classmethod
+    def parseBalance(
+        cls, statement, stmt_ofx, bal_tag_name, bal_attr, bal_date_attr, bal_type_string
+    ):  # pylint: disable=W8110
+        try:
+            super().parseBalance(
+                statement,
+                stmt_ofx,
+                bal_tag_name,
+                bal_attr,
+                bal_date_attr,
+                bal_type_string,
+            )
+        except OfxParserException:
+            _logger.warning(
+                f"Empty balance ('ledgerbal/balamt')."
+                f" 'statement.{bal_attr}' will be empty."
+            )
 
 
 class AccountStatementImport(models.TransientModel):
@@ -20,11 +49,7 @@ class AccountStatementImport(models.TransientModel):
     def _check_ofx(self, data_file):
         if not OfxParser:
             return False
-        try:
-            ofx = OfxParser.parse(io.BytesIO(data_file))
-        except Exception as e:
-            _logger.debug(e)
-            return False
+        ofx = PatchedOfxParser.parse(io.BytesIO(data_file))
         return ofx
 
     @api.model
@@ -65,13 +90,26 @@ class AccountStatementImport(models.TransientModel):
                     if vals:
                         transactions.append(vals)
                         total_amt += vals["amount"]
-                balance = float(account.statement.balance)
+
                 vals_bank_statement = {
                     "name": account.number,
                     "transactions": transactions,
-                    "balance_start": balance - total_amt,
-                    "balance_end_real": balance,
                 }
+                if hasattr(account.statement, "balance"):
+                    balance = account.statement.balance
+                    vals_bank_statement.update(
+                        {
+                            "balance_start": balance - total_amt,
+                            "balance_end_real": balance,
+                        }
+                    )
+                else:
+                    vals_bank_statement.update(
+                        {
+                            "balance_start": 0.0,
+                            "balance_end_real": 0.0,
+                        }
+                    )
                 result.append(
                     (account.statement.currency, account.number, [vals_bank_statement])
                 )
