@@ -10,7 +10,8 @@ This module has several additionnal feature:
 - support multi-account bank statement files,
 - attach the file to the bank statement (to facilitate the diagnostic in
   case of problem),
-- improved error messages.
+- improved error messages,
+- automatic partner matching based on the partner name provided in the statement file.
 
 This module only provides the technical framework for the import of
 statement files. You must also install the format-specific modules to
