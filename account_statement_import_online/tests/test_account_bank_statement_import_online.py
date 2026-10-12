@@ -93,6 +93,35 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.provider.with_context(step={"hours": 8})._scheduled_pull()
         self._getExpectedStatements(1)
 
+    def test_scheduled_pull_has_no_default_lookback(self):
+        date_since = self.now - relativedelta(hours=1)
+        self.assertFalse(self.provider._get_scheduled_pull_lookback())
+        self.assertEqual(
+            self.provider._get_scheduled_pull_date_since(date_since), date_since
+        )
+
+    def test_scheduled_pull_lookback(self):
+        now = datetime(2026, 12, 10, 12)
+        recent_date_since = now - relativedelta(hours=1)
+        old_date_since = now - relativedelta(days=30)
+
+        with (
+            mock.patch.object(
+                type(self.provider),
+                "_get_scheduled_pull_lookback",
+                return_value=relativedelta(days=14),
+            ),
+            mock.patch.object(fields.Datetime, "now", return_value=now),
+        ):
+            self.assertEqual(
+                self.provider._get_scheduled_pull_date_since(recent_date_since),
+                now - relativedelta(days=14),
+            )
+            self.assertEqual(
+                self.provider._get_scheduled_pull_date_since(old_date_since),
+                old_date_since,
+            )
+
     def test_pull_skip_duplicates_by_unique_import_id(self):
         self.provider.statement_creation_mode = "weekly"
         # Get for two weeks of data.
