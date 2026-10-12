@@ -203,3 +203,20 @@ class TestImport(TransactionCase):
 
         self.assertTrue(all([st.line_ids for st in bank_st_record]))
         self.assertEqual(bank_st_record[0].line_ids.mapped("sequence"), [1, 2, 3])
+
+    def test_merged_file_import(self):
+        """Test import of a merged xml file (typical BNP France file)"""
+        testfile = file_path(
+            "account_statement_import_camt/tests/samples/test-camt053-merged"
+        )
+        with open(testfile, "rb") as datafile:
+            camt_file = base64.b64encode(datafile.read())
+            self.env["account.statement.import"].create(
+                {"statement_filename": "test import", "statement_file": camt_file}
+            ).import_file_button()
+            bank_st_record = self.env["account.bank.statement"].search(
+                [("name", "in", ["1234Test/2", "1234Test/3"])]
+            )
+
+        self.assertTrue(all([st.line_ids for st in bank_st_record]))
+        self.assertEqual(bank_st_record[0].line_ids.mapped("sequence"), [1, 2, 3])
