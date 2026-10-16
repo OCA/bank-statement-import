@@ -280,6 +280,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 if index >= footer_line:
                     continue
                 values = list(row)
+            # Some banks pad the values to a fixed width
+            values = [
+                value.strip() if isinstance(value, str) else value for value in values
+            ]
             if mapping.skip_empty_lines and not any(values):
                 continue
 

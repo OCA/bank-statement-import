@@ -20,6 +20,15 @@ class TestAccountStatementImportSheetFile(Common):
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
+    def test_import_csv_file_padded_values(self):
+        wizard = self._get_import_wizard("fixtures/padded_values.csv")
+        wizard.import_file_button()
+        statement = self.AccountBankStatement.search(self.statement_domain)
+        line = statement.line_ids.filtered(lambda line: line.amount == -33.5)
+        self.assertEqual(line.payment_ref, "Your best supplier on 12/15/2018")
+        self.assertEqual(line.partner_name, "John Doe")
+        self.assertEqual(line.account_number, "123456789")
+
     def test_import_empty_csv_file(self):
         wizard = self._get_import_wizard("fixtures/empty_statement_en.csv")
         with self.assertRaises(UserError):
