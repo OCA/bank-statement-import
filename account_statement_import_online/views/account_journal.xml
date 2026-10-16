@@ -11,7 +11,10 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='bank_statements_source']/.." position="after">
+            <xpath
+                expr="//notebook//field[@name='bank_statements_source']/.."
+                position="after"
+            >
                 <group
                     name="online_bank_statements"
                     string="Online Bank Statements (OCA)"
@@ -31,8 +34,6 @@
                         attrs="{'required': [('bank_statements_source', '=', 'online')]}"
                         class="oe_edit_only"
                         groups="account.group_account_user"
-                        widget="dynamic_dropdown"
-                        values="values_online_bank_statement_provider"
                     />
                     <label
                         for="online_bank_statement_provider_id"
@@ -55,6 +56,7 @@
                         name="%(action_online_bank_statements_pull_wizard)d"
                         attrs="{'invisible': [('online_bank_statement_provider', '=', False)]}"
                         string="Pull Online Bank Statement"
+                        groups="account.group_account_user"
                     />
                 </header>
             </xpath>
