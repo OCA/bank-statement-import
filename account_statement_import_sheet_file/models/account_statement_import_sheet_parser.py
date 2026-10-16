@@ -2,6 +2,7 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # Copyright 2025 Simone Rubino
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import itertools
@@ -280,6 +281,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 if index >= footer_line:
                     continue
                 values = list(row)
+            # Some banks pad the values to a fixed width
+            values = [
+                value.strip() if isinstance(value, str) else value for value in values
+            ]
             if mapping.skip_empty_lines and not any(values):
                 continue
 
