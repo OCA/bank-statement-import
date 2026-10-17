@@ -2,6 +2,7 @@
 # Copyright 2019-2020 Dataplug (https://dataplug.io)
 # Copyright 2022-2023 Therp BV (https://therp.nl)
 # Copyright 2014 Tecnativa - Pedro M. Baeza
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -197,6 +198,7 @@ class OnlineBankStatementProvider(models.Model):
         debug_data = []
         for provider in self:
             provider = provider.with_company(provider.company_id)
+            failed_since = None
             # The statement periods start at midnight in the timezone of the
             # provider, but like date_since and date_until they are passed on
             # in UTC.
@@ -220,6 +222,7 @@ class OnlineBankStatementProvider(models.Model):
                     provider._log_provider_exception(
                         exception, statement_date_since, statement_date_until
                     )
+                    failed_since = statement_date_since
                     break  # Continue with next provider.
                 if debug:
                     debug_data += data
@@ -229,7 +232,7 @@ class OnlineBankStatementProvider(models.Model):
                     )
                 statement_date_since = statement_date_until
             if is_scheduled:
-                provider._schedule_next_run()
+                provider._schedule_next_run(failed_since=failed_since)
         return debug_data
 
     def _log_provider_exception(
@@ -442,9 +445,17 @@ class OnlineBankStatementProvider(models.Model):
                 statement_values["balance_end_real"]
             )
 
-    def _schedule_next_run(self):
+    def _schedule_next_run(self, failed_since=None):
+        """Schedule the next run.
+
+        :param failed_since: start of the period which failed to be pulled, the
+            next run pulls again from there instead of skipping it
+        """
         self.ensure_one()
-        self.last_successful_run = self.next_run
+        if not failed_since:
+            self.last_successful_run = self.next_run
+        elif not self.last_successful_run or failed_since > self.last_successful_run:
+            self.last_successful_run = failed_since
         self.next_run += self._get_next_run_period()
 
     def _utc_to_provider_tz(self, date):
