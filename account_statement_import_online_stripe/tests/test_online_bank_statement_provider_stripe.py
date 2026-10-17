@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from unittest.mock import patch
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -27,6 +27,29 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
                 "stripe_fee_note": "Fee Note {source.object}",
             }
         )
+
+    def test_obtain_statement_data_normalizes_aware_dates(self):
+        since = datetime(2026, 1, 14, 23, 15)
+        until = datetime(2026, 1, 15, 0, 45)
+        for offset in (10, -7):
+            with (
+                self.subTest(offset=offset),
+                patch.object(
+                    type(self.provider), "_stripe_api_get_all", return_value=[]
+                ) as get_all,
+            ):
+                zone = timezone(timedelta(hours=offset))
+                data = self.provider._obtain_statement_data(
+                    since.replace(tzinfo=timezone.utc).astimezone(zone),
+                    until.replace(tzinfo=timezone.utc).astimezone(zone),
+                )
+                get_all.assert_called_once()
+                path, params = get_all.call_args.args
+                self.assertEqual(path, "/balance_transactions")
+                params = dict(params)
+                self.assertEqual(params["created[gte]"], int(since.timestamp()))
+                self.assertEqual(params["created[lt]"], int(until.timestamp()))
+                self.assertEqual(data, ([], {}))
 
     def test_obtain_statement_data_success(self):
         mock_stripe_data = {

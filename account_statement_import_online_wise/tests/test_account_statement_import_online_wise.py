@@ -3,10 +3,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from unittest import mock
 from urllib.error import HTTPError
+from urllib.parse import parse_qs, urlsplit
 
 from dateutil.relativedelta import relativedelta
 
@@ -201,6 +202,50 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
         self.assertEqual(len(data[0]), 0)
         self.assertEqual(data[1]["balance_start"], 42.0)
         self.assertEqual(data[1]["balance_end_real"], 42.0)
+
+    def test_pull_normalizes_aware_dates(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "transferwise",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        provider.origin = "1234567891"
+        since = datetime(2026, 1, 14, 23, 15)
+        until = datetime(2026, 1, 16, 0, 45)
+        balance = {"endOfStatementBalance": {"value": 42}, "transactions": []}
+        for offset in (10, -7):
+            with (
+                self.subTest(offset=offset),
+                mock.patch(
+                    _provider_class + "._wise_retrieve",
+                    side_effect=[
+                        [{"id": 42, "balances": [{"currency": "EUR"}]}],
+                        balance,
+                        balance,
+                    ],
+                ) as retrieve,
+            ):
+                zone = timezone(timedelta(hours=offset))
+                data = provider._obtain_statement_data(
+                    since.replace(tzinfo=timezone.utc).astimezone(zone),
+                    until.replace(tzinfo=timezone.utc).astimezone(zone),
+                )
+                self.assertEqual(retrieve.call_count, 3)
+                start = parse_qs(urlsplit(retrieve.call_args_list[1].args[0]).query)
+                interval = parse_qs(urlsplit(retrieve.call_args_list[2].args[0]).query)
+                self.assertEqual(start["intervalStart"], [since.isoformat() + "Z"])
+                self.assertEqual(start["intervalEnd"], [since.isoformat() + "Z"])
+                self.assertEqual(interval["intervalStart"], [since.isoformat() + "Z"])
+                self.assertEqual(interval["intervalEnd"], [until.isoformat() + "Z"])
+                self.assertEqual(
+                    data, ([], {"balance_start": 42, "balance_end_real": 42})
+                )
 
     def test_pull_no_data(self):
         journal = self.AccountJournal.create(
