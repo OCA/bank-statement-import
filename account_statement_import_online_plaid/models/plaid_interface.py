@@ -12,6 +12,7 @@ from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUse
 from plaid.model.products import Products
 from plaid.model.transactions_get_request import TransactionsGetRequest
 from plaid.model.transactions_get_request_options import TransactionsGetRequestOptions
+from urllib3.util import Retry
 
 from odoo import _, models
 from odoo.exceptions import ValidationError
@@ -36,6 +37,7 @@ class PlaidInterface(models.AbstractModel):
                 "secret": secret or "",
             },
         )
+        configuration.retries = Retry.DEFAULT.new(redirect=0, raise_on_redirect=False)
         try:
             return plaid_api.PlaidApi(plaid.ApiClient(configuration))
         except plaid.ApiException as e:

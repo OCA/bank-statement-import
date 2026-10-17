@@ -13,6 +13,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
+from odoo.addons.account_statement_import_online.provider_http import validate_api_url
+
 GOCARDLESS_API = "https://bankaccountdata.gocardless.com/api/v2/"
 REQUESTS_TIMEOUT = 60
 
@@ -81,13 +83,23 @@ class OnlineBankStatementProvider(models.Model):
     ):
         content = {}
         url = url_join(GOCARDLESS_API, endpoint) + "/"
+        try:
+            url = validate_api_url(url, {"bankaccountdata.gocardless.com"})
+        except ValueError as exc:
+            raise UserError(
+                _("GoCardless API URL must use the official GoCardless HTTPS endpoint.")
+            ) from exc
         response = getattr(requests, request_type)(
             url,
             data=data,
             params=params,
             headers=self._gocardless_get_headers(basic=basic_auth),
             timeout=REQUESTS_TIMEOUT,
+            allow_redirects=False,
         )
+        if response.status_code in (301, 302, 303, 307, 308):
+            response.close()
+            raise UserError(_("GoCardless API redirects are not allowed."))
         if response.status_code == 429:  # Rate limit overpassed
             raise UserError(json.loads(response.text)["detail"])
         if response.status_code in [200, 201]:
