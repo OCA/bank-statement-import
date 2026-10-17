@@ -18,9 +18,22 @@ from odoo import api, models
 from odoo.exceptions import UserError
 from odoo.tools import LazyTranslate
 
+from odoo.addons.account_statement_import_online.provider_http import (
+    NoRedirectHandler,
+    validate_api_url,
+)
+
 _lt = LazyTranslate(__name__, default_lang="en_US")
 
 PAYPAL_API_BASE = "https://api.paypal.com"
+PAYPAL_API_HOSTS = frozenset(
+    {
+        "api.paypal.com",
+        "api-m.paypal.com",
+        "api.sandbox.paypal.com",
+        "api-m.sandbox.paypal.com",
+    }
+)
 TRANSACTIONS_SCOPE = "https://uri.paypal.com/services/reporting/search/read"
 EVENT_DESCRIPTIONS = {
     "T0000": _lt("General PayPal-to-PayPal payment"),
@@ -550,6 +563,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     @api.model
     def _paypal_urlopen(self, url, auth, data=None):
+        try:
+            url = validate_api_url(url, PAYPAL_API_HOSTS)
+        except ValueError as exc:
+            raise UserError(
+                self.env._("PayPal API URL must use an official PayPal HTTPS endpoint.")
+            ) from exc
         if not auth:
             raise UserError(self.env._("No authentication specified!"))
         request = urllib.request.Request(url, data=data)
@@ -567,4 +586,11 @@ class OnlineBankStatementProviderPayPal(models.Model):
             request.add_header("Authorization", f"Bearer {auth}")
         else:
             raise UserError(self.env._("Unknown authentication specified!"))
-        return urllib.request.urlopen(request)
+        try:
+            return urllib.request.build_opener(NoRedirectHandler()).open(request)
+        except HTTPError as exc:
+            if exc.code in (301, 302, 303, 307, 308):
+                raise UserError(
+                    self.env._("PayPal API redirects are not allowed.")
+                ) from exc
+            raise
