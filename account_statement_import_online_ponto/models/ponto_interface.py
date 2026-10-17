@@ -12,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.account_statement_import_online.provider_http import validate_api_url
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
 _logger = logging.getLogger(__name__)
@@ -41,6 +42,7 @@ class PontoInterface(models.AbstractModel):
             params={"grant_type": "client_credentials"},
             headers=login_headers,
             timeout=60,
+            allow_redirects=False,
         )
         data = self._get_response_data(response)
         access_token = data.get("access_token", False)
@@ -77,6 +79,7 @@ class PontoInterface(models.AbstractModel):
             params={"limit": 100},
             headers=self._get_request_headers(access_data),
             timeout=60,
+            allow_redirects=False,
         )
         data = self._get_response_data(response)
         ponto_ibans = []
@@ -150,12 +153,17 @@ class PontoInterface(models.AbstractModel):
 
     def _get_request(self, access_data, url, params):
         """Interact with Ponto to get next page of data."""
+        try:
+            url = validate_api_url(url, {"api.myponto.com"})
+        except ValueError as exc:
+            raise UserError(
+                _("Ponto API URL must use the official Ponto HTTPS endpoint.")
+            ) from exc
         headers = self._get_request_headers(access_data)
         _logger.debug(
-            _("GET request to %(url)s with headers %(headers)s and params %(params)s"),
+            _("GET request to %(url)s with params %(params)s"),
             dict(
                 url=url,
-                headers=headers,
                 params=params,
             ),
         )
@@ -164,11 +172,15 @@ class PontoInterface(models.AbstractModel):
             params=params,
             headers=headers,
             timeout=(60, 300),
+            allow_redirects=False,
         )
         return self._get_response_data(response)
 
     def _get_response_data(self, response):
         """Get response data for GET or POST request."""
+        if response.status_code in (301, 302, 303, 307, 308):
+            response.close()
+            raise UserError(_("Ponto API redirects are not allowed."))
         _logger.debug(
             _("HTTP answer code %(response_code)s from Ponto"),
             dict(response_code=response.status_code),

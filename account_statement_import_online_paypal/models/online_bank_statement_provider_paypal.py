@@ -6,22 +6,34 @@ import itertools
 import json
 import urllib.request
 from base64 import b64encode
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 
 import dateutil.parser
-import pytz
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, models
 from odoo.exceptions import UserError
 from odoo.tools import LazyTranslate
 
+from odoo.addons.account_statement_import_online.provider_http import (
+    NoRedirectHandler,
+    validate_api_url,
+)
+
 _lt = LazyTranslate(__name__, default_lang="en_US")
 
 PAYPAL_API_BASE = "https://api.paypal.com"
+PAYPAL_API_HOSTS = frozenset(
+    {
+        "api.paypal.com",
+        "api-m.paypal.com",
+        "api.sandbox.paypal.com",
+        "api-m.sandbox.paypal.com",
+    }
+)
 TRANSACTIONS_SCOPE = "https://uri.paypal.com/services/reporting/search/read"
 EVENT_DESCRIPTIONS = {
     "T0000": _lt("General PayPal-to-PayPal payment"),
@@ -210,9 +222,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
         currency = (self.currency_id or self.company_id.currency_id).name
 
         if date_since.tzinfo:
-            date_since = date_since.astimezone(pytz.utc).replace(tzinfo=None)
+            date_since = date_since.astimezone(timezone.utc).replace(tzinfo=None)
         if date_until.tzinfo:
-            date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
+            date_until = date_until.astimezone(timezone.utc).replace(tzinfo=None)
 
         if date_since < datetime.utcnow() - relativedelta(years=3):
             raise UserError(
@@ -287,7 +299,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
     def _paypal_preparse_transaction(self, transaction):
         date = (
             dateutil.parser.parse(self._paypal_get_transaction_date(transaction))
-            .astimezone(pytz.utc)
+            .astimezone(timezone.utc)
             .replace(tzinfo=None)
         )
         transaction["transaction_info"]["transaction_updated_date"] = date
@@ -551,6 +563,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     @api.model
     def _paypal_urlopen(self, url, auth, data=None):
+        try:
+            url = validate_api_url(url, PAYPAL_API_HOSTS)
+        except ValueError as exc:
+            raise UserError(
+                self.env._("PayPal API URL must use an official PayPal HTTPS endpoint.")
+            ) from exc
         if not auth:
             raise UserError(self.env._("No authentication specified!"))
         request = urllib.request.Request(url, data=data)
@@ -568,4 +586,11 @@ class OnlineBankStatementProviderPayPal(models.Model):
             request.add_header("Authorization", f"Bearer {auth}")
         else:
             raise UserError(self.env._("Unknown authentication specified!"))
-        return urllib.request.urlopen(request)
+        try:
+            return urllib.request.build_opener(NoRedirectHandler()).open(request)
+        except HTTPError as exc:
+            if exc.code in (301, 302, 303, 307, 308):
+                raise UserError(
+                    self.env._("PayPal API redirects are not allowed.")
+                ) from exc
+            raise

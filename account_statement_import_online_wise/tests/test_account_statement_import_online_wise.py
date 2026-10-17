@@ -3,10 +3,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from unittest import mock
 from urllib.error import HTTPError
+from urllib.parse import parse_qs, urlsplit
 
 from dateutil.relativedelta import relativedelta
 
@@ -202,6 +203,50 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
         self.assertEqual(data[1]["balance_start"], 42.0)
         self.assertEqual(data[1]["balance_end_real"], 42.0)
 
+    def test_pull_normalizes_aware_dates(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "transferwise",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        provider.origin = "1234567891"
+        since = datetime(2026, 1, 14, 23, 15)
+        until = datetime(2026, 1, 16, 0, 45)
+        balance = {"endOfStatementBalance": {"value": 42}, "transactions": []}
+        for offset in (10, -7):
+            with (
+                self.subTest(offset=offset),
+                mock.patch(
+                    _provider_class + "._wise_retrieve",
+                    side_effect=[
+                        [{"id": 42, "balances": [{"currency": "EUR"}]}],
+                        balance,
+                        balance,
+                    ],
+                ) as retrieve,
+            ):
+                zone = timezone(timedelta(hours=offset))
+                data = provider._obtain_statement_data(
+                    since.replace(tzinfo=timezone.utc).astimezone(zone),
+                    until.replace(tzinfo=timezone.utc).astimezone(zone),
+                )
+                self.assertEqual(retrieve.call_count, 3)
+                start = parse_qs(urlsplit(retrieve.call_args_list[1].args[0]).query)
+                interval = parse_qs(urlsplit(retrieve.call_args_list[2].args[0]).query)
+                self.assertEqual(start["intervalStart"], [since.isoformat() + "Z"])
+                self.assertEqual(start["intervalEnd"], [since.isoformat() + "Z"])
+                self.assertEqual(interval["intervalStart"], [since.isoformat() + "Z"])
+                self.assertEqual(interval["intervalEnd"], [until.isoformat() + "Z"])
+                self.assertEqual(
+                    data, ([], {"balance_start": 42, "balance_end_real": 42})
+                )
+
     def test_pull_no_data(self):
         journal = self.AccountJournal.create(
             {
@@ -245,36 +290,12 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
         provider.origin = "1234567891"
         provider.password = "API_KEY"
 
+        provider.button_wise_generate_key()
+        generated_key = provider.certificate_private_key
+        provider.certificate_private_key = False
+        provider.certificate_public_key = False
         with Form(provider) as provider_form:
-            provider_form.certificate_private_key = """
------BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAxC7aYWigCwPIB4mfyLpsALYPnqDm3/IC8I/3GdEwfK8eqXoF
-sU1BHnVytFycBDEObmJ2Acpxe8Dk61FnbWPrrl6rXVnXfIRqfFl94TvgwFsuwG7u
-8crncD6gPfe1QGkEykHcfBURr74OcSE8590ngNJcKMGvac0cuyZ2/NEszTw7EFJg
-obpMWjp0m5ItgZ/UNsPLR/D4gFE9vZz7a4+FYQMa9Wbv+xaVxUS6z9rQCJfUQx7N
-iih4etIvAafbfAnX6rFv8PwPzz+XvexPWWJxnbS4iV1LN2atrPDxqw73g5hc3W88
-a0V2AVubtxhw9L2VK1VmRb/gnqsZpRXhDPSUIwIDAQABAoIBAQCMvnRLV80hudfC
-mJh6YEvlgrfX/OVFmpFDVnVXHz2i5dugiHsXBS6HlIjzHlGLrEoHJTo19K/PscZJ
-kEAcOYg2s5JLSY4PtcvTZDyr3tJSDdiPk8Z2zzOU0kkRy+lLyUv3cqKknlTu+PHR
-daAFVCLoB4K4dqPKyq0nEuRgYgy7O42SPBY5DHgWYBKqkYGlTu+ImwpDD9unbv3e
-mwvdcBCp9hAlYAArc1Ip/6aUkZdKxJYgVhovruaH309yuOmBfAEgguhsy3vR18t5
-IZXbAF3C6iXCQXi8l+S1NUu8XWPLEavldb+ZA2hI2L+NPSBVIYqhI4jDiI7lfs1c
-HE8BRsRpAoGBAO6BnK3qD8sRvg6JsrBhppoIGsudOdpZ/KVp9ZpYCBJNJmfrkqLR
-bWx1KF2UjAoYUmaKDTS2GP8JQd7X2n4T5LX8q+7iG9/wzdSWZYZuBOnjvWlNyJu4
-OiUKX4aEgdvZHiuEIin5xTP98/c5LTZXwM3bq8IrOXEz8LBLLPrTCGRvAoGBANKS
-i3cn1jtVirJWbvhSIjjqhpfuZN0361FB6j1Aho+7z0WVd4NQjPQqA6cAqnWoa/kj
-cX0X8Ncu5eHqf6CuW+HsQda3yp3bvCXi1Yc2nKBTHnWtMm721O4ZW6rbaALzBZYW
-qeJr0m9pNlfCAL0INTcy7IVAtqcCJ/7CEN6Hjm2NAoGAIGSgKArDLFxziLvw9f29
-R+xT31WyVtKj+r9iaR0Ns5ag4bpgBxcUmodq/RLA1lopTt3vHzqgOHtEZATDGx6O
-kJ0JqP8ys/6bpgTrMw/cQPv6bMPwvB2QYBmBkd6LWJWrgFOI5FSVEROrv+cXGetf
-N1ZfhJakTZi1VuxO5p4k5KcCgYAZS9OHR/jbfeZAkFOabzt/POVYYSIq1SnmxBVg
-sFy57aTzxgXqd4XHWzi/GjxgEBCQiGp8zaB4KUEih6o3YlrVZC1wnvmvRxNuNbbT
-HINqWzHgjyLs46gmxlMVzm/LUuiL5EMaWTuZeLk3h63RB6hk7jAtvd1zaLXnS+b8
-5Kn+jQKBgQCDeMO6rvB2rbfqSbHvPPuTru1sPIsJBKm1YZpXTFI+VMjwtk7+meYb
-UQnfZ1t5rjp9q4LEcRYuSa+PfifIkM6p+wMHVQhtltUCzXWWRYkLkmQrBWKu+qiP
-edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
------END RSA PRIVATE KEY-----
-            """
+            provider_form.certificate_private_key = generated_key
 
         self.assertTrue(provider.certificate_public_key)
 
@@ -296,7 +317,7 @@ edF6byMgXSzgOWYuRPXwmHpBQV0GiexQUAxVyUzaVWfil69LaFfXaw==
         provider.button_wise_generate_key()
 
         with mock.patch(
-            "urllib.request.urlopen",
+            "urllib.request.OpenerDirector.open",
             side_effect=[
                 self.response_balance,
                 self.response_ott,

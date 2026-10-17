@@ -4,7 +4,9 @@ import datetime
 from unittest.mock import MagicMock, patch
 
 import plaid
+import urllib3
 from dateutil.relativedelta import relativedelta
+from urllib3.util import Retry
 
 from odoo.exceptions import ValidationError
 from odoo.tests import common
@@ -14,6 +16,83 @@ from .test_account_statement_import_online_plaid import TRANSACTIONS
 
 class TestPlaidInterface(common.TransactionCase):
     post_install = True
+
+    def test_http_rejects_sdk_redirects(self):
+        interface = self.env["plaid.interface"]
+        for host in ("sandbox", "production"):
+            client = interface._client("dummy-client", "dummy-secret", host)
+            try:
+                for status in (301, 302, 303, 307, 308):
+                    for target in (
+                        "http://127.0.0.1/private",
+                        "https://untrusted.invalid/",
+                    ):
+                        response = urllib3.HTTPResponse(
+                            status=status, headers={"Location": target}, body=b"{}"
+                        )
+                        # urllib3 carries the connection's retry policy on the response.
+                        response.retries = client.api_client.configuration.retries
+                        with (
+                            self.subTest(host=host, status=status, target=target),
+                            patch(
+                                "urllib3.connectionpool.HTTPSConnectionPool.urlopen",
+                                side_effect=[
+                                    response,
+                                    AssertionError("Redirect followed"),
+                                ],
+                            ) as https,
+                            patch(
+                                "urllib3.connectionpool.HTTPConnectionPool.urlopen"
+                            ) as http,
+                            self.assertRaisesRegex(
+                                ValidationError, "Error getting access token"
+                            ),
+                        ):
+                            try:
+                                interface._login(client, "dummy-public-token")
+                            finally:
+                                https.assert_called_once()
+                                http.assert_not_called()
+            finally:
+                client.api_client.close()
+
+    def test_http_preserves_hosts_credentials_and_retries(self):
+        interface = self.env["plaid.interface"]
+        for host, hostname in (
+            ("sandbox", "sandbox.plaid.com"),
+            ("production", "production.plaid.com"),
+        ):
+            client = interface._client("dummy-client", "dummy-secret", host)
+            try:
+                response = urllib3.HTTPResponse(
+                    status=200,
+                    body=b'{"access_token":"dummy-access","item_id":"dummy-item","request_id":"dummy-request"}',
+                )
+                with patch(
+                    "urllib3.connectionpool.HTTPSConnectionPool.urlopen",
+                    return_value=response,
+                ) as transport:
+                    self.assertEqual(
+                        interface._login(client, "dummy-public-token"), "dummy-access"
+                    )
+                self.assertEqual(
+                    client.api_client.configuration.host, f"https://{hostname}"
+                )
+                transport.assert_called_once()
+                request_headers = transport.call_args.kwargs["headers"]
+                self.assertEqual(request_headers["PLAID-CLIENT-ID"], "dummy-client")
+                self.assertEqual(request_headers["PLAID-SECRET"], "dummy-secret")
+                retries = (
+                    client.api_client.rest_client.pool_manager.connection_pool_kw.get(
+                        "retries", Retry.DEFAULT
+                    )
+                )
+                self.assertEqual(retries.total, Retry.DEFAULT.total)
+                self.assertEqual(retries.connect, Retry.DEFAULT.connect)
+                self.assertEqual(retries.read, Retry.DEFAULT.read)
+                self.assertIsNone(client.api_client.configuration.retries)
+            finally:
+                client.api_client.close()
 
     def test_get_host(self):
         """Test getting Plaid host."""

@@ -5,12 +5,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 from html import escape
 
+import pytz
 from dateutil.relativedelta import MO, relativedelta
-from pytz import timezone, utc
 
 from odoo import _, api, fields, models
 
@@ -352,7 +352,7 @@ class OnlineBankStatementProvider(models.Model):
     ):
         """Get lines from line data, but only for the right date."""
         AccountBankStatementLine = self.env["account.bank.statement.line"]
-        provider_tz = timezone(self.tz) if self.tz else utc
+        provider_tz = pytz.timezone(self.tz) if self.tz else timezone.utc
         journal = self.journal_id
         speeddict = journal._statement_line_import_speeddict()
         filtered_lines = []
@@ -364,8 +364,8 @@ class OnlineBankStatementProvider(models.Model):
             if not isinstance(date, datetime):
                 date = fields.Datetime.from_string(date)
             if date.tzinfo is None:
-                date = date.replace(tzinfo=utc)
-            date = date.astimezone(utc).replace(tzinfo=None)
+                date = date.replace(tzinfo=timezone.utc)
+            date = date.astimezone(timezone.utc).replace(tzinfo=None)
             if date < statement_date_since:
                 if "balance_start" in statement_values:
                     statement_values["balance_start"] = Decimal(
@@ -380,7 +380,7 @@ class OnlineBankStatementProvider(models.Model):
                     ) - Decimal(line_values["amount"])
                 lines_after_until += 1
                 continue
-            date = date.replace(tzinfo=utc)
+            date = date.replace(tzinfo=timezone.utc)
             date = date.astimezone(provider_tz).replace(tzinfo=None)
             line_values["date"] = date
             journal._statement_line_import_update_unique_import_id(

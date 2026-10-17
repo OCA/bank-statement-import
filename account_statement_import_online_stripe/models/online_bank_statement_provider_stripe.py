@@ -3,16 +3,25 @@
 import json
 import re
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.error import HTTPError
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 
-import pytz
-
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 STRIPE_API_BASE = "https://api.stripe.com/v1"
+
+
+class StripeNoRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def http_error_302(self, req, fp, code, msg, headers):
+        fp.close()
+        raise HTTPError(req.full_url, code, msg, headers, None)
+
+    http_error_301 = http_error_302
+    http_error_303 = http_error_302
+    http_error_307 = http_error_302
+    http_error_308 = http_error_302
 
 
 class OnlineBankStatementProviderStripe(models.Model):
@@ -50,10 +59,10 @@ class OnlineBankStatementProviderStripe(models.Model):
                 date_until,
             )  # pragma: no cover
         currency = self.currency_id or self.company_id.currency_id
-        if date_since.tzinfo:
-            date_since = date_since.astimezone(pytz.utc).replace(tzinfo=None)
-        if date_until.tzinfo:
-            date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
+        if date_since.tzinfo is None:
+            date_since = date_since.replace(tzinfo=timezone.utc)
+        if date_until.tzinfo is None:
+            date_until = date_until.replace(tzinfo=timezone.utc)
         date_since = int(date_since.timestamp())
         date_until = int(date_until.timestamp())
         params = [
@@ -69,13 +78,16 @@ class OnlineBankStatementProviderStripe(models.Model):
         for tx in self._stripe_api_get_all("/balance_transactions", params):
             if tx["currency"].lower() != currency.name.lower():
                 continue
+            tx_date = datetime.fromtimestamp(tx["created"], tz=timezone.utc).replace(
+                tzinfo=None
+            )
             lines.append(
                 {
                     "ref": safe_format(self.stripe_reference, tx),
                     "payment_ref": safe_format(self.stripe_label, tx),
                     "narration": safe_format(self.stripe_note, tx),
                     "amount": float(tx["amount"]) / (10**currency.decimal_places),
-                    "date": datetime.fromtimestamp(tx["created"]),
+                    "date": tx_date,
                     "unique_import_id": tx["id"],
                     "raw_data": json.dumps(tx),
                 }
@@ -87,7 +99,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                         "payment_ref": safe_format(self.stripe_fee_label, tx),
                         "narration": safe_format(self.stripe_fee_note, tx),
                         "amount": float(-tx["fee"]) / (10**currency.decimal_places),
-                        "date": datetime.fromtimestamp(tx["created"]),
+                        "date": tx_date,
                         "unique_import_id": tx["id"] + "_fee",
                         "raw_data": json.dumps(tx),
                     }
@@ -112,18 +124,38 @@ class OnlineBankStatementProviderStripe(models.Model):
 
     @api.model
     def _stripe_api_get(self, path, params=None, data=None):
+        if self.api_base:
+            try:
+                base = urlsplit(self.api_base)
+                valid_base = (
+                    base.scheme == "https"
+                    and base.hostname == "api.stripe.com"
+                    and base.port in (None, 443)
+                    and base.username is None
+                    and base.password is None
+                    and base.path.rstrip("/") == "/v1"
+                    and not base.query
+                    and not base.fragment
+                )
+            except ValueError:
+                valid_base = False
+            if not valid_base:
+                raise UserError(_("Stripe API base must be https://api.stripe.com/v1."))
         if params is None:
             params = {}
         try:
             request = urllib.request.Request(
-                (self.api_base or STRIPE_API_BASE) + path + "?" + urlencode(params),
+                STRIPE_API_BASE + path + "?" + urlencode(params),
                 data=data,
             )
             request.add_header("Authorization", f"Bearer {self.password}")
-            response = urllib.request.urlopen(request)
-            content = response.read().decode("utf-8")
+            opener = urllib.request.build_opener(StripeNoRedirectHandler())
+            with opener.open(request) as response:
+                content = response.read().decode("utf-8")
             return json.loads(content)
         except HTTPError as e:
+            if e.code in (301, 302, 303, 307, 308):
+                raise UserError(_("Stripe API redirects are not allowed.")) from e
             content = json.loads(e.read().decode("utf-8"))
             raise UserError(f"Stripe API call failed: {path}: {content}") from e
 

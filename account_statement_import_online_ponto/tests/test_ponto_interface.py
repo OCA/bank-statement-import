@@ -2,17 +2,200 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import json
 from unittest.mock import MagicMock, patch
+from urllib.parse import parse_qs, urlsplit
 
+import requests
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import common
+
+from odoo.addons.account_statement_import_online.tests.http_common import (
+    mock_http_responses,
+)
 
 from .test_account_statement_import_online_ponto import FOUR_TRANSACTIONS
 
 
 class TestPontoInterface(common.TransactionCase):
     post_install = True
+
+    def test_http_rejects_untrusted_transaction_urls(self):
+        interface = self.env["ponto.interface"]
+        urls = [
+            "http://127.0.0.1",
+            "http://2130706433",
+            "http://0x7f000001",
+            "http://[::1]",
+            "http://169.254.169.254/latest",
+            "http://api.myponto.com",
+            "//api.myponto.com",
+            "https://api.myponto.com.evil.invalid",
+            "https://api.myponto.com@evil.invalid",
+            "https://evil.invalid@api.myponto.com",
+            "https://api.myponto.com:444",
+            "https://api.myponto.com:invalid",
+            "https://api.myponto.com:65536",
+            "https://api.myponto.com:0",
+            "https://api.myponto.com.",
+            "https://%61pi.myponto.com",
+            "https://api.myponto.com%00.evil.invalid",
+            "https://api.myponto.com%2e.evil.invalid",
+            "https://api.myponto.com\u3002evil.invalid",
+            "https://api.myponto.com\uff0f@127.0.0.1",
+            "https://api.myponto.com\\@127.0.0.1",
+            "https://api.myponto.com:443@127.0.0.1",
+            "https://127.0.0.1@api.myponto.com:443",
+            "https://[broken",
+            "https://api.myponto.com#fragment",
+            "https://api.myponto.com\n.evil.invalid",
+            "file:///etc",
+            "gopher://localhost",
+        ]
+        urls.extend(
+            f"https://api.myponto.com/{chr(code)}transactions"
+            for code in (*range(33), 127)
+        )
+        for url in urls:
+            with (
+                self.subTest(url=url),
+                patch.object(type(interface), "_get_request_headers") as headers,
+                patch("requests.get") as request,
+                self.assertRaisesRegex(UserError, "official Ponto HTTPS"),
+            ):
+                try:
+                    interface._get_request({}, url, {})
+                finally:
+                    headers.assert_not_called()
+                    request.assert_not_called()
+
+    def test_http_keeps_path_and_cursor_data_on_official_origin(self):
+        interface = self.env["ponto.interface"]
+        for authority in ("api.myponto.com", "API.MYPONTO.COM:443"):
+            for path in (
+                "/accounts/dummy/transactions",
+                "//127.0.0.1/latest",
+                "/%2f%2f127.0.0.1/latest",
+                "/\\@127.0.0.1/latest",
+                "/%0d%0aHost:%20127.0.0.1/latest",
+            ):
+                for cursor in (
+                    "//127.0.0.1/latest",
+                    "https://169.254.169.254/latest",
+                    "@untrusted.invalid",
+                    "\r\nHost: untrusted.invalid",
+                    "previous-id?after=other&limit=1#fragment",
+                ):
+                    response = requests.Response()
+                    response.status_code = 200
+                    response._content = b'{"data":[]}'
+                    with (
+                        self.subTest(authority=authority, path=path, cursor=cursor),
+                        patch.object(
+                            type(interface),
+                            "_get_request_headers",
+                            return_value={"Authorization": "Bearer dummy-token"},
+                        ),
+                        mock_http_responses(response) as transport,
+                    ):
+                        self.assertEqual(
+                            interface._get_request(
+                                {}, f"https://{authority}{path}", {"after": cursor}
+                            ),
+                            {"data": []},
+                        )
+                    transport.assert_called_once()
+                    request = transport.call_args.args[0]
+                    destination = urlsplit(request.url)
+                    self.assertEqual(destination.scheme, "https")
+                    self.assertEqual(destination.netloc, "api.myponto.com")
+                    self.assertEqual(parse_qs(destination.query)["after"], [cursor])
+                    self.assertEqual(
+                        request.headers["Authorization"], "Bearer dummy-token"
+                    )
+
+    def test_http_rejects_redirects_on_every_request_path(self):
+        interface = self.env["ponto.interface"]
+        for status in (301, 302, 303, 307, 308):
+            for target in ("http://127.0.0.1/private", "https://untrusted.invalid/"):
+                for path in ("login", "accounts", "transactions"):
+                    response = requests.Response()
+                    response.status_code = status
+                    response.headers["Location"] = target
+                    response._content = b"{}"
+                    response.request = requests.Request(
+                        "POST" if path == "login" else "GET", "https://api.myponto.com"
+                    ).prepare()
+                    response.url = response.request.url
+                    with (
+                        self.subTest(status=status, target=target, path=path),
+                        patch.object(
+                            type(interface),
+                            "_get_request_headers",
+                            return_value={"Authorization": "Bearer dummy-token"},
+                        ),
+                        mock_http_responses(
+                            response, AssertionError("Redirect followed")
+                        ) as transport,
+                        self.assertRaisesRegex(UserError, "redirects are not allowed"),
+                    ):
+                        try:
+                            if path == "login":
+                                interface._login("dummy-user", "dummy-secret")
+                            elif path == "accounts":
+                                interface._set_access_account({}, "DUMMY-ACCOUNT")
+                            else:
+                                interface._get_request(
+                                    {},
+                                    "https://api.myponto.com/accounts/dummy/transactions",
+                                    {},
+                                )
+                        finally:
+                            transport.assert_called_once()
+
+    def test_http_preserves_token_refresh_pagination_and_safe_url_forms(self):
+        interface = self.env["ponto.interface"]
+        for authority in ("api.myponto.com", "API.MYPONTO.COM:443"):
+            access = self._get_access_dict()
+            access["token_expiration"] = fields.Datetime.now() - relativedelta(
+                seconds=1
+            )
+            token_response = requests.Response()
+            token_response.status_code = 200
+            token_response._content = (
+                b'{"access_token":"refreshed-dummy","expires_in":1800}'
+            )
+            transaction_response = requests.Response()
+            transaction_response.status_code = 200
+            transaction_response._content = b'{"data":[]}'
+            with (
+                self.subTest(authority=authority),
+                mock_http_responses(token_response, transaction_response) as transport,
+            ):
+                result = interface._get_request(
+                    access,
+                    f"https://{authority}/accounts/dummy/transactions",
+                    {"after": "previous-id", "limit": 100},
+                )
+            self.assertEqual(result, {"data": []})
+            self.assertEqual(access["access_token"], "refreshed-dummy")
+            self.assertEqual(transport.call_count, 2)
+            login, get = (call.args[0] for call in transport.call_args_list)
+            self.assertEqual(login.method, "POST")
+            self.assertEqual(
+                login.url,
+                "https://api.myponto.com/oauth2/token?grant_type=client_credentials",
+            )
+            self.assertTrue(login.headers["Authorization"].startswith("Basic "))
+            self.assertEqual(get.headers["Authorization"], "Bearer refreshed-dummy")
+            self.assertTrue(
+                get.url.startswith(
+                    "https://api.myponto.com/accounts/dummy/transactions?"
+                )
+            )
+            self.assertIn("after=previous-id", get.url)
+            self.assertEqual(transport.call_args.kwargs["timeout"], (60, 300))
 
     @patch("requests.post")
     def test_login(self, requests_post):
