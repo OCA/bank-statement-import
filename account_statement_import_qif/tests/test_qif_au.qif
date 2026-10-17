@@ -1,0 +1,16 @@
+!Type:Bank
+D31/07/2026
+T60.00
+PTransaction 1
+LDEP
+^
+D08/07/2026
+T360.00
+PTransaction 2
+LDEP
+^
+D01/07/2026
+T0.00
+PTransaction 3
+LJDR
+^
