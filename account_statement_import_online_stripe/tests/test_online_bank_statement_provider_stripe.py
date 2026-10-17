@@ -50,7 +50,12 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
         return response
 
     def test_stripe_api_uses_official_endpoint(self):
-        for base in (False, "https://api.stripe.com/v1", "https://api.stripe.com/v1/"):
+        for base in (
+            False,
+            "https://api.stripe.com/v1",
+            "https://api.stripe.com/v1/",
+            "HTTPS://API.STRIPE.COM:443/v1/",
+        ):
             with (
                 self.subTest(base=base),
                 patch("urllib.request.getproxies", return_value={}),
@@ -90,6 +95,11 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
             "http://169.254.169.254/latest",
             "http://api.stripe.com/v1",
             "https://api.stripe.com:444/v1",
+            "https://api.stripe.com:invalid/v1",
+            "https://api.stripe.com:65536/v1",
+            "https://[broken/v1",
+            "//api.stripe.com/v1",
+            "https://api.stripe.com/v2",
             "https://api.stripe.com.evil.invalid/v1",
             "https://api.stripe.com@evil.invalid/v1",
             "https://evil.invalid@api.stripe.com/v1",

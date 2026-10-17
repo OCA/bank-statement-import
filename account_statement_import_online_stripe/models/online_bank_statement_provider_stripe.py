@@ -5,7 +5,7 @@ import re
 import urllib.request
 from datetime import datetime, timezone
 from urllib.error import HTTPError
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -124,8 +124,23 @@ class OnlineBankStatementProviderStripe(models.Model):
 
     @api.model
     def _stripe_api_get(self, path, params=None, data=None):
-        if self.api_base and self.api_base.rstrip("/") != STRIPE_API_BASE:
-            raise UserError(_("Stripe API base must be https://api.stripe.com/v1."))
+        if self.api_base:
+            try:
+                base = urlsplit(self.api_base)
+                valid_base = (
+                    base.scheme == "https"
+                    and base.hostname == "api.stripe.com"
+                    and base.port in (None, 443)
+                    and base.username is None
+                    and base.password is None
+                    and base.path.rstrip("/") == "/v1"
+                    and not base.query
+                    and not base.fragment
+                )
+            except ValueError:
+                valid_base = False
+            if not valid_base:
+                raise UserError(_("Stripe API base must be https://api.stripe.com/v1."))
         if params is None:
             params = {}
         try:
