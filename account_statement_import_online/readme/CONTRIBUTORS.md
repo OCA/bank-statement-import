@@ -4,3 +4,4 @@
       - Ronald Portier \<<ronald@therp.nl>\>
   - [Tecnativa](https://www.tecnativa.com):
       - Carolina Fernandez
+  - Michael Tietz (MT Software) \<<mtietz@mt-software.de>\>
