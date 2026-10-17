@@ -11,6 +11,10 @@ from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common
 
+from odoo.addons.account_statement_import_online.tests.http_common import (
+    mock_http_responses,
+)
+
 _module_ns = "odoo.addons.account_statement_import_online_gocardless"
 _provider_class = (
     _module_ns + ".models.online_bank_statement_provider.OnlineBankStatementProvider"
@@ -35,10 +39,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
                     "_gocardless_get_token",
                     return_value="dummy-token",
                 ),
-                mock.patch("requests.sessions.get_environ_proxies", return_value={}),
-                mock.patch(
-                    "requests.adapters.HTTPAdapter.send", return_value=response
-                ) as transport,
+                mock_http_responses(response) as transport,
             ):
                 if status == 429:
                     with self.assertRaisesRegex(UserError, "Test rate limit"):
@@ -119,9 +120,8 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
                         mock.patch(
                             "requests.sessions.get_environ_proxies", return_value={}
                         ),
-                        mock.patch(
-                            "requests.adapters.HTTPAdapter.send",
-                            side_effect=[response, AssertionError("Redirect followed")],
+                        mock_http_responses(
+                            response, AssertionError("Redirect followed")
                         ) as transport,
                         self.assertRaisesRegex(UserError, "redirects are not allowed"),
                     ):

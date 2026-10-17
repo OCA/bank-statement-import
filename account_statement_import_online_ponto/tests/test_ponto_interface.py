@@ -10,6 +10,10 @@ from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common
 
+from odoo.addons.account_statement_import_online.tests.http_common import (
+    mock_http_responses,
+)
+
 from .test_account_statement_import_online_ponto import FOUR_TRANSACTIONS
 
 
@@ -69,10 +73,8 @@ class TestPontoInterface(common.TransactionCase):
                             "_get_request_headers",
                             return_value={"Authorization": "Bearer dummy-token"},
                         ),
-                        patch("requests.sessions.get_environ_proxies", return_value={}),
-                        patch(
-                            "requests.adapters.HTTPAdapter.send",
-                            side_effect=[response, AssertionError("Redirect followed")],
+                        mock_http_responses(
+                            response, AssertionError("Redirect followed")
                         ) as transport,
                         self.assertRaisesRegex(UserError, "redirects are not allowed"),
                     ):
@@ -107,11 +109,7 @@ class TestPontoInterface(common.TransactionCase):
             transaction_response._content = b'{"data":[]}'
             with (
                 self.subTest(authority=authority),
-                patch("requests.sessions.get_environ_proxies", return_value={}),
-                patch(
-                    "requests.adapters.HTTPAdapter.send",
-                    side_effect=[token_response, transaction_response],
-                ) as transport,
+                mock_http_responses(token_response, transaction_response) as transport,
             ):
                 result = interface._get_request(
                     access,
