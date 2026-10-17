@@ -1,5 +1,6 @@
 # Copyright 2022 Akretion France (http://www.akretion.com/)
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
+# Copyright 2026 Ryan Duguid <ryan@duguid.com.au>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
@@ -24,7 +25,10 @@ class AccountJournal(models.Model):
             ["acc_number", "partner_id"],
         )
         for partner_bank in partner_banks:
-            speeddict["account_number"][partner_bank["acc_number"]] = {
+            acc_number = self._sanitize_bank_account_number(partner_bank["acc_number"])
+            if not acc_number:
+                continue
+            speeddict["account_number"][acc_number] = {
                 "partner_id": partner_bank["partner_id"][0],
                 "partner_bank_id": partner_bank["id"],
             }
