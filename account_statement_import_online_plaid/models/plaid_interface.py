@@ -1,6 +1,8 @@
 # Copyright 2024 Binhex - Adasat Torres de León.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from functools import partial
+
 import plaid
 from plaid.api import plaid_api
 from plaid.model.country_code import CountryCode
@@ -12,7 +14,6 @@ from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUse
 from plaid.model.products import Products
 from plaid.model.transactions_get_request import TransactionsGetRequest
 from plaid.model.transactions_get_request_options import TransactionsGetRequestOptions
-from urllib3.util import Retry
 
 from odoo import _, models
 from odoo.exceptions import ValidationError
@@ -37,9 +38,12 @@ class PlaidInterface(models.AbstractModel):
                 "secret": secret or "",
             },
         )
-        configuration.retries = Retry.DEFAULT.new(redirect=0, raise_on_redirect=False)
         try:
-            return plaid_api.PlaidApi(plaid.ApiClient(configuration))
+            client = plaid.ApiClient(configuration)
+            # Per-pool retries do not cover cross-host redirects on urllib3 1.x.
+            manager = client.rest_client.pool_manager
+            manager.request = partial(manager.request, redirect=False)
+            return plaid_api.PlaidApi(client)
         except plaid.ApiException as e:
             raise ValidationError(_("Error getting client api: %s") % e.body) from e
 

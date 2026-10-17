@@ -35,14 +35,14 @@ class TestPlaidInterface(common.TransactionCase):
                         with (
                             self.subTest(host=host, status=status, target=target),
                             patch(
-                                "urllib3.connectionpool.HTTPSConnectionPool._make_request",
+                                "urllib3.connectionpool.HTTPSConnectionPool.urlopen",
                                 side_effect=[
                                     response,
                                     AssertionError("Redirect followed"),
                                 ],
                             ) as https,
                             patch(
-                                "urllib3.connectionpool.HTTPConnectionPool._make_request"
+                                "urllib3.connectionpool.HTTPConnectionPool.urlopen"
                             ) as http,
                             self.assertRaisesRegex(
                                 ValidationError, "Error getting access token"
@@ -69,7 +69,7 @@ class TestPlaidInterface(common.TransactionCase):
                     body=b'{"access_token":"dummy-access","item_id":"dummy-item","request_id":"dummy-request"}',
                 )
                 with patch(
-                    "urllib3.connectionpool.HTTPSConnectionPool._make_request",
+                    "urllib3.connectionpool.HTTPSConnectionPool.urlopen",
                     return_value=response,
                 ) as transport:
                     self.assertEqual(
@@ -82,13 +82,15 @@ class TestPlaidInterface(common.TransactionCase):
                 request_headers = transport.call_args.kwargs["headers"]
                 self.assertEqual(request_headers["PLAID-CLIENT-ID"], "dummy-client")
                 self.assertEqual(request_headers["PLAID-SECRET"], "dummy-secret")
-                retries = client.api_client.rest_client.pool_manager.connection_pool_kw[
-                    "retries"
-                ]
+                retries = (
+                    client.api_client.rest_client.pool_manager.connection_pool_kw.get(
+                        "retries", Retry.DEFAULT
+                    )
+                )
                 self.assertEqual(retries.total, Retry.DEFAULT.total)
                 self.assertEqual(retries.connect, Retry.DEFAULT.connect)
                 self.assertEqual(retries.read, Retry.DEFAULT.read)
-                self.assertEqual(retries.redirect, 0)
+                self.assertIsNone(client.api_client.configuration.retries)
             finally:
                 client.api_client.close()
 
