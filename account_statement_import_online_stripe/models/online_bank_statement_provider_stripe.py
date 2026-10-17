@@ -16,7 +16,7 @@ STRIPE_API_BASE = "https://api.stripe.com/v1"
 class StripeNoRedirectHandler(urllib.request.HTTPRedirectHandler):
     def http_error_302(self, req, fp, code, msg, headers):
         fp.close()
-        raise UserError(_("Stripe API redirects are not allowed."))
+        raise HTTPError(req.full_url, code, msg, headers, None)
 
     http_error_301 = http_error_302
     http_error_303 = http_error_302
@@ -154,6 +154,8 @@ class OnlineBankStatementProviderStripe(models.Model):
                 content = response.read().decode("utf-8")
             return json.loads(content)
         except HTTPError as e:
+            if e.code in (301, 302, 303, 307, 308):
+                raise UserError(_("Stripe API redirects are not allowed.")) from e
             content = json.loads(e.read().decode("utf-8"))
             raise UserError(f"Stripe API call failed: {path}: {content}") from e
 
