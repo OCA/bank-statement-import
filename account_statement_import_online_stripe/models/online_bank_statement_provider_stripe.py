@@ -7,10 +7,21 @@ from datetime import datetime, timezone
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 STRIPE_API_BASE = "https://api.stripe.com/v1"
+
+
+class StripeNoRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def http_error_302(self, req, fp, code, msg, headers):
+        fp.close()
+        raise UserError(_("Stripe API redirects are not allowed."))
+
+    http_error_301 = http_error_302
+    http_error_303 = http_error_302
+    http_error_307 = http_error_302
+    http_error_308 = http_error_302
 
 
 class OnlineBankStatementProviderStripe(models.Model):
@@ -113,16 +124,19 @@ class OnlineBankStatementProviderStripe(models.Model):
 
     @api.model
     def _stripe_api_get(self, path, params=None, data=None):
+        if self.api_base and self.api_base.rstrip("/") != STRIPE_API_BASE:
+            raise UserError(_("Stripe API base must be https://api.stripe.com/v1."))
         if params is None:
             params = {}
         try:
             request = urllib.request.Request(
-                (self.api_base or STRIPE_API_BASE) + path + "?" + urlencode(params),
+                STRIPE_API_BASE + path + "?" + urlencode(params),
                 data=data,
             )
             request.add_header("Authorization", f"Bearer {self.password}")
-            response = urllib.request.urlopen(request)
-            content = response.read().decode("utf-8")
+            opener = urllib.request.build_opener(StripeNoRedirectHandler())
+            with opener.open(request) as response:
+                content = response.read().decode("utf-8")
             return json.loads(content)
         except HTTPError as e:
             content = json.loads(e.read().decode("utf-8"))
