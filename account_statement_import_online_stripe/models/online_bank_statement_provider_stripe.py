@@ -48,10 +48,10 @@ class OnlineBankStatementProviderStripe(models.Model):
                 date_until,
             )  # pragma: no cover
         currency = self.currency_id or self.company_id.currency_id
-        if date_since.tzinfo:
-            date_since = date_since.astimezone(timezone.utc).replace(tzinfo=None)
-        if date_until.tzinfo:
-            date_until = date_until.astimezone(timezone.utc).replace(tzinfo=None)
+        if date_since.tzinfo is None:
+            date_since = date_since.replace(tzinfo=timezone.utc)
+        if date_until.tzinfo is None:
+            date_until = date_until.replace(tzinfo=timezone.utc)
         date_since = int(date_since.timestamp())
         date_until = int(date_until.timestamp())
         params = [
@@ -67,13 +67,16 @@ class OnlineBankStatementProviderStripe(models.Model):
         for tx in self._stripe_api_get_all("/balance_transactions", params):
             if tx["currency"].lower() != currency.name.lower():
                 continue
+            tx_date = datetime.fromtimestamp(tx["created"], tz=timezone.utc).replace(
+                tzinfo=None
+            )
             lines.append(
                 {
                     "ref": safe_format(self.stripe_reference, tx),
                     "payment_ref": safe_format(self.stripe_label, tx),
                     "narration": safe_format(self.stripe_note, tx),
                     "amount": float(tx["amount"]) / (10**currency.decimal_places),
-                    "date": datetime.fromtimestamp(tx["created"]),
+                    "date": tx_date,
                     "unique_import_id": tx["id"],
                     "raw_data": json.dumps(tx),
                 }
@@ -85,7 +88,7 @@ class OnlineBankStatementProviderStripe(models.Model):
                         "payment_ref": safe_format(self.stripe_fee_label, tx),
                         "narration": safe_format(self.stripe_fee_note, tx),
                         "amount": float(-tx["fee"]) / (10**currency.decimal_places),
-                        "date": datetime.fromtimestamp(tx["created"]),
+                        "date": tx_date,
                         "unique_import_id": tx["id"] + "_fee",
                         "raw_data": json.dumps(tx),
                     }

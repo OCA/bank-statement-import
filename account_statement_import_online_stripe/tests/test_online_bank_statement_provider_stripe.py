@@ -28,27 +28,31 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
             }
         )
 
-    def test_obtain_statement_data_normalizes_aware_dates(self):
+    def test_obtain_statement_data_uses_utc_dates(self):
         since = datetime(2026, 1, 14, 23, 15)
         until = datetime(2026, 1, 15, 0, 45)
-        for offset in (10, -7):
+        for offset in (None, 10, -7):
             with (
                 self.subTest(offset=offset),
                 patch.object(
                     type(self.provider), "_stripe_api_get_all", return_value=[]
                 ) as get_all,
             ):
-                zone = timezone(timedelta(hours=offset))
+                date_since, date_until = since, until
+                if offset is not None:
+                    zone = timezone(timedelta(hours=offset))
+                    date_since = since.replace(tzinfo=timezone.utc).astimezone(zone)
+                    date_until = until.replace(tzinfo=timezone.utc).astimezone(zone)
                 data = self.provider._obtain_statement_data(
-                    since.replace(tzinfo=timezone.utc).astimezone(zone),
-                    until.replace(tzinfo=timezone.utc).astimezone(zone),
+                    date_since,
+                    date_until,
                 )
                 get_all.assert_called_once()
                 path, params = get_all.call_args.args
                 self.assertEqual(path, "/balance_transactions")
                 params = dict(params)
-                self.assertEqual(params["created[gte]"], int(since.timestamp()))
-                self.assertEqual(params["created[lt]"], int(until.timestamp()))
+                self.assertEqual(params["created[gte]"], 1768432500)
+                self.assertEqual(params["created[lt]"], 1768437900)
                 self.assertEqual(data, ([], {}))
 
     def test_obtain_statement_data_success(self):
@@ -98,6 +102,10 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
             )
             mock_get_all.assert_called_once()
             self.assertEqual(len(statement_data), 4)
+            for line in statement_data[:2]:
+                self.assertEqual(line["date"], datetime(2023, 3, 15, 13, 20))
+            for line in statement_data[2:]:
+                self.assertEqual(line["date"], datetime(2023, 3, 16, 13, 20))
             self.assertEqual(statement_data[0]["amount"], 100.0)
             self.assertEqual(statement_data[0]["unique_import_id"], "txn_123")
             self.assertEqual(statement_data[0]["ref"], "INV-001")
