@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="finapi_base_url" model="ir.config_parameter">
+        <field name="key">finapi.base_url</field>
+        <field name="value">https://sandbox.finapi.io</field>
+    </record>
+
+    <record id="finapi_webform_base_url" model="ir.config_parameter">
+        <field name="key">finapi.webform_base_url</field>
+        <field name="value">https://webform-sandbox.finapi.io</field>
+    </record>
+</odoo>

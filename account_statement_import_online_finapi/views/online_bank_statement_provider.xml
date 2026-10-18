@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="online_bank_statement_provider_view_form" model="ir.ui.view">
+        <field name="name">online.bank.statement.provider.form.finapi</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <!-- Buttons inside the existing header -->
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_finapi_create_user"
+                    type="object"
+                    string="Create finAPI user"
+                    attrs="{'invisible': ['|',
+                            ('service', '!=', 'finapi'),
+                            ('finapi_user_id', '!=', False)]}"
+                />
+                <button
+                    name="action_finapi_open_webform_wizard"
+                    type="object"
+                    string="Add bank connection"
+                    class="btn-primary"
+                    attrs="{'invisible': ['|',
+                            ('service', '!=', 'finapi'),
+                            ('finapi_user_id', '=', False)]}"
+                />
+                <button
+                    name="action_finapi_refresh_consent"
+                    type="object"
+                    string="Renew consent"
+                    attrs="{'invisible': ['|',
+                            ('service', '!=', 'finapi'),
+                            ('finapi_bank_connection_id', '=', False)]}"
+                />
+                <button
+                    name="action_finapi_check_connection"
+                    type="object"
+                    string="Check connection"
+                    attrs="{'invisible': ['|',
+                            ('service', '!=', 'finapi'),
+                            ('finapi_bank_connection_id', '=', False)]}"
+                />
+                <button
+                    name="action_finapi_refresh_data_now"
+                    type="object"
+                    string="Refresh data now"
+                    attrs="{'invisible': ['|', '|',
+                            ('service', '!=', 'finapi'),
+                            ('finapi_refresh_mode', '=', 'none'),
+                            ('finapi_bank_connection_id', '=', False)]}"
+                />
+            </xpath>
+
+            <!-- finAPI configuration group inside the main group -->
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="finapi"
+                    string="finAPI"
+                    attrs="{'invisible': [('service', '!=', 'finapi')]}"
+                >
+                    <group string="Credentials">
+                        <field name="finapi_environment" />
+                        <field
+                            name="finapi_base_url"
+                            placeholder="https://sandbox.finapi.io"
+                        />
+                        <field
+                            name="finapi_webform_base_url"
+                            placeholder="https://webform-sandbox.finapi.io"
+                        />
+                        <field name="finapi_client_id" />
+                        <field name="finapi_client_secret" password="True" />
+                    </group>
+                    <group string="finAPI user (auto-generated)">
+                        <field name="finapi_user_id" />
+                        <field
+                            name="finapi_user_password"
+                            password="True"
+                            groups="base.group_system"
+                        />
+                    </group>
+                    <group string="Linked account">
+                        <field name="finapi_bank_connection_id" />
+                        <field name="finapi_account_id" />
+                        <field name="finapi_consent_expires_at" />
+                    </group>
+                    <group string="Data refresh">
+                        <field name="finapi_refresh_mode" />
+                        <field name="finapi_lookback_days" />
+                        <field
+                            name="finapi_banking_interface"
+                            attrs="{'invisible': [('finapi_refresh_mode', '!=', 'direct')]}"
+                        />
+                        <field
+                            name="finapi_last_data_update"
+                            attrs="{'invisible': [('finapi_refresh_mode', '=', 'none')]}"
+                        />
+                    </group>
+                    <group string="State">
+                        <field name="finapi_last_webform_id" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="ir_cron_finapi_consent_expiry" model="ir.cron">
+        <field name="name">finAPI: Check consent expiry</field>
+        <field
+            name="model_id"
+            ref="account_statement_import_online.model_online_bank_statement_provider"
+        />
+        <field name="state">code</field>
+        <field name="code">model._finapi_cron_check_consent_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True" />
+    </record>
+</odoo>
