@@ -1,13 +1,12 @@
 # Copyright 2004-2020 Odoo S.A.
 # Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
-import base64
 import logging
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
-from odoo.addons.base.models.res_bank import sanitize_account_number
+from odoo.addons.base.models.res_partner_bank import sanitize_account_number
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +28,7 @@ class AccountStatementImport(models.TransientModel):
             "notifications": [],  # list of text messages
         }
         logger.info("Start to import bank statement file %s", self.statement_filename)
-        file_data = base64.b64decode(self.statement_file)
+        file_data = self.statement_file.content
         self.import_single_file(file_data, result)
         logger.debug("result=%s", result)
         if not result["statement_ids"]:
@@ -79,7 +78,7 @@ class AccountStatementImport(models.TransientModel):
             "res_id": res_id,
             "company_id": st.company_id.id,
             "res_model": "account.bank.statement",
-            "datas": self.statement_file,
+            "raw": self.statement_file,
         }
         return vals
 
@@ -186,9 +185,7 @@ class AccountStatementImport(models.TransientModel):
             if vals["transactions"] and len(vals["transactions"]) > 0:
                 no_st_line = False
                 break
-        if no_st_line:
-            return False
-        return True
+        return not no_st_line
 
     @api.model
     def _match_currency(self, currency_code):
@@ -227,7 +224,7 @@ class AccountStatementImport(models.TransientModel):
                 [
                     ("type", "=", "bank"),
                     (
-                        "bank_account_id.sanitized_acc_number",
+                        "bank_account_id.sanitized_account_number",
                         "ilike",
                         sanitized_account_number,
                     ),
@@ -250,7 +247,7 @@ class AccountStatementImport(models.TransientModel):
                 bank_accounts = self.env["res.partner.bank"].search(
                     [
                         ("partner_id", "=", company.partner_id.id),
-                        ("sanitized_acc_number", "ilike", sanitized_account_number),
+                        ("sanitized_account_number", "ilike", sanitized_account_number),
                     ],
                     limit=1,
                 )
