@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_online_bank_statement_fints_tan_user,online.bank.statement.fints.tan:account.group_account_user,model_online_bank_statement_fints_tan,account.group_account_user,1,1,1,1
