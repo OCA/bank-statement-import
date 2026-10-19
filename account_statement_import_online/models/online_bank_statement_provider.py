@@ -326,6 +326,10 @@ class OnlineBankStatementProvider(models.Model):
             ).create(statement_values)
         else:
             statement.write(statement_values)
+        if "balance_end_real" not in statement_values:
+            # Core computes this from balance_start alone, so it latches at
+            # create() and never follows lines added by a later pull.
+            statement.balance_end_real = statement.balance_end
         return statement
 
     def _online_create_statement_lines(self, statement_values):
