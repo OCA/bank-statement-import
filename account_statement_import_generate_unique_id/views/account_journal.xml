@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
+  Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+-->
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <field name="autocheck_on_post" position="after">
+                <label for="generate_unique_import_id" invisible="type != 'bank'" />
+                <div class="o_row" invisible="type != 'bank'">
+                    <field name="generate_unique_import_id" />
+                    <button
+                        name="action_generate_unique_import_ids"
+                        type="object"
+                        string="Generate for Existing Lines"
+                        class="btn-link"
+                        icon="fa-cogs"
+                        invisible="not generate_unique_import_id"
+                        confirm="Generate an import ID for all existing statement lines of this journal without one?"
+                    />
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>
