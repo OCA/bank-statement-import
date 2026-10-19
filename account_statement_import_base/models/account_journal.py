@@ -3,8 +3,9 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
+from odoo.fields import Domain
 
-from odoo.addons.base.models.res_bank import sanitize_account_number
+from odoo.addons.base.models.res_partner_bank import sanitize_account_number
 
 
 class AccountJournal(models.Model):
@@ -19,12 +20,22 @@ class AccountJournal(models.Model):
         """
         self.ensure_one()
         speeddict = {"account_number": {}}
-        partner_banks = self.env["res.partner.bank"].search_read(
-            [("company_id", "in", (False, self.company_id.id))],
-            ["acc_number", "partner_id"],
+        Bank = self.env["res.partner.bank"]
+        Partner = self.env["res.partner"]
+        # The bank company is no longer related to the partner's one
+        partner_banks = Bank.search_read(
+            Domain(Bank._check_company_domain(self.company_id))
+            & Domain(
+                "partner_id",
+                "any",
+                Domain(Partner._check_company_domain(self.company_id)),
+            ),
+            ["account_number", "partner_id"],
         )
         for partner_bank in partner_banks:
-            speeddict["account_number"][partner_bank["acc_number"]] = {
+            # Stored numbers may be formatted (IBAN, CLABE): key them sanitized
+            key = self._sanitize_bank_account_number(partner_bank["account_number"])
+            speeddict["account_number"][key] = {
                 "partner_id": partner_bank["partner_id"][0],
                 "partner_bank_id": partner_bank["id"],
             }
