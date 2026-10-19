@@ -67,6 +67,9 @@ class AccountStatementImportSheetMapping(models.Model):
         "instead of the column name, considering that the first column is 0",
     )
     timestamp_column = fields.Char(required=True)
+    transaction_id_auto = fields.Boolean(
+        string="Automatic operation ID",
+    )
     currency_column = fields.Char(
         help=(
             "In case statement is multi-currency, column to get currency of "
