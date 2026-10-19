@@ -73,6 +73,15 @@ class OnlineBankStatementProvider(models.Model):
         compute="_compute_update_schedule",
     )
     last_successful_run = fields.Datetime(string="Last successful pull")
+    lookback_days = fields.Integer(
+        string="Lookback days",
+        default=0,
+        help=(
+            "Re-pull this many days before the last successful pull, so a"
+            " transaction the bank publishes after its window was pulled is"
+            " not missed; unique_import_id prevents duplicates."
+        ),
+    )
     next_run = fields.Datetime(
         string="Next scheduled pull",
         default=fields.Datetime.now,
@@ -506,6 +515,8 @@ class OnlineBankStatementProvider(models.Model):
                     if provider.last_successful_run
                     else (provider.next_run - provider._get_next_run_period())
                 )
+                if provider.lookback_days:
+                    date_since -= relativedelta(days=provider.lookback_days)
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
         _logger.info(self.env._("Scheduled pull of online bank statements complete."))

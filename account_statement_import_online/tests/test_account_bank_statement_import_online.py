@@ -107,6 +107,46 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.provider.with_context(step={"hours": 8})._scheduled_pull()
         self._getExpectedStatements(1)
 
+    @freeze_time("2026-08-29 12:00:00")
+    def test_pull_scheduled_lookback(self):
+        """lookback_days widens the pull so a late transaction is not missed."""
+        now = fields.Datetime.now()
+        self.provider.statement_creation_mode = "daily"
+        self.provider.last_successful_run = now - relativedelta(days=1)
+        self.provider.next_run = now
+
+        self.provider.lookback_days = 0
+        self.provider.with_context(step={"hours": 24})._scheduled_pull()
+        without_lookback = self.AccountBankStatementLine.search_count(
+            [("journal_id", "=", self.journal.id)]
+        )
+
+        # Same pull, reaching three days further back.
+        self.provider.last_successful_run = now - relativedelta(days=1)
+        self.provider.next_run = now
+        self.provider.lookback_days = 3
+        self.provider.with_context(step={"hours": 24})._scheduled_pull()
+        with_lookback = self.AccountBankStatementLine.search_count(
+            [("journal_id", "=", self.journal.id)]
+        )
+        self.assertGreater(
+            with_lookback,
+            without_lookback,
+            "lookback_days did not widen the scheduled pull window",
+        )
+
+        # A third identical run must add nothing.
+        self.provider.last_successful_run = now - relativedelta(days=1)
+        self.provider.next_run = now
+        self.provider.with_context(step={"hours": 24})._scheduled_pull()
+        self.assertEqual(
+            self.AccountBankStatementLine.search_count(
+                [("journal_id", "=", self.journal.id)]
+            ),
+            with_lookback,
+            "re-pulling a window already imported created duplicates",
+        )
+
     def test_pull_skip_duplicates_by_unique_import_id(self):
         self.provider.statement_creation_mode = "weekly"
         # Get for two weeks of data.
