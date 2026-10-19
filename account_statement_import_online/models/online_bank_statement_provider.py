@@ -196,6 +196,7 @@ class OnlineBankStatementProvider(models.Model):
         debug = self.env.context.get("account_statement_online_import_debug")
         debug_data = []
         for provider in self:
+            provider = provider.with_company(provider.company_id)
             statement_date_since = provider._get_statement_date_since(date_since)
             while statement_date_since < date_until:
                 # Note that statement_date_until is exclusive, while date_until is
