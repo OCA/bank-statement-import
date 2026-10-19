@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<?OFX OFXHEADER="200" VERSION="211" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE"?>
+<OFX>
+  <SIGNONMSGSRSV1>
+    <SONRS>
+      <STATUS>
+        <CODE>0</CODE>
+        <SEVERITY>INFO</SEVERITY>
+      </STATUS>
+      <DTSERVER>20130831165153.000[-8:PST]</DTSERVER>
+      <LANGUAGE>ENG</LANGUAGE>
+    </SONRS>
+  </SIGNONMSGSRSV1>
+  <BANKMSGSRSV1>
+    <STMTTRNRS>
+      <TRNUID>0</TRNUID>
+      <STATUS>
+        <CODE>0</CODE>
+        <SEVERITY>INFO</SEVERITY>
+      </STATUS>
+      <STMTRS>
+        <CURDEF>USD</CURDEF>
+        <BANKACCTFROM>
+          <BANKID>000000123</BANKID>
+          <ACCTID>123456</ACCTID>
+          <ACCTTYPE>CHECKING</ACCTTYPE>
+        </BANKACCTFROM>
+        <BANKTRANLIST>
+          <DTSTART>20130801</DTSTART>
+          <DTEND>20130831165153.000[-8:PST]</DTEND>
+          <STMTTRN>
+            <TRNTYPE>CHECK</TRNTYPE>
+            <DTPOSTED>20130824080000</DTPOSTED>
+            <TRNAMT>-150</TRNAMT>
+            <FITID>219400</FITID>
+            <CHECKNUM>1001</CHECKNUM>
+            <NAME>Office Supplies</NAME>
+            <MEMO>Paper and pens for Q3</MEMO>
+          </STMTTRN>
+        </BANKTRANLIST>
+        <LEDGERBAL>
+          <BALAMT>2006.56</BALAMT>
+          <DTASOF>20130831165153</DTASOF>
+        </LEDGERBAL>
+      </STMTRS>
+    </STMTTRNRS>
+  </BANKMSGSRSV1>
+</OFX>
