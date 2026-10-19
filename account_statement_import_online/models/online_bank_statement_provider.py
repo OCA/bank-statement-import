@@ -490,6 +490,23 @@ class OnlineBankStatementProvider(models.Model):
         elif self.interval_type == "weeks":
             return relativedelta(weeks=self.interval_number)
 
+    def _get_scheduled_pull_lookback(self):
+        """
+        Return the minimum period that scheduled pulls should look back from now.
+        For example, to handle transactions that take a while to settle, or for
+        providers where their data feed is delayed.
+        """
+        self.ensure_one()
+        return relativedelta()
+
+    def _get_scheduled_pull_date_since(self, date_since):
+        """Apply the provider's minimum lookback to a scheduled start date."""
+        self.ensure_one()
+        lookback = self._get_scheduled_pull_lookback()
+        if not lookback:
+            return date_since
+        return min(date_since, fields.Datetime.now() - lookback)
+
     @api.model
     def _scheduled_pull(self):
         _logger.info(_("Scheduled pull of online bank statements..."))
@@ -510,6 +527,7 @@ class OnlineBankStatementProvider(models.Model):
                     if provider.last_successful_run
                     else (provider.next_run - provider._get_next_run_period())
                 )
+                date_since = provider._get_scheduled_pull_date_since(date_since)
                 date_until = provider.next_run
                 provider._pull(date_since, date_until)
         _logger.info(_("Scheduled pull of online bank statements complete."))
