@@ -38,7 +38,10 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
 
         cls.loader.update_registry((OnlineBankStatementProviderDummy,))
 
-        cls.now = fields.Datetime.now()
+        # Use a fixed time at noon UTC to avoid flaky failures when CI runs
+        # near midnight (subtracting 1 hour would cross the day boundary,
+        # creating 2 daily statement periods instead of 1).
+        cls.now = fields.Datetime.now().replace(hour=12, minute=0, second=0)
         cls.AccountAccount = cls.env["account.account"]
         cls.AccountJournal = cls.env["account.journal"]
         cls.OnlineBankStatementProvider = cls.env["online.bank.statement.provider"]
