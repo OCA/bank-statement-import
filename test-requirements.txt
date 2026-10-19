@@ -1,0 +1,1 @@
+odoo-addon-account_statement_base @ git+https://github.com/OCA/account-reconcile.git@refs/pull/1048/head#subdirectory=account_statement_base

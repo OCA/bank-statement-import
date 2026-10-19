@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-18 18:35+0000\n"
+"Last-Translator: pere-aquarian <pere@aquarian.tech>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_base
+#: model:ir.model.constraint,message:account_statement_import_base.constraint_account_bank_statement_line_unique_import_id
+msgid "A bank account transaction can be imported only once!"
+msgstr "Una transacció de compte bancari només es pot importar una vegada!"
+
+#. module: account_statement_import_base
+#: model:ir.model,name:account_statement_import_base.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línia d'extracte bancari"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__unique_import_id
+msgid "Import ID"
+msgstr "Importar ID"
+
+#. module: account_statement_import_base
+#: model:ir.model,name:account_statement_import_base.model_account_journal
+msgid "Journal"
+msgstr "Diari"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__raw_data
+#: model_terms:ir.ui.view,arch_db:account_statement_import_base.account_bank_statement_line_form
+msgid "Raw Data"
+msgstr "Dades de línia"
