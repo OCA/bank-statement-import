@@ -1,0 +1,17 @@
+- Alexis de Lattre \<<alexis.delattre@akretion.com>\>
+- Sebastien BEAU \<<sebastien.beau@akretion.com>\>
+- Katherine Zaoral
+- Tecnativa (<https://www.tecnativa.com>)
+  - Vicent Cubells
+  - Victor M.M. Torres
+  - Víctor Martínez
+  - Andrii Kompaniiets
+- ForgeFlow (<https://www.forgeflow.com>)
+  - Jordi Ballester Alomar \<<jordi.ballester@forgeflow.com>\>
+  - Miquel Raïch Regué \<<miquel.raich@forgeflow.com>\>
+- [CorporateHub](https://corporatehub.eu/)
+  - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
+- Sebastiano Picchi <sebastiano.picchi@pytech.it>
+- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+- Studio73 (https://www.studio73.es)
+  - Roger Amorós \<<roger@studio73.es>\>
