@@ -43,7 +43,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         """Parse XLS content into normalized statement line dictionaries.
         :return: Parsed statement lines ready for transaction conversion.
         """
-        columns = dict()
+        columns = {}
         workbook = xlrd.open_workbook(
             file_contents=data_file,
             encoding_override=(
