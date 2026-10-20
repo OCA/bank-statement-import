@@ -51,7 +51,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         Parse XLSX content into normalized statement line dictionaries.
         :return: Parsed statement lines ready for transaction conversion.
         """
-        columns = dict()
+        columns = {}
         workbook = openpyxl.load_workbook(
             filename=BytesIO(data_file),
             data_only=True,
