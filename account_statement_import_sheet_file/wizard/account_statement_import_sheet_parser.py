@@ -90,7 +90,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
         )
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
-        lines = list(sorted(lines, key=lambda line: line["timestamp"]))
+        lines = sorted(lines, key=lambda line: line["timestamp"])
         first_line = lines[0]
         last_line = lines[-1]
         data = {
