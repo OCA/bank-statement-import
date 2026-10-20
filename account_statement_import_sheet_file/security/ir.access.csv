@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+access_account_statement_import_sheet_mapping_manager,account.statement.import.sheet.mapping:account.group_account_manager,account.statement.import.sheet.mapping,account.group_account_manager,crud,
+access_account_statement_import_sheet_mapping_user,account.statement.import.sheet.mapping:account.group_account_user,account.statement.import.sheet.mapping,account.group_account_user,r,
+access_account_statement_import_sheet_parser,account.statement.import.sheet.parser:account.group_account_user,account.statement.import.sheet.parser,account.group_account_user,crud,
