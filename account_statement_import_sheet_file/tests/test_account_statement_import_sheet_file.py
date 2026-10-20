@@ -13,6 +13,7 @@ from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common
 from odoo.tools import float_round, mute_logger
+from odoo.tools.mimetypes import MIMETYPE_HEAD_SIZE
 
 
 class TestAccountStatementImportSheetFile(common.TransactionCase):
@@ -99,7 +100,7 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
             data = file.read()
             if encoding:
                 data = data.encode(encoding)
-            return b64encode(data)
+            return b64encode(data).decode()
 
     def test_import_csv_file(self):
         wizard = self._get_import_wizard("fixtures/sample_statement_en.csv")
@@ -107,6 +108,12 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         statement = self.AccountBankStatement.search(self.statement_domain)
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
+
+    def test_csv_file_with_control_character_after_head(self):
+        with open(self._get_file_path("fixtures/sample_statement_en.csv"), "rb") as f:
+            data = f.read()
+        data = data * (MIMETYPE_HEAD_SIZE // len(data) + 2) + b"\x1a"
+        self.assertEqual(self.parser._get_sheet_type(data), "csv")
 
     def test_import_csv_file_without_extension(self):
         wizard = self.AccountStatementImport.with_context(
