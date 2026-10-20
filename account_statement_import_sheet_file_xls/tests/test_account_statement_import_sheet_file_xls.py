@@ -28,6 +28,15 @@ class TestAccountStatementImportSheetFileXls(
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
+    def test_import_xls_file_without_excel_marker(self):
+        wizard = self._get_import_wizard(
+            "fixtures/sample_statement_en_no_excel_marker.xls"
+        )
+        wizard.import_file_button()
+        statement = self.AccountBankStatement.search(self.statement_domain)
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+
     def test_import_empty_xls_file(self):
         wizard = self._get_import_wizard("fixtures/empty_statement_en.xls")
         with self.assertRaises(UserError):
