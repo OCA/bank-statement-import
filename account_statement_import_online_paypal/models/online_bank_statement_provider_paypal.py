@@ -283,12 +283,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
 
     @api.model
     def _paypal_preparse_transaction(self, transaction):
-        try:
-            transaction["_odoo_transaction_details"] = json.loads(
-                json.dumps(transaction)
-            )
-        except Exception:
-            transaction["_odoo_transaction_details"] = dict(transaction or {})
         date = (
             dateutil.parser.parse(self._paypal_get_transaction_date(transaction))
             .astimezone(pytz.utc)
@@ -333,9 +327,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
         )
         item_codes = self._paypal_get_cart_item_codes(data)
         narration = "\n".join(item_codes) if item_codes else False
-        transaction_details = json.dumps(
-            data.get("_odoo_transaction_details", data), default=str
-        )
         line = {
             "ref": name,
             "amount": str(total_amount),
@@ -343,7 +334,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "payment_ref": note,
             "unique_import_id": unique_import_id,
             "raw_data": transaction,
-            "transaction_details": transaction_details,
         }
         if narration:
             line["narration"] = narration
@@ -363,7 +353,6 @@ class OnlineBankStatementProviderPayPal(models.Model):
                     "unique_import_id": "%s-FEE" % unique_import_id,
                     "payment_ref": _("Transaction fee for %s") % note,
                     "raw_data": transaction,
-                    "transaction_details": transaction_details,
                 }
             ]
         return lines

@@ -581,35 +581,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
 
         self.assertEqual(len(data[0]), 2)
         del data[0][0]["raw_data"]
-        expected_details = {
-            "transaction_info": {
-                "paypal_account_id": "1234567890",
-                "transaction_id": "1234567890",
-                "transaction_event_code": "T1234",
-                "transaction_initiation_date": self.yesterday_isoformat,
-                "transaction_updated_date": self.yesterday_isoformat,
-                "transaction_amount": {"currency_code": "USD", "value": "1000.00"},
-                "fee_amount": {"currency_code": "USD", "value": "-100.00"},
-                "transaction_status": "S",
-                "transaction_subject": "Payment for Invoice(s) 1",
-                "ending_balance": {"currency_code": "USD", "value": "900.00"},
-                "available_balance": {"currency_code": "USD", "value": "900.00"},
-                "invoice_id": "1",
-            },
-            "payer_info": {
-                "account_id": "1234567890",
-                "email_address": "partner@example.com",
-                "address_status": "Y",
-                "payer_status": "N",
-                "payer_name": {"alternate_full_name": "Acme, Inc."},
-                "country_code": "US",
-            },
-            "shipping_info": {},
-            "cart_info": {},
-            "store_info": {},
-            "auction_info": {},
-            "incentive_info": {},
-        }
+        del data[0][1]["raw_data"]
         self.assertEqual(
             data[0][0],
             {
@@ -619,10 +591,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}",
-                "transaction_details": json.dumps(expected_details, default=str),
             },
         )
-        expected_details_fee = expected_details
         self.assertEqual(
             data[0][1],
             {
@@ -632,7 +602,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}-FEE",
-                "transaction_details": json.dumps(expected_details_fee, default=str),
             },
         )
         self.assertEqual(data[1], {"balance_start": 0.0, "balance_end_real": 900.0})
@@ -690,36 +659,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(len(lines), 1)
         del lines[0]["raw_data"]
 
-        expected_details = {
-            "transaction_info": {
-                "paypal_account_id": "1234567890",
-                "transaction_id": "1234567890",
-                "transaction_event_code": "T1234",
-                "transaction_initiation_date": self.today_isoformat,
-                "transaction_updated_date": self.today_isoformat,
-                "transaction_amount": {"currency_code": "USD", "value": "1000.00"},
-                "fee_amount": {"currency_code": "USD", "value": "0.00"},
-                "transaction_status": "S",
-                "transaction_subject": "Payment for Invoice(s) 1",
-                "ending_balance": {"currency_code": "USD", "value": "1000.00"},
-                "available_balance": {"currency_code": "USD", "value": "1000.00"},
-                "invoice_id": "1",
-            },
-            "payer_info": {
-                "account_id": "1234567890",
-                "email_address": "partner@example.com",
-                "address_status": "Y",
-                "payer_status": "N",
-                "payer_name": {"alternate_full_name": "Acme, Inc."},
-                "country_code": "US",
-            },
-            "shipping_info": {},
-            "cart_info": {},
-            "store_info": {},
-            "auction_info": {},
-            "incentive_info": {},
-        }
-
         self.assertEqual(
             lines[0],
             {
@@ -729,7 +668,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
-                "transaction_details": json.dumps(expected_details, default=str),
             },
         )
 
@@ -786,36 +724,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(len(lines), 1)
         del lines[0]["raw_data"]
 
-        expected_details = {
-            "transaction_info": {
-                "paypal_account_id": "1234567890",
-                "transaction_id": "1234567890",
-                "transaction_event_code": "T1234",
-                "transaction_initiation_date": self.today_isoformat,
-                "transaction_updated_date": self.today_isoformat,
-                "transaction_amount": {"currency_code": "USD", "value": "1000.00"},
-                "fee_amount": {"currency_code": "USD", "value": "0.00"},
-                "transaction_status": "S",
-                "transaction_subject": "Payment for Invoice(s) 1",
-                "ending_balance": {"currency_code": "USD", "value": "1000.00"},
-                "available_balance": {"currency_code": "USD", "value": "1000.00"},
-                "invoice_id": "1",
-            },
-            "payer_info": {
-                "account_id": "1234567890",
-                "email_address": "partner@example.com",
-                "address_status": "Y",
-                "payer_status": "N",
-                "payer_name": {"alternate_full_name": "Acme, Inc."},
-                "country_code": "US",
-            },
-            "shipping_info": {},
-            "cart_info": {},
-            "store_info": {},
-            "auction_info": {},
-            "incentive_info": {},
-        }
-
         self.assertEqual(
             lines[0],
             {
@@ -825,7 +733,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
-                "transaction_details": json.dumps(expected_details, default=str),
             },
         )
 
@@ -878,36 +785,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         )
         self.assertEqual(len(lines), 2)
         del lines[0]["raw_data"]
-
-        expected_details = {
-            "transaction_info": {
-                "paypal_account_id": "1234567890",
-                "transaction_id": "1234567890",
-                "transaction_event_code": "T1234",
-                "transaction_initiation_date": self.today_isoformat,
-                "transaction_updated_date": self.today_isoformat,
-                "transaction_amount": {"currency_code": "USD", "value": "1000.00"},
-                "fee_amount": {"currency_code": "USD", "value": "-100.00"},
-                "transaction_status": "S",
-                "transaction_subject": "Payment for Invoice(s) 1",
-                "ending_balance": {"currency_code": "USD", "value": "900.00"},
-                "available_balance": {"currency_code": "USD", "value": "900.00"},
-                "invoice_id": "1",
-            },
-            "payer_info": {
-                "account_id": "1234567890",
-                "email_address": "partner@example.com",
-                "address_status": "Y",
-                "payer_status": "N",
-                "payer_name": {"alternate_full_name": "Acme, Inc."},
-                "country_code": "US",
-            },
-            "shipping_info": {},
-            "cart_info": {},
-            "store_info": {},
-            "auction_info": {},
-            "incentive_info": {},
-        }
+        del lines[1]["raw_data"]
 
         self.assertEqual(
             lines[0],
@@ -918,7 +796,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
-                "transaction_details": json.dumps(expected_details, default=str),
             },
         )
         self.assertEqual(
@@ -930,7 +807,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "Transaction fee for 1234567890: Payment for Invoice(s) 1",
                 "partner_name": "PayPal",
                 "unique_import_id": f"1234567890-{self.today_timestamp}-FEE",
-                "transaction_details": json.dumps(expected_details, default=str),
             },
         )
 
@@ -983,45 +859,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(len(lines), 1)
         del lines[0]["raw_data"]
 
-        expected_details = {
-            "transaction_info": {
-                "paypal_account_id": "1234567890",
-                "transaction_id": "1234567890",
-                "transaction_event_code": "T1234",
-                "transaction_initiation_date": self.today_isoformat,
-                "transaction_updated_date": self.today_isoformat,
-                "transaction_amount": {
-                    "currency_code": "USD",
-                    "value": "1000.00",
-                },
-                "transaction_status": "S",
-                "transaction_subject": "Payment for Invoice(s) 1",
-                "ending_balance": {
-                    "currency_code": "USD",
-                    "value": "1000.00",
-                },
-                "available_balance": {
-                    "currency_code": "USD",
-                    "value": "1000.00",
-                },
-                "invoice_id": "1",
-            },
-            "payer_info": {
-                "account_id": "1234567890",
-                "email_address": "partner@example.com",
-                "address_status": "Y",
-                "payer_status": "N",
-                "payer_name": {
-                    "alternate_full_name": "Acme, Inc.",
-                },
-                "country_code": "US",
-            },
-            "shipping_info": {},
-            "cart_info": {},
-            "store_info": {},
-            "auction_info": {},
-            "incentive_info": {},
-        }
         self.assertEqual(
             lines[0],
             {
@@ -1031,7 +868,6 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
-                "transaction_details": json.dumps(expected_details, default=str),
             },
         )
 
