@@ -6,19 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-10-22 16:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_generate_unique_id
 #. odoo-python
 #: code:addons/account_statement_import_generate_unique_id/models/account_journal.py:0
 msgid "%s statement lines got an import ID."
-msgstr ""
+msgstr "%s righe dell'estratto conto hanno ricevuto un ID di importazione."
 
 #. module: account_statement_import_generate_unique_id
 #. odoo-python
@@ -27,12 +29,15 @@ msgid ""
 "%s statement lines were skipped because their import ID is already used by "
 "another line, they may be duplicates."
 msgstr ""
+"%s righe di rendiconto sono state ignorate perché il loro ID di importazione "
+"è già utilizzato da un'altra riga; potrebbe trattarsi di duplicati."
 
 #. module: account_statement_import_generate_unique_id
 #. odoo-python
 #: code:addons/account_statement_import_generate_unique_id/models/account_journal.py:0
 msgid "Enable 'Generate Missing Import IDs' on journal %s first."
 msgstr ""
+"Abilitare innanzitutto 'Genera ID di importazione mancanti' nel registro %s."
 
 #. module: account_statement_import_generate_unique_id
 #: model:ir.model.fields,help:account_statement_import_generate_unique_id.field_account_journal__generate_unique_import_id
@@ -45,11 +50,20 @@ msgid ""
 "option get an ID; for existing lines without ID use the 'Generate for "
 "Existing Lines' button."
 msgstr ""
+"Garantisce che venga impostato un unique_import_id sulle righe degli "
+"estratti conto bancari durante la loro importazione. Se non viene fornito un "
+"identificativo univoco, il valore viene generato tramite un hash che combina "
+"numero di conto, data, riferimento del pagamento, importo, riferimento "
+"generico e nome del partner. Le transazioni identiche all'interno della "
+"stessa importazione vengono numerate progressivamente. L'ID viene assegnato "
+"solo alle righe importate dopo l'attivazione di questa opzione; per le righe "
+"già esistenti prive di ID, utilizzare il pulsante 'Genera per le righe "
+"esistenti'."
 
 #. module: account_statement_import_generate_unique_id
 #: model:ir.model.fields,field_description:account_statement_import_generate_unique_id.field_account_journal__generate_unique_import_id
 msgid "Generate Missing Import IDs"
-msgstr ""
+msgstr "Genera gli ID di importazione mancanti"
 
 #. module: account_statement_import_generate_unique_id
 #: model_terms:ir.ui.view,arch_db:account_statement_import_generate_unique_id.view_account_journal_form
@@ -57,13 +71,15 @@ msgid ""
 "Generate an import ID for all existing statement lines of this journal "
 "without one?"
 msgstr ""
+"Generare un ID di importazione per tutte le righe esistenti di questo "
+"registro che ne sono prive?"
 
 #. module: account_statement_import_generate_unique_id
 #: model_terms:ir.ui.view,arch_db:account_statement_import_generate_unique_id.view_account_journal_form
 msgid "Generate for Existing Lines"
-msgstr ""
+msgstr "Genera per le righe esistenti"
 
 #. module: account_statement_import_generate_unique_id
 #: model:ir.model,name:account_statement_import_generate_unique_id.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Registro"
