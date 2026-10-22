@@ -28,6 +28,20 @@ class TestAccountStatementImportSheetFileXls(
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
 
+    def test_import_xls_file_without_excel_marker(self):
+        wizard = self._get_import_wizard(
+            "fixtures/sample_statement_en_no_excel_marker.xls"
+        )
+        wizard.import_file_button()
+        statement = self.AccountBankStatement.search(self.statement_domain)
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 2)
+
+    def test_ole_file_that_is_not_a_workbook(self):
+        parser = self.env["account.statement.import.sheet.parser"]
+        data_file = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1" + b"\x00" * 1024
+        self.assertIsNone(parser._get_sheet_type(data_file))
+
     def test_import_empty_xls_file(self):
         wizard = self._get_import_wizard("fixtures/empty_statement_en.xls")
         with self.assertRaises(UserError):
