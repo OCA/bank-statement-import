@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_fints_tan_form">
+        <field name="name">online.bank.statement.fints.tan.form</field>
+        <field name="model">online.bank.statement.fints.tan</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="decoupled" invisible="1" />
+                <div class="alert alert-warning" role="alert" invisible="not pending">
+                    The confirmation is still pending, confirm the access in your banking app first.
+                </div>
+                <field name="challenge" nolabel="1" />
+                <field
+                    name="challenge_image"
+                    widget="image"
+                    nolabel="1"
+                    invisible="not challenge_image"
+                />
+                <group>
+                    <field name="challenge_hhduc" invisible="not challenge_hhduc" />
+                    <field name="tan" invisible="decoupled" password="True" />
+                </group>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                        invisible="decoupled"
+                    />
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="I Confirmed in the App"
+                        class="btn-primary"
+                        invisible="not decoupled"
+                    />
+                    <button string="Cancel" special="cancel" class="btn-secondary" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

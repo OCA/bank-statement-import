@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_fints_connect"
+                    type="object"
+                    string="Connect"
+                    class="btn-primary"
+                    invisible="service != 'fints' or fints_state == 'connected'"
+                />
+                <button
+                    name="action_fints_connect"
+                    type="object"
+                    string="Reconnect"
+                    invisible="service != 'fints' or fints_state != 'connected'"
+                />
+                <field
+                    name="fints_state"
+                    widget="statusbar"
+                    invisible="service != 'fints'"
+                />
+            </xpath>
+            <xpath expr="//group[@name='main']" position="inside">
+                <group name="fints" string="FinTS" invisible="service != 'fints'">
+                    <field
+                        name="fints_blz"
+                        required="service == 'fints'"
+                        readonly="fints_state != 'disconnected'"
+                    />
+                    <field
+                        name="api_base"
+                        string="FinTS Server URL"
+                        required="service == 'fints'"
+                        readonly="fints_state != 'disconnected'"
+                    />
+                    <field
+                        name="username"
+                        string="Login"
+                        required="service == 'fints'"
+                        readonly="fints_state != 'disconnected'"
+                    />
+                    <field
+                        name="fints_customer_id"
+                        readonly="fints_state != 'disconnected'"
+                    />
+                    <field
+                        name="password"
+                        string="PIN"
+                        password="True"
+                        required="service == 'fints'"
+                    />
+                    <field name="fints_product_id" required="service == 'fints'" />
+                    <field name="fints_tan_mechanism" />
+                    <field name="fints_tan_medium" />
+                    <field name="fints_confirmation_timeout" />
+                    <field
+                        name="fints_tan_mechanisms"
+                        invisible="not fints_tan_mechanisms"
+                    />
+                    <button
+                        name="action_fints_disconnect"
+                        type="object"
+                        string="Disconnect"
+                        invisible="fints_state == 'disconnected'"
+                        class="btn-link"
+                        colspan="2"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
