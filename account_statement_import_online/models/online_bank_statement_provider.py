@@ -202,14 +202,19 @@ class OnlineBankStatementProvider(models.Model):
         debug_data = []
         for provider in self:
             failed_since = None
-            statement_date_since = provider._get_statement_date_since(date_since)
+            # The statement periods start at midnight in the timezone of the
+            # provider, but like date_since and date_until they are passed on
+            # in UTC.
+            period_since = provider._get_statement_date_since(
+                provider._utc_to_provider_tz(date_since)
+            )
+            statement_date_since = provider._provider_tz_to_utc(period_since)
             while statement_date_since < date_until:
                 # Note that statement_date_until is exclusive, while date_until is
                 # inclusive. So if we have daily statements date_until might
                 # be 2020-01-31, while statement_date_until is 2020-02-01.
-                statement_date_until = (
-                    statement_date_since + provider._get_statement_date_step()
-                )
+                period_since += provider._get_statement_date_step()
+                statement_date_until = provider._provider_tz_to_utc(period_since)
                 try:
                     data = provider._obtain_statement_data(
                         statement_date_since, statement_date_until
@@ -305,7 +310,7 @@ class OnlineBankStatementProvider(models.Model):
         self.ensure_one()
         return "{}/{}".format(
             self.journal_id.code,
-            statement_date_since.strftime("%Y-%m-%d"),
+            self._utc_to_provider_tz(statement_date_since).strftime("%Y-%m-%d"),
         )
 
     def _statement_create_or_write(self, statement_values):
@@ -456,6 +461,18 @@ class OnlineBankStatementProvider(models.Model):
         elif not self.last_successful_run or failed_since > self.last_successful_run:
             self.last_successful_run = failed_since
         self.next_run += self._get_next_run_period()
+
+    def _utc_to_provider_tz(self, date):
+        """Convert a naive UTC datetime to the naive time of the provider"""
+        self.ensure_one()
+        provider_tz = timezone(self.tz) if self.tz else utc
+        return utc.localize(date).astimezone(provider_tz).replace(tzinfo=None)
+
+    def _provider_tz_to_utc(self, date):
+        """Convert a naive time of the provider to a naive UTC datetime"""
+        self.ensure_one()
+        provider_tz = timezone(self.tz) if self.tz else utc
+        return provider_tz.localize(date).astimezone(utc).replace(tzinfo=None)
 
     def _get_statement_date_since(self, date):
         self.ensure_one()

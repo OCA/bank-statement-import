@@ -346,13 +346,57 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
             datetime(2020, 4, 17, 22, 0),
             datetime(2020, 4, 18, 2, 0),
         )
-        statements = self._getExpectedStatements(2)
+        # The whole pull is the 18th for the provider: a single statement
+        statements = self._getExpectedStatements(1)
+        self.assertEqual(statements.name, "BANK/2020-04-18")
         lines = statements.mapped("line_ids").sorted(key=lambda r: r.id)
         self.assertEqual(len(lines), 4)
         self.assertEqual(lines[0].date, date(2020, 4, 18))
         self.assertEqual(lines[1].date, date(2020, 4, 18))
         self.assertEqual(lines[2].date, date(2020, 4, 18))
         self.assertEqual(lines[3].date, date(2020, 4, 18))
+
+    def test_tz_statement_periods(self):
+        """The statement periods start at midnight in the timezone of the
+        provider, also across daylight saving time changes"""
+        self.provider.tz = "Europe/Berlin"
+        with mock.patch(mock_obtain_statement_data, return_value=([], {})) as obtain:
+            # 1st of October 00:00 until the 2nd of October 00:00 in Berlin
+            self.provider._pull(
+                datetime(2026, 9, 30, 22, 0),
+                datetime(2026, 10, 1, 22, 0),
+            )
+        obtain.assert_called_once_with(
+            datetime(2026, 9, 30, 22, 0), datetime(2026, 10, 1, 22, 0)
+        )
+        self.provider.statement_creation_mode = "monthly"
+        with mock.patch(mock_obtain_statement_data, return_value=([], {})) as obtain:
+            self.provider._pull(
+                datetime(2026, 10, 15, 12, 0),
+                datetime(2026, 11, 15, 12, 0),
+            )
+        # Berlin switches from CEST (UTC+2) to CET (UTC+1) on the 25th of October
+        self.assertEqual(
+            [call.args for call in obtain.call_args_list],
+            [
+                (datetime(2026, 9, 30, 22, 0), datetime(2026, 10, 31, 23, 0)),
+                (datetime(2026, 10, 31, 23, 0), datetime(2026, 11, 30, 23, 0)),
+            ],
+        )
+
+    def test_tz_statement_name(self):
+        self.provider.tz = "Europe/Berlin"
+        self.provider.with_context(
+            step={"hours": 1},
+            override_date_since=datetime(2026, 9, 30, 22, 30),
+            override_date_until=datetime(2026, 9, 30, 23, 30),
+        )._pull(
+            datetime(2026, 9, 30, 22, 0),
+            datetime(2026, 10, 1, 22, 0),
+        )
+        statement = self._getExpectedStatements(1)
+        self.assertEqual(statement.name, "BANK/2026-10-01")
+        self.assertEqual(statement.line_ids.date, date(2026, 10, 1))
 
     def test_other_tz_to_utc(self):
         """Test the situation where we are tot the west of the provider.
