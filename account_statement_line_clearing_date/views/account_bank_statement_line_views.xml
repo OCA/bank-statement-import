@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="account_bank_statement_line_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.form</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_form"
+        />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="clearing_date" />
+            </field>
+        </field>
+    </record>
+
+    <record id="account_bank_statement_line_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.list</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="clearing_date" optional="hide" readonly="is_reconciled" />
+            </field>
+        </field>
+    </record>
+</odoo>
