@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from unittest import mock
 from urllib.error import HTTPError
@@ -391,6 +391,52 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
 
         self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
+
+    def test_pull_normalizes_aware_dates(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+        provider = journal.online_bank_statement_provider_id
+        since = self.today - timedelta(minutes=45)
+        until = self.today + timedelta(minutes=45)
+        for offset in (10, -7):
+            with (
+                self.subTest(offset=offset),
+                self.mock_token(),
+                mock.patch(
+                    _provider_class + "._paypal_get_transactions", return_value=[]
+                ) as get_transactions,
+                mock.patch(
+                    _provider_class + "._paypal_get_balance",
+                    return_value=Decimal("0.75"),
+                ) as get_balance,
+            ):
+                zone = timezone(timedelta(hours=offset))
+                data = provider._obtain_statement_data(
+                    since.replace(tzinfo=timezone.utc).astimezone(zone),
+                    until.replace(tzinfo=timezone.utc).astimezone(zone),
+                )
+                get_transactions.assert_called_once_with(
+                    "--TOKEN--", "EUR", since, until
+                )
+                get_balance.assert_called_once_with("--TOKEN--", "EUR", since)
+                self.assertEqual(
+                    data,
+                    (
+                        [],
+                        {
+                            "balance_start": Decimal("0.75"),
+                            "balance_end_real": Decimal("0.75"),
+                        },
+                    ),
+                )
 
     def test_ancient_pull(self):
         journal = self.AccountJournal.create(

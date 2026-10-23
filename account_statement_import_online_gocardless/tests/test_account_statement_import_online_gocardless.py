@@ -1,12 +1,19 @@
 # Copyright 2023 Tecnativa - Pedro M.Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import json
 from unittest import mock
 
+import requests
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import common
+
+from odoo.addons.account_statement_import_online.tests.http_common import (
+    mock_http_responses,
+)
 
 _module_ns = "odoo.addons.account_statement_import_online_gocardless"
 _provider_class = (
@@ -15,6 +22,121 @@ _provider_class = (
 
 
 class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCase):
+    def test_http_preserves_requests_and_errors(self):
+        self.provider.api_base = "http://untrusted.invalid"
+        for method, status, payload in (
+            ("get", 200, {"institutions": []}),
+            ("post", 201, {"access": "dummy-token"}),
+            ("get", 429, {"detail": "Test rate limit"}),
+        ):
+            response = requests.Response()
+            response.status_code = status
+            response._content = json.dumps(payload).encode()
+            with (
+                self.subTest(method=method, status=status),
+                mock.patch.object(
+                    type(self.provider),
+                    "_gocardless_get_token",
+                    return_value="dummy-token",
+                ),
+                mock_http_responses(response) as transport,
+            ):
+                if status == 429:
+                    with self.assertRaisesRegex(UserError, "Test rate limit"):
+                        self.provider._gocardless_request("institutions")
+                else:
+                    _, data = self.provider._gocardless_request(
+                        "institutions",
+                        request_type=method,
+                        params={"country": "GB"},
+                        data="dummy-body",
+                        basic_auth=method == "post",
+                    )
+                    self.assertEqual(data, payload)
+                transport.assert_called_once()
+                request = transport.call_args.args[0]
+                self.assertEqual(request.method, method.upper())
+                self.assertTrue(
+                    request.url.startswith(
+                        "https://bankaccountdata.gocardless.com/api/v2/institutions/"
+                    )
+                )
+                self.assertEqual(transport.call_args.kwargs["timeout"], 60)
+                self.assertEqual(
+                    request.headers.get("Authorization"),
+                    None if method == "post" else "Bearer dummy-token",
+                )
+                if status != 429:
+                    self.assertIn("country=GB", request.url)
+                    self.assertEqual(request.body, "dummy-body")
+
+    def test_http_rejects_untrusted_joined_endpoints(self):
+        for endpoint in (
+            "http://127.0.0.1",
+            "http://[::1]",
+            "http://169.254.169.254/latest",
+            "//untrusted.invalid",
+            "https://untrusted.invalid",
+            "https://bankaccountdata.gocardless.com.evil.invalid",
+            "https://evil@bankaccountdata.gocardless.com",
+            "https://bankaccountdata.gocardless.com@evil.invalid",
+            "https://bankaccountdata.gocardless.com:444",
+            "https://bankaccountdata.gocardless.com:invalid",
+            "https://bankaccountdata.gocardless.com#fragment",
+        ):
+            with (
+                self.subTest(endpoint=endpoint),
+                mock.patch.object(
+                    type(self.provider), "_gocardless_get_headers"
+                ) as headers,
+                mock.patch("requests.get") as request,
+                self.assertRaisesRegex(UserError, "official GoCardless HTTPS"),
+            ):
+                try:
+                    self.provider._gocardless_request(endpoint)
+                finally:
+                    headers.assert_not_called()
+                    request.assert_not_called()
+
+    def test_http_rejects_get_and_token_redirects(self):
+        for status in (301, 302, 303, 307, 308):
+            for target in ("http://127.0.0.1/private", "https://untrusted.invalid/"):
+                for method in ("get", "post"):
+                    response = requests.Response()
+                    response.status_code = status
+                    response.headers["Location"] = target
+                    response._content = b"{}"
+                    response.request = requests.Request(
+                        method.upper(), "https://bankaccountdata.gocardless.com/api/v2/"
+                    ).prepare()
+                    response.url = response.request.url
+                    with (
+                        self.subTest(status=status, target=target, method=method),
+                        mock.patch.object(
+                            type(self.provider),
+                            "_gocardless_get_token",
+                            return_value="dummy-token",
+                        ),
+                        mock.patch(
+                            "requests.sessions.get_environ_proxies", return_value={}
+                        ),
+                        mock_http_responses(
+                            response, AssertionError("Redirect followed")
+                        ) as transport,
+                        self.assertRaisesRegex(UserError, "redirects are not allowed"),
+                    ):
+                        try:
+                            self.provider._gocardless_request(
+                                "token/new" if method == "post" else "institutions",
+                                request_type=method,
+                                data='{"secret_key":"dummy-secret"}'
+                                if method == "post"
+                                else None,
+                                basic_auth=method == "post",
+                            )
+                        finally:
+                            transport.assert_called_once()
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

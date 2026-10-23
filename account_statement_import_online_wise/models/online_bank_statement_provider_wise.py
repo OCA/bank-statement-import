@@ -8,11 +8,11 @@ import logging
 import urllib.parse
 import urllib.request
 from base64 import b64encode
+from datetime import timezone
 from decimal import Decimal
 from urllib.error import HTTPError
 
 import dateutil.parser
-import pytz
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
@@ -21,10 +21,24 @@ from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.account_statement_import_online.provider_http import (
+    NoRedirectHandler,
+    validate_api_url,
+)
+
 _logger = logging.getLogger(__name__)
 
 
 WISE_API_BASE = "https://api.wise.com"
+WISE_API_HOSTS = frozenset(
+    {
+        "api.wise.com",
+        "api.transferwise.com",
+        "api.wise-sandbox.com",
+        "api.sandbox.transferwise.tech",
+        "api.sandbox.wise.tech",
+    }
+)
 
 
 class OnlineBankStatementProviderWise(models.Model):
@@ -89,9 +103,9 @@ class OnlineBankStatementProviderWise(models.Model):
         currency = (self.currency_id or self.company_id.currency_id).name
 
         if date_since.tzinfo:
-            date_since = date_since.astimezone(pytz.utc).replace(tzinfo=None)
+            date_since = date_since.astimezone(timezone.utc).replace(tzinfo=None)
         if date_until.tzinfo:
-            date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
+            date_until = date_until.astimezone(timezone.utc).replace(tzinfo=None)
 
         # Get corresponding balance by currency
         url = api_base + f"/v1/borderless-accounts?profileId={self.origin}"
@@ -302,6 +316,12 @@ class OnlineBankStatementProviderWise(models.Model):
 
     @api.model
     def _wise_urlopen(self, url, api_key, ott=None, signature=None):
+        try:
+            url = validate_api_url(url, WISE_API_HOSTS)
+        except ValueError as exc:
+            raise UserError(
+                _("Wise API URL must use an official Wise HTTPS endpoint.")
+            ) from exc
         if not api_key:
             raise UserError(_("No API key specified!"))
         request = urllib.request.Request(url)
@@ -309,7 +329,12 @@ class OnlineBankStatementProviderWise(models.Model):
         if ott and signature:
             request.add_header("X-2FA-Approval", ott)
             request.add_header("X-Signature", signature)
-        return urllib.request.urlopen(request)
+        try:
+            return urllib.request.build_opener(NoRedirectHandler()).open(request)
+        except HTTPError as exc:
+            if exc.code in (301, 302, 303, 307, 308):
+                raise UserError(_("Wise API redirects are not allowed.")) from exc
+            raise
 
     @api.onchange("certificate_private_key", "service")
     def _onchange_wise_certificate_private_key(self):

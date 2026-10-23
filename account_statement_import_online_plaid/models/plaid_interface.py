@@ -1,6 +1,8 @@
 # Copyright 2024 Binhex - Adasat Torres de León.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from functools import partial
+
 import plaid
 from plaid.api import plaid_api
 from plaid.model.country_code import CountryCode
@@ -37,7 +39,11 @@ class PlaidInterface(models.AbstractModel):
             },
         )
         try:
-            return plaid_api.PlaidApi(plaid.ApiClient(configuration))
+            client = plaid.ApiClient(configuration)
+            # Per-pool retries do not cover cross-host redirects on urllib3 1.x.
+            manager = client.rest_client.pool_manager
+            manager.request = partial(manager.request, redirect=False)
+            return plaid_api.PlaidApi(client)
         except plaid.ApiException as e:
             raise ValidationError(_("Error getting client api: %s") % e.body) from e
 
