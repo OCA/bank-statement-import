@@ -320,6 +320,7 @@ class TestAccountStatementImportSheetFile(Common):
             (" ", 0, self.mock_mapping_comma_dot),  # empty string
             ("", 0, self.mock_mapping_comma_dot),  # empty space
             ("USD", 0, self.mock_mapping_comma_dot),  # empty dolar
+            ("-", 0, self.mock_mapping_comma_dot),  # sign only (empty amount)
             (
                 "12,34.56",
                 1234.56,
