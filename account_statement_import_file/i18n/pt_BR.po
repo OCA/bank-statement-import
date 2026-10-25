@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2026-10-25 20:22+0000\n"
+"PO-Revision-Date: 2026-10-25 20:23+0000\n"
 "Last-Translator: Luis Felipe Miléo <mileo@kmee.com.br>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/"
 "41243/pt_BR/)\n"
@@ -67,6 +67,10 @@ msgid ""
 "the related bank journal. If the related bank journal doesn't exist yet, you "
 "should create a new one."
 msgstr ""
+"Não foi encontrada nenhuma conta bancária com o número '%(account_number)s' "
+"ligada ao parceiro '%(partner_name)s'. Crie a conta bancária e informe-a no "
+"diário de banco correspondente. Se o diário de banco ainda não existir, crie "
+"um novo."
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
@@ -182,6 +186,9 @@ msgid ""
 "not set on any bank journal. You should set it on the related bank journal. "
 "If the related bank journal doesn't  exist yet, you should create a new one."
 msgstr ""
+"A conta bancária com o número '%(account_number)s' existe no Odoo, mas não "
+"está em nenhum diário de banco. Informe-a no diário de banco correspondente. "
+"Se o diário de banco ainda não existir, crie um novo."
 
 #. module: account_statement_import_file
 #. odoo-python
