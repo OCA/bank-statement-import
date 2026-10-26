@@ -46,6 +46,14 @@ class OnlineBankStatementProviderStripe(models.Model):
     stripe_fee_note = fields.Char()
     stripe_fee_reference = fields.Char()
     stripe_expand = fields.Char(default="data.source")
+    stripe_fetch_billing = fields.Boolean(
+        string="Fetch Billing Data",
+        help="Also fetch the customer, the invoice and the subscription of each "
+        "payment, so that they can be used in the labels, for instance "
+        "{customer.email}, {invoice.number} or {subscription.id}, and they are "
+        "kept in the raw data of the line. It needs more requests to Stripe, and "
+        "the source of the transactions must be expanded (data.source).",
+    )
 
     @api.model
     def _get_available_services(self):
@@ -77,9 +85,12 @@ class OnlineBankStatementProviderStripe(models.Model):
                 continue
             params.append(("expand[]", s))
         lines = []
+        cache = {}
         for tx in self._stripe_api_get_all("/balance_transactions", params):
             if tx["currency"].lower() != currency.name.lower():
                 continue
+            if self.stripe_fetch_billing:
+                self._stripe_add_billing_objects(tx, cache)
             lines.append(
                 {
                     "ref": safe_format(self.stripe_reference, tx),
@@ -104,6 +115,78 @@ class OnlineBankStatementProviderStripe(models.Model):
                     }
                 )
         return lines, {}
+
+    @api.model
+    def _stripe_add_billing_objects(self, tx, cache):
+        """Add the customer, the invoice and the subscription of a payment.
+
+        They are added to the transaction with the keys ``customer``, ``invoice``
+        and ``subscription``. An object that Stripe does not find any more is
+        left out.
+        """
+        source = tx.get("source")
+        if not isinstance(source, dict) or source.get("object") != "charge":
+            return
+        customer_id = _stripe_id(source.get("customer"))
+        if customer_id:
+            customer = self._stripe_get_object(f"/customers/{customer_id}", cache)
+            if customer:
+                tx["customer"] = customer
+        invoice = self._stripe_get_charge_invoice(source, cache)
+        if not invoice:
+            return
+        tx["invoice"] = invoice
+        # Since API version 2025-03-31.basil the subscription is in the parent
+        subscription_id = _stripe_id(
+            invoice.get("subscription")
+            or ((invoice.get("parent") or {}).get("subscription_details") or {}).get(
+                "subscription"
+            )
+        )
+        if subscription_id:
+            subscription = self._stripe_get_object(
+                f"/subscriptions/{subscription_id}", cache
+            )
+            if subscription:
+                tx["subscription"] = subscription
+
+    @api.model
+    def _stripe_get_charge_invoice(self, charge, cache):
+        if "invoice" in charge:
+            # Before API version 2025-03-31.basil the charge has its invoice
+            invoice = charge["invoice"]
+            if isinstance(invoice, dict):
+                return invoice
+            return invoice and self._stripe_get_object(f"/invoices/{invoice}", cache)
+        payment_intent_id = _stripe_id(charge.get("payment_intent"))
+        if not payment_intent_id:
+            return None
+        key = ("invoice_payments", payment_intent_id)
+        if key not in cache:
+            result = self._stripe_api_get(
+                "/invoice_payments",
+                [
+                    ("payment[type]", "payment_intent"),
+                    ("payment[payment_intent]", payment_intent_id),
+                    ("expand[]", "data.invoice"),
+                ],
+            )
+            data = result.get("data") or []
+            cache[key] = data[0].get("invoice") if data else None
+        return cache[key]
+
+    @api.model
+    def _stripe_get_object(self, path, cache):
+        """Get an object from Stripe once per pull, None if it does not exist"""
+        if path not in cache:
+            try:
+                cache[path] = self._stripe_api_get(path)
+            except UserError as error:
+                cause = error.__cause__
+                if not (isinstance(cause, HTTPError) and cause.code == 404):
+                    raise
+                cache[path] = None
+        return cache[path]
 
     @api.model
     def _stripe_api_get_all(self, path, params=None):
@@ -205,6 +288,13 @@ class OnlineBankStatementProviderStripe(models.Model):
             path=path,
             message=message,
         )
+
+
+def _stripe_id(value):
+    """Id of a Stripe object, expanded or not"""
+    if isinstance(value, dict):
+        return value.get("id")
+    return value
 
 
 def safe_format(template, kwargs):

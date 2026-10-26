@@ -2,3 +2,4 @@
 
 from . import test_online_bank_statement_provider_stripe
 from . import test_stripe_api_errors
+from . import test_stripe_billing
