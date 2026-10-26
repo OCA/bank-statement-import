@@ -528,12 +528,13 @@ class AccountStatementImportSheetParser(models.TransientModel):
         thousands, decimal = mapping._get_float_separators()
         # Remove all characters except digits, thousands separator,
         # decimal separator, and signs
-        value = (
-            re.sub(
-                r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+", "", value
-            )
-            or "0"
+        value = re.sub(
+            r"[^\d\-+" + re.escape(thousands) + re.escape(decimal) + "]+", "", value
         )
+        # A value made only of signs (e.g. "-", used in some exports to
+        # indicate an empty amount) is not a valid number: treat it as zero.
+        if not re.search(r"\d", value):
+            value = "0"
         value = value.replace(thousands, "")
         float_separator = "."
         if decimal:
