@@ -1,18 +1,29 @@
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
+import logging
 import re
+import time
 import urllib.request
 from datetime import datetime
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 
 import pytz
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+_logger = logging.getLogger(__name__)
+
 STRIPE_API_BASE = "https://api.stripe.com/v1"
+# Retries of a request that failed for a temporary reason (rate limit,
+# conflict, server error, network): the delay doubles at each attempt
+# unless Stripe tells how long to wait.
+STRIPE_MAX_RETRIES = 3
+STRIPE_RETRY_DELAY = 1
+STRIPE_MAX_RETRY_DELAY = 30
 
 
 class OnlineBankStatementProviderStripe(models.Model):
@@ -114,18 +125,86 @@ class OnlineBankStatementProviderStripe(models.Model):
     def _stripe_api_get(self, path, params=None, data=None):
         if params is None:
             params = {}
+        attempt = 0
+        while True:
+            try:
+                request = urllib.request.Request(
+                    (self.api_base or STRIPE_API_BASE) + path + "?" + urlencode(params),
+                    data=data,
+                )
+                request.add_header("Authorization", f"Bearer {self.password}")
+                response = urllib.request.urlopen(request)
+                content = response.read().decode("utf-8")
+                return json.loads(content)
+            except URLError as e:
+                if attempt >= STRIPE_MAX_RETRIES or not self._stripe_should_retry(e):
+                    if isinstance(e, HTTPError):
+                        raise UserError(self._stripe_error_message(path, e)) from e
+                    raise
+                delay = self._stripe_retry_delay(e, attempt)
+                _logger.info(
+                    "Stripe API call %s failed (%s), retrying in %s seconds",
+                    path,
+                    e,
+                    delay,
+                )
+                time.sleep(delay)
+                attempt += 1
+
+    @api.model
+    def _stripe_should_retry(self, error):
+        """Whether a failed request is worth retrying.
+
+        See https://docs.stripe.com/error-low-level#idempotency
+        """
+        if not isinstance(error, HTTPError):
+            # Network error: the request did not get an answer
+            return True
+        should_retry = error.headers and error.headers.get("Stripe-Should-Retry")
+        if should_retry in ("true", "false"):
+            return should_retry == "true"
+        return error.code in (409, 429) or error.code >= 500
+
+    @api.model
+    def _stripe_retry_delay(self, error, attempt):
+        retry_after = (
+            isinstance(error, HTTPError)
+            and error.headers
+            and error.headers.get("Retry-After")
+        )
         try:
-            request = urllib.request.Request(
-                (self.api_base or STRIPE_API_BASE) + path + "?" + urlencode(params),
-                data=data,
-            )
-            request.add_header("Authorization", f"Bearer {self.password}")
-            response = urllib.request.urlopen(request)
-            content = response.read().decode("utf-8")
-            return json.loads(content)
-        except HTTPError as e:
-            content = json.loads(e.read().decode("utf-8"))
-            raise UserError(f"Stripe API call failed: {path}: {content}") from e
+            delay = float(retry_after)
+        except (TypeError, ValueError):
+            delay = STRIPE_RETRY_DELAY * 2**attempt
+        return min(delay, STRIPE_MAX_RETRY_DELAY)
+
+    @api.model
+    def _stripe_error_message(self, path, error):
+        """Readable message of a failed request, from the error sent by Stripe.
+
+        See https://docs.stripe.com/api/errors
+        """
+        try:
+            content = json.loads(error.read().decode("utf-8"))
+        except (AttributeError, ValueError):
+            content = {}
+        details = content.get("error") if isinstance(content, dict) else None
+        if not isinstance(details, dict):
+            details = {}
+        message = details.get("message") or f"{error.code} {error.reason}"
+        extra = [
+            f"{key}: {details[key]}" for key in ("type", "code") if details.get(key)
+        ]
+        request_id = error.headers and error.headers.get("Request-Id")
+        if request_id:
+            extra.append(f"request: {request_id}")
+        if extra:
+            message = f"{message} ({', '.join(extra)})"
+        return _(
+            "Stripe API call failed: %(path)s: %(message)s",
+            path=path,
+            message=message,
+        )
 
 
 def safe_format(template, kwargs):
