@@ -37,6 +37,26 @@ msgid "Online Bank Statement Provider"
 msgstr "Fornitore estratto conto bancario online"
 
 #. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_skip_website_payments
+msgid "Payments Already Recorded by Odoo"
+msgstr "Pagamenti già registrati da Odoo"
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,help:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_skip_website_payments
+msgid ""
+"Payments made through the Stripe payment provider of Odoo (for instance on "
+"the website) are already recorded by Odoo. When their payment is posted on "
+"the account of this journal, the line of the payment is not imported again "
+"(its fee is); otherwise the line gets the partner of the payment, ready to "
+"be reconciled. It needs the Payment module."
+msgstr ""
+"I pagamenti fatti con il fornitore di pagamento Stripe di Odoo (per esempio "
+"sul sito) sono già registrati da Odoo. Se il loro pagamento è registrato sul"
+" conto di questo registro, la riga del pagamento non viene importata di "
+"nuovo (la sua commissione sì); altrimenti la riga riceve il partner del "
+"pagamento, pronta da riconciliare. Richiede il modulo Pagamenti."
+
+#. module: account_statement_import_online_stripe
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
 msgid "Statement Fee Label"
 msgstr "Etichetta tariffa estratto conto"
@@ -95,6 +115,11 @@ msgstr "Etichetta transizione"
 #: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_note
 msgid "Stripe Note"
 msgstr "Nota transizione"
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_payment_installed
+msgid "Stripe Payment Installed"
+msgstr "Pagamenti Stripe installati"
 
 #. module: account_statement_import_online_stripe
 #: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_reference
