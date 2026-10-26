@@ -1,5 +1,6 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021-2022 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -54,6 +55,12 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         super().setUp()
 
         self.now = fields.Datetime.now()
+        # Details of the payer in the transactions of the tests
+        self.payer_details = {
+            "partner_email": "partner@example.com",
+            "partner_country_id": self.env.ref("base.us").id,
+            "partner_external_ref": "1234567890",
+        }
         self.now_isoformat = self.now.isoformat() + "+0000"
         self.today = datetime(self.now.year, self.now.month, self.now.day)
         self.today_isoformat = self.today.isoformat() + "+0000"
@@ -561,6 +568,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "ref": "Invoice 1",
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
+                **self.payer_details,
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}",
             },
         )
@@ -632,6 +640,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "ref": "Invoice 1",
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
+                **self.payer_details,
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
         )
@@ -691,6 +700,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "ref": "Invoice 1",
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
+                **self.payer_details,
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
         )
@@ -749,6 +759,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "ref": "Invoice 1",
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
+                **self.payer_details,
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
         )
@@ -815,6 +826,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "ref": "Invoice 1",
                 "payment_ref": "1234567890: Payment for Invoice(s) 1",
                 "partner_name": "Acme, Inc.",
+                **self.payer_details,
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
         )
@@ -898,4 +910,47 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
         self.assertEqual(
             provider._paypal_format_datetime(dt),
             "2026-01-15T11:28:27Z",
+        )
+
+    def test_transaction_line_details(self):
+        """Details of the payer and of the payment from the whole transaction"""
+        details = self.OnlineBankStatementProvider._paypal_line_details(
+            {
+                "transaction_info": {
+                    "instrument_type": "PAYPAL",
+                    "paypal_reference_id": "I-SUBSCRIPTION",
+                    "paypal_reference_id_type": "SUB",
+                },
+                "payer_info": {
+                    "account_id": "PAYER1",
+                    "email_address": "jane@example.com",
+                    "phone_number": {
+                        "country_code": "39",
+                        "national_number": "0541000",
+                    },
+                    "address": {
+                        "line1": "Via Roma 1",
+                        "city": "Rimini",
+                        "state": "RN",
+                        "postal_code": "47921",
+                        "country_code": "IT",
+                    },
+                    "country_code": "IT",
+                },
+            }
+        )
+        self.assertEqual(
+            details,
+            {
+                "partner_email": "jane@example.com",
+                "partner_phone": "+39 0541000",
+                "partner_street": "Via Roma 1",
+                "partner_zip": "47921",
+                "partner_city": "Rimini",
+                "partner_state_name": "RN",
+                "partner_country_id": self.env.ref("base.it").id,
+                "partner_external_ref": "PAYER1",
+                "payment_method_type": "PAYPAL",
+                "subscription_ref": "I-SUBSCRIPTION",
+            },
         )
