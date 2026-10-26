@@ -32,9 +32,44 @@ msgid "Expand"
 msgstr "Espandi"
 
 #. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_fee_partner_id
+msgid "Fees Partner"
+msgstr "Partner delle commissioni"
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_fee_as_payment
+msgid "Fees as Payments to Stripe"
+msgstr "Commissioni come pagamenti a Stripe"
+
+#. module: account_statement_import_online_stripe
 #: model:ir.model,name:account_statement_import_online_stripe.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
 msgstr "Fornitore estratto conto bancario online"
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,help:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_fee_partner_id
+msgid ""
+"Partner set on the fee lines when they are recorded as payments to Stripe."
+msgstr ""
+"Partner impostato sulle righe delle commissioni quando sono registrate come "
+"pagamenti a Stripe."
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,help:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_fee_as_payment
+msgid ""
+"Set the partner below on the fee lines, so that a reconciliation model can "
+"reconcile them with the payable account of the partner, as payments of the "
+"invoices Stripe sends for its fees."
+msgstr ""
+"Imposta il partner qui sotto sulle righe delle commissioni, così un modello "
+"di riconciliazione può riconciliarle con il conto fornitori del partner, "
+"come pagamenti delle fatture che Stripe invia per le sue commissioni."
+
+#. module: account_statement_import_online_stripe
+#. odoo-python
+#: code:addons/account_statement_import_online_stripe/models/online_bank_statement_provider_stripe.py:0
+msgid "Set the partner of the fees to record them as payments."
+msgstr "Imposta il partner delle commissioni per registrarle come pagamenti."
 
 #. module: account_statement_import_online_stripe
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
