@@ -3,6 +3,7 @@
 # Copyright 2022-2023 Therp BV (https://therp.nl)
 # Copyright 2014 Tecnativa - Pedro M. Baeza
 # Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -213,9 +214,18 @@ class OnlineBankStatementProvider(models.Model):
                 period_since += provider._get_statement_date_step()
                 statement_date_until = provider._provider_tz_to_utc(period_since)
                 try:
-                    data = provider._obtain_statement_data(
-                        statement_date_since, statement_date_until
-                    )
+                    # A failure while writing the statement (e.g. a database
+                    # error) must not abort the transaction of the whole
+                    # scheduled pull: the period is rolled back and logged
+                    # like a failure to obtain the data.
+                    with self.env.cr.savepoint():
+                        data = provider._obtain_statement_data(
+                            statement_date_since, statement_date_until
+                        )
+                        if not debug:
+                            provider._create_or_update_statement(
+                                data, statement_date_since, statement_date_until
+                            )
                 except BaseException as exception:
                     if not is_scheduled:
                         raise
@@ -226,10 +236,6 @@ class OnlineBankStatementProvider(models.Model):
                     break  # Continue with next provider.
                 if debug:
                     debug_data += data
-                else:
-                    provider._create_or_update_statement(
-                        data, statement_date_since, statement_date_until
-                    )
                 statement_date_since = statement_date_until
             if is_scheduled:
                 provider._schedule_next_run(failed_since=failed_since)
