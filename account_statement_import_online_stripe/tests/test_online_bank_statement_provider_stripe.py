@@ -1,7 +1,52 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from unittest.mock import patch
 
 from odoo.addons.base.tests.common import BaseCommon
+
+BALANCES_MODULE = (
+    "odoo.addons.account_statement_import_online_stripe.models"
+    ".online_bank_statement_provider_stripe.OnlineBankStatementProviderStripe"
+)
+
+
+def _balances_ts(*args):
+    return int(datetime(*args, tzinfo=timezone.utc).timestamp())
+
+
+def _balances_transaction(tx_id, created, amount, fee=0, currency="usd"):
+    return {
+        "id": tx_id,
+        "amount": amount,
+        "fee": fee,
+        "net": amount - fee,
+        "currency": currency,
+        "created": created,
+        "object": "balance_transaction",
+        "type": "charge",
+        "source": {"id": f"ch_{tx_id}", "object": "charge"},
+    }
+
+
+BALANCES_TRANSACTIONS = [
+    _balances_transaction("t0", _balances_ts(2023, 3, 14, 12), 10000),
+    _balances_transaction("t1", _balances_ts(2023, 3, 15, 9), 5000, fee=150),
+    _balances_transaction("t2", _balances_ts(2023, 3, 15, 18), -2000),
+    _balances_transaction("t3", _balances_ts(2023, 3, 16, 10), 1000),
+    _balances_transaction("eur", _balances_ts(2023, 3, 15, 10), 99999, currency="eur"),
+]
+
+
+BALANCES_BALANCE = {
+    "available": [{"amount": 10000, "currency": "usd"}],
+    "pending": [{"amount": 3850, "currency": "usd"}, {"amount": 5, "currency": "eur"}],
+}
+
+
+def _balances_api_get_all(provider, path, params=None):
+    params = dict(params or [])
+    since = params.get("created[gte]", 0)
+    until = params.get("created[lt]", float("inf"))
+    return [tx for tx in BALANCES_TRANSACTIONS if since <= tx["created"] < until]
 
 
 class TestOnlineBankStatementProviderStripe(BaseCommon):
@@ -25,6 +70,24 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
                 "currency_id": cls.env.ref("base.USD").id,
                 "stripe_note": "Custom Note {source.object}",
                 "stripe_fee_note": "Fee Note {source.object}",
+            }
+        )
+        cls.balances_journal = cls.env["account.journal"].create(
+            {
+                "name": "Stripe",
+                "type": "bank",
+                "code": "SBAL",
+                "bank_statements_source": "online",
+                "currency_id": cls.env.ref("base.USD").id,
+            }
+        )
+        cls.balances_provider = cls.env["online.bank.statement.provider"].create(
+            {
+                "service": "stripe",
+                "password": "test_api_key",
+                "journal_id": cls.balances_journal.id,
+                "stripe_statement_balances": True,
+                "tz": "UTC",
             }
         )
 
@@ -105,3 +168,43 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
                 "stripe fee INV-002 charge ch_456 card",
             )
             self.assertEqual(statement_data[3]["narration"], "Fee Note charge")
+
+    def _balances_patches(self):
+        return (
+            patch(f"{BALANCES_MODULE}._stripe_api_get_all", _balances_api_get_all),
+            patch(f"{BALANCES_MODULE}._stripe_api_get", return_value=BALANCES_BALANCE),
+        )
+
+    def test_balances_of_a_period(self):
+        get_all, get = self._balances_patches()
+        with get_all, get:
+            __, statement_values = self.balances_provider._obtain_statement_data(
+                datetime(2023, 3, 15), datetime(2023, 3, 16)
+            )
+        # Before the 15th only t0; at its end t0, t1 and t2
+        self.assertEqual(
+            statement_values, {"balance_start": 100.0, "balance_end_real": 128.5}
+        )
+
+    def test_balances_of_the_statements(self):
+        get_all, get = self._balances_patches()
+        with get_all, get as balance:
+            self.balances_provider._pull(datetime(2023, 3, 15), datetime(2023, 3, 17))
+        statements = self.env["account.bank.statement"].search(
+            [("journal_id", "=", self.balances_journal.id)], order="name"
+        )
+        self.assertEqual(statements.mapped("balance_start"), [100.0, 128.5])
+        self.assertEqual(statements.mapped("balance_end_real"), [128.5, 138.5])
+        self.assertTrue(all(statements.mapped("is_valid")))
+        # The balance is read once for the whole pull
+        self.assertEqual(balance.call_count, 1)
+
+    def test_balances_disabled(self):
+        self.balances_provider.stripe_statement_balances = False
+        get_all, get = self._balances_patches()
+        with get_all, get as balance:
+            __, statement_values = self.balances_provider._obtain_statement_data(
+                datetime(2023, 3, 15), datetime(2023, 3, 16)
+            )
+        self.assertEqual(statement_values, {})
+        balance.assert_not_called()
