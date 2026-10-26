@@ -33,6 +33,12 @@
                         name="stripe_fee_reference"
                         string="Statement Fee Reference"
                     />
+                    <field name="stripe_fee_as_payment" />
+                    <field
+                        name="stripe_fee_partner_id"
+                        invisible="not stripe_fee_as_payment"
+                        required="service == 'stripe' and stripe_fee_as_payment"
+                    />
                 </group>
             </xpath>
         </field>

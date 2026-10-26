@@ -1,3 +1,4 @@
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -10,7 +11,7 @@ from urllib.parse import urlencode
 import pytz
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 STRIPE_API_BASE = "https://api.stripe.com/v1"
 
@@ -35,6 +36,32 @@ class OnlineBankStatementProviderStripe(models.Model):
     stripe_fee_note = fields.Char()
     stripe_fee_reference = fields.Char()
     stripe_expand = fields.Char(default="data.source")
+    stripe_fee_as_payment = fields.Boolean(
+        string="Fees as Payments to Stripe",
+        help="Set the partner below on the fee lines, so that a reconciliation "
+        "model can reconcile them with the payable account of the partner, as "
+        "payments of the invoices Stripe sends for its fees.",
+    )
+    stripe_fee_partner_id = fields.Many2one(
+        comodel_name="res.partner",
+        string="Fees Partner",
+        help="Partner set on the fee lines when they are recorded as payments "
+        "to Stripe.",
+    )
+
+    @api.constrains("service", "stripe_fee_as_payment", "stripe_fee_partner_id")
+    def _check_stripe_fee_partner(self):
+        for provider in self:
+            if (
+                provider.service == "stripe"
+                and provider.stripe_fee_as_payment
+                and not provider.stripe_fee_partner_id
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "Set the partner of the fees to record them as payments."
+                    )
+                )
 
     @api.model
     def _get_available_services(self):
@@ -65,6 +92,7 @@ class OnlineBankStatementProviderStripe(models.Model):
             if not s:
                 continue
             params.append(("expand[]", s))
+        fee_values = self._stripe_fee_line_values()
         lines = []
         for tx in self._stripe_api_get_all("/balance_transactions", params):
             if tx["currency"].lower() != currency.name.lower():
@@ -90,9 +118,22 @@ class OnlineBankStatementProviderStripe(models.Model):
                         "date": datetime.fromtimestamp(tx["created"]),
                         "unique_import_id": tx["id"] + "_fee",
                         "raw_data": json.dumps(tx),
+                        **fee_values,
                     }
                 )
         return lines, {}
+
+    def _stripe_fee_line_values(self):
+        """Values of the fee lines when they are recorded as payments to Stripe"""
+        self.ensure_one()
+        if not self.stripe_fee_as_payment:
+            return {}
+        partner = self.stripe_fee_partner_id
+        return {
+            "partner_id": partner.id,
+            "partner_name": partner.name,
+            "transaction_type": "fee",
+        }
 
     @api.model
     def _stripe_api_get_all(self, path, params=None):
