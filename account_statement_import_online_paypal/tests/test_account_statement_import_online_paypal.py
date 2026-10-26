@@ -1,5 +1,6 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021-2022 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -553,7 +554,9 @@ class TestAccountBankAccountStatementImportOnlinePayPal(BaseCommon):
             )
 
         self.assertEqual(len(data[0]), 2)
-        del data[0][0]["raw_data"]
+        raw_data = json.loads(data[0][0].pop("raw_data"))
+        self.assertEqual(raw_data["transaction_info"]["transaction_id"], "1234567890")
+        self.assertEqual(raw_data["payer_info"]["email_address"], "partner@example.com")
         self.assertEqual(
             data[0][0],
             {
