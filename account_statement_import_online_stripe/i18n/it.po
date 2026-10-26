@@ -67,6 +67,12 @@ msgid "Statement Reference"
 msgstr "Riferimento estratto conto"
 
 #. module: account_statement_import_online_stripe
+#. odoo-python
+#: code:addons/account_statement_import_online_stripe/models/online_bank_statement_provider_stripe.py:0
+msgid "Stripe API call failed: %(path)s: %(message)s"
+msgstr "Chiamata all'API di Stripe non riuscita: %(path)s: %(message)s"
+
+#. module: account_statement_import_online_stripe
 #: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_expand
 msgid "Stripe Expand"
 msgstr "Espandi transizione"
