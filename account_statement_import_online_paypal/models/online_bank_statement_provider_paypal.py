@@ -307,7 +307,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
         transaction_note = transaction.get("transaction_note")
         invoice = transaction.get("invoice_id")
         payer_name = payer.get("payer_name", {})
-        payer_email = payer_name.get("email_address")
+        payer_email = payer.get("email_address")
         if invoice:
             invoice = self.env._("Invoice %s") % invoice
         note = transaction_id
