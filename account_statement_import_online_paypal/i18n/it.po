@@ -251,21 +251,21 @@ msgstr "Acquisizione token fallita utilizzando ID cliente e segreto!"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(first_transaction_id)s (%"
-"(first_transaction_date)s)"
+"Failed to resolve transaction %(first_transaction_id)s "
+"(%(first_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(first_transaction_id)s (%"
-"(first_transaction_date)s)"
+"Risoluzione transizione fallita %(first_transaction_id)s "
+"(%(first_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(last_transaction_id)s (%"
-"(last_transaction_date)s)"
+"Failed to resolve transaction %(last_transaction_id)s "
+"(%(last_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(last_transaction_id)s (%"
-"(last_transaction_date)s)"
+"Risoluzione transizione fallita %(last_transaction_id)s "
+"(%(last_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -636,14 +636,15 @@ msgstr "Pagamento PayPal Here"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"PayPal allows retrieving transactions only up to 3 years in the past. Please "
-"import older transactions manually. See https://www.paypal.com/us/smarthelp/"
-"article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241"
+"PayPal allows retrieving transactions only up to 3 years in the past. Please"
+" import older transactions manually. See "
+"https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-"
+"history-greater-than-3-years-ts2241"
 msgstr ""
-"PayPal consente di recuperare transazioni solo fino a 3 anni fa. Si prega di "
-"importare manualmente le transazioni più vecchie. Vedere https://"
-"www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-history-"
-"greater-than-3-years-ts2241"
+"PayPal consente di recuperare transazioni solo fino a 3 anni fa. Si prega di"
+" importare manualmente le transazioni più vecchie. Vedere "
+"https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-"
+"history-greater-than-3-years-ts2241"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -685,8 +686,8 @@ msgstr "Prelievo con carta di debito PayPal da ATM"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"PayPal protection bonus, payout for PayPal buyer protection, payout for full "
-"protection with PayPal buyer credit."
+"PayPal protection bonus, payout for PayPal buyer protection, payout for full"
+" protection with PayPal buyer credit."
 msgstr ""
 "Bonus protezione PayPal, pagamento per la protezione acquirente PayPal, "
 "pagamento per la protezione completa con credito acquirente PayPal."
@@ -732,6 +733,31 @@ msgstr "Sospensione revisione pagamento"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid "Payment review release"
 msgstr "Rilascio revisione pagamento"
+
+#. module: account_statement_import_online_paypal
+#: model:ir.model.fields,field_description:account_statement_import_online_paypal.field_online_bank_statement_provider__paypal_skip_website_payments
+msgid "Payments Already Recorded by Odoo"
+msgstr "Pagamenti già registrati da Odoo"
+
+#. module: account_statement_import_online_paypal
+#: model:ir.model.fields,help:account_statement_import_online_paypal.field_online_bank_statement_provider__paypal_skip_website_payments
+msgid ""
+"Payments made through the PayPal payment provider of Odoo (for instance on "
+"the website) are already recorded by Odoo. When their payment is posted on "
+"the account of this journal, the line of the payment is not imported again "
+"(its fee is); otherwise the line gets the partner of the payment, ready to "
+"be reconciled. It needs the Payment module."
+msgstr ""
+"I pagamenti fatti con il fornitore di pagamento PayPal di Odoo (per esempio "
+"sul sito) sono già registrati da Odoo. Se il loro pagamento è registrato sul"
+" conto di questo registro, la riga del pagamento non viene importata di "
+"nuovo (la sua commissione sì); altrimenti la riga riceve il partner del "
+"pagamento, pronta da riconciliare. Richiede il modulo Pagamenti."
+
+#. module: account_statement_import_online_paypal
+#: model:ir.model.fields,field_description:account_statement_import_online_paypal.field_online_bank_statement_provider__paypal_payment_installed
+msgid "Paypal Payment Installed"
+msgstr "Pagamenti PayPal installati"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
