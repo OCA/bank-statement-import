@@ -443,6 +443,24 @@ msgid "Text qualifier"
 msgstr ""
 
 #. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#, python-format
+msgid ""
+"The file looks like a web page (HTML/XML) saved with a spreadsheet "
+"extension. Open it in a spreadsheet application, save it as .xlsx or CSV "
+"and import it again."
+msgstr ""
+
+#. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
+#, python-format
+msgid ""
+"The spreadsheet file could not be read as %(format)s: %(error)s"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__float_thousands_sep
 msgid "Thousands Separator"
 msgstr ""
