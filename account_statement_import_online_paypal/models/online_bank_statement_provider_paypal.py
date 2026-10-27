@@ -1,12 +1,14 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import itertools
 import json
+import logging
 import urllib.request
 from base64 import b64encode
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 from urllib.error import HTTPError
 from urllib.parse import urlencode
@@ -17,7 +19,9 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, models
 from odoo.exceptions import UserError
-from odoo.tools import LazyTranslate
+from odoo.tools import LazyTranslate, html2plaintext
+
+_logger = logging.getLogger(__name__)
 
 _lt = LazyTranslate(__name__, default_lang="en_US")
 
@@ -225,6 +229,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             )
 
         token = self._paypal_get_token()
+        self._paypal_warn_other_currencies(token, currency, date_since, date_until)
         transactions = self._paypal_get_transactions(
             token, currency, date_since, date_until
         )
@@ -381,6 +386,74 @@ class OnlineBankStatementProviderPayPal(models.Model):
         if not available_balance:
             return Decimal()
         return Decimal(available_balance["value"])
+
+    def _paypal_get_balances(self, token, as_of_timestamp):
+        """Available balances of the PayPal account, in all its currencies"""
+        self.ensure_one()
+        params = {"as_of_time": self._paypal_format_datetime(as_of_timestamp)}
+        url = (
+            f"{self.api_base or PAYPAL_API_BASE}/v1/reporting/balances?"
+            f"{urlencode(params)}"
+        )
+        data = self._paypal_retrieve(url, token)
+        balances = {}
+        for balance in data.get("balances") or []:
+            value = (balance.get("available_balance") or {}).get("value")
+            if balance.get("currency") and value is not None:
+                balances[balance["currency"]] = Decimal(value)
+        return balances
+
+    def _paypal_warn_other_currencies(self, token, currency, date_since, date_until):
+        """Warn about the balances in other currencies that changed.
+
+        Only the transactions in the currency of the journal are imported: the
+        other balances of the PayPal account need a provider on a journal in
+        their currency, no warning when it exists.
+        """
+        self.ensure_one()
+        try:
+            utc_now = datetime.now(timezone.utc).replace(tzinfo=None)
+            before = self._paypal_get_balances(token, date_since)
+            after = self._paypal_get_balances(token, min(date_until, utc_now))
+        except UserError as error:
+            # Only a warning: it must not stop the pull
+            _logger.warning(
+                "PayPal provider %s: balances not available: %s", self.name, error
+            )
+            return
+        changed = {
+            other
+            for other in set(before) | set(after)
+            if other != currency and before.get(other) != after.get(other)
+        }
+        if not changed:
+            return
+        handled = self.search(
+            [
+                ("service", "=", "paypal"),
+                ("username", "=", self.username),
+                ("id", "!=", self.id),
+            ]
+        ).mapped(
+            lambda provider: (
+                provider.currency_id or provider.company_id.currency_id
+            ).name
+        )
+        missing = sorted(changed - set(handled))
+        if not missing:
+            return
+        message = self.env._(
+            "The balance of the PayPal account in %(currencies)s changed, but its "
+            "transactions were not imported, because a provider imports only the "
+            "currency of its journal. To import them, add a provider with the same "
+            "Client ID on a journal in that currency.",
+            currencies=", ".join(missing),
+        )
+        _logger.warning("PayPal provider %s: %s", self.name, message)
+        # Once, not at each pull
+        last_message = self.message_ids[:1]
+        if not last_message or html2plaintext(last_message.body) != message:
+            self.message_post(body=message)
 
     def _paypal_get_transaction(self, token, transaction_id, timestamp):
         self.ensure_one()
