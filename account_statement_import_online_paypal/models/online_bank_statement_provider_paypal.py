@@ -1,14 +1,17 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import itertools
 import json
+import logging
+import time
 import urllib.request
 from base64 import b64encode
 from datetime import datetime
 from decimal import Decimal
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 
 import dateutil.parser
@@ -20,9 +23,16 @@ from odoo.exceptions import UserError
 from odoo.tools import LazyTranslate
 
 _lt = LazyTranslate(__name__, default_lang="en_US")
+_logger = logging.getLogger(__name__)
 
 PAYPAL_API_BASE = "https://api.paypal.com"
 TRANSACTIONS_SCOPE = "https://uri.paypal.com/services/reporting/search/read"
+# Retries of a request that failed for a temporary reason (rate limit, server
+# error, network): the delay doubles at each attempt unless PayPal tells how
+# long to wait.
+PAYPAL_MAX_RETRIES = 3
+PAYPAL_RETRY_DELAY = 1
+PAYPAL_MAX_RETRY_DELAY = 30
 EVENT_DESCRIPTIONS = {
     "T0000": _lt("General PayPal-to-PayPal payment"),
     "T0001": _lt("MassPay payment"),
@@ -495,12 +505,14 @@ class OnlineBankStatementProviderPayPal(models.Model):
     @api.model
     def _paypal_decode_error(self, content):
         if "name" in content:
-            return UserError(
-                "{}: {}".format(
-                    content["name"],
-                    content.get("message", self.env._("Unknown error")),
-                )
+            message = "{}: {}".format(
+                content["name"],
+                content.get("message", self.env._("Unknown error")),
             )
+            if content.get("debug_id"):
+                # To quote when asking PayPal for help
+                message += f" (debug_id: {content['debug_id']})"
+            return UserError(message)
 
         if "error" in content:
             return UserError(
@@ -515,10 +527,12 @@ class OnlineBankStatementProviderPayPal(models.Model):
     @api.model
     def _paypal_retrieve(self, url, auth, data=None):
         try:
-            with self._paypal_urlopen(url, auth, data) as response:
-                raw = response.read().decode("utf-8")
+            raw = self._paypal_read_with_retries(url, auth, data)
         except HTTPError as e:
-            content = json.loads(e.read().decode("utf-8"))
+            try:
+                content = json.loads(e.read().decode("utf-8"))
+            except (AttributeError, ValueError):
+                content = {}
 
             # NOTE: Workaround for INVALID_REQUEST (see ROADMAP.rst)
             if (
@@ -548,6 +562,50 @@ class OnlineBankStatementProviderPayPal(models.Model):
             raise err
 
         return content
+
+    @api.model
+    def _paypal_read_with_retries(self, url, auth, data=None):
+        """Body of the response, retrying the requests that failed for a
+        temporary reason.
+
+        See https://developer.paypal.com/api/rest/reference/rate-limiting/
+        """
+        attempt = 0
+        while True:
+            try:
+                with self._paypal_urlopen(url, auth, data) as response:
+                    return response.read().decode("utf-8")
+            except URLError as e:
+                if attempt >= PAYPAL_MAX_RETRIES or not self._paypal_should_retry(e):
+                    raise
+                delay = self._paypal_retry_delay(e, attempt)
+                _logger.info(
+                    "PayPal API call %s failed (%s), retrying in %s seconds",
+                    url.split("?")[0],
+                    e,
+                    delay,
+                )
+                time.sleep(delay)
+                attempt += 1
+
+    @api.model
+    def _paypal_should_retry(self, error):
+        """Whether a failed request is worth retrying"""
+        if not isinstance(error, HTTPError):
+            # Network error: the request did not get an answer
+            return True
+        code = getattr(error, "code", None)
+        return code is not None and (code == 429 or code >= 500)
+
+    @api.model
+    def _paypal_retry_delay(self, error, attempt):
+        headers = getattr(error, "headers", None)
+        retry_after = headers and headers.get("Retry-After")
+        try:
+            delay = float(retry_after)
+        except (TypeError, ValueError):
+            delay = PAYPAL_RETRY_DELAY * 2**attempt
+        return min(delay, PAYPAL_MAX_RETRY_DELAY)
 
     @api.model
     def _paypal_urlopen(self, url, auth, data=None):
