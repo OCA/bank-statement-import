@@ -48,3 +48,26 @@ NOTE: For development and testing purposes, you can create Sandbox
 credentials associated with your *PayPal for Business* account. When
 configuring the provider-specific settings, enter the following in the
 *API base* field: <https://api.sandbox.paypal.com>
+
+If Odoo itself takes payments through PayPal (the PayPal payment
+provider, for instance on the website), those payments are already
+recorded by Odoo. To avoid importing them twice, check *Payments
+Already Recorded by Odoo* (visible when the Payment module is
+installed). For each transaction paid through Odoo:
+
+- if its payment is posted on the account of this journal, the line of
+  the payment is not imported (its fee is);
+- otherwise the line is imported with the partner of the payment, ready
+  to be reconciled with it.
+
+Odoo identifies a payment by its capture, until the webhook of the
+PayPal payment provider replaces it with the order, which the
+transactions do not mention. For those payments the captures are read
+from the order, so the app of the provider needs access to the orders
+of the account as well (the feature to accept payments), and not only
+*Transaction Search*.
+
+In the first case the lines of the statement no longer add up to the
+balances given by PayPal, as the payments are recorded outside of the
+statement. Posting the payments on an outstanding account, and then
+reconciling the lines, keeps the statements complete.
