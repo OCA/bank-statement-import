@@ -1,0 +1,339 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_soldo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "%(line)s: the amount is now %(amount)s, but the line is reconciled."
+msgstr "%(line)s: l'importo ora è %(amount)s, ma la riga è riconciliata."
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "%(line)s: the transaction is now %(status)s."
+msgstr "%(line)s: la transazione ora è %(status)s."
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "%(name)s is larger than the size allowed for an attachment."
+msgstr "%(name)s è più grande della dimensione consentita per un allegato."
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "-----BEGIN PRIVATE KEY-----"
+msgstr "-----BEGIN PRIVATE KEY-----"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "API base"
+msgstr "Base API"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields.selection,name:account_statement_import_online_soldo.selection__online_bank_statement_provider__soldo_import_state__authorised
+msgid "Authorised and settled transactions"
+msgstr "Transazioni autorizzate e contabilizzate"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Card"
+msgstr "Carta"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "Client ID"
+msgstr "ID client"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "Client Secret"
+msgstr "Segreto client"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_excluded_wallets
+msgid ""
+"Comma separated names or ids of the wallets whose transactions are not "
+"imported, for instance the company wallet that tops up the cards."
+msgstr ""
+"Nomi o ID, separati da virgola, dei wallet le cui transazioni non vengono "
+"importate, per esempio il wallet aziendale che ricarica le carte."
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_attachments
+msgid ""
+"Download the receipts and invoices attached to the transactions in Soldo and"
+" attach them to the journal entries of the statement lines, also when they "
+"are attached in Soldo after the import."
+msgstr ""
+"Scarica gli scontrini e le fatture allegati alle transazioni in Soldo e li "
+"allega alle registrazioni contabili delle righe dell'estratto conto, anche "
+"quando vengono allegati in Soldo dopo l'importazione."
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Expense category"
+msgstr "Categoria di spesa"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Fee"
+msgstr "Commissione"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "Fingerprint Token"
+msgstr "Token fingerprint"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_settlement_days
+msgid ""
+"How many days before the period the settled transactions are searched for: a"
+" card payment is settled some days after it is made."
+msgstr ""
+"Quanti giorni prima del periodo cercare le transazioni contabilizzate: un "
+"pagamento con carta viene contabilizzato alcuni giorni dopo essere stato "
+"fatto."
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_attachments
+msgid "Import Soldo Attachments"
+msgstr "Importa gli allegati Soldo"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Link"
+msgstr "Link"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Merchant"
+msgstr "Esercente"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Merchant category"
+msgstr "Categoria merceologica"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Notes"
+msgstr "Note"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model,name:account_statement_import_online_soldo.model_online_bank_statement_provider
+msgid "Online Bank Statement Provider"
+msgstr "Fornitore estratto conto bancario online"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Open in Soldo"
+msgstr "Apri in Soldo"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Original amount"
+msgstr "Importo originale"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "Private Key"
+msgstr "Chiave privata"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "Private Key Saved"
+msgstr "Chiave privata salvata"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_update_lines
+msgid ""
+"Search the transactions changed in Soldo during the period and update the "
+"statement lines already imported. The label and the amount are updated only "
+"while the line is not reconciled: a reconciled line whose amount changed, "
+"and a line whose transaction was cancelled, are reported on the provider."
+msgstr ""
+"Cerca le transazioni modificate in Soldo nel periodo e aggiorna le righe "
+"dell'estratto conto già importate. Descrizione e importo si aggiornano solo "
+"finché la riga non è riconciliata: una riga riconciliata il cui importo è "
+"cambiato, e una riga la cui transazione è stata annullata, vengono segnalate"
+" sul provider."
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields.selection,name:account_statement_import_online_soldo.selection__online_bank_statement_provider__soldo_import_state__settled
+msgid "Settled transactions"
+msgstr "Transazioni contabilizzate"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_import_state
+msgid ""
+"Settled: the transactions are imported once settled, on their settlement date and with their final amount.\n"
+"Authorised and settled: the transactions are imported as soon as they are authorised, on their transaction date. The amount of an authorisation can still change when it is settled, and an authorisation can be cancelled after the import."
+msgstr ""
+"Contabilizzate: le transazioni vengono importate una volta contabilizzate, alla data di contabilizzazione e con l'importo definitivo.\n"
+"Autorizzate e contabilizzate: le transazioni vengono importate appena autorizzate, alla data della transazione. L'importo di un'autorizzazione può ancora cambiare quando viene contabilizzata, e un'autorizzazione può essere annullata dopo l'importazione."
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Settlement date"
+msgstr "Data contabile"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Soldo API call failed: %(path)s: %(error)s"
+msgstr "Chiamata all'API Soldo non riuscita: %(path)s: %(error)s"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Soldo API call failed: %(path)s: %(status)s %(message)s"
+msgstr "Chiamata all'API Soldo non riuscita: %(path)s: %(status)s %(message)s"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_excluded_wallets
+msgid "Soldo Excluded Wallets"
+msgstr "Wallet Soldo esclusi"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_private_key
+msgid "Soldo Private Key"
+msgstr "Chiave privata Soldo"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_private_key_set
+msgid "Soldo Private Key Set"
+msgstr "Chiave privata Soldo salvata"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_settlement_days
+msgid "Soldo Settlement Days"
+msgstr "Giorni di contabilizzazione Soldo"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_import_state
+msgid "Soldo Transactions"
+msgstr "Transazioni Soldo"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Soldo attachment download failed: %(error)s"
+msgstr "Download dell'allegato Soldo non riuscito: %(error)s"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "Soldo configuration"
+msgstr "Configurazione Soldo"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Soldo fee: %(label)s"
+msgstr "Commissione Soldo: %(label)s"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Soldo transaction"
+msgstr "Transazione Soldo"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Soldo transaction updated"
+msgstr "Transazione Soldo aggiornata"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Some attachments were not imported from Soldo: %(failures)s"
+msgstr "Alcuni allegati non sono stati importati da Soldo: %(failures)s"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Some statement lines could not be updated from Soldo: %(warnings)s"
+msgstr ""
+"Alcune righe dell'estratto conto non sono state aggiornate da Soldo: "
+"%(warnings)s"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Status"
+msgstr "Stato"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "The private key of %(provider)s is not a valid RSA key in PEM format."
+msgstr ""
+"La chiave privata di %(provider)s non è una chiave RSA valida in formato "
+"PEM."
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_private_key
+msgid ""
+"The private key, in PEM format, whose public key is registered in Soldo. "
+"Once saved it is not shown again: paste a new key to replace it."
+msgstr ""
+"La chiave privata, in formato PEM, la cui chiave pubblica è registrata in "
+"Soldo. Una volta salvata non viene più mostrata: incollarne una nuova per "
+"sostituirla."
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Transaction"
+msgstr "Transazione"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Transaction date"
+msgstr "Data transazione"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: account_statement_import_online_soldo
+#: model:ir.model.fields,field_description:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_update_lines
+msgid "Update Imported Soldo Transactions"
+msgstr "Aggiorna le transazioni Soldo importate"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "User notes"
+msgstr "Note dell'utilizzatore"
+
+#. module: account_statement_import_online_soldo
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
+msgid "https://api.soldo.com or https://api-demo.soldocloud.net"
+msgstr "https://api.soldo.com o https://api-demo.soldocloud.net"
