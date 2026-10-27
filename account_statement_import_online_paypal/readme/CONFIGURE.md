@@ -48,3 +48,11 @@ NOTE: For development and testing purposes, you can create Sandbox
 credentials associated with your *PayPal for Business* account. When
 configuring the provider-specific settings, enter the following in the
 *API base* field: <https://api.sandbox.paypal.com>
+
+PayPal keeps a balance for each currency of the account. A provider
+imports the transactions in the currency of its journal: to import the
+balance in another currency, add a provider with the same *Client ID*
+and *Secret* on a journal in that currency. When the balance in another
+currency changes and no provider imports it, a message on the provider
+says so. If the account converts automatically the payments received in
+other currencies, there is only one balance and nothing else to set.

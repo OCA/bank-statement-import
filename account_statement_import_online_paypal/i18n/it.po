@@ -251,21 +251,21 @@ msgstr "Acquisizione token fallita utilizzando ID cliente e segreto!"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(first_transaction_id)s (%"
-"(first_transaction_date)s)"
+"Failed to resolve transaction %(first_transaction_id)s "
+"(%(first_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(first_transaction_id)s (%"
-"(first_transaction_date)s)"
+"Risoluzione transizione fallita %(first_transaction_id)s "
+"(%(first_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"Failed to resolve transaction %(last_transaction_id)s (%"
-"(last_transaction_date)s)"
+"Failed to resolve transaction %(last_transaction_id)s "
+"(%(last_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(last_transaction_id)s (%"
-"(last_transaction_date)s)"
+"Risoluzione transizione fallita %(last_transaction_id)s "
+"(%(last_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -636,14 +636,15 @@ msgstr "Pagamento PayPal Here"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"PayPal allows retrieving transactions only up to 3 years in the past. Please "
-"import older transactions manually. See https://www.paypal.com/us/smarthelp/"
-"article/why-can't-i-access-transaction-history-greater-than-3-years-ts2241"
+"PayPal allows retrieving transactions only up to 3 years in the past. Please"
+" import older transactions manually. See "
+"https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-"
+"history-greater-than-3-years-ts2241"
 msgstr ""
-"PayPal consente di recuperare transazioni solo fino a 3 anni fa. Si prega di "
-"importare manualmente le transazioni più vecchie. Vedere https://"
-"www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-history-"
-"greater-than-3-years-ts2241"
+"PayPal consente di recuperare transazioni solo fino a 3 anni fa. Si prega di"
+" importare manualmente le transazioni più vecchie. Vedere "
+"https://www.paypal.com/us/smarthelp/article/why-can't-i-access-transaction-"
+"history-greater-than-3-years-ts2241"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -685,8 +686,8 @@ msgstr "Prelievo con carta di debito PayPal da ATM"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid ""
-"PayPal protection bonus, payout for PayPal buyer protection, payout for full "
-"protection with PayPal buyer credit."
+"PayPal protection bonus, payout for PayPal buyer protection, payout for full"
+" protection with PayPal buyer credit."
 msgstr ""
 "Bonus protezione PayPal, pagamento per la protezione acquirente PayPal, "
 "pagamento per la protezione completa con credito acquirente PayPal."
@@ -863,6 +864,20 @@ msgstr "Ritenuta fiscale all'IRS"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid "Temporary hold on available balance"
 msgstr "Blocco temporaneo del saldo disponibile"
+
+#. module: account_statement_import_online_paypal
+#. odoo-python
+#: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
+msgid ""
+"The balance of the PayPal account in %(currencies)s changed, but its "
+"transactions were not imported, because a provider imports only the currency"
+" of its journal. To import them, add a provider with the same Client ID on a"
+" journal in that currency."
+msgstr ""
+"Il saldo del conto PayPal in %(currencies)s è cambiato, ma le sue "
+"transazioni non sono state importate, perché un fornitore importa solo la "
+"valuta del suo registro. Per importarle, aggiungi un fornitore con lo stesso"
+" Client ID su un registro in quella valuta."
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
