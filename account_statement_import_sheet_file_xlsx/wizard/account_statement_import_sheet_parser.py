@@ -82,6 +82,13 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 cell_value = xlsx.cell(row=row, column=col_index).value
                 if isinstance(cell_value, datetime):
                     cell_value = cell_value.strftime(mapping.timestamp_format)
-                values.append(str(cell_value))
+                elif isinstance(cell_value, bool) or not isinstance(
+                    cell_value, int | float
+                ):
+                    # Keep numbers native: stringifying them here would render
+                    # the decimal point with Python notation, which no longer
+                    # matches the separators configured in the mapping.
+                    cell_value = str(cell_value)
+                values.append(cell_value)
             parsed_rows.append(values)
         return parsed_rows
