@@ -12,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 from odoo_test_helper import FakeModelLoader
 
 from odoo import _, fields
+from odoo.modules import neutralize
 from odoo.tests import common
 from odoo.tools import mute_logger
 
@@ -502,6 +503,16 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(self.journal.bank_statements_source, "undefined")
         self.assertEqual(self.journal.online_bank_statement_provider, False)
         self.assertEqual(self.journal.online_bank_statement_provider_id.id, False)
+
+    def test_neutralize(self):
+        """Neutralizing the database deactivates the providers."""
+        self.assertTrue(self.provider.active)
+        for query in neutralize.get_neutralization_queries(
+            ["account_statement_import_online"]
+        ):
+            self.env.cr.execute(query)
+        self.provider.invalidate_recordset(["active"])
+        self.assertFalse(self.provider.active)
 
     def _getExpectedStatements(self, expected_length):
         """Check for length of statement recordset, with helpfull logging."""
