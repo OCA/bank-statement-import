@@ -6,7 +6,7 @@
 
 {
     "name": "Online Bank Statements",
-    "version": "19.0.1.0.4",
+    "version": "19.0.1.0.5",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "maintainers": ["alexey-pelykh"],
     "website": "https://github.com/OCA/bank-statement-import",
