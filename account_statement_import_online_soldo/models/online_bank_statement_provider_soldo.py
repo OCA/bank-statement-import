@@ -5,6 +5,7 @@ import base64
 import hashlib
 import json
 import logging
+import re
 from datetime import datetime, timedelta
 
 import pytz
@@ -16,7 +17,7 @@ from markupsafe import Markup
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_compare, format_datetime, plaintext2html
+from odoo.tools import float_compare, format_date, format_datetime, plaintext2html
 
 _logger = logging.getLogger(__name__)
 
@@ -160,17 +161,24 @@ class OnlineBankStatementProviderSoldo(models.Model):
         sign = -1 if transaction.get("transaction_sign") == "Negative" else 1
         merchant = transaction.get("merchant") or {}
         label = merchant.get("name") or transaction.get("category") or transaction["id"]
+        invoice = transaction.get("invoice") or {}
+        transaction_ref = transaction.get("tx_id") or transaction["id"]
         line = {
             "date": date,
             "amount": sign * float(transaction.get("amount") or 0.0),
             "payment_ref": label,
-            "ref": transaction.get("tx_id") or transaction["id"],
+            # The invoice number, when the card user entered it, is what the
+            # line is reconciled with
+            "ref": invoice.get("number") or transaction_ref,
             "partner_name": merchant.get("name") or False,
             "transaction_type": transaction.get("category") or False,
             "narration": self._soldo_notes(transaction),
             "unique_import_id": transaction["id"],
             "raw_data": json.dumps(transaction),
         }
+        partner = self._soldo_supplier_partner(invoice.get("supplier_vat_number"))
+        if partner:
+            line["partner_id"] = partner.id
         line.update(self._soldo_foreign_currency_values(transaction, sign))
         lines = [line]
         fee = float(transaction.get("fee_amount") or 0.0)
@@ -181,7 +189,7 @@ class OnlineBankStatementProviderSoldo(models.Model):
                     "date": date,
                     "amount": -abs(fee),
                     "payment_ref": self.env._("Soldo fee: %(label)s", label=label),
-                    "ref": line["ref"],
+                    "ref": transaction_ref,
                     "partner_name": "Soldo",
                     "transaction_type": "fee",
                     "unique_import_id": f"{transaction['id']}-FEE",
@@ -198,6 +206,29 @@ class OnlineBankStatementProviderSoldo(models.Model):
             if (transaction.get(key) or "").strip()
         ]
         return plaintext2html("\n".join(notes)) if notes else False
+
+    def _soldo_supplier_partner(self, vat):
+        """Partner of the supplier, found by the VAT number of the invoice
+        entered in Soldo, with or without the country prefix. Nothing when no
+        partner, or more than one, has it."""
+        Partner = self.env["res.partner"]
+        prefix, number = _soldo_split_vat(vat)
+        if not number:
+            return Partner
+        candidates = Partner.search(
+            [
+                ("vat", "ilike", number),
+                ("company_id", "in", [False, self.company_id.id]),
+            ]
+        )
+        partners = Partner
+        for candidate in candidates:
+            candidate_prefix, candidate_number = _soldo_split_vat(candidate.vat)
+            if candidate_number == number and (
+                not prefix or not candidate_prefix or prefix == candidate_prefix
+            ):
+                partners |= candidate.commercial_partner_id
+        return partners if len(partners) == 1 else Partner
 
     def _create_or_update_statement(
         self, data, statement_date_since, statement_date_until
@@ -422,6 +453,9 @@ class OnlineBankStatementProviderSoldo(models.Model):
             "foreign_currency_id": line.get("foreign_currency_id", False),
             "amount_currency": line.get("amount_currency", 0.0),
         }
+        # A partner chosen by hand stays, unless the supplier is found now
+        if line.get("partner_id"):
+            accounting_values["partner_id"] = line["partner_id"]
         warning = False
         if not statement_line.is_reconciled:
             values.update(accounting_values)
@@ -502,6 +536,22 @@ class OnlineBankStatementProviderSoldo(models.Model):
         fee = False
         if transaction.get("fee_amount"):
             fee = f"{transaction['fee_amount']} {transaction.get('fee_currency') or ''}"
+        invoice = transaction.get("invoice") or {}
+        tax_rate = transaction.get("tax_rate") or {}
+        vat_amount = False
+        if tax_rate.get("name") or transaction.get("vat_amount"):
+            vat_amount = (
+                f"{transaction.get('vat_amount') or 0.0} "
+                f"{transaction.get('vat_currency') or ''}"
+            ).strip()
+        # The other tags repeat the expense category and the VAT rate
+        lists = "; ".join(
+            ": ".join(
+                value for value in (tag.get("dictionary"), tag.get("tag")) if value
+            )
+            for tag in transaction.get("tags") or []
+            if tag.get("type") == "CUSTOM"
+        )
         link = False
         if transaction.get("direct_url"):
             link = Markup('<a href="%s" target="_blank">%s</a>') % (
@@ -526,6 +576,13 @@ class OnlineBankStatementProviderSoldo(models.Model):
                 self.env._("Expense category"),
                 (transaction.get("expense_category") or {}).get("name"),
             ),
+            (self.env._("Invoice number"), invoice.get("number")),
+            (self.env._("Invoice date"), self._soldo_format_day(invoice.get("date"))),
+            (self.env._("Supplier VAT number"), invoice.get("supplier_vat_number")),
+            (self.env._("Purchase order"), invoice.get("po_number")),
+            (self.env._("VAT rate"), tax_rate.get("name")),
+            (self.env._("VAT amount"), vat_amount),
+            (self.env._("Lists"), lists),
             (self.env._("Notes"), transaction.get("notes")),
             (self.env._("User notes"), transaction.get("user_notes")),
             (self.env._("Type"), transaction.get("category")),
@@ -561,6 +618,16 @@ class OnlineBankStatementProviderSoldo(models.Model):
         return format_datetime(
             self.env, _soldo_parse_date(value), tz=self.env.context.get("tz")
         )
+
+    def _soldo_format_day(self, value):
+        """Dates without time, like 2026-09-04, in the language of the reader;
+        a value that is not a date is shown as it is."""
+        if not value:
+            return False
+        try:
+            return format_date(self.env, fields.Date.to_date(value))
+        except ValueError:
+            return value
 
     def _soldo_foreign_currency_values(self, transaction, sign):
         """Amount in the currency of the payment, when it is not the one of the
@@ -713,3 +780,12 @@ def _soldo_parse_date(value):
 def _soldo_format_date(date):
     """Naive UTC datetimes as search bounds, like 2017-06-01T12:48:40Z."""
     return date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _soldo_split_vat(vat):
+    """Country prefix and number of a VAT number, without spaces and
+    separators: IT 01234567890 gives ("IT", "01234567890")."""
+    vat = re.sub(r"[^0-9A-Za-z]", "", vat or "").upper()
+    if len(vat) > 2 and vat[:2].isalpha() and not vat[2:].isalpha():
+        return vat[:2], vat[2:]
+    return "", vat

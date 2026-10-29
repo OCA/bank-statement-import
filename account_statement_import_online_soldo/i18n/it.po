@@ -118,8 +118,26 @@ msgstr "Importa gli allegati Soldo"
 #. module: account_statement_import_online_soldo
 #. odoo-python
 #: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Invoice date"
+msgstr "Data fattura"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Invoice number"
+msgstr "Numero fattura"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
 msgid "Link"
 msgstr "Link"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Lists"
+msgstr "Liste"
 
 #. module: account_statement_import_online_soldo
 #. odoo-python
@@ -165,6 +183,12 @@ msgstr "Chiave privata"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form
 msgid "Private Key Saved"
 msgstr "Chiave privata salvata"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Purchase order"
+msgstr "Ordine di acquisto"
 
 #. module: account_statement_import_online_soldo
 #: model:ir.model.fields,help:account_statement_import_online_soldo.field_online_bank_statement_provider__soldo_update_lines
@@ -289,6 +313,12 @@ msgstr "Stato"
 #. module: account_statement_import_online_soldo
 #. odoo-python
 #: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "Supplier VAT number"
+msgstr "Partita IVA del fornitore"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
 msgid "The private key of %(provider)s is not a valid RSA key in PEM format."
 msgstr ""
 "La chiave privata di %(provider)s non è una chiave RSA valida in formato "
@@ -332,6 +362,18 @@ msgstr "Aggiorna le transazioni Soldo importate"
 #: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
 msgid "User notes"
 msgstr "Note dell'utilizzatore"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "VAT amount"
+msgstr "Importo IVA"
+
+#. module: account_statement_import_online_soldo
+#. odoo-python
+#: code:addons/account_statement_import_online_soldo/models/online_bank_statement_provider_soldo.py:0
+msgid "VAT rate"
+msgstr "Aliquota IVA"
 
 #. module: account_statement_import_online_soldo
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_soldo.online_bank_statement_provider_form

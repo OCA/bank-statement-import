@@ -280,6 +280,91 @@ class TestOnlineBankStatementProviderSoldo(BaseCommon):
         )
         self.assertTrue(kwargs["timeout"])
 
+    def _invoice_transaction(self, transaction_id, vat="01234567897", **values):
+        """A transaction with the invoice details and the VAT entered in Soldo."""
+        return soldo_transaction(
+            transaction_id,
+            invoice={
+                "number": "FT/123",
+                "date": "2026-03-09",
+                "supplier_vat_number": vat,
+            },
+            vat_percentage=0.22,
+            vat_amount=9.38,
+            vat_currency="EUR",
+            tax_rate={"name": "Standard rate (22%)", "percentage": 22.0},
+            tags=[
+                {
+                    "dictionary": "Expense Category",
+                    "tag": "Fuel",
+                    "type": "EXPENSE_CATEGORY",
+                },
+                {
+                    "dictionary": "Tax Rate",
+                    "tag": "Standard rate (22%)",
+                    "type": "TAX_RATE",
+                },
+                {"dictionary": "Project", "tag": "Alpha", "type": "CUSTOM"},
+            ],
+            **values,
+        )
+
+    def test_invoice_details(self):
+        supplier = self.env["res.partner"].create(
+            {"name": "Fuel Ltd", "is_company": True, "vat": "IT01234567897"}
+        )
+        self.env["res.partner"].create({"name": "Driver", "parent_id": supplier.id})
+        other = self.env["res.partner"].create(
+            {"name": "Other Ltd", "is_company": True, "vat": "IT07654321012"}
+        )
+        self.env["res.partner"].create(
+            {"name": "Other Ltd (copy)", "is_company": True, "vat": "07654321012"}
+        )
+        lines, _calls = self._obtain_lines(
+            [
+                # The supplier is found without the country prefix too, and its
+                # contacts count as the supplier
+                self._invoice_transaction("T1", fee_amount=1.0, fee_currency="EUR"),
+                # Two partners have the number: none is chosen
+                self._invoice_transaction("T2", vat=other.vat),
+                # Same number, other country
+                self._invoice_transaction("T3", vat="DE01234567897"),
+                soldo_transaction("T4"),
+            ],
+            datetime(2026, 3, 12),
+            datetime(2026, 3, 13),
+        )
+        payment, fee, ambiguous, other_country, without_invoice = lines
+        self.assertEqual(payment["ref"], "FT/123")
+        self.assertEqual(payment["partner_id"], supplier.id)
+        self.assertEqual(fee["ref"], "TX-T1")
+        self.assertNotIn("partner_id", fee)
+        self.assertNotIn("partner_id", ambiguous)
+        self.assertNotIn("partner_id", other_country)
+        self.assertEqual(without_invoice["ref"], "TX-T4")
+        self.assertNotIn("partner_id", without_invoice)
+
+    def test_invoice_details_in_chatter(self):
+        mock, _calls = self._mock_api([self._invoice_transaction("T1")])
+        with mock:
+            self.provider._pull(datetime(2026, 3, 12), datetime(2026, 3, 13))
+        line = self._statement_line("T1")
+        message = line.move_id.message_ids.filtered(
+            lambda message: "Soldo transaction" in (message.body or "")
+        )
+        for text in (
+            "FT/123",
+            "01234567897",
+            "Standard rate (22%)",
+            "9.38 EUR",
+            "Project: Alpha",
+        ):
+            self.assertIn(text, message.body)
+        # The tags that repeat the expense category and the VAT rate are not
+        # listed again
+        self.assertNotIn("Expense Category:", message.body)
+        self.assertNotIn("Tax Rate:", message.body)
+
     def test_notes(self):
         lines, _calls = self._obtain_lines(
             [
@@ -594,6 +679,36 @@ class TestOnlineBankStatementProviderSoldo(BaseCommon):
         self.assertIn("Cancelled", message)
         # A new transaction is not created
         self.assertFalse(self._statement_line("T5"))
+
+    def test_update_invoice_added_later(self):
+        self.provider.soldo_update_lines = True
+        supplier = self.env["res.partner"].create(
+            {"name": "Fuel Ltd", "is_company": True, "vat": "IT01234567897"}
+        )
+        chosen = self.env["res.partner"].create({"name": "Chosen by hand"})
+        transactions = [soldo_transaction("T1"), soldo_transaction("T2")]
+        mock, _calls = self._mock_update_api(transactions, [])
+        with mock:
+            self.provider._pull(datetime(2026, 3, 12), datetime(2026, 3, 13))
+        self._statement_line("T2").partner_id = chosen
+        # Days later the card user enters the invoice details of T1, and only
+        # a note on T2
+        updated_transactions = [
+            self._invoice_transaction("T1"),
+            soldo_transaction("T2", notes="Checked"),
+        ]
+        mock, _calls = self._mock_update_api([], updated_transactions)
+        with mock:
+            self.provider._pull(datetime(2026, 3, 20), datetime(2026, 3, 21))
+        line = self._statement_line("T1")
+        self.assertEqual(line.ref, "FT/123")
+        self.assertEqual(line.partner_id, supplier)
+        updates = line.move_id.message_ids.filtered(
+            lambda message: "Soldo transaction updated" in (message.body or "")
+        )
+        self.assertIn("FT/123", updates.body)
+        # No supplier found: the partner chosen by hand stays
+        self.assertEqual(self._statement_line("T2").partner_id, chosen)
 
     def test_attachments_and_update_one_search(self):
         self.provider.soldo_attachments = True
