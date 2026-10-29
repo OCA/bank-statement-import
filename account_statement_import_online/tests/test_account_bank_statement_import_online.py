@@ -11,6 +11,7 @@ from urllib.error import HTTPError
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
+from odoo.modules import neutralize
 from odoo.orm.model_classes import add_to_registry
 from odoo.tests import common, freeze_time
 from odoo.tools import mute_logger
@@ -468,6 +469,16 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(self.journal.bank_statements_source, "undefined")
         self.assertEqual(self.journal.online_bank_statement_provider, False)
         self.assertEqual(self.journal.online_bank_statement_provider_id.id, False)
+
+    def test_neutralize(self):
+        """Neutralizing the database deactivates the providers."""
+        self.assertTrue(self.provider.active)
+        for query in neutralize.get_neutralization_queries(
+            ["account_statement_import_online"]
+        ):
+            self.env.cr.execute(query)
+        self.provider.invalidate_recordset(["active"])
+        self.assertFalse(self.provider.active)
 
     def _getExpectedStatements(self, expected_length):
         """Check for length of statement recordset, with helpfull logging."""
