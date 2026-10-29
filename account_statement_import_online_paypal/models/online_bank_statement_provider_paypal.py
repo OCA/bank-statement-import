@@ -6,7 +6,7 @@ import itertools
 import json
 import urllib.request
 from base64 import b64encode
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 from urllib.error import HTTPError
 from urllib.parse import urlencode
@@ -214,7 +214,8 @@ class OnlineBankStatementProviderPayPal(models.Model):
         if date_until.tzinfo:
             date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
 
-        if date_since < datetime.utcnow() - relativedelta(years=3):
+        utc_now = datetime.now(timezone.utc).replace(tzinfo=None)
+        if date_since < utc_now - relativedelta(years=3):
             raise UserError(
                 self.env._(
                     "PayPal allows retrieving transactions only up to 3 years in "
@@ -437,7 +438,10 @@ class OnlineBankStatementProviderPayPal(models.Model):
                 invalid_data_workaround = self.env.context.get(
                     "test_account_statement_import_online_paypal_monday",
                     interval_start.weekday() == 0
-                    and (datetime.utcnow() - interval_start).total_seconds() < 28800,
+                    and (
+                        datetime.now(timezone.utc).replace(tzinfo=None) - interval_start
+                    ).total_seconds()
+                    < 28800,
                 )
                 data = self.with_context(
                     invalid_data_workaround=invalid_data_workaround,
