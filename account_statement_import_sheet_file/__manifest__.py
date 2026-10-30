@@ -15,7 +15,7 @@
     "depends": [
         "account_statement_import_file",
     ],
-    "external_dependencies": {"python": ["xlrd", "chardet"]},
+    "external_dependencies": {"python": ["xlrd", "openpyxl", "chardet"]},
     "data": [
         "security/ir.model.access.csv",
         "views/account_statement_import_sheet_mapping.xml",
