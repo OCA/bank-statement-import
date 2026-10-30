@@ -1,3 +1,4 @@
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -35,6 +36,23 @@ class OnlineBankStatementProviderStripe(models.Model):
     stripe_fee_note = fields.Char()
     stripe_fee_reference = fields.Char()
     stripe_expand = fields.Char(default="data.source")
+    stripe_skip_website_payments = fields.Boolean(
+        string="Payments Already Recorded by Odoo",
+        help="Payments made through the Stripe payment provider of Odoo (for "
+        "instance on the website) are already recorded by Odoo. When their "
+        "payment is posted on the account of this journal, the line of the "
+        "payment is not imported again (its fee is); otherwise the line gets the "
+        "partner of the payment, ready to be reconciled. It needs the Payment "
+        "module.",
+    )
+    stripe_payment_installed = fields.Boolean(
+        compute="_compute_stripe_payment_installed"
+    )
+
+    def _compute_stripe_payment_installed(self):
+        installed = "payment.transaction" in self.env
+        for provider in self:
+            provider.stripe_payment_installed = installed
 
     @api.model
     def _get_available_services(self):
@@ -66,20 +84,37 @@ class OnlineBankStatementProviderStripe(models.Model):
                 continue
             params.append(("expand[]", s))
         lines = []
-        for tx in self._stripe_api_get_all("/balance_transactions", params):
+        transactions = list(self._stripe_api_get_all("/balance_transactions", params))
+        odoo_payments = {}
+        if self.stripe_skip_website_payments:
+            odoo_payments = self._stripe_get_odoo_payments(transactions)
+        for tx in transactions:
             if tx["currency"].lower() != currency.name.lower():
                 continue
-            lines.append(
-                {
-                    "ref": safe_format(self.stripe_reference, tx),
-                    "payment_ref": safe_format(self.stripe_label, tx),
-                    "narration": safe_format(self.stripe_note, tx),
-                    "amount": float(tx["amount"]) / (10**currency.decimal_places),
-                    "date": datetime.fromtimestamp(tx["created"]),
-                    "unique_import_id": tx["id"],
-                    "raw_data": json.dumps(tx),
-                }
+            payment_values = {}
+            odoo_payment = next(
+                (
+                    odoo_payments[key]
+                    for key in _stripe_payment_keys(tx)
+                    if key in odoo_payments
+                ),
+                None,
             )
+            if odoo_payment:
+                payment_values = self._stripe_odoo_payment_line_values(odoo_payment)
+            if payment_values is not None:
+                lines.append(
+                    {
+                        "ref": safe_format(self.stripe_reference, tx),
+                        "payment_ref": safe_format(self.stripe_label, tx),
+                        "narration": safe_format(self.stripe_note, tx),
+                        "amount": float(tx["amount"]) / (10**currency.decimal_places),
+                        "date": datetime.fromtimestamp(tx["created"]),
+                        "unique_import_id": tx["id"],
+                        "raw_data": json.dumps(tx),
+                        **payment_values,
+                    }
+                )
             if tx.get("fee"):
                 lines.append(
                     {
@@ -93,6 +128,55 @@ class OnlineBankStatementProviderStripe(models.Model):
                     }
                 )
         return lines, {}
+
+    def _stripe_get_odoo_payments(self, transactions):
+        """Payments recorded by the Stripe payment provider of Odoo.
+
+        :return: a dict mapping the Stripe ids of the payments (payment intent,
+            charge or refund) to their ``payment.transaction``
+        """
+        self.ensure_one()
+        if "payment.transaction" not in self.env:
+            return {}
+        keys = set()
+        for tx in transactions:
+            keys.update(_stripe_payment_keys(tx))
+        if not keys:
+            return {}
+        payment_transactions = (
+            self.env["payment.transaction"]
+            .sudo()
+            .search(
+                [
+                    ("provider_code", "=", "stripe"),
+                    ("provider_reference", "in", list(keys)),
+                    ("state", "=", "done"),
+                ]
+            )
+        )
+        return {ptx.provider_reference: ptx for ptx in payment_transactions}
+
+    def _stripe_odoo_payment_line_values(self, payment_transaction):
+        """Values of the line of a payment already recorded by Odoo.
+
+        :return: None when the payment is already posted on the account of the
+            journal, so that the line must not be imported again; otherwise the
+            values to add to the line
+        """
+        self.ensure_one()
+        payment = (
+            payment_transaction.payment_id
+            if "payment_id" in payment_transaction._fields
+            else None
+        )
+        if (
+            payment
+            and payment.move_id.state == "posted"
+            and payment.outstanding_account_id
+            and payment.outstanding_account_id == self.journal_id.default_account_id
+        ):
+            return None
+        return {"partner_id": payment_transaction.partner_id.id}
 
     @api.model
     def _stripe_api_get_all(self, path, params=None):
@@ -126,6 +210,19 @@ class OnlineBankStatementProviderStripe(models.Model):
         except HTTPError as e:
             content = json.loads(e.read().decode("utf-8"))
             raise UserError(f"Stripe API call failed: {path}: {content}") from e
+
+
+def _stripe_payment_keys(tx):
+    """Stripe ids under which Odoo may have recorded the payment of a transaction"""
+    source = tx.get("source")
+    if not isinstance(source, dict):
+        return set()
+    keys = {source.get("id")}
+    # Odoo records a payment under its payment intent; a refund also refers to
+    # the payment intent of the payment it refunds, which is not its own
+    if source.get("object") == "charge":
+        keys.add(source.get("payment_intent"))
+    return {key for key in keys if isinstance(key, str)}
 
 
 def safe_format(template, kwargs):
