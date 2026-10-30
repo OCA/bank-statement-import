@@ -413,9 +413,16 @@ Bank Statements (OCA)</em> section</li>
 <li>Save the bank account</li>
 <li>Click on provider and configure provider-specific settings.</li>
 </ol>
-<p>To obtain <em>Login</em> and <em>Key</em>:</p>
+<p>To obtain <em>Client ID</em> and <em>Client Secret</em>:</p>
 <ol class="arabic simple">
 <li>Open <a class="reference external" href="https://myponto.com/">MyPonto.com</a>.</li>
+<li>If you are in test environment, enable “Sandbox” mode.</li>
+<li>Add “Custom integration” to obtain <em>Client ID</em> and <em>Client Secret</em>
+credentials.</li>
+<li>Add an account to the custom integration. You can select test
+accounts if you are in sandbox mode.</li>
+<li>The reference of this account should be the same as the <em>Account
+Number</em> of the bank journal in Odoo.</li>
 </ol>
 <p>Check also <tt class="docutils literal">account_bank_statement_import_online</tt> configuration
 instructions for more information.</p>

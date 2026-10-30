@@ -6,6 +6,7 @@ from datetime import datetime
 from unittest import mock
 
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import common
 
 _logger = logging.getLogger(__name__)
@@ -457,3 +458,9 @@ class TestAccountStatementImportOnlinePonto(common.TransactionCase):
             action = wizard.action_debug()
         debug_wizard = self.env[action["res_model"]].browse(action["res_id"])
         self.assertIn("Laboriosam repelo", debug_wizard.data)
+
+    def test_check_journal_bank_account_configured(self):
+        """Test that UserError is raised if journal has no bank account."""
+        self.journal.bank_account_id = False
+        with self.assertRaises(UserError), self.mock_login():
+            self.provider._pull(datetime(2019, 11, 3), datetime(2019, 11, 18))
