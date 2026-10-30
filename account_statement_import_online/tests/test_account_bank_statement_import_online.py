@@ -206,6 +206,38 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertTrue(statements[1].balance_start)
 
     @freeze_time("2026-08-29 12:00:00")
+    def test_pull_no_balance_end_real_follows_lines(self):
+        """Without a provider balance, the declared close must follow the lines."""
+        self.provider.statement_creation_mode = "monthly"
+        provider_context = {
+            "step": {"hours": 24},
+            "override_date_since": datetime(2020, 1, 1),
+            "amount": 1.0,
+            "balance_start": 0,
+            "balance": False,
+        }
+        self.provider.with_context(
+            **provider_context,
+            override_date_until=datetime(2020, 1, 31),
+        )._pull(datetime(2020, 1, 1), datetime(2020, 1, 31))
+        statements = self._getExpectedStatements(1)
+        self.assertEqual(statements[0].balance_end_real, 30.0)
+
+        # A line lands in a window already written.
+        self.provider.with_context(
+            **provider_context,
+            override_date_until=datetime(2020, 2, 15),
+        )._pull(datetime(2020, 1, 1), datetime(2020, 2, 29))
+        statements = self._getExpectedStatements(2)
+        self.assertEqual(statements[0].balance_end_real, 31.0)
+        self.assertEqual(
+            statements[0].balance_end_real,
+            statements[0].balance_start + sum(statements[0].line_ids.mapped("amount")),
+        )
+        # The next window must open on the corrected figure.
+        self.assertEqual(statements[1].balance_start, 31.0)
+
+    @freeze_time("2026-08-29 12:00:00")
     def test_wizard(self):
         now = fields.Datetime.now()
         vals = {
