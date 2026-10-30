@@ -3,9 +3,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest import mock
+from unittest.mock import patch
 from urllib.error import HTTPError
 
 from dateutil.relativedelta import relativedelta
@@ -13,6 +14,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common
+
+from ..models.online_bank_statement_provider_paypal import _paypal_payment_keys
 
 _module_ns = "odoo.addons.account_statement_import_online_paypal"
 _provider_class = (
@@ -49,7 +52,62 @@ class UrlopenRetValMock:
         return self.content.encode("utf-8")
 
 
+ODOO_DAY = datetime.combine(datetime.now().date(), datetime.min.time()) - timedelta(
+    days=1
+)
+
+
+ODOO_MODULE = (
+    "odoo.addons.account_statement_import_online_paypal.models"
+    ".online_bank_statement_provider_paypal.OnlineBankStatementProviderPayPal"
+)
+
+
+def _odoo_transaction(transaction_id, order_id=None):
+    info = {
+        "transaction_id": transaction_id,
+        "transaction_event_code": "T0006",
+        "transaction_updated_date": ODOO_DAY + timedelta(hours=10),
+        "transaction_amount": {"currency_code": "USD", "value": "10.00"},
+        "fee_amount": {"currency_code": "USD", "value": "-0.50"},
+        "available_balance": {"currency_code": "USD", "value": "100.00"},
+        "transaction_subject": "Order",
+    }
+    if order_id:
+        info["paypal_reference_id"] = order_id
+        info["paypal_reference_id_type"] = "ODR"
+    return {"transaction_info": info, "payer_info": {}, "cart_info": {}}
+
+
 class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.odoo_journal = cls.env["account.journal"].create(
+            {
+                "name": "PayPal",
+                "type": "bank",
+                "code": "PODOO",
+                "bank_statements_source": "online",
+                "currency_id": cls.env.ref("base.USD").id,
+            }
+        )
+        cls.odoo_partner = cls.env["res.partner"].create({"name": "Customer"})
+        cls.odoo_provider = cls.env["online.bank.statement.provider"].create(
+            {
+                "service": "paypal",
+                "username": "client_id",
+                "password": "secret",
+                "journal_id": cls.odoo_journal.id,
+                "paypal_skip_website_payments": True,
+            }
+        )
+        cls.odoo_transactions = [
+            _odoo_transaction("CAPTURE1"),
+            _odoo_transaction("CAPTURE2", order_id="ORDER2"),
+            _odoo_transaction("CAPTURE3"),
+        ]
+
     def setUp(self):
         super().setUp()
 
@@ -899,3 +957,154 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             provider._paypal_format_datetime(dt),
             "2026-01-15T11:28:27Z",
         )
+
+    def _odoo_obtain_lines(self, odoo_payments=None, line_values=None):
+        with (
+            patch(f"{ODOO_MODULE}._paypal_get_token", return_value="TOKEN"),
+            patch(
+                f"{ODOO_MODULE}._paypal_get_transactions",
+                return_value=self.odoo_transactions,
+            ),
+            patch(
+                f"{ODOO_MODULE}._paypal_get_transaction",
+                return_value=self.odoo_transactions[0],
+            ),
+            patch(
+                f"{ODOO_MODULE}._paypal_get_odoo_payments",
+                return_value=odoo_payments or {},
+            ) as get_odoo_payments,
+            patch(
+                f"{ODOO_MODULE}._paypal_odoo_payment_line_values",
+                side_effect=lambda payment: line_values[payment],
+            ),
+        ):
+            lines, __ = self.odoo_provider._obtain_statement_data(
+                ODOO_DAY, ODOO_DAY + timedelta(days=1)
+            )
+        return {line["unique_import_id"]: line for line in lines}, get_odoo_payments
+
+    def test_payment_keys(self):
+        self.assertEqual(_paypal_payment_keys(self.odoo_transactions[0]), {"CAPTURE1"})
+        self.assertEqual(
+            _paypal_payment_keys(self.odoo_transactions[1]), {"CAPTURE2", "ORDER2"}
+        )
+        # A refund refers to the payment it refunds: not a key of the refund
+        refund = _odoo_transaction("REFUND1")
+        refund["transaction_info"].update(
+            paypal_reference_id="CAPTURE1", paypal_reference_id_type="TXN"
+        )
+        self.assertEqual(_paypal_payment_keys(refund), {"REFUND1"})
+
+    def test_payments_recorded_by_odoo(self):
+        lines, __ = self._odoo_obtain_lines(
+            {"CAPTURE1": "posted on the journal", "ORDER2": "to reconcile"},
+            {
+                "posted on the journal": None,
+                "to reconcile": {"partner_id": self.odoo_partner.id},
+            },
+        )
+        timestamp = int((ODOO_DAY + timedelta(hours=10)).timestamp())
+        # Already posted on the journal: only its fee is imported
+        self.assertNotIn(f"CAPTURE1-{timestamp}", lines)
+        self.assertIn(f"CAPTURE1-{timestamp}-FEE", lines)
+        # Recorded elsewhere (found by its order): imported with the partner
+        self.assertEqual(
+            lines[f"CAPTURE2-{timestamp}"]["partner_id"], self.odoo_partner.id
+        )
+        self.assertNotIn("partner_id", lines[f"CAPTURE2-{timestamp}-FEE"])
+        # Not recorded by Odoo: imported as usual
+        self.assertNotIn("partner_id", lines[f"CAPTURE3-{timestamp}"])
+
+    def test_option_disabled(self):
+        self.odoo_provider.paypal_skip_website_payments = False
+        lines, get_odoo_payments = self._odoo_obtain_lines()
+        get_odoo_payments.assert_not_called()
+        self.assertEqual(len(lines), 6)
+
+    def test_order_captures(self):
+        order = {
+            "id": "ORDER3",
+            "purchase_units": [
+                {"payments": {"captures": [{"id": "CAPTURE3"}, {"id": "CAPTURE4"}]}},
+                {"reference_id": "without payments"},
+            ],
+        }
+        with patch(f"{ODOO_MODULE}._paypal_retrieve", return_value=order) as retrieve:
+            captures = self.odoo_provider._paypal_get_order_captures("TOKEN", "ORDER3")
+        self.assertEqual(captures, ["CAPTURE3", "CAPTURE4"])
+        retrieve.assert_called_once_with(
+            "https://api.paypal.com/v2/checkout/orders/ORDER3", "TOKEN"
+        )
+        # Not an order (for instance a capture): nothing, without error
+        with patch(
+            f"{ODOO_MODULE}._paypal_retrieve",
+            side_effect=UserError("RESOURCE_NOT_FOUND: not found"),
+        ):
+            self.assertEqual(
+                self.odoo_provider._paypal_get_order_captures("TOKEN", "CAPTURE1"), []
+            )
+
+    def test_odoo_payments_search(self):
+        """With the PayPal payment provider, find the done transactions"""
+        if "payment.transaction" not in self.env:
+            self.skipTest("The Payment module is not installed")
+        paypal = self.env["payment.provider"].search([("code", "=", "paypal")], limit=1)
+        if not paypal:
+            self.skipTest("The PayPal payment provider is not installed")
+        method = (
+            self.env["payment.method"]
+            .with_context(active_test=False)
+            .search([("code", "=", "paypal")], limit=1)
+        )
+        values = {
+            "provider_id": paypal.id,
+            "payment_method_id": method.id,
+            "amount": 10.0,
+            "currency_id": self.env.ref("base.USD").id,
+            "partner_id": self.odoo_partner.id,
+        }
+        done, __, by_webhook, earlier = self.env["payment.transaction"].create(
+            [
+                dict(values, reference="T1", provider_reference="ORDER2", state="done"),
+                dict(values, reference="T2", provider_reference="CAPTURE3"),
+                # The webhook stored the order: its capture is read from PayPal
+                dict(values, reference="T3", provider_reference="ORDER3", state="done"),
+                dict(values, reference="T4", provider_reference="ORDER4", state="done"),
+            ]
+        )
+        by_webhook.last_state_change = ODOO_DAY + timedelta(hours=11)
+        # Done long before the transactions: its order is not read
+        earlier.last_state_change = ODOO_DAY - timedelta(days=5)
+        orders = {"ORDER3": ["CAPTURE3"], "ORDER4": ["CAPTURE1"]}
+        with patch(
+            f"{ODOO_MODULE}._paypal_get_order_captures",
+            side_effect=lambda token, order_id: orders.get(order_id, []),
+        ) as get_order_captures:
+            odoo_payments = self.odoo_provider._paypal_get_odoo_payments(
+                "TOKEN", self.odoo_transactions
+            )
+        self.assertEqual(odoo_payments, {"ORDER2": done, "CAPTURE3": by_webhook})
+        get_order_captures.assert_called_once_with("TOKEN", "ORDER3")
+        # Without a payment posted on the journal, the line gets the partner
+        self.assertEqual(
+            self.odoo_provider._paypal_odoo_payment_line_values(done),
+            {"partner_id": self.odoo_partner.id},
+        )
+        if "payment_id" not in done._fields:
+            return
+        # Payment posted directly on the account of the journal: line skipped
+        method_line = self.odoo_journal.inbound_payment_method_line_ids[:1]
+        method_line.payment_account_id = self.odoo_journal.default_account_id
+        payment = self.env["account.payment"].create(
+            {
+                "payment_type": "inbound",
+                "partner_type": "customer",
+                "partner_id": self.odoo_partner.id,
+                "amount": 10.0,
+                "journal_id": self.odoo_journal.id,
+                "payment_method_line_id": method_line.id,
+            }
+        )
+        payment.action_post()
+        done.payment_id = payment
+        self.assertIsNone(self.odoo_provider._paypal_odoo_payment_line_values(done))
