@@ -27,9 +27,29 @@ msgid "API base"
 msgstr "API base"
 
 #. module: account_statement_import_online_stripe
+#: model:ir.model.fields,help:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_fetch_billing
+msgid ""
+"Also fetch the customer, the invoice and the subscription of each payment, "
+"so that they can be used in the labels, for instance {customer.email}, "
+"{invoice.number} or {subscription.id}, and they are kept in the raw data of "
+"the line. It needs more requests to Stripe, and the source of the "
+"transactions must be expanded (data.source)."
+msgstr ""
+"Legge anche il cliente, la fattura e l'abbonamento di ogni pagamento, così "
+"si possono usare nelle etichette, per esempio {customer.email}, "
+"{invoice.number} o {subscription.id}, e restano nei dati grezzi della riga. "
+"Richiede più chiamate a Stripe, e l'origine delle transazioni deve essere "
+"espansa (data.source)."
+
+#. module: account_statement_import_online_stripe
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
 msgid "Expand"
 msgstr "Espandi"
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_fetch_billing
+msgid "Fetch Billing Data"
+msgstr "Leggi i dati di fatturazione"
 
 #. module: account_statement_import_online_stripe
 #: model:ir.model,name:account_statement_import_online_stripe.model_online_bank_statement_provider
@@ -65,6 +85,12 @@ msgstr "Nota estratto conto"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
 msgid "Statement Reference"
 msgstr "Riferimento estratto conto"
+
+#. module: account_statement_import_online_stripe
+#. odoo-python
+#: code:addons/account_statement_import_online_stripe/models/online_bank_statement_provider_stripe.py:0
+msgid "Stripe API call failed: %(path)s: %(message)s"
+msgstr "Chiamata all'API di Stripe non riuscita: %(path)s: %(message)s"
 
 #. module: account_statement_import_online_stripe
 #: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_expand
