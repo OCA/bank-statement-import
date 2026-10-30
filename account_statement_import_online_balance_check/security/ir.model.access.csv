@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_online_bank_statement_check_user,online.bank.statement.check:account.group_account_user,model_online_bank_statement_check,account.group_account_user,1,1,1,1
+access_online_bank_statement_check_day_user,online.bank.statement.check.day:account.group_account_user,model_online_bank_statement_check_day,account.group_account_user,1,1,1,1
+access_online_bank_statement_check_issue_user,online.bank.statement.check.issue:account.group_account_user,model_online_bank_statement_check_issue,account.group_account_user,1,1,1,1
