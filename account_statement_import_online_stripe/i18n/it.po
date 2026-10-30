@@ -32,9 +32,23 @@ msgid "Expand"
 msgstr "Espandi"
 
 #. module: account_statement_import_online_stripe
+#: model:ir.model.fields,help:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_foreign_currency
+msgid ""
+"For the payments made in a currency other than the one of the balance, keep "
+"on the line the amount and the currency of the payment."
+msgstr ""
+"Per i pagamenti fatti in una valuta diversa da quella del saldo, conserva "
+"sulla riga l'importo e la valuta del pagamento."
+
+#. module: account_statement_import_online_stripe
 #: model:ir.model,name:account_statement_import_online_stripe.model_online_bank_statement_provider
 msgid "Online Bank Statement Provider"
 msgstr "Fornitore estratto conto bancario online"
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_foreign_currency
+msgid "Payments in Foreign Currencies"
+msgstr "Pagamenti in valuta estera"
 
 #. module: account_statement_import_online_stripe
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
@@ -105,3 +119,15 @@ msgstr "Riferimento transizione"
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
 msgid "Stripe configuration"
 msgstr "Configurazione transizione"
+
+#. module: account_statement_import_online_stripe
+#. odoo-python
+#: code:addons/account_statement_import_online_stripe/models/online_bank_statement_provider_stripe.py:0
+msgid ""
+"Transactions in %(currencies)s were not imported, because they belong to the"
+" balance of the Stripe account in that currency. To import them, add a "
+"provider with the same key on a journal in that currency."
+msgstr ""
+"Le transazioni in %(currencies)s non sono state importate, perché "
+"appartengono al saldo del conto Stripe in quella valuta. Per importarle, "
+"aggiungi un fornitore con la stessa chiave su un registro in quella valuta."

@@ -24,6 +24,7 @@
                     />
                     <field name="password" string="API Key" password="True" />
                     <field name="stripe_expand" string="Expand" />
+                    <field name="stripe_foreign_currency" />
                     <field name="stripe_label" string="Statement Label" />
                     <field name="stripe_note" string="Statement Note" />
                     <field name="stripe_reference" string="Statement Reference" />
