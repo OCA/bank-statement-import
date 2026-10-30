@@ -1,3 +1,4 @@
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -35,12 +36,25 @@ class OnlineBankStatementProviderStripe(models.Model):
     stripe_fee_note = fields.Char()
     stripe_fee_reference = fields.Char()
     stripe_expand = fields.Char(default="data.source")
+    stripe_statement_balances = fields.Boolean(
+        string="Statement Balances",
+        help="Set the starting and ending balances of the statements from the "
+        "balance of the Stripe account, so that Odoo shows the statements whose "
+        "lines do not match it. It needs more requests to Stripe.",
+    )
 
     @api.model
     def _get_available_services(self):
         return super()._get_available_services() + [
             ("stripe", "Stripe"),
         ]
+
+    def _pull(self, date_since, date_until):
+        # The balance of the account and its later transactions are read from
+        # Stripe once per pull, and used for all its periods.
+        if "stripe_balance_cache" not in self.env.context:
+            self = self.with_context(stripe_balance_cache={})
+        return super()._pull(date_since, date_until)
 
     def _obtain_statement_data(self, date_since, date_until):
         self.ensure_one()
@@ -66,7 +80,8 @@ class OnlineBankStatementProviderStripe(models.Model):
                 continue
             params.append(("expand[]", s))
         lines = []
-        for tx in self._stripe_api_get_all("/balance_transactions", params):
+        transactions = list(self._stripe_api_get_all("/balance_transactions", params))
+        for tx in transactions:
             if tx["currency"].lower() != currency.name.lower():
                 continue
             lines.append(
@@ -92,7 +107,54 @@ class OnlineBankStatementProviderStripe(models.Model):
                         "raw_data": json.dumps(tx),
                     }
                 )
-        return lines, {}
+        statement_values = {}
+        if self.stripe_statement_balances:
+            factor = 10**currency.decimal_places
+            balance_end = self._stripe_balance_at(date_until, currency)
+            period_net = sum(
+                tx.get("net", 0)
+                for tx in transactions
+                if tx["currency"].lower() == currency.name.lower()
+            )
+            statement_values = {
+                "balance_start": (balance_end - period_net) / factor,
+                "balance_end_real": balance_end / factor,
+            }
+        return lines, statement_values
+
+    def _stripe_balance_at(self, timestamp, currency):
+        """Balance of the Stripe account at a time, in the smallest unit.
+
+        It is the current balance (available and pending) less the net amounts
+        of the transactions created since then.
+        """
+        self.ensure_one()
+        cache = self.env.context.get("stripe_balance_cache")
+        if cache is None:
+            cache = {}
+        entry = cache.get(self.id)
+        if not entry or entry["since"] > timestamp:
+            later = [
+                (tx["created"], tx.get("net", 0))
+                for tx in self._stripe_api_get_all(
+                    "/balance_transactions", [("created[gte]", timestamp)]
+                )
+                if tx["currency"].lower() == currency.name.lower()
+            ]
+            balance = self._stripe_api_get("/balance")
+            current = sum(
+                amount["amount"]
+                for amount in balance.get("available", []) + balance.get("pending", [])
+                if amount["currency"].lower() == currency.name.lower()
+            )
+            entry = cache[self.id] = {
+                "since": timestamp,
+                "current": current,
+                "later": later,
+            }
+        return entry["current"] - sum(
+            net for created, net in entry["later"] if created >= timestamp
+        )
 
     @api.model
     def _stripe_api_get_all(self, path, params=None):
