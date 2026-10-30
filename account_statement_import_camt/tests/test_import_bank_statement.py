@@ -89,11 +89,26 @@ class TestParser(TestParserCommon):
     def test_parse_camt054(self):
         self._do_parse_test("test-camt054", "golden-camt054.pydata")
 
-    def test_parse_txdtls(self):
-        self._do_parse_test("test-camt053-txdtls", "golden-camt053-txdtls.pydata")
+    def test_parse_2_txdtls(self):
+        self._do_parse_test(
+            "test-camt053-2-txdtls",
+            "golden-camt053-2-txdtls.pydata",
+        )
 
     def test_parse_no_ntry(self):
         self._do_parse_test("test-camt053-no-ntry", "golden-camt053-no-ntry.pydata")
+
+    def test_parse_addtlntryinf_with_no_txdtls(self):
+        self._do_parse_test(
+            "test-camt053-addtlntryinf-with-no-txdtls",
+            "golden-camt053-addtlntryinf-with-no-txdtls.pydata",
+        )
+
+    def test_parse_addtlntryinf_with_1_txdtls(self):
+        self._do_parse_test(
+            "test-camt053-addtlntryinf-with-1-txdtls",
+            "golden-camt053-addtlntryinf-with-1-txdtls.pydata",
+        )
 
 
 class TestImport(TransactionCase):
