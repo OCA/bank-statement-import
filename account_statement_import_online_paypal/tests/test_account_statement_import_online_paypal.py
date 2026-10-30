@@ -1,5 +1,6 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021-2022 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
@@ -552,14 +553,17 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
 
         self.assertEqual(len(data[0]), 2)
-        del data[0][0]["raw_data"]
+        raw_data = json.loads(data[0][0].pop("raw_data"))
+        self.assertEqual(raw_data["transaction_info"]["transaction_id"], "1234567890")
+        self.assertEqual(raw_data["payer_info"]["email_address"], "partner@example.com")
         self.assertEqual(
             data[0][0],
             {
                 "date": self.yesterday,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1"
+                " (partner@example.com)",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}",
             },
@@ -571,7 +575,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "amount": "-100.00",
                 "ref": "Fee for Invoice 1",
                 "payment_ref": "Transaction fee for 1234567890: Payment for Invoice(s)"
-                " 1",
+                " 1 (partner@example.com)",
                 "partner_name": "PayPal",
                 "unique_import_id": f"1234567890-{self.yesterday_timestamp}-FEE",
             },
@@ -630,10 +634,36 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1"
+                " (partner@example.com)",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
+        )
+
+    def test_transaction_parse_without_email(self):
+        lines = self.paypal_parse_transaction(f"""{{
+    "transaction_info": {{
+        "transaction_id": "1234567890",
+        "transaction_event_code": "T1234",
+        "transaction_initiation_date": "{self.today_isoformat}",
+        "transaction_updated_date": "{self.today_isoformat}",
+        "transaction_amount": {{
+            "currency_code": "USD",
+            "value": "1000.00"
+        }},
+        "transaction_status": "S",
+        "transaction_subject": "Payment for Invoice(s) 1"
+    }},
+    "payer_info": {{
+        "payer_name": {{
+            "alternate_full_name": "Acme, Inc."
+        }}
+    }},
+    "cart_info": {{}}
+}}""")
+        self.assertEqual(
+            lines[0]["payment_ref"], "1234567890: Payment for Invoice(s) 1"
         )
 
     def test_transaction_parse_2(self):
@@ -689,7 +719,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1"
+                " (partner@example.com)",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
@@ -747,7 +778,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1"
+                " (partner@example.com)",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },
@@ -759,7 +791,7 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "amount": "-100.00",
                 "ref": "Fee for Invoice 1",
                 "payment_ref": "Transaction fee for 1234567890: Payment for Invoice(s)"
-                " 1",
+                " 1 (partner@example.com)",
                 "partner_name": "PayPal",
                 "unique_import_id": f"1234567890-{self.today_timestamp}-FEE",
             },
@@ -813,7 +845,8 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
                 "date": self.today,
                 "amount": "1000.00",
                 "ref": "Invoice 1",
-                "payment_ref": "1234567890: Payment for Invoice(s) 1",
+                "payment_ref": "1234567890: Payment for Invoice(s) 1"
+                " (partner@example.com)",
                 "partner_name": "Acme, Inc.",
                 "unique_import_id": f"1234567890-{self.today_timestamp}",
             },

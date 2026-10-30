@@ -1,5 +1,6 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import itertools
@@ -306,7 +307,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
         transaction_note = transaction.get("transaction_note")
         invoice = transaction.get("invoice_id")
         payer_name = payer.get("payer_name", {})
-        payer_email = payer_name.get("email_address")
+        payer_email = payer.get("email_address")
         if invoice:
             invoice = self.env._("Invoice %s") % invoice
         note = transaction_id
@@ -328,7 +329,9 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "date": date,
             "payment_ref": note,
             "unique_import_id": unique_import_id,
-            "raw_data": transaction,
+            # The whole transaction (payer, cart...) as valid JSON, so that
+            # it can be read back later
+            "raw_data": json.dumps(data, default=str),
         }
         payer_full_name = payer_name.get("full_name") or payer_name.get(
             "alternate_full_name"
