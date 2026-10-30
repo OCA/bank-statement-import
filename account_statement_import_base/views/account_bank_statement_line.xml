@@ -12,6 +12,30 @@
             ref="account_statement_base.account_bank_statement_line_form"
         />
         <field name="arch" type="xml">
+            <page name="technical" position="before">
+                <page name="transaction_details" string="Transaction Details">
+                    <group>
+                        <group name="counterpart_details" string="Counterpart">
+                            <field name="partner_email" widget="email" />
+                            <field name="partner_phone" widget="phone" />
+                            <field name="partner_street" />
+                            <field name="partner_zip" />
+                            <field name="partner_city" />
+                            <field name="partner_state_name" />
+                            <field name="partner_country_id" />
+                            <field name="partner_external_ref" />
+                        </group>
+                        <group name="payment_details" string="Payment">
+                            <field name="payment_method_type" />
+                            <field name="card_masked_number" />
+                            <field name="card_expiry_date" />
+                            <field name="merchant_category" />
+                            <field name="subscription_ref" />
+                            <field name="provider_url" widget="url" />
+                        </group>
+                    </group>
+                </page>
+            </page>
             <group name="tech-fields" position="inside">
                 <field name="unique_import_id" readonly="1" />
             </group>
