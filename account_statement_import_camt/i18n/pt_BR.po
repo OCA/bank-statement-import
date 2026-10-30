@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-import (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-16 08:08+0000\n"
-"PO-Revision-Date: 2026-10-30 02:52+0000\n"
+"PO-Revision-Date: 2026-10-30 02:53+0000\n"
 "Last-Translator: Luis Felipe Miléo <mileo@kmee.com.br>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-"
 "statement-import-8-0/language/pt_BR/)\n"
@@ -47,15 +47,13 @@ msgstr "Informação adicional da transação"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement
-#, fuzzy
 msgid "Bank Statement"
-msgstr "Importar Extrato Bancário"
+msgstr "Extrato bancário"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_bank_statement_line
-#, fuzzy
 msgid "Bank Statement Line"
-msgstr "Importar Extrato Bancário"
+msgstr "Linha do extrato bancário"
 
 #. module: account_statement_import_camt
 #: model_terms:ir.ui.view,arch_db:account_statement_import_camt.account_statement_import_view
@@ -85,9 +83,8 @@ msgstr "Identificador fim a fim"
 
 #. module: account_statement_import_camt
 #: model:ir.model,name:account_statement_import_camt.model_account_statement_import
-#, fuzzy
 msgid "Import Bank Statement Files"
-msgstr "Importar Extrato Bancário"
+msgstr "Importar arquivos de extrato bancário"
 
 #. module: account_statement_import_camt
 #. odoo-python
