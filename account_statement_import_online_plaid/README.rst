@@ -21,13 +21,13 @@ Online Bank Statements: plaid.com
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fbank--statement--import-lightgray.png?logo=github
-    :target: https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_plaid
+    :target: https://github.com/OCA/bank-statement-import/tree/19.0/account_statement_import_online_plaid
     :alt: OCA/bank-statement-import
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/bank-statement-import-18-0/bank-statement-import-18-0-account_statement_import_online_plaid
+    :target: https://translation.odoo-community.org/projects/bank-statement-import-19-0/bank-statement-import-19-0-account_statement_import_online_plaid
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/bank-statement-import&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -106,10 +106,32 @@ follows:
 - **Plaid Environment**: Select **Sandbox** for testing or
   **Production** for live data.
 
+Then click **Link with Plaid** and log in to the bank in the Plaid
+window. If the login has several accounts (checking, savings, a credit
+card), choose the one for this journal. **Choose Account** changes it
+later.
+
+Several accounts at one bank
+----------------------------
+
+Plaid bills per bank login. To import a second account from a login that
+is already linked, for example a credit card at the same bank as the
+checking account, create its provider and set **Use Plaid Login Of** to
+the first provider instead of entering credentials. Then choose its
+account.
+
+Expired logins and unlinking
+----------------------------
+
+When the bank asks for a new password or a new consent, pulls fail with
+a message to reconnect. Click **Reconnect Bank** to repair the login
+without creating a new one. **Unlink from Plaid** removes the login at
+Plaid, which ends its billing; imported transactions are kept.
+
 Check also ``account_bank_statement_import_online`` configuration
 instructions for more information.
 
-.. |Plaid Keys Dashboard| image:: https://raw.githubusercontent.com/OCA/bank-statement-import/18.0/account_statement_import_online_plaid/static/description/plaid_keys.png
+.. |Plaid Keys Dashboard| image:: https://raw.githubusercontent.com/OCA/bank-statement-import/19.0/account_statement_import_online_plaid/static/description/plaid_keys.png
 
 Usage
 =====
@@ -119,7 +141,7 @@ To pull historical bank statements:
 1. Go to *Invoicing > Configuration > Bank Accounts*
 2. Select specific bank accounts
 3. Configure username, password and host for plaid
-4. Launch *Actions > Sync with plaid.com*
+4. Click *Link with Plaid* and choose the account
 5. After launch *Actions > Online Bank Statements Pull Wizard*
 6. Configure date interval and click *Pull*
 
@@ -127,13 +149,36 @@ If historical data is not needed, then just simply wait for the
 scheduled activity "Pull Online Bank Statements" to be executed for
 getting new transactions.
 
+Changelog
+=========
+
+19.0.1.0.0
+----------
+
+- Migration to 19.0.
+- Import only the account chosen for the journal. A Plaid login can hold
+  several accounts, which were all imported into the same journal.
+- Leave out pending transactions, which get a new ID once posted and
+  were imported twice.
+- Keep the bank's transaction dates in the provider's timezone.
+- Fetch the whole pull range from Plaid once, instead of once per
+  statement period.
+- Scheduled pulls look back 14 days (*Plaid Lookback*), so transactions
+  that post a few days after their date are not missed.
+- Share one Plaid login between providers (*Use Plaid Login Of*).
+- *Reconnect Bank* opens Link in update mode for expired logins. *Unlink
+  from Plaid* removes the login at Plaid.
+- The access token is readable by administrators only.
+- Load Plaid Link from Plaid's CDN, as Plaid requires, instead of a
+  bundled copy.
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-import/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_plaid%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/bank-statement-import/issues/new?body=module:%20account_statement_import_online_plaid%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -167,6 +212,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/18.0/account_statement_import_online_plaid>`_ project on GitHub.
+This module is part of the `OCA/bank-statement-import <https://github.com/OCA/bank-statement-import/tree/19.0/account_statement_import_online_plaid>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

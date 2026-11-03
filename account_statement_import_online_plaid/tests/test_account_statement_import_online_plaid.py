@@ -94,7 +94,8 @@ class TestAccountStatementImportOnlinePlaid(AccountTestInvoicingCommon):
             [("journal_id", "=", (journal or self.journal).id)], order="date"
         )
 
-    def _response(self, transactions=TRANSACTIONS):
+    def _response(self, transactions=None):
+        transactions = TRANSACTIONS if transactions is None else transactions
         return {"transactions": transactions, "total_transactions": len(transactions)}
 
     def test_pull(self, transactions_get):
