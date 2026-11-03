@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="plaid"
+                    string="Plaid config"
+                    invisible="service != 'plaid'"
+                >
+                    <field name="plaid_link_provider_id" />
+                    <field
+                        name="username"
+                        required="service == 'plaid' and not plaid_link_provider_id"
+                        invisible="plaid_link_provider_id"
+                        password="1"
+                        string="Client ID"
+                    />
+                    <field
+                        name="password"
+                        required="service == 'plaid' and not plaid_link_provider_id"
+                        invisible="plaid_link_provider_id"
+                        password="1"
+                        string="Secret Key"
+                    />
+                    <field
+                        name="plaid_host"
+                        required="service == 'plaid' and not plaid_link_provider_id"
+                        invisible="plaid_link_provider_id"
+                        string="Plaid Host"
+                    />
+                    <field name="plaid_lookback_days" />
+                    <field name="plaid_linked" />
+                    <field name="plaid_account_name" invisible="not plaid_linked" />
+                </group>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button
+                    type="object"
+                    class="btn btn-secondary"
+                    name="action_sync_with_plaid"
+                    string="Link with Plaid"
+                    invisible="service != 'plaid' or plaid_link_provider_id or plaid_linked"
+                />
+                <button
+                    type="object"
+                    class="btn btn-secondary"
+                    name="action_sync_with_plaid"
+                    string="Reconnect Bank"
+                    help="Repair a bank login that has expired or changed its password"
+                    invisible="service != 'plaid' or plaid_link_provider_id or not plaid_linked"
+                />
+                <button
+                    type="object"
+                    class="btn btn-secondary"
+                    name="action_plaid_select_account"
+                    string="Choose Account"
+                    invisible="service != 'plaid' or not plaid_linked"
+                />
+                <button
+                    type="object"
+                    class="btn btn-secondary"
+                    name="action_plaid_unlink"
+                    string="Unlink from Plaid"
+                    confirm="Remove this bank login at Plaid? Transactions already imported are kept."
+                    invisible="service != 'plaid' or plaid_link_provider_id or not plaid_linked"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
