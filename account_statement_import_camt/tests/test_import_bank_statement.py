@@ -9,6 +9,7 @@ import tempfile
 from datetime import date
 from pathlib import Path
 
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 from odoo.tools.misc import file_path
 
@@ -94,6 +95,40 @@ class TestParser(TestParserCommon):
 
     def test_parse_no_ntry(self):
         self._do_parse_test("test-camt053-no-ntry", "golden-camt053-no-ntry.pydata")
+
+    def _parse_transactions(self, filename):
+        path = file_path(f"account_statement_import_camt/tests/samples/{filename}")
+        with open(path, "rb") as inputf:
+            _currency, _account, statements = self.parser.parse(inputf.read())
+        return [t for st in statements for t in st["transactions"]]
+
+    def test_unique_import_id_from_account_servicer_references(self):
+        """The entry's AcctSvcrRef, the position and the transaction's
+        AcctSvcrRef identify each transaction; two transactions of one entry
+        sharing a reference still get distinct identifiers."""
+        ids = [
+            t["unique_import_id"]
+            for t in self._parse_transactions("test-camt053-txdtls")
+        ]
+        entry = "20170323001234567891234567891234"
+        self.assertEqual(
+            ids, [f"{entry}/1/123456CHCAFEBABE", f"{entry}/2/123456CHCAFEBABE"]
+        )
+
+    def test_no_reference_no_unique_import_id(self):
+        """Without any AcctSvcrRef nothing reliable identifies a transaction."""
+        for transaction in self._parse_transactions("test-camt053"):
+            self.assertNotIn("unique_import_id", transaction)
+
+    def test_get_unique_import_id(self):
+        uid = self.parser._get_unique_import_id
+        self.assertEqual(uid("E", None, 1, 1), "E")
+        self.assertEqual(uid("E", "T", 1, 1), "E/T")
+        self.assertEqual(uid("E", "E", 1, 1), "E")
+        self.assertEqual(uid("E", None, 2, 3), "E/2")
+        self.assertEqual(uid(None, "T", 1, 1), "T")
+        self.assertEqual(uid(None, "T", 2, 2), "2/T")
+        self.assertIsNone(uid(None, None, 1, 3))
 
 
 class TestImport(TransactionCase):
@@ -186,6 +221,52 @@ class TestImport(TransactionCase):
                     for line in statement_lines
                 )
             )
+
+    def test_reimport_skips_known_transactions(self):
+        """Importing the same statement again creates nothing."""
+        chf = self.env.ref("base.CHF")
+        chf.write({"active": True})
+        bank = self.env["res.partner.bank"].create(
+            {
+                "acc_number": "CH1111000000123456789",
+                "partner_id": self.env.ref("base.main_partner").id,
+                "company_id": self.env.ref("base.main_company").id,
+            }
+        )
+        journal = self.env["account.journal"].create(
+            {
+                "name": "Bank Journal - (test camt CHF)",
+                "code": "TCHF",
+                "type": "bank",
+                "bank_account_id": bank.id,
+                "currency_id": chf.id,
+            }
+        )
+        testfile = file_path(
+            "account_statement_import_camt/tests/samples/test-camt053-txdtls"
+        )
+        with open(testfile, "rb") as datafile:
+            camt_file = base64.b64encode(datafile.read())
+
+        def do_import():
+            self.env["account.statement.import"].create(
+                {"statement_filename": "test import", "statement_file": camt_file}
+            ).import_file_button()
+
+        do_import()
+        lines = self.env["account.bank.statement.line"].search(
+            [("journal_id", "=", journal.id)]
+        )
+        self.assertEqual(len(lines), 2)
+        self.assertTrue(all(lines.mapped("unique_import_id")))
+        with self.assertRaises(UserError):
+            do_import()
+        self.assertEqual(
+            self.env["account.bank.statement.line"].search_count(
+                [("journal_id", "=", journal.id)]
+            ),
+            2,
+        )
 
     def test_zip_import(self):
         """Test import of multiple statements from zip file."""
