@@ -18,7 +18,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -37,8 +37,8 @@ class OnlineBankStatementProviderWise(models.Model):
 
     @api.model
     def values_wise_profile(self):
-        api_base = self.env.context.get("api_base") or WISE_API_BASE
-        api_key = self.env.context.get("api_key")
+        api_base, api_key = self.env.context.get("depending_on", [False, False])
+        api_base = api_base or WISE_API_BASE
         if not api_key:
             return []
         try:
@@ -145,7 +145,7 @@ class OnlineBankStatementProviderWise(models.Model):
             balance_end = data["endOfStatementBalance"]["value"]
             interval_start += interval_step
         if balance_end is None:
-            raise UserError(_("Ending balance unavailable"))
+            raise UserError(self.env._("Ending balance unavailable"))
 
         # Normalize transactions' date, sort by it, and get lines
         transactions = map(
@@ -246,12 +246,14 @@ class OnlineBankStatementProviderWise(models.Model):
         if fees_value:
             lines += [
                 {
-                    "name": _("Fee for %s") % reference_number,
+                    "name": self.env._("Fee for %s", reference_number),
                     "amount": str(fees_value),
                     "date": date,
                     "partner_name": "Wise",
                     "unique_import_id": f"{unique_import_id}-FEE",
-                    "payment_ref": _("Transaction fee for %s") % reference_number,
+                    "payment_ref": self.env._(
+                        "Transaction fee for %s", reference_number
+                    ),
                 }
             ]
         return lines
@@ -279,7 +281,7 @@ class OnlineBankStatementProviderWise(models.Model):
                 raise e
             if not private_key:
                 raise UserError(
-                    _("Strong Customer Authentication is not configured")
+                    self.env._("Strong Customer Authentication is not configured")
                 ) from e
             one_time_token = e.headers["X-2FA-Approval"]
             signature = private_key.sign(
@@ -303,7 +305,7 @@ class OnlineBankStatementProviderWise(models.Model):
     @api.model
     def _wise_urlopen(self, url, api_key, ott=None, signature=None):
         if not api_key:
-            raise UserError(_("No API key specified!"))
+            raise UserError(self.env._("No API key specified!"))
         request = urllib.request.Request(url)
         request.add_header("Authorization", f"Bearer {api_key}")
         if ott and signature:
@@ -336,7 +338,7 @@ class OnlineBankStatementProviderWise(models.Model):
             )
         except BaseException as exception:
             _logger.warning("Unable to parse key", exc_info=True)
-            raise UserError(_("Unable to parse key")) from exception
+            raise UserError(self.env._("Unable to parse key")) from exception
 
     def _wise_generate_key(self):
         self.ensure_one()

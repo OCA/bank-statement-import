@@ -125,7 +125,7 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
             return_value=mocked_response,
         ):
             values_wise_profile = self.OnlineBankStatementProvider.with_context(
-                api_base="https://example.com", api_key="dummy"
+                depending_on=["https://example.com", "dummy"]
             ).values_wise_profile()
         self.assertEqual(
             values_wise_profile,
@@ -137,7 +137,7 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
 
     def test_values_wise_profile_no_key(self):
         values_wise_profile = self.OnlineBankStatementProvider.with_context(
-            api_base="https://example.com"
+            depending_on=["https://example.com", False]
         ).values_wise_profile()
         self.assertEqual(values_wise_profile, [])
 
@@ -148,7 +148,7 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
             return_value=[],
         ):
             values_wise_profile = self.OnlineBankStatementProvider.with_context(
-                api_base="https://example.com", api_key="dummy"
+                depending_on=["https://example.com", "dummy"]
             ).values_wise_profile()
         self.assertEqual(values_wise_profile, [])
 
