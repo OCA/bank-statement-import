@@ -37,8 +37,8 @@ class OnlineBankStatementProviderWise(models.Model):
 
     @api.model
     def values_wise_profile(self):
-        api_base = self.env.context.get("api_base") or WISE_API_BASE
-        api_key = self.env.context.get("api_key")
+        api_base, api_key = self.env.context.get("depending_on", [False, False])
+        api_base = api_base or WISE_API_BASE
         if not api_key:
             return []
         try:

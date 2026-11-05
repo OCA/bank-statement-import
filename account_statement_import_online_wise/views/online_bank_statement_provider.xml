@@ -22,7 +22,7 @@
                         name="api_base"
                         string="API base"
                         groups="base.group_no_one"
-                        required="service == 'transferwise'"
+                        placeholder="https://api.wise.com"
                     />
                     <field
                         name="password"
@@ -35,7 +35,7 @@
                         string="Profile"
                         widget="dynamic_dropdown"
                         options="{'values': 'values_wise_profile'}"
-                        context="{'api_key': password, 'api_base': api_base}"
+                        context="{'depending_on': [api_base, password]}"
                         required="service == 'transferwise' and id"
                     />
                 </group>
