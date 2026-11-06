@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_ramp_form">
+        <field name="name">online.bank.statement.provider.ramp.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="inside">
+                <group
+                    name="ramp"
+                    string="Ramp Configuration"
+                    invisible="service != 'ramp'"
+                >
+                    <field
+                        name="username"
+                        string="Client ID"
+                        help="OAuth2 client_id from Ramp Dashboard → Settings → Developer API."
+                    />
+                    <field
+                        name="password"
+                        string="Client Secret"
+                        password="True"
+                        help="OAuth2 client_secret. Store securely; the module exchanges it for a short-lived bearer."
+                    />
+                    <field name="ramp_host" />
+                    <field name="ramp_token_expiry" readonly="1" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
