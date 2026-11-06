@@ -33,7 +33,7 @@ addon | version | maintainers | summary
 [account_statement_import_online_qonto](account_statement_import_online_qonto/) | 19.0.1.0.1 |  | Online Bank Statements: Qonto
 [account_statement_import_online_stripe](account_statement_import_online_stripe/) | 19.0.1.0.0 | <a href='https://github.com/juancarlosonate-tecnativa'><img src='https://github.com/juancarlosonate-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='juancarlosonate-tecnativa'/></a> | Online bank statements for Stripe
 [account_statement_import_qif](account_statement_import_qif/) | 19.0.1.0.0 |  | Import QIF Bank Statements
-[account_statement_import_sheet_file](account_statement_import_sheet_file/) | 19.0.2.0.2 | <a href='https://github.com/alexey-pelykh'><img src='https://github.com/alexey-pelykh.png' width='32' height='32' style='border-radius:50%;' alt='alexey-pelykh'/></a> | Import TXT/CSV files as Bank Statements in Odoo
+[account_statement_import_sheet_file](account_statement_import_sheet_file/) | 19.0.2.0.3 | <a href='https://github.com/alexey-pelykh'><img src='https://github.com/alexey-pelykh.png' width='32' height='32' style='border-radius:50%;' alt='alexey-pelykh'/></a> | Import TXT/CSV files as Bank Statements in Odoo
 [account_statement_import_sheet_file_xls](account_statement_import_sheet_file_xls/) | 19.0.2.0.0 |  | Import XLS files as Bank Statements in Odoo
 [account_statement_import_sheet_file_xlsx](account_statement_import_sheet_file_xlsx/) | 19.0.2.0.0 |  | Import XLSX files as Bank Statements in Odoo
 
