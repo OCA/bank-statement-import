@@ -1,0 +1,69 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_ofx_by_acctid
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-12-29 10:33+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_setup_bank_manual_config__acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank__acctid
+msgid "ACCTID"
+msgstr "ACCTID"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model,name:account_statement_import_ofx_by_acctid.model_res_partner_bank
+msgid "Bank Accounts"
+msgstr "Cuentas de Banco"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_statement_import__display_name
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_statement_import__id
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model,name:account_statement_import_ofx_by_acctid.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Importar Archivos de Extracto Bancario"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_statement_import____last_update
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank____last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: account_statement_import_ofx_by_acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_account_setup_bank_manual_config__sanitized_acctid
+#: model:ir.model.fields,field_description:account_statement_import_ofx_by_acctid.field_res_partner_bank__sanitized_acctid
+msgid "Sanitized ACCTID"
+msgstr "ACCTID Saneado"
+
+#. module: account_statement_import_ofx_by_acctid
+#: code:addons/account_statement_import_ofx_by_acctid/wizards/account_statement_import.py:0
+#, python-format
+msgid ""
+"The journal found for the file is not consistent with the selected journal. "
+"You should use the proper journal or use the generic button on the top of "
+"the Accounting Dashboard"
+msgstr ""
+"El diario encontrado para el fichero no coincide con el diario seleccionado. "
+"Debe utilizar el diario adecuado o utilizar el botón genérico de la parte "
+"superior del Panel de contabilidad"
