@@ -2,3 +2,4 @@
   - Dario Nieuwenhuis
 - [Tecnativa](https://www.tecnativa.com):
   - Juan Carlos Oñate
+- Luca Orioli \<<lucaorioli@gmail.com>\>
