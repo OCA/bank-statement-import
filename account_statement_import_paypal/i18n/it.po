@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-03 10:06+0000\n"
+"PO-Revision-Date: 2026-11-09 13:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__balance_column
@@ -116,7 +116,7 @@ msgstr "Colonna \"A indirizzo e-mail\""
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__transaction_id_column
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping_wizard__transaction_id_column
 msgid "\"Transaction ID\" column"
-msgstr "Colonna \"ID transizione\""
+msgstr "Colonna \"ID transazione \""
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields,field_description:account_statement_import_paypal.field_account_statement_import_paypal_mapping__type_column
@@ -322,7 +322,7 @@ msgstr "Formato ora"
 #: code:addons/account_statement_import_paypal/models/account_statement_import_paypal_parser.py:0
 #, python-format
 msgid "Transaction fee for %s"
-msgstr "Tariffa transizione per %s"
+msgstr "Tariffa transazione per %s"
 
 #. module: account_statement_import_paypal
 #: model:ir.model.fields.selection,name:account_statement_import_paypal.selection__account_statement_import_paypal_mapping__float_decimal_sep__comma
