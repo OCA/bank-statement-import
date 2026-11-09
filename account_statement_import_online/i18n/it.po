@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-28 10:06+0000\n"
+"PO-Revision-Date: 2026-11-09 13:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_online
 #. odoo-python
@@ -110,7 +110,7 @@ msgstr "Crea estratto conto"
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__create_statement
 msgid "Create statements for the downloaded transactions automatically or not."
-msgstr "Crea estratto conto automaticamente o meno dalle transizioni scaricate."
+msgstr "Crea estratto conto automaticamente o meno dalle transazioni scaricate."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_uid
@@ -162,7 +162,7 @@ msgstr ""
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Fetch and display transaction data (for debug purposes)"
-msgstr "Recupera e visualizza dati transizione (ad uso debug)"
+msgstr "Recupera e visualizza dati transazione (ad uso debug)"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__message_follower_ids
@@ -209,7 +209,7 @@ msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Import Transactions"
-msgstr "Importa transizioni"
+msgstr "Importa transazioni"
 
 #. module: account_statement_import_online
 #. odoo-python
@@ -509,7 +509,7 @@ msgstr "Servizio"
 #. module: account_statement_import_online
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online.online_bank_statement_pull_wizard_form
 msgid "Show Transaction Data"
-msgstr "Visualizza dati transizione"
+msgstr "Visualizza dati transazione"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_account_journal__online_bank_statement_provider_id
@@ -532,7 +532,7 @@ msgid ""
 "Timezone to convert transaction timestamps to prior being saved into a "
 "statement."
 msgstr ""
-"Fuso orario per convertire l'orario della transizione per la priorità di "
+"Fuso orario per convertire l'orario della transazione per la priorità di "
 "salvataggio in un estratto conto."
 
 #. module: account_statement_import_online
@@ -543,7 +543,7 @@ msgstr "A"
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
 msgid "Transactions interval to obtain"
-msgstr "Intervallo transizioni da estrarre"
+msgstr "Intervallo transazioni da estrarre"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__update_schedule
