@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-26 18:09+0000\n"
+"PO-Revision-Date: 2026-11-09 13:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -255,7 +255,7 @@ msgstr "API pagamento diretto"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Display only transaction"
-msgstr "Visualizza solo transizioni"
+msgstr "Visualizza solo transazioni"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -286,8 +286,8 @@ msgid ""
 "Failed to resolve transaction %(first_transaction_id)s "
 "(%(first_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(first_transaction_id)s "
-"(%(first_transaction_date)s)"
+"Risoluzione transazione fallita %(first_transaction_id)s (%"
+"(first_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -297,8 +297,8 @@ msgid ""
 "Failed to resolve transaction %(last_transaction_id)s "
 "(%(last_transaction_date)s)"
 msgstr ""
-"Risoluzione transizione fallita %(last_transaction_id)s "
-"(%(last_transaction_date)s)"
+"Risoluzione transazione fallita %(last_transaction_id)s (%"
+"(last_transaction_date)s)"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -361,7 +361,7 @@ msgstr "Fondi ricevibili: fondi forniti da PayPal che vengono rimborsati"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "General PayPal debit card transaction"
-msgstr "Transizione generale carta di debito PayPal"
+msgstr "Transazione sizione generale carta di debito PayPal"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -529,7 +529,7 @@ msgstr "Inversione strumento generico/portafoglio aperto (lato venditore)"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Generic instrument/Open Wallet transaction"
-msgstr "Transizione strumento generico/portafoglio aperto"
+msgstr "Transazione strumento generico/portafoglio aperto"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -564,7 +564,7 @@ msgstr "Riscatto buono omaggio"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Hidden virtual PayPal debit card transaction"
-msgstr "Transizione virtuale nascosta carta di debito PayPal"
+msgstr "Transazione virtuale nascosta carta di debito PayPal"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -641,14 +641,14 @@ msgstr "Pagamento MassPay"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "MassPay refund transaction"
-msgstr "Transizione rimborso MassPay"
+msgstr "Transazione rimborso MassPay"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "MassPay reversal transaction"
-msgstr "Transizione inversa MassPay"
+msgstr "Transazione inversa MassPay"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -923,7 +923,7 @@ msgstr "Annullamento deposito ACH"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Reversal of ACH withdrawal transaction"
-msgstr "Annullamento transizione deposito ACH"
+msgstr "Annullamento transazione deposito ACH"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
@@ -1019,7 +1019,7 @@ msgstr "Recupero da parte di terzi"
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 #, python-format
 msgid "Transaction fee for %s"
-msgstr "Tariffa transizione per %s"
+msgstr "Tariffa transazione per %s"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
