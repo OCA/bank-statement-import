@@ -126,6 +126,7 @@ class TestAccountBankAccountStatementImportOnlineGocardless(common.TransactionCa
         vals = {
             "date_since": "2020-10-30",
             "date_until": "2020-11-11",
+            "one_fetch": False,
         }
         wizard = (
             self.env["online.bank.statement.pull.wizard"]
