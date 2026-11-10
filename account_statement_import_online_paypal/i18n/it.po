@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-11-09 13:46+0000\n"
+"PO-Revision-Date: 2026-11-10 11:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -227,7 +227,7 @@ msgstr "API pagamento diretto"
 #. odoo-python
 #: code:addons/account_statement_import_online_paypal/models/online_bank_statement_provider_paypal.py:0
 msgid "Display only transaction"
-msgstr "Visualizza solo transazioni"
+msgstr "Visualizza solo transazione"
 
 #. module: account_statement_import_online_paypal
 #. odoo-python
