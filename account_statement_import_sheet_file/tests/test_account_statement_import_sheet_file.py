@@ -3,14 +3,19 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from base64 import b64encode
+from datetime import timedelta
 from decimal import Decimal
 from os import path
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
+
+import xlrd
 
 from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import common, tagged
 from odoo.tools import float_round
+
+from ..models.account_statement_import_sheet_parser import _OpenpyxlSheet
 
 
 @tagged("post_install", "-at_install")
@@ -780,3 +785,210 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_start, 0.0)
         self.assertEqual(statement.balance_end_real, 2291.5)
         self.assertEqual(statement.balance_end, 2291.5)
+
+    XLRD_OPEN_WORKBOOK = (
+        "odoo.addons.account_statement_import_sheet_file.models."
+        "account_statement_import_sheet_parser.xlrd.open_workbook"
+    )
+
+    def _xlrd2_xlsx_error(self):
+        return patch(
+            self.XLRD_OPEN_WORKBOOK,
+            side_effect=xlrd.XLRDError("Excel xlsx file; not supported"),
+        )
+
+    def _create_journal(self, code="BANK"):
+        return self.AccountJournal.create(
+            {
+                "name": "Bank %s" % code,
+                "type": "bank",
+                "code": code,
+                "currency_id": self.currency_usd.id,
+                "suspense_account_id": self.suspense_account.id,
+            }
+        )
+
+    def _import_fixture(self, filename, mapping, journal=None):
+        journal = journal or self._create_journal()
+        wizard = self.AccountStatementImport.with_context(journal_id=journal.id).create(
+            {
+                "statement_filename": filename,
+                "statement_file": self._data_file(filename),
+                "sheet_mapping_id": mapping.id,
+            }
+        )
+        wizard.with_context(
+            account_statement_import_sheet_file_test=True
+        ).import_file_button()
+        statement = self.AccountBankStatement.search([("journal_id", "=", journal.id)])
+        self.assertEqual(len(statement), 1, "Expected exactly one statement")
+        return statement
+
+    def _lines_signature(self, statement):
+        return sorted(
+            (
+                line.amount,
+                str(line.date),
+                line.payment_ref,
+                # The journal id is part of the stored unique id: strip it
+                (line.unique_import_id or "").replace(
+                    "%s-" % line.journal_id.id, "", 1
+                ),
+            )
+            for line in statement.line_ids
+        )
+
+    def _assert_sample_lines(self, statement):
+        self.assertEqual(len(statement.line_ids), 2)
+        lines = statement.line_ids.sorted("amount")
+        self.assertEqual(lines[0].amount, -33.5)
+        self.assertEqual(lines[1].amount, 1525.0)
+        self.assertEqual(
+            lines.mapped("date"),
+            [fields.Date.to_date("2018-12-15")] * 2,
+        )
+        self.assertEqual(
+            lines.mapped("payment_ref"),
+            [
+                "Your best supplier on 12/15/2018",
+                "Your payment on 12/15/2018",
+            ],
+        )
+
+    def _empty_values_map(self):
+        return self.AccountStatementImportSheetMapping.create(
+            {
+                "name": "Sample Statement with empty values",
+                "amount_type": "distinct_credit_debit",
+                "float_decimal_sep": "comma",
+                "delimiter": "n/a",
+                "no_header": 0,
+                "footer_lines_skip_count": 1,
+                "amount_inverse_sign": 0,
+                "header_lines_skip_count": 1,
+                "quotechar": '"',
+                "float_thousands_sep": "dot",
+                "reference_column": "REF",
+                "description_column": "DESCRIPTION",
+                "amount_credit_column": "DEBIT",
+                "amount_debit_column": "CREDIT",
+                "balance_column": "BALANCE",
+                "timestamp_format": "%d/%m/%Y",
+                "timestamp_column": "DATE",
+            }
+        )
+
+    def test_01_xlsx_reader_xlrd(self):
+        statement = self._import_fixture(
+            "fixtures/sample_statement_en.xlsx", self.sample_statement_map
+        )
+        self._assert_sample_lines(statement)
+
+    def test_02_xlsx_reader_openpyxl_fallback(self):
+        filename = "fixtures/sample_statement_en.xlsx"
+        journal_xlrd = self._create_journal("BANK")
+        journal_fallback = self._create_journal("BNK2")
+        expected = self._lines_signature(
+            self._import_fixture(filename, self.sample_statement_map, journal_xlrd)
+        )
+        # Free the unique ids so the second import is not filtered as duplicate
+        self.AccountBankStatement.search(
+            [("journal_id", "=", journal_xlrd.id)]
+        ).line_ids.unlink()
+        with self._xlrd2_xlsx_error():
+            statement = self._import_fixture(
+                filename, self.sample_statement_map, journal_fallback
+            )
+        self._assert_sample_lines(statement)
+        self.assertEqual(self._lines_signature(statement), expected)
+
+    def test_03_xlsx_fallback_footer_trailing_rows(self):
+        mapping = self._empty_values_map()
+        for code_xlrd, code_fallback, filename in (
+            ("BNK3", "BNK4", "fixtures/sample_statement_en_trailing_rows.xlsx"),
+            ("BNK5", "BNK6", "fixtures/sample_statement_en_empty_values.xlsx"),
+        ):
+            expected = self._import_fixture(
+                filename, mapping, self._create_journal(code_xlrd)
+            )
+            self.assertEqual(len(expected.line_ids), 3)
+            signature = self._lines_signature(expected)
+            expected.line_ids.unlink()
+            with self._xlrd2_xlsx_error():
+                statement = self._import_fixture(
+                    filename, mapping, self._create_journal(code_fallback)
+                )
+            self.assertEqual(self._lines_signature(statement), signature)
+
+    def test_04_xls_binary_import(self):
+        statement = self._import_fixture(
+            "fixtures/sample_statement_en.xls", self.sample_statement_map
+        )
+        self._assert_sample_lines(statement)
+
+    def test_05_xlsx_header_skip_zero(self):
+        mapping = self.sample_statement_map.copy({"header_lines_skip_count": 0})
+        statement = self._import_fixture(
+            "fixtures/sample_statement_header_skip_zero.xlsx", mapping
+        )
+        self._assert_sample_lines(statement)
+
+    def test_06_markup_disguised_xls_error(self):
+        with self.assertRaisesRegex(UserError, "web page"):
+            self._import_fixture(
+                "fixtures/markup_statement.xls", self.sample_statement_map
+            )
+
+    def test_07_corrupt_xlsx_error(self):
+        with self._xlrd2_xlsx_error(), self.assertRaisesRegex(
+            UserError, "could not be read as.*XLSX"
+        ):
+            self._import_fixture(
+                "fixtures/corrupt_statement.xlsx", self.sample_statement_map
+            )
+        with self.assertRaisesRegex(UserError, "could not be read as.*XLSX"):
+            self._import_fixture(
+                "fixtures/corrupt_statement.xlsx",
+                self.sample_statement_map,
+                self._create_journal("BNK2"),
+            )
+
+    def test_08_csv_starting_with_angle_bracket(self):
+        mapping = self.sample_statement_map.copy({"timestamp_column": "<DTPOSTED>"})
+        statement = self._import_fixture(
+            "fixtures/angle_bracket_statement.csv", mapping
+        )
+        self.assertEqual(len(statement.line_ids), 2)
+        self.assertEqual(
+            sorted(statement.line_ids.mapped("amount")),
+            [-33.5, 1525.0],
+        )
+        self.assertEqual(
+            sorted(str(d) for d in statement.line_ids.mapped("date")),
+            ["2018-12-15", "2018-12-16"],
+        )
+
+    def test_09_truncated_sheet_xlsx_error(self):
+        with self._xlrd2_xlsx_error(), self.assertRaisesRegex(
+            UserError, "could not be read as.*XLSX"
+        ):
+            self._import_fixture(
+                "fixtures/truncated_sheet_statement.xlsx", self.sample_statement_map
+            )
+        with self.assertRaisesRegex(UserError, "could not be read as.*XLSX"):
+            self._import_fixture(
+                "fixtures/truncated_sheet_statement.xlsx",
+                self.sample_statement_map,
+                self._create_journal("BNK2"),
+            )
+
+    def test_10_corrupt_xls_error(self):
+        with self.assertRaisesRegex(UserError, "could not be read as XLS:"):
+            self._import_fixture(
+                "fixtures/corrupt_statement.xls", self.sample_statement_map
+            )
+
+    def test_11_openpyxl_duration_as_days(self):
+        self.assertEqual(
+            _OpenpyxlSheet._normalize(timedelta(hours=1, minutes=30)), 0.0625
+        )

@@ -6,10 +6,11 @@ import itertools
 import logging
 import math
 import re
+import zipfile
 from collections.abc import Iterable
-from datetime import datetime
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
-from io import StringIO
+from io import BytesIO, StringIO
 from os import path
 
 from odoo import _, api, models
@@ -21,9 +22,16 @@ try:
     from csv import reader
 
     import xlrd
+    from xlrd.compdoc import CompDocError
     from xlrd.xldate import xldate_as_datetime
 except (ImportError, IOError) as err:  # pragma: no cover
     _logger.error(err)
+
+try:
+    import openpyxl
+    from openpyxl.utils.exceptions import InvalidFileException
+except ImportError:
+    _logger.debug("Cannot `import openpyxl`.")
 
 try:
     import chardet
@@ -32,6 +40,56 @@ except ImportError:
         "chardet library not found, please install it "
         "from http://pypi.python.org/pypi/chardet"
     )
+
+
+class _OpenpyxlBook:
+    datemode = 0
+
+
+class _OpenpyxlSheet:
+    def __init__(self, rows):
+        rows = [[self._normalize(value) for value in row] for row in rows]
+        while rows and not any(value != "" for value in rows[-1]):
+            rows.pop()
+        ncols = max((len(row) for row in rows), default=0)
+        while ncols and all(len(row) < ncols or row[ncols - 1] == "" for row in rows):
+            ncols -= 1
+        self._rows = [row[:ncols] + [""] * (ncols - len(row[:ncols])) for row in rows]
+        self.nrows = len(self._rows)
+        self.ncols = ncols
+
+    @staticmethod
+    def _normalize(value):
+        if value is None:
+            return ""
+        if isinstance(value, (bool, int, float)):
+            return float(value)
+        if isinstance(value, datetime):
+            return value
+        if isinstance(value, date):
+            return datetime.combine(value, time.min)
+        if isinstance(value, time):
+            return datetime.combine(date(1899, 12, 31), value)
+        if isinstance(value, timedelta):
+            return value.total_seconds() / 86400
+        return value
+
+    def row_len(self, rowx):
+        return self.ncols
+
+    def row_values(self, rowx):
+        return list(self._rows[rowx])
+
+    def cell_value(self, rowx, colx):
+        return self._rows[rowx][colx]
+
+    def cell_type(self, rowx, colx):
+        value = self._rows[rowx][colx]
+        if value == "":
+            return xlrd.XL_CELL_EMPTY
+        if isinstance(value, float):
+            return xlrd.XL_CELL_NUMBER
+        return xlrd.XL_CELL_TEXT
 
 
 class AccountStatementImportSheetParser(models.TransientModel):
@@ -146,37 +204,102 @@ class AccountStatementImportSheetParser(models.TransientModel):
             "bank_account_column",
         ]
 
-    def _parse_lines(self, mapping, data_file, currency_code):
-        columns = dict()
+    def _open_sheet(self, data_file, mapping):
         try:
             workbook = xlrd.open_workbook(
                 file_contents=data_file,
-                encoding_override=(
-                    mapping.file_encoding if mapping.file_encoding else None
-                ),
+                encoding_override=mapping.file_encoding or None,
             )
-            csv_or_xlsx = (
-                workbook,
-                workbook.sheet_by_index(0),
+            return workbook, workbook.sheet_by_index(0)
+        except (
+            xlrd.XLRDError,
+            CompDocError,
+            IndexError,
+            SyntaxError,
+            zipfile.BadZipFile,
+        ) as error:
+            if data_file[:4] == b"PK\x03\x04":
+                return self._open_sheet_openpyxl(data_file)
+            if self._is_markup_file(data_file):
+                raise UserError(
+                    _(
+                        "The file looks like a web page (HTML/XML) saved with a "
+                        "spreadsheet extension. Open it in a spreadsheet "
+                        "application, save it as .xlsx or CSV and import it again."
+                    )
+                ) from error
+            if data_file[:4] == b"\xd0\xcf\x11\xe0":
+                raise UserError(
+                    _(
+                        "The spreadsheet file could not be read as %(format)s: "
+                        "%(error)s",
+                        format="XLS",
+                        error=error,
+                    )
+                ) from error
+            return self._open_csv(data_file, mapping)
+
+    def _open_sheet_openpyxl(self, data_file):
+        try:
+            workbook = openpyxl.load_workbook(
+                BytesIO(data_file), read_only=True, data_only=True
             )
-        except xlrd.XLRDError:
-            csv_options = {}
-            csv_delimiter = mapping._get_column_delimiter_character()
-            if csv_delimiter:
-                csv_options["delimiter"] = csv_delimiter
-            if mapping.quotechar:
-                csv_options["quotechar"] = mapping.quotechar
-            try:
-                decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
-            except UnicodeDecodeError:
-                # Try auto guessing the format
-                detected_encoding = chardet.detect(data_file).get("encoding", False)
-                if not detected_encoding:
-                    raise UserError(
-                        _("No valid encoding was found for the attached file")
-                    ) from None
-                decoded_file = data_file.decode(detected_encoding)
-            csv_or_xlsx = reader(StringIO(decoded_file), **csv_options)
+            worksheet = workbook.worksheets[0]
+            worksheet.reset_dimensions()
+            rows = [list(row) for row in worksheet.iter_rows(values_only=True)]
+            workbook.close()
+        except (
+            zipfile.BadZipFile,
+            KeyError,
+            IndexError,
+            InvalidFileException,
+            OSError,
+            SyntaxError,
+        ) as error:
+            raise UserError(
+                _(
+                    "The spreadsheet file could not be read as %(format)s: "
+                    "%(error)s",
+                    format="XLSX",
+                    error=error,
+                )
+            ) from error
+        return _OpenpyxlBook(), _OpenpyxlSheet(rows)
+
+    def _is_markup_file(self, data_file):
+        head = data_file[:512]
+        if head.startswith(b"\xef\xbb\xbf"):
+            head = head[3:]
+        head = head.lstrip().lower()
+        return head.startswith((b"<?xml", b"<html", b"<!doctype", b"<table"))
+
+    def _open_csv(self, data_file, mapping):
+        csv_options = {}
+        csv_delimiter = mapping._get_column_delimiter_character()
+        if csv_delimiter:
+            csv_options["delimiter"] = csv_delimiter
+        if mapping.quotechar:
+            csv_options["quotechar"] = mapping.quotechar
+        try:
+            decoded_file = data_file.decode(mapping.file_encoding or "utf-8")
+        except UnicodeDecodeError:
+            # Try auto guessing the format
+            detected_encoding = chardet.detect(data_file).get("encoding", False)
+            if not detected_encoding:
+                raise UserError(
+                    _("No valid encoding was found for the attached file")
+                ) from None
+            decoded_file = data_file.decode(detected_encoding)
+        return reader(StringIO(decoded_file), **csv_options)
+
+    def _first_data_row(self, mapping):
+        if mapping.no_header:
+            return mapping.header_lines_skip_count
+        return max(mapping.header_lines_skip_count, 1)
+
+    def _parse_lines(self, mapping, data_file, currency_code):
+        columns = dict()
+        csv_or_xlsx = self._open_sheet(data_file, mapping)
         header = self.parse_header(csv_or_xlsx, mapping)
 
         # NOTE no seria necesario debit_column y credit_column ya que tenemos los
@@ -216,12 +339,14 @@ class AccountStatementImportSheetParser(models.TransientModel):
         footer_line = numrows - mapping.footer_lines_skip_count
 
         if isinstance(csv_or_xlsx, tuple):
-            rows = range(label_line, footer_line)
+            first_row = self._first_data_row(mapping)
+            rows = range(first_row, footer_line)
         else:
+            first_row = label_line
             rows = csv_or_xlsx
 
         lines = []
-        for index, row in enumerate(rows, label_line):
+        for index, row in enumerate(rows, first_row):
             if isinstance(csv_or_xlsx, tuple):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
