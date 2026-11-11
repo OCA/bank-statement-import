@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="finapi_webform_wizard_view_form" model="ir.ui.view">
+        <field name="name">finapi.webform.wizard.form</field>
+        <field name="model">finapi.webform.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add finAPI Bank Connection">
+                <field name="state" invisible="1" />
+                <field
+                    name="info"
+                    nolabel="1"
+                    widget="html"
+                    attrs="{'invisible': [('info', '=', False)]}"
+                />
+                <group>
+                    <field name="provider_id" readonly="1" />
+                    <field
+                        name="mode"
+                        attrs="{'readonly': [('state', '!=', 'draft')]}"
+                    />
+                    <field
+                        name="webform_status"
+                        attrs="{'invisible': [('state', '=', 'draft')]}"
+                    />
+                    <field
+                        name="webform_url"
+                        widget="url"
+                        attrs="{'invisible': [('state', '=', 'draft')]}"
+                    />
+                    <field
+                        name="bank_connection_id"
+                        attrs="{'invisible': [('bank_connection_id', '=', False)]}"
+                    />
+                </group>
+
+                <group
+                    string="Select account to link"
+                    attrs="{'invisible': [('state', '!=', 'account_select')]}"
+                >
+                    <field name="multi_link" />
+                    <field
+                        name="selected_account_id"
+                        options="{'no_create': True}"
+                        domain="[('wizard_id', '=', id)]"
+                        attrs="{'invisible': [('multi_link', '=', True)],
+                                'required': [('multi_link', '=', False),
+                                             ('state', '=', 'account_select')]}"
+                    />
+                    <field name="account_ids" readonly="1">
+                        <tree>
+                            <field name="iban" />
+                            <field name="name" />
+                            <field name="account_type" />
+                            <field name="balance" />
+                            <field name="currency" />
+                        </tree>
+                    </field>
+                </group>
+
+                <footer>
+                    <button
+                        name="action_start"
+                        type="object"
+                        string="Create Web Form"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"
+                    />
+                    <button
+                        name="action_refresh"
+                        type="object"
+                        string="Refresh status"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', 'not in', ('waiting',))]}"
+                    />
+                    <button
+                        name="action_apply"
+                        type="object"
+                        string="Link account"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', '!=', 'account_select')]}"
+                    />
+                    <button string="Close" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Referenced by the RedirectWarning raised when finAPI asks for SCA,
+         which needs a stored action to redirect to. -->
+    <record id="finapi_webform_wizard_update_action" model="ir.actions.act_window">
+        <field name="name">Renew finAPI Consent</field>
+        <field name="res_model">finapi.webform.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="finapi_webform_wizard_view_form" />
+        <field name="target">new</field>
+        <field name="context">{'default_mode': 'update'}</field>
+    </record>
+</odoo>

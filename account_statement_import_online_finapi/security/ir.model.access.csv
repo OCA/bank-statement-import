@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_finapi_webform_wizard,finapi.webform.wizard access,model_finapi_webform_wizard,account.group_account_manager,1,1,1,1
+access_finapi_webform_wizard_account,finapi.webform.wizard.account access,model_finapi_webform_wizard_account,account.group_account_manager,1,1,1,1

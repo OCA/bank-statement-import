@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="mail_template_consent_expiry" model="mail.template">
+        <field name="name">finAPI: PSD2 Consent Expiry Warning</field>
+        <field
+            name="model_id"
+            ref="account_statement_import_online.model_online_bank_statement_provider"
+        />
+        <field name="subject">finAPI consent expiring soon for {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+        <field name="email_to">{{ (object.create_uid.partner_id.email or '') }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: sans-serif;">
+                <p>Hello,</p>
+                <p>
+                    The PSD2 bank consent for provider
+                    <strong>{{ object.name }}</strong>
+                    is expiring on
+                    <strong>{{ object.finapi_consent_expires_at }}</strong>
+                    .
+                </p>
+                <p>
+                    Please renew the consent in Odoo by navigating to the
+        provider and clicking
+                    <em>Renew consent</em>
+                    .
+        Without renewal, automatic bank statement imports will
+        stop working.
+                </p>
+                <p>
+                    Regards,
+                    <br />
+                    Your Odoo ERP
+                </p>
+            </div>
+        </field>
+        <field name="lang">{{ object.company_id.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+    </record>
+</odoo>
