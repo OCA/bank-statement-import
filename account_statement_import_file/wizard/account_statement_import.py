@@ -4,7 +4,7 @@
 import base64
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
@@ -21,6 +21,7 @@ class AccountStatementImport(models.TransientModel):
         help="Download bank statement files from your bank and upload them here.",
     )
     statement_filename = fields.Char()
+    journal_id = fields.Many2one("account.journal", string="Journal")
 
     def _import_file(self):
         self.ensure_one()
@@ -28,6 +29,9 @@ class AccountStatementImport(models.TransientModel):
             "statement_ids": [],
             "notifications": [],  # list of text messages
         }
+        self = self.with_context(
+            journal_id=self.journal_id.id or self.env.context.get("journal_id")
+        )
         logger.info("Start to import bank statement file %s", self.statement_filename)
         file_data = base64.b64decode(self.statement_file)
         self.import_single_file(file_data, result)
@@ -50,6 +54,8 @@ class AccountStatementImport(models.TransientModel):
     def import_file_button(self):
         """Process the file chosen in the wizard, create bank statement(s)
         and return an action."""
+        if self.env.context.get("from_import_button") and not self.journal_id:
+            raise UserError(_("A journal must be selected before importing."))
         result = self._import_file()
         action = self.env["ir.actions.actions"]._for_xml_id(
             "account.action_bank_statement_tree"
