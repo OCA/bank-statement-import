@@ -4,7 +4,12 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from base64 import b64encode
+from datetime import datetime
+from io import BytesIO
 from os import path
+
+import openpyxl
 
 from odoo.exceptions import UserError
 from odoo.tools import mute_logger
@@ -26,6 +31,62 @@ class TestAccountStatementImportSheetFileXlsx(
         statement = self.AccountBankStatement.search(self.statement_domain)
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
+
+    def test_import_xlsx_numeric_amounts_with_comma_decimal_sep(self):
+        """Numeric cells must not be reinterpreted through the mapping seps.
+
+        Amounts stored as numbers carry no separators: the sheet only holds a
+        display format, which never reaches the parser. Rendering them as text
+        printed a dot decimal, so a mapping set to a comma decimal separator
+        dropped it and shifted the amount by a factor of 10 or 100 depending on
+        how many decimals the value had.
+        """
+        self.sample_statement_map.write(
+            {
+                "float_thousands_sep": "none",
+                "float_decimal_sep": "comma",
+                "original_currency_column": None,
+                "original_amount_column": None,
+                "partner_name_column": None,
+                "bank_account_column": None,
+                "reference_column": "Reference",
+            }
+        )
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+        sheet.append(["Date", "Label", "Reference", "Amount"])
+        # Amounts as native numbers, with a display format that shows a comma
+        # decimal separator -- exactly what the mapping is configured for. The
+        # reference is numeric too, to cover a non-amount column that stops
+        # being handed over as text.
+        for label, reference, amount in [
+            ("TWO DECIMALS", 26182, 1234.56),
+            ("ONE DECIMAL", 289400, 78.9),
+            ("NO DECIMALS", 304102, 100),
+        ]:
+            sheet.append([datetime(2026, 7, 1), label, reference, amount])
+            sheet.cell(row=sheet.max_row, column=4).number_format = "#.##0,00"
+        buffer = BytesIO()
+        workbook.save(buffer)
+        wizard = self.AccountStatementImport.with_context(
+            journal_id=self.journal.id, account_statement_import_sheet_file_test=True
+        ).create(
+            {
+                "statement_filename": "numeric_amounts.xlsx",
+                "statement_file": b64encode(buffer.getvalue()),
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.import_file_button()
+        statement = self.AccountBankStatement.search(self.statement_domain)
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 3)
+        self.assertEqual(
+            sorted(statement.line_ids.mapped("amount")), [78.9, 100.0, 1234.56]
+        )
+        self.assertEqual(
+            sorted(statement.line_ids.mapped("ref")), ["26182", "289400", "304102"]
+        )
 
     def test_import_empty_xlsx_file(self):
         wizard = self._get_import_wizard("fixtures/empty_statement_en.xlsx")
