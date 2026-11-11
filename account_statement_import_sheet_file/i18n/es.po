@@ -246,8 +246,8 @@ msgstr "Recuento de líneas omitidas a pie de página"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__header_lines_skip_count
-msgid "Header lines skip count"
-msgstr "Recuento de líneas de cabecera omitidas"
+msgid "Header row number"
+msgstr "Número de fila del encabezado"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__id
@@ -403,8 +403,8 @@ msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__header_lines_skip_count
-msgid "Set the Header lines number."
-msgstr "Establezca el número de líneas de Cabecera."
+msgid "Row number where the column headers are located (first row is 0)."
+msgstr "Número de fila donde se encuentran los encabezados de columna (la primera fila es 0)."
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import__sheet_mapping_id
