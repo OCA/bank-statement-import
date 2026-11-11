@@ -5,18 +5,20 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <record id="account_statement_import_sheet_mapping_form" model="ir.ui.view">
-        <field name="name">account.statement.import.sheet.mapping.form</field>
+    <record id="account_statement_import_sheet_mapping_tree" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.tree</field>
         <field name="model">account.statement.import.sheet.mapping</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
             </list>
         </field>
     </record>
-    <record id="account_statement_import_sheet_mapping_tree" model="ir.ui.view">
-        <field name="name">account.statement.import.sheet.mapping.tree</field>
+    <record id="account_statement_import_sheet_mapping_form" model="ir.ui.view">
+        <field name="name">account.statement.import.sheet.mapping.form</field>
         <field name="model">account.statement.import.sheet.mapping</field>
+        <field name="type">form</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
