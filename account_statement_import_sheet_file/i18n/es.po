@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-18 06:13+0000\n"
-"PO-Revision-Date: 2024-05-12 21:35+0000\n"
-"Last-Translator: Sergio Ariel Ameghino <ariel.ameghino@gmail.com>\n"
+"PO-Revision-Date: 2026-11-11 10:46+0000\n"
+"Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_import_sheet_file
 #. odoo-python
@@ -550,7 +550,7 @@ msgid ""
 "Some statement formats use credit/debit columns"
 msgstr ""
 "Se utiliza si el tipo de importe es \"Valor simple\" o \"Valor absoluto\".\n"
-"Importe de la transacción en la divisa del diario\n"
+"Importe de la transacción en la moneda del diario\n"
 "Algunos formatos de extracto utilizan columnas de crédito/débito"
 
 #. module: account_statement_import_sheet_file
