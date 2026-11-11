@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 09:11+0000\n"
-"PO-Revision-Date: 2026-11-11 08:25+0000\n"
+"PO-Revision-Date: 2026-11-11 13:46+0000\n"
 "Last-Translator: leszekszczepkowski <leszekszczepkowski@gmail.com>\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "Language: pl\n"
@@ -40,13 +40,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 msgid "%d transactions had already been imported and were ignored."
-msgstr "%d transakcji już zaimportowanych oraz zignorowanych."
+msgstr "Pominięto transakcje zaimportowane już wcześniej: %d."
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
 msgid "1 transaction had already been imported and was ignored."
-msgstr "1 transakcja została już importowana i została ignorowana."
+msgstr "Pominięto 1 transakcję zaimportowaną już wcześniej."
 
 #. module: account_statement_import_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_file.journal_dashboard_view_inherit
@@ -75,7 +75,7 @@ msgstr ""
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_uid
 msgid "Created by"
-msgstr "Utworzona przez"
+msgstr "Utworzył(a)"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__create_date
@@ -215,7 +215,7 @@ msgid ""
 "dashboard."
 msgstr ""
 "Ten format pliku wyciągu nie zawiera numeru rachunku bankowego, dlatego "
-"uruchom kreator z właściwego dziennika bankowego na pulpicie."
+"uruchom kreator z właściwego dziennika bankowego w konsoli."
 
 #. module: account_statement_import_file
 #. odoo-python
