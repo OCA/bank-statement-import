@@ -41,4 +41,20 @@
                      'partner_name': 'Banque Cantonale Vaudoise',
                      'payment_ref': '/',
                      'ref': '302388292000022222222222222',
-                     'transaction_type': 'PMNT-RCDT-VCOM'}]}])
+                     'transaction_type': 'PMNT-RCDT-VCOM'},
+                    {'account_number': 'CH4444000000123456789',
+                     'amount': 50.0,
+                     'date': '2017-03-22',
+                     'narration': 'Partner Name (RltdPties/Nm): Single Detail Debtor\n'
+                                  'Partner Account Number (RltdPties/Acct): CH4444000000123456789\n'
+                                  'Transaction Date (BookgDt): 2017-03-22\n'
+                                  'Reference: ENTRY-FALLBACK-REF\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): \n'
+                                  'Additional Entry Information (AddtlNtryInf): ENTRY INFO SHOULD STAY IN NARRATION ONLY\n'
+                                  'Unstructured Reference (RmtInf/Ustrd): REM-ONE\n'
+                                  'Postal Address (PstlAdr): Address line 1',
+                     'partner_name': 'Single Detail Debtor',
+                     'payment_ref': 'REM-ONE',
+                     'ref': 'ENTRY-FALLBACK-REF',
+                     'transaction_type': ''}]}])

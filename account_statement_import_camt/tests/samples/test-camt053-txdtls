@@ -209,6 +209,37 @@
         </NtryDtls>
         <AddtlNtryInf>CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: 123456CHCAFEBABE</AddtlNtryInf>
       </Ntry>
+      <Ntry>
+        <Amt Ccy="CHF">50.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2017-03-22</Dt>
+        </BookgDt>
+        <AcctSvcrRef>ENTRY-FALLBACK-REF</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <RltdPties>
+              <Dbtr>
+                <Nm>Single Detail Debtor</Nm>
+                <PstlAdr>
+                  <AdrLine></AdrLine>
+                  <AdrLine>Address line 1</AdrLine>
+                </PstlAdr>
+              </Dbtr>
+              <DbtrAcct>
+                <Id>
+                  <IBAN>CH4444000000123456789</IBAN>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd></Ustrd>
+              <Ustrd>REM-ONE</Ustrd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+        <AddtlNtryInf>ENTRY INFO SHOULD STAY IN NARRATION ONLY</AddtlNtryInf>
+      </Ntry>
     </Stmt>
   </BkToCstmrStmt>
 </Document>

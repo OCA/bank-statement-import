@@ -95,6 +95,33 @@ class TestParser(TestParserCommon):
     def test_parse_no_ntry(self):
         self._do_parse_test("test-camt053-no-ntry", "golden-camt053-no-ntry.pydata")
 
+    def test_parse_entry_without_txdtls(self):
+        """An entry without TxDtls takes its label and reference from the entry."""
+        data = b"""<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.04">
+  <BkToCstmrStmt>
+    <GrpHdr><MsgId>1</MsgId></GrpHdr>
+    <Stmt>
+      <Id>STMT1</Id>
+      <Acct><Id><IBAN>CH1111000000123456789</IBAN></Id><Ccy>CHF</Ccy></Acct>
+      <Ntry>
+        <Amt Ccy="CHF">12.50</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <BookgDt><Dt>2017-03-22</Dt></BookgDt>
+        <AcctSvcrRef>REF-123</AcctSvcrRef>
+        <AddtlNtryInf>Bank fees</AddtlNtryInf>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>"""
+        currency, account_number, statements = self.parser.parse(data)
+        self.assertEqual(currency, "CHF")
+        self.assertEqual(account_number, "CH1111000000123456789")
+        transaction = statements[0]["transactions"][0]
+        self.assertEqual(transaction["amount"], -12.5)
+        self.assertEqual(transaction["payment_ref"], "Bank fees")
+        self.assertEqual(transaction["ref"], "REF-123")
+
 
 class TestImport(TransactionCase):
     """Run test to import camt import."""
