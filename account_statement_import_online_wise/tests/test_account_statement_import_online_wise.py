@@ -71,11 +71,8 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
             data=b"""[
             {
                 "id": 42,
-                "balances": [
-                    {
-                        "currency": "EUR"
-                    }
-                ]
+                "currency": "EUR",
+                "type": "STANDARD"
             }
         ]"""
         )
@@ -168,18 +165,15 @@ class TestAccountBankAccountStatementImportOnlineWise(common.TransactionCase):
         provider.origin = "1234567891"
 
         def mock_response(url, api_key, private_key=None):
-            if "/borderless-accounts?profileId=1234567891" in url:
+            if "/v4/profiles/1234567891/balances?types=STANDARD" in url:
                 payload = """[
     {
         "id": 42,
-        "balances": [
-            {
-                "currency": "EUR"
-            }
-        ]
+        "currency": "EUR",
+        "type": "STANDARD"
     }
 ]"""
-            elif "/borderless-accounts/42/statement.json" in url:
+            elif "/v1/profiles/1234567891/balance-statements/42/statement.json" in url:
                 payload = """{
     "transactions": [],
     "endOfStatementBalance": {
