@@ -94,31 +94,25 @@ class OnlineBankStatementProviderWise(models.Model):
             date_until = date_until.astimezone(pytz.utc).replace(tzinfo=None)
 
         # Get corresponding balance by currency
-        url = api_base + f"/v1/borderless-accounts?profileId={self.origin}"
+        url = api_base + (
+            f"/v4/profiles/{self.origin}/balances?"
+            + urllib.parse.urlencode({"types": "STANDARD"})
+        )
         data = self._wise_retrieve(url, api_key, private_key)
         if not data:
             return None
-        borderless_account = data[0]["id"]
-        balance = list(
-            filter(lambda balance: balance["currency"] == currency, data[0]["balances"])
-        )
+        balance = list(filter(lambda balance: balance["currency"] == currency, data))
         if not balance:
             return None
+        balance_id = balance[0]["id"]
 
-        # Notes on /statement endpoint:
+        # Notes on /balance-statements endpoint:
         #  - intervalStart <= date < intervalEnd
+        #  - interval cannot exceed 469 days
 
         # Get starting balance
-        starting_balance_timestamp = date_since.isoformat() + "Z"
-        url = api_base + (
-            "/v3/profiles/%s/borderless-accounts/%s/statement.json"
-            + "?currency=%s&intervalStart=%s&intervalEnd=%s&type=COMPACT"
-        ) % (
-            self.origin,
-            borderless_account,
-            currency,
-            starting_balance_timestamp,
-            starting_balance_timestamp,
+        url = self._wise_statement_url(
+            api_base, balance_id, currency, date_since, date_since
         )
         data = self._wise_retrieve(url, api_key, private_key)
         balance_start = data["endOfStatementBalance"]["value"]
@@ -130,15 +124,12 @@ class OnlineBankStatementProviderWise(models.Model):
         transactions = []
         balance_end = None
         while interval_start < interval_end:
-            url = api_base + (
-                "/v3/profiles/%s/borderless-accounts/%s/statement.json"
-                + "?currency=%s&intervalStart=%s&intervalEnd=%s&type=COMPACT"
-            ) % (
-                self.origin,
-                borderless_account,
+            url = self._wise_statement_url(
+                api_base,
+                balance_id,
                 currency,
-                interval_start.isoformat() + "Z",
-                min(interval_start + interval_step, interval_end).isoformat() + "Z",
+                interval_start,
+                min(interval_start + interval_step, interval_end),
             )
             data = self._wise_retrieve(url, api_key, private_key)
             transactions += data["transactions"]
@@ -162,6 +153,23 @@ class OnlineBankStatementProviderWise(models.Model):
         )
 
         return lines, {"balance_start": balance_start, "balance_end_real": balance_end}
+
+    def _wise_statement_url(
+        self, api_base, balance_id, currency, interval_start, interval_end
+    ):
+        self.ensure_one()
+        query = urllib.parse.urlencode(
+            {
+                "currency": currency,
+                "intervalStart": interval_start.isoformat() + "Z",
+                "intervalEnd": interval_end.isoformat() + "Z",
+                "type": "COMPACT",
+            }
+        )
+        return api_base + (
+            f"/v1/profiles/{self.origin}/balance-statements/{balance_id}"
+            f"/statement.json?{query}"
+        )
 
     @api.model
     def _wise_preparse_transaction(self, transaction):
@@ -268,15 +276,50 @@ class OnlineBankStatementProviderWise(models.Model):
         return content
 
     @api.model
+    def _wise_read(self, response):
+        return response.read().decode(response.headers.get_content_charset() or "utf-8")
+
+    @api.model
+    def _wise_http_error(self, error, url):
+        try:
+            body = error.read().decode("utf-8", errors="replace")
+        except Exception:
+            body = ""
+        _logger.warning(
+            "Wise API error %s on %s (x-2fa-approval-result: %s): %s",
+            error.code,
+            url.split("?")[0],
+            error.headers.get("X-2FA-Approval-Result") if error.headers else None,
+            body,
+        )
+        message = _(
+            "Wise API returned HTTP %(code)s for %(url)s",
+            code=error.code,
+            url=url.split("?")[0],
+        )
+        if error.code == 403:
+            message += "\n" + _(
+                "This can happen if the API token is read-only or has no access "
+                "to this profile, if the public key has not been registered on "
+                "Wise.com, or because Wise does not allow personal API tokens to "
+                "retrieve balance statements for profiles registered outside "
+                "US, CA, AU, NZ, SG and MY."
+            )
+        if body:
+            message += "\n" + body[:1000]
+        return UserError(message)
+
+    @api.model
     def _wise_retrieve(self, url, api_key, private_key=None):
         try:
             with self._wise_urlopen(url, api_key) as response:
-                content = response.read().decode(
-                    response.headers.get_content_charset() or "utf-8"
-                )
+                content = self._wise_read(response)
         except HTTPError as e:
-            if e.code != 403 or e.headers.get("X-2FA-Approval-Result") != "REJECTED":
-                raise e
+            if (
+                e.code != 403
+                or (e.headers.get("X-2FA-Approval-Result") or "").upper() != "REJECTED"
+            ):
+                raise self._wise_http_error(e, url) from e
             if not private_key:
                 raise UserError(
                     _("Strong Customer Authentication is not configured")
@@ -287,16 +330,16 @@ class OnlineBankStatementProviderWise(models.Model):
                 padding.PKCS1v15(),
                 hashes.SHA256(),
             )
-
-            with self._wise_urlopen(
-                url,
-                api_key,
-                one_time_token,
-                b64encode(signature).decode(),
-            ) as response:
-                content = response.read().decode(
-                    response.headers.get_content_charset() or "utf-8"
-                )
+            try:
+                with self._wise_urlopen(
+                    url,
+                    api_key,
+                    one_time_token,
+                    b64encode(signature).decode(),
+                ) as response:
+                    content = self._wise_read(response)
+            except HTTPError as e2:
+                raise self._wise_http_error(e2, url) from e2
 
         return self._wise_validate(content)
 
