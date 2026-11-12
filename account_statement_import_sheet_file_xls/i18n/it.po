@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_sheet_file_xls
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-17 21:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: account_statement_import_sheet_file_xls
+#: model:ir.model,name:account_statement_import_sheet_file_xls.model_account_statement_import_sheet_parser
+msgid "Bank Statement Import Sheet Parser"
+msgstr "Analizzatore foglio importazione estratti conto bancari"
+
+#. module: account_statement_import_sheet_file_xls
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file_xls.field_account_statement_import_sheet_parser__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: account_statement_import_sheet_file_xls
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file_xls.field_account_statement_import_sheet_parser__id
+msgid "ID"
+msgstr "ID"
