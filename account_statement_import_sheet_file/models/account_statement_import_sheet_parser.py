@@ -2,6 +2,7 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import hashlib
 import itertools
 import logging
 import math
@@ -37,6 +38,20 @@ except ImportError:
 class AccountStatementImportSheetParser(models.TransientModel):
     _name = "account.statement.import.sheet.parser"
     _description = "Bank Statement Import Sheet Parser"
+
+    def _hash_row_values(self, values):
+        normalized_values = []
+        for value in values:
+            if value is None:
+                normalized_values.append("")
+            elif isinstance(value, datetime):
+                normalized_values.append(value.isoformat())
+            elif isinstance(value, float):
+                normalized_values.append(repr(value))
+            else:
+                normalized_values.append(str(value))
+        row_payload = "\x1f".join(normalized_values)
+        return hashlib.sha256(row_payload.encode("utf-8")).hexdigest()
 
     @api.model
     def parse_header(self, csv_or_xlsx, mapping):
@@ -285,11 +300,13 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 if columns["debit_credit_column"]
                 else None
             )
-            transaction_id = (
-                self._get_values_from_column(values, columns, "transaction_id_column")
-                if columns["transaction_id_column"]
-                else None
-            )
+            transaction_id = None
+            if mapping.transaction_id_auto:
+                transaction_id = self._hash_row_values(values)
+            elif columns["transaction_id_column"]:
+                transaction_id = self._get_values_from_column(
+                    values, columns, "transaction_id_column"
+                )
             description = (
                 self._get_values_from_column(values, columns, "description_column")
                 if columns["description_column"]
