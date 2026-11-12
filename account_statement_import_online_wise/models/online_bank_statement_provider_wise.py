@@ -375,7 +375,7 @@ class OnlineBankStatementProviderWise(models.Model):
                 private_key.public_key()
                 .public_bytes(
                     serialization.Encoding.PEM,
-                    serialization.PublicFormat.PKCS1,
+                    serialization.PublicFormat.SubjectPublicKeyInfo,
                 )
                 .decode()
             )
@@ -401,7 +401,7 @@ class OnlineBankStatementProviderWise(models.Model):
             private_key.public_key()
             .public_bytes(
                 serialization.Encoding.PEM,
-                serialization.PublicFormat.PKCS1,
+                serialization.PublicFormat.SubjectPublicKeyInfo,
             )
             .decode()
         )
