@@ -46,3 +46,38 @@ class TestAccountBankStatementImportMoveLine(AccountTestInvoicingCommon):
         wizard.create_statement_lines()
         line = self.statement.line_ids[0]
         self.assertEqual(line.amount, self.invoice.amount_total)
+
+    def test_payment_reset_to_draft(self):
+        """A payment reset to draft keeps its journal entry"""
+        self.invoice.action_post()
+        payment = self.env["account.payment"].create(
+            {
+                "payment_type": "inbound",
+                "partner_type": "customer",
+                "partner_id": self.partner.id,
+                "amount": 50.0,
+                "journal_id": self.journal_bank.id,
+            }
+        )
+        payment.action_post()
+        payment.action_draft()
+        self.assertEqual(payment.state, "draft")
+        self.assertTrue(payment.move_id)
+        wizard = (
+            self.env["account.statement.line.create"]
+            .with_context(
+                active_model="account.bank.statement", active_id=self.statement.id
+            )
+            .create(
+                {
+                    "statement_id": self.statement.id,
+                    "partner_id": self.partner.id,
+                    "target_move": "all",
+                    "date_type": "move",
+                    "move_date": fields.Date.today(),
+                    "invoice": False,
+                }
+            )
+        )
+        wizard.populate()
+        self.assertEqual(wizard.move_line_ids, self.invoice.line_ids.filtered("debit"))

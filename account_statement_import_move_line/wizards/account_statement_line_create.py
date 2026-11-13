@@ -90,7 +90,7 @@ class AccountStatementLineCreate(models.TransientModel):
             ]
         )
         if paylines:
-            move_in_payment_ids = paylines.mapped("line_ids.id")
+            move_in_payment_ids = paylines.mapped("move_id.line_ids.id")
             domain += [("id", "not in", move_in_payment_ids)]
         return domain
 
