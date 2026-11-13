@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest import mock
 from urllib.error import HTTPError
@@ -20,6 +20,30 @@ _provider_class = (
     + ".models.online_bank_statement_provider_paypal"
     + ".OnlineBankStatementProviderPayPal"
 )
+
+
+class FixedDatetime(datetime):
+    """Serves a fixed naive UTC clock through both utcnow() and now(tz)."""
+
+    fixed = datetime(2026, 10, 12, 10, 0, 0)  # Monday 10:00
+
+    @classmethod
+    def now(cls, tz=None):
+        return cls.fixed.replace(tzinfo=tz) if tz else cls.fixed
+
+    @classmethod
+    def utcnow(cls):
+        return cls.fixed
+
+
+def _context_recorder(seen):
+    """Fake _paypal_retrieve that records the invalid_data_workaround flag."""
+
+    def retrieve(record, url, token):
+        seen.append(record.env.context.get("invalid_data_workaround"))
+        return {"transaction_details": [], "total_pages": 1}
+
+    return retrieve
 
 
 class FakeHTTPError(HTTPError):
@@ -391,6 +415,87 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             )
 
         self.assertEqual(data, ([], {"balance_start": 0.75, "balance_end_real": 0.75}))
+
+    def _paypal_provider(self):
+        journal = self.AccountJournal.create(
+            {
+                "name": "Bank",
+                "type": "bank",
+                "code": "BANK",
+                "currency_id": self.currency_eur.id,
+                "bank_statements_source": "online",
+                "online_bank_statement_provider": "paypal",
+            }
+        )
+        return journal.online_bank_statement_provider_id
+
+    def test_three_year_limit_boundary(self):
+        provider = self._paypal_provider()
+        limit = FixedDatetime.fixed - relativedelta(years=3)
+        with (
+            mock.patch(
+                _module_ns + ".models.online_bank_statement_provider_paypal.datetime",
+                FixedDatetime,
+            ),
+            self.mock_token(),
+            mock.patch(_provider_class + "._paypal_get_transactions", return_value=[]),
+            mock.patch(
+                _provider_class + "._paypal_get_balance", return_value=Decimal("0")
+            ),
+        ):
+            for since in (limit, limit + timedelta(microseconds=1)):
+                with self.subTest(since=since):
+                    data = provider._obtain_statement_data(since, FixedDatetime.fixed)
+                    self.assertEqual(
+                        data,
+                        (
+                            [],
+                            {
+                                "balance_start": Decimal("0"),
+                                "balance_end_real": Decimal("0"),
+                            },
+                        ),
+                    )
+            with self.assertRaisesRegex(UserError, "only up to 3 years in the past"):
+                provider._obtain_statement_data(
+                    limit - timedelta(microseconds=1), FixedDatetime.fixed
+                )
+
+    def test_monday_workaround_threshold(self):
+        provider = self._paypal_provider()
+        monday = FixedDatetime.fixed.replace(hour=0)
+        cases = (
+            (monday.replace(hour=3), True),
+            (
+                FixedDatetime.fixed - timedelta(hours=8) + timedelta(microseconds=1),
+                True,
+            ),
+            (FixedDatetime.fixed - timedelta(hours=8), False),
+            (monday + timedelta(days=7), True),
+            (monday + timedelta(days=1), False),
+        )
+        for interval_start, expected in cases:
+            seen = []
+            with (
+                self.subTest(interval_start=interval_start),
+                mock.patch(
+                    _module_ns
+                    + ".models.online_bank_statement_provider_paypal.datetime",
+                    FixedDatetime,
+                ),
+                mock.patch(
+                    _provider_class + "._paypal_retrieve",
+                    autospec=True,
+                    side_effect=_context_recorder(seen),
+                ),
+            ):
+                provider._paypal_get_transactions(
+                    "--TOKEN--",
+                    "EUR",
+                    interval_start,
+                    interval_start + timedelta(hours=1),
+                )
+                self.assertEqual(seen, [expected])
 
     def test_ancient_pull(self):
         journal = self.AccountJournal.create(
