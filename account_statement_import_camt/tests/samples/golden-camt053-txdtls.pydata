@@ -1,0 +1,44 @@
+('CHF',
+ 'CH1111000000123456789',
+ [{'balance_end_real': 79443.15,
+   'balance_start': 75960.15,
+   'date': '2017-03-22',
+   'name': '20170323123456789012345',
+   'transactions': [{'account_number': 'CH2222000000123456789',
+                     'amount': 2187.0,
+                     'date': '2017-03-22',
+                     'narration': 'Partner Name (RltdPties/Nm): Banque Cantonale Vaudoise\n'
+                                  'Partner Account Number (RltdPties/Acct): CH2222000000123456789\n'
+                                  'Transaction Date (BookgDt): 2017-03-22\n'
+                                  'Reference: 302388292000011111111111111\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-RCDT-VCOM\n'
+                                  'Additional Entry Information (AddtlNtryInf): CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: '
+                                  '123456CHCAFEBABE\n'
+                                  'Reversal Indicator (RvslInd): false\n'
+                                  'Structured Reference (RmtInf/Strd/CdtrRefInf/Ref): 302388292000011111111111111\n'
+                                  'Account Servicer Reference (Refs/AcctSvcrRef): 123456CHCAFEBABE\n'
+                                  'Postal Address (PstlAdr): Place Saint-François | 14 | 1003 | Lausanne | CH1',
+                     'partner_name': 'Banque Cantonale Vaudoise',
+                     'payment_ref': '/',
+                     'ref': '302388292000011111111111111',
+                     'transaction_type': 'PMNT-RCDT-VCOM'},
+                    {'account_number': 'CH3333000000123456789',
+                     'amount': 1296.0,
+                     'date': '2017-03-22',
+                     'narration': 'Partner Name (RltdPties/Nm): Banque Cantonale Vaudoise\n'
+                                  'Partner Account Number (RltdPties/Acct): CH3333000000123456789\n'
+                                  'Transaction Date (BookgDt): 2017-03-22\n'
+                                  'Reference: 302388292000022222222222222\n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): PMNT-RCDT-VCOM\n'
+                                  'Additional Entry Information (AddtlNtryInf): CRÉDIT GROUPÉ BVR TRAITEMENT DU 22.03.2017 NUMÉRO CLIENT 01-70884-3 PAQUET ID: '
+                                  '123456CHCAFEBABE\n'
+                                  'Reversal Indicator (RvslInd): false\n'
+                                  'Structured Reference (RmtInf/Strd/CdtrRefInf/Ref): 302388292000022222222222222\n'
+                                  'Account Servicer Reference (Refs/AcctSvcrRef): 123456CHCAFEBABE\n'
+                                  'Postal Address (PstlAdr): Place Saint-François | 14 | 1003 | Lausanne | CH2',
+                     'partner_name': 'Banque Cantonale Vaudoise',
+                     'payment_ref': '/',
+                     'ref': '302388292000022222222222222',
+                     'transaction_type': 'PMNT-RCDT-VCOM'}]}])
