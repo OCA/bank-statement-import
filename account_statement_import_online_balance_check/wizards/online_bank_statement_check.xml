@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="online_bank_statement_check_form" model="ir.ui.view">
+        <field name="model">online.bank.statement.check</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="main">
+                    <group name="period">
+                        <field name="provider_id" readonly="state == 'done'" />
+                        <field name="date_from" readonly="state == 'done'" />
+                        <field name="date_to" readonly="state == 'done'" />
+                    </group>
+                    <group name="result" invisible="state != 'done'">
+                        <field name="first_mismatch_date" />
+                        <field name="missing_count" />
+                    </group>
+                </group>
+                <div
+                    class="alert alert-success"
+                    role="status"
+                    invisible="state != 'done' or first_mismatch_date or issue_ids"
+                >
+                    The lines of the period match the data of the provider.
+                </div>
+                <notebook invisible="state != 'done'">
+                    <page name="issues" string="Issues">
+                        <field name="issue_ids" nolabel="1">
+                            <list
+                                create="0"
+                                delete="0"
+                                decoration-danger="issue_type in ('missing', 'extra')"
+                                decoration-warning="issue_type in ('amount', 'date')"
+                            >
+                                <field name="issue_type" />
+                                <field name="unique_import_id" />
+                                <field name="payment_ref" />
+                                <field name="provider_date" />
+                                <field name="provider_amount" />
+                                <field name="odoo_date" />
+                                <field name="odoo_amount" />
+                                <field name="statement_line_id" />
+                                <field name="currency_id" column_invisible="1" />
+                            </list>
+                        </field>
+                    </page>
+                    <page name="days" string="Day by Day">
+                        <field name="day_ids" nolabel="1">
+                            <list create="0" delete="0" decoration-danger="mismatch">
+                                <field name="date" />
+                                <field name="provider_amount" />
+                                <field name="odoo_amount" />
+                                <field name="difference" />
+                                <field name="cumulative_difference" />
+                                <field name="statement_id" />
+                                <field name="balance_difference" />
+                                <field name="mismatch" />
+                                <field name="currency_id" column_invisible="1" />
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button
+                        name="action_check"
+                        type="object"
+                        string="Check"
+                        class="btn-primary"
+                    />
+                    <button
+                        name="action_import_missing"
+                        type="object"
+                        string="Import Missing Lines"
+                        invisible="not missing_count"
+                    />
+                    <button special="cancel" string="Close" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="online_bank_statement_check_action" model="ir.actions.act_window">
+        <field name="name">Check Statements</field>
+        <field name="res_model">online.bank.statement.check</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
