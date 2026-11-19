@@ -1,0 +1,27 @@
+('EUR',
+ 'BE00000000000000',
+ [{'balance_end_real': 100.0,
+   'balance_start': 0.0,
+   'date': '2026-06-28T21:40:58.810767+02:00',
+   'name': '52995589-87806609-1783466312332',
+   'transactions': [{'amount': -900.0,
+                     'date': '2026-06-28T21:40:58.810767+02:00',
+                     'narration': 'Partner Name (RltdPties/Nm): \n'
+                                  'Partner Account Number (RltdPties/Acct): \n'
+                                  'Transaction Date (BookgDt): 2026-06-28T21:40:58.810767+02:00\n'
+                                  'Reference: \n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): \n'
+                                  'Additional Entry Information (AddtlNtryInf): Card transaction of 900.00 EUR issued by Provider',
+                     'payment_ref': 'Card transaction of 900.00 EUR issued by Provider',
+                     'transaction_type': ''},
+                    {'amount': 1000.0,
+                     'date': '2026-06-03T09:52:08.054666+02:00',
+                     'narration': 'Partner Name (RltdPties/Nm): \n'
+                                  'Partner Account Number (RltdPties/Acct): \n'
+                                  'Transaction Date (BookgDt): 2026-06-03T09:52:08.054666+02:00\n'
+                                  'Reference: \n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): ',
+                     'payment_ref': '/',
+                     'transaction_type': ''}]}])

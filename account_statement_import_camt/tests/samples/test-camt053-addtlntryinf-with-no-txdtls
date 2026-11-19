@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.10">
+    <BkToCstmrStmt>
+        <GrpHdr>
+            <MsgId>52995589-1783466312332</MsgId>
+            <CreDtTm>2026-07-07T23:18:32.332104506Z</CreDtTm>
+        </GrpHdr>
+        <Stmt>
+            <Id>52995589-87806609-1783466312332</Id>
+            <CreDtTm>2026-07-07T23:18:32.332104506Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2026-06-01T00:00:00+02:00</FrDtTm>
+                <ToDtTm>2026-07-01T00:00:00+02:00</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <IBAN>BE00000000000000</IBAN>
+                </Id>
+                <Ccy>EUR</Ccy>
+                <Ownr>
+                    <Nm>ACME Corporation</Nm>
+                    <PstlAdr>
+                        <AdrTp>
+                            <Cd>ADDR</Cd>
+                        </AdrTp>
+                        <PstCd>12345</PstCd>
+                        <TwnNm>Springfield</TwnNm>
+                        <AdrLine>Fake Str. 123</AdrLine>
+                    </PstlAdr>
+                    <Id>
+                        <OrgId>
+                            <Othr>
+                                <Id>B12345678</Id>
+                                <SchmeNm>
+                                    <Cd>COID</Cd>
+                                </SchmeNm>
+                            </Othr>
+                        </OrgId>
+                    </Id>
+                </Ownr>
+                <Svcr>
+                    <FinInstnId>
+                        <Nm>Wise Europe SA</Nm>
+                        <PstlAdr>
+                            <AdrTp>
+                                <Cd>ADDR</Cd>
+                            </AdrTp>
+                            <PstCd>1050</PstCd>
+                            <TwnNm>Brussels</TwnNm>
+                            <AdrLine>Rue du Trône 100, 3rd floor</AdrLine>
+                        </PstlAdr>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>CLBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">100.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2026-07-01T00:00:00+02:00</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>OPBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">0.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2026-06-01T00:00:00+02:00</DtTm>
+                </Dt>
+            </Bal>
+            <TxsSummry>
+                <TtlNtries>
+                    <NbOfNtries>2</NbOfNtries>
+                    <Sum>100.00</Sum>
+                    <TtlNetNtry>
+                        <Amt>100.00</Amt>
+                        <CdtDbtInd>CRDT</CdtDbtInd>
+                    </TtlNetNtry>
+                </TtlNtries>
+                <TtlCdtNtries>
+                    <NbOfNtries>1</NbOfNtries>
+                    <Sum>1000.00</Sum>
+                </TtlCdtNtries>
+                <TtlDbtNtries>
+                    <NbOfNtries>1</NbOfNtries>
+                    <Sum>900.00</Sum>
+                </TtlDbtNtries>
+            </TxsSummry>
+            <Ntry>
+                <Amt Ccy="EUR">900.00</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2026-06-28T21:40:58.810767+02:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>CARD-0123456789</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <AddtlNtryInf>Card transaction of 900.00 EUR issued by Provider</AddtlNtryInf>
+            </Ntry>
+            <Ntry>
+                <Amt Ccy="EUR">1000.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2026-06-03T09:52:08.054666+02:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>14f0b58de0089edb1ef85f57ffc5052d</Cd>
+                    </Prtry>
+                </BkTxCd>
+            </Ntry>
+        </Stmt>
+    </BkToCstmrStmt>
+</Document>
