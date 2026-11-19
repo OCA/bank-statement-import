@@ -2,6 +2,7 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # Copyright 2025 Tecnativa - Pedro M. Baeza
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from decimal import Decimal
@@ -19,6 +20,10 @@ class TestAccountStatementImportSheetFile(Common):
         statement = self.AccountBankStatement.search(self.statement_domain)
         self.assertEqual(len(statement), 1)
         self.assertEqual(len(statement.line_ids), 2)
+        line = statement.line_ids.filtered(lambda line: line.amount == -33.5)
+        self.assertEqual(line.payment_ref, "Your best supplier on 12/15/2018")
+        self.assertEqual(line.partner_name, "John Doe")
+        self.assertEqual(line.account_number, "123456789")
 
     def test_import_empty_csv_file(self):
         wizard = self._get_import_wizard("fixtures/empty_statement_en.csv")
