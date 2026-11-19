@@ -35,7 +35,7 @@ class OnlineBankStatementProvider(models.Model):
             ("ponto", "MyPonto.com"),
         ]
 
-    def _pull(self, date_since, date_until):
+    def _pull(self, date_since, date_until, one_fetch=False):
         """For Ponto the pulling of data will not be grouped by statement.
 
         Instead we will pull data from the last available backwards.
@@ -52,7 +52,7 @@ class OnlineBankStatementProvider(models.Model):
         debug = self.env.context.get("account_statement_online_import_debug")
         debug_data = []
         data = super(OnlineBankStatementProvider, self - ponto_providers)._pull(
-            date_since, date_until
+            date_since, date_until, one_fetch=one_fetch
         )
         if debug:
             debug_data += data
