@@ -1,6 +1,7 @@
 # Copyright 2024 Binhex - Adasat Torres de León.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import datetime
+from copy import deepcopy
 from unittest.mock import MagicMock, patch
 
 from odoo.tests import common
@@ -188,6 +189,13 @@ class TestAccountStatementImportOnlinePlaid(common.TransactionCase):
         self.assertEqual(len(lines), 2)
         self.assertEqual(lines[0].amount, -500.0)
         self.assertEqual(lines[1].amount, -30.0)
+
+    def test_prepare_vals_for_statement_skips_pending_transactions(self):
+        transactions = deepcopy(TRANSACTIONS)
+        transactions[0]["pending"] = True
+        vals = self.provider._prepare_vals_for_statement(transactions)
+        self.assertEqual(len(vals), 1)
+        self.assertEqual(vals[0]["unique_import_id"], transactions[1]["transaction_id"])
 
     def test_get_services(self):
         services = self.provider._get_available_services()

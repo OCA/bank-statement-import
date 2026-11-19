@@ -128,4 +128,5 @@ class OnlineBankStatementProvider(models.Model):
                 "raw_data": transaction,
             }
             for transaction in transactions
+            if not transaction.get("pending")
         ]
