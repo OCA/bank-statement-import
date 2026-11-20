@@ -12,7 +12,7 @@ class CamtParser(models.AbstractModel):
 
     def _get_partner_ref(self, isr):
         ICP = self.env["ir.config_parameter"]
-        ref_format = ICP.sudo().get_param("qrr_partner_ref")
+        ref_format = ICP.sudo().get_str("qrr_partner_ref")
         if not ref_format:
             return
         config = ref_format.split(",")

@@ -8,8 +8,10 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
-            <xpath expr='//field[@name="restrict_mode_hash_table"]' position='before'>
-                <field name="transfer_line" />
+            <xpath expr="//page[@name='advanced_settings']/group" position="inside">
+                <group string="Bank statement configuration" invisible="type != 'bank'">
+                    <field name="transfer_line" />
+                </group>
             </xpath>
         </field>
     </record>

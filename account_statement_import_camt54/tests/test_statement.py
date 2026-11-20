@@ -1,9 +1,8 @@
 # Copyright 2020 Camptocamp SA
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import base64
-
 from odoo.tests.common import TransactionCase
+from odoo.tools import BinaryBytes
 from odoo.tools.misc import file_path
 
 
@@ -15,18 +14,16 @@ class TestGenerateBankStatement(TransactionCase):
         eur_currency.write({"active": True})
         bank = cls.env["res.partner.bank"].create(
             {
-                "acc_number": "NL77ABNA0574908765",
+                "account_number": "NL77ABNA0574908765",
                 "partner_id": cls.env.ref("base.main_partner").id,
                 "company_id": cls.env.ref("base.main_company").id,
-                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
         cls.env["res.partner.bank"].create(
             {
-                "acc_number": "NL46ABNA0499998748",
+                "account_number": "NL46ABNA0499998748",
                 "partner_id": cls.env.ref("base.main_partner").id,
                 "company_id": cls.env.ref("base.main_company").id,
-                "bank_id": cls.env.ref("base.res_bank_1").id,
             }
         )
         cls.journal = cls.env["account.journal"].create(
@@ -42,7 +39,7 @@ class TestGenerateBankStatement(TransactionCase):
     def _load_statement(self):
         testfile = file_path("account_statement_import_camt/tests/samples/test-camt054")
         with open(testfile, "rb") as datafile:
-            camt_file = base64.b64encode(datafile.read())
+            camt_file = BinaryBytes(datafile.read())
             self.env["account.statement.import"].create(
                 {
                     "statement_filename": "test import",
@@ -51,11 +48,12 @@ class TestGenerateBankStatement(TransactionCase):
             ).import_file_button()
             bank_st_record = self.env["account.bank.statement"].search(
                 [
+                    ("journal_id", "=", self.journal.id),
                     (
                         "name",
                         "in",
                         ["TBNKC Statement 2022-01-26", "20220120000000000000000"],
-                    )
+                    ),
                 ],
                 limit=1,
             )
