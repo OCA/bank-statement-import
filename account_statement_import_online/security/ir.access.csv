@@ -1,0 +1,6 @@
+id,name,model_id,group_id/id,operation,domain
+access_online_bank_statement_provider_admin,online.bank.statement.provider:base.group_system,online.bank.statement.provider,base.group_system,crud,
+access_online_bank_statement_provider_user,online.bank.statement.provider:account.group_account_user,online.bank.statement.provider,account.group_account_user,crud,
+access_online_bank_statement_pull_debug_user,online.bank.statement.pull.debug:account.group_account_user,online.bank.statement.pull.debug,account.group_account_user,crud,
+access_online_bank_statement_pull_wizard_user,online.bank.statement.pull.wizard:account.group_account_user,online.bank.statement.pull.wizard,account.group_account_user,crud,
+online_bank_statement_provider_multicompany,Online Bank Statement Provider multi-company,online.bank.statement.provider,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"

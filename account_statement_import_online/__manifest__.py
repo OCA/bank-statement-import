@@ -18,8 +18,7 @@
     ],
     "data": [
         "data/account_statement_import_online.xml",
-        "security/ir.model.access.csv",
-        "security/online_bank_statement_provider.xml",
+        "security/ir.access.csv",
         "wizards/online_bank_statement_pull_debug.xml",
         "wizards/online_bank_statement_pull_wizard.xml",
         "views/actions.xml",
