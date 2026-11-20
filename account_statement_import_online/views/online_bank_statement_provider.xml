@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
     Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
     Copyright 2019 Dataplug (https://dataplug.io)
@@ -6,7 +6,7 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <record model="ir.ui.view" id="online_bank_statement_provider_filter">
+    <record id="online_bank_statement_provider_filter" model="ir.ui.view">
         <field name="name">online.bank.statement.provider.filter</field>
         <field name="model">online.bank.statement.provider</field>
         <field name="arch" type="xml">
@@ -27,7 +27,7 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="online_bank_statement_provider_tree">
+    <record id="online_bank_statement_provider_tree" model="ir.ui.view">
         <field name="name">online.bank.statement.provider.list</field>
         <field name="model">online.bank.statement.provider</field>
         <field name="arch" type="xml">
@@ -41,7 +41,7 @@
             </list>
         </field>
     </record>
-    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+    <record id="online_bank_statement_provider_form" model="ir.ui.view">
         <field name="name">online.bank.statement.provider.form</field>
         <field name="model">online.bank.statement.provider</field>
         <field name="arch" type="xml">
@@ -75,7 +75,7 @@
                         </group>
                         <group name="pull" string="Scheduled Pull">
                             <label for="interval_number" />
-                            <div class="o_row" id="interval_number">
+                            <div id="interval_number" class="o_row">
                                 <field name="interval_number" class="ml8" />
                                 <field name="interval_type" />
                             </div>

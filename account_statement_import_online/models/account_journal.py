@@ -27,8 +27,8 @@ class AccountJournal(models.Model):
         copy=False,
     )
 
-    def __get_bank_statements_available_sources(self):
-        result = super().__get_bank_statements_available_sources()
+    def _get_bank_statements_available_sources(self):
+        result = super()._get_bank_statements_available_sources()
         result.append(("online", self.env._("Online (OCA)")))
         return result
 
