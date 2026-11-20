@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>MULTI-1</MsgId>
+      <CreDtTm>2026-05-06T10:00:00</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>STATEMENT-1</Id>
+      <Acct>
+        <Id>
+          <IBAN>SE3550000000054910000003</IBAN>
+        </Id>
+        <Ccy>SEK</Ccy>
+      </Acct>
+      <Ntry>
+        <Amt Ccy="SEK">345.34</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <BookgDt>
+          <Dt>2026-05-06</Dt>
+        </BookgDt>
+        <NtryDtls>
+          <TxDtls>
+            <AmtDtls>
+              <TxAmt>
+                <Amt Ccy="EUR">32.00</Amt>
+              </TxAmt>
+            </AmtDtls>
+            <RltdPties>
+              <DbtrAcct>
+                <Id>
+                  <Othr>
+                    <Id>SE123456789</Id>
+                  </Othr>
+                </Id>
+              </DbtrAcct>
+            </RltdPties>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>
+

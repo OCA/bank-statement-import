@@ -1,0 +1,19 @@
+('SEK',
+ 'SE3550000000054910000003',
+ [{'balance_end_real': 0.0,
+   'balance_start': 0.0,
+   'date': '2026-05-06',
+   'name': 'STATEMENT-1',
+   'transactions': [{'account_number': 'SE123456789',
+                     'amount': 345.34,
+                     'amount_currency': 32.0,
+                     'date': '2026-05-06',
+                     'foreign_currency_id': 'EUR',
+                     'narration': 'Partner Name (RltdPties/Nm): \n'
+                                  'Partner Account Number (RltdPties/Acct): SE123456789\n'
+                                  'Transaction Date (BookgDt): 2026-05-06\n'
+                                  'Reference: \n'
+                                  'Communication: \n'
+                                  'Transaction Type (BkTxCd): ',
+                     'payment_ref': '/',
+                     'transaction_type': ''}]}])
