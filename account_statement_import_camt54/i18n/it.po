@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_camt54
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-05-03 16:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_statement_import_camt54
+#: model:ir.model,name:account_statement_import_camt54.model_account_statement_import_camt_parser
+msgid "Account Bank Statement Import CAMT parser"
+msgstr "Parser CAMT importazione estratto conto bancario"
+
+#. module: account_statement_import_camt54
+#: model:ir.model.fields,field_description:account_statement_import_camt54.field_account_journal__transfer_line
+msgid "Add balance Line"
+msgstr "Aggiungi riga saldo"
+
+#. module: account_statement_import_camt54
+#. odoo-python
+#: code:addons/account_statement_import_camt54/models/parser.py:0
+#, python-format
+msgid ""
+"Config parameter `isr_partner_ref` is wrong.\n"
+"It must be in format `i[,n]` \n"
+"`i` and `n` must be integers.\n"
+"e.g. \"13,6\""
+msgstr ""
+"Il parametro `isr_partner_ref` è configurato in modo errato.\n"
+"Deve essere nel formato `i[,n]` \n"
+"`i` e `n` devono essere interi.\n"
+"es. \"13,6\""
+
+#. module: account_statement_import_camt54
+#. odoo-python
+#: code:addons/account_statement_import_camt54/models/parser.py:0
+#, python-format
+msgid ""
+"Config parameter `isr_partner_ref` is wrong.\n"
+"It must be in format `i[,n]` \n"
+"where `i` is the position of the first digit and\n"
+"`n` the number of digit in the reference, by default 6.\n"
+"e.g. \"13,6\""
+msgstr ""
+"Il parametro `isr_partner_ref` è configurato male.\n"
+"Deve essere nel formato `i[,n]` \n"
+"dove `i` è la posizione della prima cifra e\n"
+"`n` il numero di cifre nel riferimento, predefinito 6.\n"
+"es. \"13,6\""
+
+#. module: account_statement_import_camt54
+#: model:ir.model.fields,help:account_statement_import_camt54.field_account_journal__transfer_line
+msgid "Generate balance line on total of bank statement import"
+msgstr "Genera riga di saldo sul totale dell'importazione dell'estratto conto"
+
+#. module: account_statement_import_camt54
+#: model:ir.model,name:account_statement_import_camt54.model_account_statement_import
+msgid "Import Bank Statement Files"
+msgstr "Importazione file estratto conto bancario"
+
+#. module: account_statement_import_camt54
+#: model:ir.model,name:account_statement_import_camt54.model_account_journal
+msgid "Journal"
+msgstr "Registro"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome visualizzato"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
