@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="plaid_account_select_form">
+        <field name="name">plaid.account.select.form</field>
+        <field name="model">plaid.account.select</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>
+                    This bank login has several accounts. Choose the one to
+                    import into this journal.
+                </p>
+                <field name="line_ids" invisible="1" />
+                <field
+                    name="line_id"
+                    widget="radio"
+                    required="1"
+                    options="{'no_create': True}"
+                />
+                <footer>
+                    <button
+                        name="action_select"
+                        type="object"
+                        string="Select"
+                        class="btn-primary"
+                    />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
