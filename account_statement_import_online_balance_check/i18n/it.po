@@ -1,0 +1,283 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_import_online_balance_check
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__balance_difference
+msgid "Balance Difference"
+msgstr "Differenza di saldo"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__check_id
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__check_id
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_check_form
+msgid "Check"
+msgstr "Verifica"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.actions.act_window,name:account_statement_import_online_balance_check.online_bank_statement_check_action
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_provider_form
+msgid "Check Statements"
+msgstr "Verifica estratti conto"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields.selection,name:account_statement_import_online_balance_check.selection__online_bank_statement_check__state__done
+msgid "Checked"
+msgstr "Verificato"
+
+#. module: account_statement_import_online_balance_check
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_check_form
+msgid "Close"
+msgstr "Chiudi"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__create_uid
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__create_uid
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__create_date
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__create_date
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__cumulative_difference
+msgid "Cumulative Difference"
+msgstr "Differenza cumulata"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__currency_id
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__currency_id
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__currency_id
+msgid "Currency"
+msgstr "Valuta"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__date
+msgid "Date"
+msgstr "Data"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__date_from
+msgid "Date From"
+msgstr "Dalla data"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__date_to
+msgid "Date To"
+msgstr "Alla data"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__day_ids
+msgid "Day"
+msgstr "Giorno"
+
+#. module: account_statement_import_online_balance_check
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_check_form
+msgid "Day by Day"
+msgstr "Giorno per giorno"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__difference
+msgid "Difference"
+msgstr "Differenza"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,help:account_statement_import_online_balance_check.field_online_bank_statement_check_day__balance_difference
+msgid ""
+"Difference between the computed and the declared ending balance of the "
+"statement of the day."
+msgstr ""
+"Differenza tra il saldo finale calcolato e quello dichiarato dell'estratto "
+"conto del giorno."
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields.selection,name:account_statement_import_online_balance_check.selection__online_bank_statement_check_issue__issue_type__amount
+msgid "Different amount"
+msgstr "Importo diverso"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields.selection,name:account_statement_import_online_balance_check.selection__online_bank_statement_check_issue__issue_type__date
+msgid "Different date"
+msgstr "Data diversa"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__display_name
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__display_name
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__first_mismatch_date
+msgid "First Mismatch Date"
+msgstr "Primo giorno non corrispondente"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,help:account_statement_import_online_balance_check.field_online_bank_statement_check__first_mismatch_date
+msgid "First day whose lines or balance do not match the provider."
+msgstr ""
+"Primo giorno in cui le righe o il saldo non corrispondono al fornitore."
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__id
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__id
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__unique_import_id
+msgid "Import ID"
+msgstr "ID importazione"
+
+#. module: account_statement_import_online_balance_check
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_check_form
+msgid "Import Missing Lines"
+msgstr "Importa righe mancanti"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__issue_ids
+msgid "Issue"
+msgstr "Problema"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__issue_type
+msgid "Issue Type"
+msgstr "Tipo di problema"
+
+#. module: account_statement_import_online_balance_check
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_check_form
+msgid "Issues"
+msgstr "Problemi"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__journal_id
+msgid "Journal"
+msgstr "Registro"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__payment_ref
+msgid "Label"
+msgstr "Etichetta"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__write_uid
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__write_uid
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__write_date
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__write_date
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__mismatch
+msgid "Mismatch"
+msgstr "Non corrisponde"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__missing_count
+msgid "Missing Count"
+msgstr "Righe mancanti"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields.selection,name:account_statement_import_online_balance_check.selection__online_bank_statement_check_issue__issue_type__missing
+msgid "Missing in Odoo"
+msgstr "Mancante in Odoo"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields.selection,name:account_statement_import_online_balance_check.selection__online_bank_statement_check_issue__issue_type__extra
+msgid "Not at the provider"
+msgstr "Non presente presso il fornitore"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__odoo_amount
+msgid "Odoo"
+msgstr "Odoo"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__odoo_amount
+msgid "Odoo Amount"
+msgstr "Importo in Odoo"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__odoo_date
+msgid "Odoo Date"
+msgstr "Data in Odoo"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model,name:account_statement_import_online_balance_check.model_online_bank_statement_check
+msgid "Online Bank Statement Check"
+msgstr "Verifica estratti conto online"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model,name:account_statement_import_online_balance_check.model_online_bank_statement_check_day
+msgid "Online Bank Statement Check Day"
+msgstr "Giorno della verifica estratti conto online"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model,name:account_statement_import_online_balance_check.model_online_bank_statement_check_issue
+msgid "Online Bank Statement Check Issue"
+msgstr "Problema della verifica estratti conto online"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__provider_id
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__provider_amount
+msgid "Provider"
+msgstr "Fornitore"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__provider_amount
+msgid "Provider Amount"
+msgstr "Importo del fornitore"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__provider_date
+msgid "Provider Date"
+msgstr "Data del fornitore"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check__state
+msgid "State"
+msgstr "Stato"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_day__statement_id
+msgid "Statement"
+msgstr "Estratto conto"
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields,field_description:account_statement_import_online_balance_check.field_online_bank_statement_check_issue__statement_line_id
+msgid "Statement Line"
+msgstr "Riga estratto conto"
+
+#. module: account_statement_import_online_balance_check
+#: model_terms:ir.ui.view,arch_db:account_statement_import_online_balance_check.online_bank_statement_check_form
+msgid "The lines of the period match the data of the provider."
+msgstr "Le righe del periodo corrispondono ai dati del fornitore."
+
+#. module: account_statement_import_online_balance_check
+#: model:ir.model.fields.selection,name:account_statement_import_online_balance_check.selection__online_bank_statement_check__state__draft
+msgid "To Check"
+msgstr "Da verificare"
