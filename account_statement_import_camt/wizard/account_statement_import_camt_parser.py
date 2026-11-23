@@ -334,17 +334,57 @@ class AccountStatementImportCamtParser(models.AbstractModel):
             "-".join(transaction["transaction_type"].values()) or ""
         )
 
+        entry_ref = self._xpath_text(ns, node, "./ns:AcctSvcrRef")
         details_nodes = node.xpath("./ns:NtryDtls/ns:TxDtls", namespaces={"ns": ns})
         if len(details_nodes) == 0:
+            unique_import_id = self._get_unique_import_id(entry_ref, None, 1, 1)
+            if unique_import_id:
+                transaction["unique_import_id"] = unique_import_id
             self.generate_narration(transaction)
             yield transaction
             return
         transaction_base = transaction
-        for node in details_nodes:
+        for index, node in enumerate(details_nodes, start=1):
             transaction = transaction_base.copy()
             self.parse_transaction_details(ns, node, transaction)
+            unique_import_id = self._get_unique_import_id(
+                entry_ref,
+                self._xpath_text(ns, node, "./ns:Refs/ns:AcctSvcrRef"),
+                index,
+                len(details_nodes),
+            )
+            if unique_import_id:
+                transaction["unique_import_id"] = unique_import_id
             self.generate_narration(transaction)
             yield transaction
+
+    def _xpath_text(self, ns, node, xpath_str):
+        """Stripped text of the first node ``xpath_str`` finds, or None."""
+        found = node.xpath(xpath_str, namespaces={"ns": ns})
+        if found and found[0].text and found[0].text.strip():
+            return found[0].text.strip()
+        return None
+
+    def _get_unique_import_id(self, entry_ref, transaction_ref, index, count):
+        """Identify a transaction by the references of the account servicer.
+
+        ``Ntry/AcctSvcrRef`` is the bank's reference of the entry and
+        ``TxDtls/Refs/AcctSvcrRef`` that of a transaction in it, so together
+        they let the import skip a transaction it already has, as it does for
+        other formats. In an entry with several transactions the position is
+        always part of the identifier: banks do repeat a transaction reference
+        within an entry, and two transactions must never collapse into one.
+        Without any reference there is nothing reliable to go on, and no
+        identifier is set.
+        """
+        if not entry_ref and not transaction_ref:
+            return None
+        parts = [entry_ref] if entry_ref else []
+        if count > 1:
+            parts.append(str(index))
+        if transaction_ref and transaction_ref != entry_ref:
+            parts.append(transaction_ref)
+        return "/".join(parts)
 
     def get_balance_amounts(self, ns, node):
         """Return opening and closing balance.

@@ -23,4 +23,5 @@
                      'partner_name': 'Test Customer',
                      'payment_ref': 'MIB InstrId305-312MM20211231v1',
                      'ref': '000000000000000000000000003',
-                     'transaction_type': 'PMNT-RCDT-VCOM'}]}])
+                     'transaction_type': 'PMNT-RCDT-VCOM',
+                     'unique_import_id': '98888208N8/15180015077602405'}]}])

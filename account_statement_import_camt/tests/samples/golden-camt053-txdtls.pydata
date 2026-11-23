@@ -22,7 +22,8 @@
                      'partner_name': 'Banque Cantonale Vaudoise',
                      'payment_ref': '/',
                      'ref': '302388292000011111111111111',
-                     'transaction_type': 'PMNT-RCDT-VCOM'},
+                     'transaction_type': 'PMNT-RCDT-VCOM',
+                     'unique_import_id': '20170323001234567891234567891234/1/123456CHCAFEBABE'},
                     {'account_number': 'CH3333000000123456789',
                      'amount': 1296.0,
                      'date': '2017-03-22',
@@ -41,4 +42,5 @@
                      'partner_name': 'Banque Cantonale Vaudoise',
                      'payment_ref': '/',
                      'ref': '302388292000022222222222222',
-                     'transaction_type': 'PMNT-RCDT-VCOM'}]}])
+                     'transaction_type': 'PMNT-RCDT-VCOM',
+                     'unique_import_id': '20170323001234567891234567891234/2/123456CHCAFEBABE'}]}])
