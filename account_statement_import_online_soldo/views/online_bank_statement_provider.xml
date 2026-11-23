@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="online_bank_statement_provider_form">
+        <field name="name">online.bank.statement.provider.form</field>
+        <field name="model">online.bank.statement.provider</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_online.online_bank_statement_provider_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main']" position="after">
+                <group
+                    name="soldo"
+                    string="Soldo configuration"
+                    invisible="service != 'soldo'"
+                >
+                    <field
+                        name="api_base"
+                        string="API base"
+                        placeholder="https://api.soldo.com or https://api-demo.soldocloud.net"
+                        groups="base.group_no_one"
+                    />
+                    <field name="username" string="Client ID" />
+                    <field name="password" string="Client Secret" password="True" />
+                    <field
+                        name="passphrase"
+                        string="Fingerprint Token"
+                        password="True"
+                    />
+                    <field
+                        name="soldo_private_key"
+                        string="Private Key"
+                        placeholder="-----BEGIN PRIVATE KEY-----"
+                        groups="base.group_system"
+                    />
+                    <field
+                        name="soldo_private_key_set"
+                        string="Private Key Saved"
+                        groups="base.group_system"
+                    />
+                    <field name="soldo_import_state" />
+                    <field
+                        name="soldo_settlement_days"
+                        invisible="soldo_import_state != 'settled'"
+                    />
+                    <field name="soldo_excluded_wallets" />
+                    <field name="soldo_attachments" />
+                    <field name="soldo_update_lines" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
