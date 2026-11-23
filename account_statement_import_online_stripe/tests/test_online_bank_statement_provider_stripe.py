@@ -43,6 +43,7 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
                         "id": "ch_123",
                         "object": "charge",
                         "metadata": {"invoice_number": "INV-001"},
+                        "payment_intent": "pi_123",
                         "payment_method_details": {"type": "card"},
                     },
                 },
@@ -58,6 +59,7 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
                         "id": "ch_456",
                         "object": "charge",
                         "metadata": {"invoice_number": "INV-002"},
+                        "payment_intent": "pi_456",
                         "payment_method_details": {"type": "card"},
                     },
                 },
@@ -79,7 +81,8 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
             self.assertEqual(statement_data[0]["unique_import_id"], "txn_123")
             self.assertEqual(statement_data[0]["ref"], "INV-001")
             self.assertEqual(
-                statement_data[0]["payment_ref"], "stripe INV-001 charge ch_123 card"
+                statement_data[0]["payment_ref"],
+                "stripe INV-001 pi_123 charge ch_123 card",
             )
             self.assertEqual(statement_data[0]["narration"], "Custom Note charge")
             self.assertEqual(statement_data[1]["amount"], -1.0)
@@ -94,7 +97,8 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
             self.assertEqual(statement_data[2]["unique_import_id"], "txn_456")
             self.assertEqual(statement_data[2]["ref"], "INV-002")
             self.assertEqual(
-                statement_data[2]["payment_ref"], "stripe INV-002 charge ch_456 card"
+                statement_data[2]["payment_ref"],
+                "stripe INV-002 pi_456 charge ch_456 card",
             )
             self.assertEqual(statement_data[2]["narration"], "Custom Note charge")
             self.assertEqual(statement_data[3]["amount"], -2.0)
