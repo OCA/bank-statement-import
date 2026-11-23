@@ -28,6 +28,66 @@ msgid "Bank Statement Line"
 msgstr "Riga estratto conto"
 
 #. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__card_expiry_date
+msgid "Card Expiry Date"
+msgstr "Data di scadenza della carta"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__card_masked_number
+msgid "Card Number"
+msgstr "Numero carta"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__merchant_category
+msgid "Category of the merchant, for card payments."
+msgstr "Categoria dell'esercente, per i pagamenti con carta."
+
+#. module: account_statement_import_base
+#: model_terms:ir.ui.view,arch_db:account_statement_import_base.account_bank_statement_line_form
+msgid "Counterpart"
+msgstr "Controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_city
+msgid "Counterpart City"
+msgstr "Città della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_country_id
+msgid "Counterpart Country"
+msgstr "Nazione della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_email
+msgid "Counterpart Email"
+msgstr "Email della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_phone
+msgid "Counterpart Phone"
+msgstr "Telefono della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_external_ref
+msgid "Counterpart Reference"
+msgstr "Riferimento della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_state_name
+msgid "Counterpart State"
+msgstr "Provincia della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_street
+msgid "Counterpart Street"
+msgstr "Indirizzo della controparte"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__partner_zip
+msgid "Counterpart Zip"
+msgstr "CAP della controparte"
+
+#. module: account_statement_import_base
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__unique_import_id
 msgid "Import ID"
 msgstr "ID importazione"
@@ -38,7 +98,75 @@ msgid "Journal"
 msgstr "Registro"
 
 #. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__card_expiry_date
+msgid "Last day of the month in which the card expires."
+msgstr "Ultimo giorno del mese in cui scade la carta."
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__provider_url
+msgid "Link to the transaction on the website of the provider."
+msgstr "Collegamento alla transazione sul sito del fornitore."
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__card_masked_number
+msgid "Masked number of the card."
+msgstr "Numero della carta, mascherato."
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__merchant_category
+msgid "Merchant Category"
+msgstr "Categoria dell'esercente"
+
+#. module: account_statement_import_base
+#: model_terms:ir.ui.view,arch_db:account_statement_import_base.account_bank_statement_line_form
+msgid "Payment"
+msgstr "Pagamento"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__payment_method_type
+msgid "Payment Method Type"
+msgstr "Tipo di metodo di pagamento"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__payment_method_type
+msgid ""
+"Payment method, as named by the provider (card, sepa_debit, paypal...)."
+msgstr ""
+"Metodo di pagamento, come lo chiama il fornitore (card, sepa_debit, "
+"paypal...)."
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__provider_url
+msgid "Provider Link"
+msgstr "Collegamento al fornitore"
+
+#. module: account_statement_import_base
 #: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__raw_data
 #: model_terms:ir.ui.view,arch_db:account_statement_import_base.account_bank_statement_line_form
 msgid "Raw Data"
 msgstr "Dati grezzi"
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__partner_external_ref
+msgid ""
+"Reference of the counterpart at the provider, for instance the id of the "
+"customer, of the payer or of the merchant."
+msgstr ""
+"Riferimento della controparte presso il fornitore, per esempio l'id del "
+"cliente, del pagatore o dell'esercente."
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,help:account_statement_import_base.field_account_bank_statement_line__subscription_ref
+msgid "Reference of the subscription or recurring payment at the provider."
+msgstr ""
+"Riferimento dell'abbonamento o del pagamento ricorrente presso il fornitore."
+
+#. module: account_statement_import_base
+#: model:ir.model.fields,field_description:account_statement_import_base.field_account_bank_statement_line__subscription_ref
+msgid "Subscription Reference"
+msgstr "Riferimento dell'abbonamento"
+
+#. module: account_statement_import_base
+#: model_terms:ir.ui.view,arch_db:account_statement_import_base.account_bank_statement_line_form
+msgid "Transaction Details"
+msgstr "Dettagli della transazione"

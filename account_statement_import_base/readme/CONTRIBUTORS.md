@@ -2,3 +2,5 @@
 
 - Trobz \<<https://www.trobz.com/>\>
   - Do Anh Duy \<<duyda@trobz.com>\>
+
+- Luca Orioli \<<lucaorioli@gmail.com>\>

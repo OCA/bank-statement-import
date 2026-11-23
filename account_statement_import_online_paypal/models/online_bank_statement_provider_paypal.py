@@ -1,5 +1,6 @@
 # Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
 # Copyright 2021 CorporateHub (https://corporatehub.eu)
+# Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import itertools
@@ -294,6 +295,42 @@ class OnlineBankStatementProviderPayPal(models.Model):
         return transaction
 
     @api.model
+    def _paypal_line_details(self, data):
+        """Details of the payer and of the payment of a transaction"""
+        transaction = data.get("transaction_info") or {}
+        payer = data.get("payer_info") or {}
+        address = payer.get("address") or {}
+        phone = payer.get("phone_number") or {}
+        country_code = address.get("country_code") or payer.get("country_code")
+        country = self.env["res.country"]
+        if country_code:
+            country = country.search([("code", "=", country_code.upper())], limit=1)
+        details = {
+            "partner_email": payer.get("email_address"),
+            "partner_phone": " ".join(
+                filter(
+                    None,
+                    [
+                        phone.get("country_code") and f"+{phone['country_code']}",
+                        phone.get("national_number"),
+                    ],
+                )
+            ),
+            "partner_street": ", ".join(
+                filter(None, [address.get("line1"), address.get("line2")])
+            ),
+            "partner_zip": address.get("postal_code"),
+            "partner_city": address.get("city"),
+            "partner_state_name": address.get("state"),
+            "partner_country_id": country.id,
+            "partner_external_ref": payer.get("account_id"),
+            "payment_method_type": transaction.get("instrument_type"),
+        }
+        if transaction.get("paypal_reference_id_type") == "SUB":
+            details["subscription_ref"] = transaction.get("paypal_reference_id")
+        return {key: value for key, value in details.items() if value}
+
+    @api.model
     def _paypal_transaction_to_lines(self, data):
         transaction = data["transaction_info"]
         payer = data["payer_info"]
@@ -329,6 +366,7 @@ class OnlineBankStatementProviderPayPal(models.Model):
             "payment_ref": note,
             "unique_import_id": unique_import_id,
             "raw_data": transaction,
+            **self._paypal_line_details(data),
         }
         payer_full_name = payer_name.get("full_name") or payer_name.get(
             "alternate_full_name"
