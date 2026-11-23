@@ -24,6 +24,11 @@
                     />
                     <field name="password" string="API Key" password="True" />
                     <field name="stripe_expand" string="Expand" />
+                    <field name="stripe_payment_installed" invisible="1" />
+                    <field
+                        name="stripe_skip_website_payments"
+                        invisible="not stripe_payment_installed"
+                    />
                     <field name="stripe_label" string="Statement Label" />
                     <field name="stripe_note" string="Statement Note" />
                     <field name="stripe_reference" string="Statement Reference" />
