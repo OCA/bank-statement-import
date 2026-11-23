@@ -236,6 +236,8 @@ class AccountStatementImportSheetParser(models.TransientModel):
                 if index >= footer_line:
                     continue
                 values = list(row)
+            if mapping._skip_row(values, columns):
+                continue
             if mapping.skip_empty_lines and not any(values):
                 continue
 
