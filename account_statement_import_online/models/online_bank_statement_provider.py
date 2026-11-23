@@ -225,7 +225,7 @@ class OnlineBankStatementProvider(models.Model):
                     failed_since = statement_date_since
                     break  # Continue with next provider.
                 if debug:
-                    debug_data += data
+                    debug_data += data or []
                 else:
                     provider._create_or_update_statement(
                         data, statement_date_since, statement_date_until

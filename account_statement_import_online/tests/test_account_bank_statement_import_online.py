@@ -469,6 +469,22 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(lines[2].date, date(2020, 4, 18))
         self.assertEqual(lines[3].date, date(2020, 4, 18))
 
+    def test_wizard_debug_no_data(self):
+        wizard = self.OnlineBankStatementPullWizard.with_context(
+            active_model=self.provider._name,
+            active_id=self.provider.id,
+        ).create(
+            {
+                "date_since": self.now - relativedelta(hours=1),
+                "date_until": self.now,
+            }
+        )
+        with mock.patch(mock_obtain_statement_data, return_value=None) as mock_data:
+            action = wizard.action_debug()
+        mock_data.assert_called_once()
+        debug_wizard = self.env[action["res_model"]].browse(action["res_id"])
+        self.assertEqual(debug_wizard.data, "[]")
+
     def _get_statement_line_data(self, statement_date):
         return [
             {
