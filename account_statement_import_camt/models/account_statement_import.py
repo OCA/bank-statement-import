@@ -25,7 +25,7 @@ class AccountBankStatementImport(models.TransientModel):
                     account_number = None
                     transactions = []
                     for member in data.namelist():
-                        currency, account_number, new = self._parse_file(
+                        currency, account_number, new = parser.parse(
                             data.open(member).read()
                         )
                         transactions.extend(new)
