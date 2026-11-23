@@ -2,11 +2,14 @@
 # Copyright 2021-2022 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import io
 import json
 from datetime import datetime
 from decimal import Decimal
+from email.message import Message
 from unittest import mock
-from urllib.error import HTTPError
+from unittest.mock import patch
+from urllib.error import HTTPError, URLError
 
 from dateutil.relativedelta import relativedelta
 
@@ -24,6 +27,8 @@ _provider_class = (
 
 class FakeHTTPError(HTTPError):
     def __init__(self, content):
+        # A client error, which is not retried
+        super().__init__("https://url", 400, "Bad Request", None, None)
         self.content = content
 
     # pylint: disable=method-required-super
@@ -49,7 +54,44 @@ class UrlopenRetValMock:
         return self.content.encode("utf-8")
 
 
+RETRY_MODULE = (
+    "odoo.addons.account_statement_import_online_paypal.models"
+    ".online_bank_statement_provider_paypal"
+)
+
+
+RETRY_PROVIDER = f"{RETRY_MODULE}.OnlineBankStatementProviderPayPal"
+
+
+RETRY_URL = "https://api.paypal.com/v1/reporting/transactions?page=1"
+
+
+def _retry_http_error(code, body=None, retry_after=None):
+    headers = Message()
+    if retry_after is not None:
+        headers["Retry-After"] = str(retry_after)
+    content = json.dumps(body or {}).encode("utf-8")
+    return HTTPError(RETRY_URL, code, "Error", headers, io.BytesIO(content))
+
+
+class _retry_Response(io.BytesIO):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.close()
+
+
+def _retry_response(data):
+    return _retry_Response(json.dumps(data).encode("utf-8"))
+
+
 class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.retry_provider = cls.env["online.bank.statement.provider"]
+
     def setUp(self):
         super().setUp()
 
@@ -899,3 +941,74 @@ class TestAccountBankAccountStatementImportOnlinePayPal(common.TransactionCase):
             provider._paypal_format_datetime(dt),
             "2026-01-15T11:28:27Z",
         )
+
+    def _retry_retrieve(self, responses):
+        with (
+            patch(
+                f"{RETRY_PROVIDER}._paypal_urlopen", side_effect=responses
+            ) as urlopen,
+            patch(f"{RETRY_MODULE}.time.sleep") as sleep,
+        ):
+            try:
+                result = self.retry_provider._paypal_retrieve(RETRY_URL, "TOKEN")
+            except UserError as error:
+                result = error
+        return (
+            result,
+            urlopen.call_count,
+            [call.args[0] for call in sleep.call_args_list],
+        )
+
+    def test_retry_temporary_errors(self):
+        result, calls, delays = self._retry_retrieve(
+            [
+                _retry_http_error(429),
+                _retry_http_error(503),
+                URLError("Connection reset"),
+                _retry_response({"ok": True}),
+            ]
+        )
+        self.assertEqual(result, {"ok": True})
+        self.assertEqual(calls, 4)
+        # The delay doubles at each attempt
+        self.assertEqual(delays, [1, 2, 4])
+
+    def test_retry_after(self):
+        result, __, delays = self._retry_retrieve(
+            [_retry_http_error(429, retry_after=7), _retry_response({"ok": True})]
+        )
+        self.assertEqual(result, {"ok": True})
+        self.assertEqual(delays, [7])
+
+    def test_no_retry_on_client_errors(self):
+        result, calls, delays = self._retry_retrieve(
+            [
+                _retry_http_error(
+                    400,
+                    {
+                        "name": "INVALID_REQUEST",
+                        "message": "Request is not well-formed",
+                        "debug_id": "abc123",
+                    },
+                )
+            ]
+        )
+        self.assertIsInstance(result, UserError)
+        self.assertEqual(calls, 1)
+        self.assertFalse(delays)
+        # The debug id is in the message, to quote when asking PayPal for help
+        self.assertIn("debug_id: abc123", str(result))
+
+    def test_give_up(self):
+        result, calls, delays = self._retry_retrieve(
+            [
+                _retry_http_error(500, {"name": "INTERNAL_SERVER_ERROR"}),
+                _retry_http_error(500, {"name": "INTERNAL_SERVER_ERROR"}),
+                _retry_http_error(500, {"name": "INTERNAL_SERVER_ERROR"}),
+                _retry_http_error(500, {"name": "INTERNAL_SERVER_ERROR"}),
+            ]
+        )
+        self.assertIsInstance(result, UserError)
+        self.assertIn("INTERNAL_SERVER_ERROR", str(result))
+        self.assertEqual(calls, 4)
+        self.assertEqual(len(delays), 3)
