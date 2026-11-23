@@ -37,6 +37,22 @@ msgid "Online Bank Statement Provider"
 msgstr "Fornitore estratto conto bancario online"
 
 #. module: account_statement_import_online_stripe
+#: model:ir.model.fields,help:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_statement_balances
+msgid ""
+"Set the starting and ending balances of the statements from the balance of "
+"the Stripe account, so that Odoo shows the statements whose lines do not "
+"match it. It needs more requests to Stripe."
+msgstr ""
+"Imposta i saldi iniziale e finale degli estratti conto dal saldo del conto "
+"Stripe, così Odoo mostra gli estratti conto le cui righe non corrispondono. "
+"Richiede più chiamate a Stripe."
+
+#. module: account_statement_import_online_stripe
+#: model:ir.model.fields,field_description:account_statement_import_online_stripe.field_online_bank_statement_provider__stripe_statement_balances
+msgid "Statement Balances"
+msgstr "Saldi degli estratti conto"
+
+#. module: account_statement_import_online_stripe
 #: model_terms:ir.ui.view,arch_db:account_statement_import_online_stripe.online_bank_statement_provider_form
 msgid "Statement Fee Label"
 msgstr "Etichetta tariffa estratto conto"
