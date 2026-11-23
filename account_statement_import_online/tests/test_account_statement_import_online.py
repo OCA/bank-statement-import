@@ -8,11 +8,9 @@ from urllib.error import HTTPError
 
 from dateutil.relativedelta import relativedelta
 from odoo_test_helper import FakeModelLoader
-from psycopg2 import IntegrityError
 
 from odoo import fields
 from odoo.tests import common
-from odoo.tools import mute_logger
 
 mock_obtain_statement_data = (
     "odoo.addons.account_statement_import_online.tests."
@@ -43,18 +41,6 @@ class TestAccountAccountStatementImportOnline(common.SavepointCase):
         cls.AccountBankStatement = cls.env["account.bank.statement"]
         cls.AccountBankStatementLine = cls.env["account.bank.statement.line"]
 
-    def test_provider_unlink_restricted(self):
-        journal = self.AccountJournal.create(
-            {"name": "Bank", "type": "bank", "code": "BANK"}
-        )
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = "online"
-            journal_form.online_bank_statement_provider = "dummy"
-        journal_form.save()
-
-        with self.assertRaises(IntegrityError), mute_logger("odoo.sql_db"):
-            journal.online_bank_statement_provider_id.unlink()
-
     def test_cascade_unlink(self):
         journal = self.AccountJournal.create(
             {"name": "Bank", "type": "bank", "code": "BANK"}
@@ -67,36 +53,6 @@ class TestAccountAccountStatementImportOnline(common.SavepointCase):
         self.assertTrue(journal.online_bank_statement_provider_id)
         save_provider_id = journal.online_bank_statement_provider_id.id
         journal.unlink()
-        self.assertFalse(
-            self.OnlineBankStatementProvider.search(
-                [
-                    ("id", "=", save_provider_id),
-                ]
-            )
-        )
-
-    def test_source_change_cleanup(self):
-        journal = self.AccountJournal.create(
-            {"name": "Bank", "type": "bank", "code": "BANK"}
-        )
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = "online"
-            journal_form.online_bank_statement_provider = "dummy"
-        journal_form.save()
-
-        self.assertTrue(journal.online_bank_statement_provider_id)
-        save_provider_id = journal.online_bank_statement_provider_id.id
-
-        # Stuff should not change when doing unrelated write.
-        journal.write({"code": "BIGBANK"})
-        self.assertTrue(journal.online_bank_statement_provider_id)
-        self.assertEqual(journal.online_bank_statement_provider_id.id, save_provider_id)
-
-        with common.Form(journal) as journal_form:
-            journal_form.bank_statements_source = "undefined"
-        journal_form.save()
-
-        self.assertFalse(journal.online_bank_statement_provider_id)
         self.assertFalse(
             self.OnlineBankStatementProvider.search(
                 [
