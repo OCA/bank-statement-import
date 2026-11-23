@@ -36,6 +36,11 @@
                             password="True"
                             required="service == 'paypal'"
                         />
+                        <field name="paypal_payment_installed" invisible="1" />
+                        <field
+                            name="paypal_skip_website_payments"
+                            invisible="not paypal_payment_installed"
+                        />
                     </group>
                 </group>
             </xpath>
