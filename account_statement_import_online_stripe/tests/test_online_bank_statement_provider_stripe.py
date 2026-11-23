@@ -1,7 +1,32 @@
+import io
+import json
 from datetime import datetime
 from unittest.mock import patch
+from urllib.error import HTTPError, URLError
+
+from odoo.exceptions import UserError
+from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
+
+RETRY_MODULE = (
+    "odoo.addons.account_statement_import_online_stripe.models"
+    ".online_bank_statement_provider_stripe"
+)
+
+
+def _retry_http_error(code, body=None, headers=None):
+    return HTTPError(
+        "https://api.stripe.com/v1/balance_transactions",
+        code,
+        "Error",
+        headers or {},
+        io.BytesIO(json.dumps(body or {}).encode()),
+    )
+
+
+def _retry_response(body):
+    return io.BytesIO(json.dumps(body).encode())
 
 
 class TestOnlineBankStatementProviderStripe(BaseCommon):
@@ -105,3 +130,82 @@ class TestOnlineBankStatementProviderStripe(BaseCommon):
                 "stripe fee INV-002 charge ch_456 card",
             )
             self.assertEqual(statement_data[3]["narration"], "Fee Note charge")
+
+    def _retry_api_get(self, responses):
+        with (
+            patch(
+                f"{RETRY_MODULE}.urllib.request.urlopen", side_effect=responses
+            ) as urlopen,
+            patch(f"{RETRY_MODULE}.time.sleep") as sleep,
+            mute_logger(RETRY_MODULE),
+        ):
+            try:
+                result = self.provider._stripe_api_get("/balance_transactions")
+            except UserError as error:
+                result = error
+        return result, urlopen, sleep
+
+    def test_retry_rate_limit(self):
+        result, urlopen, sleep = self._retry_api_get(
+            [
+                _retry_http_error(429),
+                _retry_http_error(429),
+                _retry_response({"data": [], "has_more": False}),
+            ]
+        )
+        self.assertEqual(result, {"data": [], "has_more": False})
+        self.assertEqual(urlopen.call_count, 3)
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [1, 2])
+
+    def test_retry_network_error(self):
+        result, urlopen, sleep = self._retry_api_get(
+            [URLError("timed out"), _retry_response({"data": [], "has_more": False})]
+        )
+        self.assertEqual(result, {"data": [], "has_more": False})
+        self.assertEqual(urlopen.call_count, 2)
+
+    def test_retry_after_header(self):
+        result, urlopen, sleep = self._retry_api_get(
+            [
+                _retry_http_error(503, headers={"Retry-After": "5"}),
+                _retry_response({"data": [], "has_more": False}),
+            ]
+        )
+        self.assertEqual(sleep.call_args.args[0], 5)
+
+    def test_retry_exhausted(self):
+        result, urlopen, sleep = self._retry_api_get([_retry_http_error(429)] * 4)
+        self.assertIsInstance(result, UserError)
+        self.assertEqual(urlopen.call_count, 4)
+
+    def test_no_retry_when_stripe_says_so(self):
+        result, urlopen, sleep = self._retry_api_get(
+            [_retry_http_error(500, headers={"Stripe-Should-Retry": "false"})]
+        )
+        self.assertIsInstance(result, UserError)
+        self.assertEqual(urlopen.call_count, 1)
+        sleep.assert_not_called()
+
+    def test_readable_error(self):
+        result, urlopen, sleep = self._retry_api_get(
+            [
+                _retry_http_error(
+                    401,
+                    body={
+                        "error": {
+                            "message": "Invalid API Key provided: rk_live_****abcd",
+                            "type": "invalid_request_error",
+                        }
+                    },
+                    headers={"Request-Id": "req_123"},
+                )
+            ]
+        )
+        self.assertIsInstance(result, UserError)
+        self.assertEqual(urlopen.call_count, 1)
+        self.assertEqual(
+            str(result),
+            "Stripe API call failed: /balance_transactions: Invalid API Key "
+            "provided: rk_live_****abcd (type: invalid_request_error, "
+            "request: req_123)",
+        )
