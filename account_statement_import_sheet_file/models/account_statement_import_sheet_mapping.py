@@ -259,3 +259,6 @@ class AccountStatementImportSheetMapping(models.Model):
 
     def _get_column_delimiter_character(self):
         return self._decode_column_delimiter_character(self.delimiter)
+
+    def _skip_row(self, values, columns):
+        return False
