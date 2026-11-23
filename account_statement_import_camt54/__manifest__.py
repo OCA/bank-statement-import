@@ -8,5 +8,6 @@
     "author": "camptocamp, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
+    "data": ["views/account_journal_view.xml"],
     "depends": ["account_statement_import_camt"],
 }
