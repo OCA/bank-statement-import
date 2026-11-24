@@ -200,7 +200,12 @@ class AccountStatementImportSheetParser(models.TransientModel):
         csv_options = self._get_csv_options(mapping)
         decoded_file = self._decode_data_file(data_file, encoding=mapping.file_encoding)
         if decoded_file:
-            parsed_data = reader(StringIO(decoded_file), **csv_options)
+            rows = list(reader(StringIO(decoded_file), **csv_options))
+            # Skip the footer from the records, not from the lines of the file:
+            # a quoted value can contain a line break
+            if mapping.footer_lines_skip_count:
+                rows = rows[: -mapping.footer_lines_skip_count]
+            parsed_data = iter(rows)
         else:
             parsed_data = None
         return parsed_data
@@ -248,24 +253,18 @@ class AccountStatementImportSheetParser(models.TransientModel):
         return content_l[0]
 
     def _parse_rows(self, mapping, currency_code, data, columns):  # noqa: C901
-        csv_or_xlsx, data_file = data
-
-        # Get the numbers of rows of the file
-        if isinstance(csv_or_xlsx, tuple):
-            numrows = csv_or_xlsx[1].nrows
-        else:
-            numrows = len(str(data_file.strip()).split("\\n"))
+        csv_or_xlsx = data[0]
 
         label_line = mapping.header_lines_skip_count
-        footer_line = numrows - mapping.footer_lines_skip_count
-
         if isinstance(csv_or_xlsx, tuple):
+            footer_line = csv_or_xlsx[1].nrows - mapping.footer_lines_skip_count
             rows = range(label_line, footer_line)
         else:
+            # the footer of a csv file is skipped by _parse_data_csv
             rows = csv_or_xlsx
 
         lines = []
-        for index, row in enumerate(rows, label_line):
+        for row in rows:
             if isinstance(csv_or_xlsx, tuple):
                 book = csv_or_xlsx[0]
                 sheet = csv_or_xlsx[1]
@@ -277,8 +276,6 @@ class AccountStatementImportSheetParser(models.TransientModel):
                         cell_value = xldate_as_datetime(cell_value, book.datemode)
                     values.append(cell_value)
             else:
-                if index >= footer_line:
-                    continue
                 values = list(row)
             if mapping.skip_empty_lines and not any(values):
                 continue
