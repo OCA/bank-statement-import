@@ -201,6 +201,35 @@ class TestAccountStatementImportSheetFile(Common):
         self.assertEqual(line1.amount, 50)
         self.assertEqual(line4.amount, -1300)
 
+    def test_metadata_multiline_cell_csv(self):
+        """A line break inside a quoted cell does not shift the footer"""
+        self.sample_statement_map.write(
+            {
+                "footer_lines_skip_count": 1,
+                "header_lines_skip_count": 5,
+                "amount_column": None,
+                "partner_name_column": None,
+                "bank_account_column": None,
+                "float_thousands_sep": "none",
+                "float_decimal_sep": "comma",
+                "timestamp_format": "%m/%d/%y",
+                "original_currency_column": None,
+                "original_amount_column": None,
+                "amount_type": "distinct_credit_debit",
+                "amount_debit_column": "Debit",
+                "amount_credit_column": "Credit",
+            }
+        )
+        wizard = self._get_import_wizard("fixtures/meta_data_multiline_cell.csv")
+        wizard.import_file_button()
+        statement = self.AccountBankStatement.search(self.statement_domain)
+        self.assertEqual(len(statement), 1)
+        self.assertEqual(len(statement.line_ids), 4)
+        line2 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 2")
+        line4 = statement.line_ids.filtered(lambda x: x.payment_ref == "LABEL 4")
+        self.assertEqual(line2.amount, 100)
+        self.assertEqual(line4.amount, -1300)
+
     def test_metadata_separated_debit_credit_xlsx(self):
         self.sample_statement_map.write(
             {
