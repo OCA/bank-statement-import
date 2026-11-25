@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="import_bank_statement_line_batch_limit" model="ir.config_parameter">
+        <field name="key">import.bank.statement.line.batch.limit</field>
+        <field name="value">100</field>
+    </record>
+</odoo>

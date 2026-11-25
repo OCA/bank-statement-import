@@ -16,31 +16,33 @@ class AccountStatementImport(models.TransientModel):
     def _match_journal(self, account_number, currency):
         journal_obj = self.env["account.journal"]
 
-        file_data = base64.b64decode(self.statement_file)
-        if self._check_ofx(file_data):
-            sanitized_account_number = sanitize_account_number(account_number)
+        if self.statement_file:
+            file_data = base64.b64decode(self.statement_file)
+            if self._check_ofx(file_data):
+                sanitized_account_number = sanitize_account_number(account_number)
 
-            journal = journal_obj.search(
-                [
-                    ("type", "=", "bank"),
-                    (
-                        "bank_account_id.sanitized_acctid",
-                        "ilike",
-                        sanitized_account_number,
-                    ),
-                ],
-                limit=1,
-            )
-            journal_id = self.env.context.get("journal_id")
-            if journal_id and journal.id != journal_id:
-                raise UserError(
-                    _(
-                        "The journal found for the file is not consistent with the "
-                        "selected journal. You should use the proper journal or "
-                        "use the generic button on the top of the Accounting Dashboard"
-                    )
+                journal = journal_obj.search(
+                    [
+                        ("type", "=", "bank"),
+                        (
+                            "bank_account_id.sanitized_acctid",
+                            "ilike",
+                            sanitized_account_number,
+                        ),
+                    ],
+                    limit=1,
                 )
-            if journal:
-                account_number = journal.bank_acc_number
+                journal_id = self.env.context.get("journal_id")
+                if journal_id and journal.id != journal_id:
+                    raise UserError(
+                        _(
+                            "The journal found for the file is not consistent with the "
+                            "selected journal. You should use the proper journal or "
+                            "use the generic button on the top of the Accounting "
+                            "Dashboard"
+                        )
+                    )
+                if journal:
+                    account_number = journal.bank_acc_number
 
         return super()._match_journal(account_number=account_number, currency=currency)

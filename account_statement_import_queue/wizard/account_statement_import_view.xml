@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="account_statement_import_form_inherit" model="ir.ui.view">
+        <field name="name">account.statement.import.form.inherit</field>
+        <field name="model">account.statement.import</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_import_sheet_file.account_statement_import_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='import_file_button']" position="after">
+                <button
+                    name="action_import_batch"
+                    string="Import as Batch"
+                    type="object"
+                    class="btn-primary"
+                    context="{'from_import_button': True}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
