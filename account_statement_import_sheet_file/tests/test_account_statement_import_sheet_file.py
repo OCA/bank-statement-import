@@ -426,3 +426,51 @@ class TestAccountStatementImportSheetFile(common.TransactionCase):
         self.assertEqual(statement.balance_start, 0.0)
         self.assertEqual(statement.balance_end_real, 2291.5)
         self.assertEqual(statement.balance_end, 2291.5)
+
+    def _import_balance_file(self, filename, encoding=None):
+        """Import a file with the columns of balance.csv, encoded as asked."""
+        self.sample_statement_map.write(
+            {
+                "balance_column": "Balance",
+                "original_currency_column": None,
+                "original_amount_column": None,
+            }
+        )
+        wizard = self.AccountStatementImport.with_context(
+            journal_id=self.journal.id, account_statement_import_sheet_file_test=True
+        ).create(
+            {
+                "statement_filename": filename,
+                "statement_file": self._data_file(filename, encoding),
+                "sheet_mapping_id": self.sample_statement_map.id,
+            }
+        )
+        wizard.import_file_button()
+        return self.AccountBankStatement.search(self.statement_domain)
+
+    def test_import_csv_file_not_utf8(self):
+        """Non UTF-8 files are not rejected as an unsupported sheet type."""
+        for encoding in ("latin-1", "windows-1252", "utf-16-le", "utf-16-be", "utf-16"):
+            with self.subTest(encoding=encoding):
+                statement = self._import_balance_file("fixtures/encoding.csv", encoding)
+                self.assertEqual(len(statement), 1)
+                self.assertEqual(statement.line_ids.payment_ref, "Comisión mensual")
+                self.assertEqual(statement.line_ids.partner_name, "José Muñoz")
+                statement.unlink()
+
+    def test_import_csv_file_mapping_encoding(self):
+        """The encoding of the mapping is used when the file is not UTF-8."""
+        self.sample_statement_map.file_encoding = "iso-8859-2"
+        statement = self._import_balance_file(
+            "fixtures/encoding_latin2.csv", "iso-8859-2"
+        )
+        self.assertEqual(statement.line_ids.payment_ref, "Opłata za konto")
+        self.assertEqual(statement.line_ids.partner_name, "Łukasz Wiśniewski")
+
+    def test_balance_newest_first(self):
+        """Balances of a file that lists the transactions newest first."""
+        statement = self._import_balance_file("fixtures/newest_first.csv")
+        self.assertEqual(len(statement.line_ids), 4)
+        self.assertEqual(statement.balance_start, 1000.0)
+        self.assertEqual(statement.balance_end_real, 1025.0)
+        self.assertEqual(statement.balance_end, 1025.0)

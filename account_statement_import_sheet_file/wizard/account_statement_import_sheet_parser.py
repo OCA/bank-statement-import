@@ -6,6 +6,7 @@
 
 """Parse mapped bank statement sheet files into Odoo import values."""
 
+import codecs
 import itertools
 import logging
 import math
@@ -64,9 +65,17 @@ class AccountStatementImportSheetParser(models.TransientModel):
         }
 
     def _get_sheet_type(self, data_file):
-        """Detect the sheet parser suffix from the uploaded file content."""
+        """Detect the sheet parser suffix from the uploaded file content.
+
+        guess_mimetype() only reports text/plain for UTF-8 content: a text file in
+        another encoding (Latin-1, UTF-16...) comes as application/octet-stream.
+        Read it as CSV, and let the CSV parser decode it.
+        """
         mimetype = guess_mimetype(data_file)
-        return self._get_mimetype_sheet_type_map().get(mimetype)
+        sheet_type = self._get_mimetype_sheet_type_map().get(mimetype)
+        if not sheet_type and mimetype == "application/octet-stream":
+            sheet_type = "csv"
+        return sheet_type
 
     @api.model
     def parse(self, data_file, mapping, filename):
@@ -90,6 +99,10 @@ class AccountStatementImportSheetParser(models.TransientModel):
         )
         if not lines:
             return currency_code, account_number, [{"transactions": []}]
+        if self._is_newest_first(lines, mapping):
+            # The sort is stable: reverse first, so that the transactions of the
+            # same day keep their real order.
+            lines.reverse()
         lines = list(sorted(lines, key=lambda line: line["timestamp"]))
         first_line = lines[0]
         last_line = lines[-1]
@@ -118,6 +131,31 @@ class AccountStatementImportSheetParser(models.TransientModel):
         )
         data.update({"transactions": transactions})
         return currency_code, account_number, [data]
+
+    def _is_newest_first(self, lines, mapping):
+        """Return whether the file lists the transactions newest first.
+
+        By the dates of the first and last lines when they differ. When all the
+        lines have the same date, by the balance column: on an oldest-first file
+        each balance is the previous one plus the amount of the line, and on a
+        newest-first file it is the other way round.
+        """
+        first_date = lines[0]["timestamp"]
+        last_date = lines[-1]["timestamp"]
+        if first_date != last_date:
+            return first_date > last_date
+        if not mapping.balance_column or len(lines) < 2:
+            return False
+        pairs = list(zip(lines, lines[1:], strict=False))
+        oldest_first = all(
+            line["balance"] == previous["balance"] + line["amount"]
+            for previous, line in pairs
+        )
+        newest_first = all(
+            previous["balance"] == line["balance"] + previous["amount"]
+            for previous, line in pairs
+        )
+        return newest_first and not oldest_first
 
     def _get_column_indexes(self, header, column_name, mapping):
         column_indexes = []
@@ -167,6 +205,40 @@ class AccountStatementImportSheetParser(models.TransientModel):
             "bank_account_column",
         ]
 
+    def _decode_csv_data(self, data_file, mapping):
+        """Decode the content of a CSV file, trying in this order:
+
+        1. the encoding given by a BOM;
+        2. strict UTF-8, so files that import fine today are not affected;
+        3. UTF-16 without BOM, for content with NUL bytes: in mostly ASCII text
+           the NUL bytes are at odd positions in little endian and at even
+           positions in big endian (chardet < 5 does not detect it);
+        4. the encoding of the mapping;
+        5. chardet, as a last resort.
+        """
+        if data_file.startswith(codecs.BOM_UTF8):
+            return data_file.decode("utf-8-sig")
+        if data_file.startswith((codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE)):
+            return data_file.decode("utf-16")
+        if b"\x00" in data_file:
+            little_endian = data_file[1::2].count(0) >= data_file[::2].count(0)
+            encodings = ["utf-16-le" if little_endian else "utf-16-be"]
+        else:
+            encodings = ["utf-8", mapping.file_encoding]
+        for encoding in encodings:
+            if not encoding:
+                continue
+            try:
+                return data_file.decode(encoding)
+            except (UnicodeDecodeError, LookupError):
+                continue
+        detected_encoding = chardet.detect(data_file).get("encoding", False)
+        if not detected_encoding:
+            raise UserError(
+                self.env._("No valid encoding was found for the attached file")
+            ) from None
+        return data_file.decode(detected_encoding)
+
     def _parse_lines_csv(self, mapping, data_file, currency_code):
         """Parse CSV content into normalized statement line dictionaries.
         :return: Parsed statement lines ready for transaction conversion.
@@ -178,12 +250,7 @@ class AccountStatementImportSheetParser(models.TransientModel):
             csv_options["delimiter"] = csv_delimiter
         if mapping.quotechar:
             csv_options["quotechar"] = mapping.quotechar
-        detected_encoding = chardet.detect(data_file).get("encoding", False)
-        if not detected_encoding:
-            raise UserError(
-                self.env._("No valid encoding was found for the attached file")
-            ) from None
-        decoded_file = data_file.decode(detected_encoding)
+        decoded_file = self._decode_csv_data(data_file, mapping)
         rows = reader(StringIO(decoded_file), **csv_options)
         header = self.parse_header_csv(rows, mapping)
 
