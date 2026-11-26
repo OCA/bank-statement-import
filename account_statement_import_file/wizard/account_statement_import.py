@@ -348,6 +348,9 @@ class AccountStatementImport(models.TransientModel):
                 context = st_vals.pop("creation_context", {})
                 # Create the statement with lines
                 st_vals["line_ids"] = [[0, False, line] for line in st_lines_to_create]
+                # Skip the Enterprise synchronous PDF render on create, too heavy
+                # for large imports (no-op if account_accountant is not installed).
+                context["skip_pdf_attachment_generation"] = True
                 statement = abs_obj.with_context(**context).create(st_vals)
                 statement_ids.append(statement.id)
 
