@@ -26,7 +26,10 @@
                 </t>
             </xpath>
             <xpath expr='//div[@name="bank_customer_payment"]' position="before">
-                <div t-if="journal_type == 'bank'" groups="account.group_account_user">
+                <div
+                    t-if="journal_type == 'bank' or journal_type == 'cash' or journal_type == 'credit'"
+                    groups="account.group_account_user"
+                >
                     <a
                         type="object"
                         name="import_account_statement"
